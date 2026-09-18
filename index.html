@@ -28058,7 +28058,7 @@ function _scanProposalPreview(existing, opts){
   const invNo=inv.number||(maker?(document.getElementById('grn_invoiceNo')||{}).value:'')||''; const invDt=inv.date||(maker?(document.getElementById('grn_invoiceDate')||{}).value:'')||'';
   const h='<h3>'+(mode==='admin'?'Proposal for ':'Proposed amendment \u2014 ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(invNo?'from invoice '+esc(invNo)+(invDt?' dated '+fmtDate(invDt):''):(mode==='manual'?'manual proposal':''))+'</small></h3>'
    +'<div class="amd-banner info"><span class="i"></span><div>Rules: proposed PO qty = PO qty + (received \u2212 balance) \u00b7 rate differs \u2192 new rate (received qty keeps the old rate via split) \u00b7 not on PO \u2192 new line, Purchase Executive picks the material/WBS. Edit anything below; budget is checked at the later steps.'+(maker?' <b>The whole PO is locked</b> from the moment you send, until the amendment is approved or cancelled; this receipt is parked and saved once, in full, after approval.':'')+'</div></div>'
-   +(maker?'<div class="field" style="margin-bottom:10px;"><label'+(mode==='manual'?' class="req"':'')+'>Reason'+(mode==='manual'?'':' (optional \u2014 the invoice reference is added for you)')+'</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;_propSum()"></div>':'')
+   +(maker?'<div class="field" style="margin-bottom:10px;"><label'+(mode==='manual'?' class="req"':'')+'>Reason'+(mode==='manual'?'':' (optional \u2014 the invoice reference is added for you)')+'</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;this.style.borderColor=\'\';this.style.boxShadow=\'\';_propSum()"></div>':'')
    +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th>UOM</th><th class="num">PO qty</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(mode==='manual'?'Receiving now':'Invoice qty')+'</th><th class="num">Proposed PO qty</th><th class="num">PO rate</th><th class="num">Proposed rate</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
    +(maker?'<div style="display:flex;gap:8px;align-items:center;margin-top:8px;" id="propAddRow"></div>':'')
    +'<div class="actions-row"><span style="margin-right:auto;font-size:12px;color:var(--muted);" id="propSum"></span>'
@@ -28103,7 +28103,7 @@ function _propSum(){ const el=document.getElementById('propSum'); if(!el) return
   const d=ch.reduce((s,p)=>{ const q=num(p.qty), r=num(p.unit_rate!=null?p.unit_rate:p._po_rate); const before=num(p._po_qty)*num(p._po_rate); return s+(q*r-before); },0);
   const needReason=_prop.opts.mode==='manual'&&!String(_prop.reason||'').trim();
   el.textContent=n+' line change'+(n===1?'':'s')+' \u00b7 value change '+(d>=0?'+':'')+fmtINRSym(d)+' (before tax, approximate)'+(n&&needReason?' \u00b7 reason required':'');
-  const sb_=document.getElementById('propSendBtn'); if(sb_) sb_.disabled=!n||needReason; }
+  const sb_=document.getElementById('propSendBtn'); if(sb_) sb_.disabled=!n; }
 function _propClean(){ const keep=['_desc','_sno','_po_qty','_po_rate','_inv_qty','_bal','_uom','_mat_po','_mat_prev','_loc','_nloc','_src']; return _prop.lines.filter(_propChanged).map(p=>{ const o={}; Object.keys(p).forEach(k=>{ if(k[0]!=='_'||keep.includes(k)) o[k]=p[k]; }); return o; }); }
 // v131.5 · the receipt as typed, carried on the request so it is entered once and saved once (after approval)
 function _grnParkSnapshot(){
@@ -28115,7 +28115,7 @@ async function _scanProposalSend(){
   const poNum=_prop.opts.poNum; if(!poNum) return;
   const lines=_propClean(); if(!lines.length){ toast('Nothing to propose','warn'); return; }
   const manual=_prop.opts.mode==='manual'; const why=String(_prop.reason||'').trim();
-  if(manual&&!why){ toast('Give a reason for the amendment','warn'); return; }
+  if(manual&&!why){ const re_=document.getElementById('propReason'); if(re_){ re_.style.borderColor='#dc2626'; re_.style.boxShadow='0 0 0 2px rgba(220,38,38,.18)'; re_.focus(); } toast('Reason is required \u2014 say why the PO needs amending','error',5000); return; }
   const P=_scan.parse||null; const inv=(P&&P.invoice)||{}; const park=_grnParkSnapshot();
   const invNo=inv.number||park.invoice_no||null, invDt=inv.date||park.invoice_date||null;
   const reason=(why?why+' \u2014 ':'')+'Amendment proposed from '+(invNo?'invoice '+invNo+(invDt?' dated '+fmtDate(invDt):''):'GRN entry')+': '+lines.length+' line change'+(lines.length>1?'s':'')+' (see proposal).';
@@ -29355,14 +29355,24 @@ async function onGRNPOChange() {
   // location breadcrumbs
   let locMap={};
   try{ const lt=await _loadLocTree(); locMap=Object.fromEntries((lt||[]).map(n=>[String(n.id),n])); }catch(e){}
-  // prev received per (material, location) from verified GRNs; legacy null-loc receipts bucketed per material
-  const prevByMatLoc={}, prevUnloc={};
+  // v131.7: prev received per PO LINE (po_item_id) from every LIVE GRN — Pending Verification included.
+  // Counting verified GRNs only let a second GRN, raised before the first was verified, refill the same
+  // locations (PO/152: 9.58 ordered, 19.16 received). Legacy rows without po_item_id fall back to
+  // (material, location); null-loc receipts stay bucketed per material. Paged — PostgREST caps at 1000 rows.
+  const prevByItem={}, prevByMatLoc={}, prevUnloc={};
   const {data:doneGRNs}=await sb.from('pu_grn').select('grn_number')
-    .eq('po_number',poNum).in('status',['Verified','Partially Billed','Billed']);
+    .eq('po_number',poNum).not('status','in','("Rejected","Rejected - Correction")');
   if(doneGRNs?.length){
-    const {data:prevItems}=await sb.from('pu_grn_items').select('material_name,material_code,loc_node_id,this_grn_qty')
-      .in('grn_number',doneGRNs.map(g=>g.grn_number));
+    const _gn=doneGRNs.map(g=>g.grn_number), prevItems=[];
+    for(let _c=0;_c<_gn.length;_c+=100){ const _ch=_gn.slice(_c,_c+100);
+      for(let _f=0;;_f+=1000){
+        const {data:_pg,error:_pe}=await sb.from('pu_grn_items').select('id,po_item_id,material_name,material_code,loc_node_id,this_grn_qty')
+          .in('grn_number',_ch).order('id').range(_f,_f+999);
+        if(_pe){ pbDone(); toast('Could not read earlier receipts for this PO \u2014 GRN not loaded: '+_pe.message,'error',8000);
+          document.getElementById('grnItemsBody').innerHTML='<tr><td colspan="11" class="center muted">Earlier receipts could not be read. Reselect the PO.</td></tr>'; return; }
+        prevItems.push(...(_pg||[])); if(!_pg||_pg.length<1000) break; } }
     (prevItems||[]).forEach(it=>{
+      if(it.po_item_id){ prevByItem[it.po_item_id]=(prevByItem[it.po_item_id]||0)+num(it.this_grn_qty); return; }
       const mk=(it.material_code!=null?('c'+it.material_code):('n'+it.material_name));
       if(it.loc_node_id){ (prevByMatLoc[mk]=prevByMatLoc[mk]||{})[String(it.loc_node_id)]=(prevByMatLoc[mk][String(it.loc_node_id)]||0)+num(it.this_grn_qty); }
       else prevUnloc[mk]=(prevUnloc[mk]||0)+num(it.this_grn_qty);
@@ -29379,13 +29389,17 @@ async function onGRNPOChange() {
       po_item_id:it.id, loc_node_id:it.loc_node_id||null, wbs_node_id:it.wbs_node_id!=null?Number(it.wbs_node_id):null,
       procurement_line_id:it.procurement_line_id||null, procurement_source:it.procurement_source||null,
       rate:num(it.unit_rate), item:it,   // v116: per-line rate (split lines carry their own)
-      ordered:num(it.qty), prev:(prevByMatLoc[key]&&prevByMatLoc[key][lk])||0,
+      ordered:num(it.qty), prev:num(prevByItem[it.id]),   // v131.7: by PO line; legacy (material, location) receipts are spread below
       path:node?node.path:'', label:node?node.name:'', sno:num(it.sno),
     });
   });
   const _grnRows=Object.values(_grnGroups);
   document.getElementById('grnItemsBody').innerHTML=_grnRows.map((g,i)=>{
     const it=g.first; g.locs.sort((a,b)=>a.sno-b.sno);
+    { const _lg=Object.assign({},prevByMatLoc[g.key]||{});   // v131.7: legacy receipts (no po_item_id) — first line at that location first, never counted twice
+      g.locs.forEach((l,n)=>{ const k=String(l.loc_node_id||''), left=num(_lg[k]); if(left<=0) return;
+        const last=!g.locs.slice(n+1).some(x=>String(x.loc_node_id||'')===k);
+        const take=last?left:Math.min(left,Math.max(0,l.ordered-l.prev)); l.prev+=take; _lg[k]=left-take; }); }
     const poQty=g.locs.reduce((s,l)=>s+l.ordered,0);
     const prevLoc=g.locs.reduce((s,l)=>s+l.prev,0);
     const unloc=prevUnloc[g.key]||0;
@@ -29605,7 +29619,9 @@ async function saveGRN() {
       flashSuccess('GRN '+res.doc_number+' saved — pending Site Manager verification');
     }
     closeGRNForm(); loadGRNList(); loadPOList();
-  } catch(e){toast((/PO_UNDER_AMENDMENT/.test(e.message)?'PO is under amendment \u2014 GRN blocked until it is approved or cancelled':'Error: '+e.message),'error',6000);}
+  } catch(e){toast((/PO_UNDER_AMENDMENT/.test(e.message)?'PO is under amendment \u2014 GRN blocked until it is approved or cancelled'
+      :/GRN_OVER_PO/.test(e.message)?String(e.message).replace(/^.*GRN_OVER_PO:\s*/,'')+' \u2014 another receipt was saved on this PO meanwhile. Reselect the PO to refresh the balances.'
+      :'Error: '+e.message),'error',/GRN_OVER_PO/.test(e.message)?12000:6000);}
   finally{pbDone();}
 }
 
@@ -30548,7 +30564,7 @@ async function reviseGRN(grnNum) {
   // Pre-fill quantities and item-level remarks from the original GRN
   const qtyMap = {}, rmkMap = {};
   (items||[]).forEach(it => {
-    qtyMap[it.material_name] = it.this_grn_qty;
+    qtyMap[it.material_name] = Math.round(((qtyMap[it.material_name]||0) + num(it.this_grn_qty))*1000)/1000;   // v131.7: sum the location splits
     rmkMap[it.material_name] = it.remarks || '';
   });
   document.querySelectorAll('#grnItemsBody tr').forEach((_, i) => {

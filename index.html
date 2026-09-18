@@ -171,6 +171,8 @@ tr.amd-addedln td { background:#f0fdf4; }
 #amdTbl input.amd-bad { border-color:var(--danger); background:#fef2f2; }
 .amd-sum { display:flex; gap:26px; font-size:12.5px; color:var(--muted); } .amd-sum b { color:var(--text); display:block; font-size:14px; font-variant-numeric:tabular-nums; }
 .amd-hdr { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:12px; margin-top:14px; }
+.amd-req { border:1px solid #bae6fd; border-radius:6px; margin-bottom:10px; overflow:hidden; } .amd-req .hd { background:#e0f2fe; color:#075985; padding:7px 12px; font-size:12.5px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; } .amd-req .hd b { color:#0c4a6e; }
+.amd-req th { background:#f0f9ff; color:#075985; border-bottom:1px solid #bae6fd; padding:6px 8px; position:static; } .amd-req td { vertical-align:middle; } .amd-req tr:last-child td { border-bottom:none; }
 .amd-hdr input, .amd-hdr textarea { width:100%; padding:7px 9px; border:1px solid var(--border); border-radius:4px; background:var(--input-bg); font:inherit; font-size:13px; }
 .amd-rule { display:inline-block; padding:2px 8px; border-radius:4px; background:#f1f5f9; color:#475569; font-size:11px; margin-right:6px; margin-bottom:2px; }
 .amd-rule.blocked { background:#fee2e2; color:#991b1b; }
@@ -28012,27 +28014,43 @@ function _scanClearPrefill(keepStrip){ document.querySelectorAll('#grnForm .scan
 function _scanStripMsg(kind,html){ const strip=document.getElementById('grnScanStrip'); if(strip) strip.innerHTML='<div class="amd-banner '+kind+'"><span class="i"></span><div>'+html+'</div></div>'; }
 // ── amendment proposal from the scan (v122 · mig #30) ──────────────────
 function _scanProposalRows(rows){ return (rows||[]).filter(r=>(r.res==='nopo'&&!r.frozen)||r.capped||r.res==='rate'); }
-// One proposal line per PO material. The extra quantity lands on the location line that still has balance
-// (last line when none has); the Purchase Executive can rebalance. `qty` in the payload is that line's new qty.
-function _grnPropLine(i, recvQty, newRate){
-  const mt=_grnMeta[i]; const g=_grnLocs[i]||[]; const inp=document.getElementById('grnRecv_'+i); if(!mt||!g.length||!inp) return null;   // v131.5: was window._grnLocs — a `let` is never on window, so every line was dropped
-  const bal=num(inp.dataset.balance), tgt=g.find(x=>num(x.ordered)-num(x.prev)>0.0005)||g[g.length-1]; if(!tgt||!tgt.item) return null;
-  const add=Math.max(0,num(recvQty)-bal);
-  const line={item_id:tgt.item.id,action:'modify',qty:Math.round((num(tgt.item.qty)+add)*1000)/1000,note:'',source:'store',_gi:i,_desc:mt.matName,_inv_qty:num(recvQty),_bal:bal,_po_qty:num(tgt.item.qty),_po_rate:num(tgt.rate!=null?tgt.rate:mt.rate),_sno:tgt.sno,_uom:mt.uom,_mat_po:num(inp.dataset.poqty),_mat_prev:num(inp.dataset.prev),_loc:_grnLabel3(tgt.path),_nloc:g.length,_src:tgt.procurement_source||null};
-  if(newRate!=null&&!_scanRateEq(num(newRate),line._po_rate)) line.unit_rate=num(newRate);
+// v131.8 · Store asks per MATERIAL — material and quantity only. No PO line, WBS, location or rate is named:
+// Purchase places the quantity (and sets the rate) in the amendment. Request line:
+//   {action:'request', item_id:null, material_code, material_name, uom, extra_qty, inv_rate?, not_on_po?, source:'store', _snapshot…}
+// rpc_amd_open_v2 applies only 'modify'+item_id and 'add' lines, so a 'request' rides on request_context.proposal untouched.
+function _propKey(code,name){ return code?('c:'+code):('n:'+String(name||'').trim().toLowerCase()); }
+function _grnPropLine(i, recvQty, invRate){
+  const mt=_grnMeta[i]; const inp=document.getElementById('grnRecv_'+i); if(!mt||!inp) return null;
+  const bal=num(inp.dataset.balance);
+  const line={item_id:null,action:'request',material_code:mt.matCode||null,material_name:mt.matName,uom:mt.uom,extra_qty:Math.round(Math.max(0,num(recvQty)-bal)*1000)/1000,note:'',source:'store',
+    _gi:i,_desc:mt.matName,_inv_qty:num(recvQty),_bal:bal,_po_qty:num(inp.dataset.poqty),_po_rate:num(mt.rate),_uom:mt.uom,_mat_po:num(inp.dataset.poqty),_mat_prev:num(inp.dataset.prev)};
+  if(invRate!=null&&num(invRate)>0&&!_scanRateEq(num(invRate),line._po_rate)) line.inv_rate=num(invRate);
   _grnPropNote(line); return line;
 }
-function _grnPropNote(p){ if(p.action!=='modify') return; const dq=num(p.qty)-num(p._po_qty); const bits=[];
-  if(Math.abs(dq)>0.0005) bits.push((dq>0?'+':'')+fmtINR(dq)+(p._inv_qty?' = received '+fmtINR(p._inv_qty)+(num(p._bal)>0?' \u2212 balance '+fmtINR(p._bal):''):''));
-  if(p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))) bits.push('rate '+fmtINR(p._po_rate)+' \u2192 '+fmtINR(p.unit_rate));
-  if(p._src==='mir'&&dq>0.0005) bits.push('MIR-linked line \u2014 the DB caps it at the linked MIR qty; PE adds the extra as a direct line');
-  if(num(p._nloc)>1) bits.push('on line '+p._sno+(p._loc?' ('+p._loc+')':'')+' of '+p._nloc+' locations \u2014 PE may rebalance');
+function _propFreeLine(desc, qty, uom, rate){
+  return {item_id:null,action:'request',not_on_po:true,material_code:null,material_name:'',uom:'',extra_qty:num(qty),inv_rate:(num(rate)>0?num(rate):undefined),inv_desc:desc||null,inv_uom:uom||null,
+    note:'not on PO',source:'store',_manual:true,_q:desc||'',_desc:'',_inv_qty:(qty!=null?num(qty):null),_bal:null,_po_qty:null,_po_rate:null,_mat_po:null,_mat_prev:null};
+}
+function _grnPropNote(p){ const bits=[];
+  if(p.not_on_po) bits.push('not on PO');
+  else if(num(p.extra_qty)>0.0005) bits.push('+'+fmtINR(p.extra_qty)+(p._inv_qty?' = received '+fmtINR(p._inv_qty)+(num(p._bal)>0?' \u2212 balance '+fmtINR(p._bal):''):''));
+  if(p.inv_rate!=null&&p._po_rate!=null&&!_scanRateEq(num(p.inv_rate),num(p._po_rate))) bits.push('invoice rate '+fmtINR(p.inv_rate)+' vs PO '+fmtINR(p._po_rate));
   p.note=bits.join(' \u00b7 '); }
+// Requests raised before v131.8 named a PO line ('modify'+item_id) or a free-text 'add' — read them as material requests.
+function _propNormalize(p, items){
+  if(!p||p.action==='request') return p;
+  const it=p.item_id?(items||[]).find(x=>x.id===p.item_id):null;
+  if(p.action==='modify') return {item_id:null,action:'request',material_code:(it&&it.material_code)||p.material_code||null,material_name:p._desc||(it&&it.material_name)||'',uom:p._uom||(it&&it.uom)||'',
+    extra_qty:Math.round(Math.max(0,num(p.qty)-num(p._po_qty))*1000)/1000,inv_rate:(p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate)))?num(p.unit_rate):undefined,note:p.note||'',source:p.source||'store',
+    _desc:p._desc||(it&&it.material_name)||'',_inv_qty:p._inv_qty,_bal:p._bal,_po_qty:(p._mat_po!=null?p._mat_po:p._po_qty),_po_rate:p._po_rate,_uom:p._uom,_mat_po:(p._mat_po!=null?p._mat_po:p._po_qty),_mat_prev:p._mat_prev,_legacy:true};
+  return {item_id:null,action:'request',not_on_po:true,material_code:p.material_code||null,material_name:p.material_name||p._desc||'',uom:p.uom||'',extra_qty:num(p.qty),inv_rate:(num(p.unit_rate)>0?num(p.unit_rate):undefined),
+    note:p.note||'not on PO',source:p.source||'store',_desc:p.material_name||p._desc||'',_inv_qty:(p._inv_qty!=null?p._inv_qty:num(p.qty)),_bal:null,_po_qty:null,_po_rate:null,_mat_po:null,_mat_prev:null,_legacy:true};
+}
 function _scanBuildProposal(){
   const rows=_scanProposalRows(_scan.rows); const out=[];
   rows.forEach(r=>{
     const l=(_scan.parse.lines||[])[r.li]; if(!l) return;
-    if(r.i==null){ out.push({item_id:null,action:'add',material_code:null,material_name:l.description,uom:l.uom||null,qty:num(l.qty),unit_rate:num(_scanInvRate(l)),note:'not on PO \u00b7 invoice '+((_scan.parse.invoice&&_scan.parse.invoice.number)||''),source:'store',_desc:l.description,_inv_qty:num(l.qty),_bal:null,_po_qty:null,_po_rate:null}); return; }
+    if(r.i==null){ out.push(_propFreeLine(l.description,num(l.qty),l.uom,_scanInvRate(l))); return; }   // not on PO — Store picks the material from the master
     const inp=document.getElementById('grnRecv_'+r.i); const typed=inp?num(inp.value):0;
     const line=_grnPropLine(r.i, typed>0?typed:num(r.q!=null?r.q:l.qty), r.res==='rate'?r.effRate:null); if(line) out.push(line);
   });
@@ -28056,55 +28074,88 @@ function _scanProposalPreview(existing, opts){
   const po=(opts&&opts.poNum)||document.getElementById('grn_poSelect').value; const inv=(_scan.parse&&_scan.parse.invoice)||{};
   const mode=_prop.opts.mode; _prop.opts.poNum=po; const maker=(mode==='store'||mode==='manual');
   const invNo=inv.number||(maker?(document.getElementById('grn_invoiceNo')||{}).value:'')||''; const invDt=inv.date||(maker?(document.getElementById('grn_invoiceDate')||{}).value:'')||'';
-  const h='<h3>'+(mode==='admin'?'Proposal for ':'Proposed amendment \u2014 ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(invNo?'from invoice '+esc(invNo)+(invDt?' dated '+fmtDate(invDt):''):(mode==='manual'?'manual proposal':''))+'</small></h3>'
-   +'<div class="amd-banner info"><span class="i"></span><div>Rules: proposed PO qty = PO qty + (received \u2212 balance) \u00b7 rate differs \u2192 new rate (received qty keeps the old rate via split) \u00b7 not on PO \u2192 new line, Purchase Executive picks the material/WBS. Edit anything below; budget is checked at the later steps.'+(maker?' <b>The whole PO is locked</b> from the moment you send, until the amendment is approved or cancelled; this receipt is parked and saved once, in full, after approval.':'')+'</div></div>'
-   +(maker?'<div class="field" style="margin-bottom:10px;"><label'+(mode==='manual'?' class="req"':'')+'>Reason'+(mode==='manual'?'':' (optional \u2014 the invoice reference is added for you)')+'</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;this.style.borderColor=\'\';this.style.boxShadow=\'\';_propSum()"></div>':'')
-   +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th>UOM</th><th class="num">PO qty</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(mode==='manual'?'Receiving now':'Invoice qty')+'</th><th class="num">Proposed PO qty</th><th class="num">PO rate</th><th class="num">Proposed rate</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
+  const h='<h3>'+(maker?'Proposed amendment \u2014 ':'Store request for ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(invNo?'from invoice '+esc(invNo)+(invDt?' dated '+fmtDate(invDt):''):(mode==='manual'?'manual proposal':''))+(_prop.opts.by?' \u00b7 '+esc(_prop.opts.by):'')+'</small></h3>'
+   +'<div class="amd-banner info"><span class="i"></span><div>'+(maker?'You are asking for <b>material and quantity only</b>. <b>Purchase decides the WBS / location and the rate</b> when the PO is amended; budget is checked at that step. <b>The whole PO is locked</b> from the moment you send, until the amendment is approved or cancelled; this receipt is parked and saved once, in full, after approval.'
+      :'Material and quantity only. Opening the PO does not change any line \u2014 the request travels with the amendment, and the <b>Purchase Executive places it on WBS / location and sets the rate</b>.')+'</div></div>'
+   +(!maker&&_prop.opts.reason?'<div class="amd-banner freeze"><span class="i"></span><div><b>Reason:</b> <span style="white-space:pre-line;">'+esc(_prop.opts.reason)+'</span></div></div>':'')
+   +(maker?'<div class="field" style="margin-bottom:10px;"><label class="req">Reason</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;_propReasonMark(false);_propSum()"><span id="propReasonErr" style="display:none;color:var(--danger);font-size:12px;font-weight:600;margin-top:4px;">Reason is required \u2014 say why the PO needs more quantity. Nothing has been sent.</span></div>':'')
+   +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th>UOM</th><th class="num">PO qty</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(mode==='store'||(!maker&&invNo)?'Invoice qty':'Receiving now')+'</th><th class="num">Extra requested</th><th class="num">PO qty after</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
    +(maker?'<div style="display:flex;gap:8px;align-items:center;margin-top:8px;" id="propAddRow"></div>':'')
    +'<div class="actions-row"><span style="margin-right:auto;font-size:12px;color:var(--muted);" id="propSum"></span>'
-   +(mode==='admin'?'<button class="btn btn-ghost" onclick="closeModal()">Back</button><button class="btn btn-primary" onclick="_scanProposalOpen()">\u270e Open for amendment \u2014 with this proposal</button>'
+   +(mode==='admin'?'<button class="btn btn-ghost" onclick="closeModal()">Back</button><button class="btn btn-primary" onclick="_scanProposalOpen()">\u270e Open for amendment \u2014 request attached</button>'
     :mode==='view'?'<button class="btn btn-ghost" onclick="closeModal();viewPO(\''+esc(po)+'\')">Back to PO</button>'
     :'<button class="btn btn-ghost" onclick="window._modalNoBackdropClose=false;closeModal()">Back</button><button class="btn btn-primary" id="propSendBtn" onclick="_scanProposalSend()">Send proposal to Admin</button>')+'</div>';
   window._modalNoBackdropClose=true; openModal(h,'wide'); _propRender();
   if(mode==='view') document.querySelectorAll('#propTbl input,#propTbl button').forEach(x=>x.disabled=true);
 }
-function _propMatPo(p){ return p._mat_po!=null?num(p._mat_po):num(p._po_qty); }
-function _propMatQty(p){ return Math.round((_propMatPo(p)+num(p.qty)-num(p._po_qty))*1000)/1000; }
-function _propChanged(p){ if(p.action==='add') return num(p.qty)>0&&!!String(p.material_name||'').trim(); return Math.abs(num(p.qty)-num(p._po_qty))>0.0005||(p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))); }
-function _propSetMatQty(k,v){ const p=_prop.lines[k]; p.qty=(v===''?num(p._po_qty):Math.round((num(p._po_qty)+Number(v)-_propMatPo(p))*1000)/1000); _grnPropNote(p); _propSum(); _propChip(k); }
-function _propSetRecv(k,v){ const p=_prop.lines[k]; p._inv_qty=num(v); p.qty=Math.round((num(p._po_qty)+Math.max(0,num(v)-num(p._bal)))*1000)/1000; _grnPropNote(p); _propRender(); }
-function _propSetRate(k,v){ const p=_prop.lines[k]; if(v===''||(p._po_rate!=null&&_scanRateEq(Number(v),num(p._po_rate)))) delete p.unit_rate; else p.unit_rate=Number(v); _grnPropNote(p); _propSum(); _propChip(k); }
-function _propChipHtml(p){ const isAdd=p.action==='add'; if(isAdd) return '<span class="scan-chip ok">added'+(p.material_code?'':' \u00b7 PE picks material')+'</span>';
-  const dq=Math.abs(num(p.qty)-num(p._po_qty))>0.0005, dr=p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate));
-  return (dq?'<span class="scan-chip qty">qty '+fmtINR(_propMatPo(p))+' \u2192 '+fmtINR(_propMatQty(p))+'</span> ':'')+(dr?'<span class="scan-chip rate">rate '+fmtINR(p._po_rate)+' \u2192 '+fmtINR(p.unit_rate)+' \u00b7 split</span>':'')+(!dq&&!dr?'<span class="scan-chip nopo">no change \u2014 not sent</span>':''); }
-function _propChip(k){ const el=document.getElementById('propChg_'+k); if(el) el.innerHTML=_propChipHtml(_prop.lines[k]); const n=document.getElementById('propNote_'+k); if(n) n.textContent=_prop.lines[k].note||''; }
+function _propReasonMark(bad){ const re_=document.getElementById('propReason'), er=document.getElementById('propReasonErr'); if(re_){ re_.style.borderColor=bad?'#dc2626':''; re_.style.boxShadow=bad?'0 0 0 2px rgba(220,38,38,.18)':''; re_.style.background=bad?'#fef2f2':''; } if(er) er.style.display=bad?'block':'none'; }
+function _propMatPo(p){ return p._mat_po!=null?num(p._mat_po):null; }
+function _propRateDiff(p){ return p.inv_rate!=null&&p._po_rate!=null&&!_scanRateEq(num(p.inv_rate),num(p._po_rate)); }
+function _propReady(p){ return !p.not_on_po||!!p.material_code||(!!p._legacy&&!!String(p.material_name||'').trim()); }
+function _propChanged(p){ return _propReady(p)&&(num(p.extra_qty)>0.0005||_propRateDiff(p)); }
+function _propCells(k){ const p=_prop.lines[k]; _grnPropNote(p); const g=id=>document.getElementById(id+k);
+  const ex=g('propExtra_'); if(ex&&ex.tagName!=='INPUT') ex.innerHTML=num(p.extra_qty)>0.0005?'<b>+'+fmtINR(p.extra_qty)+'</b>':'<span class="muted">\u2014</span>';
+  const af=g('propAfter_'); if(af) af.innerHTML=_propMatPo(p)!=null?fmtINR(_propMatPo(p)+num(p.extra_qty)):'<span class="muted">\u2014</span>';
+  const ch=g('propChg_'); if(ch) ch.innerHTML=_propChipHtml(p); _propSum(); }
+function _propSetRecv(k,v){ const p=_prop.lines[k]; p._inv_qty=num(v); p.extra_qty=Math.round(Math.max(0,num(v)-(p.not_on_po?0:num(p._bal)))*1000)/1000; _propCells(k); }
+function _propSetExtra(k,v){ const p=_prop.lines[k]; p.extra_qty=Math.round(Math.max(0,num(v))*1000)/1000; _propCells(k); }
+function _propChipHtml(p){
+  if(p.not_on_po) return _propReady(p)?'<span class="scan-chip ok">not on PO \u00b7 Purchase places it</span>':'<span class="scan-chip nopo">pick a material</span>';
+  const dq=num(p.extra_qty)>0.0005, dr=_propRateDiff(p);
+  return (dq?'<span class="scan-chip qty">qty '+fmtINR(_propMatPo(p))+' \u2192 '+fmtINR(_propMatPo(p)+num(p.extra_qty))+'</span> ':'')+(dr?'<span class="scan-chip rate" title="Information for Purchase \u2014 the rate is decided in the amendment">invoice rate '+fmtINR(p.inv_rate)+' \u2260 PO '+fmtINR(p._po_rate)+' \u00b7 Purchase decides</span>':'')+(!dq&&!dr?'<span class="scan-chip nopo">no change \u2014 not sent</span>':''); }
 function _propAddPoLine(v){ if(v==='') return; const line=_grnPropLine(+v,num((document.getElementById('grnRecv_'+v)||{}).value),null); if(line){ _prop.lines.push(line); _propRender(); } }
-function _propAddFree(){ _prop.lines.push({item_id:null,action:'add',material_code:null,material_name:'',uom:'',qty:0,unit_rate:0,note:'not on PO \u00b7 added by store',source:'store',_manual:true,_desc:'',_inv_qty:null,_bal:null,_po_qty:null,_po_rate:null}); _propRender(); }
+function _propAddFree(){ _prop.lines.push(_propFreeLine('',null,'',null)); _propRender(); const q=document.getElementById('propMatQ_'+(_prop.lines.length-1)); if(q) q.focus(); }
+function _propMatClear(k){ const p=_prop.lines[k]; if(!p) return; p.material_code=null; p.material_name=''; p.uom=''; p._desc=''; _propRender(); const q=document.getElementById('propMatQ_'+k); if(q) q.focus(); }
+// Material Master typeahead (fuzzy — same matcher as the GRN material search). Free typing is never accepted.
+async function _propMatType(k){
+  const inp=document.getElementById('propMatQ_'+k), res=document.getElementById('propMatRes_'+k); if(!inp||!res||!_prop.lines[k]) return;
+  _prop.lines[k]._q=inp.value; const q=(inp.value||'').toLowerCase().trim();
+  if(!q){ res.classList.remove('show'); return; }
+  if(!(puState.materials||[]).length){ try{ await apiLoadMaterials(); }catch(e){} if(!document.getElementById('propMatQ_'+k)) return; }
+  const tokens=_fuzzyTokens(q); const onPo=new Set(Object.keys(_grnMeta||{}).map(i=>_grnMeta[i].matCode).filter(Boolean));
+  const hit=(puState.materials||[]).filter(m=>_fuzzyMatch(((m.material_name||'')+'|'+(m.material_code||'')+'|'+(m.material_group||'')+'|'+(m.sub_head||'')+'|'+(m.uom||'')).toLowerCase(),tokens)).slice(0,18);
+  res.innerHTML=hit.length?hit.map(m=>'<div class="typeahead-item" data-code="'+esc(m.material_code||'')+'" onmousedown="event.preventDefault();_propMatPick('+k+',this.dataset.code)"><strong>'+esc(m.material_name)+'</strong><div class="muted">'+esc(m.material_code||'')+' \u00b7 '+esc(m.material_group||'')+(m.sub_head?' \u203a '+esc(m.sub_head):'')+' \u00b7 '+esc(m.uom||'')+(onPo.has(m.material_code)?' \u00b7 <span style="color:#b45309;">already on this PO \u2014 picks the PO row</span>':'')+'</div></div>').join('')
+    :'<div class="typeahead-item muted" style="cursor:default;">No match in the Material Master \u2014 ask Purchase to create the material</div>';
+  _anchorDropdown(inp,res);
+}
+function _propMatPick(k,code){
+  const p=_prop.lines[k]; const m=(puState.materials||[]).find(x=>x.material_code===code); if(!p||!m) return;
+  if(_prop.lines.some((x,j)=>j!==k&&x.material_code===code)){ toast(m.material_name+' is already in this proposal','warn'); return; }
+  const gi=Object.keys(_grnMeta||{}).find(i=>_grnMeta[i].matCode===code);
+  if(gi!=null&&document.getElementById('grnRecv_'+gi)){   // the material IS on the PO — ask against its PO row, keeping the quantity typed here
+    const bal=num(document.getElementById('grnRecv_'+gi).dataset.balance); const line=_grnPropLine(+gi,bal+num(p.extra_qty),p.inv_rate); if(line) _prop.lines[k]=line;
+  } else { p.material_code=m.material_code; p.material_name=m.material_name; p.uom=m.uom||''; p._desc=m.material_name; p._uom=m.uom||''; _grnPropNote(p); }
+  _propRender();
+}
 function _propRender(){
-  const tb=document.getElementById('propBody'); if(!tb) return; const mode=_prop.opts.mode;
+  const tb=document.getElementById('propBody'); if(!tb) return; const mode=_prop.opts.mode; const maker=(mode==='store'||mode==='manual');
+  document.querySelectorAll('body > [id^="propMatRes_"]').forEach(x=>x.remove());   // dropdowns re-anchored to <body> by an earlier render
+  const dash='<span class="muted">\u2014</span>';
   tb.innerHTML=_prop.lines.map((p,k)=>{
-    const isAdd=p.action==='add'; const dash='<span class="muted">\u2014</span>';
-    const mat=(isAdd&&p._manual)?'<input style="width:100%" placeholder="Material as on the invoice" value="'+esc(p.material_name||'')+'" oninput="_prop.lines['+k+'].material_name=this.value;_prop.lines['+k+']._desc=this.value;_propSum()">':esc(p._desc||p.material_name||'');
-    return '<tr'+(isAdd?' style="background:#f0fdf4"':'')+'><td>'+(isAdd?'<b style="color:#15803d">new</b>':esc(String(p._gi!=null?(p._gi+1):(p._sno||''))))+'</td><td>'+mat+'<span class="amd-hint" id="propNote_'+k+'" style="text-align:left;white-space:normal;">'+esc(p.note||'')+'</span></td>'
-      +'<td>'+((isAdd&&p._manual)?'<input style="width:64px" placeholder="UOM" value="'+esc(p.uom||'')+'" oninput="_prop.lines['+k+'].uom=this.value">':esc(p._uom||p.uom||''))+'</td>'
-      +'<td class="num mono">'+(p._po_qty!=null?fmtINR(_propMatPo(p)):dash)+'</td><td class="num mono">'+(p._mat_prev!=null?fmtINR(p._mat_prev):dash)+'</td><td class="num mono">'+(p._bal!=null?fmtINR(p._bal):dash)+'</td>'
-      +'<td class="num">'+((mode==='manual'&&!isAdd)?'<input type="number" step="0.001" class="num" style="width:100px" value="'+esc(String(p._inv_qty||''))+'" onchange="_propSetRecv('+k+',this.value)" onwheel="this.blur()">':'<span class="mono">'+(p._inv_qty!=null?fmtINR(p._inv_qty):'\u2014')+'</span>')+'</td>'
-      +'<td class="num"><input type="number" step="0.001" class="num amd-changed" style="width:110px" value="'+esc(String(isAdd?(p.qty!=null?p.qty:''):_propMatQty(p)))+'" oninput="'+(isAdd?'_prop.lines['+k+'].qty=(this.value===\'\'?null:Number(this.value));_propSum()':'_propSetMatQty('+k+',this.value)')+'" onwheel="this.blur()"></td>'
-      +'<td class="num mono">'+(p._po_rate!=null?fmtINR(p._po_rate):'\u2014')+'</td>'
-      +'<td class="num"><input type="number" step="0.0001" class="num'+(p.unit_rate!=null&&p._po_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))?' amd-changed':'')+'" style="width:100px" value="'+esc(String(p.unit_rate!=null?p.unit_rate:(p._po_rate!=null?p._po_rate:'')))+'" oninput="'+(isAdd?'_prop.lines['+k+'].unit_rate=(this.value===\'\'?null:Number(this.value));_propSum()':'_propSetRate('+k+',this.value)')+'" onwheel="this.blur()"></td>'
+    const free=!!p.not_on_po, pick=free&&!_propReady(p); const recvEd=maker&&(mode==='manual'||free);
+    const mat=pick?'<div class="typeahead"><input id="propMatQ_'+k+'" style="width:100%" autocomplete="off" placeholder="Search the Material Master \u2014 name or code\u2026" value="'+esc(p._q||'')+'" oninput="_propMatType('+k+')" onfocus="_propMatType('+k+')"><div class="typeahead-results" id="propMatRes_'+k+'"></div></div>'
+        +(p.inv_desc?'<span class="amd-hint" style="text-align:left;white-space:normal;">on the invoice: '+esc(p.inv_desc)+(p.inv_uom?' ('+esc(p.inv_uom)+')':'')+'</span>':'')
+      :esc(p.material_name||p._desc||'')+(free?' <span class="muted" style="font-size:11px;">'+esc(p.material_code||'no master code')+'</span>'+(maker&&p._manual?' <a href="#" style="font-size:11px;color:var(--accent);" onclick="_propMatClear('+k+');return false;">change</a>':''):'');
+    return '<tr'+(free?' style="background:#f0fdf4"':'')+'><td>'+(free?'<b style="color:#15803d">new</b>':esc(String(p._gi!=null?(p._gi+1):(k+1))))+'</td><td>'+mat+'</td>'
+      +'<td>'+(esc(p.uom||p._uom||'')||dash)+'</td>'
+      +'<td class="num mono">'+(_propMatPo(p)!=null?fmtINR(_propMatPo(p)):dash)+'</td><td class="num mono">'+(p._mat_prev!=null?fmtINR(p._mat_prev):dash)+'</td><td class="num mono">'+(p._bal!=null?fmtINR(p._bal):dash)+'</td>'
+      +'<td class="num">'+(recvEd?'<input type="number" step="0.001" min="0" class="num" style="width:100px" placeholder="qty" value="'+esc(String(p._inv_qty||''))+'" oninput="_propSetRecv('+k+',this.value)" onwheel="this.blur()">':'<span class="mono">'+(p._inv_qty!=null?fmtINR(p._inv_qty):'\u2014')+'</span>')+'</td>'
+      +'<td class="num">'+((!recvEd&&mode!=='view')?'<input type="number" step="0.001" min="0" id="propExtra_'+k+'" class="num amd-changed" style="width:100px" value="'+esc(String(num(p.extra_qty)||''))+'" oninput="_propSetExtra('+k+',this.value)" onwheel="this.blur()">':'<span class="mono" id="propExtra_'+k+'">'+(num(p.extra_qty)>0.0005?'<b>+'+fmtINR(p.extra_qty)+'</b>':dash)+'</span>')+'</td>'
+      +'<td class="num mono" id="propAfter_'+k+'">'+(_propMatPo(p)!=null?fmtINR(_propMatPo(p)+num(p.extra_qty)):dash)+'</td>'
       +'<td id="propChg_'+k+'">'+_propChipHtml(p)+'</td><td><button class="btn btn-ghost btn-sm" onclick="_prop.lines.splice('+k+',1);_propRender()">Remove</button></td></tr>';
-  }).join('')||'<tr><td colspan="12" class="center muted">'+((mode==='store'||mode==='manual')?'No lines yet \u2014 add a PO line, or a line that is not on the PO':'Nothing left in the proposal')+'</td></tr>';
+  }).join('')||'<tr><td colspan="11" class="center muted">'+(maker?'No materials yet \u2014 add a PO material, or a material that is not on the PO':'Nothing left in the request')+'</td></tr>';
   const ar=document.getElementById('propAddRow');
   if(ar){ const used=new Set(_prop.lines.filter(p=>p._gi!=null).map(p=>p._gi)); const free=Object.keys(_grnMeta||{}).map(Number).filter(i=>!used.has(i));
-    ar.innerHTML='<select style="max-width:340px;" onchange="_propAddPoLine(this.value)"><option value="">\uff0b Add a PO line\u2026</option>'+free.map(i=>{ const inp=document.getElementById('grnRecv_'+i); return '<option value="'+i+'">'+(i+1)+' \u00b7 '+esc(_grnMeta[i].matName)+' \u00b7 balance '+fmtINR(inp?num(inp.dataset.balance):0)+' '+esc(_grnMeta[i].uom||'')+'</option>'; }).join('')+'</select><button class="btn btn-ghost btn-sm" onclick="_propAddFree()">\uff0b Line not on PO</button>'; }
+    ar.innerHTML='<select style="max-width:340px;" onchange="_propAddPoLine(this.value)"><option value="">\uff0b Add a PO material\u2026</option>'+free.map(i=>{ const inp=document.getElementById('grnRecv_'+i); return '<option value="'+i+'">'+(i+1)+' \u00b7 '+esc(_grnMeta[i].matName)+' \u00b7 balance '+fmtINR(inp?num(inp.dataset.balance):0)+' '+esc(_grnMeta[i].uom||'')+'</option>'; }).join('')+'</select><button class="btn btn-ghost btn-sm" onclick="_propAddFree()">\uff0b Material not on PO</button>'; }
   _propSum();
 }
-function _propSum(){ const el=document.getElementById('propSum'); if(!el) return; const ch=_prop.lines.filter(_propChanged); const n=ch.length;
-  const d=ch.reduce((s,p)=>{ const q=num(p.qty), r=num(p.unit_rate!=null?p.unit_rate:p._po_rate); const before=num(p._po_qty)*num(p._po_rate); return s+(q*r-before); },0);
-  const needReason=_prop.opts.mode==='manual'&&!String(_prop.reason||'').trim();
-  el.textContent=n+' line change'+(n===1?'':'s')+' \u00b7 value change '+(d>=0?'+':'')+fmtINRSym(d)+' (before tax, approximate)'+(n&&needReason?' \u00b7 reason required':'');
+function _propSum(){ const el=document.getElementById('propSum'); if(!el) return; const ch=_prop.lines.filter(_propChanged); const n=ch.length, nf=ch.filter(p=>p.not_on_po).length;
+  const open=_prop.lines.filter(p=>p.not_on_po&&(!_propReady(p)||!(num(p.extra_qty)>0))).length;
+  const maker=(_prop.opts.mode==='store'||_prop.opts.mode==='manual'); const needReason=maker&&!String(_prop.reason||'').trim();
+  const red=t=>' \u00b7 <b style="color:var(--danger);">'+t+'</b>';
+  el.innerHTML=n+' material'+(n===1?'':'s')+(nf?' \u00b7 '+nf+' not on PO':'')+' \u00b7 rate and WBS / location are set by Purchase'+(open?red(open+' row'+(open>1?'s need':' needs')+' a material from the master and a quantity'):'')+(n&&needReason?red('reason required'):'');
   const sb_=document.getElementById('propSendBtn'); if(sb_) sb_.disabled=!n; }
-function _propClean(){ const keep=['_desc','_sno','_po_qty','_po_rate','_inv_qty','_bal','_uom','_mat_po','_mat_prev','_loc','_nloc','_src']; return _prop.lines.filter(_propChanged).map(p=>{ const o={}; Object.keys(p).forEach(k=>{ if(k[0]!=='_'||keep.includes(k)) o[k]=p[k]; }); return o; }); }
+function _propClean(){ const keep=['_desc','_po_qty','_po_rate','_inv_qty','_bal','_uom','_mat_po','_mat_prev']; return _prop.lines.filter(_propChanged).map(p=>{ const o={}; Object.keys(p).forEach(k=>{ if((k[0]!=='_'||keep.includes(k))&&p[k]!==undefined) o[k]=p[k]; }); return o; }); }
 // v131.5 · the receipt as typed, carried on the request so it is entered once and saved once (after approval)
 function _grnParkSnapshot(){
   const g=id=>{ const e=document.getElementById(id); return e?e.value:''; };
@@ -28115,15 +28166,17 @@ async function _scanProposalSend(){
   const poNum=_prop.opts.poNum; if(!poNum) return;
   const lines=_propClean(); if(!lines.length){ toast('Nothing to propose','warn'); return; }
   const manual=_prop.opts.mode==='manual'; const why=String(_prop.reason||'').trim();
-  if(manual&&!why){ const re_=document.getElementById('propReason'); if(re_){ re_.style.borderColor='#dc2626'; re_.style.boxShadow='0 0 0 2px rgba(220,38,38,.18)'; re_.focus(); } toast('Reason is required \u2014 say why the PO needs amending','error',5000); return; }
+  if(_prop.lines.some(p=>p.not_on_po&&(!_propReady(p)||!(num(p.extra_qty)>0)))){ toast('Pick the material from the Material Master and enter its quantity \u2014 or remove the empty row','error',6000); return; }
+  if(!why){ _propReasonMark(true); const re_=document.getElementById('propReason'); if(re_) re_.focus(); toast('Reason is required \u2014 nothing has been sent','error',5000); return; }   // v131.8: both paths (scan and manual)
   const P=_scan.parse||null; const inv=(P&&P.invoice)||{}; const park=_grnParkSnapshot();
   const invNo=inv.number||park.invoice_no||null, invDt=inv.date||park.invoice_date||null;
-  const reason=(why?why+' \u2014 ':'')+'Amendment proposed from '+(invNo?'invoice '+invNo+(invDt?' dated '+fmtDate(invDt):''):'GRN entry')+': '+lines.length+' line change'+(lines.length>1?'s':'')+' (see proposal).';
+  lines.filter(p=>p.not_on_po&&p.material_code).forEach(p=>{ if(!park.lines.some(x=>x.material_code===p.material_code)) park.lines.push({material_code:p.material_code,material_name:p.material_name,uom:p.uom,qty:num(p._inv_qty)||num(p.extra_qty),remarks:null}); });   // not-on-PO materials ride on the parked receipt too
+  const reason=why+' \u2014 Amendment proposed from '+(invNo?'invoice '+invNo+(invDt?' dated '+fmtDate(invDt):''):'GRN entry')+': '+lines.length+' material'+(lines.length>1?'s':'')+' (see request).';
   if(!confirm('Send this proposal to the Admin?\n\n'+poNum+' will be locked for every receipt until the amendment is approved or cancelled. This receipt is parked and re-opens for saving after approval.')) return;
   pbShow('Sending proposal\u2026');
   try{
     let att=null; try{ att=await _scanUploadForGRN(); }catch(e){ console.warn('attach',e); }
-    const ctx={invoice:{number:invNo,date:invDt,vendor:(P&&P.vendor&&P.vendor.name)||(document.getElementById('grn_vendor')||{}).value||null,gstin:(P&&P.vendor&&P.vendor.gstin_norm)||null},proposal:lines,attachment:att,parked_receipt:park,requested_from:manual?'GRN entry (manual)':'GRN entry scan'};
+    const ctx={invoice:{number:invNo,date:invDt,vendor:(P&&P.vendor&&P.vendor.name)||(document.getElementById('grn_vendor')||{}).value||null,gstin:(P&&P.vendor&&P.vendor.gstin_norm)||null},proposal:lines,reason_text:why,attachment:att,parked_receipt:park,requested_from:manual?'GRN entry (manual)':'GRN entry scan'};
     const {data,error}=await sb.rpc('rpc_amd_request',{p_doc_number:poNum,p_reason:reason,p_context:ctx,p_user:state.userName});
     if(error) throw new Error(error.message.replace(/^.*?:\s*/,''));
     _amdInvalidate(poNum); window._modalNoBackdropClose=false; closeModal();
@@ -28135,13 +28188,13 @@ async function _scanProposalSend(){
 // Admin: open the PO for amendment with the (possibly edited) proposal.
 async function _scanProposalOpen(){
   const poNum=_prop.opts.poNum; const lines=_propClean();
-  if(!confirm('Open '+poNum+' for amendment with '+lines.length+' proposed line change(s)? The PO is frozen until approved or cancelled.')) return;
+  if(!confirm('Open '+poNum+' for amendment with the store request attached ('+lines.length+' material'+(lines.length===1?'':'s')+')?\n\nNo PO line is changed \u2014 the Purchase Executive places the quantity and sets the rate. The PO stays frozen until approved or cancelled.')) return;
   pbShow('Opening amendment\u2026');
   try{
     const {data,error}=await sb.rpc('rpc_amd_open_v2',{p_doc_number:poNum,p_user:state.userName,p_proposal:lines});
     if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
     _amdInvalidate(poNum); window._modalNoBackdropClose=false;
-    toast('Opened A'+data.rev_no+' with '+data.proposal_applied+' proposed change(s) \u2014 Purchase Executive can review','success',6000);
+    toast('Opened A'+data.rev_no+' \u2014 store request attached ('+lines.length+' material'+(lines.length===1?'':'s')+'). Purchase Executive places it.','success',6000);
     closeModal(); await loadPOList(); await viewPO(poNum);
   }catch(e){ toast(e.message,'error',7000); }
   finally{ pbDone(); }
@@ -28153,7 +28206,8 @@ function amdViewProposal(poNum, rev){
   _scan.parse=_scan.parse||{}; _scan.parse.invoice=Object.assign({},(live.request_context.invoice)||{});
   const admin=!!(state.isOwner||state.isSuper);
   closeModal();
-  _scanProposalPreview(prop.map(p=>Object.assign({},p)),{mode:admin?'admin':'view',poNum,rev_no:rev});
+  const items=(window._amdPopCtx&&window._amdPopCtx.items)||[];
+  _scanProposalPreview(prop.map(p=>_propNormalize(Object.assign({},p),items)),{mode:admin?'admin':'view',poNum,rev_no:rev,reason:live.reason||'',by:[live.requested_by,live.requested_at?fmtDateShort(live.requested_at):''].filter(Boolean).join(' \u00b7 ')});
 }
 // ── upload on save ────────────────────────────────────────────────────
 async function _scanUploadForGRN(){
@@ -28304,9 +28358,9 @@ function _amdBanner(h, hist){
   if(req&&(!h.amendment_state||h.amendment_state==='Amendment Requested')){   // v131.5: M10 stamps the PO at request time
     const prop=req.request_context&&req.request_context.proposal; const att=req.request_context&&req.request_context.attachment;
     return '<div class="amd-banner warn"><span class="i"></span><div><b>Amendment '+(prop&&prop.length?'proposed':'requested')+' — PO locked for receipts</b> by '+esc(req.requested_by||'store')+(req.requested_at?' on '+fmtDateShort(req.requested_at):'')
-      +(prop&&prop.length?' — '+prop.length+' line change'+(prop.length>1?'s':'')+(att&&att.path?' · <a href="#" onclick="grnScanView(\''+esc(att.path)+'\');return false;" style="color:var(--accent-2);">📎 invoice</a>':''):'')+'.<br><span style="white-space:pre-line;">'+esc(req.reason||'')+'</span>'
-      +(prop&&prop.length?' <button class="btn btn-ghost btn-sm" onclick="amdViewProposal(\''+esc(h.po_number)+'\','+(num(h.rev_no)+1)+')">'+((state.isOwner||state.isSuper)?'View / edit proposal':'View proposal')+'</button>':'')
-      +((state.isOwner||state.isSuper)?'<br><span class="muted" style="font-size:12px;">'+(prop&&prop.length?'Open for amendment — with proposal creates the draft pre-filled from these lines.':'Open for amendment adopts this request — the reason carries into the draft.')+'</span>':'')+'</div></div>';
+      +(prop&&prop.length?' — '+prop.length+' material'+(prop.length>1?'s':'')+(att&&att.path?' · <a href="#" onclick="grnScanView(\''+esc(att.path)+'\');return false;" style="color:var(--accent-2);">📎 invoice</a>':''):'')+'.<br><span style="white-space:pre-line;">'+esc(req.reason||'')+'</span>'
+      +(prop&&prop.length?' <button class="btn btn-ghost btn-sm" onclick="amdViewProposal(\''+esc(h.po_number)+'\','+(num(h.rev_no)+1)+')">'+((state.isOwner||state.isSuper)?'View / edit request':'View request')+'</button>':'')
+      +((state.isOwner||state.isSuper)?'<br><span class="muted" style="font-size:12px;">'+(prop&&prop.length?'Open for amendment attaches this request — no PO line is pre-filled; the Purchase Executive places the quantity on WBS / location and sets the rate.':'Open for amendment adopts this request — the reason carries into the draft.')+'</span>':'')+'</div></div>';
   }
   if(!h||!h.amendment_state) return '';
   const live=(hist&&hist.live)||{};
@@ -28327,7 +28381,7 @@ function _amdActions(h, hist){
   if(!h.amendment_state||h.amendment_state==='Amendment Requested'){   // v131.5 (M10)
     const _prop=live&&live.status==='Requested'&&live.request_context&&live.request_context.proposal&&live.request_context.proposal.length;
     if(admin && ['Open','Partial Receipt','Fully Received'].includes(h.status))
-      out+=(_prop?'<button class="btn btn-primary" onclick="amdViewProposal(\''+n+'\','+(num(h.rev_no)+1)+')">\u270e Open for amendment \u2014 with proposal</button> ':'<button class="btn btn-secondary" onclick="amdOpen(\''+n+'\')">\u270e Open for amendment'+(live&&live.status==='Requested'?' (requested)':'')+'</button> ');
+      out+=(_prop?'<button class="btn btn-primary" onclick="amdViewProposal(\''+n+'\','+(num(h.rev_no)+1)+')">\u270e Open for amendment \u2014 store request</button> ':'<button class="btn btn-secondary" onclick="amdOpen(\''+n+'\')">\u270e Open for amendment'+(live&&live.status==='Requested'?' (requested)':'')+'</button> ');
     if(admin && live && live.status==='Requested')
       out+='<button class="btn btn-ghost" onclick="amdCancel(\''+esc(live.id)+'\',\''+n+'\')">Dismiss request</button> ';
     if(!admin && live && live.status==='Requested')
@@ -28392,6 +28446,7 @@ async function amdEdit(id){
     (items||[]).filter(i=>(i.line_status||'Active')==='Active' && !seen.has(i.id)).forEach(i=>draft.lines.push({item_id:i.id,action:'keep'}));
     draft.lines.forEach((l,i)=>{ l._k=l.item_id||('new'+i); });
     _amd={id,a,po,items:items||[],draft,plan:null,wbsMap,locMap,saveT:null,dirty:false};
+    _amd.req=_amdReqBuild(a,items||[]); _amd.reqKeys=new Set(_amd.req.map(r=>r.key));   // v131.8: store request (material + qty), placed by the PE
     window._modalNoBackdropClose=true;
     openModal(_amdEditHtml(),'wide');
     _amdRenderLines();
@@ -28406,6 +28461,7 @@ function _amdEditHtml(){
    +(a.status==='Rejected - Correction'&&a.rejection_reason?'<div class="amd-banner block"><span class="i"></span><div><b>Purchase Manager note:</b> '+esc(a.rejection_reason)+'</div></div>':'')
    +'<div class="amd-banner info"><span class="i"></span><div>Received quantities are the floor on each line. A rate or WBS/location change on a line with receipts closes that line at the received qty and creates a new line for the balance \u2014 the system does the split.</div></div>'
    +'<div style="font-size:12px;color:var(--muted);margin-bottom:8px;"><b>'+esc(po.vendor_name||'')+'</b> \u00b7 Revision '+num(po.rev_no)+' \u00b7 '+esc(po.status)+'</div>'
+   +'<div id="amdReqStrip"></div>'
    +'<div class="table-wrap"><table id="amdTbl"><thead><tr><th>#</th><th style="min-width:230px;">Material</th><th style="min-width:200px;">WBS / Location</th><th>UOM</th><th class="num">Received</th><th class="num" style="min-width:130px;">Qty</th><th class="num" style="min-width:130px;">Budget left</th><th class="num" style="min-width:120px;">Rate</th><th class="num">Amount</th><th></th></tr></thead><tbody id="amdBody"></tbody></table></div>'
    +'<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;"><button class="btn btn-ghost btn-sm" onclick="_amdAddLine()">+ Add line from estimate</button><div id="amdTotals" class="amd-sum"></div></div>'
    +'<div class="amd-hdr"><div><label class="muted" style="font-size:11px;">DELIVERY DATE</label><input type="date" id="amdH_delivery_date" value="'+esc(f('delivery_date'))+'" oninput="_amdHdr(\'delivery_date\',this.value)"></div>'
@@ -28414,6 +28470,7 @@ function _amdEditHtml(){
    +'<div><label class="muted" style="font-size:11px;">CONTACT PERSON</label><input id="amdH_contact_person" value="'+esc(f('contact_person'))+'" oninput="_amdHdr(\'contact_person\',this.value)"></div>'
    +'<div style="grid-column:1/3;"><label class="muted" style="font-size:11px;">COMMENTS / SPECIAL INSTRUCTIONS</label><textarea id="amdH_remarks" rows="2" oninput="_amdHdr(\'remarks\',this.value)">'+esc(f('remarks'))+'</textarea></div>'
    +'<div style="grid-column:3/5;"><label class="muted" style="font-size:11px;">REASON FOR AMENDMENT <span style="color:#b91c1c;">*</span> (printed on A'+a.rev_no+', kept in history)</label><textarea id="amdReason" rows="2" oninput="_amd.draft.reason=this.value;_amdDirty()">'+esc(_amd.draft.reason||'')+'</textarea></div></div>'
+   +'<div id="amdReqWarn" style="margin-top:8px;"></div>'
    +'<div id="amdIssues" style="margin-top:8px;"></div>'
    +'<div class="actions-row"><span id="amdSaveState" style="margin-right:auto;font-size:12px;color:var(--muted);"></span>'
    +'<button class="btn btn-ghost" onclick="_amdClose()">Close</button>'
@@ -28432,6 +28489,7 @@ function _amdSet(k,field,v){
     const changed=['qty','unit_rate','wbs_node_id','loc_node_id','material_name','uom','specification','remarks'].some(f=>l[f]!==undefined && l[f]!==null && String(l[f])!==String(it[f]==null?'':it[f]));
     if(l.action!=='remove') l.action=changed?'modify':'keep';
   }
+  _amdReqRender();
   _amdDirty();
 }
 function _amdRemove(k){ const l=_amdLineByKey(k); if(!l) return; if(l.item_id){ l.action=(l.action==='remove')?'keep':'remove'; } else { _amd.draft.lines=_amd.draft.lines.filter(x=>x._k!==k); } _amdRenderLines(); _amdDirty(); }
@@ -28479,7 +28537,7 @@ function _amdRenderLines(){
     let budgetCell='\u2014';
     if(b){ budgetCell=(b.mode==='ls'?'\u20b9 '+fmtINR(b.remaining)+' LS':fmtINR(b.remaining)+' '+esc(uom))+'<span class="amd-hint '+(b.ok?'ok':'bad')+'">'+(b.mode==='ls'?'requested \u20b9'+fmtINR(b.requested):'after change '+fmtINR(num(b.remaining)-num(b.requested)))+'</span>'; }
     html+='<tr id="amdRow_'+esc(l._k)+'"'+(removed?' class="amd-removedln"':'')+(isSplit?' class="amd-closedln"':'')+'>'
-      +'<td>'+(it?esc(String(it.sno)):'<span style="color:#15803d;font-weight:700;">new</span>')+'</td>'
+      +'<td'+((_amd.reqKeys&&_amd.reqKeys.has(_propKey(l.material_code||(it?it.material_code:''),name)))?' style="box-shadow:inset 3px 0 0 #0ea5e9;" title="Material on the store request"':'')+'>'+(it?esc(String(it.sno)):'<span style="color:#15803d;font-weight:700;">new</span>')+'</td>'
       +'<td>'+(it?esc(name):'<input value="'+esc(name)+'" oninput="_amdSet(\''+esc(l._k)+'\',\'material_name\',this.value)" style="width:100%;">'+(l.material_code?'':' <button class="btn btn-ghost btn-sm" onclick="_amdPickFor(\''+esc(l._k)+'\')" title="Pick the material, WBS package and location from the estimate">pick from estimate</button>'))+(it&&it.procurement_source==='mir'?' <span class="amd-src">MIR</span>':'')+(l.source==='store'?' <span class="scan-chip file" title="From the store proposal">store proposal</span>':'')+'</td>'
       +'<td>'+wl(w,lo)+'</td>'
       +'<td>'+esc(uom)+'</td>'
@@ -28512,6 +28570,56 @@ function _amdRenderLines(){
   const iss=document.getElementById('amdIssues');
   if(iss&&p){ const bad=(p.budget||[]).filter(b=>!b.ok); iss.innerHTML=bad.length?'<div class="amd-banner block"><span class="i"></span><div>'+bad.map(b=>(b.mode==='ls'?'LS budget exceeded at package '+esc(String(b.wbs))+': requested \u20b9'+fmtINR(b.requested)+' of \u20b9'+fmtINR(b.remaining)+' remaining':'Material '+esc(b.material||'')+' exceeds package estimate: '+fmtINR(b.requested)+' requested, '+fmtINR(b.remaining)+' remaining')).join('<br>')+'</div></div>':''; }
   const sb2=document.getElementById('amdSubmitBtn'); if(sb2&&p) sb2.disabled=!p.ok;
+  _amdReqRender();
+}
+// ── v131.8 · Store request strip — the store asks per material; the PE places it on WBS / location ──
+function _amdReqBuild(a, items){
+  const ctx=(a&&a.request_context)||{}; const prop=Array.isArray(ctx.proposal)?ctx.proposal:[]; const m=new Map();
+  prop.forEach(p0=>{ const p=_propNormalize(p0,items); if(!p||p.action!=='request') return; const k=_propKey(p.material_code,p.material_name||p._desc); let r=m.get(k);
+    if(!r){ r={key:k,code:p.material_code||'',name:p.material_name||p._desc||'',uom:p.uom||p._uom||'',asks:0,po:null,prev:null,bal:null,recv:null,inv_rate:null,po_rate:null,free:!!p.not_on_po}; m.set(k,r); }
+    r.asks=Math.round((r.asks+num(p.extra_qty))*1000)/1000;
+    if(p._mat_po!=null) r.po=num(p._mat_po); if(p._mat_prev!=null) r.prev=num(p._mat_prev); if(p._bal!=null) r.bal=num(p._bal); if(p._inv_qty!=null) r.recv=num(p._inv_qty);
+    if(p.inv_rate!=null){ r.inv_rate=num(p.inv_rate); r.po_rate=p._po_rate!=null?num(p._po_rate):null; } });
+  return [...m.values()].filter(r=>r.asks>0.0005||r.inv_rate!=null);
+}
+// quantity this draft adds to the material, against Revision N as it stands (active lines only)
+function _amdReqAdded(r){
+  if(!_amd) return 0; let before=0, after=0;
+  _amd.items.forEach(it=>{ if((it.line_status||'Active')==='Active'&&_propKey(it.material_code,it.material_name)===r.key) before+=num(it.qty); });
+  _amd.draft.lines.forEach(l=>{ const it=l.item_id?_amd.items.find(i=>i.id===l.item_id):null;
+    if(_propKey(l.material_code||(it?it.material_code:''),l.material_name||(it?it.material_name:''))!==r.key||l.action==='remove') return;
+    after+=(l.qty!=null?num(l.qty):(it?num(it.qty):0)); });
+  return Math.round((after-before)*1000)/1000;
+}
+function _amdReqRender(){
+  const el=document.getElementById('amdReqStrip'), wr=document.getElementById('amdReqWarn'); if(!el||!_amd) return; const R=_amd.req||[];
+  if(!R.length){ el.innerHTML=''; if(wr) wr.innerHTML=''; return; }
+  const a=_amd.a, ctx=a.request_context||{}; const att=ctx.attachment; const scan=/scan/i.test(String(ctx.requested_from||''));
+  const why=ctx.reason_text||String(a.reason||'').split(' \u2014 Amendment proposed')[0]; const dash='<span class="muted">\u2014</span>'; const short=[];
+  el.innerHTML='<div class="amd-req"><div class="hd"><b>Store request</b><span>'+esc([a.requested_by,a.requested_at?fmtDateShort(a.requested_at):'',ctx.requested_from||''].filter(Boolean).join(' \u00b7 '))+'</span>'
+    +(why?'<span class="muted" style="white-space:normal;">\u201c'+esc(why)+'\u201d</span>':'')+(att&&att.path?'<a href="#" style="margin-left:auto;color:var(--accent-2);" onclick="grnScanView(\''+esc(att.path)+'\');return false;">\ud83d\udcce invoice</a>':'')+'</div>'
+    +'<table><thead><tr><th>Material</th><th>UOM</th><th class="num">PO qty (Rev '+num(_amd.po.rev_no)+')</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(scan?'Invoice qty':'Receiving now')+'</th><th class="num">Store asks</th><th class="num">Added in A'+a.rev_no+'</th><th class="num">Still to place</th><th style="width:64px;"></th></tr></thead><tbody>'
+    +R.map((r,i)=>{ const add=_amdReqAdded(r), left=Math.round(Math.max(0,r.asks-add)*1000)/1000; if(left>0.0005) short.push(esc(r.name)+': '+fmtINR(left)+' '+esc(r.uom)+' of +'+fmtINR(r.asks));
+      return '<tr><td>'+esc(r.name)+(r.free?' <span class="scan-chip ok" style="font-size:9.5px;padding:0 6px;">not on PO</span>':'')+(r.code?' <span class="muted" style="font-size:11px;">'+esc(r.code)+'</span>':'')
+        +(r.inv_rate!=null?'<span class="amd-hint warn" style="text-align:left;">invoice rate '+fmtINR(r.inv_rate)+(r.po_rate!=null?' vs PO '+fmtINR(r.po_rate):'')+' \u2014 for your information, you set the rate</span>':'')+'</td><td>'+esc(r.uom)+'</td>'
+        +'<td class="num mono">'+(r.po!=null?fmtINR(r.po):dash)+'</td><td class="num mono">'+(r.prev!=null?fmtINR(r.prev):dash)+'</td><td class="num mono">'+(r.bal!=null?fmtINR(r.bal):dash)+'</td><td class="num mono">'+(r.recv!=null?fmtINR(r.recv):dash)+'</td>'
+        +'<td class="num mono"><b>'+(r.asks>0.0005?'+'+fmtINR(r.asks):'\u2014')+'</b></td><td class="num mono">'+(add>=0?'+':'')+fmtINR(add)+'</td>'
+        +'<td class="num">'+(r.asks>0.0005?(left>0.0005?'<span class="scan-chip rate">'+fmtINR(left)+' '+esc(r.uom)+'</span>':'<span class="scan-chip ok">\u2713 placed'+(add>r.asks+0.0005?' \u00b7 '+fmtINR(add-r.asks)+' extra':'')+'</span>'):dash)+'</td>'
+        +'<td><button class="btn btn-ghost btn-sm" style="margin:0;" title="Add a line for this material from the estimate \u2014 pick the WBS package and location" onclick="_amdAddLineFor('+i+')">\uff0b line</button></td></tr>'; }).join('')
+    +'</tbody></table></div>';
+  if(wr) wr.innerHTML=short.length?'<div class="amd-banner freeze"><span class="i"></span><div><b>Store request not fully placed.</b> '+short.join(' \u00b7 ')+' \u2014 no PO line yet. If A'+a.rev_no+' is approved like this, the parked receipt will not fit and the GRN stays locked.</div></div>':'';
+}
+async function _amdAddLineFor(i){
+  const r=(_amd&&_amd.req||[])[i]; if(!r) return;
+  await _ppOpenPicker('amd');
+  if(r.code&&_ppMatAgg&&_ppMatAgg.has(r.code)) _ppPickMat(r.code);
+  else toast((r.name||'This material')+' has no approved estimate \u2014 it cannot be ordered until Planning estimates it','warn',7000);
+}
+// new amendment line: the PO's own rate for that material, else the Material Master rate (the PE may change it)
+function _amdDefaultRate(code){
+  if(!code) return 0;
+  const it=((_amd&&_amd.items)||[]).filter(x=>x.material_code===code&&(x.line_status||'Active')==='Active').sort((a,b)=>num(b.sno)-num(a.sno))[0]; if(it&&num(it.unit_rate)>0) return num(it.unit_rate);
+  const m=(puState.materials||[]).find(x=>x.material_code===code); return m?num(m.estimated_rate):0;
 }
 function _amdDraftPayload(){
   return { header:_amd.draft.header, reason:_amd.draft.reason||'',
@@ -28535,6 +28643,8 @@ async function _amdSaveDraft(silent){
 async function _amdSubmit(){
   if(!_amd) return;
   if(!(_amd.draft.reason||'').trim()){ toast('Reason for amendment is required','error'); document.getElementById('amdReason')?.focus(); return; }
+  const _short=(_amd.req||[]).map(r=>({r,left:Math.round(Math.max(0,r.asks-_amdReqAdded(r))*1000)/1000})).filter(x=>x.left>0.0005);
+  if(_short.length&&!confirm('Part of the store request is not placed on any PO line:\n\n'+_short.map(x=>'\u2022 '+x.r.name+': '+fmtINR(x.left)+' '+x.r.uom+' of +'+fmtINR(x.r.asks)+' still to place').join('\n')+'\n\nThe parked receipt will not fit after approval and the GRN stays locked. Submit anyway?')) return;
   if(!confirm('Submit amendment A'+_amd.a.rev_no+' of '+_amd.po.po_number+' for Purchase Manager approval?')) return;
   pbShow('Submitting\u2026');
   try{
@@ -28571,7 +28681,7 @@ function _amdCommitFromCart(){
   _mpCart.forEach(v=>{
     if((Number(v.qty)||0)<=0) return;
     const k='new'+Date.now()+'_'+(added++);
-    _amd.draft.lines.push({_k:k,item_id:null,action:'add',material_code:v.code,material_name:v.name,uom:v.uom,qty:Number(v.qty)||0,unit_rate:0,
+    _amd.draft.lines.push({_k:k,item_id:null,action:'add',material_code:v.code,material_name:v.name,uom:v.uom,qty:Number(v.qty)||0,unit_rate:_amdDefaultRate(v.code),
       wbs_node_id:v.leafId!=null?Number(v.leafId):null,loc_node_id:v.locId||null});
   });
   _mpMode='mir'; window._ppActive=false;
@@ -28579,7 +28689,7 @@ function _amdCommitFromCart(){
   window._modalNoBackdropClose=true;
   openModal(_amdEditHtml(),'wide');
   _amdRenderLines(); _amdDirty();
-  toast(added+' line(s) added \u2014 enter the rate','success',2500);
+  toast(added+' line(s) added \u2014 rate defaults to the PO / Material Master rate, change it if needed','success',3500);
 }
 // ── Review screen (Purchase Manager) ─────────────────────────────────
 async function amdReview(id){

@@ -934,6 +934,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 .pgp-uchip{ display:inline-block; background:#e8f7f5; color:#0f766e; border:1px solid #b7e7e2;
   border-radius:12px; padding:2px 9px; font-size:11px; font-weight:600; margin:1px 3px 1px 0; }
 .pgp-none{ font-size:11px; color:#b6c0d0; font-style:italic; }
+.pgp-noroles{ display:inline-block; font-size:11px; font-weight:700; border-radius:99px; padding:2px 10px; background:#fffbeb; color:#92400e; border:1px solid #fcd34d; }
+.pgp-assign{ font-size:11.5px; font-weight:600; color:#0d9488; cursor:pointer; margin-left:8px; white-space:nowrap; }
+.pgp-assign:hover{ text-decoration:underline; }
 .pgp-mx thead th{ width:96px; min-width:96px; text-align:center; vertical-align:middle;
   white-space:normal; line-height:1.35; padding:9px 6px; }
 .pgp-mx thead th.uh{ width:auto; min-width:230px; text-align:left; padding-left:14px; }
@@ -3287,15 +3290,6 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
           <input id="inv_name" placeholder="e.g. Ramesh Kumar"></div>
         <div class="field"><label class="req">Email Address</label>
           <input type="email" id="inv_email" placeholder="user@urbanexcellence.in"></div>
-        <div class="field"><label class="req">Legacy role</label>
-          <select id="inv_role">
-            <option value="Procurement">Procurement</option>
-            <option value="Site Manager">Site Manager</option>
-            <option value="Store Executive">Store Executive</option>
-            <option value="Planning/ QS">Planning/ QS</option>
-            <option value="Project Manager">Project Manager</option>
-            <option value="Admin">Admin</option>
-          </select></div>
         <div class="field"><label class="req">Project</label>
           <select id="inv_project"><option value="">Default project</option></select></div>
       </div>
@@ -3304,8 +3298,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
         <button class="btn btn-ghost" onclick="pgpToggleInvite()">Cancel</button>
       </div>
       <p style="color:var(--muted);font-size:12px;margin-top:8px;">
-        The user receives an email to set their password, then appears in Team members ready to assign.
-        The legacy role still drives the older screens.</p>
+        The user receives an email to set their password and joins this project with <b>no role</b>.
+        Once they confirm, they appear in Team members &mdash; assign their roles in <b>System roles</b> below.
+        Until then they can sign in but see no screens.</p>
     </div>
   </div>
   </div><!-- /pgp_invite_ovl (v49) -->
@@ -6993,7 +6988,6 @@ async function inviteUser() {
   if (!hasPerm('canManageUsers')) { toast('Admin access only','error'); return; }
   const name  = document.getElementById('inv_name').value.trim();
   const email = document.getElementById('inv_email').value.trim().toLowerCase();
-  const role  = document.getElementById('inv_role').value;
   if (!name || !email) { toast('Name and email required','error'); return; }
   pbShow('Inviting\u2026');
   try {
@@ -7002,7 +6996,7 @@ async function inviteUser() {
     // user_active_project from this row at signUp time, so the user's very
     // first JWT already carries org, role and project claims.
     const { data: inv, error: invErr } = await sb.rpc('rpc_invite_user', {
-      p_email: email, p_full_name: name, p_legacy_role: role,
+      p_email: email, p_full_name: name,   // v131.5: no role at invite (M9) — roles are assigned in System roles
       p_project_id: (document.getElementById('inv_project') || {}).value || null   // v47: admin-chosen project; blank → server default (oldest active)
     });
     if (invErr) throw invErr;
@@ -7019,12 +7013,12 @@ async function inviteUser() {
       }
     });
     if (signUpErr) throw signUpErr;
-    toast('Invite sent to ' + email + ' \u2014 they set their own password from the email link.', 'success', 7000);
+    toast('Invite sent to ' + email + ' \u2014 assign roles once they confirm.', 'success', 7000);
     const _iovl=document.getElementById('pgp_invite_ovl'); if(_iovl) _iovl.style.display='none';   // v49
     if(typeof pgpTeamLoad==='function') pgpTeamLoad();                                             // v49
     document.getElementById('inv_name').value = '';
     document.getElementById('inv_email').value = '';
-    flashSuccess('Invite recorded as ' + ((inv && inv.org_role) || role) + '. The account appears below once they confirm.');
+    flashSuccess('Invite recorded with no role. The account appears in Team members once they confirm \u2014 then assign roles in System roles.');
     loadUsersList();
   } catch (e) {
     toast('Invite failed: ' + (e.message || e), 'error', 8000);
@@ -7194,6 +7188,36 @@ async function _pgsClaimRoles(){
     return codes.map(function(c){ return _PGS_ROLE_LABELS[c]; }).filter(Boolean);
   }catch(e){ console.warn('[v75] claim decode failed:', e.message); return []; }
 }
+// ── v131.5: no-role wall ─────────────────────────────────────────────
+function _pgsNoRoleWallClose(){ const w=document.getElementById('pgsNoRoleWall'); if(w) w.remove(); }
+async function _pgsNoRoleWall(profile){
+  let proj='your project';
+  try{
+    if(state.claimProjectId){
+      const { data } = await sb.from('projects').select('project_code,project_name').eq('id', state.claimProjectId).maybeSingle();
+      if(data) proj = data.project_code + ' \u2014 ' + data.project_name;
+    }
+  }catch(e){ /* label only */ }
+  const x=function(v){ return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  _pgsNoRoleWallClose();
+  document.getElementById('authGate').style.display = 'none';
+  const w=document.createElement('div'); w.id='pgsNoRoleWall';
+  w.style.cssText='position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;';
+  w.innerHTML='<div style="background:#1B2A47;color:#fff;padding:10px 18px;display:flex;align-items:center;gap:10px;font-size:13px;">'
+    +'<b>Penguin Suite</b><span style="flex:1"></span>'+x(profile.full_name)+' <span style="color:#8fa8cc;">&middot; no role</span>'
+    +'<button class="btn btn-ghost btn-sm" style="margin-left:10px;background:#fff;" onclick="_pgsNoRoleWallClose();doLogout()">Sign out</button></div>'
+    +'<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px;"><div style="text-align:center;max-width:560px;">'
+    +'<div style="font-size:32px;">&#128273;</div>'
+    +'<h3 style="margin:8px 0 8px;font-size:17px;color:#1B2A47;">Your account is ready &mdash; a role hasn\u2019t been assigned yet</h3>'
+    +'<p style="color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 16px;">You\u2019ve joined <b>'+x(proj)+'</b>. Screens appear once the project owner assigns your role. Ask them, then check again.</p>'
+    +'<button class="btn btn-primary" id="pgsNoRoleRetry" onclick="_pgsNoRoleRetry()">Check again</button></div></div>';
+  document.body.appendChild(w);
+}
+async function _pgsNoRoleRetry(){
+  const b=document.getElementById('pgsNoRoleRetry'); if(b){ b.disabled=true; b.textContent='Checking\u2026'; }
+  try{ await sb.auth.refreshSession(); }catch(e){ /* reload decides */ }   // new token carries any role assigned since login
+  location.reload();
+}
 async function onSignedIn(user) {
   // Retry profile fetch up to 3 times — RLS can take a moment to recognise new session
   let profile = null;
@@ -7246,6 +7270,15 @@ async function onSignedIn(user) {
       if (_fpe) console.warn('[v75] fnPerms fetch failed:', _fpe.message);
       state.fnPerms = _fp || [];
     } catch(e) { console.warn('[v75] fnPerms fetch failed:', e); }
+  }
+
+  // v131.5: invited with no role (M9) and none assigned yet — explain, load nothing
+  // Walled only when they hold no role on ANY project — someone with roles on another project keeps the shell and its project switcher
+  if (!state.isOwner && !state.isSuper && !_claimRoles.length) {
+    let _anyRole = true;
+    try { const { data: _pra, error: _prae } = await sb.from('project_role_assignments').select('project_id').eq('user_id', user.id).eq('is_active', true).limit(1);
+          if (!_prae) _anyRole = !!(_pra && _pra.length); } catch(e) { /* on doubt, do not wall */ }
+    if (!_anyRole) { await _pgsNoRoleWall(profile); return; }
   }
 
   document.getElementById('authGate').style.display = 'none';
@@ -36889,6 +36922,7 @@ function pgpTeamLoad(){
     pgpTeamRender();
   });
 }
+function pgpJumpRoles(){ const t=document.getElementById('pgp_rbody'); if(t) t.closest('.card').scrollIntoView({behavior:'smooth',block:'start'}); }
 function pgpTeamRender(){
   const tb=document.getElementById('pgp_tbody'); if(!tb) return;
   const rows=(pgpS.team||[]).map(function(u){
@@ -36896,7 +36930,8 @@ function pgpTeamRender(){
     const roleChips = u.is_owner
       ? '<span class="pgp-hchip" style="background:#fdf8e8;color:#a07d10;border:1px solid #D4AF37;">OWNER &mdash; all access</span>'
       : (u.roles||[]).map(function(c){ return '<span class="pgp-hchip">'+pgsEsc(_PGS_ROLE_LABELS[c]||c)+'</span>'; }).join(' ')
-        || '<span class="pgp-none">'+(inact?'&mdash;':'No roles yet')+'</span>';
+        || (inact ? '<span class="pgp-none">&mdash;</span>'
+                  : '<span class="pgp-noroles">No roles yet</span><span class="pgp-assign" onclick="pgpJumpRoles()">Assign roles &darr;</span>');
     const memChips=(u.memberships||[]).map(function(m){
       return '<span class="pgp-hchip"'+(m.is_active?'':' style="opacity:.45;text-decoration:line-through;"')+'>'+pgsEsc(m.project_code)+'</span>';
     }).join(' ')||'<span class="pgp-none">&mdash;</span>';

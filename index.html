@@ -3779,7 +3779,8 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
         <div class="field"><label>GRN Number</label><input id="grn_number" readonly style="opacity:.6;"></div>
         <div class="field"><label class="req">GRN Date</label><input type="date" id="grn_date"></div>
         <div class="field"><label class="req">Purchase Order</label>
-          <select id="grn_poSelect" onchange="onGRNPOChange()"><option value="">— Select Open PO —</option></select>
+          <input id="grn_poFilter" placeholder="Filter PO no. / vendor…" autocomplete="off" oninput="grnPoFilter(this.value)" style="margin-bottom:4px;padding:4px 8px;font-size:12px;">
+          <select id="grn_poSelect" onchange="onGRNPOChange()"><option value="">— Select PO —</option></select>
         </div>
         <div class="field"><label>Vendor</label><input id="grn_vendor" readonly style="opacity:.6;"></div>
       </div>
@@ -3801,7 +3802,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
       </div><!-- /scan-split -->
       <!-- GRN Items (loaded from PO) — full width below the split (v117) -->
       <div class="scan-bottom">
-        <h3 style="font-size:13px;margin-bottom:8px;color:var(--text);">Materials Received</h3>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><h3 style="font-size:13px;margin:0;color:var(--text);">Materials Received</h3><span style="flex:1;"></span><button class="btn btn-ghost btn-sm" id="grnProposeBtn" style="display:none;" onclick="grnProposeManual()" title="Propose a PO amendment to the Admin — works with or without a scan">⚡ Propose PO amendment</button></div>
         <!-- Over-receipt warning card — shown dynamically by recalcGRNRow() -->
         <div id="grnOverReceiptWarn" style="display:none;background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;margin-bottom:10px;">
           <div style="font-weight:600;color:#92400e;font-size:12px;margin-bottom:4px;">⚠ Over-Receipt Warning</div>
@@ -3822,8 +3823,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
         </div>
       </div>
       <div class="field" style="margin-top:12px;max-width:600px;"><label>Remarks</label><textarea id="grn_remarks" rows="2"></textarea></div>
+      <div id="grnLockBar" style="margin-top:10px;"></div>
       <div class="actions-row">
-        <button class="btn btn-primary" onclick="guardedSave(saveGRN, this)">Save GRN</button>
+        <button class="btn btn-primary" id="grnSaveBtn" onclick="guardedSave(saveGRN, this)">Save GRN</button>
         <button class="btn btn-ghost" onclick="closeGRNForm()">Cancel</button>
       </div>
     </div>
@@ -27635,7 +27637,7 @@ function _scanFixGstin(g){
   return null;
 }
 function grnScanReset(){
-  Object.assign(_scan,{file:null,pdf:null,pages:0,parse:null,route:null,model:null,confidence:null,zoom:1,poCands:null,match:null,uploaded:null,busy:false,profile:null,assign:null,usage:null,logId:null,hints:null});
+  Object.assign(_scan,{file:null,pdf:null,pages:0,parse:null,route:null,model:null,confidence:null,zoom:1,poCands:null,match:null,uploaded:null,busy:false,profile:null,assign:null,usage:null,logId:null,hints:null,conv:null,pickerHtml:null});
   const pane=document.getElementById('grnDocPages'); if(pane) pane.innerHTML=_scanEmptyPane();
   const bar=document.getElementById('grnDocBar'); if(bar) bar.innerHTML='<b>Document</b> · none attached<span class="sp"></span><button class="btn btn-ghost btn-sm" onclick="grnScanPick(false)">📎 Attach</button>';
   const strip=document.getElementById('grnScanStrip'); if(strip) strip.innerHTML='<div class="muted" style="font-size:12px;padding:8px 0;">Scan result appears here after <b>Scan invoice / challan</b>. For manual entry, pick the PO above.</div>';
@@ -27828,6 +27830,10 @@ function _scanUomEq(invUom, appUom){
   const p=_scan.profile; const m=p&&p.uom_map&&p.uom_map[String(invUom||'').toLowerCase().trim()];
   return !!(m && _scanUom(m)===_scanUom(appUom));
 }
+// v131.5 · unit conversion — deterministic families only (mass). Anything else is typed by the user on the scan row.
+const _SCAN_CONV={KG:{MT:0.001},MT:{KG:1000}};
+function _scanConvFactor(invUom, poUom){ const a=_scanUom(invUom), b=_scanUom(poUom); return (_SCAN_CONV[a]&&_SCAN_CONV[a][b])||null; }
+function _scanSetConv(li, v){ if(!_scan.parse) return; _scan.conv=_scan.conv||{}; if(num(v)>0) _scan.conv[li]=num(v); else delete _scan.conv[li]; _scanClearPrefill(true); _scanFillLines(_scan.parse, true); }
 // Manual correction from the review table: map an invoice line to a PO line (teaches the profile on save).
 function _scanMapLine(li, i){
   if(!_scan.parse) return; i=(i===''||i==null)?null:+i;
@@ -27862,7 +27868,7 @@ async function _scanMatch(p){
   const strip=document.getElementById('grnScanStrip');
   await _scanLoadProfile(p&&p.vendor&&p.vendor.gstin_norm);
   const route=_scanRouteLabel();
-  const {data:openPOs}=await sb.from('pu_po_orders').select('po_number,vendor_name,vendor_gstin,status,amendment_state,rev_no,po_date').in('status',['Open','Partial Receipt']).order('po_date',{ascending:false});
+  const {data:openPOs}=await sb.from('pu_po_orders').select('po_number,vendor_name,vendor_gstin,status,amendment_state,rev_no,po_date').in('status',['Open','Partial Receipt','Fully Received']).order('po_date',{ascending:false});   // v131.6: Fully Received = amendment-only candidates
   const open=(openPOs||[]).filter(x=>!x.amendment_state);
   // Tier 1: printed PO number
   if(p.invoice&&p.invoice.po_number_norm){
@@ -27874,8 +27880,8 @@ async function _scanMatch(p){
       const gOk=p.vendor&&p.vendor.gstin_norm&&_scanNormGst(anyPO.vendor_gstin)===p.vendor.gstin_norm;
       const how='PO matched by <b>printed PO number</b> "'+esc(p.invoice.po_number_raw)+'" → '+esc(_amdDocLabel(anyPO))+(p.vendor&&p.vendor.gstin_norm?' · vendor GSTIN '+esc(p.vendor.gstin_norm)+(anyPO.vendor_gstin?(gOk?' ✓ matches PO':' <span class="amber">≠ PO vendor GSTIN '+esc(anyPO.vendor_gstin)+' — check</span>'):' (PO has no GSTIN on record)'):'');
       if(anyPO.amendment_state){ _scanStripMsg('block','<b>'+esc(_amdDocLabel(anyPO))+' is '+esc(anyPO.amendment_state)+' (A'+(num(anyPO.rev_no)+1)+').</b> Invoice matched it by PO number, but no GRN can be raised until the amendment is approved or cancelled. Nothing has been filled. <button class="btn btn-ghost btn-sm" onclick="viewPO(\''+esc(anyPO.po_number)+'\')">View PO</button>'); return; }
-      if(!['Open','Partial Receipt'].includes(anyPO.status)){ _scanStripMsg('block','<b>'+esc(_amdDocLabel(anyPO))+' is '+esc(anyPO.status)+'.</b> Invoice matched it by PO number; there is no balance to receive. If goods really arrived, the PO needs an amendment for the extra quantity. <button class="btn btn-ghost btn-sm" onclick="viewPO(\''+esc(anyPO.po_number)+'\')">View PO</button>'+((state.isOwner||state.isSuper)?' <button class="btn btn-ghost btn-sm" onclick="amdOpen(\''+esc(anyPO.po_number)+'\')">Raise amendment</button>':'')); return; }
-      _scan.match={tier:1,how}; await _scanApplyPO(anyPO.po_number); return;
+      if(!['Open','Partial Receipt','Fully Received'].includes(anyPO.status)){ _scanStripMsg('block','<b>'+esc(_amdDocLabel(anyPO))+' is '+esc(anyPO.status)+'.</b> Invoice matched it by PO number; there is no balance to receive. If goods really arrived, the PO needs an amendment for the extra quantity. <button class="btn btn-ghost btn-sm" onclick="viewPO(\''+esc(anyPO.po_number)+'\')">View PO</button>'+((state.isOwner||state.isSuper)?' <button class="btn btn-ghost btn-sm" onclick="amdOpen(\''+esc(anyPO.po_number)+'\')">Raise amendment</button>':'')); return; }
+      _scan.match={tier:1,how:how+(anyPO.status==='Fully Received'?' \u00b7 <b>Fully Received \u2014 amendment only</b>':'')}; await _scanApplyPO(anyPO.po_number); return;
     }
     // number printed but unknown here: fall through to vendor tiers with a note
     _scan.match={tier:0,how:'Printed PO number "'+esc(p.invoice.po_number_raw)+'" ('+esc(n)+') is not in this project — matched by vendor instead'};
@@ -27895,17 +27901,18 @@ async function _scanMatch(p){
   const byPO={}; (items||[]).forEach(it=>{ if((it.line_status||'Active')!=='Active') return; (byPO[it.po_number]=byPO[it.po_number]||[]).push(it); });
   cands.forEach(c=>{ const its=byPO[c.po_number]||[]; let sc=0, det=[]; (p.lines||[]).forEach(l=>{ let best=0,bi=null; its.forEach(it=>{ const s=_scanSim(l.description,it.material_name); if(s>best){best=s;bi=it;} }); if(bi&&best>=0.35){ sc+=1; det.push('name ✓'); const r=_scanInvRate(l); if(_scanRateEq(r,num(bi.unit_rate))){ sc+=1; det.push('rate ✓'); } else det.push('rate ✗'); if(_scanUom(l.uom)===_scanUom(bi.uom)) sc+=0.5; } else { const r0=_scanInvRate(l); if(its.some(it=>_scanRateEq(r0,num(it.unit_rate)))){ sc+=0.5; det.push('name ✗ rate ✓'); } else det.push('name ✗'); } }); c._score=sc; c._max=(p.lines||[]).length*2.5; c._det=det; });
   cands.sort((a,b)=>b._score-a._score);
-  _scan.poCands=cands;
+  _scan.poCands=cands; _scan.pickerHtml=null;
   const fitOk=c=>c._max>0&&c._score>=c._max*0.5;   // at least half the lines must agree on name+rate
+  // v131.5: the picker is always built and kept, so "Change PO" can come back to it without a re-run
+  const lead=(_scan.match&&_scan.match.tier===0)?'<b>'+_scan.match.how+'.</b> Is this invoice for another project? The vendor has '+cands.length+' open PO'+(cands.length>1?'s':'')+' here, but the line fit is '+(fitOk(cands[0])?'partial':'poor')+' — pick only if you are sure.':'<b>No usable PO number on the invoice.</b> Matched the vendor by '+how+' → '+cands.length+' open PO'+(cands.length>1?'s':'')+'. Pick the one this invoice belongs to; line fit is shown for each.';
+  _scan.pickerHtml='<div class="amd-banner warn"><span class="i"></span><div>'+lead+'</div></div>'
+    +cands.map((c,i)=>'<div class="scan-cand'+(i===0?' best':'')+'" onclick="_scanPickCand(\''+esc(c.po_number)+'\')"><div><div class="t">'+esc(_amdDocLabel(c))+' · '+esc(c.status)+(c.status==='Fully Received'?' <span class="scan-chip uom">amendment only</span>':'')+(c.po_date?' · '+fmtDate(c.po_date):'')+'</div><div class="m">'+(byPO[c.po_number]||[]).length+' line(s) · '+esc((byPO[c.po_number]||[]).slice(0,2).map(it=>it.material_name+' @ '+fmtINR(it.unit_rate)).join(' · '))+' &nbsp;·&nbsp; invoice: '+c._det.slice(0,6).join(' ')+'</div></div><div class="score">'+c._score.toFixed(1)+' / '+c._max.toFixed(1)+'<small>line fit</small></div></div>').join('')
+    +'<div class="muted" style="font-size:12px;margin-top:6px;">The scan is kept \u2014 picking a PO fills from the same reading, no re-scan. '+_scanRouteNote(route)+'</div>';
   if(fitOk(cands[0])&&(cands.length===1||(cands[0]._score>=cands[0]._max*0.8&&cands[0]._score>cands[1]._score*1.5))){
-    _scan.match={tier:g?2:3,how:'PO chosen by '+how+' + line fit ('+cands[0]._score.toFixed(1)+' / '+cands[0]._max.toFixed(1)+') — <b>verify</b>'+((_scan.match&&_scan.match.tier===0)?' · '+_scan.match.how:'')};
+    _scan.match={tier:g?2:3,how:'PO chosen by '+how+' + line fit ('+cands[0]._score.toFixed(1)+' / '+cands[0]._max.toFixed(1)+') — <b>verify</b>'+(cands[0].status==='Fully Received'?' \u00b7 Fully Received \u2014 amendment only':'')+((_scan.match&&_scan.match.tier===0)?' · '+_scan.match.how:'')};
     await _scanApplyPO(cands[0].po_number); return;
   }
-  // several plausible → picker
-  const lead=(_scan.match&&_scan.match.tier===0)?'<b>'+_scan.match.how+'.</b> Is this invoice for another project? The vendor has '+cands.length+' open PO'+(cands.length>1?'s':'')+' here, but the line fit is '+(fitOk(cands[0])?'partial':'poor')+' — pick only if you are sure.':'<b>No usable PO number on the invoice.</b> Matched the vendor by '+how+' → '+cands.length+' open PO'+(cands.length>1?'s':'')+'. Pick the one this invoice belongs to; line fit is shown for each.';
-  strip.innerHTML='<div class="amd-banner warn"><span class="i"></span><div>'+lead+'</div></div>'
-    +cands.map((c,i)=>'<div class="scan-cand'+(i===0?' best':'')+'" onclick="_scanPickCand(\''+esc(c.po_number)+'\')"><div><div class="t">'+esc(_amdDocLabel(c))+' · '+esc(c.status)+(c.po_date?' · '+fmtDate(c.po_date):'')+'</div><div class="m">'+(byPO[c.po_number]||[]).length+' line(s) · '+esc((byPO[c.po_number]||[]).slice(0,2).map(it=>it.material_name+' @ '+fmtINR(it.unit_rate)).join(' · '))+' &nbsp;·&nbsp; invoice: '+c._det.slice(0,6).join(' ')+'</div></div><div class="score">'+c._score.toFixed(1)+' / '+c._max.toFixed(1)+'<small>line fit</small></div></div>').join('')
-    +'<div class="muted" style="font-size:12px;margin-top:6px;">Nothing has been filled yet. '+_scanRouteNote(route)+'</div>';
+  strip.innerHTML=_scan.pickerHtml;   // several plausible → picker
   _scanFillHeader(p);
 }
 // v131.1 · scan ledger — one row per parse (model / pdf_text / ocr); other screens call the same RPC with their own p_screen
@@ -27918,7 +27925,17 @@ async function _scanLog(screen, docType, file){
 function _scanRouteLabel(){ return _scan.route==='pdf_text'?'read from the PDF text layer (in-system)':_scan.route==='ocr'?'<span class="amber">read by in-system OCR — check every value carefully</span>':'read by the vision model'+(_scan.model?' ('+esc(_scan.model)+')':''); }
 function _scanRouteNote(route){ return ' <span class="muted">Document '+route+'.</span>'; }
 async function _scanPickCand(poNum){ if(_scan.busy) return; const c=(_scan.poCands||[]).find(x=>x.po_number===poNum); _scan.match={tier:2,how:'PO chosen by you from '+(_scan.poCands||[]).length+' candidates (line fit '+(c?c._score.toFixed(1):'?')+')'}; _scan.busy=true; try{ await _scanApplyPO(poNum); }catch(e){ console.error(e); _scanStripMsg('block','<b>Could not fill from '+esc(poNum)+'.</b> '+esc(e.message||String(e))+' — the PO is selected; enter quantities manually.'); } finally{ _scan.busy=false; _scanOverlay(null); } }   // v131.1: overlay was never cleared on this path (hang)
+// v131.5 · back to the candidate list from a chosen PO (no model call, no scan-counter hit)
+function _scanChangePO(){
+  if(!_scan.pickerHtml||_scan.busy) return;
+  const typed=[...document.querySelectorAll('#grnItemsBody input[id^="grnRecv_"]')].some(x=>num(x.value)>0&&!x.classList.contains('scan-fill'));
+  if(typed&&!confirm('Quantities you typed against this PO will be cleared. Change PO?')) return;
+  const sel=document.getElementById('grn_poSelect'); if(sel){ sel.value=''; onGRNPOChange(); }
+  _scan.assign=null; _scan.conv=null;
+  const strip=document.getElementById('grnScanStrip'); if(strip) strip.innerHTML=_scan.pickerHtml;
+}
 async function _scanApplyPO(poNum){
+  _scan.conv=null;
   const sel=document.getElementById('grn_poSelect');
   if(!sel||![...sel.options].some(o=>o.value===poNum)){ _scanStripMsg('block','<b>'+esc(poNum)+' is not selectable</b> (frozen, closed, or not in this project).'); return; }
   _scanOverlay('Filling the GRN…',3);
@@ -27953,16 +27970,23 @@ function _scanFillLines(p, keepAssign){
   _scan.assign=Object.assign({},assign);
   let filled=0;
   (p.lines||[]).forEach((l,li)=>{
-    const i=assign[li]; const invRate=_scanInvRate(l);
+    const i=assign[li]; let invRate=_scanInvRate(l); let q=num(l.qty);
     const row={desc:l.description,invQty:l.qty,invUom:l.uom,invRate,poLine:null,poRate:null,bal:null,res:'nopo',note:''};
     if(i!=null){
       const mt=_grnMeta[i]; const inp=document.getElementById('grnRecv_'+i); const bal=inp?num(inp.dataset.balance):0; const rmk=document.getElementById('grnRmk_'+i);
       row.poLine=(i+1)+' · '+mt.matName; row.poRate=mt.rate; row.bal=bal; row.balUom=mt.uom;
-      if(l.uom&&!_scanUomEq(l.uom,mt.uom)){ row.res='uom'; row.note='UOM differs '+esc(l.uom)+' ≠ '+esc(mt.uom)+' — convert and type'; if(rmk&&!rmk.value){ rmk.value='Inv '+fmtINR(l.qty)+' '+(l.uom||'')+' @ '+fmtINR(invRate)+'/'+(l.uom||'')+' — convert to '+mt.uom; _scanMark(rmk); } }
-      else if(!_scanRateEq(invRate,mt.rate)){ row.res='rate'; row.note='rate differs '+fmtINR(invRate)+' ≠ '+fmtINR(mt.rate)+' — not filled'; if(rmk&&!rmk.value){ rmk.value='Inv rate '+fmtINR(invRate)+(num(l.discount_pct)>0?' (net of '+num(l.discount_pct)+'%)':'')+' vs PO '+fmtINR(mt.rate); _scanMark(rmk); } if(inp) inp.classList.add('scan-bad'); }
-      else if(!inp||inp.disabled||bal<=0){ row.res='nopo'; row.note='PO balance is zero — nothing to receive'; }
-      else { const q=Math.min(num(l.qty),bal); inp.value=Math.round(q*1000)/1000; _scanMark(inp); recalcGRNRow(i); filled++;
-        if(num(l.qty)>bal+0.0005){ row.res='capped'; row.capped=true; row.note='qty capped to balance '+fmtINR(bal); if(rmk&&!rmk.value){ rmk.value='Inv qty '+fmtINR(l.qty)+' '+(l.uom||'')+'; '+fmtINR(num(l.qty)-bal)+' excess vs balance'; _scanMark(rmk); } }
+      // v131.5: deterministic unit families convert on their own; any other pair takes a typed quantity in the PO unit
+      let uomOpen=false;
+      if(l.uom&&!_scanUomEq(l.uom,mt.uom)){ const fac=_scanConvFactor(l.uom,mt.uom); const man=num((_scan.conv||{})[li]);
+        if(fac){ q=Math.round(num(l.qty)*fac*1000)/1000; if(invRate>0) invRate=invRate/fac; row.conv=esc(l.uom)+' \u2192 '+esc(mt.uom)+' = '+fmtINR(q)+' '+esc(mt.uom); }
+        else if(man>0){ q=man; if(invRate>0) invRate=num(l.qty)*invRate/man; row.conv='typed \u00b7 '+fmtINR(q)+' '+esc(mt.uom); }
+        else uomOpen=true; }
+      const noRate=!(invRate>0); row.q=q; row.effRate=invRate; row.noRate=noRate&&!uomOpen;
+      if(uomOpen){ row.res='uom'; row.note='UOM differs '+esc(l.uom)+' ≠ '+esc(mt.uom); if(rmk&&!rmk.value){ rmk.value='Inv '+fmtINR(l.qty)+' '+(l.uom||'')+(invRate>0?' @ '+fmtINR(invRate)+'/'+(l.uom||''):'')+' — convert to '+mt.uom; _scanMark(rmk); } }
+      else if(!noRate&&!_scanRateEq(invRate,mt.rate)){ row.res='rate'; row.note='rate differs '+fmtINR(invRate)+' ≠ '+fmtINR(mt.rate)+' — not filled'; if(rmk&&!rmk.value){ rmk.value='Inv rate '+fmtINR(invRate)+(num(l.discount_pct)>0?' (net of '+num(l.discount_pct)+'%)':'')+' vs PO '+fmtINR(mt.rate); _scanMark(rmk); } if(inp) inp.classList.add('scan-bad'); }
+      else if(!inp||inp.disabled){ row.res='nopo'; row.frozen=true; row.note='PO is frozen — nothing can be received'; }
+      else { inp.value=Math.round(q*1000)/1000; _scanMark(inp); recalcGRNRow(i); filled++;   // the true quantity, never capped
+        if(q>bal+0.0005){ row.res='capped'; row.capped=true; row.note='over balance by '+fmtINR(q-bal)+' \u2014 amendment needed'; if(rmk&&!rmk.value){ rmk.value='Inv qty '+fmtINR(q)+' '+(mt.uom||'')+'; '+fmtINR(q-bal)+' over PO balance'; _scanMark(rmk); } }
         else if(via[li]==='rate'){ row.res='byrate'; row.note='matched by rate \u2014 verify · filled '+fmtINR(q); } else { row.res='ok'; row.note='matched · filled '+fmtINR(q); } }
     } else { row.note='not on PO'; row.hint=(_scan.hints&&_scan.hints[li])||null; }
     row.li=li; row.i=i; row.via=via[li]||null;
@@ -27972,84 +27996,139 @@ function _scanFillLines(p, keepAssign){
   const mapSel=r=>{ const ranked=metas.map(m=>{ const sim=_scanSim(r.desc,m.matName); const rq=r.invRate!=null&&_scanRateEq(r.invRate,m.rate); const bq=num(r.invQty)>0&&Math.abs(num(r.invQty)-balOf(m.i))<0.0005; const tags=[]; if(rq) tags.push('rate ='); if(bq) tags.push('qty = balance'); if(sim>=0.25) tags.push('name '+sim.toFixed(2)); return {m,sc:sim+(rq?1:0)+(bq?0.5:0),tags}; }).sort((a,b)=>b.sc-a.sc);
     return (r.hint?' <span class="muted" style="font-size:11px;">'+esc(r.hint)+'</span>':'')+'<select class="scan-map" title="Map this invoice line to a PO line (the system remembers it for this vendor)" onchange="_scanMapLine('+r.li+',this.value)"><option value="">map to…</option>'+ranked.map(x=>'<option value="'+x.m.i+'"'+(r.i===x.m.i?' selected':'')+'>'+(x.m.i+1)+' · '+esc(x.m.matName)+(x.tags.length?' \u00b7 '+x.tags.join(' \u00b7 '):'')+'</option>').join('')+'</select>'+(r.via==='alias'?' <span class="scan-chip file" title="Learned from earlier GRNs of this vendor">learned</span>':r.via==='manual'?' <span class="scan-chip file">manual</span>':''); };
   const poSel=esc(document.getElementById('grn_poSelect').value);
-  const chip=r=>({ok:'<span class="scan-chip ok">'+r.note+'</span>',byrate:'<span class="scan-chip byrate">'+r.note+'</span>',capped:'<span class="scan-chip qty">'+r.note+'</span>',rate:'<span class="scan-chip rate">'+r.note+'</span>',uom:'<span class="scan-chip uom">'+r.note+'</span>',nopo:'<span class="scan-chip nopo">'+r.note+'</span>'}[r.res]+' '+mapSel(r));
+  const chip=r=>({ok:'<span class="scan-chip ok">'+r.note+'</span>',byrate:'<span class="scan-chip byrate">'+r.note+'</span>',capped:'<span class="scan-chip qty">'+r.note+'</span>',rate:'<span class="scan-chip rate">'+r.note+'</span>',uom:'<span class="scan-chip uom">'+r.note+'</span> <span class="muted" style="font-size:11px;">qty in '+esc(r.balUom||'PO unit')+' =</span> <input type="number" step="0.001" class="num" style="width:86px;padding:2px 6px;font-size:12px;" placeholder="type" onchange="_scanSetConv('+r.li+',this.value)" onwheel="this.blur()">',nopo:'<span class="scan-chip nopo">'+r.note+'</span>'}[r.res]+' '+mapSel(r));
   const route=_scanRouteLabel();
   const conf=_scan.confidence!=null?' · confidence '+_scan.confidence.toFixed(2):'';
   _scan.rows=rows;
-  strip.innerHTML='<div class="scan-strip"><div class="top"><b>Scan result</b><span class="scan-chip file">📎 '+esc(_scan.file?_scan.file.name:'')+' · attached on save</span><span class="src red">'+((_scan.match&&_scan.match.how)||'')+conf+'</span>'+(_scan.profile?'<span class="scan-chip file" title="Vendor profile: learned from '+num(_scan.profile.samples)+' earlier GRN(s)">vendor known · '+Object.keys(_scan.profile.aliases||{}).length+' aliases</span>':'<span class="muted" style="font-size:11px;">new vendor — mappings you confirm here are remembered</span>')+'<span style="margin-left:auto;"><button class="btn btn-ghost btn-sm" onclick="viewPO(\''+poSel+'\')">View PO</button>'+(_scanProposalRows(rows).length?'<button class="btn btn-primary btn-sm" onclick="_scanProposalPreview()">\u26a1 Propose amendment ('+_scanProposalRows(rows).length+' line'+(_scanProposalRows(rows).length>1?'s':'')+')</button>':'')+'<button class="btn btn-ghost btn-sm" onclick="grnScanHandle(_scan.file,true)">Re-run</button><button class="btn btn-ghost btn-sm" onclick="_scanClearPrefill()">Clear prefill</button></span></div>'
+  strip.innerHTML='<div class="scan-strip"><div class="top"><b>Scan result</b><span class="scan-chip file">📎 '+esc(_scan.file?_scan.file.name:'')+' · attached on save</span><span class="src red">'+((_scan.match&&_scan.match.how)||'')+conf+'</span>'+(_scan.profile?'<span class="scan-chip file" title="Vendor profile: learned from '+num(_scan.profile.samples)+' earlier GRN(s)">vendor known · '+Object.keys(_scan.profile.aliases||{}).length+' aliases</span>':'<span class="muted" style="font-size:11px;">new vendor — mappings you confirm here are remembered</span>')+'<span style="margin-left:auto;">'+((_scan.pickerHtml&&(_scan.poCands||[]).length>1)?'<button class="btn btn-ghost btn-sm" onclick="_scanChangePO()" title="Back to the candidate POs — the scan is kept, nothing is re-run">\u2190 Change PO ('+_scan.poCands.length+')</button>':'')+'<button class="btn btn-ghost btn-sm" onclick="viewPO(\''+poSel+'\')">View PO</button>'+(_scanProposalRows(rows).length?'<button class="btn btn-primary btn-sm" onclick="_scanProposalPreview()">\u26a1 Propose amendment ('+_scanProposalRows(rows).length+' line'+(_scanProposalRows(rows).length>1?'s':'')+')</button>':'')+'<button class="btn btn-ghost btn-sm" onclick="grnScanHandle(_scan.file,true)">Re-run</button><button class="btn btn-ghost btn-sm" onclick="_scanClearPrefill()">Clear prefill</button></span></div>'
     +'<div class="table-wrap"><table class="scan-tbl"><thead><tr><th>Invoice line</th><th class="num">Inv qty</th><th class="num">Inv rate'+((p.lines||[]).some(l=>num(l.discount_pct)>0)?' (net)':'')+'</th><th>PO line</th><th class="num">PO rate</th><th class="num">Balance</th><th>Result</th></tr></thead><tbody>'
-    +rows.map(r=>'<tr><td>'+esc(r.desc)+'</td><td class="num mono">'+fmtINR(r.invQty)+' '+esc(r.invUom||'')+'</td><td class="num mono">'+(r.invRate!=null?fmtINR(r.invRate):'—')+'</td><td>'+(r.poLine?esc(r.poLine):'<span class="muted">no receivable line</span>')+'</td><td class="num mono">'+(r.poRate!=null?fmtINR(r.poRate):'—')+'</td><td class="num mono">'+(r.bal!=null?fmtINR(r.bal)+' '+esc(r.balUom||''):'—')+'</td><td>'+chip(r)+'</td></tr>').join('')
+    +rows.map(r=>'<tr><td>'+esc(r.desc)+'</td><td class="num mono">'+fmtINR(r.invQty)+' '+esc(r.invUom||'')+(r.conv?'<br><span class="scan-chip file" title="Converted to the PO unit">'+r.conv+'</span>':'')+'</td><td class="num mono">'+(r.invRate>0?fmtINR(r.invRate):'—')+(r.noRate?'<br><span class="scan-chip nopo" title="The document carries no rate — the PO rate applies">no rate · PO rate kept</span>':'')+'</td><td>'+(r.poLine?esc(r.poLine):'<span class="muted">no receivable line</span>')+'</td><td class="num mono">'+(r.poRate!=null?fmtINR(r.poRate):'—')+'</td><td class="num mono">'+(r.bal!=null?fmtINR(r.bal)+' '+esc(r.balUom||''):'—')+'</td><td>'+chip(r)+'</td></tr>').join('')
     +'</tbody></table></div>'
-    +'<div class="legend"><span class="scan-chip ok">matched</span> qty filled &nbsp;<span class="scan-chip byrate">matched by rate</span> name unclear, rate + UOM agree — filled, verify &nbsp;<span class="scan-chip qty">capped</span> invoice qty &gt; balance — filled with balance, excess noted in remarks &nbsp;<span class="scan-chip rate">rate differs</span> exact-rate rule — left blank, you decide &nbsp;<span class="scan-chip uom">UOM differs</span> convert and type &nbsp;<span class="scan-chip nopo">not on PO</span> raise amendment, re-run after approval &nbsp;<span class="muted">· Document '+route+'. Amber cells came from the scan and clear on first touch.</span></div></div>';
+    +'<div class="legend"><span class="scan-chip ok">matched</span> qty filled &nbsp;<span class="scan-chip byrate">matched by rate</span> name unclear, rate + UOM agree — filled, verify &nbsp;<span class="scan-chip qty">over balance</span> invoice qty &gt; balance — true qty filled, Save stays locked until the PO is amended &nbsp;<span class="scan-chip rate">rate differs</span> exact-rate rule — left blank, you decide &nbsp;<span class="scan-chip uom">UOM differs</span> Kg ⇄ MT converts itself; otherwise type the qty in the PO unit &nbsp;<span class="scan-chip nopo">not on PO</span> raise amendment, re-run after approval &nbsp;<span class="muted">· Document '+route+'. Amber cells came from the scan and clear on first touch.</span></div></div>';
   if(!filled&&rows.length) toast('Scan read '+rows.length+' line(s) but none could be filled — see the review table below','warn',5000);
   else toast('Prefilled '+filled+' of '+rows.length+' invoice line(s) — verify against the document, then Save','success',4000);
 }
 function _scanClearPrefill(keepStrip){ document.querySelectorAll('#grnForm .scan-fill, #grnForm .scan-bad').forEach(el=>{ if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.value=''; el.classList.remove('scan-fill','scan-bad'); const m=el.id&&el.id.match(/^grnRecv_(\d+)$/); if(m) recalcGRNRow(+m[1]); }); if(keepStrip) return; _scan.assign=null; const strip=document.getElementById('grnScanStrip'); if(strip) strip.innerHTML='<div class="muted" style="font-size:12px;">Prefill cleared. Document still attached.</div>'; }
 function _scanStripMsg(kind,html){ const strip=document.getElementById('grnScanStrip'); if(strip) strip.innerHTML='<div class="amd-banner '+kind+'"><span class="i"></span><div>'+html+'</div></div>'; }
 // ── amendment proposal from the scan (v122 · mig #30) ──────────────────
-function _scanProposalRows(rows){ return (rows||[]).filter(r=>r.res==='nopo'||r.capped||r.res==='rate'); }
-// One proposal line per invoice line: modify (qty and/or rate) or add. Applied to the first PO item of the group; PE can rebalance.
+function _scanProposalRows(rows){ return (rows||[]).filter(r=>(r.res==='nopo'&&!r.frozen)||r.capped||r.res==='rate'); }
+// One proposal line per PO material. The extra quantity lands on the location line that still has balance
+// (last line when none has); the Purchase Executive can rebalance. `qty` in the payload is that line's new qty.
+function _grnPropLine(i, recvQty, newRate){
+  const mt=_grnMeta[i]; const g=_grnLocs[i]||[]; const inp=document.getElementById('grnRecv_'+i); if(!mt||!g.length||!inp) return null;   // v131.5: was window._grnLocs — a `let` is never on window, so every line was dropped
+  const bal=num(inp.dataset.balance), tgt=g.find(x=>num(x.ordered)-num(x.prev)>0.0005)||g[g.length-1]; if(!tgt||!tgt.item) return null;
+  const add=Math.max(0,num(recvQty)-bal);
+  const line={item_id:tgt.item.id,action:'modify',qty:Math.round((num(tgt.item.qty)+add)*1000)/1000,note:'',source:'store',_gi:i,_desc:mt.matName,_inv_qty:num(recvQty),_bal:bal,_po_qty:num(tgt.item.qty),_po_rate:num(tgt.rate!=null?tgt.rate:mt.rate),_sno:tgt.sno,_uom:mt.uom,_mat_po:num(inp.dataset.poqty),_mat_prev:num(inp.dataset.prev),_loc:_grnLabel3(tgt.path),_nloc:g.length,_src:tgt.procurement_source||null};
+  if(newRate!=null&&!_scanRateEq(num(newRate),line._po_rate)) line.unit_rate=num(newRate);
+  _grnPropNote(line); return line;
+}
+function _grnPropNote(p){ if(p.action!=='modify') return; const dq=num(p.qty)-num(p._po_qty); const bits=[];
+  if(Math.abs(dq)>0.0005) bits.push((dq>0?'+':'')+fmtINR(dq)+(p._inv_qty?' = received '+fmtINR(p._inv_qty)+(num(p._bal)>0?' \u2212 balance '+fmtINR(p._bal):''):''));
+  if(p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))) bits.push('rate '+fmtINR(p._po_rate)+' \u2192 '+fmtINR(p.unit_rate));
+  if(p._src==='mir'&&dq>0.0005) bits.push('MIR-linked line \u2014 the DB caps it at the linked MIR qty; PE adds the extra as a direct line');
+  if(num(p._nloc)>1) bits.push('on line '+p._sno+(p._loc?' ('+p._loc+')':'')+' of '+p._nloc+' locations \u2014 PE may rebalance');
+  p.note=bits.join(' \u00b7 '); }
 function _scanBuildProposal(){
   const rows=_scanProposalRows(_scan.rows); const out=[];
   rows.forEach(r=>{
     const l=(_scan.parse.lines||[])[r.li]; if(!l) return;
     if(r.i==null){ out.push({item_id:null,action:'add',material_code:null,material_name:l.description,uom:l.uom||null,qty:num(l.qty),unit_rate:num(_scanInvRate(l)),note:'not on PO \u00b7 invoice '+((_scan.parse.invoice&&_scan.parse.invoice.number)||''),source:'store',_desc:l.description,_inv_qty:num(l.qty),_bal:null,_po_qty:null,_po_rate:null}); return; }
-    const mt=_grnMeta[r.i]; const g=(window._grnLocs&&_grnLocs[r.i])||[]; const first=g[0]&&g[0].item; if(!first) return;
-    const bal=num(r.bal||0); const invQty=num(l.qty); const invRate=num(_scanInvRate(l));
-    const rateDiff=!_scanRateEq(invRate,mt.rate);
-    const addQty=Math.max(0,invQty-bal);
-    const line={item_id:first.id,action:'modify',qty:num(first.qty)+addQty,note:'',source:'store',_desc:mt.matName,_inv_qty:invQty,_bal:bal,_po_qty:num(first.qty),_po_rate:mt.rate,_sno:first.sno,_uom:mt.uom};
-    if(addQty>0) line.note='+'+fmtINR(addQty)+' = invoice '+fmtINR(invQty)+(bal>0?' \u2212 balance '+fmtINR(bal):'');
-    if(rateDiff){ line.unit_rate=invRate; line.note=(line.note?line.note+' \u00b7 ':'')+'rate '+fmtINR(mt.rate)+' \u2192 '+fmtINR(invRate)+' (invoice)'; }
-    if(g.length>1) line.note+=' \u00b7 applied to line '+first.sno+' of '+g.length+' locations \u2014 PE may rebalance';
-    out.push(line);
+    const inp=document.getElementById('grnRecv_'+r.i); const typed=inp?num(inp.value):0;
+    const line=_grnPropLine(r.i, typed>0?typed:num(r.q!=null?r.q:l.qty), r.res==='rate'?r.effRate:null); if(line) out.push(line);
   });
+  // rows the user pushed over balance by hand join the same proposal
+  _grnOverRows().forEach(o=>{ if(out.some(p=>p._gi===o.i)) return; const line=_grnPropLine(o.i,o.qty,null); if(line) out.push(line); });
   return out;
+}
+// every Materials Received row whose typed qty is above its PO balance
+function _grnOverRows(){ const out=[]; Object.keys(_grnMeta||{}).forEach(k=>{ const i=+k; const inp=document.getElementById('grnRecv_'+i); if(!inp) return; const q=num(inp.value), b=num(inp.dataset.balance); if(q>b+0.0005) out.push({i,qty:q,bal:b,over:Math.round((q-b)*1000)/1000}); }); return out; }
+// Manual path — no scan needed. i given → that row; otherwise every row over balance.
+function grnProposeManual(i){
+  const poNum=document.getElementById('grn_poSelect').value; if(!poNum){ toast('Select a PO first','warn'); return; }
+  if(window._grnFrozen){ toast('This PO already has an amendment in progress','warn'); return; }
+  const lines=[]; const pick=(i!=null)?[{i,qty:num((document.getElementById('grnRecv_'+i)||{}).value)}]:_grnOverRows();
+  pick.forEach(o=>{ const line=_grnPropLine(o.i,o.qty,null); if(line) lines.push(line); });
+  _scanProposalPreview(lines,{mode:'manual'});
 }
 let _prop=null;
 function _scanProposalPreview(existing, opts){
-  _prop={lines:existing||_scanBuildProposal(),opts:opts||{mode:'store'}};
+  _prop={lines:existing||_scanBuildProposal(),opts:opts||{mode:'store'},reason:''};
   const po=(opts&&opts.poNum)||document.getElementById('grn_poSelect').value; const inv=(_scan.parse&&_scan.parse.invoice)||{};
-  const mode=_prop.opts.mode; _prop.opts.poNum=po;
-  const h='<h3>'+(mode==='admin'?'Proposal for ':'Proposed amendment \u2014 ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(inv.number?'from invoice '+esc(inv.number)+(inv.date?' dated '+fmtDate(inv.date):''):'')+'</small></h3>'
-   +'<div class="amd-banner info"><span class="i"></span><div>Rules: exhausted line \u2192 qty = PO qty + invoice qty \u00b7 partly open \u2192 + (invoice \u2212 balance) \u00b7 rate differs \u2192 invoice rate (received qty keeps the old rate via split) \u00b7 not on PO \u2192 new line, Purchase Executive picks the material/WBS. Edit anything below; budget is checked at the later steps.</div></div>'
-   +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th class="num">PO qty</th><th class="num">Invoice qty</th><th class="num">Proposed qty</th><th class="num">PO rate</th><th class="num">Proposed rate</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
+  const mode=_prop.opts.mode; _prop.opts.poNum=po; const maker=(mode==='store'||mode==='manual');
+  const invNo=inv.number||(maker?(document.getElementById('grn_invoiceNo')||{}).value:'')||''; const invDt=inv.date||(maker?(document.getElementById('grn_invoiceDate')||{}).value:'')||'';
+  const h='<h3>'+(mode==='admin'?'Proposal for ':'Proposed amendment \u2014 ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(invNo?'from invoice '+esc(invNo)+(invDt?' dated '+fmtDate(invDt):''):(mode==='manual'?'manual proposal':''))+'</small></h3>'
+   +'<div class="amd-banner info"><span class="i"></span><div>Rules: proposed PO qty = PO qty + (received \u2212 balance) \u00b7 rate differs \u2192 new rate (received qty keeps the old rate via split) \u00b7 not on PO \u2192 new line, Purchase Executive picks the material/WBS. Edit anything below; budget is checked at the later steps.'+(maker?' <b>The whole PO is locked</b> from the moment you send, until the amendment is approved or cancelled; this receipt is parked and saved once, in full, after approval.':'')+'</div></div>'
+   +(maker?'<div class="field" style="margin-bottom:10px;"><label'+(mode==='manual'?' class="req"':'')+'>Reason'+(mode==='manual'?'':' (optional \u2014 the invoice reference is added for you)')+'</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;_propSum()"></div>':'')
+   +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th>UOM</th><th class="num">PO qty</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(mode==='manual'?'Receiving now':'Invoice qty')+'</th><th class="num">Proposed PO qty</th><th class="num">PO rate</th><th class="num">Proposed rate</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
+   +(maker?'<div style="display:flex;gap:8px;align-items:center;margin-top:8px;" id="propAddRow"></div>':'')
    +'<div class="actions-row"><span style="margin-right:auto;font-size:12px;color:var(--muted);" id="propSum"></span>'
    +(mode==='admin'?'<button class="btn btn-ghost" onclick="closeModal()">Back</button><button class="btn btn-primary" onclick="_scanProposalOpen()">\u270e Open for amendment \u2014 with this proposal</button>'
     :mode==='view'?'<button class="btn btn-ghost" onclick="closeModal();viewPO(\''+esc(po)+'\')">Back to PO</button>'
-    :'<button class="btn btn-ghost" onclick="closeModal()">Back</button><button class="btn btn-primary" onclick="_scanProposalSend()">Send proposal to Admin</button>')+'</div>';
+    :'<button class="btn btn-ghost" onclick="window._modalNoBackdropClose=false;closeModal()">Back</button><button class="btn btn-primary" id="propSendBtn" onclick="_scanProposalSend()">Send proposal to Admin</button>')+'</div>';
   window._modalNoBackdropClose=true; openModal(h,'wide'); _propRender();
   if(mode==='view') document.querySelectorAll('#propTbl input,#propTbl button').forEach(x=>x.disabled=true);
 }
+function _propMatPo(p){ return p._mat_po!=null?num(p._mat_po):num(p._po_qty); }
+function _propMatQty(p){ return Math.round((_propMatPo(p)+num(p.qty)-num(p._po_qty))*1000)/1000; }
+function _propChanged(p){ if(p.action==='add') return num(p.qty)>0&&!!String(p.material_name||'').trim(); return Math.abs(num(p.qty)-num(p._po_qty))>0.0005||(p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))); }
+function _propSetMatQty(k,v){ const p=_prop.lines[k]; p.qty=(v===''?num(p._po_qty):Math.round((num(p._po_qty)+Number(v)-_propMatPo(p))*1000)/1000); _grnPropNote(p); _propSum(); _propChip(k); }
+function _propSetRecv(k,v){ const p=_prop.lines[k]; p._inv_qty=num(v); p.qty=Math.round((num(p._po_qty)+Math.max(0,num(v)-num(p._bal)))*1000)/1000; _grnPropNote(p); _propRender(); }
+function _propSetRate(k,v){ const p=_prop.lines[k]; if(v===''||(p._po_rate!=null&&_scanRateEq(Number(v),num(p._po_rate)))) delete p.unit_rate; else p.unit_rate=Number(v); _grnPropNote(p); _propSum(); _propChip(k); }
+function _propChipHtml(p){ const isAdd=p.action==='add'; if(isAdd) return '<span class="scan-chip ok">added'+(p.material_code?'':' \u00b7 PE picks material')+'</span>';
+  const dq=Math.abs(num(p.qty)-num(p._po_qty))>0.0005, dr=p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate));
+  return (dq?'<span class="scan-chip qty">qty '+fmtINR(_propMatPo(p))+' \u2192 '+fmtINR(_propMatQty(p))+'</span> ':'')+(dr?'<span class="scan-chip rate">rate '+fmtINR(p._po_rate)+' \u2192 '+fmtINR(p.unit_rate)+' \u00b7 split</span>':'')+(!dq&&!dr?'<span class="scan-chip nopo">no change \u2014 not sent</span>':''); }
+function _propChip(k){ const el=document.getElementById('propChg_'+k); if(el) el.innerHTML=_propChipHtml(_prop.lines[k]); const n=document.getElementById('propNote_'+k); if(n) n.textContent=_prop.lines[k].note||''; }
+function _propAddPoLine(v){ if(v==='') return; const line=_grnPropLine(+v,num((document.getElementById('grnRecv_'+v)||{}).value),null); if(line){ _prop.lines.push(line); _propRender(); } }
+function _propAddFree(){ _prop.lines.push({item_id:null,action:'add',material_code:null,material_name:'',uom:'',qty:0,unit_rate:0,note:'not on PO \u00b7 added by store',source:'store',_manual:true,_desc:'',_inv_qty:null,_bal:null,_po_qty:null,_po_rate:null}); _propRender(); }
 function _propRender(){
-  const tb=document.getElementById('propBody'); if(!tb) return;
+  const tb=document.getElementById('propBody'); if(!tb) return; const mode=_prop.opts.mode;
   tb.innerHTML=_prop.lines.map((p,k)=>{
-    const isAdd=p.action==='add';
-    const chg=isAdd?'<span class="scan-chip ok">added'+(p.material_code?'':' \u00b7 PE picks material')+'</span>':((p.qty!=null&&num(p.qty)!==num(p._po_qty))?'<span class="scan-chip qty">qty '+fmtINR(p._po_qty)+' \u2192 '+fmtINR(p.qty)+'</span> ':'')+((p.unit_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate)))?'<span class="scan-chip rate">rate '+fmtINR(p._po_rate)+' \u2192 '+fmtINR(p.unit_rate)+' \u00b7 split</span>':'');
-    return '<tr'+(isAdd?' style="background:#f0fdf4"':'')+'><td>'+(isAdd?'<b style="color:#15803d">new</b>':esc(String(p._sno||'')))+'</td><td>'+esc(p._desc||p.material_name||'')+(p.note?'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(p.note)+'</span>':'')+'</td>'
-      +'<td class="num mono">'+(p._po_qty!=null?fmtINR(p._po_qty):'\u2014')+'</td><td class="num mono">'+(p._inv_qty!=null?fmtINR(p._inv_qty):'\u2014')+'</td>'
-      +'<td class="num"><input type="number" step="0.001" class="num amd-changed" style="width:110px" value="'+esc(String(p.qty!=null?p.qty:''))+'" oninput="_prop.lines['+k+'].qty=(this.value===\'\'?null:Number(this.value));_propSum()"></td>'
+    const isAdd=p.action==='add'; const dash='<span class="muted">\u2014</span>';
+    const mat=(isAdd&&p._manual)?'<input style="width:100%" placeholder="Material as on the invoice" value="'+esc(p.material_name||'')+'" oninput="_prop.lines['+k+'].material_name=this.value;_prop.lines['+k+']._desc=this.value;_propSum()">':esc(p._desc||p.material_name||'');
+    return '<tr'+(isAdd?' style="background:#f0fdf4"':'')+'><td>'+(isAdd?'<b style="color:#15803d">new</b>':esc(String(p._gi!=null?(p._gi+1):(p._sno||''))))+'</td><td>'+mat+'<span class="amd-hint" id="propNote_'+k+'" style="text-align:left;white-space:normal;">'+esc(p.note||'')+'</span></td>'
+      +'<td>'+((isAdd&&p._manual)?'<input style="width:64px" placeholder="UOM" value="'+esc(p.uom||'')+'" oninput="_prop.lines['+k+'].uom=this.value">':esc(p._uom||p.uom||''))+'</td>'
+      +'<td class="num mono">'+(p._po_qty!=null?fmtINR(_propMatPo(p)):dash)+'</td><td class="num mono">'+(p._mat_prev!=null?fmtINR(p._mat_prev):dash)+'</td><td class="num mono">'+(p._bal!=null?fmtINR(p._bal):dash)+'</td>'
+      +'<td class="num">'+((mode==='manual'&&!isAdd)?'<input type="number" step="0.001" class="num" style="width:100px" value="'+esc(String(p._inv_qty||''))+'" onchange="_propSetRecv('+k+',this.value)" onwheel="this.blur()">':'<span class="mono">'+(p._inv_qty!=null?fmtINR(p._inv_qty):'\u2014')+'</span>')+'</td>'
+      +'<td class="num"><input type="number" step="0.001" class="num amd-changed" style="width:110px" value="'+esc(String(isAdd?(p.qty!=null?p.qty:''):_propMatQty(p)))+'" oninput="'+(isAdd?'_prop.lines['+k+'].qty=(this.value===\'\'?null:Number(this.value));_propSum()':'_propSetMatQty('+k+',this.value)')+'" onwheel="this.blur()"></td>'
       +'<td class="num mono">'+(p._po_rate!=null?fmtINR(p._po_rate):'\u2014')+'</td>'
-      +'<td class="num"><input type="number" step="0.0001" class="num'+(p.unit_rate!=null&&p._po_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))?' amd-changed':'')+'" style="width:100px" value="'+esc(String(p.unit_rate!=null?p.unit_rate:(p._po_rate!=null?p._po_rate:'')))+'" oninput="_prop.lines['+k+'].unit_rate=(this.value===\'\'?null:Number(this.value));_propSum()"></td>'
-      +'<td>'+chg+'</td><td><button class="btn btn-ghost btn-sm" onclick="_prop.lines.splice('+k+',1);_propRender()">Remove</button></td></tr>';
-  }).join('')||'<tr><td colspan="9" class="center muted">Nothing left in the proposal</td></tr>';
+      +'<td class="num"><input type="number" step="0.0001" class="num'+(p.unit_rate!=null&&p._po_rate!=null&&!_scanRateEq(num(p.unit_rate),num(p._po_rate))?' amd-changed':'')+'" style="width:100px" value="'+esc(String(p.unit_rate!=null?p.unit_rate:(p._po_rate!=null?p._po_rate:'')))+'" oninput="'+(isAdd?'_prop.lines['+k+'].unit_rate=(this.value===\'\'?null:Number(this.value));_propSum()':'_propSetRate('+k+',this.value)')+'" onwheel="this.blur()"></td>'
+      +'<td id="propChg_'+k+'">'+_propChipHtml(p)+'</td><td><button class="btn btn-ghost btn-sm" onclick="_prop.lines.splice('+k+',1);_propRender()">Remove</button></td></tr>';
+  }).join('')||'<tr><td colspan="12" class="center muted">'+((mode==='store'||mode==='manual')?'No lines yet \u2014 add a PO line, or a line that is not on the PO':'Nothing left in the proposal')+'</td></tr>';
+  const ar=document.getElementById('propAddRow');
+  if(ar){ const used=new Set(_prop.lines.filter(p=>p._gi!=null).map(p=>p._gi)); const free=Object.keys(_grnMeta||{}).map(Number).filter(i=>!used.has(i));
+    ar.innerHTML='<select style="max-width:340px;" onchange="_propAddPoLine(this.value)"><option value="">\uff0b Add a PO line\u2026</option>'+free.map(i=>{ const inp=document.getElementById('grnRecv_'+i); return '<option value="'+i+'">'+(i+1)+' \u00b7 '+esc(_grnMeta[i].matName)+' \u00b7 balance '+fmtINR(inp?num(inp.dataset.balance):0)+' '+esc(_grnMeta[i].uom||'')+'</option>'; }).join('')+'</select><button class="btn btn-ghost btn-sm" onclick="_propAddFree()">\uff0b Line not on PO</button>'; }
   _propSum();
 }
-function _propSum(){ const el=document.getElementById('propSum'); if(!el) return; const n=_prop.lines.length; const d=_prop.lines.reduce((s,p)=>{ const q=num(p.qty), r=num(p.unit_rate!=null?p.unit_rate:p._po_rate); const before=num(p._po_qty)*num(p._po_rate); return s+(q*r-before); },0); el.textContent=n+' line change'+(n===1?'':'s')+' \u00b7 value change '+(d>=0?'+':'')+fmtINRSym(d)+' (before tax, approximate)'; }
-function _propClean(){ const keep=['_desc','_sno','_po_qty','_po_rate','_inv_qty','_bal','_uom']; return _prop.lines.map(p=>{ const o={}; Object.keys(p).forEach(k=>{ if(k[0]!=='_'||keep.includes(k)) o[k]=p[k]; }); return o; }); }
+function _propSum(){ const el=document.getElementById('propSum'); if(!el) return; const ch=_prop.lines.filter(_propChanged); const n=ch.length;
+  const d=ch.reduce((s,p)=>{ const q=num(p.qty), r=num(p.unit_rate!=null?p.unit_rate:p._po_rate); const before=num(p._po_qty)*num(p._po_rate); return s+(q*r-before); },0);
+  const needReason=_prop.opts.mode==='manual'&&!String(_prop.reason||'').trim();
+  el.textContent=n+' line change'+(n===1?'':'s')+' \u00b7 value change '+(d>=0?'+':'')+fmtINRSym(d)+' (before tax, approximate)'+(n&&needReason?' \u00b7 reason required':'');
+  const sb_=document.getElementById('propSendBtn'); if(sb_) sb_.disabled=!n||needReason; }
+function _propClean(){ const keep=['_desc','_sno','_po_qty','_po_rate','_inv_qty','_bal','_uom','_mat_po','_mat_prev','_loc','_nloc','_src']; return _prop.lines.filter(_propChanged).map(p=>{ const o={}; Object.keys(p).forEach(k=>{ if(k[0]!=='_'||keep.includes(k)) o[k]=p[k]; }); return o; }); }
+// v131.5 · the receipt as typed, carried on the request so it is entered once and saved once (after approval)
+function _grnParkSnapshot(){
+  const g=id=>{ const e=document.getElementById(id); return e?e.value:''; };
+  const lines=[]; Object.keys(_grnMeta||{}).forEach(k=>{ const i=+k; const inp=document.getElementById('grnRecv_'+i); const q=inp?num(inp.value):0; if(!(q>0)) return; lines.push({material_code:_grnMeta[i].matCode||null,material_name:_grnMeta[i].matName,uom:_grnMeta[i].uom,qty:q,remarks:g('grnRmk_'+i)||null}); });
+  return {by:state.userId,by_name:state.userName,at:new Date().toISOString(),grn_date:g('grn_date'),challan:g('grn_challan'),invoice_no:g('grn_invoiceNo'),invoice_date:g('grn_invoiceDate')||null,remarks:g('grn_remarks')||null,lines};
+}
 async function _scanProposalSend(){
   const poNum=_prop.opts.poNum; if(!poNum) return;
   const lines=_propClean(); if(!lines.length){ toast('Nothing to propose','warn'); return; }
-  const inv=(_scan.parse&&_scan.parse.invoice)||{};
-  const reason='Amendment proposed from invoice '+(inv.number||'?')+(inv.date?' dated '+fmtDate(inv.date):'')+': '+lines.length+' line change'+(lines.length>1?'s':'')+' (see proposal).';
+  const manual=_prop.opts.mode==='manual'; const why=String(_prop.reason||'').trim();
+  if(manual&&!why){ toast('Give a reason for the amendment','warn'); return; }
+  const P=_scan.parse||null; const inv=(P&&P.invoice)||{}; const park=_grnParkSnapshot();
+  const invNo=inv.number||park.invoice_no||null, invDt=inv.date||park.invoice_date||null;
+  const reason=(why?why+' \u2014 ':'')+'Amendment proposed from '+(invNo?'invoice '+invNo+(invDt?' dated '+fmtDate(invDt):''):'GRN entry')+': '+lines.length+' line change'+(lines.length>1?'s':'')+' (see proposal).';
+  if(!confirm('Send this proposal to the Admin?\n\n'+poNum+' will be locked for every receipt until the amendment is approved or cancelled. This receipt is parked and re-opens for saving after approval.')) return;
   pbShow('Sending proposal\u2026');
   try{
     let att=null; try{ att=await _scanUploadForGRN(); }catch(e){ console.warn('attach',e); }
-    const ctx={invoice:{number:inv.number||null,date:inv.date||null,vendor:(_scan.parse.vendor&&_scan.parse.vendor.name)||null,gstin:(_scan.parse.vendor&&_scan.parse.vendor.gstin_norm)||null},proposal:lines,attachment:att,requested_from:'GRN entry scan'};
+    const ctx={invoice:{number:invNo,date:invDt,vendor:(P&&P.vendor&&P.vendor.name)||(document.getElementById('grn_vendor')||{}).value||null,gstin:(P&&P.vendor&&P.vendor.gstin_norm)||null},proposal:lines,attachment:att,parked_receipt:park,requested_from:manual?'GRN entry (manual)':'GRN entry scan'};
     const {data,error}=await sb.rpc('rpc_amd_request',{p_doc_number:poNum,p_reason:reason,p_context:ctx,p_user:state.userName});
     if(error) throw new Error(error.message.replace(/^.*?:\s*/,''));
     _amdInvalidate(poNum); window._modalNoBackdropClose=false; closeModal();
-    toast(data&&data.appended?'Proposal added to the existing request on '+poNum:'Proposal sent \u2014 the Admin will see it on '+poNum,'success',6000);
+    window._grnFrozen=true; window._grnParked={po:poNum,at:Date.now()}; _grnLockEval();
+    toast(data&&data.appended?'Proposal added to the existing request on '+poNum:'Proposal sent \u2014 '+poNum+' is locked until the Admin decides. Your receipt is parked.','success',7000);
   }catch(e){ toast(e.message,'error',7000); }
   finally{ pbDone(); }
 }
@@ -28222,9 +28301,9 @@ function _amdOrigQty(it,rows){ const q=rows.filter(r=>r.field==='qty'&&r.old!=nu
 function _amdOrigRate(it,rows){ const r=rows.filter(r=>r.field==='unit_rate'&&r.old!=null).sort((a,b)=>a.rev_no-b.rev_no)[0]; return r?r.old:it.unit_rate; }
 function _amdBanner(h, hist){
   const req=hist&&hist.live&&hist.live.status==='Requested'?hist.live:null;
-  if(req&&!h.amendment_state){
+  if(req&&(!h.amendment_state||h.amendment_state==='Amendment Requested')){   // v131.5: M10 stamps the PO at request time
     const prop=req.request_context&&req.request_context.proposal; const att=req.request_context&&req.request_context.attachment;
-    return '<div class="amd-banner warn"><span class="i"></span><div><b>Amendment '+(prop&&prop.length?'proposed':'requested')+'</b> by '+esc(req.requested_by||'store')+(req.requested_at?' on '+fmtDateShort(req.requested_at):'')
+    return '<div class="amd-banner warn"><span class="i"></span><div><b>Amendment '+(prop&&prop.length?'proposed':'requested')+' — PO locked for receipts</b> by '+esc(req.requested_by||'store')+(req.requested_at?' on '+fmtDateShort(req.requested_at):'')
       +(prop&&prop.length?' — '+prop.length+' line change'+(prop.length>1?'s':'')+(att&&att.path?' · <a href="#" onclick="grnScanView(\''+esc(att.path)+'\');return false;" style="color:var(--accent-2);">📎 invoice</a>':''):'')+'.<br><span style="white-space:pre-line;">'+esc(req.reason||'')+'</span>'
       +(prop&&prop.length?' <button class="btn btn-ghost btn-sm" onclick="amdViewProposal(\''+esc(h.po_number)+'\','+(num(h.rev_no)+1)+')">'+((state.isOwner||state.isSuper)?'View / edit proposal':'View proposal')+'</button>':'')
       +((state.isOwner||state.isSuper)?'<br><span class="muted" style="font-size:12px;">'+(prop&&prop.length?'Open for amendment — with proposal creates the draft pre-filled from these lines.':'Open for amendment adopts this request — the reason carries into the draft.')+'</span>':'')+'</div></div>';
@@ -28245,7 +28324,7 @@ function _amdActions(h, hist){
   const perms=mergedPerms(); const admin=!!(state.isOwner||state.isSuper);
   const live=hist&&hist.live; let out='';
   const n=esc(h.po_number);
-  if(!h.amendment_state){
+  if(!h.amendment_state||h.amendment_state==='Amendment Requested'){   // v131.5 (M10)
     const _prop=live&&live.status==='Requested'&&live.request_context&&live.request_context.proposal&&live.request_context.proposal.length;
     if(admin && ['Open','Partial Receipt','Fully Received'].includes(h.status))
       out+=(_prop?'<button class="btn btn-primary" onclick="amdViewProposal(\''+n+'\','+(num(h.rev_no)+1)+')">\u270e Open for amendment \u2014 with proposal</button> ':'<button class="btn btn-secondary" onclick="amdOpen(\''+n+'\')">\u270e Open for amendment'+(live&&live.status==='Requested'?' (requested)':'')+'</button> ');
@@ -29178,6 +29257,17 @@ function renderGRNMatResults() {
 }
 
 
+// v131.6 · PO dropdown: receivable POs on top, Fully Received below as "amendment only"; the filter box narrows both
+function grnPoFilter(q){
+  const sel=document.getElementById('grn_poSelect'); if(!sel) return; const cur=sel.value; const t=String(q||'').toLowerCase().trim();
+  const all=(window._grnPoList||[]).filter(p=>!t||p.po_number===cur||(p.po_number+' '+(p.vendor_name||'')).toLowerCase().includes(t));
+  const opt=p=>`<option value="${esc(p.po_number)}" data-vendor="${esc(p.vendor_name)}" data-status="${esc(p.status)}">${esc(_amdDocLabel(p))} — ${esc(p.vendor_name)} · ${esc(p.status)}</option>`;
+  const rec=all.filter(p=>p.status!=='Fully Received'), full=all.filter(p=>p.status==='Fully Received');
+  sel.innerHTML='<option value="">— Select PO —</option>'
+    +(rec.length?'<optgroup label="Receivable · Open / Partial Receipt ('+rec.length+')">'+rec.map(opt).join('')+'</optgroup>':'')
+    +(full.length?'<optgroup label="Fully received — amendment only ('+full.length+')">'+full.map(opt).join('')+'</optgroup>':'');
+  sel.value=[...sel.options].some(o=>o.value===cur)?cur:'';
+}
 async function newGRN() {
   if(!hasPerm('canCreateGRN')){toast('Only Store Executive can create GRN','error');return;}
   document.getElementById('cashGrnForm').style.display='none';  // hide sibling
@@ -29196,11 +29286,10 @@ async function newGRN() {
   document.getElementById('grnItemsBody').innerHTML='<tr><td colspan="11" class="center muted">Select a PO to load items</td></tr>';
   grnScanReset();   // v117
   const {data:pos}=await sb.from('pu_po_orders').select('po_number,vendor_name,amendment_state,rev_no,status')
-    .in('status',['Open','Partial Receipt']).is('amendment_state',null).order('po_number');   // v117: frozen POs are not listed
-  const sel=document.getElementById('grn_poSelect');
-  sel.innerHTML='<option value="">— Select PO (Open · Partial Receipt) —</option>'+
-    (pos||[]).map(p=>`<option value="${esc(p.po_number)}" data-vendor="${esc(p.vendor_name)}">${esc(_amdDocLabel(p))} — ${esc(p.vendor_name)} · ${esc(p.status)}</option>`).join('');
-  sel.value='';
+    .in('status',['Open','Partial Receipt','Fully Received']).is('amendment_state',null).order('po_number');   // v117: frozen POs are not listed · v131.6: Fully Received listed as amendment-only
+  window._grnPoList=pos||[];
+  const _pf=document.getElementById('grn_poFilter'); if(_pf) _pf.value='';
+  grnPoFilter('');
   window.scrollTo(0,0);
 }
 
@@ -29251,14 +29340,16 @@ async function onGRNPOChange() {
   const poNum=document.getElementById('grn_poSelect').value;
   const opt=document.querySelector('#grn_poSelect option:checked');
   document.getElementById('grn_vendor').value=opt?.dataset?.vendor||'';
-  _grnLocs={}; _grnMeta={};
-  if(!poNum){document.getElementById('grnItemsBody').innerHTML='<tr><td colspan="11" class="center muted">Select a PO</td></tr>';return;}
+  _grnLocs={}; _grnMeta={}; window._grnAmdOnly=false;
+  if(!poNum){ _grnLockEval();document.getElementById('grnItemsBody').innerHTML='<tr><td colspan="11" class="center muted">Select a PO</td></tr>';return;}
   pbShow('Loading PO items…');
   const {data:poItemsAll}=await sb.from('pu_po_items').select('*').eq('po_number',poNum).order('sno');
   // v116: amendment — history for pills, freeze state, only Active lines receivable
   const _amdH=await _amdLoadHistory(poNum, poItemsAll||[]);
-  const {data:_amdPo}=await sb.from('pu_po_orders').select('amendment_state,rev_no').eq('po_number',poNum).single();
-  window._grnFrozen=!!(_amdPo&&_amdPo.amendment_state);
+  const {data:_amdPo}=await sb.from('pu_po_orders').select('amendment_state,rev_no,status').eq('po_number',poNum).single();
+  window._grnAmdOnly=!!(_amdPo&&_amdPo.status==='Fully Received');
+  const _amdReq=!!(_amdH&&_amdH.live&&_amdH.live.status==='Requested');   // v131.5: a pending request locks the whole PO (DB-enforced by M10; this is the screen side)
+  window._grnFrozen=!!((_amdPo&&_amdPo.amendment_state)||_amdReq); window._grnParked=null;
   window._amdPopCtx={h:Object.assign({po_number:poNum},_amdPo||{}), items:poItemsAll||[], hist:_amdH};
   const poItems=(poItemsAll||[]).filter(it=>(it.line_status||'Active')==='Active');
   // location breadcrumbs
@@ -29318,7 +29409,8 @@ async function onGRNPOChange() {
         <input type="number" id="grnRecv_${i}" class="num" style="width:90px;" step="0.001" min="0" placeholder="0"
           data-mat="${esc(it.material_name)}" data-uom="${esc(it.uom)}" data-matcode="${esc(it.material_code||'')}"
           data-poqty="${poQty}" data-prev="${prevTotal}" data-balance="${balance}" data-rate="${num(it.unit_rate)}"
-          oninput="recalcGRNRow(${i})" ${exhausted?'disabled title="PO balance fully received — cannot enter quantity"':''} onwheel="this.blur()" onkeydown="if(event.key==='ArrowUp'||event.key==='ArrowDown')event.preventDefault()">
+          oninput="recalcGRNRow(${i})" ${exhausted?'title="PO balance fully received — a quantity here needs a PO amendment"':''} onwheel="this.blur()" onkeydown="if(event.key==='ArrowUp'||event.key==='ArrowDown')event.preventDefault()">
+        <div id="grnOver_${i}" style="font-size:11px;margin-top:2px;white-space:nowrap;"></div>
       </td>
       <td style="vertical-align:top;">
         ${_locCell}
@@ -29330,9 +29422,11 @@ async function onGRNPOChange() {
   }).join('')||'<tr><td colspan="11" class="center muted">No items on this PO.</td></tr>';
   if(window._grnFrozen){   // v116: PO frozen while an amendment is in progress
     document.getElementById('grnItemsBody').insertAdjacentHTML('afterbegin',
-      '<tr><td colspan="11" style="padding:0;"><div class="amd-banner freeze" style="margin:6px;"><span class="i"></span><div><b>'+esc(_amdPo.amendment_state)+' (A'+(num(_amdPo.rev_no)+1)+')</b> \u2014 no GRN can be raised against this PO until the amendment is approved or cancelled.</div></div></td></tr>');
+      '<tr><td colspan="11" style="padding:0;"><div class="amd-banner freeze" style="margin:6px;"><span class="i"></span><div><b>'+esc(_amdPo.amendment_state||'Amendment Requested')+' (A'+(num(_amdPo.rev_no)+1)+')</b> \u2014 no GRN can be raised against this PO until the amendment is approved or cancelled.</div></div></td></tr>');
     document.querySelectorAll('#grnItemsBody input').forEach(inp=>{ inp.disabled=true; });
   }
+  _grnLockEval();
+  if(!window._grnFrozen) _grnParkedOffer(poNum,_amdH);
 }
 
 function recalcGRNRow(i) {
@@ -29341,11 +29435,46 @@ function recalcGRNRow(i) {
   const bal=parseFloat(inp.dataset.balance)||0;
   let qty=parseFloat(inp.value)||0;
   const uom=inp.dataset.uom||'';
-  // hard clamp — cannot receive more than the (summed) PO balance for this material
-  if(bal>0 && qty>bal){ qty=bal; inp.value=(Math.round(bal*1000)/1000); toast('Cannot receive more than PO balance ('+fmtINR(bal)+' '+uom+')','warn'); }
+  // v131.5: never clamped — the true received qty stays as typed; above balance, Save locks until the PO is amended
   const amt=qty*(parseFloat(inp.dataset.rate)||0);
   const amtEl=document.getElementById('grnAmt_'+i); if(amtEl) amtEl.textContent=fmtINR(amt);
   // v126: per-location split is computed silently at save; nothing rendered live
+  _grnLockEval();
+}
+// v131.5 · single GRN, single entry. Any qty above PO balance locks Save; the receipt is parked with the proposal.
+function _grnLockEval(){
+  const bar=document.getElementById('grnLockBar'), btn=document.getElementById('grnSaveBtn'), pb=document.getElementById('grnProposeBtn'); if(!bar||!btn) return;
+  const poNum=(document.getElementById('grn_poSelect')||{}).value; const over=poNum?_grnOverRows():[]; const parked=!!(window._grnParked&&window._grnParked.po===poNum);
+  Object.keys(_grnMeta||{}).forEach(k=>{ const el=document.getElementById('grnOver_'+k); if(!el) return; const o=over.find(x=>x.i===+k); const inp=document.getElementById('grnRecv_'+k); const spent=inp&&num(inp.dataset.balance)<=0;
+    el.innerHTML=o?(parked?'<span class="scan-chip file">'+fmtINR(o.over)+' over balance \u00b7 awaiting Admin</span>':'<span class="scan-chip rate">'+fmtINR(o.over)+' over balance</span> <a href="#" style="color:var(--accent);font-weight:600;" onclick="grnProposeManual('+k+');return false;">\u26a1 propose</a>')
+      :(spent&&!window._grnFrozen?'<span class="muted">PO line exhausted \u2014 type the qty received to propose</span>':''); });
+  if(pb) pb.style.display=(poNum&&!window._grnFrozen)?'':'none';
+  const lock=parked||over.length>0; btn.disabled=lock||!!window._grnFrozen; btn.innerHTML=(lock?'\uD83D\uDD12 ':'')+'Save GRN';
+  bar.innerHTML=parked?'<div class="amd-banner info"><span class="i"></span><div><b>Receipt parked \u2014 waiting for the amendment.</b> The proposal is with the Admin and '+esc(poNum)+' is locked for every receipt. Everything typed here travels with the request; after approval pick this PO again and press <b>Resume parked receipt</b> \u2014 nothing to re-enter.</div></div>'
+    :over.length?'<div class="amd-banner block"><span class="i"></span><div style="flex:1;"><b>Save is locked.</b> '+over.length+' line'+(over.length>1?'s are':' is')+' above the PO balance. Propose the amendment \u2014 this receipt is kept exactly as typed and is saved once, in full, after approval. No partial GRN.</div><button class="btn btn-primary btn-sm" onclick="'+((_scan.rows&&_scanProposalRows(_scan.rows).length)?'_scanProposalPreview()':'grnProposeManual()')+'">\u26a1 Propose amendment</button></div>'
+    :(window._grnAmdOnly&&poNum&&!window._grnFrozen&&!window._grnParkedCtx)?'<div class="amd-banner warn"><span class="i"></span><div><b>Fully Received \u2014 amendment only.</b> Every line of '+esc(poNum)+' is exhausted. Type what arrived and propose the amendment; this receipt is parked and saved once after approval.</div></div>':'';
+}
+// After approval: offer the parked receipt back (same user, same PO, not yet saved as a GRN).
+async function _grnParkedOffer(poNum, hist){
+  try{
+    const ap=((hist&&hist.amendments)||[]).filter(a=>a.status==='Approved').sort((a,b)=>num(b.rev_no)-num(a.rev_no))[0]; if(!ap) return;
+    const {data:r}=await sb.from('order_amendments').select('id,rev_no,request_context').eq('id',ap.id).maybeSingle();
+    const pr=r&&r.request_context&&r.request_context.parked_receipt; if(!pr||!pr.lines||!pr.lines.length) return;
+    if(pr.by&&pr.by!==state.userId) return;
+    if(pr.invoice_no){ const {data:dup}=await sb.from('pu_grn').select('grn_number').eq('po_number',poNum).eq('invoice_no',pr.invoice_no).not('status','in','("Rejected")').limit(1); if(dup&&dup.length) return; }
+    if((document.getElementById('grn_poSelect')||{}).value!==poNum) return;
+    window._grnParkedCtx={po:poNum,pr,att:(r.request_context.attachment)||null,rev:r.rev_no};
+    const bar=document.getElementById('grnLockBar'); if(bar&&!bar.innerHTML) bar.innerHTML='<div class="amd-banner info"><span class="i"></span><div style="flex:1;"><b>Parked receipt found</b> \u2014 invoice '+esc(pr.invoice_no||'\u2014')+', '+pr.lines.length+' line'+(pr.lines.length>1?'s':'')+', parked '+fmtDateShort(pr.at)+'. Amendment A'+num(r.rev_no)+' is approved.</div><button class="btn btn-primary btn-sm" onclick="_grnParkedResume()">Resume parked receipt</button></div>';
+  }catch(e){ console.warn('parked receipt',e); }
+}
+function _grnParkedResume(){
+  const c=window._grnParkedCtx; if(!c) return; const pr=c.pr; const set=(id,v)=>{ const e=document.getElementById(id); if(e&&v!=null&&v!=='') e.value=v; };
+  set('grn_date',pr.grn_date); set('grn_challan',pr.challan); set('grn_invoiceNo',pr.invoice_no); set('grn_invoiceDate',pr.invoice_date); set('grn_remarks',pr.remarks);
+  let n=0; pr.lines.forEach(l=>{ const k=Object.keys(_grnMeta).find(i=>(l.material_code&&_grnMeta[i].matCode===l.material_code)||(!l.material_code&&_grnMeta[i].matName===l.material_name)); if(k==null) return;
+    const inp=document.getElementById('grnRecv_'+k), rm=document.getElementById('grnRmk_'+k); if(inp){ inp.value=l.qty; n++; } if(rm&&l.remarks) rm.value=l.remarks; recalcGRNRow(+k); });
+  if(c.att&&!_scan.file) _scan.uploaded=c.att;   // the document uploaded with the proposal rides on this GRN
+  window._grnParkedCtx=null; _grnLockEval();
+  toast('Parked receipt restored \u2014 '+n+' of '+pr.lines.length+' line(s). Check and Save.', n===pr.lines.length?'success':'warn', 6000);
 }
 
 function grnLocTog(i){
@@ -29378,8 +29507,8 @@ async function saveGRN() {
     const rate=parseFloat(inp.dataset.rate)||0;
     let remarks=document.getElementById('grnRmk_'+i)?.value||null;
     // hard block — never accept more than the (summed) PO balance for a material
-    if(qty>bal && bal>0){
-      toast(`${inp.dataset.mat}: GRN qty ${qty} exceeds PO balance ${bal} ${uom} — reduce to ${bal} or less`,'error',6000);
+    if(qty>bal+0.0005){   // v131.5: was `&& bal>0` — an exhausted line (balance 0) slipped through
+      toast(`${inp.dataset.mat}: GRN qty ${qty} exceeds PO balance ${bal} ${uom} — propose a PO amendment; the GRN saves once after approval`,'error',7000);
       inp.focus(); _grnSaveBlocked=true; return;
     }
     // v122: split the received total across the PO's locations progressively (first location first)
@@ -29465,7 +29594,7 @@ async function saveGRN() {
       po_status: { po_number: poNum, status: newStatus },
     };
     if (revisingGRN) payload.doc_number = revisingGRN;
-    if (window._scan && _scan.file) { payload.header.scan_attachment = await _scanUploadForGRN(); }   // v117 (mig #27)
+    if (_scan.file || _scan.uploaded) { payload.header.scan_attachment = _scan.file ? await _scanUploadForGRN() : _scan.uploaded; }   // v131.5: `window._scan` never existed (const) — the attachment was silently dropped   // v117 (mig #27)
 
     const res = await puRPC('rpc_save_grn', payload);
     await _scanLearnAfterSave();   // v119 (mig #28): remember this vendor's descriptions → materials

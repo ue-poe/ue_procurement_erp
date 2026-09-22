@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v132</title>
+<title>Penguin Suite v146</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -1292,6 +1292,73 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #mod-dpr .dpr-tn .qty{font-size:11px;color:var(--dink2);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 #mod-dpr .dpr-tn .qty b{display:block;font-size:12.5px}
 .dprFld.bad input{border-color:#b3261e;background:#fceceb}
+/* ===== DPR v146 · groups, dates, preview, full-page review ===== */
+#mod-dpr .dpr-dates{display:grid;grid-template-columns:1fr 1fr;background:#fff;border-bottom:1px solid var(--dln)}
+#mod-dpr .dpr-dates>div{padding:9px 10px 8px}
+#mod-dpr .dpr-dates .y{background:var(--dvl);border-right:1px solid var(--dvb)}
+#mod-dpr .dpr-dates .t{background:var(--dtl)}
+#mod-dpr .dpr-dates i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.3px}
+#mod-dpr .dpr-dates .y i{color:var(--dv)}#mod-dpr .dpr-dates .t i{color:var(--dtd)}
+#mod-dpr .dpr-dates b{display:block;font-size:22px;line-height:1.05;letter-spacing:-.3px;margin-top:2px}
+#mod-dpr .dpr-dates .y b{color:#3d2a75}#mod-dpr .dpr-dates .t b{color:var(--dtd)}
+#mod-dpr .dpr-dates span{font-size:10.5px;color:var(--dink2)}
+#mod-dpr .dpr-mbar{background:var(--dn);color:#fff;display:flex;align-items:stretch;border-top:1px solid #2e5794;flex-wrap:wrap}
+#mod-dpr .dpr-mbar .dt{background:var(--dvl);color:#3d2a75;padding:8px 14px;min-width:190px;border-right:1px solid var(--dvb)}
+#mod-dpr .dpr-mbar .dt i{display:block;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.3px;color:var(--dv)}
+#mod-dpr .dpr-mbar .dt b{display:block;font-size:22px;line-height:1.05;letter-spacing:-.3px}
+#mod-dpr .dpr-mbar .dt span{font-size:10.5px;color:var(--dink2)}
+#mod-dpr .dpr-mbar .nav{display:flex;align-items:center;gap:10px;padding:8px 12px;flex:1;min-width:0}
+#mod-dpr .dpr-mbar .st{font-size:11px;color:#a9bfdd}#mod-dpr .dpr-mbar .st b{color:#fff;font-size:12.5px;display:block}
+#mod-dpr .dpr-mbar .act{display:flex;align-items:center;gap:8px;padding:8px 12px}
+#mod-dpr .dpr-job{background:#fff;border-bottom:1px solid var(--dln);border-left:4px solid var(--dln)}
+#mod-dpr .dpr-job.done{border-left-color:var(--dv)}#mod-dpr .dpr-job.hind{border-left-color:var(--drd)}#mod-dpr .dpr-job.carry{border-left-color:var(--dam)}
+#mod-dpr .dpr-job .jh{display:grid;grid-template-columns:1fr auto auto;gap:2px 8px;padding:8px 10px;align-items:center;cursor:pointer}
+#mod-dpr .dpr-job .jh .a{font-weight:800;font-size:13px}#mod-dpr .dpr-job .jh .l{font-size:11px;color:var(--dink2)}
+#mod-dpr .dpr-job .jh .r{text-align:right}#mod-dpr .dpr-job .jh .r b{display:block;font-size:13px;color:var(--dtd)}#mod-dpr .dpr-job .jh .r span{font-size:10px;color:var(--dink3)}
+#mod-dpr .dpr-job .jm{padding:2px 8px;font-size:14px}
+#mod-dpr .dpr-job .ln{display:grid;grid-template-columns:1fr auto;gap:8px;padding:5px 10px 5px 22px;border-top:1px solid var(--dln2);font-size:11.5px;align-items:center}
+#mod-dpr .dpr-job .ln .x{color:var(--dink2);font-size:10.5px}#mod-dpr .dpr-job .ln .q{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#mod-dpr .dpr-job .ln .q b{font-size:12.5px}#mod-dpr .dpr-job .ln .q i{font-style:normal;color:var(--dink3);font-size:10px;display:block}
+#mod-dpr .dpr-job .ln.mut .q b{color:var(--dink3);font-weight:600}
+#mod-dpr .dpr-srch{display:flex;gap:6px;padding:8px 10px;background:#fff;border-bottom:1px solid var(--dln2)}
+#mod-dpr .dpr-srch input{flex:1;border:1px solid var(--dln);border-radius:6px;padding:8px 10px;font-family:inherit;font-size:13px}
+#mod-dpr .dpr-tick{display:flex;gap:10px;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid var(--dln2);cursor:pointer}
+#mod-dpr .dpr-tick.dis{opacity:.55}#mod-dpr .dpr-tick input{width:18px;height:18px}
+#mod-dpr .dpr-tick span b{display:block;font-size:12.5px;font-weight:650}#mod-dpr .dpr-tick span i{font-style:normal;font-size:10.5px;color:var(--dink3)}
+#mod-dpr .dpr-line{display:grid;grid-template-columns:auto 1fr 84px auto auto;gap:6px;align-items:center;background:#fff;border-bottom:1px solid var(--dln2);padding:6px 10px}
+#mod-dpr .dpr-line.off{color:var(--dink3)}#mod-dpr .dpr-line.bad input[type=number]{border-color:var(--drd);background:var(--drdl)}
+#mod-dpr .dpr-line input[type=checkbox]{width:18px;height:18px}
+#mod-dpr .dpr-line b{font-size:12.5px;display:block}#mod-dpr .dpr-line i{font-style:normal;font-size:10.5px;color:var(--dink3);display:block}
+#mod-dpr .dpr-line input[type=number]{border:1px solid var(--dln);border-radius:5px;padding:7px;font-family:inherit;font-size:15px;font-weight:700;text-align:right;width:84px}
+#mod-dpr .dpr-line .u{font-size:11px;color:var(--dink2)}#mod-dpr .dpr-line .fin{font-size:10.5px;color:var(--dink2);white-space:nowrap}
+#mod-dpr .dpr-hd{background:#fff;border-bottom:1px solid var(--dln);padding:8px 10px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:2}
+#mod-dpr .dpr-hd b{font-size:14px;display:block}#mod-dpr .dpr-hd span{font-size:10.5px;color:var(--dink2);display:block}
+#mod-dpr .dpr-fab{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--dln);padding:8px 10px;display:flex;gap:8px;align-items:center;z-index:2}
+#mod-dpr .dpr-fab .sp{flex:1}
+#mod-dpr .dpr-hrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 10px;background:#fff;border-bottom:1px solid var(--dln2);cursor:pointer;border-left:4px solid var(--drd)}
+#mod-dpr .dpr-hrow.cl{border-left-color:var(--dln)}#mod-dpr .dpr-hrow .nm b{display:block;font-size:12.5px}#mod-dpr .dpr-hrow .nm span{font-size:10.5px;color:var(--dink2)}
+#mod-dpr .dpr-hrow .d{text-align:right}#mod-dpr .dpr-hrow .d b{font-size:18px;display:block;line-height:1}#mod-dpr .dpr-hrow .d span{font-size:9.5px;color:var(--dink3)}
+#mod-dpr table.dt tr.rd td{background:var(--drdl)}#mod-dpr table.dt tr.mut td{color:var(--dink3)}
+#mod-dpr .dprFld input[type=date]{width:100%;border:1px solid var(--dln);border-radius:4px;padding:9px;font-family:inherit;font-size:13px}
+/* ===== Masters · Labour (v146) ===== */
+#master-labour .lm-tabs{display:flex;background:#fff;border:1px solid var(--line,#c3ccd9);border-bottom:0}
+#master-labour .lm-tabs button{flex:1;border:0;background:none;font-family:inherit;font-size:12.5px;font-weight:700;color:#8a98ad;padding:9px 4px;border-right:1px solid #e0e5ec;border-bottom:2px solid transparent;cursor:pointer}
+#master-labour .lm-tabs button:last-child{border-right:0}#master-labour .lm-tabs button.on{color:#12305a;border-bottom-color:#12305a;background:#f3f6fa}
+#master-labour .lm-tabs button i{font-style:normal;font-size:10px;opacity:.75;display:block}
+#master-labour .lm-note{font-size:11px;padding:7px 9px;line-height:1.45;background:#f7f9fc;border:1px solid var(--line,#c3ccd9);border-top:0;color:#51627a}
+#master-labour .lm-note.red{background:#fceceb;color:#b3261e}
+#master-labour .lm-new{display:flex;gap:7px;align-items:center;padding:7px 9px;background:#f3f6fa;border:1px solid var(--line,#c3ccd9);border-top:0;flex-wrap:wrap}
+#master-labour .lm-new input,#master-labour .lm-new select{border:1px solid #c3ccd9;border-radius:3px;padding:6px 8px;font-family:inherit;font-size:12.5px}
+#master-labour table.lm-t{width:100%;border-collapse:collapse;background:#fff;font-size:12px}
+#master-labour .lm-t th,#master-labour .lm-t td{border:1px solid #c3ccd9;padding:5px 7px;vertical-align:middle}
+#master-labour .lm-t th{background:#eef2f7;text-align:left;font-weight:800;font-size:9.5px;color:#51627a}
+#master-labour .lm-t td.n,#master-labour .lm-t th.n{text-align:right}#master-labour .lm-t td.c,#master-labour .lm-t th.c{text-align:center}
+#master-labour .lm-t tr.mut td{color:#8a98ad}#master-labour .lm-t tr.new td{background:#f8fafc}
+#master-labour .lm-t input:not([type=checkbox]){border:1px solid transparent;background:transparent;font-family:inherit;font-size:12.5px;padding:4px 6px;width:100%}
+#master-labour .lm-t input:not([type=checkbox]):hover{border-color:#b6c0cc;background:#fff}#master-labour .lm-t input:not([type=checkbox]):focus{border-color:#0b7d7d;background:#fff;outline:0}
+#master-labour .lm-pill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:3px;background:#f0f2f5;color:#51627a;border:1px solid #d3d9e2}
+#master-labour .lm-ok{font-size:11px;color:#128a4a;font-weight:700}
+
 
 /* ===== v142 · two-tone ribbon ===== */
 #mod-dpr .dpr-ribbon{display:grid;grid-template-columns:1fr 1fr}
@@ -3377,6 +3444,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
     <div class="sub-tab" data-mastertab="contractors" onclick="switchMasterTab('contractors')">Contractor Master</div>
     <div class="sub-tab" data-mastertab="projcompany" onclick="switchMasterTab('projcompany')">Project &amp; Company</div>
     <div class="sub-tab" data-mastertab="areas" onclick="switchMasterTab('areas')">Site Areas</div>
+    <div class="sub-tab" data-mastertab="labour" onclick="switchMasterTab('labour')">Labour</div>
   </div>
   <div id="masterQueueBox"></div>
 
@@ -3649,6 +3717,20 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
           <div>ADD</div><div></div></div>
         <div id="ar_rows"></div>
       </div></div>
+    </div>
+  </div>
+  <!-- ==================== LABOUR MASTERS (v146) ==================== -->
+  <div id="master-labour" class="hidden">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:12px 14px 0">
+        <h3 style="display:flex;align-items:center;margin-bottom:4px">Labour
+          <span style="flex:1"></span>
+          <button class="btn btn-ghost btn-sm" onclick="DPRM.load()">&#8635; Refresh</button></h3>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px">
+          Trades on the engineer's steppers, non-estimated work items, daywork rates per contractor, and
+          estimate lines hidden from site reporting.</p>
+      </div>
+      <div id="lm_root"></div>
     </div>
   </div>
 </div>
@@ -7912,7 +7994,7 @@ function applyRoleUI() {
 // TAB NAVIGATION
 // ============================================================
 /* ═══════════════════════════════════════════════════════════════════════════
-   DAILY REPORT MODULE (v144) — header knows the sheet before it draws
+   DAILY REPORT MODULE (v146) — groups · per-engineer submission · M22
    ═══════════════════════════════════════════════════════════════════════════ */
 /* ==================================================================
    DAILY REPORT · v137
@@ -7927,27 +8009,20 @@ function applyRoleUI() {
 const DPR = (function () {
 
   const S = {
-    view: null,          // 'eng' | 'mgr'
-    areaId: null, areaName: '',
-    myAreas: [],
-    sub: null,           // submission row
-    works: [],
-    np: [],
-    today: null, from: null, to: null,
-    tab: 'works',
-    filt: 'all',         // all | fin | new
-    node: null,          // wbs node id when inside the tree
-    q: '',               // search inside a drill list
-    tree: {},            // scope -> nodes[] from rpc_dpr_area_wbs
-    locs: {},            // scope:node -> rows[] from rpc_dpr_area_locations
-    hist: null,          // past submissions
-    rtab: 'now',         // report sub-tab: now | hist
-    locked: false,
-    editing: null,       // work being edited
-    draft: null,
+    view: null,            // 'eng' | 'mgr'
+    sub: null, groups: [], np: [], returned: [], homeAreas: [],
+    today: null, from: null, to: null, locked: false, lateNow: false,
+    tab: 'works', filt: 'mine', q: '', rtab: 'now',
+    page: null,            // engineer: null | 'prev' | 'hist' | 'sub'
+    hist: null, histSub: null,
+    editing: null, draft: null,
+    // start / regroup
+    st: null,              // { q, locs, loc, lines, ticks:Set }
     // manager
-    mDate: null, mQueue: null, mSel: null, mDetail: null,
-    mTab: 'queue', hind: null, sheet: null, pubList: null
+    mDate: null, mToday: null, mProg: null, mQueue: null, mSel: null, mDetail: null,
+    mTab: 'queue', mPage: null, hind: null, hSum: null, hSel: null, sheet: null, pubList: null,
+    // masters
+    masters: null, _conMap: null, _cons: null
   };
 
   const $ = id => document.getElementById(id);
@@ -7955,25 +8030,25 @@ const DPR = (function () {
     c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = v => (v === null || v === undefined || v === '') ? 0 : Number(v);
   const fmt = v => { const n = num(v); return (Math.round(n * 1000) / 1000).toLocaleString('en-IN'); };
-  const dmy = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB',
-    { weekday: 'short', day: '2-digit', month: 'short' }) : '—';
-  const dsh = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB',
-    { day: '2-digit', month: 'short' }) : '—';
-  // yyyy-mm-dd in LOCAL time. toISOString() is UTC and shifts IST dates
-  // back a day after 18:30 — that was the blank-sheet bug.
+  const dmy = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }) : '—';
+  const dsh = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '—';
+  const hm  = t => t ? new Date(t).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '';
   const ymd = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
   const addDays = (d, n) => { const x = new Date(d + 'T00:00:00'); x.setDate(x.getDate() + n); return ymd(x); };
-  const projectId = () => (pgsS.project && pgsS.project.id) || state.claimProjectId;
   const conName = code => (S._conMap && S._conMap[code]) || code || '';
+  const sum = m => Object.values(m || {}).reduce((a, b) => a + num(b), 0);
+  const projName = () => (pgsS.project ? pgsS.project.project_name : '');
+  const istMins = () => { const ist = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })); return (13 * 60) - (ist.getHours() * 60 + ist.getMinutes()); };
 
   function err(e, fallback) {
     const m = (e && e.message ? e.message : '') + '';
-    const codes = ['DPR_PRIOR_OPEN','DPR_LOCKED','DPR_ALREADY_SUBMITTED','DPR_PENDING_WORKS',
-      'DPR_NO_LABOUR','DPR_DATE_OUT_OF_SPAN','DPR_WORK_CLOSED','DPR_NO_ESTIMATE',
-      'DPR_NO_AREA_FOR_LOCATION','DPR_SELF_ACCEPT','DPR_NOT_SUBMITTED','DPR_REASON_REQUIRED',
-      'DPR_ALREADY_PUBLISHED','DPR_TOO_EARLY','DPR_NOTHING_TO_PUBLISH','DPR_UNCLASSIFIED',
-      'DPR_NOT_RETURNABLE','DPR_BAD_REASON','DPR_NO_AREA'];
-    for (const c of codes) if (m.indexOf(c) >= 0) return m.split(c + ':')[1].trim();
+    const codes = ['DPR_LOCKED','DPR_ALREADY_SUBMITTED','DPR_EMPTY','DPR_DATE_OUT_OF_SPAN','DPR_WORK_CLOSED',
+      'DPR_NO_ESTIMATE','DPR_NO_LINES','DPR_LINE_IN_GROUP','DPR_MIXED_LOCATIONS','DPR_BAD_GROUP','DPR_OVER_ESTIMATE',
+      'DPR_SELF_ACCEPT','DPR_NOT_SUBMITTED','DPR_REASON_REQUIRED','DPR_ALREADY_PUBLISHED','DPR_TOO_EARLY',
+      'DPR_NOTHING_TO_PUBLISH','DPR_NOT_RETURNABLE','DPR_BAD_REASON','DPR_NO_AREA','DPR_BAD_CLOSE_DATE',
+      'DPR_NO_SUBMISSION','DPR_NO_GROUP','DPR_NO_WORK','DPR_BAD_CODE','DPR_BAD_NAME','DPR_BAD_RATE',
+      'DPR_NO_CONTRACTOR','DPR_NO_TRADE','DPR_NO_LINE','DPR_NOT_ON_PROJECT','DPR_CANNOT_FILE'];
+    for (const c of codes) if (m.indexOf(c) >= 0) return (m.split(c + ':')[1] || m.split(c)[1] || '').trim() || c;
     if (m.indexOf('PERM_DENIED') >= 0) return 'You do not have rights for that action';
     if (m.indexOf('DPR_NO_SESSION') >= 0) return 'Your session expired — sign in again';
     console.error('[DPR]', e);
@@ -7985,1397 +8060,742 @@ const DPR = (function () {
     const canFile = hasPerm('canFileDPR');
     const canRev  = hasPerm('canReviewDPR');
     if (!canFile && !canRev) {
-      $('dpr_root').innerHTML = '<div class="dpr-note a" style="margin:16px">'
-        + 'You have no daily-report rights on this project.</div>';
+      $('dpr_root').innerHTML = '<div class="dpr-note a" style="margin:16px">You have no daily-report rights on this project.</div>';
       return;
     }
-    // fn_role_clash guarantees nobody holds both sides; if both look
-    // true it is an admin override, and an admin reviews, not files.
     S.view = canRev ? 'mgr' : 'eng';
     $('dpr_root').innerHTML = '<div class="dpr-load">Loading…</div>';
     if (S.view === 'eng') await engLoad(); else await mgrLoad();
   }
 
-  /* ==================================================================
-     ENGINEER
-     ================================================================== */
-  async function engLoad() {
-    try {
-      // area resolution happens once per session; a save must not
-      // pay for it again.
-      if (!S.areaId || !S.myAreas.length) {
-        const me = (await sb.auth.getUser()).data.user;
-        const [mine, all] = await Promise.all([
-          sb.from('dpr_area_engineers').select('area_id').eq('is_active', true).eq('user_id', me ? me.id : null),
-          sb.from('dpr_areas').select('id,area_name').eq('is_active', true).order('sort_order')
-        ]);
-        if (mine.error) throw mine.error;
-        S.myAreas = all.data || [];
-        if (!S.myAreas.length) {
-          $('dpr_root').innerHTML = '<div class="dpr-note a" style="margin:16px">'
-            + 'No site areas exist yet. An administrator sets these up under '
-            + '<b>Masters &rsaquo; Site Areas</b> before daily reports can be filed.</div>';
-          return;
-        }
-        if (!S.areaId) S.areaId = (mine.data && mine.data.length) ? mine.data[0].area_id : S.myAreas[0].id;
-        // reference data in the same breath, not on first editor open
-        contractors(); tradeList(); hindReasons();
-      }
-      S.areaName = (S.myAreas.find(a => a.id === S.areaId) || {}).area_name || 'Area';
-
-      const { data, error } = await sb.rpc('rpc_dpr_open_day',
-        { p_area_id: S.areaId, p_shift: 'D' });
-      if (error) throw error;
-
-      S.sub    = data.submission;
-      S.works  = data.works || [];
-      S.np     = data.np || [];
-      S.today  = data.today;
-      S.from   = data.submission.progress_from;
-      S.to     = data.submission.progress_to;
-      S.locked = !!data.locked;
-      engRender();
-    } catch (e) {
-      const m = err(e, 'Could not open the day');
-      $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(m) + '</div>'
-        + '<div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try again</button></div>';
-    }
+  /* ================= reference data ================= */
+  async function masters() {
+    if (S.masters) return S.masters;
+    const [{ data }, cons] = await Promise.all([sb.rpc('rpc_dpr_masters'), contractors()]);
+    S.masters = data || { trades: [], np_reasons: [], hindrance_reasons: [], rates: [] };
+    S.masters.trades = (S.masters.trades || []).filter(t => t.is_active);
+    S.masters.np_reasons = (S.masters.np_reasons || []).filter(r => r.is_active);
+    S.masters.hindrance_reasons = (S.masters.hindrance_reasons || []).filter(r => r.is_active);
+    return S.masters;
   }
-
-  function wState(w) {
-    if (w.status === 'finished') return 'fin';
-    if (w.progress && w.progress.outcome === 'hindrance') return 'hind';
-    if (w.progress) return 'done';
-    return 'pend';
-  }
-  // a work is on the list from the moment it is started. site_works
-  // stays 'not_started' until the first worked progress flips it to
-  // 'wip' — filtering on 'wip' hid freshly started work entirely.
-  const running = () => S.works.filter(w => w.status !== 'finished');
-  const pending = () => running().filter(w => !w.progress);
-
-  function engRender() {
-    const days = num(S.sub.days_covered);
-    const late = days > 1;
-    const mins = (() => {
-      const now = new Date(); const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-      return (13 * 60) - (ist.getHours() * 60 + ist.getMinutes());
-    })();
-
-    let h = `<div class="dpr-bar">
-      <div class="ttl"><b>Daily Report</b><span>${esc(S.areaName)} · ${esc(pgsS.project ? pgsS.project.project_name : '')}</span></div>
-      <div class="nav">
-        ${S.myAreas.length > 1 ? `<select onchange="DPR.switchArea(this.value)"
-            style="background:#1b4179;color:#fff;border:1px solid #2e5794;border-radius:5px;
-                   padding:5px 8px;font-family:inherit;font-size:12px;font-weight:700">
-            ${S.myAreas.map(a => `<option value="${a.id}" ${a.id === S.areaId ? 'selected' : ''}>${esc(a.area_name)}</option>`).join('')}
-          </select>` : ''}
-        <span class="dpr-cut">Cut-off <b>${mins > 0 ? mins + ' min left' : 'passed'}</b></span>
-      </div>
-      <div class="st">${S.locked
-        ? '<span class="pill p-ok" style="background:#fff">Submitted ' + (S.sub.submitted_at
-            ? new Date(S.sub.submitted_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '') + '</span>'
-        : S.sub.status === 'Returned'
-          ? '<span class="pill p-red" style="background:#fff">Returned</span>'
-          : '<span class="pill p-grey" style="background:#fff">Draft</span>'}</div>
-      <div class="act">
-        <button class="dbtn ${S.locked ? '' : 'ok'}" ${S.locked ? 'disabled' : ''}
-          onclick="DPR.submit()">${S.locked ? 'Sent' : 'Submit'}</button>
-      </div></div>`;
-
-    const worked = S.works.filter(w => w.progress && w.progress.outcome === 'worked').length;
-    const hinds  = S.works.filter(w => w.progress && w.progress.outcome === 'hindrance').length;
-    const heads  = S.works.reduce((s, w) => s + Object.values(w.labour_heads || {}).reduce((x, y) => x + num(y), 0), 0)
-                 + S.np.reduce((s, r) => s + num(r.head_count), 0);
-    h += `<div class="dpr-kpis">
-      <div><b>${running().length}</b><span>RUNNING</span></div>
-      <div><b style="color:${pending().length ? 'var(--dam)' : 'var(--dok)'}">${pending().length}</b><span>PENDING</span></div>
-      <div><b style="color:var(--dv)">${worked}</b><span>PROGRESSED</span></div>
-      <div><b style="color:${hinds ? 'var(--drd)' : 'var(--dink3)'}">${hinds}</b><span>HINDRANCE</span></div>
-      <div><b style="color:var(--dtd)">${fmt(heads)}</b><span>HEADS TODAY</span></div>
-    </div>`;
-
-    h += `<div class="dpr-tabs">
-      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">Works<br><i>${pending().length ? pending().length + ' pending' : 'all filled'}</i></button>
-      <button class="${S.tab === 'other' ? 'on' : ''}" onclick="DPR.tab('other')">Other labour<br><i>${S.np.length} line${S.np.length === 1 ? '' : 's'}</i></button>
-      <button class="${S.tab === 'report' ? 'on' : ''}" onclick="DPR.tab('report')">Report<br><i>check &amp; send</i></button>
-    </div>`;
-
-    if (S.sub.status === 'Returned') {
-      h += `<div class="dpr-note r"><b>Returned by the manager.</b> ${esc(S.sub.return_reason || '')}
-        ${S.sub.return_note ? '— ' + esc(S.sub.return_note) : ''}<br>
-        Correct what is needed and submit again. This is attempt ${num(S.sub.attempt_no) + 1}.</div>`;
-    }
-    if (late) {
-      h += `<div class="dpr-note a"><b>This report covers ${days} days</b> —
-        ${dmy(S.from)} to ${dmy(S.to)}. A day was missed, so each work needs a figure for every day it moved.</div>`;
-    }
-    if (S.locked) {
-      h += `<div class="dpr-note g">Sent at
-        ${S.sub.submitted_at ? new Date(S.sub.submitted_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : ''}.
-        Nothing can be changed now. If something is wrong, ask the manager to return it.</div>`;
-    }
-
-    h += '<div id="dpr_body"></div>';
-    $('dpr_root').innerHTML = h;
-    engBody();
-  }
-
-  function engBody() {
-    if (S.tab === 'works')  return engWorks();
-    if (S.tab === 'other')  return engOther();
-    if (S.tab === 'report') return engReport();
-  }
-
-  /* ------------------------------------------------------------------
-     Works — three filters over the same area. "All" is what runs today,
-     grouped by activity. "Finished" and "Not started" are drill-downs:
-     the WBS activity first, then its locations, because an area carries
-     hundreds of lines and a flat list is unusable on a phone.
-     ------------------------------------------------------------------ */
-  const finished  = () => S.works.filter(w => w.status === 'finished');
-
-  function engWorks() {
-    const run = running(), fin = finished();
-    const tNew = S.tree['new'];
-    const nNew = tNew ? (tNew.find(n => n.parent_id === null) || {}).locations : null;
-
-    let h = `<div class="dpr-fbar">
-      <button class="${S.filt === 'all' ? 'on' : ''}" onclick="DPR.filt('all')">Running<i>${run.length}</i></button>
-      <button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished<i>${fin.length}</i></button>
-      <button class="${S.filt === 'new' ? 'on' : ''}" onclick="DPR.filt('new')">Not started<i>${nNew == null ? '…' : nNew}</i></button>
-    </div>`;
-
-    if (S.filt === 'all') { $('dpr_body').innerHTML = h + worksAll(run); return; }
-    return treeScreen(h, S.filt);
-  }
-
-  /* ---------- running works, grouped by activity ---------- */
-  // ancestor chain for a wbs node, from whichever tree scope we hold;
-  // fetched once for 'run' in the background so groups can show it.
-  function wbsPath(id) {
-    const nodes = S.tree.run || S.tree.new || S.tree.fin;
-    if (!nodes) return '';
-    const by = {}; nodes.forEach(n => by[n.id] = n);
-    const o = []; let c = by[id]; while (c && by[c.parent_id]) { c = by[c.parent_id]; o.unshift(c.name); }
-    return o.join(' › ');
-  }
-  async function primeRunTree() {
-    if (S.tree.run || S._priming) return;
-    S._priming = true;
-    try {
-      const { data } = await sb.rpc('rpc_dpr_area_wbs', { p_area_id: S.areaId, p_scope: 'run' });
-      S.tree.run = data || [];
-      if (S.tab === 'works' && S.filt === 'all') engWorks();
-    } catch (e) { /* cosmetic — never block filing on it */ }
-    S._priming = false;
-  }
-
-  function worksAll(rows) {
-    if (!S.tree.run) primeRunTree();
-    if (!rows.length) {
-      return `<div class="dpr-note">Nothing is running in this area yet.
-        Open <b>Not started</b> to begin a work from the approved estimate.</div>`;
-    }
-    const byAct = {};
-    rows.forEach(w => { (byAct[w.activity] = byAct[w.activity] || []).push(w); });
-
-    let h = `<div class="dpr-ribbon">
-        <div class="y">YESTERDAY · ${dmy(S.to).toUpperCase()} — WHAT WAS DONE</div>
-        <div class="t">TODAY · ${dmy(S.today).toUpperCase()} — WHO IS ON IT</div></div>
-      <div class="dpr-gwrap"><div class="dpr-grid">
-      <div class="dpr-gh"><div>WORK · LOCATION</div><div>${dmy(S.to).toUpperCase()} DONE</div>
-        <div>${dmy(S.today).toUpperCase()} LABOUR</div></div>`;
-
-    Object.keys(byAct).sort().forEach(act => {
-      const g = byAct[act];
-      const pend = g.filter(w => !w.progress).length;
-      const upd  = g.filter(w => w.progress).length;
-      const est  = g.reduce((s, w) => s + num(w.est_qty), 0);
-      const dn   = g.reduce((s, w) => s + num(w.cum_published), 0);
-      const par = wbsPath(g[0].wbs_node_id);
-      h += `<div class="dpr-gbar"><span>${esc(act)}${par ? '<div class="n" style="font-weight:600">' + esc(par) + '</div>' : ''}</span>
-        <span class="n">${g.length} loc · ${Math.round(est ? dn / est * 100 : 0)}%</span>
-        <span class="r">${pend ? `<span class="pill p-amb">${pend} pending</span>` : ''}
-          ${upd ? `<span class="pill p-ok">${upd} filled</span>` : ''}</span></div>`;
-      g.forEach(w => { h += trow(w); });
-    });
-    h += '</div></div>';
-
-    if (!S.locked) {
-      h += `<div class="dacts"><span class="sp"></span>
-        <button class="dbtn ok" onclick="DPR.submit()">Submit the day</button></div>`;
-      if (pending().length) {
-        h += `<div class="dpr-note a">${pending().length} work${pending().length === 1 ? '' : 's'}
-          still need a figure before this can be sent.</div>`;
-      }
-    }
-    return h;
-  }
-
-  function trow(w) {
-    const st = wState(w), p = w.progress, l = w.labour;
-    const cum = num(w.cum_published), est = num(w.est_qty) || 1;
-    const add = p && p.outcome === 'worked' ? num(p.qty_done) : 0;
-    const pc = Math.min(100, cum / est * 100), pa = Math.min(100 - pc, add / est * 100);
-    const heads = Object.values(w.labour_heads || {}).reduce((s, v) => s + num(v), 0);
-    return `<div class="dpr-r ${st}" onclick="DPR.edit('${w.work_id}')">
-      <div class="nm"><b>${esc(w.location)}</b>
-        ${w.status === 'not_started' ? '<span class="pill p-teal">not begun</span>' : ''}
-        <span>${fmt(cum)}${add ? ' + ' + fmt(add) : ''} of ${fmt(w.est_qty)} ${esc(w.uom || '')}</span>
-        <div class="dpr-bar2"><i style="width:${pc}%"></i><u style="width:${pa}%"></u></div></div>
-      <div class="cell">${!p ? '<span class="pill p-amb">not filled</span>'
-        : p.outcome === 'worked' ? '<b>' + fmt(p.qty_done) + '</b> ' + esc(w.uom || '')
-            + (p.marks_finished ? ' <span class="pill p-ok">finished</span>' : '')
-        : p.outcome === 'hindrance' ? '<span class="pill p-red">hindrance</span><i>'
-            + esc((w.open_hindrance || {}).reason_text || '') + '</i>'
-        : '<span class="pill p-grey">no work</span>'}</div>
-      <div class="cell">${!l ? '<span class="pill p-grey">—</span>'
-        : l.outcome === 'work' ? '<b>' + fmt(heads) + '</b> heads<i>' + esc(conName(l.contractor_code)) + '</i>'
-        : l.outcome === 'hindrance' ? '<span class="pill p-red">hindrance</span>'
-        : '<span class="pill p-grey">no labour</span>'}</div></div>`;
-  }
-
-  /* ------------------------------------------------------------------
-     WBS tree. rpc_dpr_area_wbs returns every node with a matching
-     line beneath it, counts already rolled up, so Tower-C's 1,356
-     startable lines arrive as ~60 nodes. Locations come per node,
-     only when that node is opened.
-     ------------------------------------------------------------------ */
-  async function treeScreen(head, scope) {
-    if (!S.tree[scope]) {
-      $('dpr_body').innerHTML = head + '<div class="dpr-load">Reading the WBS…</div>';
-      try {
-        const { data, error } = await sb.rpc('rpc_dpr_area_wbs', { p_area_id: S.areaId, p_scope: scope });
-        if (error) throw error;
-        S.tree[scope] = data || [];
-      } catch (e) {
-        $('dpr_body').innerHTML = head + '<div class="dpr-note r">' + esc(err(e, 'Could not read the WBS')) + '</div>';
-        return;
-      }
-      engRender(); return;
-    }
-    const nodes = S.tree[scope], byId = {};
-    nodes.forEach(n => byId[n.id] = n);
-    const path = id => { const o = []; let c = byId[id]; while (c) { o.unshift(c); c = byId[c.parent_id]; } return o; };
-    const root = nodes.filter(n => !byId[n.parent_id]);
-    const label = scope === 'fin' ? 'finished' : 'left to start';
-    if (!nodes.length) { $('dpr_body').innerHTML = head + `<div class="dpr-note ${scope === 'fin' ? '' : 'g'}">Nothing ${label} here.</div>`; return; }
-
-    const cur = S.node ? byId[S.node] : null;
-    const crumb = (n, count) => `<div class="dpr-crumb"><button onclick="DPR.node(null)">‹ Top</button>
-      ${path(n.id).slice(0, -1).map(x => `<button onclick="DPR.node(${x.id})">${esc(x.name)}</button>`).join('')}
-      <b>${esc(n.name)}</b><span style="margin-left:auto;color:var(--dink3)">${count} location(s)</span></div>`;
-
-    // inside an activity → its locations, loaded on demand
-    if (cur && (cur.node_type === 'activity' || cur.is_leaf)) {
-      const key = scope + ':' + cur.id;
-      if (!S.locs[key]) {
-        $('dpr_body').innerHTML = head + crumb(cur, cur.locations) + '<div class="dpr-load">Loading locations…</div>';
-        try {
-          const { data, error } = await sb.rpc('rpc_dpr_area_locations',
-            { p_area_id: S.areaId, p_wbs_node_id: cur.id, p_scope: scope });
-          if (error) throw error;
-          S.locs[key] = data || [];
-        } catch (e) {
-          $('dpr_body').innerHTML = head + crumb(cur, cur.locations) + '<div class="dpr-note r">' + esc(err(e, 'Could not load locations')) + '</div>';
-          return;
-        }
-      }
-      const all = S.locs[key];
-      const g = all.filter(r => !S.q || (r.location || '').toLowerCase().indexOf(S.q.toLowerCase()) >= 0);
-      let h = head + crumb(cur, all.length);
-      if (all.length > 12) h += `<div class="dpr-srch"><input placeholder="Filter locations…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"></div>`;
-      h += g.map(r => `<div class="dpr-lrow"><div class="nm"><b>${esc(r.location)}</b>
-          <span>${scope === 'fin' ? fmt(r.cum_qty) + ' of ' + fmt(r.est_qty) : fmt(r.est_qty)} ${esc(r.uom || '')}
-            ${scope === 'fin' ? (r.finished_on ? '· closed ' + dmy(r.finished_on) : '') : 'estimated'}</span></div>
-          ${scope === 'fin' ? '<span class="pill p-ok">finished</span>'
-            : S.locked ? '<span class="pill p-grey">locked</span>'
-            : `<button class="dbtn sm" onclick="DPR.start(${r.wbs_node_id},'${r.loc_node_id}')">start</button>`}</div>`).join('');
-      if (!g.length) h += '<div class="dpr-note">No location matches that.</div>';
-      $('dpr_body').innerHTML = h; return;
-    }
-
-    // a node → its children
-    const ch = (cur ? nodes.filter(n => n.parent_id === cur.id) : root);
-    let h = head + (cur ? crumb(cur, cur.locations)
-      : `<div class="dpr-sec">WBS<small>${root.reduce((a, n) => a + num(n.locations), 0)} location(s)</small></div>`);
-    h += '<div class="dpr-tree">' + ch.map(n => {
-      const leaf = n.node_type === 'activity' || n.is_leaf;
-      const lv = Math.min(2, path(n.id).length - 1);
-      return `<div class="dpr-tn ${leaf ? '' : 'grp'} lv${lv}" onclick="DPR.node(${n.id})">
-        <div class="nm"><span class="tw">${leaf ? '▸' : '▾'}</span>
-          <span class="lb"><b>${esc(n.name)}</b>
-            <span class="code">${esc(n.wbs_code || '')}</span>
-            <span> · ${n.locations} location${n.locations > 1 ? 's' : ''}</span></span></div>
-        <div class="qty"><b>${fmt(n.est_qty)}</b>${leaf ? esc(n.uom || '') : 'est'}</div>
-        <div class="tw">›</div></div>`;
-    }).join('') + '</div>';
-    $('dpr_body').innerHTML = h;
-  }
-
-
-  async function start(wbs, loc) {
-    try {
-      const { error } = await sb.rpc('rpc_dpr_start_work',
-        { p_wbs_node_id: wbs, p_loc_node_id: loc });
-      if (error) throw error;
-      toast('Work started — it is on your Works list now', 'success');
-      S.tree = {}; S.locs = {}; S.node = null; S.q = ''; S._priming = false;
-      await engLoad(); S.tab = 'works'; S.filt = 'all'; engRender();
-    } catch (e) { toast(err(e, 'Could not start that work'), 'error'); }
-  }
-
-  /* ---------- non-productive labour ---------- */
-  async function engOther() {
-    let reasons = S._npReasons;
-    if (!reasons) {
-      const { data } = await sb.from('dpr_np_reasons')
-        .select('reason_code,reason_text').eq('is_active', true).order('sort_order');
-      reasons = S._npReasons = data || [];
-    }
-    let h = `<div class="dpr-band t">TODAY · ${dmy(S.today)} — labour not against a work</div>
-      <div class="dpr-note">Housekeeping, shifting, dewatering, idle time. This keeps the day's
-        head-count honest even when nothing was produced.</div>`;
-    if (S.np.length) {
-      h += `<table class="dt"><tr><th>REASON</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th><th></th></tr>`;
-      S.np.forEach((r, i) => {
-        h += `<tr><td>${esc(r.reason_text)}</td><td>${esc(conName(r.contractor_code))}</td>
-          <td>${esc(r.trade_code)}</td><td class="n">${fmt(r.head_count)}</td>
-          <td>${S.locked ? '' : '<button class="dbtn sm" onclick="DPR.npDrop(' + i + ')">×</button>'}</td></tr>`;
-      });
-      h += '</table>';
-    } else {
-      h += '<div class="dpr-note">Nothing recorded.</div>';
-    }
-    if (!S.locked) {
-      h += `<div class="dacts"><span class="sp"></span>
-        <button class="dbtn" onclick="DPR.npAdd()">＋ Add a line</button></div>`;
-    }
-    $('dpr_body').innerHTML = h;
-  }
-
-  async function npAdd() {
-    const reasons = S._npReasons || [];
-    const cons = await contractors();
-    const trades = await tradeList();
-    sheetOpen('Labour not against a work', dmy(S.today), `
-      <div class="dprFld"><label>WHAT WERE THEY DOING</label>
-        <select id="np_r">${reasons.map(r => `<option value="${r.reason_code}">${esc(r.reason_text)}</option>`).join('')}</select></div>
-      <div class="dprFld"><label>CONTRACTOR</label>
-        <select id="np_c">${cons.map(c => `<option value="${esc(c)}">${esc(conName(c))}</option>`).join('')}</select></div>
-      <div class="dprFld"><label>TRADE</label>
-        <select id="np_t">${trades.map(t => `<option value="${t.trade_code}">${esc(t.trade_name)}</option>`).join('')}</select></div>
-      <div class="dprFld"><label>HOW MANY</label>
-        <div class="dprQty"><button onclick="DPR.bump('np_h',-1)">−</button>
-          <input id="np_h" type="number" inputmode="numeric" value="1" min="0">
-          <button onclick="DPR.bump('np_h',1)">+</button></div></div>`,
-      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>
-       <button class="dbtn pri" onclick="DPR.npSave()">Add</button>`);
-  }
-  async function npSave() {
-    const r = $('np_r').value, c = $('np_c').value, t = $('np_t').value, n = num($('np_h').value);
-    if (n <= 0) { toast('Enter how many people', 'warn'); return; }
-    const rows = S.np.map(x => ({ reason_code: x.reason_code, contractor: x.contractor_code,
-      trade: x.trade_code, heads: num(x.head_count) }));
-    rows.push({ reason_code: r, contractor: c, trade: t, heads: n });
-    await npPush(rows);
-  }
-  async function npDrop(i) {
-    const rows = S.np.filter((_, j) => j !== i).map(x => ({ reason_code: x.reason_code,
-      contractor: x.contractor_code, trade: x.trade_code, heads: num(x.head_count) }));
-    await npPush(rows);
-  }
-  async function npPush(rows) {
-    try {
-      const { error } = await sb.rpc('rpc_dpr_save_np',
-        { p_submission_id: S.sub.id, p_rows: rows });
-      if (error) throw error;
-      sheetClose(); await engLoad(); S.tab = 'other'; engRender();
-    } catch (e) { toast(err(e, 'Could not save'), 'error'); }
-  }
-
-  /* ---------- the work editor ---------- */
-  async function edit(workId) {
-    const w = S.works.find(x => x.work_id === workId); if (!w) return;
-    if (S.locked) {
-      sheetOpen(w.activity, w.location, engReadOnly(w),
-        '<span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>');
-      return;
-    }
-    S.editing = w;
-    const cons = await contractors();
-    const trades = await tradeList();
-    const reasons = await hindReasons();
-    const p = w.progress || {}, l = w.labour || {};
-    S.draft = {
-      y_out: p.outcome || 'worked',
-      y_qty: num(p.qty_done),
-      y_fin: !!p.marks_finished,
-      y_rc:  (w.open_hindrance || {}).reason_code || (reasons[0] || {}).reason_code,
-      y_con: p.contractor_code || w.memo_contractor || (cons[0] || ''),
-      y_lab: Object.assign({}, w.progress_labour || {}),
-      t_out: l.outcome || 'work',
-      t_con: l.contractor_code || w.memo_contractor || (cons[0] || ''),
-      t_rc:  (w.open_hindrance || {}).reason_code || (reasons[0] || {}).reason_code,
-      t_lab: Object.assign({}, Object.keys(w.labour_heads || {}).length ? w.labour_heads : (w.memo_labour || {})),
-      memo:  !Object.keys(w.labour_heads || {}).length && Object.keys(w.memo_labour || {}).length > 0,
-      cons, trades, reasons
-    };
-    sheetOpen(w.activity, w.location + ' · ' + fmt(w.cum_published) + ' of ' + fmt(w.est_qty) + ' ' + (w.uom || ''),
-      '<div id="dpr_ed"></div>',
-      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>
-       <button class="dbtn ok" onclick="DPR.saveWork()">Save</button>`);
-    drawEditor();
-  }
-
-  function engReadOnly(w) {
-    const p = w.progress, l = w.labour;
-    return `<div class="dpr-note g">This sheet was submitted and cannot be changed.</div>
-      <div class="dpr-sec">${dmy(S.to).toUpperCase()}</div>
-      <div class="dprFld">${!p ? 'Nothing filed'
-        : p.outcome === 'worked' ? '<b style="font-size:17px">' + fmt(p.qty_done) + ' ' + esc(w.uom || '') + '</b>'
-            + (p.marks_finished ? ' &nbsp;<span class="pill p-ok">marked finished</span>' : '')
-        : p.outcome === 'hindrance' ? 'Hindrance — ' + esc((w.open_hindrance || {}).reason_text || '')
-        : 'No work'}</div>
-      <div class="dpr-sec">${dmy(S.today).toUpperCase()}</div>
-      <div class="dprFld">${!l ? 'Nothing filed'
-        : l.outcome === 'work' ? esc(conName(l.contractor_code)) + ' · '
-            + Object.entries(w.labour_heads || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(', ')
-        : l.outcome === 'hindrance' ? 'Hindrance' : 'No labour'}</div>`;
-  }
-
-  function drawEditor() {
-    const w = S.editing, d = S.draft;
-    const est = num(w.est_qty), cum = num(w.cum_published);
-    const left = Math.max(0, est - cum);
-    let h = `<div class="dpr-band y">YESTERDAY · ${dmy(S.to)}</div>
-      <div class="dprSeg">
-        <button class="${d.y_out === 'worked' ? 'on' : ''}" onclick="DPR.setY('worked')">Worked</button>
-        <button class="${d.y_out === 'hindrance' ? 'on red' : ''}" onclick="DPR.setY('hindrance')">Hindrance</button>
-        <button class="${d.y_out === 'none' ? 'on grey' : ''}" onclick="DPR.setY('none')">No work</button>
-      </div>`;
-
-    if (d.y_out === 'worked') {
-      const over = num(d.y_qty) > left;
-      h += `<div class="dprFld ${over ? 'bad' : ''}"><label>HOW MUCH WAS DONE · ${esc(w.uom || '')}
-          <span style="float:right;font-weight:700;color:#8a98ad">${fmt(left)} left of ${fmt(est)}</span></label>
-        <div class="dprQty"><button onclick="DPR.bump('y_qty',-1)">−</button>
-          <input id="y_qty" type="number" inputmode="decimal" step="any" value="${d.y_qty}"
-            oninput="DPR.draftSet('y_qty',this.value)">
-          <button onclick="DPR.bump('y_qty',1)">+</button></div>
-        ${over ? '<div class="dpr-note r" style="margin-top:7px"><b>Only ' + fmt(left) + ' ' + esc(w.uom || '')
-          + ' remains on this estimate.</b> You cannot report more than was estimated. If extra work was '
-          + 'genuinely done, the estimate needs a variation first — tell your QS.</div>' : ''}
-      </div>
-      <div class="dprFld"><label>CONTRACTOR ON IT</label>
-        <select onchange="DPR.draftSet('y_con',this.value)">
-          ${d.cons.map(c => `<option value="${esc(c)}" ${c === d.y_con ? 'selected' : ''}>${esc(conName(c))}</option>`).join('')}</select></div>
-      <div class="dpr-sec">WHO WAS WORKING${d.memo ? ' <span class="dprMemo">FROM LAST ENTRY</span>' : ''}</div>`;
-      d.trades.forEach(t => {
-        const k = d.y_con + ':' + t.trade_code, v = num(d.y_lab[k]);
-        h += `<div class="dprLab"><span class="t">${esc(t.trade_name)}</span>
-          <button onclick="DPR.lab('y','${esc(k)}',-1)">−</button>
-          <input type="number" inputmode="numeric" value="${v}" min="0"
-            oninput="DPR.labSet('y','${esc(k)}',this.value)">
-          <button onclick="DPR.lab('y','${esc(k)}',1)">+</button></div>`;
-      });
-      if (!Object.values(d.y_lab).reduce((a, b) => a + num(b), 0)) {
-        h += '<div class="dpr-note a">Work was done, so somebody did it. Enter at least one head.</div>';
-      }
-      h += `<div class="dprFld"><label>
-        <input type="checkbox" ${d.y_fin ? 'checked' : ''} onchange="DPR.draftSet('y_fin',this.checked)"
-          style="width:auto;margin-right:7px"> This work is finished</label>
-        ${d.y_fin ? '<div class="dpr-note a" style="margin-top:6px">Once the manager publishes, this work '
-          + 'closes and leaves your daily list. Reopening needs the manager.</div>' : ''}</div>`;
-    } else if (d.y_out === 'hindrance') {
-      h += `<div class="dprFld"><label>WHAT STOPPED IT</label>
-        <select onchange="DPR.draftSet('y_rc',this.value)">
-          ${d.reasons.map(r => `<option value="${r.reason_code}" ${r.reason_code === d.y_rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select>
-        <div class="dpr-note v" style="margin-top:7px">Report what happened. The manager decides whose
-          delay it is — that is what supports an extension of time claim.</div></div>`;
-    } else {
-      h += '<div class="dpr-note">Nothing happened here yesterday. No quantity, no labour.</div>';
-    }
-
-    h += `<div class="dpr-band t">TODAY · ${dmy(S.today)}</div>
-      <div class="dprSeg">
-        <button class="${d.t_out === 'work' ? 'on' : ''}" onclick="DPR.setT('work')">Working</button>
-        <button class="${d.t_out === 'hindrance' ? 'on red' : ''}" onclick="DPR.setT('hindrance')">Hindrance</button>
-        <button class="${d.t_out === 'none' ? 'on grey' : ''}" onclick="DPR.setT('none')">No labour</button>
-      </div>`;
-    if (d.t_out === 'work') {
-      h += `<div class="dprFld"><label>CONTRACTOR</label>
-        <select onchange="DPR.draftSet('t_con',this.value)">
-          ${d.cons.map(c => `<option value="${esc(c)}" ${c === d.t_con ? 'selected' : ''}>${esc(conName(c))}</option>`).join('')}</select></div>
-        <div class="dpr-sec">STRENGTH TODAY${d.memo ? ' <span class="dprMemo">FROM LAST ENTRY</span>' : ''}</div>`;
-      d.trades.forEach(t => {
-        const v = num(d.t_lab[t.trade_code]);
-        h += `<div class="dprLab"><span class="t">${esc(t.trade_name)}</span>
-          <button onclick="DPR.lab('t','${t.trade_code}',-1)">−</button>
-          <input type="number" inputmode="numeric" value="${v}" min="0"
-            oninput="DPR.labSet('t','${t.trade_code}',this.value)">
-          <button onclick="DPR.lab('t','${t.trade_code}',1)">+</button></div>`;
-      });
-      if (!Object.values(d.t_lab).reduce((a, b) => a + num(b), 0)) {
-        h += '<div class="dpr-note a">Somebody is on this work today. Enter at least one head, or switch to <b>No labour</b>.</div>';
-      }
-    } else if (d.t_out === 'hindrance') {
-      h += `<div class="dprFld"><label>WHAT IS STOPPING IT</label>
-        <select onchange="DPR.draftSet('t_rc',this.value)">
-          ${d.reasons.map(r => `<option value="${r.reason_code}" ${r.reason_code === d.t_rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select></div>`;
-    } else {
-      h += '<div class="dpr-note">Nobody on this work today.</div>';
-    }
-    $('dpr_ed').innerHTML = h;
-  }
-
-  function setY(v) { S.draft.y_out = v; drawEditor(); }
-  function setT(v) { S.draft.t_out = v; drawEditor(); }
-  function draftSet(k, v) {
-    S.draft[k] = v;
-    if (k === 'y_con' || k === 'y_fin' || k === 't_con') drawEditor();
-    if (k === 'y_qty') {   // keep focus, just repaint the warning
-      const w = S.editing, left = Math.max(0, num(w.est_qty) - num(w.cum_published));
-      const el = $('y_qty');
-      const f = el && typeof el.closest === 'function' ? el.closest('.dprFld') : null;
-      if (f) f.classList.toggle('bad', num(v) > left);
-    }
-  }
-  function lab(side, key, delta) {
-    const m = side === 'y' ? S.draft.y_lab : S.draft.t_lab;
-    m[key] = Math.max(0, num(m[key]) + delta); drawEditor();
-  }
-  function labSet(side, key, v) {
-    const m = side === 'y' ? S.draft.y_lab : S.draft.t_lab;
-    m[key] = Math.max(0, num(v));
-  }
-  function bump(id, d) {
-    const el = $(id); if (!el) return;
-    el.value = Math.max(0, num(el.value) + d);
-    if (id === 'y_qty') { S.draft.y_qty = num(el.value); drawEditor(); }
-  }
-
-  async function saveWork() {
-    const w = S.editing, d = S.draft;
-    const left = Math.max(0, num(w.est_qty) - num(w.cum_published));
-    const sum = m => Object.values(m || {}).reduce((a, b) => a + num(b), 0);
-    if (d.y_out === 'worked') {
-      if (num(d.y_qty) <= 0) { toast('Enter how much was done', 'warn'); return; }
-      if (num(d.y_qty) > left) { toast('Refused — only ' + fmt(left) + ' ' + (w.uom || '') + ' remains on the estimate', 'error'); return; }
-      if (!sum(d.y_lab)) { toast('Enter who was working, or mark it No work', 'warn'); return; }
-    }
-    if (d.t_out === 'work' && !sum(d.t_lab)) { toast('Enter today\u2019s strength, or choose No labour', 'warn'); return; }
-    try {
-      const prog = d.y_out === 'worked'
-        ? { outcome: 'worked', qty: num(d.y_qty), finish: !!d.y_fin, contractor: d.y_con,
-            work_date: S.to, labour: clean(d.y_lab) }
-        : d.y_out === 'hindrance'
-          ? { outcome: 'hindrance', work_date: S.to, reason_code: d.y_rc }
-          : { outcome: 'none', work_date: S.to };
-      const today = d.t_out === 'work'
-        ? { outcome: 'work', contractor: d.t_con, labour: clean(d.t_lab) }
-        : d.t_out === 'hindrance'
-          ? { outcome: 'hindrance', reason_code: d.t_rc }
-          : { outcome: 'none' };
-
-      const { error } = await sb.rpc('rpc_dpr_save_work', {
-        p_submission_id: S.sub.id, p_work_id: w.work_id,
-        p_progress: prog, p_today: today });
-      if (error) throw error;
-      sheetClose(); await engLoad(); engRender();
-    } catch (e) { toast(err(e, 'Could not save'), 'error'); }
-  }
-  function clean(m) {
-    const o = {}; Object.keys(m || {}).forEach(k => { if (num(m[k]) > 0) o[k] = num(m[k]); }); return o;
-  }
-
-  function submit() {
-    if (S.locked) { toast('Already sent', 'warn'); return; }
-    const pend = pending();
-    const heads = todayHeads();
-    sheetOpen('Before you send', S.areaName + ' · ' + dmy(S.to) + ' progress, ' + dmy(S.today) + ' labour',
-      '<div class="dpr-note v">This is exactly what the manager will see. Nothing can be changed once sent.</div>'
-      + (pend.length ? '<div class="dpr-note a"><b>' + pend.length + ' work(s) have no figure.</b> They will be sent as not reported: '
-          + pend.slice(0, 8).map(w => esc(w.location)).join(', ') + '.</div>' : '')
-      + (!heads ? '<div class="dpr-note r"><b>No labour at all for today.</b> If genuinely nobody worked, add a line under Other labour saying why.</div>' : '')
-      + sheetBody(),
-      '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Keep editing</button>'
-      + '<button class="dbtn ok" onclick="DPR.submitGo()">Send to manager</button>');
-  }
-  function todayHeads() {
-    return S.works.reduce((s, w) => s + Object.values(w.labour_heads || {}).reduce((x, y) => x + num(y), 0), 0)
-         + S.np.reduce((s, r) => s + num(r.head_count), 0);
-  }
-  async function submitGo() {
-    if (!todayHeads()) { toast('No labour entered for today', 'error'); return; }
-    try {
-      const { data, error } = await sb.rpc('rpc_dpr_submit', { p_submission_id: S.sub.id });
-      if (error) throw error;
-      sheetClose();
-      toast('Sent — locked until the manager reviews (attempt ' + (data ? data.attempt : 1) + ')', 'success');
-      await engLoad(); S.tab = 'report'; S.rtab = 'now'; engRender();
-    } catch (e) { toast(err(e, 'Could not send'), 'error'); }
-  }
-
-  /* ------------------------------------------------------------------
-     Report — two faces. "This sheet" is the preview the engineer checks
-     before sending; "My past reports" is what they filed before, with
-     the return reasons intact. Labour is a contractor x trade matrix,
-     which is how a site actually reads a head-count.
-     ------------------------------------------------------------------ */
-  function engReport() {
-    let h = `<div class="dpr-fbar">
-      <button class="${S.rtab === 'now' ? 'on' : ''}" onclick="DPR.rtab('now')">This sheet</button>
-      <button class="${S.rtab === 'hist' ? 'on' : ''}" onclick="DPR.rtab('hist')">My past reports</button>
-    </div>`;
-    if (S.rtab === 'hist') { $('dpr_body').innerHTML = h + '<div id="dpr_hist"><div class="dpr-load">Loading…</div></div>'; engHist(); return; }
-
-    h += sheetBody();
-    if (!S.locked) {
-      h += `<div class="dacts"><span class="sp"></span>
-        <button class="dbtn ok" onclick="DPR.submit()">Looks right — submit</button></div>`;
-    }
-    $('dpr_body').innerHTML = h;
-  }
-
-  function sheetBody() {
-    const rows = S.works.filter(w => w.progress);
-    const hind   = rows.filter(w => w.progress.outcome === 'hindrance');
-    const pend   = pending();
-    let h = '';
-    h += `<table class="dt" style="border-left:0;border-right:0">
-      <tr><th>SHEET</th><td>${esc(S.areaName)} · day shift</td>
-        <th>STATUS</th><td>${S.locked
-          ? '<span class="pill p-ok">submitted ' + (S.sub.submitted_at
-              ? new Date(S.sub.submitted_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '') + ' · locked</span>'
-          : S.sub.status === 'Returned'
-            ? '<span class="pill p-amb">returned — attempt ' + (num(S.sub.attempt_no) + 1) + '</span>'
-            : '<span class="pill p-grey">not submitted</span>'}</td></tr></table>`;
-
-    if (pend.length) {
-      h += `<div class="dpr-note a"><b>${pend.length} work${pend.length === 1 ? '' : 's'} with no figure.</b>
-        ${pend.slice(0, 6).map(w => esc(w.location)).join(', ')}${pend.length > 6 ? ' and ' + (pend.length - 6) + ' more' : ''}.</div>`;
-    }
-
-    h += `<div class="dpr-sec">PROGRESS · ${dmy(S.to).toUpperCase()}<small>${rows.length} line(s)</small></div>`;
-    if (!rows.length) h += '<div class="dpr-note a">Nothing filed yet.</div>';
-    else {
-      h += `<table class="dt"><tr><th>ACTIVITY</th><th>LOCATION</th><th class="n">DONE</th>
-        <th>UOM</th><th>NOTE</th></tr>`;
-      rows.forEach(w => {
-        const p = w.progress;
-        h += `<tr class="${p.outcome === 'hindrance' ? 'am' : ''}">
-          <td>${esc(w.activity)}</td><td>${esc(w.location)}</td>
-          <td class="n">${p.outcome === 'worked' ? fmt(p.qty_done) : '—'}</td>
-          <td>${esc(w.uom || '')}</td>
-          <td>${p.outcome === 'hindrance' ? 'Hindrance — ' + esc((w.open_hindrance || {}).reason_text || '')
-            : p.outcome === 'none' ? 'No work'
-            : (p.marks_finished ? 'Marked finished' : '')}</td></tr>`;
-      });
-      h += '</table>';
-    }
-    if (hind.length) {
-      h += `<div class="dpr-note r"><b>${hind.length} hindrance${hind.length === 1 ? '' : 's'}.</b>
-        The manager attributes each one to a party.</div>`;
-    }
-    h += `<div class="dpr-sec">LABOUR · ${dmy(S.today).toUpperCase()}</div>` + labMatrix();
-    return h;
-  }
-
-  /* contractor down the side, trade across the top */
-  function labMatrix() {
-    const tot = {};                     // contractor -> trade -> heads
-    const add = (c, t, n) => { if (!num(n)) return; (tot[c] = tot[c] || {}); tot[c][t] = num(tot[c][t]) + num(n); };
-    S.works.forEach(w => {
-      const c = (w.labour && w.labour.contractor_code) || w.memo_contractor || '—';
-      Object.entries(w.labour_heads || {}).forEach(([t, n]) => add(c, t, n));
-    });
-    S.np.forEach(r => add(r.contractor_code || '—', r.trade_code, r.head_count));
-
-    const cons = Object.keys(tot).sort();
-    if (!cons.length) return '<div class="dpr-note a">Nobody entered for today yet.</div>';
-    const trades = (S._trades || []).map(t => t.trade_code)
-      .filter(tc => cons.some(c => num(tot[c][tc])));
-    Object.values(tot).forEach(m => Object.keys(m).forEach(t => {
-      if (trades.indexOf(t) < 0) trades.push(t);
-    }));
-    const nameOf = tc => { const t = (S._trades || []).find(x => x.trade_code === tc); return t ? t.trade_name : tc; };
-
-    const cols = trades.map(() => 0); let gt = 0;
-    let h = `<table class="dt"><tr><th>CONTRACTOR</th>${trades.map(t =>
-      `<th class="c" title="${esc(nameOf(t))}">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th></tr>`;
-    cons.forEach(c => {
-      let rs = 0;
-      const cells = trades.map((t, i) => {
-        const v = num(tot[c][t]); rs += v; cols[i] += v;
-        return `<td class="c">${v || ''}</td>`;
-      }).join('');
-      gt += rs;
-      h += `<tr><td>${esc(conName(c))}</td>${cells}<td class="n"><b>${fmt(rs)}</b></td></tr>`;
-    });
-    h += `<tr class="tt"><td>TOTAL</td>${cols.map(v => `<td class="c">${v || ''}</td>`).join('')}
-      <td class="n">${fmt(gt)}</td></tr></table>
-      <div class="dpr-note">Columns are trade codes — ${trades.map(t => esc(t) + ' = ' + esc(nameOf(t))).join(', ')}.</div>`;
-    return h;
-  }
-
-  /* ---------- what this engineer filed before ---------- */
-  async function engHist() {
-    try {
-      const { data, error } = await sb.from('dpr_submissions')
-        .select('id,business_date,progress_from,progress_to,days_covered,status,attempt_no,'
-              + 'submitted_at,reviewed_at,return_reason,return_note')
-        .eq('area_id', S.areaId)
-        .order('business_date', { ascending: false }).limit(60);
-      if (error) throw error;
-      const rows = (data || []).filter(r => r.id !== S.sub.id);
-      let h = `<div class="dpr-sec">WHAT YOU SUBMITTED<small>${rows.length}</small></div>`;
-      if (!rows.length) {
-        h += '<div class="dpr-note">Nothing before today.</div>';
-      } else {
-        rows.forEach(r => {
-          const pill = r.status === 'Accepted' ? 'p-ok' : r.status === 'Returned' ? 'p-amb'
-            : r.status === 'Submitted' ? 'p-teal' : 'p-grey';
-          h += `<div class="dpr-lrow"><div class="nm"><b>${dmy(r.progress_to)}</b>
-            <span>${r.submitted_at
-                ? 'sent ' + new Date(r.submitted_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
-                : 'never sent'}
-              ${num(r.days_covered) > 1 ? ' · covered ' + r.days_covered + ' days' : ''}
-              ${num(r.attempt_no) > 1 ? ' · attempt ' + r.attempt_no : ''}
-              ${r.return_reason ? ' · returned: ' + esc(r.return_reason) : ''}</span></div>
-            <span class="pill ${pill}">${esc(r.status)}</span></div>`;
-        });
-      }
-      h += `<div class="dpr-note">Your submission is kept exactly as you filed it. If it was
-        returned, the reason and every attempt stay on the record.</div>`;
-      $('dpr_hist').innerHTML = h;
-    } catch (e) {
-      $('dpr_hist').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load your past reports')) + '</div>';
-    }
-  }
-
-  /* ================= shared helpers ================= */
   async function contractors() {
     if (S._cons) return S._cons;
-    const { data } = await sb.from('wo_contractors')
-      .select('contractor_code,contractor_name')
-      .eq('is_active', true).eq('approval_status', 'Approved')
-      .order('contractor_name');
+    const { data } = await sb.from('wo_contractors').select('contractor_code,contractor_name')
+      .eq('is_active', true).eq('approval_status', 'Approved').order('contractor_name');
     S._conMap = {};
     (data || []).forEach(c => { S._conMap[c.contractor_code] = c.contractor_name || c.contractor_code; });
     S._cons = (data || []).map(c => c.contractor_code);
-    if (!S._cons.length) S._cons = ['—'];
     return S._cons;
   }
-  async function tradeList() {
-    if (S._trades) return S._trades;
-    const { data } = await sb.from('labour_trades')
-      .select('trade_code,trade_name').eq('is_active', true).order('sort_order');
-    S._trades = data || [];
-    return S._trades;
-  }
-  async function hindReasons() {
-    if (S._hr) return S._hr;
-    const { data } = await sb.from('dpr_hindrance_reasons')
-      .select('reason_code,reason_text').eq('is_active', true).order('sort_order');
-    S._hr = data || [];
-    return S._hr;
-  }
-
-  function sheetOpen(title, sub, body, foot) {
-    let el = $('dprSheet');
-    if (!el) {
-      el = document.createElement('div');
-      el.id = 'dprSheet'; el.className = 'dprSheet';
-      // must live INSIDE #mod-dpr — the stylesheet is namespaced to it,
-      // and appending to body strips every class from the modal.
-      ($('mod-dpr') || document.body).appendChild(el);
-    }
-    el.innerHTML = `<div class="box">
-      <div class="hd"><div><b>${esc(title)}</b><span>${esc(sub || '')}</span></div>
-        <button class="x" onclick="DPR.sheetClose()">×</button></div>
-      <div class="bd">${body}</div>
-      <div class="ft">${foot || ''}</div></div>`;
-    el.classList.add('on');
-  }
-  function sheetClose() { const el = $('dprSheet'); if (el) el.classList.remove('on'); }
-
-  function tab(t) { S.tab = t; engRender(); }
-  async function switchArea(id) { S.areaId = id; await engLoad(); engRender(); }
-
 
   /* ==================================================================
-     MANAGER
-     On business date D the engineers file progress for D-1.
-     The queue is keyed on D; the sheet that gets published is D-1.
-     rpc_dpr_publish refuses anything dated today or later.
+     ENGINEER
      ================================================================== */
-  async function mgrLoad() {
+  async function engLoad(subId) {
     try {
-      const { data, error } = await sb.rpc('rpc_dpr_review_queue',
-        S.mDate ? { p_business_date: S.mDate, p_shift: 'D' } : { p_shift: 'D' });
+      masters();
+      const { data, error } = subId
+        ? await sb.rpc('rpc_dpr_my_submission', { p_submission_id: subId })
+        : await sb.rpc('rpc_dpr_open_my_day', { p_shift: 'D' });
       if (error) throw error;
-      S.mQueue  = data;
-      S.mDate   = data.business_date;
-      S.mProg   = data.progress_date;
-      if (!S.mToday) S.mToday = data.business_date;
-      // the header needs the sheet (is this date published?) and the
-      // hindrance count, so both are fetched here — in PARALLEL, and
-      // only when stale. Latency is the slower of the two, not the sum.
-      const needH = !S.hind;
-      const needS = !S.sheet || S.sheet.report_date !== S.mProg;
-      const [hr, sh] = await Promise.all([
-        needH ? sb.rpc('rpc_dpr_hindrance_register', { p_open: null }) : Promise.resolve(null),
-        needS ? sb.rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }) : Promise.resolve(null)
-      ]);
-      if (hr) { S.hind = (hr.data && hr.data.rows) || []; S.hSum = (hr.data && hr.data.by_party) || []; }
-      if (sh) { S.sheet = sh.data || {}; S.sheet.report_date = S.mProg; }
-      mgrRender();
+      S.sub = data.submission; S.groups = data.groups || []; S.np = data.np || [];
+      S.today = data.today; S.from = S.sub.progress_from; S.to = S.sub.progress_to;
+      S.locked = !!data.locked; S.lateNow = !!data.is_late_now;
+      if (!subId) { S.returned = data.returned || []; S.homeAreas = data.home_areas || []; S.histSub = null;
+        if (num(data.carried_submissions)) toast('An unsent report from an earlier day was folded into today — its lines keep their own date', 'info', 7000); }
+      else S.histSub = data;
+      S.page = null;
+      engRender();
     } catch (e) {
-      $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">'
-        + esc(err(e, 'Could not load the review queue')) + '</div>'
+      $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not open the day')) + '</div>'
         + '<div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try again</button></div>';
     }
   }
 
-  function mgrRender() {
-    const q = S.mQueue || {}, areas = q.areas || [];
-    const sub  = areas.filter(a => a.status === 'Submitted').length;
-    const acc  = areas.filter(a => a.status === 'Accepted').length;
-    const miss = areas.filter(a => a.status === 'NotStarted' || a.status === 'Draft').length;
-    const ret  = areas.filter(a => a.status === 'Returned').length;
-    const openH = S.hind.filter(x => x.is_open).length;
-    const uncl  = S.hind.filter(x => x.is_open && !x.party).length;
-    const published = S.sheet && S.sheet.report_date === S.mProg && S.sheet.sheet;
+  const gState = g => g.progress ? (g.progress.outcome === 'hindrance' ? 'hind' : g.progress.work_date < S.to ? 'carry' : 'done') : 'pend';
+  const gHeads = g => sum(g.labour_heads);
+  const reported = () => S.groups.filter(g => g.progress);
+  const pendingG = () => S.groups.filter(g => !g.progress);
+  const headsToday = () => S.groups.reduce((s, g) => s + gHeads(g), 0) + S.np.reduce((s, r) => s + num(r.head_count), 0);
 
-    let h = `<div class="dpr-bar">
-      <div class="ttl"><b>Daily Report</b><span>${esc(pgsS.project ? pgsS.project.project_name : '')} · review &amp; publish</span></div>
-      <div class="nav"><div class="dpr-dn">
-        <button onclick="DPR.mDay(-1)">‹</button>
-        <span class="d">${dmy(S.mDate)}</span>
-        <button onclick="DPR.mDay(1)" ${S.mDate >= S.mToday ? 'disabled style="opacity:.35"' : ''}>›</button>
-      </div><span class="dpr-cut">reporting on <b>${dmy(S.mProg)}</b></span></div>
-      <div class="st">${published
-        ? '<span class="pill p-ok" style="background:#fff">' + esc(published.dpr_no || 'Published') + '</span>'
-        : sub ? '<span class="pill p-amb" style="background:#fff">' + sub + ' awaiting you</span>'
-        : '<span class="pill p-grey" style="background:#fff">Nothing pending</span>'}</div>
-      <div class="act">
-        <button class="dbtn ${(!published && acc && !sub && !uncl) ? 'ok' : ''}"
-          ${(published || !acc) ? 'disabled' : ''}
-          onclick="DPR.publish()">Publish ${dmy(S.mProg)}</button>
-      </div></div>`;
-
+  function engRender() {
+    if (S.page === 'prev') return engPreview();
+    if (S.page === 'hist') return engHistPage();
+    const sub = S.sub, mins = istMins();
+    const editingOld = S.histSub && sub.business_date !== S.today;
+    let h = `<div class="dpr-dates">
+      <div class="y"><i>PROGRESS FOR</i><b>${dmy(S.to)}</b><span>${num(sub.days_covered) > 1 ? 'from ' + dsh(S.from) + ' — a day was missed' : 'work done yesterday'}</span></div>
+      <div class="t"><i>LABOUR FOR</i><b>${dmy(sub.business_date)}</b><span>who is on site today</span></div></div>
+    <div class="dpr-bar" style="display:flex;align-items:center;gap:8px">
+      <div class="ttl"><b>${esc(state.userName || 'My report')}</b><span>${S.homeAreas.length ? esc(S.homeAreas.join(', ')) + ' · ' : ''}day shift · send by 1:00 pm</span></div>
+      <span class="sp" style="flex:1"></span>
+      ${S.locked ? '<span class="pill p-ok" style="background:#fff">Sent ' + hm(sub.submitted_at) + (sub.is_late ? ' · late' : '') + '</span>'
+        : sub.status === 'Returned' ? '<span class="pill p-red" style="background:#fff">Returned</span>'
+        : '<span class="pill p-grey" style="background:#fff">Draft</span>'}
+      ${!S.locked && !editingOld ? '<span class="dpr-cut">' + (mins > 0 ? '<b>' + mins + ' min</b> to cut-off' : '<b>past 1 pm</b> — goes as late') + '</span>' : ''}
+      ${editingOld ? '<button class="dbtn sm" onclick="DPR.engLoad()">‹ Today</button>' : ''}
+    </div>`;
+    const hinds = S.groups.filter(g => gState(g) === 'hind').length;
+    const carried = S.groups.filter(g => gState(g) === 'carry').length;
     h += `<div class="dpr-kpis">
-      <div><b>${areas.length}</b><span>AREAS</span></div>
-      <div><b style="color:${sub ? 'var(--dam)' : 'var(--dink3)'}">${sub}</b><span>TO REVIEW</span></div>
-      <div><b style="color:var(--dok)">${acc}</b><span>ACCEPTED</span></div>
-      <div><b style="color:${miss ? 'var(--drd)' : 'var(--dink3)'}">${miss}</b><span>NOT FILED</span></div>
-      <div><b style="color:${openH ? 'var(--drd)' : 'var(--dink3)'}">${openH}</b><span>HELD UP</span></div>
-    </div>`;
-
+      <div><b>${reported().length}</b><span>REPORTED</span></div>
+      <div><b style="color:var(--dink3)">${pendingG().length}</b><span>NOT YET</span></div>
+      <div><b style="color:${hinds ? 'var(--drd)' : 'var(--dink3)'}">${hinds}</b><span>HINDRANCE</span></div>
+      <div><b style="color:${carried ? 'var(--dam)' : 'var(--dink3)'}">${carried}</b><span>EARLIER DATE</span></div>
+      <div><b style="color:var(--dtd)">${fmt(headsToday())}</b><span>HEADS TODAY</span></div></div>`;
     h += `<div class="dpr-tabs">
-      <button class="${S.mTab === 'queue' ? 'on' : ''}" onclick="DPR.mTab('queue')">Review<br><i>${sub} waiting</i></button>
-      <button class="${S.mTab === 'hind' ? 'on' : ''}" onclick="DPR.mTab('hind')">Hindrances<br><i>${openH} open</i></button>
-      <button class="${S.mTab === 'sheet' ? 'on' : ''}" onclick="DPR.mTab('sheet')">The report<br><i>${dsh(S.mProg)}</i></button>
-      <button class="${S.mTab === 'pub' ? 'on' : ''}" onclick="DPR.mTab('pub')">Published<br><i>archive</i></button>
-    </div>`;
-
-    if (ret) h += `<div class="dpr-note v">${ret} area(s) returned and not yet corrected.</div>`;
-    if (uncl) {
-      h += `<div class="dpr-note a"><b>${uncl} open hindrance(s) have no party against them.</b>
-        Attribute each one — contractor, client, architect or neither. That attribution is the
-        evidence behind any extension of time, and a hindrance cannot be closed without it.</div>`;
-    }
+      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">My works<br><i>${reported().length} of ${S.groups.length} groups</i></button>
+      <button class="${S.tab === 'np' ? 'on' : ''}" onclick="DPR.tab('np')">Non-estimated work<br><i>${S.np.length} line${S.np.length === 1 ? '' : 's'}</i></button>
+      <button class="${S.tab === 'report' ? 'on' : ''}" onclick="DPR.tab('report')">Report<br><i>check &amp; send</i></button></div>`;
+    if (sub.status === 'Returned') h += `<div class="dpr-note r"><b>Returned by the manager.</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''}<br>Correct what is needed and send again. This will be attempt ${num(sub.attempt_no) + 1}.</div>`;
+    if (!editingOld && S.returned.length) h += S.returned.map(r => `<div class="dpr-note r" style="display:flex;gap:8px;align-items:center"><span style="flex:1"><b>${dmy(r.progress_to)} report was returned:</b> ${esc(r.return_reason || '')}</span><button class="dbtn sm" onclick="DPR.engLoad('${r.submission_id}')">Fix &amp; resend</button></div>`).join('');
+    if (S.locked) h += `<div class="dpr-note g">Sent at ${hm(sub.submitted_at)}. Nothing can be changed now. If something is wrong, ask the manager to return it.</div>`;
     h += '<div id="dpr_body"></div>';
     $('dpr_root').innerHTML = h;
-    mgrBody();
+    if (S.tab === 'works') engWorks(); else if (S.tab === 'np') engNp(); else engReport();
   }
 
-  function mgrBody() {
-    if (S.mTab === 'queue') return mgrQueue();
-    if (S.mTab === 'hind')  return mgrHind();
-    if (S.mTab === 'sheet') return mgrSheet();
-    if (S.mTab === 'pub')   return mgrPub();
-  }
-
-  function mgrQueue() {
-    const areas = (S.mQueue || {}).areas || [];
-    if (!areas.length) {
-      $('dpr_body').innerHTML = `<div class="dpr-note a">No areas are set up on this project.
-        Create them under <b>Masters &rsaquo; Site Areas</b>.</div>`;
-      return;
-    }
-    let h = `<div class="dpr-note">Cut-off is ${esc((S.mQueue || {}).cutoff || '13:00')}.
-      You can accept or return — you cannot edit a figure. That is deliberate: the number
-      stays the engineer's.</div><div class="dprList">`;
-    areas.forEach(a => {
-      const st = a.status || 'NotStarted';
-      const pill = st === 'Submitted' ? 'p-amb' : st === 'Accepted' ? 'p-ok'
-        : st === 'Returned' ? 'p-red' : 'p-grey';
-      const label = st === 'NotStarted' ? 'not started' : st === 'Draft' ? 'in progress' : st.toLowerCase();
-      h += `<div class="row" ${a.submission_id ? `onclick="DPR.mOpen('${a.submission_id}')"` : ''}>
-        <div class="nm"><b>${esc(a.area_name)}</b>
-          <span>${a.engineers ? esc(a.engineers) : '<b style="color:#b3261e">no engineer allocated</b>'}
-          ${a.submitted_at ? ' · sent ' + new Date(a.submitted_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : ''}
-          ${num(a.days_covered) > 1 ? ' · <b style="color:#a8690a">' + a.days_covered + ' days</b>' : ''}</span></div>
-        ${num(a.attempt_no) > 1 ? '<span class="pill p-vio">attempt ' + a.attempt_no + '</span>' : ''}
-        ${num(a.no_photo_lines) ? '<span class="pill p-amb">' + a.no_photo_lines + ' no photo</span>' : ''}
-        ${num(a.hindrances) ? '<span class="pill p-red">' + a.hindrances + ' hindrance' + (a.hindrances > 1 ? 's' : '') + '</span>' : ''}
-        ${num(a.works_reported) ? '<span class="pill p-grey">' + a.works_worked + '/' + a.works_reported + ' worked</span>' : ''}
-        ${num(a.heads) ? '<span class="pill p-teal">' + fmt(a.heads) + ' heads</span>' : ''}
-        <span class="pill ${pill}">${esc(label)}</span></div>`;
+  /* ---------- works: group cards ---------- */
+  function engWorks() {
+    const q = (S.q || '').toLowerCase();
+    let h = `<div class="dpr-fbar">
+      <button class="${S.filt === 'mine' ? 'on' : ''}" onclick="DPR.filt('mine')">Mine<i>${S.groups.filter(g => g.status !== 'finished').length}</i></button>
+      <button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished</button>
+      <span class="sp" style="flex:1"></span>
+      ${S.locked ? '' : '<button class="on" style="background:var(--dok);border-color:var(--dok)" onclick="DPR.startOpen()">＋ Start</button>'}</div>
+      <div class="dpr-srch"><input value="${esc(S.q)}" placeholder="Search line or location…" oninput="DPR.srch(this.value)"></div>`;
+    let list = S.groups.filter(g => {
+      const fin = g.lines.length && g.lines.every(l => l.status === 'finished');
+      return S.filt === 'fin' ? fin : !fin;
     });
-    $('dpr_body').innerHTML = h + '</div>';
+    if (q) list = list.filter(g => (g.label + ' ' + g.location + ' ' + (g.loc_path || '') + ' ' + g.lines.map(l => l.activity).join(' ')).toLowerCase().indexOf(q) >= 0);
+    if (!list.length) {
+      h += `<div class="dpr-note">${S.groups.length ? 'Nothing matches.' : 'No groups yet. Tap <b>＋ Start</b>, pick a location, tick the lines you are working on.'}</div>`;
+      $('dpr_body').innerHTML = h; return;
+    }
+    const byLoc = {};
+    list.forEach(g => { const k = g.loc_path || g.location; (byLoc[k] = byLoc[k] || []).push(g); });
+    Object.keys(byLoc).sort().forEach(k => {
+      h += `<div class="dpr-grp">${esc(k)}<small>${byLoc[k].length} group${byLoc[k].length === 1 ? '' : 's'}</small></div>`;
+      byLoc[k].forEach(g => h += gCard(g));
+    });
+    h += '<div class="dpr-note">Groups you leave blank are shown to the manager as <b>not reported</b>. Nothing stops you sending.</div>';
+    $('dpr_body').innerHTML = h;
+  }
+  function gCard(g) {
+    const st = gState(g), p = g.progress, hd = gHeads(g);
+    const pill = st === 'hind' ? `<span class="pill p-red">${esc((g.open_hindrance || {}).reason_text || 'hindrance')}</span>`
+      : st === 'carry' ? `<span class="pill p-amb">dated ${dsh(p.work_date)}, never sent</span>` : '';
+    let h = `<div class="dpr-job ${st}">
+      <div class="jh" onclick="DPR.edit('${g.wgroup_id}')"><div><div class="a">${esc(g.location)} · ${esc(g.label)}</div>
+        <div class="l">${esc(g.package || '')}${g.memo_contractor ? ' · ' + esc(conName(g.memo_contractor)) : ''} · ${g.lines.length} line${g.lines.length === 1 ? '' : 's'} ${pill}</div></div>
+      <div class="r">${g.labour ? (g.labour.outcome === 'work' ? '<b>' + fmt(hd) + ' head' + (hd === 1 ? '' : 's') + ' today</b><span>' + Object.entries(g.labour_heads || {}).map(([t, v]) => esc(t) + ' ' + fmt(v)).join(' · ') + '</span>'
+          : g.labour.outcome === 'hindrance' ? '<b style="color:var(--drd)">hindrance</b><span>0 heads</span>' : '<b style="color:var(--dink3)">no labour</b><span>today</span>')
+        : '<b style="color:var(--dink3)">not yet</b><span>tap to fill</span>'}</div>
+      ${S.locked ? '' : `<button class="dbtn sm jm" onclick="event.stopPropagation();DPR.regroupOpen('${g.wgroup_id}')" title="Split or combine">⋯</button>`}</div>`;
+    g.lines.forEach(l => {
+      const lp = l.progress;
+      h += `<div class="ln ${lp && lp.qty_done > 0 ? '' : 'mut'}"><div>${esc(l.activity)}<div class="x">est ${fmt(l.est_qty)} ${esc(l.uom || '')} · cum ${fmt(l.cum_published)}${l.status === 'finished' ? ' · finished ✓' : ''}</div></div>
+        <div class="q">${lp ? (lp.outcome === 'worked' ? '<b>' + fmt(lp.qty_done) + ' ' + esc(l.uom || '') + '</b><i>' + dsh(lp.work_date) + (lp.marks_finished ? ' · finish' : '') + '</i>' : lp.outcome === 'hindrance' ? '<b style="color:var(--drd)">hindrance</b>' : '<b>no work</b>') : '<b>not reported</b>'}</div></div>`;
+    });
+    return h + '</div>';
   }
 
+  /* ---------- start work ---------- */
+  async function startOpen() {
+    S.st = { q: '', locs: null, loc: null, lines: null, ticks: new Set() };
+    sheetOpen('Start work', 'Find the location, tick the lines you are on', '<div id="dpr_st"></div>', '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>');
+    startDraw(); await startSearch('');
+  }
+  async function startSearch(q) {
+    S.st.q = q;
+    const { data, error } = await sb.rpc('rpc_dpr_location_search', { p_q: q || null, p_limit: 40 });
+    if (error) { toast(err(error, 'Search failed'), 'error'); return; }
+    if (S.st.q !== q) return;
+    S.st.locs = data || []; startDraw();
+  }
+  async function startLoc(id) {
+    S.st.loc = id; S.st.lines = null; S.st.ticks = new Set(); startDraw();
+    const { data, error } = await sb.rpc('rpc_dpr_location_lines', { p_loc_node_id: id });
+    if (error) { toast(err(error, 'Could not load lines'), 'error'); return; }
+    S.st.lines = data; startDraw();
+  }
+  function startTick(id, on) { on ? S.st.ticks.add(id) : S.st.ticks.delete(id); const f = $('dpr_st_ft'); if (f) f.innerHTML = startFoot(); }
+  function startFoot() {
+    const n = S.st.ticks.size;
+    return `<button class="dbtn" ${n ? '' : 'disabled'} onclick="DPR.startGo(false)">Each on its own</button><span class="sp"></span><button class="dbtn ok" ${n ? '' : 'disabled'} onclick="DPR.startGo(true)">Report together (${n})</button>`;
+  }
+  function startDraw() {
+    const st = S.st; if (!st) return;
+    let h = '';
+    if (!st.loc) {
+      h += `<div class="dpr-srch"><input placeholder="Location… e.g. A-101, 19th floor" value="${esc(st.q)}" oninput="DPR.startSearch(this.value)" autofocus></div>`;
+      if (!st.locs) h += '<div class="dpr-load">Searching…</div>';
+      else if (!st.locs.length) h += '<div class="dpr-note">No location with approved lines matches.</div>';
+      else st.locs.forEach(l => { h += `<div class="dpr-lrow" onclick="DPR.startLoc('${l.loc_node_id}')"><div class="nm"><b>${esc(l.name)}</b><span>${esc(l.path || '')} · ${l.lines} line${l.lines === 1 ? '' : 's'}${num(l.open_groups) ? ' · ' + l.open_groups + ' group' + (l.open_groups === 1 ? '' : 's') + ' already' : ''}</span></div>›</div>`; });
+    } else {
+      const d = st.lines;
+      h += `<div class="dpr-lrow" style="background:#f3f6fa"><button class="dbtn sm" onclick="DPR.startBack()">‹</button><div class="nm"><b>${esc(d ? d.location : '')}</b><span>${esc(d ? d.path || '' : '')}</span></div></div>`;
+      if (!d) h += '<div class="dpr-load">Loading lines…</div>';
+      else {
+        const byPkg = {}; (d.lines || []).forEach(l => { (byPkg[l.package || 'Other'] = byPkg[l.package || 'Other'] || []).push(l); });
+        if (!Object.keys(byPkg).length) h += '<div class="dpr-note a">No approved, reportable line at this location.</div>';
+        Object.keys(byPkg).sort().forEach(pk => {
+          h += `<div class="dpr-grp">${esc(pk)}</div>`;
+          byPkg[pk].forEach(l => {
+            const dis = !!l.in_group || l.finished;
+            h += `<label class="dpr-tick ${dis ? 'dis' : ''}"><input type="checkbox" ${dis ? 'disabled' : ''} ${st.ticks.has(l.wbs_node_id) ? 'checked' : ''} onchange="DPR.startTick(${l.wbs_node_id},this.checked)">
+              <span><b><span class="pill ${l.kind === 'H' ? 'p-vio' : 'p-teal'}">${l.kind}</span> ${esc(l.activity)}</b><i>${fmt(l.est_qty)} ${esc(l.uom || '')}${l.in_group ? ' · already on "' + esc(l.in_group) + '"' : ''}${l.finished ? ' · finished' : ''}</i></span></label>`;
+          });
+        });
+        h += '<div class="dpr-note">Ticked lines become <b>one card</b> — one gang, labour entered once. "Each on its own" makes a card per line.</div>';
+      }
+    }
+    $('dpr_st').innerHTML = h;
+    const ft = document.querySelector('#dprSheet .ft'); if (ft) ft.innerHTML = '<span id="dpr_st_ft" style="display:contents">' + (st.loc ? startFoot() : '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>') + '</span>';
+  }
+  function startBack() { S.st.loc = null; S.st.lines = null; startDraw(); }
+  async function startGo(together) {
+    try {
+      const { error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: S.st.loc, p_wbs_node_ids: [...S.st.ticks], p_together: together });
+      if (error) throw error;
+      sheetClose(); toast('On your list', 'success'); await engLoad(); S.tab = 'works'; S.filt = 'mine'; engRender();
+    } catch (e) { toast(err(e, 'Could not start'), 'error'); }
+  }
+
+  /* ---------- regroup ---------- */
+  function regroupOpen(gid) {
+    const g = S.groups.find(x => x.wgroup_id === gid); if (!g) return;
+    const others = S.groups.filter(x => x.wgroup_id !== gid && x.loc_node_id === g.loc_node_id);
+    let b = `<div class="dpr-sec">REPORT A LINE ON ITS OWN</div>`;
+    if (g.lines.length < 2) b += '<div class="dpr-note">Only one line here — nothing to split.</div>';
+    else g.lines.forEach(l => { b += `<div class="dpr-lrow"><div class="nm"><b>${esc(l.activity)}</b></div><button class="dbtn sm" onclick="DPR.regroupGo(['${l.work_id}'],null)">Split off</button></div>`; });
+    b += `<div class="dpr-sec">COMBINE THIS CARD WITH…</div>`;
+    if (!others.length) b += '<div class="dpr-note">No other card at this location.</div>';
+    else others.forEach(o => { b += `<div class="dpr-lrow"><div class="nm"><b>${esc(o.label)}</b><span>${o.lines.length} line${o.lines.length === 1 ? '' : 's'}</span></div><button class="dbtn sm" onclick="DPR.regroupGo(${JSON.stringify(g.lines.map(l => l.work_id)).replace(/"/g, '&quot;')},'${o.wgroup_id}')">Combine</button></div>`; });
+    b += '<div class="dpr-note">The grouping is remembered. A line already sent today cannot move until tomorrow.</div>';
+    sheetOpen(g.location + ' · ' + g.label, 'Split or combine', b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  async function regroupGo(workIds, target) {
+    try {
+      const { error } = await sb.rpc('rpc_dpr_regroup', { p_work_ids: workIds, p_target_wgroup_id: target });
+      if (error) throw error;
+      sheetClose(); await engLoad(); engRender();
+    } catch (e) { toast(err(e, 'Could not regroup'), 'error'); }
+  }
+
+  /* ---------- editor: one group card ---------- */
+  async function edit(gid) {
+    const g = S.groups.find(x => x.wgroup_id === gid); if (!g) return;
+    if (S.locked) { sheetOpen(g.location + ' · ' + g.label, 'sent — read only', gReadOnly(g), '<span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>'); return; }
+    S.editing = g;
+    const M = await masters(), cons = await contractors();
+    const p = g.progress || {}, l = g.labour || {};
+    const oh = g.open_hindrance || (g.lines.find(x => x.open_hindrance) || {}).open_hindrance;
+    S.draft = {
+      y_out: p.outcome || 'worked', y_rc: p.hindrance_id ? (oh || {}).reason_code : (oh || {}).reason_code || (M.hindrance_reasons[0] || {}).reason_code,
+      y_con: p.contractor_code || g.memo_contractor || cons[0] || '',
+      y_lab: Object.assign({}, Object.keys(g.progress_labour || {}).length ? g.progress_labour : (g.memo_labour || {})),
+      y_lines: {}, // work_id -> {on, qty, fin}
+      t_out: l.outcome || 'work', t_con: l.contractor_code || g.memo_contractor || cons[0] || '',
+      t_rc: (oh || {}).reason_code || (M.hindrance_reasons[0] || {}).reason_code,
+      t_lab: Object.assign({}, Object.keys(g.labour_heads || {}).length ? g.labour_heads : (g.memo_labour || {})),
+      memo: !Object.keys(g.labour_heads || {}).length && Object.keys(g.memo_labour || {}).length > 0, oh, M, cons
+    };
+    g.lines.forEach(x => { const lp = x.progress; S.draft.y_lines[x.work_id] = { on: !!(lp && lp.outcome === 'worked'), qty: lp ? num(lp.qty_done) : '', fin: !!(lp && lp.marks_finished) }; });
+    sheetOpen(g.location + ' · ' + g.label, (g.package || '') + ' · ' + g.lines.length + ' line' + (g.lines.length === 1 ? '' : 's'), '<div id="dpr_ed"></div>',
+      '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn ok" onclick="DPR.saveGroup()">Save group</button>');
+    drawEditor();
+  }
+  function gReadOnly(g) {
+    const p = g.progress, l = g.labour;
+    return `<div class="dpr-sec">${dmy(S.to).toUpperCase()}</div><div class="dprFld">${!p ? 'Not reported' : p.outcome === 'worked'
+      ? g.lines.map(x => x.progress && x.progress.outcome === 'worked' ? esc(x.activity) + ' <b>' + fmt(x.progress.qty_done) + ' ' + esc(x.uom || '') + '</b>' : null).filter(Boolean).join('<br>') + '<br><span class="dpr-note" style="padding:4px 0">' + esc(conName(p.contractor_code)) + ' · ' + Object.entries(g.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(', ') + '</span>'
+      : p.outcome === 'hindrance' ? 'Hindrance — ' + esc((g.open_hindrance || {}).reason_text || '') : 'No work'}</div>
+      <div class="dpr-sec">${dmy(S.sub.business_date).toUpperCase()}</div><div class="dprFld">${!l ? 'Nothing filed' : l.outcome === 'work' ? esc(conName(l.contractor_code)) + ' · ' + Object.entries(g.labour_heads || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(', ') : l.outcome === 'hindrance' ? 'Hindrance' : 'No labour'}</div>`;
+  }
+  function drawEditor() {
+    const g = S.editing, d = S.draft, M = d.M;
+    const conSel = (k) => `<select onchange="DPR.draftSet('${k}',this.value)">${d.cons.map(c => `<option value="${esc(c)}" ${c === d[k] ? 'selected' : ''}>${esc(conName(c))}</option>`).join('')}</select>`;
+    const steppers = side => M.trades.map(t => { const v = num((side === 'y' ? d.y_lab : d.t_lab)[t.trade_code]);
+      return `<div class="dprLab"><span class="t">${esc(t.trade_name)}</span><button onclick="DPR.lab('${side}','${t.trade_code}',-1)">−</button><input type="number" inputmode="numeric" value="${v}" min="0" oninput="DPR.labSet('${side}','${t.trade_code}',this.value)"><button onclick="DPR.lab('${side}','${t.trade_code}',1)">+</button></div>`; }).join('');
+    const reasons = k => `<select onchange="DPR.draftSet('${k}',this.value)">${M.hindrance_reasons.map(r => `<option value="${r.reason_code}" ${r.reason_code === d[k] ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select>`;
+    let h = `<div class="dpr-band y">${dmy(S.to).toUpperCase()} — WHAT THE GROUP DID</div>`;
+    if (d.oh) h += `<div class="dpr-note r"><b>Hindrance open since ${dsh(d.oh.from_date)} — ${esc(d.oh.reason_text)}.</b> Choose <b>Worked</b> if work resumed: it closes itself on the day before.</div>`;
+    h += `<div class="dprSeg"><button class="${d.y_out === 'worked' ? 'on' : ''}" onclick="DPR.setY('worked')">Worked</button><button class="${d.y_out === 'hindrance' ? 'on red' : ''}" onclick="DPR.setY('hindrance')">Hindrance</button><button class="${d.y_out === 'none' ? 'on grey' : ''}" onclick="DPR.setY('none')">No work</button></div>`;
+    if (d.y_out === 'worked') {
+      h += `<div class="dprFld"><label>WHO DID IT</label>${conSel('y_con')}</div><div class="dpr-sec">HEADS ON THIS GROUP${d.memo ? ' <span class="dprMemo">FROM LAST ENTRY</span>' : ''}</div>${steppers('y')}`;
+      if (!sum(d.y_lab)) h += '<div class="dpr-note a">Work was done, so somebody did it. Enter at least one head.</div>';
+      h += `<div class="dpr-sec">LINES THAT MOVED — TICK AND ENTER, LEAVE THE REST</div>`;
+      g.lines.forEach(x => {
+        const y = d.y_lines[x.work_id], left = Math.max(0, num(x.est_qty) - num(x.cum_published)), over = num(y.qty) > left;
+        h += `<div class="dpr-line ${y.on ? '' : 'off'} ${over ? 'bad' : ''}"><input type="checkbox" ${y.on ? 'checked' : ''} ${x.status === 'finished' ? 'disabled' : ''} onchange="DPR.lineSet('${x.work_id}','on',this.checked)">
+          <div><b>${esc(x.activity)}</b><i>${x.status === 'finished' ? 'finished' : fmt(left) + ' left of ' + fmt(x.est_qty) + ' ' + esc(x.uom || '')}</i>${over ? '<i style="color:var(--drd)">more than remains on the estimate</i>' : ''}</div>
+          <input type="number" inputmode="decimal" step="any" value="${y.qty}" ${y.on ? '' : 'disabled'} oninput="DPR.lineSet('${x.work_id}','qty',this.value)"><span class="u">${esc(x.uom || '')}</span>
+          <label class="fin" title="Finished"><input type="checkbox" ${y.fin ? 'checked' : ''} ${y.on ? '' : 'disabled'} onchange="DPR.lineSet('${x.work_id}','fin',this.checked)"> done</label></div>`;
+      });
+    } else if (d.y_out === 'hindrance') {
+      h += `<div class="dprFld"><label>WHAT STOPPED IT</label>${reasons('y_rc')}<div class="dpr-note v" style="margin-top:7px">Report what happened. The manager decides whose delay it is.</div></div>`;
+    } else h += '<div class="dpr-note">Nothing happened here. No quantity, no labour.</div>';
+    h += `<div class="dpr-band t">${dmy(S.sub.business_date).toUpperCase()} — WHO IS HERE TODAY</div>
+      <div class="dprSeg"><button class="${d.t_out === 'work' ? 'on' : ''}" onclick="DPR.setT('work')">Working</button><button class="${d.t_out === 'hindrance' ? 'on red' : ''}" onclick="DPR.setT('hindrance')">Hindrance</button><button class="${d.t_out === 'none' ? 'on grey' : ''}" onclick="DPR.setT('none')">No labour</button></div>`;
+    if (d.t_out === 'work') {
+      h += `<div class="dprFld"><label>CONTRACTOR</label>${conSel('t_con')}</div><div class="dpr-sec">STRENGTH TODAY${d.memo ? ' <span class="dprMemo">FROM LAST ENTRY</span>' : ''}</div>${steppers('t')}`;
+      if (!sum(d.t_lab)) h += '<div class="dpr-note a">Somebody is here today — enter at least one head, or choose <b>No labour</b>.</div>';
+    } else if (d.t_out === 'hindrance') h += `<div class="dprFld"><label>WHAT IS STOPPING IT</label>${reasons('t_rc')}</div>`;
+    else h += '<div class="dpr-note">Nobody on this group today.</div>';
+    $('dpr_ed').innerHTML = h;
+  }
+  function setY(v) { S.draft.y_out = v; drawEditor(); }
+  function setT(v) { S.draft.t_out = v; drawEditor(); }
+  function draftSet(k, v) { S.draft[k] = v; }
+  function lab(side, key, delta) { const m = side === 'y' ? S.draft.y_lab : S.draft.t_lab; m[key] = Math.max(0, num(m[key]) + delta); drawEditor(); }
+  function labSet(side, key, v) { const m = side === 'y' ? S.draft.y_lab : S.draft.t_lab; m[key] = Math.max(0, num(v)); }
+  function lineSet(id, k, v) {
+    const y = S.draft.y_lines[id]; if (!y) return; y[k] = k === 'qty' ? v : !!v;
+    if (k !== 'qty') { drawEditor(); return; }
+    const x = S.editing.lines.find(z => z.work_id === id), left = x ? Math.max(0, num(x.est_qty) - num(x.cum_published)) : Infinity;
+    const el = document.activeElement, row = el && typeof el.closest === 'function' ? el.closest('.dpr-line') : null;
+    if (row) row.classList.toggle('bad', num(v) > left);
+  }
+
+  async function saveGroup() {
+    const g = S.editing, d = S.draft;
+    let lines = [];
+    if (d.y_out === 'worked') {
+      if (!sum(d.y_lab)) { toast('Enter who was working, or mark it No work', 'warn'); return; }
+      lines = g.lines.filter(x => d.y_lines[x.work_id].on).map(x => ({ work_id: x.work_id, outcome: 'worked', qty: num(d.y_lines[x.work_id].qty), finish: !!d.y_lines[x.work_id].fin }));
+      if (!lines.length) { toast('Tick at least one line that moved', 'warn'); return; }
+      const bad = lines.find(l => !(l.qty > 0)); if (bad) { toast('Enter a quantity on every ticked line', 'warn'); return; }
+      for (const l of lines) { const x = g.lines.find(z => z.work_id === l.work_id); const left = Math.max(0, num(x.est_qty) - num(x.cum_published)); if (l.qty > left) { toast('Refused — only ' + fmt(left) + ' ' + (x.uom || '') + ' remains on ' + x.activity, 'error'); return; } }
+    }
+    if (d.t_out === 'work' && !sum(d.t_lab)) { toast('Enter today\u2019s strength, or choose No labour', 'warn'); return; }
+    const clean = m => { const o = {}; Object.keys(m || {}).forEach(k => { if (num(m[k]) > 0) o[k] = num(m[k]); }); return o; };
+    const prog = d.y_out === 'worked' ? { outcome: 'worked', contractor: d.y_con, labour: clean(d.y_lab), work_date: S.to, lines }
+      : d.y_out === 'hindrance' ? { outcome: 'hindrance', reason_code: d.y_rc, work_date: S.to, lines: g.lines.map(x => ({ work_id: x.work_id, outcome: 'hindrance' })) }
+      : { outcome: 'none', work_date: S.to, lines: g.lines.map(x => ({ work_id: x.work_id, outcome: 'none' })) };
+    const today = d.t_out === 'work' ? { outcome: 'work', contractor: d.t_con, labour: clean(d.t_lab) } : d.t_out === 'hindrance' ? { outcome: 'hindrance', reason_code: d.t_rc } : { outcome: 'none' };
+    try {
+      const { data, error } = await sb.rpc('rpc_dpr_save_group', { p_submission_id: S.sub.id, p_wgroup_id: g.wgroup_id, p_progress: prog, p_today: today });
+      if (error) throw error;
+      if (data && num(data.hindrances_auto_closed)) toast('Hindrance closed — work resumed', 'success');
+      sheetClose(); await engLoad(S.histSub ? S.sub.id : undefined); engRender();
+    } catch (e) { toast(err(e, 'Could not save'), 'error'); }
+  }
+
+  /* ---------- non-estimated work ---------- */
+  async function engNp() {
+    const M = await masters();
+    let h = `<div class="dpr-band t">${dmy(S.sub.business_date).toUpperCase()} — LABOUR NOT AGAINST AN ESTIMATE LINE</div>
+      <div class="dpr-note">Housekeeping, shifting, dewatering, idle time. Keeps the day's head-count honest.</div>`;
+    if (S.np.length) {
+      h += '<table class="dt"><tr><th>WORK</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th><th></th></tr>';
+      S.np.forEach((r, i) => { h += `<tr><td>${esc(r.reason_text)}</td><td>${esc(conName(r.contractor_code))}</td><td>${esc(r.trade_code)}</td><td class="n">${fmt(r.head_count)}</td><td>${S.locked ? '' : '<button class="dbtn sm" onclick="DPR.npDrop(' + i + ')">×</button>'}</td></tr>`; });
+      h += '</table>';
+    } else h += '<div class="dpr-note">Nothing recorded.</div>';
+    if (!S.locked) h += `<div class="dacts"><span class="sp"></span><button class="dbtn" onclick="DPR.npAdd()">＋ Add a line</button></div>`;
+    $('dpr_body').innerHTML = h;
+  }
+  async function npAdd() {
+    const M = await masters(), cons = await contractors();
+    if (!M.np_reasons.length) { toast('No non-estimated work items set up — ask the manager (Masters › Labour)', 'warn'); return; }
+    sheetOpen('Non-estimated work', dmy(S.sub.business_date), `
+      <div class="dprFld"><label>WHAT</label><select id="np_r">${M.np_reasons.map(r => `<option value="${r.reason_code}">${esc(r.reason_text)}</option>`).join('')}</select></div>
+      <div class="dprFld"><label>CONTRACTOR</label><select id="np_c">${cons.map(c => `<option value="${esc(c)}">${esc(conName(c))}</option>`).join('')}</select></div>
+      <div class="dprFld"><label>TRADE</label><select id="np_t">${M.trades.map(t => `<option value="${t.trade_code}">${esc(t.trade_name)}</option>`).join('')}</select></div>
+      <div class="dprFld"><label>HEADS</label><div class="dprQty"><button onclick="DPR.bump('np_n',-1)">−</button><input id="np_n" type="number" inputmode="numeric" value="1" min="0"><button onclick="DPR.bump('np_n',1)">+</button></div></div>`,
+      '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn ok" onclick="DPR.npSave()">Add</button>');
+  }
+  function bump(id, d) { const el = $(id); if (el) el.value = Math.max(0, num(el.value) + d); }
+  async function npSave() {
+    const rows = S.np.map(r => ({ reason_code: r.reason_code, contractor: r.contractor_code, trade: r.trade_code, heads: r.head_count, loc_node_id: r.loc_node_id }));
+    rows.push({ reason_code: $('np_r').value, contractor: $('np_c').value, trade: $('np_t').value, heads: num($('np_n').value) });
+    await npPush(rows); sheetClose();
+  }
+  async function npDrop(i) { const rows = S.np.filter((_, j) => j !== i).map(r => ({ reason_code: r.reason_code, contractor: r.contractor_code, trade: r.trade_code, heads: r.head_count, loc_node_id: r.loc_node_id })); await npPush(rows); }
+  async function npPush(rows) {
+    try { const { error } = await sb.rpc('rpc_dpr_save_np', { p_submission_id: S.sub.id, p_rows: rows }); if (error) throw error; await engLoad(S.histSub ? S.sub.id : undefined); S.tab = 'np'; engRender(); }
+    catch (e) { toast(err(e, 'Could not save'), 'error'); }
+  }
+
+  /* ---------- report tab ---------- */
+  function engReport() {
+    let h = `<div class="dpr-fbar"><button class="${S.rtab === 'now' ? 'on' : ''}" onclick="DPR.rtab('now')">This report</button><button class="${S.rtab === 'hist' ? 'on' : ''}" onclick="DPR.rtab('hist')">My past reports</button></div>`;
+    if (S.rtab === 'now') {
+      h += '<div class="dpr-note">Live view of your report as it stands.</div>' + sheetBody(S) + labTable(S);
+      if (!S.locked) h += `<div class="dpr-fab"><span style="font-size:11px;color:var(--dink2)">After 1:00 pm it still goes, marked <b>late</b>.</span><span class="sp"></span><button class="dbtn ok" onclick="DPR.preview()">Preview &amp; send</button></div>`;
+      $('dpr_body').innerHTML = h;
+    } else { h += '<div id="dpr_hist"><div class="dpr-load">Loading…</div></div>'; $('dpr_body').innerHTML = h; engHist(); }
+  }
+  function sheetBody(X) {
+    const g = X.groups, rep = g.filter(x => x.progress), nr = g.filter(x => !x.progress);
+    let h = `<div class="dpr-sec">PROGRESS · ${dmy(X.to).toUpperCase()}<small>${rep.length} group${rep.length === 1 ? '' : 's'} reported · ${nr.length} not</small></div>`;
+    if (!rep.length && !nr.length) return h + '<div class="dpr-note a">No groups on the list.</div>';
+    h += '<table class="dt"><tr><th>GROUP</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th>NOTE</th></tr>';
+    rep.forEach(x => {
+      const p = x.progress, st = gState(x);
+      h += `<tr class="tt ${st === 'hind' ? 'rd' : st === 'carry' ? 'am' : ''}"><td colspan="5">${esc(x.location)} · ${esc(x.label)} — ${p.outcome === 'worked' ? esc(conName(p.contractor_code)) + ', ' + Object.entries(x.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : p.outcome === 'hindrance' ? 'Hindrance — ' + esc((x.open_hindrance || {}).reason_text || '') : '<b>No work</b>'}${st === 'carry' ? ' · dated <b>' + dsh(p.work_date) + '</b>, never sent' : ''}</td></tr>`;
+      if (p.outcome === 'worked') x.lines.forEach(l => { const lp = l.progress; if (!lp || lp.outcome !== 'worked') return;
+        h += `<tr><td></td><td>${esc(l.activity)}</td><td class="n">${fmt(lp.qty_done)} ${esc(l.uom || '')}</td><td class="n">${fmt(lp.cum_after)}</td><td>${lp.marks_finished ? 'Finished' : ''}</td></tr>`; });
+    });
+    if (nr.length) h += `<tr class="mut"><td colspan="5" style="color:var(--dink3)">Not reported: ${nr.map(x => esc(x.location + ' · ' + x.label)).join(', ')}</td></tr>`;
+    return h + '</table>';
+  }
+  function labTable(X) {
+    const trades = [], byCon = {};
+    const add = (c, t, n) => { if (!num(n)) return; (byCon[c] = byCon[c] || {})[t] = num((byCon[c] || {})[t]) + num(n); if (trades.indexOf(t) < 0) trades.push(t); };
+    X.groups.forEach(g => { if (g.labour && g.labour.outcome === 'work') Object.entries(g.labour_heads || {}).forEach(([t, n]) => add(g.labour.contractor_code, t, n)); });
+    X.np.forEach(r => add(r.contractor_code, r.trade_code, r.head_count));
+    const cons = Object.keys(byCon).sort(), tot = cons.reduce((a, c) => a + sum(byCon[c]), 0);
+    let h = `<div class="dpr-sec">LABOUR · ${dmy(X.sub.business_date).toUpperCase()}<small>${fmt(tot)} heads${X.np.length ? ' · incl. ' + fmt(X.np.reduce((a, r) => a + num(r.head_count), 0)) + ' non-estimated' : ''}</small></div>`;
+    if (!cons.length) return h + '<div class="dpr-note a">No labour entered for today.</div>';
+    h += `<table class="dt"><tr><th>CONTRACTOR</th>${trades.map(t => `<th class="c">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th></tr>`;
+    const cols = trades.map(() => 0);
+    cons.forEach(c => { h += `<tr><td>${esc(conName(c))}</td>${trades.map((t, i) => { const v = num(byCon[c][t]); cols[i] += v; return `<td class="c">${v || ''}</td>`; }).join('')}<td class="n"><b>${fmt(sum(byCon[c]))}</b></td></tr>`; });
+    h += `<tr class="tt"><td>Total</td>${cols.map(v => `<td class="c">${v || ''}</td>`).join('')}<td class="n">${fmt(tot)}</td></tr></table>`;
+    return h;
+  }
+  function preview() {
+    if (S.locked) { toast('Already sent', 'warn'); return; }
+    S.page = 'prev'; engRender();
+  }
+  function engPreview() {
+    const nr = pendingG(), noLab = !headsToday();
+    const fin = S.groups.flatMap(g => g.lines.filter(l => l.progress && l.progress.marks_finished).map(l => l.activity));
+    const carried = S.groups.filter(g => gState(g) === 'carry'), hinds = S.groups.filter(g => gState(g) === 'hind');
+    let checks = [];
+    if (nr.length) checks.push(nr.length + ' group' + (nr.length === 1 ? ' has' : 's have') + ' no figure — go as <b>not reported</b>');
+    if (fin.length) checks.push('Marked finished: ' + fin.map(esc).join(', ') + ' — they leave your list once published');
+    if (carried.length) checks.push(carried.map(g => esc(g.location + ' · ' + g.label) + ' is dated <b>' + dsh(g.progress.work_date) + '</b>').join('; ') + ' — goes with this report');
+    if (hinds.length) checks.push(hinds.length + ' hindrance' + (hinds.length === 1 ? '' : 's') + ' continue');
+    if (noLab) checks.push('<b>No labour at all today.</b> If nobody worked, add a non-estimated work line saying why');
+    if (istMins() <= 0) checks.push('It is past 1:00 pm — this will be marked <b>late</b>');
+    let h = `<div class="dpr-hd"><button class="dbtn sm" onclick="DPR.prevClose()">‹ Keep editing</button><div><b>Before you send</b><span>${esc(state.userName || '')} · attempt ${num(S.sub.attempt_no) + 1}</span></div></div>
+      <div class="dpr-dates"><div class="y"><i>PROGRESS FOR</i><b>${dmy(S.to)}</b><span>${reported().length} groups · ${S.groups.flatMap(g => g.lines).filter(l => l.progress && l.progress.qty_done > 0).length} lines moved</span></div><div class="t"><i>LABOUR FOR</i><b>${dmy(S.sub.business_date)}</b><span>${fmt(headsToday())} heads</span></div></div>
+      <div class="dpr-note v">This is exactly what the manager sees. Once sent it is locked — a mistake is corrected only if it is returned.</div>
+      ${checks.length ? '<div class="dpr-note a"><b>Check before sending</b><br>· ' + checks.join('<br>· ') + '</div>' : ''}
+      ${sheetBody(S)}${labTable(S)}
+      <div class="dpr-fab"><button class="dbtn" onclick="DPR.prevClose()">Keep editing</button><span class="sp"></span><button class="dbtn ok" onclick="DPR.submitGo()">Send to manager</button></div>`;
+    $('dpr_root').innerHTML = h; window.scrollTo(0, 0);
+  }
+  function prevClose() { S.page = null; S.tab = 'report'; S.rtab = 'now'; engRender(); }
+  async function submitGo() {
+    try {
+      const { data, error } = await sb.rpc('rpc_dpr_submit', { p_submission_id: S.sub.id });
+      if (error) throw error;
+      toast('Sent ' + (data ? data.submitted_at : '') + (data && data.is_late ? ' — marked late' : '') + ' · attempt ' + (data ? data.attempt : 1), 'success', 6000);
+      S.page = null; await engLoad(); S.tab = 'report'; S.rtab = 'now'; engRender();
+    } catch (e) { toast(err(e, 'Could not send'), 'error'); }
+  }
+
+  /* ---------- my past reports ---------- */
+  async function engHist() {
+    try {
+      const { data, error } = await sb.rpc('rpc_dpr_my_history', { p_limit: 60 });
+      if (error) throw error;
+      const rows = Array.isArray(data) ? data : [];
+      let h = `<div class="dpr-sec">WHAT YOU SUBMITTED<small>tap to open</small></div>`;
+      if (!rows.length) h += '<div class="dpr-note">Nothing before today.</div>';
+      rows.forEach(r => {
+        const pill = r.status === 'Accepted' ? 'p-ok' : r.status === 'Returned' ? 'p-red' : r.status === 'Submitted' ? 'p-teal' : 'p-grey';
+        h += `<div class="dpr-lrow" onclick="DPR.histOpen('${r.submission_id}')"><div class="nm"><b>${dmy(r.progress_to)}</b><span>${r.submitted_at ? 'sent ' + hm(r.submitted_at) : 'never sent'}${r.is_late ? ' <span class="pill p-amb">late</span>' : ''} · ${r.groups} group${r.groups === 1 ? '' : 's'} · ${fmt(r.heads)} heads${num(r.attempt_no) > 1 ? ' · attempt ' + r.attempt_no : ''}${r.reviewed_by ? ' · ' + esc(r.status.toLowerCase()) + ' by ' + esc(r.reviewed_by) : ''}${r.return_reason ? ' · ' + esc(r.return_reason) : ''}</span></div><span class="pill ${pill}">${esc(r.status)}</span></div>`;
+      });
+      $('dpr_hist').innerHTML = h;
+    } catch (e) { $('dpr_hist').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load your past reports')) + '</div>'; }
+  }
+  async function histOpen(id) {
+    try {
+      const { data, error } = await sb.rpc('rpc_dpr_my_submission', { p_submission_id: id });
+      if (error) throw error;
+      S.hist = data; S.page = 'hist'; engRender();
+    } catch (e) { toast(err(e, 'Could not open'), 'error'); }
+  }
+  function engHistPage() {
+    const d = S.hist, s = d.submission;
+    const X = { groups: d.groups || [], np: d.np || [], sub: s, to: s.progress_to };
+    let h = `<div class="dpr-hd"><button class="dbtn sm" onclick="DPR.histClose()">‹ Back</button><div><b>${dmy(s.progress_to)} · ${esc(s.status)}${num(s.attempt_no) > 1 ? ' · attempt ' + s.attempt_no : ''}</b><span>sent ${s.submitted_at ? new Date(s.submitted_at).toLocaleString('en-GB') : '—'}${s.is_late ? ' (late)' : ''}${s.reviewed_at ? ' · reviewed ' + new Date(s.reviewed_at).toLocaleString('en-GB') : ''}</span></div>${s.status === 'Returned' ? `<button class="dbtn sm ok" onclick="DPR.engLoad('${s.id}')">Fix &amp; resend</button>` : ''}</div>`;
+    (d.attempts || []).filter(a => a.returned_at).forEach(a => { h += `<div class="dpr-note a"><b>Attempt ${a.attempt_no} returned</b> ${hm(a.returned_at)} — ${esc(a.return_reason || '')}${a.return_note ? ': ' + esc(a.return_note) : ''}</div>`; });
+    h += sheetBody(X) + labTable(X);
+    $('dpr_root').innerHTML = h; window.scrollTo(0, 0);
+  }
+  function histClose() { S.page = null; S.tab = 'report'; S.rtab = 'hist'; engRender(); }
+
+  function sheetOpen(title, sub, body, foot) {
+    let el = $('dprSheet');
+    if (!el) { el = document.createElement('div'); el.id = 'dprSheet'; el.className = 'dprSheet'; ($('mod-dpr') || document.body).appendChild(el); }
+    el.innerHTML = `<div class="box"><div class="hd"><div><b>${esc(title)}</b><span>${esc(sub || '')}</span></div><button class="x" onclick="DPR.sheetClose()">×</button></div><div class="bd">${body}</div><div class="ft">${foot || ''}</div></div>`;
+    el.classList.add('on');
+  }
+  function sheetClose() { const el = $('dprSheet'); if (el) el.classList.remove('on'); }
+  function tab(t) { S.tab = t; engRender(); }
+  function filt(f) { S.filt = f; engRender(); }
+  function srch(v) { S.q = v; const b = $('dpr_body'); const sc = b ? b.scrollTop : 0; engWorks(); const i = document.querySelector('#dpr_body .dpr-srch input'); if (i) { i.focus(); i.setSelectionRange(v.length, v.length); } if (b) b.scrollTop = sc; }
+  function rtab(t) { S.rtab = t; engRender(); }
+
+  /* ==================================================================
+     MANAGER
+     ================================================================== */
+  async function mgrLoad() {
+    try {
+      contractors();
+      const { data, error } = await sb.rpc('rpc_dpr_review_queue', S.mDate ? { p_business_date: S.mDate, p_shift: 'D' } : { p_shift: 'D' });
+      if (error) throw error;
+      S.mQueue = data; S.mDate = data.business_date; S.mProg = data.progress_date;
+      if (!S.mToday) S.mToday = data.business_date;
+      const needH = !S.hind, needS = !S.sheet || S.sheet.report_date !== S.mProg;
+      const [hr, sh] = await Promise.all([needH ? sb.rpc('rpc_dpr_hindrance_register', { p_open: null }) : Promise.resolve(null), needS ? sb.rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }) : Promise.resolve(null)]);
+      if (hr) { S.hind = (hr.data && hr.data.rows) || []; S.hSum = (hr.data && hr.data.by_party) || []; }
+      if (sh) { S.sheet = sh.data || {}; S.sheet.report_date = S.mProg; }
+      S.mPage = null; mgrRender();
+    } catch (e) {
+      $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not load the review queue')) + '</div><div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try again</button></div>';
+    }
+  }
+  function mgrRender() {
+    if (S.mPage === 'rev') return mgrReview();
+    const q = S.mQueue || {}, subs = q.submissions || [], areas = q.areas || [];
+    const waiting = subs.filter(s => s.status === 'Submitted').length, acc = subs.filter(s => s.status === 'Accepted').length, ret = subs.filter(s => s.status === 'Returned').length;
+    const notRep = areas.filter(a => !(a.submission_ids || []).some(id => subs.some(s => s.submission_id === id && s.status !== 'Draft'))).length;
+    const openH = (S.hind || []).filter(x => x.is_open).length, uncl = (S.hind || []).filter(x => !x.party).length;
+    const published = S.sheet && S.sheet.report_date === S.mProg && S.sheet.sheet;
+    const heads = subs.filter(s => s.status === 'Accepted' || s.status === 'Submitted').reduce((a, s) => a + num(s.heads), 0);
+    let h = `<div class="dpr-mbar"><div class="dt"><i>DAILY REPORT FOR</i><b>${dmy(S.mProg)}</b><span>filed on ${dmy(S.mDate)} · cut-off 1:00 pm</span></div>
+      <div class="nav"><div class="dpr-dn"><button onclick="DPR.mDay(-1)">‹</button><button onclick="DPR.mDay(1)" ${S.mDate >= S.mToday ? 'disabled style="opacity:.35"' : ''}>›</button></div>
+        <div class="st"><b>${published ? esc(published.dpr_no) : waiting ? waiting + ' awaiting you' : acc ? 'ready to publish' : 'nothing yet'}</b>${published ? 'published ' + new Date(published.published_at).toLocaleString('en-GB') : notRep ? notRep + ' area' + (notRep === 1 ? '' : 's') + ' not reported' : 'all areas reported'}</div></div>
+      <div class="act"><button class="dbtn ${(!published && acc && !waiting) ? 'ok' : ''}" ${(published || !acc) ? 'disabled' : ''} onclick="DPR.publish()">Publish ${dsh(S.mProg)}</button></div></div>`;
+    h += `<div class="dpr-kpis"><div><b>${areas.length}</b><span>AREAS</span></div><div><b style="color:${waiting ? 'var(--dam)' : 'var(--dink3)'}">${waiting}</b><span>TO REVIEW</span></div><div><b style="color:var(--dok)">${acc}</b><span>ACCEPTED</span></div><div><b style="color:${notRep ? 'var(--drd)' : 'var(--dink3)'}">${notRep}</b><span>NOT REPORTED</span></div><div><b style="color:${openH ? 'var(--drd)' : 'var(--dink3)'}">${openH}</b><span>HINDRANCES</span></div><div><b style="color:var(--dtd)">${fmt(heads)}</b><span>HEADS</span></div></div>`;
+    h += `<div class="dpr-tabs"><button class="${S.mTab === 'queue' ? 'on' : ''}" onclick="DPR.mTab('queue')">Review<br><i>${waiting} waiting</i></button><button class="${S.mTab === 'hind' ? 'on' : ''}" onclick="DPR.mTab('hind')">Hindrances<br><i>${openH} open</i></button><button class="${S.mTab === 'sheet' ? 'on' : ''}" onclick="DPR.mTab('sheet')">The report<br><i>${dsh(S.mProg)}</i></button><button class="${S.mTab === 'pub' ? 'on' : ''}" onclick="DPR.mTab('pub')">Published<br><i>archive</i></button></div>`;
+    if (ret) h += `<div class="dpr-note v">${ret} report${ret === 1 ? '' : 's'} returned and not yet corrected.</div>`;
+    if (uncl) h += `<div class="dpr-note a"><b>${uncl} hindrance${uncl === 1 ? '' : 's'} not attributed.</b> Say whose delay each one is — contractor, client, architect or neither. That is the extension-of-time evidence.</div>`;
+    h += '<div id="dpr_body"></div>';
+    $('dpr_root').innerHTML = h;
+    if (S.mTab === 'queue') mgrQueue(); else if (S.mTab === 'hind') mgrHind(); else if (S.mTab === 'sheet') mgrSheet(); else mgrPub();
+  }
+  function subRow(s) {
+    const st = s.status, pill = st === 'Submitted' ? 'p-amb' : st === 'Accepted' ? 'p-ok' : st === 'Returned' ? 'p-red' : 'p-grey';
+    return `<div class="dpr-lrow" onclick="DPR.mOpen('${s.submission_id}')"><div class="nm"><b>${esc(s.engineer || '')}</b><span>${s.submitted_at ? 'sent ' + hm(s.submitted_at) : 'not sent'}${s.is_late ? ' <b style="color:var(--dam)">late</b>' : ''} · ${s.groups_reported} group${s.groups_reported === 1 ? '' : 's'} · ${s.lines_moved} line${s.lines_moved === 1 ? '' : 's'} moved${num(s.carried_lines) ? ' · <b style="color:#a8690a">' + s.carried_lines + ' earlier-dated</b>' : ''}${num(s.hindrances) ? ' · ' + s.hindrances + ' hindrance' + (s.hindrances === 1 ? '' : 's') : ''}${(s.areas || []).length > 1 ? ' · ' + s.areas.map(esc).join(' + ') : ''}</span></div>
+      ${num(s.attempt_no) > 1 ? '<span class="pill p-vio">attempt ' + s.attempt_no + '</span>' : ''}${num(s.no_photo_groups) ? '<span class="pill p-amb">' + s.no_photo_groups + ' no photo</span>' : ''}<span class="pill p-teal">${fmt(s.heads)} heads</span><span class="pill ${pill}">${st === 'Draft' ? 'in progress' : st.toLowerCase()}</span></div>`;
+  }
+  function mgrQueue() {
+    const q = S.mQueue || {}, subs = q.submissions || [], areas = q.areas || [];
+    if (!areas.length && !subs.length) { $('dpr_body').innerHTML = '<div class="dpr-note a">No areas set up and nothing filed. Create areas under <b>Masters › Site Areas</b>.</div>'; return; }
+    let h = '<div class="dpr-note">Accept or return — you cannot edit a figure. The number stays the engineer\'s.</div>';
+    const seen = new Set();
+    areas.forEach(a => {
+      const mine = subs.filter(s => (a.submission_ids || []).includes(s.submission_id)); mine.forEach(s => seen.add(s.submission_id));
+      const rep = mine.some(s => s.status !== 'Draft');
+      h += `<div class="dpr-grp">${esc(a.area_name)}<span style="font-weight:600;color:var(--dink2);margin-left:6px">${esc(a.home_engineers || 'no engineer allocated')}</span><small>${rep ? '' : '<span class="pill p-red">not reported</span>'}</small></div>`;
+      if (!mine.length) h += `<div class="dpr-note">Nobody has filed for ${dsh(S.mProg)}. Publish goes ahead; the DPR shows this area as not reported and its ${a.running_works} running work${a.running_works === 1 ? '' : 's'} carry forward.</div>`;
+      mine.forEach(s => h += subRow(s));
+    });
+    const rest = subs.filter(s => !seen.has(s.submission_id));
+    if (rest.length) { h += '<div class="dpr-grp">Not tied to an area</div>'; rest.forEach(s => h += subRow(s)); }
+    $('dpr_body').innerHTML = h;
+  }
   async function mOpen(subId) {
     try {
       const { data, error } = await sb.rpc('rpc_dpr_submission_detail', { p_submission_id: subId });
       if (error) throw error;
-      S.mDetail = data; S.mSel = subId;
-      const s = data.submission, prog = data.progress || [], lab = data.labour || [];
-
-      let b = '';
-      if (num(s.days_covered) > 1) {
-        b += `<div class="dpr-note a">Covers ${s.days_covered} days — ${dmy(s.progress_from)}
-          to ${dmy(s.progress_to)}. A day was missed somewhere.</div>`;
-      }
-      if (num(s.attempt_no) > 1) {
-        b += `<div class="dpr-note v">Attempt ${s.attempt_no}.
-          Last returned for: ${esc(s.return_reason || '')}</div>`;
-      }
-
-      b += `<div class="dpr-sec">PROGRESS<small>${prog.length} line(s)</small></div>`;
-      if (!prog.length) b += '<div class="dpr-note a">No progress filed.</div>';
-      else {
-        b += `<table class="dt"><tr><th>DATE</th><th>ACTIVITY</th><th>LOCATION</th>
-          <th class="n">DONE</th><th class="n">CUM AFTER</th><th class="n">EST</th>
-          <th class="n">📷</th><th>NOTE</th></tr>`;
-        prog.forEach(w => {
-          const over = num(w.cum_after) > num(w.est_qty);
-          const noPic = w.outcome === 'worked' && !num(w.photos);
-          b += `<tr class="${w.outcome === 'hindrance' || over || noPic ? 'am' : ''}">
-            <td>${dsh(w.work_date)}</td>
-            <td>${esc(w.activity)}</td><td>${esc(w.location)}</td>
-            <td class="n">${w.outcome === 'worked' ? fmt(w.qty_done) + ' ' + esc(w.uom || '') : '—'}</td>
-            <td class="n">${fmt(w.cum_after)}</td><td class="n">${fmt(w.est_qty)}</td>
-            <td class="n">${num(w.photos) || '—'}</td>
-            <td>${over ? '<b style="color:#a8690a">over estimate</b>. ' : ''}
-              ${w.outcome === 'hindrance' ? 'Hindrance — ' + esc(w.hindrance || '')
-                : w.marks_finished ? '<b style="color:#128a4a">marked finished</b>'
-                : w.outcome === 'none' ? 'No work' : ''}</td></tr>`;
-        });
-        b += '</table>';
-      }
-
-      const heads = {};
-      lab.forEach(l => Object.entries(l.heads || {}).forEach(([t, v]) => {
-        heads[t] = num(heads[t]) + num(v);
-      }));
-      (data.np || []).forEach(r => { heads[r.trade_code] = num(heads[r.trade_code]) + num(r.head_count); });
-      const keys = Object.keys(heads).filter(k => num(heads[k]) > 0).sort();
-      b += `<div class="dpr-sec">LABOUR<small>${fmt(keys.reduce((a, k) => a + num(heads[k]), 0))} heads</small></div>`;
-      b += keys.length
-        ? '<table class="dt"><tr><th>TRADE</th><th class="n">HEADS</th></tr>'
-          + keys.map(k => `<tr><td>${esc(k)}</td><td class="n">${fmt(heads[k])}</td></tr>`).join('') + '</table>'
-        : '<div class="dpr-note a">No labour recorded.</div>';
-
-      if ((data.np || []).length) {
-        b += '<div class="dpr-sec">NOT AGAINST A WORK</div><table class="dt">'
-          + '<tr><th>REASON</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th></tr>'
-          + data.np.map(r => `<tr><td>${esc(r.reason_text)}</td><td>${esc(r.contractor_code)}</td>
-              <td>${esc(r.trade_code)}</td><td class="n">${fmt(r.head_count)}</td></tr>`).join('')
-          + '</table>';
-      }
-      if ((data.attempts || []).length > 1) {
-        b += '<div class="dpr-sec">HISTORY</div><table class="dt">'
-          + '<tr><th class="n">#</th><th>SENT</th><th>RETURNED</th><th>WHY</th></tr>'
-          + data.attempts.map(a => `<tr><td class="n">${a.attempt_no}</td>
-              <td>${a.submitted_at ? new Date(a.submitted_at).toLocaleString('en-GB') : '—'}</td>
-              <td>${a.returned_at ? new Date(a.returned_at).toLocaleString('en-GB') : '—'}</td>
-              <td>${esc(a.return_reason || '')}</td></tr>`).join('') + '</table>';
-      }
-
-      const canAct = s.status === 'Submitted';
-      sheetOpen(data.area, (s.submitted_by_name || '') + dmy(s.progress_to), b, canAct
-        ? `<button class="dbtn warn" onclick="DPR.mReturn()">Return</button><span class="sp"></span>
-           <button class="dbtn" onclick="DPR.sheetClose()">Close</button>
-           <button class="dbtn ok" onclick="DPR.mAccept()">Accept</button>`
-        : `<span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>`);
+      S.mDetail = data; S.mSel = subId; S.mPage = 'rev'; mgrRender(); window.scrollTo(0, 0);
     } catch (e) { toast(err(e, 'Could not open that submission'), 'error'); }
   }
-
-  async function mAccept() {
-    try {
-      const { error } = await sb.rpc('rpc_dpr_accept', { p_submission_id: S.mSel });
-      if (error) throw error;
-      toast('Accepted', 'success'); sheetClose(); S.sheet = null; await mgrLoad();
-    } catch (e) { toast(err(e, 'Could not accept'), 'error'); }
+  function mgrReview() {
+    const d = S.mDetail, s = d.submission, groups = d.groups || [], lab = d.labour || [], np = d.np || [];
+    const look = [];
+    groups.forEach(g => { if (g.outcome === 'worked' && !num(g.photos)) look.push(esc(g.location + ' · ' + g.label) + ' worked with no photo'); if (g.carried) look.push(esc(g.location + ' · ' + g.label) + ' is dated ' + dsh(g.work_date) + ' — never sent that day'); if (g.outcome === 'hindrance') look.push(esc(g.location + ' · ' + g.label) + ' hindrance — ' + esc(g.hindrance || '')); (g.lines || []).forEach(l => { if (num(l.cum_after) > num(l.est_qty)) look.push(esc(l.activity) + ' over estimate'); }); });
+    let h = `<div class="dpr-hd"><button class="dbtn sm" onclick="DPR.mBack()">‹ Back to review</button><div><b>${esc(d.engineer || '')} · progress for ${dmy(s.progress_to)}</b><span>sent ${s.submitted_at ? new Date(s.submitted_at).toLocaleString('en-GB') : '—'}${s.is_late ? ' · <b style="color:var(--dam)">late</b>' : ''} · attempt ${s.attempt_no}${num(s.days_covered) > 1 ? ' · covers ' + s.days_covered + ' days' : ''}</span></div><span class="sp" style="flex:1"></span><span class="pill ${s.status === 'Submitted' ? 'p-amb' : s.status === 'Accepted' ? 'p-ok' : 'p-red'}">${esc(s.status.toLowerCase())}</span></div>`;
+    if (num(s.attempt_no) > 1 && s.return_reason) h += `<div class="dpr-note v">Attempt ${s.attempt_no}. Last returned for: ${esc(s.return_reason)}</div>`;
+    if (look.length) h += `<div class="dpr-note a"><b>Look at:</b> ${look.join(' · ')}</div>`;
+    h += `<div class="dpr-sec">PROGRESS · ${dmy(s.progress_to).toUpperCase()}<small>${groups.length} group${groups.length === 1 ? '' : 's'} reported</small></div>`;
+    if (!groups.length) h += '<div class="dpr-note a">No progress filed.</div>';
+    else {
+      h += '<table class="dt"><tr><th>GROUP · LOCATION · LINES</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM AFTER</th><th class="n">EST</th><th class="n">%</th><th class="c">📷</th><th>NOTE</th></tr>';
+      groups.forEach(g => {
+        h += `<tr class="tt ${g.outcome === 'hindrance' ? 'rd' : g.carried ? 'am' : ''}"><td colspan="8">${esc(g.area || 'Unassigned')} · ${esc(g.location)} · ${esc(g.label)}${g.package ? ' (' + esc(g.package) + ')' : ''} — ${g.outcome === 'worked' ? esc(g.contractor_name || conName(g.contractor)) + ', ' + Object.entries(g.labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : g.outcome === 'hindrance' ? 'hindrance — ' + esc(g.hindrance || '') : 'no work'}${g.carried ? ' · dated <b>' + dsh(g.work_date) + '</b>' : ''}</td></tr>`;
+        (g.lines || []).forEach(l => {
+          const over = num(l.cum_after) > num(l.est_qty), pc = num(l.est_qty) ? (num(l.reported ? l.cum_after : l.cum_before) / num(l.est_qty) * 100).toFixed(1) : '';
+          h += `<tr class="${l.reported && l.outcome === 'worked' ? (over ? 'am' : '') : 'mut'}"><td></td><td>${esc(l.activity)}</td><td class="n">${l.reported && l.outcome === 'worked' ? fmt(l.qty_done) + ' ' + esc(l.uom || '') : '—'}</td><td class="n">${fmt(l.reported ? l.cum_after : l.cum_before)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td><td class="c">${num(g.photos) || '—'}</td><td>${over ? '<b style="color:#a8690a">over estimate</b> ' : ''}${l.reported ? (l.marks_finished ? '<b style="color:#128a4a">marked finished</b>' : l.outcome === 'hindrance' ? 'hindrance' : l.outcome === 'none' ? 'no work' : '') : 'not reported'}</td></tr>`;
+        });
+      });
+      h += '</table>';
+    }
+    const trades = [], byCon = {}; const add = (c, t, n, w) => { if (!num(n)) return; const k = c + '|' + w; (byCon[k] = byCon[k] || { c, w, m: {} }).m[t] = num(byCon[k].m[t]) + num(n); if (trades.indexOf(t) < 0) trades.push(t); };
+    lab.forEach(l => { if (l.outcome === 'work') Object.entries(l.heads || {}).forEach(([t, n]) => add(l.contractor, t, n, l.location + ' · ' + l.label)); });
+    np.forEach(r => add(r.contractor_code, r.trade_code, r.head_count, r.reason_text + ' (non-estimated)'));
+    const keys = Object.keys(byCon), tot = keys.reduce((a, k) => a + sum(byCon[k].m), 0);
+    h += `<div class="dpr-sec">LABOUR · ${dmy(s.business_date).toUpperCase()}<small>${fmt(tot)} heads</small></div>`;
+    if (!keys.length) h += '<div class="dpr-note a">No labour recorded.</div>';
+    else { h += `<table class="dt"><tr><th>CONTRACTOR</th><th>GROUP</th>${trades.map(t => `<th class="c">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th></tr>`;
+      keys.sort().forEach(k => { const r = byCon[k]; h += `<tr><td>${esc(conName(r.c))}</td><td>${esc(r.w)}</td>${trades.map(t => `<td class="c">${num(r.m[t]) || ''}</td>`).join('')}<td class="n"><b>${fmt(sum(r.m))}</b></td></tr>`; });
+      h += `<tr class="tt"><td colspan="2">Total</td>${trades.map(t => `<td class="c">${keys.reduce((a, k) => a + num(byCon[k].m[t]), 0) || ''}</td>`).join('')}<td class="n">${fmt(tot)}</td></tr></table>`; }
+    if ((d.attempts || []).length > 1) { h += '<div class="dpr-sec">HISTORY</div><table class="dt"><tr><th class="n">#</th><th>SENT</th><th>RETURNED</th><th>WHY</th></tr>' + d.attempts.map(a => `<tr><td class="n">${a.attempt_no}</td><td>${a.submitted_at ? new Date(a.submitted_at).toLocaleString('en-GB') : '—'}</td><td>${a.returned_at ? new Date(a.returned_at).toLocaleString('en-GB') : '—'}</td><td>${esc(a.return_reason || '')}${a.return_note ? ' — ' + esc(a.return_note) : ''}</td></tr>`).join('') + '</table>'; }
+    const canAct = s.status === 'Submitted';
+    h += `<div class="dpr-fab">${canAct ? '<button class="dbtn warn" onclick="DPR.mReturn()">Return with reason</button>' : ''}<span class="sp"></span><button class="dbtn" onclick="DPR.mBack()">Close</button>${canAct ? '<button class="dbtn ok" onclick="DPR.mAccept()">Accept</button>' : ''}</div>`;
+    $('dpr_root').innerHTML = h;
   }
-
+  function mBack() { S.mPage = null; mgrRender(); }
+  async function mAccept() {
+    try { const { error } = await sb.rpc('rpc_dpr_accept', { p_submission_id: S.mSel }); if (error) throw error; toast('Accepted', 'success'); S.sheet = null; await mgrLoad(); }
+    catch (e) { toast(err(e, 'Could not accept'), 'error'); }
+  }
   function mReturn() {
-    const reasons = ['Photos missing', 'Quantity looks wrong', 'Labour count does not match',
-      'Hindrance not explained', 'Wrong location', 'Other'];
-    sheetOpen('Return this report', 'The engineer corrects it and sends again', `
-      <div class="dprFld"><label>WHY</label>
-        <select id="rt_r">${reasons.map(r => `<option>${r}</option>`).join('')}</select></div>
-      <div class="dprFld"><label>WHAT SHOULD THEY FIX</label>
-        <textarea id="rt_n" rows="3" placeholder="Be specific — they read this on a phone"></textarea></div>
-      <div class="dpr-note v">Nothing is deleted. The attempt is kept and numbered, so the
-        correction trail survives.</div>`,
-      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>
-       <button class="dbtn warn" onclick="DPR.mReturnGo()">Return it</button>`);
+    const reasons = ['Quantity looks wrong', 'Photos missing', 'Labour count does not match', 'Hindrance not explained', 'Wrong location or line', 'Other'];
+    sheetOpen('Return this report', 'The engineer corrects it and sends again', `<div class="dprFld"><label>WHY</label><select id="rt_r">${reasons.map(r => `<option>${r}</option>`).join('')}</select></div><div class="dprFld"><label>WHAT SHOULD THEY FIX</label><textarea id="rt_n" rows="3" placeholder="Be specific — they read this on a phone"></textarea></div><div class="dpr-note v">Nothing is deleted. The attempt is kept and numbered.</div>`,
+      '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn warn" onclick="DPR.mReturnGo()">Return it</button>');
   }
   async function mReturnGo() {
     const r = $('rt_r').value, n = $('rt_n').value.trim();
     if (!n) { toast('Say what needs fixing', 'warn'); return; }
-    try {
-      const { error } = await sb.rpc('rpc_dpr_return',
-        { p_submission_id: S.mSel, p_reason: r, p_note: n });
-      if (error) throw error;
-      toast('Returned to the engineer', 'success'); sheetClose(); S.sheet = null; await mgrLoad();
-    } catch (e) { toast(err(e, 'Could not return'), 'error'); }
+    try { const { error } = await sb.rpc('rpc_dpr_return', { p_submission_id: S.mSel, p_reason: r, p_note: n }); if (error) throw error; toast('Returned to the engineer', 'success'); sheetClose(); S.sheet = null; await mgrLoad(); }
+    catch (e) { toast(err(e, 'Could not return'), 'error'); }
   }
 
   /* ---------- hindrances ---------- */
   function mgrHind() {
-    const all = S.hind || [];
-    const open = all.filter(x => x.is_open), shut = all.filter(x => !x.is_open);
-    let h = `<div class="dpr-note">A hindrance runs from the day it started until you close it,
-      and days accrue on their own. Say whose delay it is and the extension-of-time case builds itself.</div>`;
-    if ((S.hSum || []).length) {
-      h += '<div class="dpr-sec">DAYS LOST BY PARTY</div><table class="dt">'
-        + '<tr><th>PARTY</th><th class="n">EVENTS</th><th class="n">DAYS</th></tr>'
-        + S.hSum.map(p => `<tr class="${p.party === 'unclassified' ? 'am' : ''}">
-            <td>${esc(p.party)}</td><td class="n">${p.events}</td>
-            <td class="n"><b>${p.days}</b></td></tr>`).join('') + '</table>';
-    }
-    if (!all.length) { $('dpr_body').innerHTML = h + '<div class="dpr-note g">Nothing is held up.</div>'; return; }
-
-    h += `<div class="dpr-sec">OPEN<small>${open.length}</small></div><div class="dprList">`;
-    if (!open.length) h += '<div class="dpr-note g">No open hindrance.</div>';
-    open.forEach(x => {
-      h += `<div class="row" onclick="DPR.hOpen('${x.id}')">
-        <div class="nm"><b>${esc(x.reason_text)}</b>
-          <span>${esc(x.activity || '')} · ${esc(x.location || '')} · ${esc(x.area || '')}
-            · since ${dmy(x.from_date)}</span></div>
-        <span class="pill ${num(x.days_lost) > 3 ? 'p-red' : 'p-amb'}">${x.days_lost} day${num(x.days_lost) === 1 ? '' : 's'}</span>
-        ${x.party ? '<span class="pill p-vio">' + esc(x.party) + '</span>'
-          : '<span class="pill p-red">attribute it</span>'}</div>`;
-    });
-    h += '</div>';
-    if (shut.length) {
-      h += `<div class="dpr-sec">CLOSED<small>${shut.length}</small></div><div class="dprList">`;
-      shut.forEach(x => {
-        h += `<div class="row" onclick="DPR.hOpen('${x.id}')">
-          <div class="nm"><b>${esc(x.reason_text)}</b>
-            <span>${esc(x.location || '')} · ${dmy(x.from_date)} → ${dmy(x.closed_on)}</span></div>
-          <span class="pill p-grey">${x.days_lost} days</span>
-          <span class="pill p-vio">${esc(x.party || '—')}</span></div>`;
-      });
-      h += '</div>';
-    }
+    const rows = S.hind || [], open = rows.filter(x => x.is_open), closed = rows.filter(x => !x.is_open);
+    const hrow = x => `<div class="dpr-hrow ${x.is_open ? '' : 'cl'}" onclick="DPR.hOpen('${x.id}')"><div class="nm"><b>${esc(x.reason_text)} · ${esc(x.location || '')}</b><span>${esc(x.group || x.activity || '')}${x.area ? ' · ' + esc(x.area) : ''}${x.raised_by ? ' · raised by ' + esc(x.raised_by) : ''} · since ${dsh(x.from_date)}${x.closed_on ? ' → ' + dsh(x.closed_on) + (x.auto_closed ? ' · <b>closed itself</b> when work resumed' : x.closed_by ? ' · closed by ' + esc(x.closed_by) : '') : ''}</span></div>${x.party ? '<span class="pill p-vio">' + esc(x.party) + '</span>' : '<span class="pill p-amb">not attributed</span>'}<div class="d"><b>${x.days_lost}</b><span>DAY${num(x.days_lost) === 1 ? '' : 'S'}</span></div></div>`;
+    let h = '<div class="dpr-note">A hindrance closes itself the day work resumes. Attribute each one — it is the EOT evidence. You can also close or reopen one by hand.</div>';
+    h += `<div class="dpr-sec">OPEN<small>${open.length}</small></div>` + (open.length ? open.map(hrow).join('') : '<div class="dpr-note">Nothing open.</div>');
+    h += `<div class="dpr-sec">CLOSED<small>${closed.length}</small></div>` + (closed.length ? closed.slice(0, 40).map(hrow).join('') : '<div class="dpr-note">None yet.</div>');
+    if ((S.hSum || []).length) h += '<div class="dpr-sec">DAYS LOST BY PARTY</div><table class="dt"><tr><th>PARTY</th><th class="n">EVENTS</th><th class="n">DAYS</th></tr>' + S.hSum.map(p => `<tr><td>${esc(p.party)}</td><td class="n">${p.events}</td><td class="n">${p.days}</td></tr>`).join('') + '</table>';
     $('dpr_body').innerHTML = h;
   }
-
   function hOpen(id) {
     const x = (S.hind || []).find(h => h.id === id); if (!x) return;
     S.hSel = id;
-    const parties = [['contractor', 'Contractor — our own delay'], ['client', 'Client'],
-      ['architect', 'Architect / consultant'], ['neutral', 'Neither party (weather, force majeure)']];
+    const parties = [['contractor', 'Contractor — our own delay'], ['client', 'Client'], ['architect', 'Architect / consultant'], ['neutral', 'Neither party (weather, force majeure)']];
     const cur = x.party || x.default_party || 'contractor';
-    sheetOpen(x.reason_text, (x.activity || '') + ' · ' + (x.location || ''), `
-      <table class="dt" style="border-left:0;border-right:0">
-        <tr><th style="width:26%">DAYS LOST</th><td><b style="font-size:16px">${x.days_lost}</b> day${num(x.days_lost) === 1 ? '' : 's'}
-              &nbsp;<span class="pill ${x.is_open ? 'p-red' : 'p-grey'}">${x.is_open ? 'open' : 'closed'}</span></td></tr>
-        <tr><th>SINCE</th><td>${dmy(x.from_date)}${x.closed_on ? ' → ' + dmy(x.closed_on) : ' → today'}</td></tr>
-        <tr><th>WHERE</th><td>${esc(x.area || '')} · ${esc(x.location || '')}</td></tr>
-        <tr><th>ATTRIBUTED TO</th><td>${x.party ? '<span class="pill p-vio">' + esc(x.party) + '</span>' : '<span class="pill p-amb">not yet</span>'}</td></tr>
-      </table>
+    sheetOpen(x.reason_text, (x.group || x.activity || '') + ' · ' + (x.location || ''), `
+      <table class="dt" style="border-left:0;border-right:0"><tr><th style="width:26%">DAYS LOST</th><td><b style="font-size:16px">${x.days_lost}</b> day${num(x.days_lost) === 1 ? '' : 's'} &nbsp;<span class="pill ${x.is_open ? 'p-red' : 'p-grey'}">${x.is_open ? 'open' : 'closed'}</span></td></tr>
+      <tr><th>SINCE</th><td>${dmy(x.from_date)}${x.closed_on ? ' → ' + dmy(x.closed_on) : ' → today'}</td></tr><tr><th>WHERE</th><td>${esc(x.area || '')} · ${esc(x.location || '')}</td></tr>
+      <tr><th>ATTRIBUTED TO</th><td>${x.party ? '<span class="pill p-vio">' + esc(x.party) + '</span>' : '<span class="pill p-amb">not yet</span>'}</td></tr></table>
       ${x.raised_by ? '<div class="dpr-note">Raised by ' + esc(x.raised_by) + '.</div>' : ''}
-      <div class="dprFld"><label>WHOSE DELAY IS THIS</label>
-        <select id="h_p">${parties.map(p => `<option value="${p[0]}" ${cur === p[0] ? 'selected' : ''}>${p[1]}</option>`).join('')}</select>
-        ${!x.party && x.default_party ? '<div class="dpr-note" style="margin-top:6px">The reason code '
-          + 'suggests <b>' + esc(x.default_party) + '</b>. Override it if the site says otherwise.</div>' : ''}</div>
-      <div class="dprFld"><label>ON WHAT BASIS</label>
-        <textarea id="h_n" rows="3" placeholder="RFI number, instruction reference, what was observed"
-          >${esc(x.party_basis || '')}</textarea></div>
-      <div class="dpr-note v">Only <b>client</b> and <b>architect</b> delays support an extension of time.
-        Contractor delay is ours. Neither party covers weather and the like — time but usually no money.</div>`,
-      (x.is_open
-        ? `<button class="dbtn" onclick="DPR.hClose()">Mark resolved</button><span class="sp"></span>`
-        : `<span class="sp"></span>`)
-      + `<button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>
-         <button class="dbtn pri" onclick="DPR.hClassify()">Save</button>`);
+      <div class="dprFld"><label>WHOSE DELAY IS THIS</label><select id="h_p">${parties.map(p => `<option value="${p[0]}" ${cur === p[0] ? 'selected' : ''}>${p[1]}</option>`).join('')}</select>${!x.party && x.default_party ? '<div class="dpr-note" style="margin-top:6px">The reason code suggests <b>' + esc(x.default_party) + '</b>. Override it if the site says otherwise.</div>' : ''}</div>
+      <div class="dprFld"><label>ON WHAT BASIS</label><textarea id="h_n" rows="3" placeholder="RFI number, instruction reference, what was observed">${esc(x.party_basis || '')}</textarea></div>
+      ${x.is_open ? `<div class="dprFld"><label>CLOSE IT BY HAND — LAST DAY IT WAS HELD UP</label><input type="date" id="h_d" value="${S.mToday || ''}" min="${x.from_date}" max="${S.mToday || ''}"><div class="dpr-note v" style="margin-top:6px">Leave it if the engineer will report the work resumed — it closes itself on the day before.</div></div>` : ''}
+      <div class="dpr-note v">Only <b>client</b> and <b>architect</b> delays support an extension of time. Contractor delay is ours. Neither party covers weather and the like.</div>`,
+      (x.is_open ? '<button class="dbtn" onclick="DPR.hClose()">Close on this date</button>' : '<button class="dbtn" onclick="DPR.hReopen()">Reopen</button>') + '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.hClassify()">Save attribution</button>');
   }
   async function hClassify() {
-    try {
-      const { error } = await sb.rpc('rpc_dpr_classify_hindrance',
-        { p_id: S.hSel, p_party: $('h_p').value, p_basis: $('h_n').value.trim() || null });
-      if (error) throw error;
-      toast('Attributed', 'success'); sheetClose(); S.hind = null; S.sheet = null; await mgrLoad();
-    } catch (e) { toast(err(e, 'Could not save'), 'error'); }
+    try { const { error } = await sb.rpc('rpc_dpr_classify_hindrance', { p_id: S.hSel, p_party: $('h_p').value, p_basis: $('h_n').value.trim() || null }); if (error) throw error; toast('Attributed', 'success'); sheetClose(); S.hind = null; S.sheet = null; await mgrLoad(); S.mTab = 'hind'; mgrRender(); }
+    catch (e) { toast(err(e, 'Could not save'), 'error'); }
   }
   async function hClose() {
-    const party = $('h_p').value, basis = $('h_n').value.trim();
-    if (!confirm('Mark this resolved? Days stop accruing today.')) return;
+    const d = $('h_d').value; if (!d) { toast('Pick the last day it was held up', 'warn'); return; }
     try {
-      const c = await sb.rpc('rpc_dpr_classify_hindrance',
-        { p_id: S.hSel, p_party: party, p_basis: basis || null });
-      if (c.error) throw c.error;
-      const { data, error } = await sb.rpc('rpc_dpr_close_hindrance',
-        { p_id: S.hSel, p_closed_on: null });
-      if (error) throw error;
-      toast('Closed — ' + (data ? data.days_lost : '?') + ' days lost', 'success');
-      sheetClose(); S.hind = null; S.sheet = null; await mgrLoad();
+      const c = await sb.rpc('rpc_dpr_classify_hindrance', { p_id: S.hSel, p_party: $('h_p').value, p_basis: $('h_n').value.trim() || null }); if (c.error) throw c.error;
+      const { data, error } = await sb.rpc('rpc_dpr_close_hindrance', { p_id: S.hSel, p_closed_on: d }); if (error) throw error;
+      toast('Closed — ' + (data ? data.days_lost : '?') + ' days lost', 'success'); sheetClose(); S.hind = null; S.sheet = null; await mgrLoad(); S.mTab = 'hind'; mgrRender();
     } catch (e) { toast(err(e, 'Could not close it'), 'error'); }
+  }
+  async function hReopen() {
+    try { const { error } = await sb.rpc('rpc_dpr_reopen_hindrance', { p_id: S.hSel }); if (error) throw error; toast('Reopened', 'success'); sheetClose(); S.hind = null; S.sheet = null; await mgrLoad(); S.mTab = 'hind'; mgrRender(); }
+    catch (e) { toast(err(e, 'Could not reopen'), 'error'); }
   }
 
   /* ---------- the assembled sheet ---------- */
   function mgrSheet() {
-    const d = S.sheet || {};
-    const rows = d.progress || [], lab = d.labour || [], np = d.np || [];
-    let h = '';
-    if (d.sheet) {
-      h += `<div class="dpr-note g"><b>${esc(d.sheet.dpr_no || '')}</b> — published
-        ${d.sheet.published_at ? new Date(d.sheet.published_at).toLocaleString('en-GB') : ''}.
-        These figures are frozen.</div>`;
-    } else {
-      h += `<div class="dpr-note">Draft for ${dmy(d.report_date || S.mProg)}. Publishing freezes
-        these figures and moves every cumulative quantity forward — once only, and never twice.</div>`;
-    }
-
-    if ((d.areas || []).length) {
-      const out = d.areas.filter(a => !a.included);
-      if (out.length) {
-        h += '<div class="dpr-sec">LEFT OUT</div><table class="dt">'
-          + '<tr><th>AREA</th><th>WHY</th></tr>'
-          + out.map(a => `<tr class="am"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td></tr>`).join('')
-          + '</table>';
-      }
-    }
-
-    h += `<div class="dpr-sec">WORK DONE<small>${rows.length} line(s)</small></div>`;
-    if (!rows.length) {
-      h += `<div class="dpr-note a">No accepted progress for this date yet. Accept the areas
-        on the Review tab first.</div>`;
-    } else {
-      h += `<table class="dt"><tr><th>AREA</th><th>ACTIVITY</th><th>LOCATION</th>
-        <th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>NOTE</th></tr>`;
-      rows.forEach(r => {
-        const pc = num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100) : 0;
-        h += `<tr class="${r.outcome === 'hindrance' ? 'am' : ''}">
-          <td>${esc(r.area)}</td><td>${esc(r.activity)}</td><td>${esc(r.location)}</td>
-          <td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) + ' ' + esc(r.uom || '') : '—'}</td>
-          <td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td>
-          <td class="n">${pc.toFixed(1)}</td>
-          <td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '')
-            : r.finished ? 'Finished' : ''}</td></tr>`;
-      });
-      h += '</table>';
-    }
-
-    const total = lab.reduce((a, l) => a + num(l.heads), 0) + np.reduce((a, r) => a + num(r.heads), 0);
-    h += `<div class="dpr-sec">LABOUR<small>${fmt(total)} heads</small></div>`;
-    if (!lab.length) h += '<div class="dpr-note a">No labour.</div>';
-    else {
-      h += '<table class="dt"><tr><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th><th>DAYWORK</th></tr>'
-        + lab.map(l => `<tr><td>${esc(l.contractor)}</td><td>${esc(l.trade)}</td>
-            <td class="n">${fmt(l.heads)}</td><td>${l.daywork ? 'yes' : ''}</td></tr>`).join('') + '</table>';
-    }
-    if (np.length) {
-      h += '<div class="dpr-sec">NOT AGAINST A WORK</div><table class="dt">'
-        + '<tr><th>REASON</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th></tr>'
-        + np.map(r => `<tr><td>${esc(r.reason)}</td><td>${esc(r.contractor)}</td>
-            <td>${esc(r.trade)}</td><td class="n">${fmt(r.heads)}</td></tr>`).join('') + '</table>';
-    }
-    if ((d.hindrances || []).length) {
-      h += '<div class="dpr-sec">HELD UP ON THIS DATE</div><table class="dt">'
-        + '<tr><th>ACTIVITY</th><th>LOCATION</th><th>REASON</th><th>SINCE</th><th class="n">DAYS</th><th>PARTY</th></tr>'
-        + d.hindrances.map(x => `<tr class="${x.party === 'not classified' ? 'am' : ''}">
-            <td>${esc(x.activity)}</td><td>${esc(x.location)}</td><td>${esc(x.reason)}</td>
-            <td>${dsh(x.from_date)}</td>
-            <td class="n">${x.days_lost}</td><td>${esc(x.party)}</td></tr>`).join('') + '</table>';
-    }
-    h += `<div class="dacts">
-      <button class="dbtn" onclick="DPR.printSheet()">🖨 Print / PDF</button>
-      <button class="dbtn" onclick="DPR.shareSheet()">Share</button>
-      <span class="sp"></span>
-      ${(!d.sheet && rows.length) ? `<button class="dbtn ok" onclick="DPR.publish()">Publish ${dmy(d.report_date || S.mProg)}</button>` : ''}
-    </div>`;
+    const d = S.sheet || {}, rows = d.progress || [], lab = d.labour || [], np = d.np || [], nrd = d.not_reported_draft || [];
+    let h = d.sheet ? `<div class="dpr-note g"><b>${esc(d.sheet.dpr_no || '')}</b> — published ${d.sheet.published_at ? new Date(d.sheet.published_at).toLocaleString('en-GB') : ''}${d.published_by_name ? ' by ' + esc(d.published_by_name) : ''}. These figures are frozen.</div>`
+      : `<div class="dpr-note">Draft for ${dmy(S.mProg)}. Publishing freezes these figures and moves every cumulative forward — once only.</div>`;
+    const out = d.sheet ? (d.areas || []).filter(a => !a.included) : nrd.map(a => ({ area: a.area, reason: 'No accepted submission covers this date' + (a.home_engineers ? ' — ' + a.home_engineers : ''), works: a.running_works }));
+    if (out.length) h += '<div class="dpr-sec">NOT REPORTED</div><table class="dt"><tr><th>AREA</th><th>WHY</th><th>WHAT HAPPENS</th></tr>' + out.map(a => `<tr class="rd"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td><td>${a.works != null ? a.works + ' running works carry to the next DPR' : 'carried to the next DPR'}</td></tr>`).join('') + '</table>';
+    const cur = rows.filter(r => !r.carried), car = rows.filter(r => r.carried);
+    const progT = (list, hdr) => { let t = `<div class="dpr-sec">${hdr}<small>${list.length} line${list.length === 1 ? '' : 's'}</small></div><table class="dt"><tr><th>AREA</th><th>GROUP · LOCATION</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>NOTE</th></tr>`;
+      let last = '';
+      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="8">${esc(r.location)} · ${esc(r.group)}${r.package ? ' (' + esc(r.package) + ')' : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ') || (r.outcome === 'hindrance' ? 'hindrance' : '')}${r.carried ? ' · dated ' + dsh(r.work_date) : ''}</td></tr>`; }
+        t += `<tr class="${r.outcome === 'hindrance' ? 'rd' : ''}"><td></td><td></td><td>${esc(r.activity)}</td><td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) + ' ' + esc(r.uom || '') : '—'}</td><td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td><td class="n">${num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100).toFixed(1) : ''}</td><td>${esc(r.reported_by || '')}</td><td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '') + (r.party ? ', ' + esc(r.party) : '') : r.finished ? 'Finished' : r.outcome === 'none' ? 'No work' : ''}</td></tr>`; });
+      return t + '</table>'; };
+    if (!cur.length) h += `<div class="dpr-sec">WORK DONE · ${dmy(S.mProg).toUpperCase()}</div><div class="dpr-note a">No accepted progress for this date yet. Accept the reports on the Review tab first.</div>`;
+    else h += progT(cur, 'WORK DONE · ' + dmy(S.mProg).toUpperCase());
+    if (car.length) h += progT(car, 'WORK REPORTED FOR AN EARLIER DATE — CAME IN WITH THIS REPORT');
+    const trades = [], byCon = {}; const add = (c, t, n) => { if (!num(n)) return; (byCon[c] = byCon[c] || {})[t] = num((byCon[c] || {})[t]) + num(n); if (trades.indexOf(t) < 0) trades.push(t); };
+    lab.forEach(l => add(l.contractor, l.trade, l.heads)); np.forEach(r => add(r.contractor, r.trade, r.heads));
+    const cons = Object.keys(byCon).sort(), tot = cons.reduce((a, c) => a + sum(byCon[c]), 0);
+    h += `<div class="dpr-sec">LABOUR STRENGTH · ${dmy(d.labour_date || addDays(S.mProg, 1)).toUpperCase()}<small>${fmt(tot)} heads</small></div>`;
+    if (!cons.length) h += '<div class="dpr-note a">No labour.</div>';
+    else { const cols = trades.map(() => 0); h += `<table class="dt"><tr><th>CONTRACTOR</th>${trades.map(t => `<th class="c">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th><th>DAYWORK</th></tr>`;
+      cons.forEach(c => { const dw = lab.filter(l => l.contractor === c && l.daywork).reduce((a, l) => a + num(l.heads), 0); h += `<tr><td>${esc(conName(c))}</td>${trades.map((t, i) => { const v = num(byCon[c][t]); cols[i] += v; return `<td class="c">${v || ''}</td>`; }).join('')}<td class="n"><b>${fmt(sum(byCon[c]))}</b></td><td>${dw ? fmt(dw) : ''}</td></tr>`; });
+      h += `<tr class="tt"><td>Total</td>${cols.map(v => `<td class="c">${v || ''}</td>`).join('')}<td class="n">${fmt(tot)}</td><td></td></tr></table>`;
+      if (np.length) h += '<div class="dpr-note">Includes non-estimated work: ' + np.map(r => esc(r.reason) + ' ' + fmt(r.heads) + ' (' + esc(conName(r.contractor)) + ')').join(', ') + '.</div>'; }
+    if ((d.hindrances || []).length) h += '<div class="dpr-sec">HINDRANCES ON THIS DATE</div><table class="dt"><tr><th>GROUP</th><th>LOCATION</th><th>REASON</th><th>SINCE</th><th>UNTIL</th><th class="n">DAYS</th><th>PARTY</th></tr>' + d.hindrances.map(x => `<tr class="${x.party === 'not classified' ? 'am' : ''}"><td>${esc(x.group || x.activity || '')}</td><td>${esc(x.location || '')}</td><td>${esc(x.reason)}</td><td>${dsh(x.from_date)}</td><td>${x.closed_on ? dsh(x.closed_on) : 'open'}</td><td class="n">${x.days_lost}</td><td>${esc(x.party)}</td></tr>`).join('') + '</table>';
+    h += `<div class="dacts"><button class="dbtn" onclick="DPR.printSheet()">🖨 Print / PDF</button><button class="dbtn" onclick="DPR.shareSheet()">Share</button><span class="sp"></span>${(!d.sheet && rows.length) ? `<button class="dbtn ok" onclick="DPR.publish()">Publish ${dsh(S.mProg)}</button>` : ''}</div>`;
     $('dpr_body').innerHTML = h;
   }
-
-  /* ------------------------------------------------------------------
-     Printable sheet. Opens a clean document in a new window with the
-     company letterhead; the browser's print dialog gives "Save as PDF"
-     on desktop and Share on mobile. Same figures as on screen — the
-     published ones are frozen, a draft says so in red.
-     ------------------------------------------------------------------ */
   function sheetHtml() {
     const d = S.sheet || {}, s = d.sheet, rows = d.progress || [], lab = d.labour || [], np = d.np || [];
-    const org  = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || 'Urban Excellence LLP';
-    const proj = (pgsS.project && pgsS.project.project_name) || '';
+    const org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', proj = projName();
     const title = s ? esc(s.dpr_no) : 'DRAFT — not yet published';
-    const tot = lab.reduce((a, l) => a + num(l.heads), 0) + np.reduce((a, r) => a + num(r.heads), 0);
-    const trades = []; lab.forEach(l => { if (trades.indexOf(l.trade) < 0) trades.push(l.trade); });
-    const byCon = {}; lab.forEach(l => { (byCon[l.contractor] = byCon[l.contractor] || {})[l.trade] = num(l.heads); });
-    np.forEach(r => { (byCon[r.contractor] = byCon[r.contractor] || {})[r.trade] = num((byCon[r.contractor] || {})[r.trade]) + num(r.heads); if (trades.indexOf(r.trade) < 0) trades.push(r.trade); });
-
-    let h = `<!doctype html><html><head><meta charset="utf-8"><title>${title} · ${esc(proj)}</title>
-<style>
- @page{size:A4;margin:14mm 12mm}
- body{font:10.5pt/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#132338;margin:0}
+    const trades = [], byCon = {}; const add = (c, t, n) => { if (!num(n)) return; (byCon[c] = byCon[c] || {})[t] = num((byCon[c] || {})[t]) + num(n); if (trades.indexOf(t) < 0) trades.push(t); };
+    lab.forEach(l => add(l.contractor, l.trade, l.heads)); np.forEach(r => add(r.contractor, r.trade, r.heads));
+    const cons = Object.keys(byCon).sort(), tot = cons.reduce((a, c) => a + sum(byCon[c]), 0);
+    const out = s ? (d.areas || []).filter(a => !a.included) : (d.not_reported_draft || []).map(a => ({ area: a.area, reason: 'No accepted submission covers this date' }));
+    let h = `<!doctype html><html><head><meta charset="utf-8"><title>${title} · ${esc(proj)}</title><style>
+ @page{size:A4;margin:14mm 12mm} body{font:10.5pt/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#132338;margin:0}
  .hd{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #12305a;padding-bottom:8px;margin-bottom:10px}
- .hd h1{font-size:16pt;margin:0;color:#12305a}.hd .sub{font-size:9.5pt;color:#51627a}
- .hd .no{text-align:right}.hd .no b{font-size:13pt;display:block;color:#12305a}
+ .hd h1{font-size:16pt;margin:0;color:#12305a}.hd .sub{font-size:9.5pt;color:#51627a}.hd .no{text-align:right}.hd .no b{font-size:13pt;display:block;color:#12305a}.hd .no .bd{font-size:15pt;color:#3d2a75;display:block}
  .draft{color:#b3261e;font-weight:800;border:2px solid #b3261e;padding:3px 8px;display:inline-block;transform:rotate(-2deg)}
  h2{font-size:9.5pt;letter-spacing:.6px;background:#0c2445;color:#fff;padding:4px 8px;margin:12px 0 0}
- table{width:100%;border-collapse:collapse;font-size:9.5pt}
- th,td{border:1px solid #bcc6d4;padding:3px 6px;vertical-align:top}
- th{background:#eef2f7;text-align:left;font-size:8.5pt;color:#51627a}
- td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
- td.c,th.c{text-align:center}
- tr.am td{background:#fdf1dc}tr.tt td{background:#eef2f7;font-weight:800}
- .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:9pt;margin:8px 0}
- .meta div{border:1px solid #dde3ea;padding:5px 7px}.meta b{display:block;font-size:8pt;color:#8a98ad;letter-spacing:.4px}
- .sig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:28px;font-size:9pt}
- .sig div{border-top:1px solid #132338;padding-top:4px;text-align:center;color:#51627a}
- .ft{margin-top:14px;font-size:8pt;color:#8a98ad;border-top:1px solid #dde3ea;padding-top:5px}
- @media print{.nop{display:none}}
-</style></head><body>
-<div class="hd"><div><h1>${esc(org)}</h1><div class="sub">${esc(proj)} · Daily Progress Report</div></div>
- <div class="no">${s ? '<b>' + esc(s.dpr_no) + '</b>' : '<span class="draft">DRAFT</span>'}
-  <div class="sub">Report date ${dmy(d.report_date || S.mProg)} · Day shift</div></div></div>
-<div class="meta">
- <div><b>PUBLISHED</b>${s && s.published_at ? new Date(s.published_at).toLocaleString('en-GB') : '—'}</div>
- <div><b>AREAS REPORTED</b>${(d.areas || []).filter(a => a.included).map(a => esc(a.area)).join(', ') || '—'}</div>
- <div><b>WORK LINES</b>${rows.length}</div>
- <div><b>TOTAL HEADS</b>${fmt(tot)}</div></div>`;
-
-    const out = (d.areas || []).filter(a => !a.included);
-    if (out.length) h += `<h2>NOT INCLUDED</h2><table><tr><th>AREA</th><th>REASON</th></tr>`
-      + out.map(a => `<tr class="am"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td></tr>`).join('') + '</table>';
-
-    h += `<h2>WORK DONE · ${dmy(d.report_date || S.mProg).toUpperCase()}</h2>`;
-    if (!rows.length) h += '<p>No progress on this date.</p>';
-    else h += `<table><tr><th>AREA</th><th>ACTIVITY</th><th>LOCATION</th><th class="n">DONE</th><th>UOM</th>
-        <th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>REMARK</th></tr>`
-      + rows.map(r => `<tr class="${r.outcome === 'hindrance' ? 'am' : ''}"><td>${esc(r.area)}</td><td>${esc(r.activity)}</td>
-          <td>${esc(r.location)}</td><td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) : '—'}</td><td>${esc(r.uom || '')}</td>
-          <td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td>
-          <td class="n">${num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100).toFixed(1) : ''}</td>
-          <td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '') : r.finished ? 'Finished' : ''}</td></tr>`).join('')
-      + '</table>';
-
-    h += `<h2>LABOUR STRENGTH</h2>`;
-    const cons = Object.keys(byCon).sort();
+ table{width:100%;border-collapse:collapse;font-size:9.5pt}th,td{border:1px solid #bcc6d4;padding:3px 6px;vertical-align:top}th{background:#eef2f7;text-align:left;font-size:8.5pt;color:#51627a}
+ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}td.c,th.c{text-align:center}tr.am td{background:#fdf1dc}tr.rd td{background:#fdf0ef}tr.tt td{background:#eef2f7;font-weight:800}
+ .meta{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;font-size:9pt;margin:8px 0}.meta div{border:1px solid #dde3ea;padding:5px 7px}.meta b{display:block;font-size:8pt;color:#8a98ad}
+ .sig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:28px;font-size:9pt}.sig div{border-top:1px solid #132338;padding-top:4px;text-align:center;color:#51627a}
+ .ft{margin-top:14px;font-size:8pt;color:#8a98ad;border-top:1px solid #dde3ea;padding-top:5px}</style></head><body>
+<div class="hd"><div><h1>${esc(org)}</h1><div class="sub">${esc(proj)} · Daily Progress Report · day shift</div></div>
+ <div class="no"><span class="bd">${dmy(d.report_date || S.mProg)}</span>${s ? '<b>' + esc(s.dpr_no) + '</b>' : '<span class="draft">DRAFT</span>'}</div></div>
+<div class="meta"><div><b>AREAS REPORTED</b>${(d.areas || []).filter(a => a.included).map(a => esc(a.area)).join(', ') || '—'}</div><div><b>NOT REPORTED</b>${out.map(a => esc(a.area)).join(', ') || '—'}</div><div><b>WORK LINES</b>${rows.length}</div><div><b>HEADS ${dsh(d.labour_date || addDays(S.mProg, 1)).toUpperCase()}</b>${fmt(tot)}</div><div><b>HINDRANCES</b>${(d.hindrances || []).length}</div></div>`;
+    if (out.length) h += '<h2>NOT REPORTED</h2><table><tr><th>AREA</th><th>REASON</th></tr>' + out.map(a => `<tr class="rd"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td></tr>`).join('') + '</table>';
+    const cur = rows.filter(r => !r.carried), car = rows.filter(r => r.carried);
+    const pt = list => { let t = '<table><tr><th>AREA</th><th>GROUP · LOCATION</th><th>LINE</th><th class="n">DONE</th><th>UOM</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>REMARK</th></tr>'; let last = '';
+      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="9">${esc(r.location)} · ${esc(r.group)}${r.package ? ' (' + esc(r.package) + ')' : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ')}${r.carried ? ' · dated ' + dsh(r.work_date) : ''}</td></tr>`; }
+        t += `<tr class="${r.outcome === 'hindrance' ? 'rd' : ''}"><td></td><td></td><td>${esc(r.activity)}</td><td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) : '—'}</td><td>${esc(r.uom || '')}</td><td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td><td class="n">${num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100).toFixed(1) : ''}</td><td>${esc(r.reported_by || '')}</td><td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '') : r.finished ? 'Finished' : r.outcome === 'none' ? 'No work' : ''}</td></tr>`; });
+      return t + '</table>'; };
+    h += `<h2>WORK DONE · ${dmy(d.report_date || S.mProg).toUpperCase()}</h2>` + (cur.length ? pt(cur) : '<p>No progress on this date.</p>');
+    if (car.length) h += '<h2>WORK REPORTED FOR AN EARLIER DATE</h2>' + pt(car);
+    h += `<h2>LABOUR STRENGTH · ${dmy(d.labour_date || addDays(S.mProg, 1)).toUpperCase()}</h2>`;
     if (!cons.length) h += '<p>No labour recorded.</p>';
-    else {
-      const cols = trades.map(() => 0); let gt = 0;
-      h += `<table><tr><th>CONTRACTOR</th>${trades.map(t => `<th class="c">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th></tr>`
-        + cons.map(cn => { let rs = 0; const cells = trades.map((t, i) => { const v = num(byCon[cn][t]); rs += v; cols[i] += v; return `<td class="c">${v || ''}</td>`; }).join(''); gt += rs;
-            return `<tr><td>${esc(conName(cn))}</td>${cells}<td class="n"><b>${fmt(rs)}</b></td></tr>`; }).join('')
-        + `<tr class="tt"><td>TOTAL</td>${cols.map(v => `<td class="c">${v || ''}</td>`).join('')}<td class="n">${fmt(gt)}</td></tr></table>`;
-      if (np.length) h += `<p style="font-size:9pt;color:#51627a;margin:4px 0 0">Includes labour not against a work: `
-        + np.map(r => esc(r.reason) + ' ' + fmt(r.heads)).join(', ') + '.</p>';
-    }
-
-    if ((d.hindrances || []).length) {
-      h += `<h2>HINDRANCES ON THIS DATE</h2><table><tr><th>ACTIVITY</th><th>LOCATION</th><th>REASON</th><th>SINCE</th><th class="n">DAYS</th><th>ATTRIBUTED TO</th></tr>`
-        + d.hindrances.map(x => `<tr class="${x.party === 'not classified' ? 'am' : ''}"><td>${esc(x.activity)}</td><td>${esc(x.location)}</td>
-            <td>${esc(x.reason)}</td><td>${dsh(x.from_date)}</td><td class="n">${x.days_lost}</td><td>${esc(x.party)}</td></tr>`).join('') + '</table>';
-    }
-
-    h += `<div class="sig"><div>Site Engineer</div><div>Site Manager</div><div>Project Manager</div></div>
-<div class="ft">${s ? 'Published ' + (s.published_at ? new Date(s.published_at).toLocaleString('en-GB') : '') + (s.published_by ? ' by ' + esc(s.published_by) : '') + '. ' : ''}
-Generated ${new Date().toLocaleString('en-GB')} from Penguin Suite. Figures on a published sheet are frozen and cannot be edited.</div>
-<scr` + `ipt>window.onload=function(){setTimeout(function(){window.print()},250)}</scr` + `ipt>
-</body></html>`;
+    else { const cols = trades.map(() => 0); h += `<table><tr><th>CONTRACTOR</th>${trades.map(t => `<th class="c">${esc(t)}</th>`).join('')}<th class="n">TOTAL</th></tr>` + cons.map(c => { const cells = trades.map((t, i) => { const v = num(byCon[c][t]); cols[i] += v; return `<td class="c">${v || ''}</td>`; }).join(''); return `<tr><td>${esc(conName(c))}</td>${cells}<td class="n"><b>${fmt(sum(byCon[c]))}</b></td></tr>`; }).join('') + `<tr class="tt"><td>TOTAL</td>${cols.map(v => `<td class="c">${v || ''}</td>`).join('')}<td class="n">${fmt(tot)}</td></tr></table>`;
+      if (np.length) h += '<p style="font-size:9pt;color:#51627a;margin:4px 0 0">Includes non-estimated work: ' + np.map(r => esc(r.reason) + ' ' + fmt(r.heads)).join(', ') + '.</p>'; }
+    if ((d.hindrances || []).length) h += '<h2>HINDRANCES ON THIS DATE</h2><table><tr><th>GROUP</th><th>LOCATION</th><th>REASON</th><th>SINCE</th><th>UNTIL</th><th class="n">DAYS</th><th>ATTRIBUTED TO</th></tr>' + d.hindrances.map(x => `<tr class="${x.party === 'not classified' ? 'am' : ''}"><td>${esc(x.group || x.activity || '')}</td><td>${esc(x.location || '')}</td><td>${esc(x.reason)}</td><td>${dsh(x.from_date)}</td><td>${x.closed_on ? dsh(x.closed_on) : 'open'}</td><td class="n">${x.days_lost}</td><td>${esc(x.party)}</td></tr>`).join('') + '</table>';
+    h += `<div class="sig"><div>Site Engineer</div><div>Site Manager</div><div>Project Manager</div></div><div class="ft">${s ? 'Published ' + (s.published_at ? new Date(s.published_at).toLocaleString('en-GB') : '') + (d.published_by_name ? ' by ' + esc(d.published_by_name) : '') + '. ' : ''}Generated ${new Date().toLocaleString('en-GB')} from Penguin Suite. Figures on a published sheet are frozen.</div>
+<scr` + `ipt>window.onload=function(){setTimeout(function(){window.print()},250)}</scr` + `ipt></body></html>`;
     return h;
   }
-  function printSheet() {
-    const w = window.open('', '_blank');
-    if (!w) { toast('Allow pop-ups to print', 'warn'); return; }
-    w.document.open(); w.document.write(sheetHtml()); w.document.close();
-  }
+  function printSheet() { const w = window.open('', '_blank'); if (!w) { toast('Allow pop-ups to print', 'warn'); return; } w.document.open(); w.document.write(sheetHtml()); w.document.close(); }
   async function shareSheet() {
-    const d = S.sheet || {}, s = d.sheet;
-    const text = (s ? s.dpr_no : 'Draft DPR') + ' · ' + dmy(d.report_date || S.mProg) + ' · '
-      + (pgsS.project ? pgsS.project.project_name : '');
-    if (navigator.share) {
-      try {
-        const blob = new Blob([sheetHtml()], { type: 'text/html' });
-        const file = new File([blob], (s ? s.dpr_no.replace(/\//g, '-') : 'DPR-draft') + '.html', { type: 'text/html' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ title: text, files: [file] }); return; }
-        await navigator.share({ title: text, text });
-      } catch (e) { /* user cancelled */ }
-    } else printSheet();
+    const d = S.sheet || {}, s = d.sheet; const text = (s ? s.dpr_no : 'Draft DPR') + ' · ' + dmy(d.report_date || S.mProg) + ' · ' + projName();
+    if (navigator.share) { try { const blob = new Blob([sheetHtml()], { type: 'text/html' }); const file = new File([blob], (s ? s.dpr_no.replace(/\//g, '-') : 'DPR-draft') + '.html', { type: 'text/html' }); if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ title: text, files: [file] }); return; } await navigator.share({ title: text, text }); } catch (e) { /* cancelled */ } }
+    else printSheet();
   }
-
   async function publish() {
     const d = S.mProg;
-    if (S.sheet && S.sheet.report_date === d && S.sheet.sheet) {
-      toast(dmy(d) + ' is already published as ' + S.sheet.sheet.dpr_no, 'warn'); return;
-    }
-    if (!confirm('Publishing ' + dmy(d) + ' freezes the day and advances every cumulative '
-      + 'quantity. It cannot be undone. Go ahead?')) return;
+    if (S.sheet && S.sheet.report_date === d && S.sheet.sheet) { toast(dmy(d) + ' is already published as ' + S.sheet.sheet.dpr_no, 'warn'); return; }
+    const nr = (S.sheet && S.sheet.not_reported_draft) || [];
+    if (!confirm('Publish ' + dmy(d) + '?' + (nr.length ? '\n\n' + nr.map(a => a.area).join(', ') + ' will show as NOT REPORTED.' : '') + '\n\nThis freezes the day and advances every cumulative. It cannot be undone.')) return;
     try {
-      const { data, error } = await sb.rpc('rpc_dpr_publish', { p_report_date: d, p_shift: 'D' });
-      if (error) throw error;
-      toast('Published as ' + (data ? data.dpr_no : '') + ' — '
-        + (data ? data.progress_applied : 0) + ' line(s) applied'
-        + (data && num(data.works_finished) ? ', ' + data.works_finished + ' finished' : ''), 'success');
+      const { data, error } = await sb.rpc('rpc_dpr_publish', { p_report_date: d, p_shift: 'D' }); if (error) throw error;
+      toast('Published as ' + (data ? data.dpr_no : '') + ' — ' + (data ? data.progress_applied : 0) + ' line(s) applied' + (data && num(data.carried_applied) ? ', ' + data.carried_applied + ' earlier-dated' : '') + (data && num(data.areas_not_reported) ? ', ' + data.areas_not_reported + ' area(s) not reported' : ''), 'success', 7000);
       S.mTab = 'sheet'; S.sheet = null; await mgrLoad();
     } catch (e) { toast(err(e, 'Could not publish'), 'error'); }
   }
-
   async function mgrPub() {
     $('dpr_body').innerHTML = '<div class="dpr-load">Loading…</div>';
     try {
-      const { data, error } = await sb.rpc('rpc_dpr_published_list', { p_limit: 60 });
-      if (error) throw error;
+      const { data, error } = await sb.rpc('rpc_dpr_published_list', { p_limit: 60 }); if (error) throw error;
       S.pubList = data || [];
-      if (!S.pubList.length) {
-        $('dpr_body').innerHTML = '<div class="dpr-note">Nothing published yet.</div>'; return;
-      }
-      let h = '<div class="dprList">';
-      S.pubList.forEach(s => {
-        h += `<div class="row" onclick="DPR.mGo('${s.report_date}')">
-          <div class="nm"><b>${esc(s.dpr_no)}</b>
-            <span>${dmy(s.report_date)} · ${s.included} area(s) in
-            ${num(s.excluded) ? ', ' + s.excluded + ' out' : ''}
-            ${s.published_by ? ' · ' + esc(s.published_by) : ''}</span></div>
-          ${num(s.excluded) ? '<span class="pill p-amb">' + s.excluded + ' excluded</span>' : ''}
-          <span class="pill p-teal">open</span></div>`;
-      });
-      $('dpr_body').innerHTML = h + '</div>';
-    } catch (e) {
-      $('dpr_body').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load the archive')) + '</div>';
-    }
+      if (!S.pubList.length) { $('dpr_body').innerHTML = '<div class="dpr-note">Nothing published yet.</div>'; return; }
+      $('dpr_body').innerHTML = '<div class="dprList">' + S.pubList.map(s => `<div class="row" onclick="DPR.mGo('${s.report_date}')"><div class="nm"><b>${esc(s.dpr_no)}</b><span>${dmy(s.report_date)} · ${s.included} area(s) in${num(s.excluded) ? ', ' + s.excluded + ' not reported' : ''}${s.published_by ? ' · ' + esc(s.published_by) : ''}</span></div>${num(s.excluded) ? '<span class="pill p-red">' + s.excluded + ' not reported</span>' : ''}<span class="pill p-teal">open</span></div>`).join('') + '</div>';
+    } catch (e) { $('dpr_body').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load the archive')) + '</div>'; }
   }
-
-  // a published sheet is dated D-1, so its business date is D
-  async function mGo(reportDate) {
-    S.mDate = addDays(reportDate, 1); S.mTab = 'sheet'; S.sheet = null; await mgrLoad();
-  }
-  async function mDay(n) {
-    const nd = addDays(S.mDate, n);
-    if (nd > S.mToday) return;
-    S.mDate = nd; S.sheet = null; S.hind = null; await mgrLoad();
-  }
+  async function mGo(reportDate) { S.mDate = addDays(reportDate, 1); S.mTab = 'sheet'; S.sheet = null; await mgrLoad(); }
+  async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.hind = null; await mgrLoad(); }
   function mTab(t) { S.mTab = t; mgrRender(); }
 
-  function filt(f) { S.filt = f; S.node = null; S.q = ''; engRender(); }
-  function node(id) { S.node = id; S.q = ''; engRender(); }
-  function srch(v) { S.q = v; const b = $('dpr_body'); const sc = b ? b.scrollTop : 0; engRender(); if (b) b.scrollTop = sc; }
-  function rtab(t) { S.rtab = t; engRender(); }
-
-  return { open, tab, filt, node, srch, rtab, switchArea, edit, start, submit, submitGo, saveWork, sheetClose,
-    setY, setT, draftSet, lab, labSet, bump, npAdd, npSave, npDrop,
-    mOpen, mAccept, mReturn, mReturnGo, mTab, mDay, mGo, publish, printSheet, shareSheet,
-    hOpen, hClassify, hClose, _s: S };
+  return { open, engLoad, tab, filt, srch, rtab, edit, saveGroup, setY, setT, draftSet, lab, labSet, lineSet, bump,
+    startOpen, startSearch, startLoc, startBack, startTick, startGo, regroupOpen, regroupGo,
+    npAdd, npSave, npDrop, preview, prevClose, submitGo, histOpen, histClose, sheetClose,
+    mOpen, mBack, mAccept, mReturn, mReturnGo, mTab, mDay, mGo, publish, printSheet, shareSheet,
+    hOpen, hClassify, hClose, hReopen, _s: S };
 })();
 
 document.querySelectorAll('.tabs .tab').forEach(t => {
@@ -11698,6 +11118,7 @@ function switchMasterTab(tab) {
     locations:   hasRole('Admin') || hasPerm('canManageMasters'),
     costheads:   hasRole('Admin') || hasPerm('canManageMasters'),
     areas:       hasPerm('canManageAreas'),   // v133
+    labour:      hasPerm('canManageAreas'),   // v146 · same seat as Site Areas
   };
   Object.entries(_mtVis).forEach(([t, vis]) => {
     const stab = document.querySelector(`.sub-tab[data-mastertab="${t}"]`);
@@ -11708,7 +11129,7 @@ function switchMasterTab(tab) {
     if (first && first !== tab) return switchMasterTab(first);
   }
   renderMasterQueues();
-  ['vendors','activities','materials','contractors','locations','costheads','projcompany','areas'].forEach(t => {
+  ['vendors','activities','materials','contractors','locations','costheads','projcompany','areas','labour'].forEach(t => {
     const el = document.getElementById('master-' + t);
     if (el) el.classList.toggle('hidden', t !== tab);
     const stab = document.querySelector(`.sub-tab[data-mastertab="${t}"]`);
@@ -11723,6 +11144,7 @@ function switchMasterTab(tab) {
   if (tab === 'contractors') { renderContractorMaster(); }
   if (tab === 'projcompany') { pgsPCLoad(); }   // v66
   if (tab === 'areas') { AREAS.load(); }        // v133
+  if (tab === 'labour') { DPRM.load(); }        // v146
   _mcEnsureBtn(tab);   // v67: copy-from-project tool on the four master tabs
 }
 
@@ -39920,6 +39342,132 @@ const AREAS = (function () {
 
   return { load, render, add, rename, del, pickLoc, pickEng,
            toggleLoc, toggleEng, dropLoc, dropEng, closeModal };
+})();
+
+/* ==================================================================
+   MASTERS · LABOUR (v146) — trades, non-estimated work, daywork rates,
+   and WBS lines hidden from site reporting. Seat: dpr_area:A, the same
+   seat as Site Areas. Every write is an RPC (M22).
+   ================================================================== */
+const DPRM = (function () {
+  const S = { tab: 'trades', m: null, cons: null, conMap: {}, lines: null, lq: '' };
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const num = v => (v === null || v === undefined || v === '') ? 0 : Number(v);
+  const dsh = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: '2-digit' }) : '—';
+  const ymd = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+  const fail = (e, f) => { const m = (e && e.message) || ''; const c = m.match(/DPR_[A-Z_]+:\s*(.*)$/); toast(c ? c[1] : (m.indexOf('PERM_DENIED') >= 0 ? 'You do not have rights for that action' : f + (m ? ': ' + m : '')), 'error'); };
+
+  async function load() {
+    const root = $('lm_root'); if (!root) return;
+    root.innerHTML = '<div class="lm-note">Loading…</div>';
+    try {
+      const [{ data, error }, c] = await Promise.all([sb.rpc('rpc_dpr_masters'), sb.from('wo_contractors').select('contractor_code,contractor_name').eq('is_active', true).eq('approval_status', 'Approved').order('contractor_name')]);
+      if (error) throw error;
+      S.m = data || {}; S.cons = c.data || []; S.conMap = {}; S.cons.forEach(x => { S.conMap[x.contractor_code] = x.contractor_name || x.contractor_code; });
+      render();
+    } catch (e) { root.innerHTML = '<div class="lm-note red">' + esc((e && e.message) || 'Could not load') + '</div>'; }
+  }
+  function render() {
+    const m = S.m || {}, t = (m.trades || []), np = (m.np_reasons || []), rt = (m.rates || []);
+    let h = `<div class="lm-tabs">
+      <button class="${S.tab === 'trades' ? 'on' : ''}" onclick="DPRM.tab('trades')">Labour trades<i>${t.filter(x => x.is_active).length} active</i></button>
+      <button class="${S.tab === 'np' ? 'on' : ''}" onclick="DPRM.tab('np')">Non-estimated work<i>${np.filter(x => x.is_active).length} items</i></button>
+      <button class="${S.tab === 'rates' ? 'on' : ''}" onclick="DPRM.tab('rates')">Daywork rates<i>${rt.filter(x => !x.effective_to).length} live</i></button>
+      <button class="${S.tab === 'lines' ? 'on' : ''}" onclick="DPRM.tab('lines')">Hidden from site<i>milestones</i></button></div><div id="lm_body"></div>`;
+    $('lm_root').innerHTML = h;
+    ({ trades: trades, np: npList, rates: rates, lines: lines })[S.tab]();
+  }
+  function tab(t) { S.tab = t; render(); }
+
+  /* ---- trades ---- */
+  function trades() {
+    const rows = (S.m.trades || []);
+    let h = '<div class="lm-note">Trades are org-wide — one list for every project. A code cannot change once used on a report; the name and order can. Retiring keeps history and stops the trade showing on the engineer\'s steppers.</div>';
+    h += '<table class="lm-t"><tr><th style="width:70px">CODE</th><th>TRADE</th><th style="width:80px" class="n">ORDER</th><th style="width:80px" class="c">ACTIVE</th><th style="width:70px"></th></tr>';
+    rows.forEach(r => { h += `<tr class="${r.is_active ? '' : 'mut'}"><td><b>${esc(r.trade_code)}</b>${r.used ? ' <span class="lm-pill">used</span>' : ''}</td>
+      <td><input id="tr_n_${esc(r.trade_code)}" value="${esc(r.trade_name)}"></td><td class="n"><input id="tr_s_${esc(r.trade_code)}" type="number" value="${r.sort_order}" style="width:64px;text-align:right"></td>
+      <td class="c"><input type="checkbox" id="tr_a_${esc(r.trade_code)}" ${r.is_active ? 'checked' : ''}></td><td><button class="btn btn-ghost btn-sm" onclick="DPRM.tradeSave('${esc(r.trade_code)}')">Save</button></td></tr>`; });
+    h += `<tr class="new"><td><input id="tr_n_code" placeholder="e.g. TL" maxlength="4" style="width:60px;text-transform:uppercase"></td><td><input id="tr_n_name" placeholder="New trade name"></td><td class="n"><input id="tr_n_sort" type="number" placeholder="auto" style="width:64px;text-align:right"></td><td class="c">✓</td><td><button class="btn btn-primary btn-sm" onclick="DPRM.tradeSave(null)">＋ Add</button></td></tr></table>`;
+    $('lm_body').innerHTML = h;
+  }
+  async function tradeSave(code) {
+    const isNew = !code; const c = isNew ? ($('tr_n_code').value || '').trim().toUpperCase() : code;
+    const name = isNew ? $('tr_n_name').value : $('tr_n_' + code).value; const so = isNew ? $('tr_n_sort').value : $('tr_s_' + code).value; const act = isNew ? true : $('tr_a_' + code).checked;
+    if (!c || !name.trim()) { toast('Code and name are required', 'warn'); return; }
+    try { const { error } = await sb.rpc('rpc_dpr_trade_save', { p_trade_code: c, p_trade_name: name.trim(), p_sort_order: so === '' ? null : Number(so), p_is_active: act }); if (error) throw error; toast(isNew ? 'Trade added' : 'Saved', 'success'); await load(); }
+    catch (e) { fail(e, 'Could not save'); }
+  }
+
+  /* ---- non-estimated work ---- */
+  function npList() {
+    const rows = (S.m.np_reasons || []);
+    let h = '<div class="lm-note">What an engineer can book labour against when it is not an estimate line — housekeeping, shifting, dewatering, idle time. This list feeds the <b>Non-estimated work</b> tab on the engineer\'s report.</div>';
+    h += '<table class="lm-t"><tr><th style="width:110px">CODE</th><th>WORK</th><th style="width:80px" class="n">ORDER</th><th style="width:80px" class="c">ACTIVE</th><th style="width:70px"></th></tr>';
+    rows.forEach(r => { h += `<tr class="${r.is_active ? '' : 'mut'}"><td><b>${esc(r.reason_code)}</b>${r.used ? ' <span class="lm-pill">used</span>' : ''}</td>
+      <td><input id="np_n_${esc(r.reason_code)}" value="${esc(r.reason_text)}"></td><td class="n"><input id="np_s_${esc(r.reason_code)}" type="number" value="${r.sort_order}" style="width:64px;text-align:right"></td>
+      <td class="c"><input type="checkbox" id="np_a_${esc(r.reason_code)}" ${r.is_active ? 'checked' : ''}></td><td><button class="btn btn-ghost btn-sm" onclick="DPRM.npSave('${esc(r.reason_code)}')">Save</button></td></tr>`; });
+    h += `<tr class="new"><td><input id="np_n_code" placeholder="e.g. SCAFF" maxlength="16" style="width:100px;text-transform:uppercase"></td><td><input id="np_n_name" placeholder="New item, e.g. Scaffolding erection"></td><td class="n"><input id="np_n_sort" type="number" placeholder="auto" style="width:64px;text-align:right"></td><td class="c">✓</td><td><button class="btn btn-primary btn-sm" onclick="DPRM.npSave(null)">＋ Add</button></td></tr></table>`;
+    $('lm_body').innerHTML = h;
+  }
+  async function npSave(code) {
+    const isNew = !code; const c = isNew ? ($('np_n_code').value || '').trim().toUpperCase() : code;
+    const name = isNew ? $('np_n_name').value : $('np_n_' + code).value; const so = isNew ? $('np_n_sort').value : $('np_s_' + code).value; const act = isNew ? true : $('np_a_' + code).checked;
+    if (!c || !name.trim()) { toast('Code and description are required', 'warn'); return; }
+    try { const { error } = await sb.rpc('rpc_dpr_np_reason_save', { p_reason_code: c, p_reason_text: name.trim(), p_sort_order: so === '' ? null : Number(so), p_is_active: act }); if (error) throw error; toast(isNew ? 'Added' : 'Saved', 'success'); await load(); }
+    catch (e) { fail(e, 'Could not save'); }
+  }
+
+  /* ---- daywork rates ---- */
+  function rates() {
+    const rows = (S.m.rates || []), trades = (S.m.trades || []).filter(t => t.is_active);
+    let h = '<div class="lm-note">A contractor with a rate here is paid on head-count for that trade; no row means measured work. A new rate closes the previous open one the day before it starts. Reports snapshot the rate on the day, so changing a rate never rewrites a past DPR.</div>';
+    h += `<div class="lm-new"><select id="rt_c"><option value="">Contractor…</option>${S.cons.map(c => `<option value="${esc(c.contractor_code)}">${esc(c.contractor_name || c.contractor_code)}</option>`).join('')}</select>
+      <select id="rt_t"><option value="">Trade…</option>${trades.map(t => `<option value="${t.trade_code}">${esc(t.trade_name)}</option>`).join('')}</select>
+      <input id="rt_r" type="number" min="0" step="1" placeholder="₹ / day" style="width:100px"><input id="rt_f" type="date" value="${ymd(new Date())}">
+      <button class="btn btn-primary btn-sm" onclick="DPRM.rateSave(null)">＋ New rate</button></div>`;
+    h += '<table class="lm-t"><tr><th>CONTRACTOR</th><th style="width:130px">TRADE</th><th style="width:100px" class="n">₹ / DAY</th><th style="width:100px">FROM</th><th style="width:100px">TO</th><th style="width:90px"></th></tr>';
+    if (!rows.length) h += '<tr><td colspan="6" class="mut">No daywork rates yet — every contractor is treated as measured.</td></tr>';
+    rows.forEach(r => { const live = !r.effective_to; h += `<tr class="${live ? '' : 'mut'}"><td>${esc(r.contractor_name || S.conMap[r.contractor_code] || r.contractor_code)}</td><td>${esc(r.trade_code)}</td>
+      <td class="n">${live ? `<input id="rt_v_${r.id}" type="number" value="${r.rate_per_day}" style="width:84px;text-align:right">` : num(r.rate_per_day).toLocaleString('en-IN')}</td>
+      <td>${live ? `<input id="rt_d_${r.id}" type="date" value="${r.effective_from}">` : dsh(r.effective_from)}</td><td>${r.effective_to ? dsh(r.effective_to) : '—'}</td>
+      <td>${live ? `<button class="btn btn-ghost btn-sm" onclick="DPRM.rateSave('${r.id}','${esc(r.contractor_code)}','${esc(r.trade_code)}')">Save</button>` : ''}</td></tr>`; });
+    $('lm_body').innerHTML = h + '</table>';
+  }
+  async function rateSave(id, con, trade) {
+    const p = id ? { p_id: id, p_contractor_code: con, p_trade_code: trade, p_rate_per_day: Number($('rt_v_' + id).value), p_effective_from: $('rt_d_' + id).value }
+      : { p_contractor_code: $('rt_c').value, p_trade_code: $('rt_t').value, p_rate_per_day: Number($('rt_r').value), p_effective_from: $('rt_f').value };
+    if (!p.p_contractor_code || !p.p_trade_code || !(p.p_rate_per_day >= 0) || !p.p_effective_from) { toast('Contractor, trade, rate and from-date are required', 'warn'); return; }
+    try { const { error } = await sb.rpc('rpc_dpr_rate_save', p); if (error) throw error; toast(id ? 'Saved' : 'Rate added — the previous one is closed', 'success'); await load(); }
+    catch (e) { fail(e, 'Could not save'); }
+  }
+
+  /* ---- hidden lines ---- */
+  async function lines() {
+    $('lm_body').innerHTML = '<div class="lm-note">Loading…</div>';
+    if (!S.lines) {
+      const { data, error } = await sb.from('wbs_nodes').select('id,name,node_type,dpr_reportable,parent_id').in('node_type', ['activity', 'hire_equipment']).eq('is_active', true).order('name');
+      if (error) { $('lm_body').innerHTML = '<div class="lm-note red">' + esc(error.message) + '</div>'; return; }
+      const { data: pk } = await sb.from('wbs_nodes').select('id,name').eq('node_type', 'package');
+      const pm = {}; (pk || []).forEach(p => { pm[p.id] = p.name; });
+      S.lines = (data || []).map(l => Object.assign(l, { pkg: pm[l.parent_id] || '' }));
+    }
+    const q = S.lq.toLowerCase(); const hidden = S.lines.filter(l => !l.dpr_reportable);
+    let h = '<div class="lm-note">Lines an engineer never sees on site — milestone payment lines and anything else that is a billing device, not work. Hidden lines still certify and bill as normal.</div>';
+    h += `<div class="lm-new"><input id="lm_lq" placeholder="Search a line to hide…" value="${esc(S.lq)}" oninput="DPRM.lq(this.value)" style="flex:1"></div>`;
+    const show = q ? S.lines.filter(l => (l.name + ' ' + l.pkg).toLowerCase().indexOf(q) >= 0).slice(0, 60) : hidden;
+    h += `<table class="lm-t"><tr><th>LINE</th><th style="width:36%">PACKAGE</th><th style="width:60px" class="c">KIND</th><th style="width:150px" class="c">ON SITE</th></tr>`;
+    if (!show.length) h += `<tr><td colspan="4" class="mut">${q ? 'No line matches.' : 'Nothing hidden.'}</td></tr>`;
+    show.forEach(l => { h += `<tr class="${l.dpr_reportable ? '' : 'mut'}"><td>${esc(l.name)}</td><td>${esc(l.pkg)}</td><td class="c">${l.node_type === 'hire_equipment' ? 'H' : 'A'}</td>
+      <td class="c">${l.dpr_reportable ? `<span class="lm-ok">reportable</span> <button class="btn btn-ghost btn-sm" onclick="DPRM.setRep(${l.id},false)">Hide</button>` : `<span class="lm-pill">hidden</span> <button class="btn btn-ghost btn-sm" onclick="DPRM.setRep(${l.id},true)">Show</button>`}</td></tr>`; });
+    $('lm_body').innerHTML = h + '</table>';
+  }
+  function lq(v) { S.lq = v; const pos = v.length; lines().then(() => { const i = $('lm_lq'); if (i) { i.focus(); i.setSelectionRange(pos, pos); } }); }
+  async function setRep(id, on) {
+    try { const { error } = await sb.rpc('rpc_dpr_wbs_reportable_set', { p_wbs_node_id: id, p_reportable: on }); if (error) throw error; const l = S.lines.find(x => x.id === id); if (l) l.dpr_reportable = on; toast(on ? 'Shown on site again' : 'Hidden from site reporting', 'success'); lines(); }
+    catch (e) { fail(e, 'Could not change'); }
+  }
+  return { load, tab, tradeSave, npSave, rateSave, lq, setRep };
 })();
 </script>
 </body>

@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12305a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Penguin">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Penguin Suite v132</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -890,11 +897,29 @@ body.pgs-gated .pgs-sidebar .tab{ pointer-events:none; opacity:.45; }
 .pgs-gate .why{ background:var(--pgs-amber-bg); color:#7a5600; border-radius:9px; padding:12px 15px;
   font-size:12.5px; line-height:1.7; margin:14px 0; }
 
+.pgs-menu{ display:none; }
 @media(max-width:860px){
+  /* ---- v145 mobile shell: top bar + slide-in drawer ---- */
   .pgs-shell{ flex-direction:column; }
-  .pgs-sidebar{ width:100%; height:auto; position:static; }   /* mobile: full width */
+  .pgs-sidebar{ width:100% !important; height:auto !important; position:sticky !important; top:0; z-index:60;
+    overflow:visible; padding-top:env(safe-area-inset-top,0px); box-shadow:0 2px 8px rgba(0,0,0,.25); }
+  .pgs-sidebar #pgsRail{ display:none !important; }
+  .pgs-menu{ display:block; position:absolute; right:10px; top:calc(8px + env(safe-area-inset-top,0px)); z-index:62;
+    background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25); border-radius:7px;
+    width:40px; height:36px; font-size:20px; line-height:1; cursor:pointer; }
+  .pgs-sbbrand{ padding:9px 12px !important; }
+  .pgs-sbproj{ margin:0 10px 8px !important; padding:6px 10px !important; }
+  .pgs-sbproj b{ font-size:13px !important; }
+  .pgs-sidebar .tabs, .pgs-sbfoot{ display:none; }
+  body.pgs-nav-open .pgs-sidebar .tabs, body.pgs-nav-open .pgs-sbfoot{ display:block; }
+  body.pgs-nav-open .pgs-sidebar{ position:fixed !important; inset:0; height:100% !important; overflow-y:auto; }
+  body.pgs-nav-open .pgs-menu{ background:#fff; color:#12305a; }
+  .pgs-main{ width:100%; }
+  .pgs-main > .container{ padding:8px 6px calc(12px + env(safe-area-inset-bottom,0px)) !important; }
   .pgs-projgrid{ grid-template-columns:1fr; }
   .pgs-selcard{ padding:24px; }
+  body.pgs-rail .pgs-sidebar{ width:100% !important; }   /* rail collapse is a desktop idea */
+  body.pgs-rail .pgs-brandtext, body.pgs-rail .pgs-sbproj{ display:block !important; }
 }
 
 /* ---- v3: Planning & QS embed ---- */
@@ -1273,6 +1298,44 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #mod-dpr .dpr-ribbon>div{padding:5px 10px;font-size:9.5px;font-weight:800;letter-spacing:.5px;color:#fff}
 #mod-dpr .dpr-ribbon .y{background:#3d2a75}
 #mod-dpr .dpr-ribbon .t{background:var(--dtd);text-align:right}
+
+/* ===== v145 · phone layout ===== */
+@media(max-width:600px){
+  #mod-dpr .dpr-bar{grid-template-columns:1fr auto;gap:6px 8px;padding:8px 10px}
+  #mod-dpr .dpr-bar .ttl b{font-size:14px}
+  #mod-dpr .dpr-bar .nav select{max-width:46vw}
+  #mod-dpr .dpr-kpis>div{padding:6px 3px;min-width:0}
+  #mod-dpr .dpr-kpis b{font-size:16px}
+  #mod-dpr .dpr-kpis span{font-size:7.5px;letter-spacing:0}
+  #mod-dpr .dpr-tabs button{font-size:11.5px;padding:8px 2px}
+  #mod-dpr .dpr-tabs button i{font-size:9.5px}
+  /* the grid becomes cards: name on top, the two day cells beneath */
+  #mod-dpr .dpr-gwrap{overflow:visible}
+  #mod-dpr .dpr-grid{min-width:0}
+  #mod-dpr .dpr-gh{display:none}
+  #mod-dpr .dpr-ribbon>div{font-size:8.5px;padding:4px 8px;letter-spacing:.3px}
+  #mod-dpr .dpr-gbar{grid-template-columns:1fr;gap:3px;padding:6px 9px}
+  #mod-dpr .dpr-gbar .r{justify-content:flex-start}
+  #mod-dpr .dpr-r{grid-template-columns:1fr 1fr;grid-template-areas:"nm nm" "y t"}
+  #mod-dpr .dpr-r .nm{grid-area:nm;border-right:0;border-bottom:1px dashed var(--dln2);padding:7px 9px 5px}
+  #mod-dpr .dpr-r>.cell:nth-child(2){grid-area:y}
+  #mod-dpr .dpr-r>.cell:nth-child(3){grid-area:t;border-right:0}
+  #mod-dpr .dpr-r .cell{padding:5px 9px 7px;font-size:11px}
+  #mod-dpr .dpr-r .cell::before{display:block;font-size:8px;font-weight:800;color:var(--dink3);letter-spacing:.3px;margin-bottom:2px}
+  #mod-dpr .dpr-r>.cell:nth-child(2)::before{content:'YESTERDAY'}
+  #mod-dpr .dpr-r>.cell:nth-child(3)::before{content:'TODAY'}
+  #mod-dpr .dpr-tn{padding:8px 9px}
+  #mod-dpr .dpr-tn .lb b{font-size:12px}
+  #mod-dpr .dpr-crumb{font-size:11px}
+  #mod-dpr .dpr-crumb button{padding:3px 7px;font-size:10.5px}
+  #mod-dpr table.dt{font-size:10.5px}
+  #mod-dpr table.dt th,#mod-dpr table.dt td{padding:4px 5px}
+  #mod-dpr .dacts{flex-wrap:wrap}
+  #mod-dpr .dacts .dbtn{flex:1 1 auto}
+  .dprSheet .box{max-height:96vh;border-radius:12px 12px 0 0}
+  .dprSheet .ft{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .dprLab{grid-template-columns:1fr 40px 76px 40px}
+}
 </style>
 </head>
 <body>
@@ -1380,8 +1443,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
      tab-users ids, so both v174 tab-binding blocks and all role
      gating (applyRoleUI / applyRoleTabVisibility) attach with zero
      JS changes. -->
-<div class="pgs-sidebar" style="position:sticky;">
+<div class="pgs-sidebar" id="pgsSidebar">
   <button id="pgsRail" onclick="pgsToggleRail()" title="Collapse / expand the sidebar (Ctrl+B)">&#10216;</button>
+  <button id="pgsMenu" class="pgs-menu" onclick="pgsMobileNav()" aria-label="Menu">☰</button>
   <div class="pgs-sbbrand"><span class="pg">🐧</span><span class="pgs-brandtext">Penguin <span>Suite</span></span></div>
   <div class="pgs-sbproj">
     <span id="pgs-sb-org">—</span>
@@ -38552,6 +38616,21 @@ function pgsApplyRail(on){
   window.dispatchEvent(new Event('resize'));   // let grids re-measure
 }
 function pgsToggleRail(){ pgsApplyRail(!document.body.classList.contains('pgs-rail')); }
+/* v145 · mobile drawer */
+function pgsMobileNav(force){
+  var b=document.body, on = (force===undefined) ? !b.classList.contains('pgs-nav-open') : !!force;
+  b.classList.toggle('pgs-nav-open', on);
+}
+document.addEventListener('click', function(e){
+  if (window.innerWidth > 860) return;
+  if (e.target.closest && e.target.closest('#mainTabs .tab')) pgsMobileNav(false);
+}, true);
+/* v145 · service worker (needs sw.js beside this file; silently absent otherwise) */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){ /* no sw.js deployed yet */ });
+  });
+}
 function pgsRailBoot(){
   pgsWrapTabLabels();
   var v='0'; try{v=localStorage.getItem('pgs_rail')||'0';}catch(e){}

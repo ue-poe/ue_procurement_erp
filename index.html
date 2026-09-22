@@ -1359,6 +1359,52 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #master-labour .lm-pill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:3px;background:#f0f2f5;color:#51627a;border:1px solid #d3d9e2}
 #master-labour .lm-ok{font-size:11px;color:#128a4a;font-weight:700}
 
+/* ===== DPR v146.1 · touch, week strip, report blocks, snaps ===== */
+#mod-dpr, #mod-dpr button, #mod-dpr input, #mod-dpr .dprSheet, .dprSheet *{touch-action:manipulation}
+#mod-dpr .dpr-week{display:flex;gap:4px;padding:6px 8px;background:#fff;border-bottom:1px solid var(--dln);align-items:stretch}
+#mod-dpr .dpr-week button{border:1px solid var(--dln);background:#fff;border-radius:6px;font-family:inherit;cursor:pointer;color:var(--dink)}
+#mod-dpr .dpr-week .wk{width:30px;font-size:16px;font-weight:700}
+#mod-dpr .dpr-week .d{flex:1;padding:4px 0;line-height:1.1}
+#mod-dpr .dpr-week .d i{display:block;font-style:normal;font-size:9px;font-weight:800;color:var(--dink3);letter-spacing:.3px}
+#mod-dpr .dpr-week .d b{display:block;font-size:15px}
+#mod-dpr .dpr-week .d.on{background:var(--dv);border-color:var(--dv);color:#fff}#mod-dpr .dpr-week .d.on i{color:#e6dcff}
+#mod-dpr .dpr-week .d.pub:not(.on){border-color:var(--dokb);background:var(--dokl)}
+#mod-dpr .dpr-week .d:disabled{opacity:.35}
+#mod-dpr .dpr-rg{background:#fff;border-bottom:2px solid var(--dln);border-left:4px solid var(--dv)}
+#mod-dpr .dpr-rg.hind{border-left-color:var(--drd)}#mod-dpr .dpr-rg.carry{border-left-color:var(--dam)}
+#mod-dpr .dpr-rg .rg-h{display:grid;grid-template-columns:1fr auto;gap:6px 10px;padding:7px 10px;background:#f3f6fa;border-bottom:1px solid var(--dln2)}
+#mod-dpr .dpr-rg .rg-h b{display:block;font-size:14px}#mod-dpr .dpr-rg .rg-h span{display:block;font-size:11px;color:var(--dink2)}
+#mod-dpr .dpr-rg .rg-w{text-align:right}#mod-dpr .dpr-rg .rg-w b{font-size:12px}#mod-dpr .dpr-rg .rg-w span{font-size:11px;color:var(--dtd);font-weight:700}
+#mod-dpr .dpr-rg table.rg-t{border-left:0;border-right:0}
+#mod-dpr .dpr-rg td.big{font-size:17px;font-weight:800;color:#3d2a75;white-space:nowrap}#mod-dpr .dpr-rg td.big small{font-size:10px;font-weight:700;color:var(--dink2)}
+#mod-dpr .dpr-line .snap{grid-column:1/-1;display:flex;gap:5px;align-items:center;padding-top:2px}
+#mod-dpr .dpr-line .snap span{font-size:10px;color:var(--dink3);font-weight:800}
+#mod-dpr .dpr-line .snap button{flex:1;border:1px solid var(--dvb);background:var(--dvl);color:var(--dv);border-radius:5px;padding:6px 0;font-family:inherit;font-size:12px;font-weight:800}
+
+/* ===== DPR v146.2 · pills, section banners ===== */
+#mod-dpr .dpr-fbar .fl{font-size:9.5px;font-weight:800;color:var(--dink3);align-self:center;margin-right:2px;letter-spacing:.3px}
+#mod-dpr .dpr-rule{border-top:1px solid var(--dln);margin:0 10px}
+#mod-dpr .dpr-segs{display:grid;grid-template-columns:1fr 1fr;background:var(--dn3)}
+#mod-dpr .dpr-segs .dpr-sec{cursor:pointer;opacity:.55;border-bottom:3px solid transparent;display:block;padding:6px 10px}
+#mod-dpr .dpr-segs .dpr-sec.on{opacity:1;border-bottom-color:var(--dtd);background:var(--dn)}
+#mod-dpr .dpr-segs .dpr-sec small{display:block;margin:2px 0 0;font-weight:600}
+
+/* ===== DPR v146.3 · estimate tree ===== */
+#mod-dpr .dpr-rbar{display:flex;gap:6px;align-items:center;padding:6px 10px;background:#f3f6fa;border-bottom:1px solid var(--dln);font-size:11px;color:var(--dink2);position:sticky;top:0;z-index:3}
+#mod-dpr .dpr-rbar .sum{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dpr-rbar .seg2{display:inline-flex;border:1px solid var(--dln);border-radius:6px;overflow:hidden}
+#mod-dpr .dpr-rbar .seg2 button{border:0;border-right:1px solid var(--dln);background:#fff;font-family:inherit;font-size:11px;font-weight:700;padding:6px 9px;color:var(--dink2)}
+#mod-dpr .dpr-rbar .seg2 button:last-child{border-right:0}#mod-dpr .dpr-rbar .seg2 button.on{background:var(--dv);color:#fff}
+#mod-dpr .dpr-rbar .shw{display:inline-flex;align-items:center;gap:3px;font-weight:700;white-space:nowrap}
+#mod-dpr .dpr-th{display:flex;align-items:center;gap:8px;min-height:44px;border-bottom:1px solid var(--dln2);cursor:pointer;user-select:none;padding:0 10px}
+#mod-dpr .dpr-th.t1{background:#dbe2ea;font-size:13px}#mod-dpr .dpr-th.t2{background:#eef2f7;padding-left:18px;font-size:12.5px}#mod-dpr .dpr-th.t3{background:#fff;padding-left:26px;font-size:12.5px}
+#mod-dpr .dpr-th .car{width:12px;color:var(--dink2)}#mod-dpr .dpr-th .sp{flex:1}#mod-dpr .dpr-th small{color:var(--dink3);font-size:10.5px;font-weight:600}
+#mod-dpr .dpr-th .cnt{font-size:10.5px;font-weight:800;color:var(--dv);background:var(--dvl);border:1px solid var(--dvb);border-radius:9px;padding:0 6px}
+#mod-dpr .dpr-th input.cb,#mod-dpr .dpr-tick.ct4 input{width:22px;height:22px;flex:none}
+#mod-dpr .dpr-tick.ct4{padding-left:40px;min-height:48px}
+#mod-dpr .dpr-addfab{position:sticky;bottom:0;display:flex;gap:6px;align-items:center;padding:8px 10px;background:var(--dokl);border-top:2px solid var(--dokb);font-size:11.5px;color:var(--dok);z-index:3;flex-wrap:wrap}
+#mod-dpr .dpr-addfab .sp{flex:1}
+
 
 /* ===== v142 · two-tone ribbon ===== */
 #mod-dpr .dpr-ribbon{display:grid;grid-template-columns:1fr 1fr}
@@ -8012,7 +8058,7 @@ const DPR = (function () {
     view: null,            // 'eng' | 'mgr'
     sub: null, groups: [], np: [], returned: [], homeAreas: [],
     today: null, from: null, to: null, locked: false, lateNow: false,
-    tab: 'works', filt: 'mine', q: '', rtab: 'now',
+    tab: 'works', filt: 'active', area: '', seg: 'est', q: '', qnp: '', rtab: 'now',
     page: null,            // engineer: null | 'prev' | 'hist' | 'sub'
     hist: null, histSub: null,
     editing: null, draft: null,
@@ -8040,6 +8086,9 @@ const DPR = (function () {
   const projName = () => (pgsS.project ? pgsS.project.project_name : '');
   const istMins = () => { const ist = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })); return (13 * 60) - (ist.getHours() * 60 + ist.getMinutes()); };
 
+  // Same fuzzy matcher the rest of the suite uses (procurement, estimation, masters):
+  // _normForSearch + _fuzzyTokens + _fuzzyMatch — substring, word-prefix, 1–2 edit typos, exact digits.
+  const fz = (hay, q) => { const t = _fuzzyTokens(q || ''); return !t.length || _fuzzyMatch(hay, t); };
   function err(e, fallback) {
     const m = (e && e.message ? e.message : '') + '';
     const codes = ['DPR_LOCKED','DPR_ALREADY_SUBMITTED','DPR_EMPTY','DPR_DATE_OUT_OF_SPAN','DPR_WORK_CLOSED',
@@ -8134,6 +8183,7 @@ const DPR = (function () {
         : '<span class="pill p-grey" style="background:#fff">Draft</span>'}
       ${!S.locked && !editingOld ? '<span class="dpr-cut">' + (mins > 0 ? '<b>' + mins + ' min</b> to cut-off' : '<b>past 1 pm</b> — goes as late') + '</span>' : ''}
       ${editingOld ? '<button class="dbtn sm" onclick="DPR.engLoad()">‹ Today</button>' : ''}
+      <button class="dbtn sm" title="Reload" onclick="DPR.refresh()">↻</button>
     </div>`;
     const hinds = S.groups.filter(g => gState(g) === 'hind').length;
     const carried = S.groups.filter(g => gState(g) === 'carry').length;
@@ -8144,43 +8194,142 @@ const DPR = (function () {
       <div><b style="color:${carried ? 'var(--dam)' : 'var(--dink3)'}">${carried}</b><span>EARLIER DATE</span></div>
       <div><b style="color:var(--dtd)">${fmt(headsToday())}</b><span>HEADS TODAY</span></div></div>`;
     h += `<div class="dpr-tabs">
-      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">My works<br><i>${reported().length} of ${S.groups.length} groups</i></button>
-      <button class="${S.tab === 'np' ? 'on' : ''}" onclick="DPR.tab('np')">Non-estimated work<br><i>${S.np.length} line${S.np.length === 1 ? '' : 's'}</i></button>
+      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">Work Status Update<br><i>${reported().length} of ${S.groups.length} groups · ${S.np.length} other</i></button>
       <button class="${S.tab === 'report' ? 'on' : ''}" onclick="DPR.tab('report')">Report<br><i>check &amp; send</i></button></div>`;
     if (sub.status === 'Returned') h += `<div class="dpr-note r"><b>Returned by the manager.</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''}<br>Correct what is needed and send again. This will be attempt ${num(sub.attempt_no) + 1}.</div>`;
     if (!editingOld && S.returned.length) h += S.returned.map(r => `<div class="dpr-note r" style="display:flex;gap:8px;align-items:center"><span style="flex:1"><b>${dmy(r.progress_to)} report was returned:</b> ${esc(r.return_reason || '')}</span><button class="dbtn sm" onclick="DPR.engLoad('${r.submission_id}')">Fix &amp; resend</button></div>`).join('');
     if (S.locked) h += `<div class="dpr-note g">Sent at ${hm(sub.submitted_at)}. Nothing can be changed now. If something is wrong, ask the manager to return it.</div>`;
     h += '<div id="dpr_body"></div>';
     $('dpr_root').innerHTML = h;
-    if (S.tab === 'works') engWorks(); else if (S.tab === 'np') engNp(); else engReport();
+    if (S.tab === 'works') engWorks(); else engReport();
   }
 
-  /* ---------- works: group cards ---------- */
+  /* ---------- works: area + status pills, two section banners ---------- */
+  const isFin = g => g.lines.length && g.lines.every(l => l.status === 'finished');
   function engWorks() {
-    const q = (S.q || '').toLowerCase();
-    let h = `<div class="dpr-fbar">
-      <button class="${S.filt === 'mine' ? 'on' : ''}" onclick="DPR.filt('mine')">Mine<i>${S.groups.filter(g => g.status !== 'finished').length}</i></button>
-      <button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished</button>
-      <span class="sp" style="flex:1"></span>
-      ${S.locked ? '' : '<button class="on" style="background:var(--dok);border-color:var(--dok)" onclick="DPR.startOpen()">＋ Start</button>'}</div>
-      <div class="dpr-srch"><input value="${esc(S.q)}" placeholder="Search line or location…" oninput="DPR.srch(this.value)"></div>`;
-    let list = S.groups.filter(g => {
-      const fin = g.lines.length && g.lines.every(l => l.status === 'finished');
-      return S.filt === 'fin' ? fin : !fin;
-    });
-    if (q) list = list.filter(g => (g.label + ' ' + g.location + ' ' + (g.loc_path || '') + ' ' + g.lines.map(l => l.activity).join(' ')).toLowerCase().indexOf(q) >= 0);
-    if (!list.length) {
-      h += `<div class="dpr-note">${S.groups.length ? 'Nothing matches.' : 'No groups yet. Tap <b>＋ Start</b>, pick a location, tick the lines you are working on.'}</div>`;
-      $('dpr_body').innerHTML = h; return;
-    }
+    const areas = {};
+    if (S.seg === 'est' && S.q && S.cat) S.cat.forEach(r => { if (r[10] || r[11]) return; const a = r[12] || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
+    else S.groups.forEach(g => { const a = g.area || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
+    const areaKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
+    const nAct = S.groups.filter(g => !isFin(g)).length, nFin = S.groups.length - nAct;
+    let h = `<div class="dpr-fbar" style="border-bottom:0"><span class="fl">AREA</span><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${areaKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)}<i>${areas[a]}</i></button>`).join('')}</div>
+      <div class="dpr-rule"></div>
+      <div class="dpr-fbar"><span class="fl">STATUS</span><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active<i>${nAct}</i></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished<i>${nFin}</i></button></div>
+      <div class="dpr-segs"><div class="dpr-sec ${S.seg === 'est' ? 'on' : ''}" onclick="DPR.seg('est')">ESTIMATED WORK<small>${reported().length} of ${S.groups.length} filled</small></div><div class="dpr-sec ${S.seg === 'np' ? 'on' : ''}" onclick="DPR.seg('np')">NON-ESTIMATED WORK<small>${S.np.length} line${S.np.length === 1 ? '' : 's'} today</small></div></div>`;
+    h += S.seg === 'est' ? engEst() : engNpBody();
+    $('dpr_body').innerHTML = h;
+  }
+  function engEst() {
+    let h = `<div class="dpr-srch"><input value="${esc(S.q)}" placeholder="Search the estimate to add work… e.g. waterproofing A-101" oninput="DPR.srch(this.value)">${S.q ? '<button class="dbtn sm" onclick="DPR.srch(\'\')">×</button>' : ''}<button class="dbtn pri sm" onclick="DPR.startOpen()">＋ Browse</button></div>`;
+    if (S.q) return h + catResults();
+    if (S.locked) h += '<div class="dpr-note">Today\'s report is sent. Anything you start now goes on your list for the next report.</div>';
+    const list = S.groups.filter(g => (S.filt === 'fin' ? isFin(g) : !isFin(g)) && (!S.area || (g.area || 'Unassigned') === S.area));
+    if (!list.length) return h + `<div class="dpr-note">${S.groups.length ? 'Nothing here.' : 'Nothing on your list yet. Search the estimate above, or ＋ Browse by tower and floor.'}</div>`;
     const byLoc = {};
     list.forEach(g => { const k = g.loc_path || g.location; (byLoc[k] = byLoc[k] || []).push(g); });
     Object.keys(byLoc).sort().forEach(k => {
       h += `<div class="dpr-grp">${esc(k)}<small>${byLoc[k].length} group${byLoc[k].length === 1 ? '' : 's'}</small></div>`;
       byLoc[k].forEach(g => h += gCard(g));
     });
-    h += '<div class="dpr-note">Groups you leave blank are shown to the manager as <b>not reported</b>. Nothing stops you sending.</div>';
-    $('dpr_body').innerHTML = h;
+    return h + '<div class="dpr-note">Groups you leave blank are shown to the manager as <b>not reported</b>. Nothing stops you sending.</div>';
+  }
+  /* ---------- estimate catalogue search (M25/M26): collapsed tree ---------- */
+  // row: [wbs_node_id, loc_node_id, activity, kind, uom, est_qty, package, wbs_path, loc_name, loc_path, in_group, finished, area]
+  const catKey = r => r[0] + '|' + r[1];
+  function catLevels(r) {                       // tower-level + floor-level from the location path
+    const segs = (r[9] || '').split(' › ').filter(Boolean);
+    const t = r[12] || segs[1] || segs[0] || '—';
+    const f = segs.length > 2 ? segs.slice(2).join(' › ') : segs.length === 2 && !r[12] ? '—' : (segs[segs.length - 1] === t ? '(at ' + t + ')' : (segs[segs.length - 1] || '—'));
+    return [t, f];
+  }
+  function catHits() {
+    const q = S.q || '', all = q.trim() === '/', sa = !!S.catAll;
+    return S.cat.filter(r => (sa || !(r[10] || r[11])) && (!S.area || (r[12] || 'Unassigned') === S.area)
+      && (all || fz(r[2] + ' ' + (r[6] || '') + ' ' + (r[7] || '') + ' ' + r[8] + ' ' + (r[9] || '') + ' ' + (r[12] || ''), q)));
+  }
+  function catResults() {
+    if (!S.cat) { if (!S.catP) S.catP = sb.rpc('rpc_dpr_line_catalog').then(({ data, error }) => { S.catP = null; if (error) { toast(err(error, 'Could not load the estimate'), 'error'); S.cat = []; } else S.cat = data || []; if (S.tab === 'works' && S.seg === 'est' && S.q) engWorks(); }); return '<div class="dpr-load">Loading the estimate…</div>'; }
+    S.ct = S.ct || new Set(); S.co = S.co || new Set(); S.cv = S.cv || 'loc';
+    const H = catHits(), view = S.cv;
+    const units = new Set(H.map(r => r[1])).size, nT = S.ct.size;
+    let h = `<div class="dpr-rbar"><span class="sum"><b>${H.length}</b> line${H.length === 1 ? '' : 's'} · ${units} unit${units === 1 ? '' : 's'}</span>
+      <span class="seg2"><button class="${view === 'loc' ? 'on' : ''}" onclick="DPR.catView('loc')">Location</button><button class="${view === 'pkg' ? 'on' : ''}" onclick="DPR.catView('pkg')">Package</button></span>
+      <button class="dbtn sm" title="${S.coAll ? 'Collapse all' : 'Expand all'}" onclick="DPR.catAllOpen()">${S.coAll ? '⊟' : '⊞'}</button>
+      <label class="shw"><input type="checkbox" ${S.catAll ? 'checked' : ''} onchange="DPR.catShowAll(this.checked)"> started</label></div>`;
+    if (!H.length) return h + '<div class="dpr-note">Nothing in the approved estimate matches. Milestone lines and materials are never listed.</div>';
+    const G = (arr, f) => { const m = new Map(); arr.forEach(r => { const k = f(r); if (!m.has(k)) m.set(k, []); m.get(k).push(r); }); return m; };
+    const lv = new Map(H.map(r => [catKey(r), catLevels(r)]));
+    const k1 = r => view === 'loc' ? lv.get(catKey(r))[0] : (r[6] || '—');
+    const k2 = r => view === 'loc' ? lv.get(catKey(r))[1] : String(r[0]);
+    const k3 = r => view === 'loc' ? r[1] : lv.get(catKey(r))[0];
+    // auto-open single branches
+    const s1 = new Set(H.map(k1)); if (s1.size === 1) S.co.add('1|' + [...s1][0]);
+    const s2 = new Set(H.map(r => k1(r) + '|' + k2(r))); if (s2.size === 1) S.co.add('2|' + [...s2][0]);
+    const open = k => S.co.has(k), cb = (ids, extra) => { const o = ids.filter(k => !S.cat.find(r => catKey(r) === k && (r[10] || r[11]))); const all = o.length && o.every(k => S.ct.has(k)), some = !all && o.some(k => S.ct.has(k));
+      return `<input type="checkbox" class="cb" ${all ? 'checked' : ''} ${some ? 'data-part="1"' : ''} ${o.length ? '' : 'disabled'} onclick="event.stopPropagation()" onchange="DPR.catTickMany('${o.join(',')}',this.checked)"${extra || ''}>`; };
+    const row = r => { const dis = !!(r[10] || r[11]), k = catKey(r);
+      return `<label class="dpr-tick ct4 ${dis ? 'dis' : ''}"><input type="checkbox" ${dis ? 'disabled' : ''} ${S.ct.has(k) ? 'checked' : ''} onchange="DPR.catTick('${k}',this.checked)">
+        <span><b><span class="pill ${r[3] === 'H' ? 'p-vio' : 'p-teal'}">${r[3]}</span> ${esc(view === 'loc' ? r[2] : r[8])}</b><i>${fmt(r[5])} ${esc(r[4] || '')} · ${esc(view === 'loc' ? (r[6] || '') : lv.get(k)[1])}${r[10] ? ' · on “' + esc(r[10]) + '”' : ''}${r[11] ? ' · finished' : ''}</i></span></label>`; };
+    G(H, k1).forEach((a, x1) => {
+      const K1 = '1|' + x1, o1 = open(K1);
+      h += `<div class="dpr-th t1" onclick="DPR.catOpen('${esc(K1)}')"><span class="car">${o1 ? '▾' : '▸'}</span><b>${esc(x1)}</b><span class="cnt">${a.length}</span><span class="sp"></span><small>${view === 'loc' ? new Set(a.map(r => r[1])).size + ' units' : new Set(a.map(r => r[0])).size + ' lines'}</small></div>`;
+      if (!o1) return;
+      G(a, k2).forEach((b, x2) => {
+        const K2 = '2|' + x1 + '|' + x2, o2 = open(K2), title = view === 'loc' ? x2 : b[0][2];
+        h += `<div class="dpr-th t2" onclick="DPR.catOpen('${esc(K2)}')">${cb(b.map(catKey))}<span class="car">${o2 ? '▾' : '▸'}</span><b>${esc(title)}</b><span class="cnt">${b.length}</span><span class="sp"></span><small>${new Set(b.map(r => r[1])).size} unit${new Set(b.map(r => r[1])).size === 1 ? '' : 's'}</small></div>`;
+        if (!o2) return;
+        G(b, k3).forEach((c, x3) => {
+          const K3 = '3|' + x1 + '|' + x2 + '|' + x3, o3 = open(K3), nt = c.filter(r => S.ct.has(catKey(r))).length;
+          h += `<div class="dpr-th t3" onclick="DPR.catOpen('${esc(K3)}')">${cb(c.map(catKey))}<span class="car">${o3 ? '▾' : '▸'}</span><b>${esc(view === 'loc' ? c[0][8] : x3)}</b><span class="cnt">${c.length}</span>${nt ? `<span class="pill p-teal">${nt} ticked</span>` : ''}</div>`;
+          if (o3) h += c.map(row).join('');
+        });
+      });
+    });
+    if (nT) { const byU = new Set([...S.ct].map(k => k.split('|')[1])).size;
+      h += `<div class="dpr-addfab"><span><b>${nT}</b> ticked in <b>${byU}</b> unit${byU === 1 ? '' : 's'}${byU > 1 ? ' · one group per unit' : ''}</span><span class="sp"></span><button class="dbtn sm" onclick="DPR.catClear()">Clear</button><button class="dbtn" onclick="DPR.catGo(false)">Each on its own</button><button class="dbtn ok" onclick="DPR.catGo(true)">${byU > 1 ? 'Add ' + byU + ' groups' : 'Report together'}</button></div>`; }
+    return h;
+  }
+  function catRedraw() { const y = window.scrollY; engWorks(); document.querySelectorAll('#dpr_body input[data-part]').forEach(c => { c.indeterminate = true; }); window.scrollTo(0, y); }
+  function catOpen(k) { S.co.has(k) ? S.co.delete(k) : S.co.add(k); catRedraw(); }
+  function catView(v) { S.cv = v; S.co = new Set(); S.coAll = false; catRedraw(); }
+  function catShowAll(v) { S.catAll = !!v; catRedraw(); }
+  function catAllOpen() {
+    if (S.coAll) { S.coAll = false; S.co = new Set(); return catRedraw(); }
+    S.coAll = true;
+    const view = S.cv; catHits().forEach(r => { const [t, f] = catLevels(r), a = view === 'loc' ? t : (r[6] || '—'), b = view === 'loc' ? f : String(r[0]), c = view === 'loc' ? r[1] : t;
+      S.co.add('1|' + a); S.co.add('2|' + a + '|' + b); S.co.add('3|' + a + '|' + b + '|' + c); });
+    catRedraw();
+  }
+  function catTick(k, on) { on ? S.ct.add(k) : S.ct.delete(k); catRedraw(); }
+  function catTickMany(ks, on) { ks.split(',').filter(Boolean).forEach(k => on ? S.ct.add(k) : S.ct.delete(k)); catRedraw(); }
+  function catClear() { S.ct = new Set(); catRedraw(); }
+  async function catGo(together) {
+    const byLoc = {}; [...S.ct].forEach(k => { const [w, l] = k.split('|'); (byLoc[l] = byLoc[l] || []).push(Number(w)); });
+    const locs = Object.keys(byLoc); let ok = 0;
+    try {
+      for (const l of locs) { const { error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: l, p_wbs_node_ids: byLoc[l], p_together: together }); if (error) throw error; ok++; }
+      toast('Added ' + (together ? ok + ' group' + (ok === 1 ? '' : 's') : [...S.ct].length + ' line' + ([...S.ct].length === 1 ? '' : 's')) + ' to your list', 'success');
+    } catch (e) { toast(err(e, 'Could not add') + (ok ? ' — ' + ok + ' unit(s) were added before this' : ''), 'error'); }
+    S.ct = new Set(); S.cat = null; S.q = ''; await engLoad(S.histSub ? S.sub.id : undefined); S.tab = 'works'; S.seg = 'est'; engRender();
+  }
+  function engNpBody() {
+    const q = S.qnp || '';
+    let h = `<div class="dpr-srch"><input value="${esc(q)}" placeholder="Search non-estimated work to add… e.g. housekeeping" oninput="DPR.srchNp(this.value)">${q ? '<button class="dbtn sm" onclick="DPR.srchNp(\'\')">×</button>' : ''}</div>`;
+    if (q) {
+      if (!S.masters) { masters().then(() => { if (S.tab === 'works' && S.seg === 'np' && S.qnp) engWorks(); }); return h + '<div class="dpr-load">Loading the list…</div>'; }
+      const hits = S.masters.np_reasons.filter(r => fz(r.reason_text + ' ' + r.reason_code, q));
+      if (!hits.length) return h + '<div class="dpr-note">Nothing in the non-estimated work list matches. The manager adds items under Masters › Labour.</div>';
+      if (S.locked) h += '<div class="dpr-note a">Today\'s report is sent — non-estimated labour belongs to a report, so it can only be added before sending.</div>';
+      hits.forEach(r => { h += `<div class="dpr-lrow" ${S.locked ? '' : `onclick="DPR.npAdd('${esc(r.reason_code)}')"`}><div class="nm"><b>${esc(r.reason_text)}</b><span>${esc(r.reason_code)}</span></div>${S.locked ? '' : '<span class="pill p-teal">＋ add</span>'}</div>`; });
+      return h;
+    }
+    h += `<div class="dpr-band t">${dmy(S.sub.business_date).toUpperCase()} — LABOUR NOT AGAINST AN ESTIMATE LINE</div>`;
+    if (S.np.length) {
+      h += '<table class="dt"><tr><th>WORK</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th><th></th></tr>';
+      S.np.forEach((r, i) => { h += `<tr><td>${esc(r.reason_text)}</td><td>${esc(conName(r.contractor_code))}</td><td>${esc(r.trade_code)}</td><td class="n">${fmt(r.head_count)}</td><td>${S.locked ? '' : '<button class="dbtn sm" onclick="DPR.npDrop(' + i + ')">×</button>'}</td></tr>`; });
+      h += '</table>';
+    } else h += '<div class="dpr-note">Nothing recorded. Search above to add housekeeping, shifting, dewatering, idle time.</div>';
+    return h;
   }
   function gCard(g) {
     const st = gState(g), p = g.progress, hd = gHeads(g);
@@ -8202,17 +8351,21 @@ const DPR = (function () {
   }
 
   /* ---------- start work ---------- */
-  async function startOpen() {
-    S.st = { q: '', locs: null, loc: null, lines: null, ticks: new Set() };
+  async function startOpen(q) {
+    S.st = { q: typeof q === 'string' ? q : '', locs: null, loc: null, lines: null, ticks: new Set(), open: new Set() };
     sheetOpen('Start work', 'Find the location, tick the lines you are on', '<div id="dpr_st"></div>', '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>');
-    startDraw(); await startSearch('');
+    startDraw(); await startSearch(S.st.q);
   }
   async function startSearch(q) {
     S.st.q = q;
-    const { data, error } = await sb.rpc('rpc_dpr_location_search', { p_q: q || null, p_limit: 40 });
-    if (error) { toast(err(error, 'Search failed'), 'error'); return; }
-    if (S.st.q !== q) return;
-    S.st.locs = data || []; startDraw();
+    if (!S.st.all) {
+      const { data, error } = await sb.rpc('rpc_dpr_location_search', { p_q: null, p_limit: 5000 });
+      if (error) { toast(err(error, 'Could not load locations'), 'error'); return; }
+      S.st.all = data || [];
+    }
+    S.st.locs = S.st.all.filter(l => fz(l.name + ' ' + (l.path || ''), S.st.q));
+    startDraw();
+    const i = document.querySelector('#dpr_st .dpr-srch input'); if (i && document.activeElement !== i) { i.focus(); i.setSelectionRange(q.length, q.length); }
   }
   async function startLoc(id) {
     S.st.loc = id; S.st.lines = null; S.st.ticks = new Set(); startDraw();
@@ -8229,10 +8382,25 @@ const DPR = (function () {
     const st = S.st; if (!st) return;
     let h = '';
     if (!st.loc) {
-      h += `<div class="dpr-srch"><input placeholder="Location… e.g. A-101, 19th floor" value="${esc(st.q)}" oninput="DPR.startSearch(this.value)" autofocus></div>`;
+      h += `<div class="dpr-srch"><input placeholder="Location… e.g. A-101, 19th floor, tower b" value="${esc(st.q)}" oninput="DPR.startSearch(this.value)" autofocus>${st.q ? '<button class="dbtn sm" onclick="DPR.startSearch(\'\')">×</button>' : ''}</div>`;
       if (!st.locs) h += '<div class="dpr-load">Searching…</div>';
       else if (!st.locs.length) h += '<div class="dpr-note">No location with approved lines matches.</div>';
-      else st.locs.forEach(l => { h += `<div class="dpr-lrow" onclick="DPR.startLoc('${l.loc_node_id}')"><div class="nm"><b>${esc(l.name)}</b><span>${esc(l.path || '')} · ${l.lines} line${l.lines === 1 ? '' : 's'}${num(l.open_groups) ? ' · ' + l.open_groups + ' group' + (l.open_groups === 1 ? '' : 's') + ' already' : ''}</span></div>›</div>`; });
+      else {
+        // clubbed: Tower › Floor › units, from the location path
+        const tree = {};
+        st.locs.forEach(l => { const parts = (l.path || '').split(' › ').filter(Boolean); const k1 = parts[0] || '—', k2 = parts.slice(1).join(' › ') || '—'; ((tree[k1] = tree[k1] || {})[k2] = tree[k1][k2] || []).push(l); });
+        const row = l => `<div class="dpr-lrow" style="padding-left:24px" onclick="DPR.startLoc('${l.loc_node_id}')"><div class="nm"><b>${esc(l.name)}</b><span>${l.lines} line${l.lines === 1 ? '' : 's'}${num(l.open_groups) ? ' · ' + l.open_groups + ' on your list' : ''}</span></div>›</div>`;
+        Object.keys(tree).sort().forEach(k1 => {
+          const k1o = st.open.has(k1) || !!st.q; const n1 = Object.values(tree[k1]).reduce((a, b) => a + b.length, 0);
+          h += `<div class="dpr-grp" style="cursor:pointer" onclick="DPR.startTog('${esc(k1)}')">${k1o ? '▾' : '▸'} ${esc(k1)}<small>${n1} location${n1 === 1 ? '' : 's'}</small></div>`;
+          if (!k1o) return;
+          Object.keys(tree[k1]).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach(k2 => {
+            const kk = k1 + '|' + k2, k2o = st.open.has(kk) || !!st.q || Object.keys(tree[k1]).length === 1;
+            if (k2 !== '—') h += `<div class="dpr-lrow" style="background:#f7f9fc;padding-left:16px;cursor:pointer" onclick="DPR.startTog('${esc(kk)}')"><div class="nm"><b>${k2o ? '▾' : '▸'} ${esc(k2)}</b><span>${tree[k1][k2].length} unit${tree[k1][k2].length === 1 ? '' : 's'}</span></div></div>`;
+            if (k2o) tree[k1][k2].forEach(l => h += row(l));
+          });
+        });
+      }
     } else {
       const d = st.lines;
       h += `<div class="dpr-lrow" style="background:#f3f6fa"><button class="dbtn sm" onclick="DPR.startBack()">‹</button><div class="nm"><b>${esc(d ? d.location : '')}</b><span>${esc(d ? d.path || '' : '')}</span></div></div>`;
@@ -8255,11 +8423,12 @@ const DPR = (function () {
     const ft = document.querySelector('#dprSheet .ft'); if (ft) ft.innerHTML = '<span id="dpr_st_ft" style="display:contents">' + (st.loc ? startFoot() : '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>') + '</span>';
   }
   function startBack() { S.st.loc = null; S.st.lines = null; startDraw(); }
+  function startTog(k) { const o = S.st.open; o.has(k) ? o.delete(k) : o.add(k); startDraw(); }
   async function startGo(together) {
     try {
       const { error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: S.st.loc, p_wbs_node_ids: [...S.st.ticks], p_together: together });
       if (error) throw error;
-      sheetClose(); toast('On your list', 'success'); await engLoad(); S.tab = 'works'; S.filt = 'mine'; engRender();
+      sheetClose(); toast('On your list', 'success'); S.cat = null; await engLoad(); S.tab = 'works'; S.filt = 'mine'; engRender();
     } catch (e) { toast(err(e, 'Could not start'), 'error'); }
   }
 
@@ -8332,7 +8501,8 @@ const DPR = (function () {
         h += `<div class="dpr-line ${y.on ? '' : 'off'} ${over ? 'bad' : ''}"><input type="checkbox" ${y.on ? 'checked' : ''} ${x.status === 'finished' ? 'disabled' : ''} onchange="DPR.lineSet('${x.work_id}','on',this.checked)">
           <div><b>${esc(x.activity)}</b><i>${x.status === 'finished' ? 'finished' : fmt(left) + ' left of ' + fmt(x.est_qty) + ' ' + esc(x.uom || '')}</i>${over ? '<i style="color:var(--drd)">more than remains on the estimate</i>' : ''}</div>
           <input type="number" inputmode="decimal" step="any" value="${y.qty}" ${y.on ? '' : 'disabled'} oninput="DPR.lineSet('${x.work_id}','qty',this.value)"><span class="u">${esc(x.uom || '')}</span>
-          <label class="fin" title="Finished"><input type="checkbox" ${y.fin ? 'checked' : ''} ${y.on ? '' : 'disabled'} onchange="DPR.lineSet('${x.work_id}','fin',this.checked)"> done</label></div>`;
+          <label class="fin" title="Finished"><input type="checkbox" ${y.fin ? 'checked' : ''} ${y.on ? '' : 'disabled'} onchange="DPR.lineSet('${x.work_id}','fin',this.checked)"> done</label>
+          ${y.on && x.status !== 'finished' ? `<div class="snap"><span>cum to</span>${[25, 50, 75, 100].map(p => `<button onclick="DPR.lineSnap('${x.work_id}',${p})">${p}%</button>`).join('')}</div>` : ''}</div>`;
       });
     } else if (d.y_out === 'hindrance') {
       h += `<div class="dprFld"><label>WHAT STOPPED IT</label>${reasons('y_rc')}<div class="dpr-note v" style="margin-top:7px">Report what happened. The manager decides whose delay it is.</div></div>`;
@@ -8359,6 +8529,11 @@ const DPR = (function () {
     if (row) row.classList.toggle('bad', num(v) > left);
   }
 
+  function lineSnap(id, pct) {
+    const x = S.editing.lines.find(z => z.work_id === id), y = S.draft.y_lines[id]; if (!x || !y) return;
+    const est = num(x.est_qty), cum = num(x.cum_published), target = Math.round(est * pct / 100 * 1000) / 1000;
+    y.on = true; y.qty = Math.max(0, Math.round((target - cum) * 1000) / 1000); y.fin = pct === 100; drawEditor();
+  }
   async function saveGroup() {
     const g = S.editing, d = S.draft;
     let lines = [];
@@ -8384,23 +8559,12 @@ const DPR = (function () {
   }
 
   /* ---------- non-estimated work ---------- */
-  async function engNp() {
-    const M = await masters();
-    let h = `<div class="dpr-band t">${dmy(S.sub.business_date).toUpperCase()} — LABOUR NOT AGAINST AN ESTIMATE LINE</div>
-      <div class="dpr-note">Housekeeping, shifting, dewatering, idle time. Keeps the day's head-count honest.</div>`;
-    if (S.np.length) {
-      h += '<table class="dt"><tr><th>WORK</th><th>CONTRACTOR</th><th>TRADE</th><th class="n">HEADS</th><th></th></tr>';
-      S.np.forEach((r, i) => { h += `<tr><td>${esc(r.reason_text)}</td><td>${esc(conName(r.contractor_code))}</td><td>${esc(r.trade_code)}</td><td class="n">${fmt(r.head_count)}</td><td>${S.locked ? '' : '<button class="dbtn sm" onclick="DPR.npDrop(' + i + ')">×</button>'}</td></tr>`; });
-      h += '</table>';
-    } else h += '<div class="dpr-note">Nothing recorded.</div>';
-    if (!S.locked) h += `<div class="dacts"><span class="sp"></span><button class="dbtn" onclick="DPR.npAdd()">＋ Add a line</button></div>`;
-    $('dpr_body').innerHTML = h;
-  }
-  async function npAdd() {
+  async function npAdd(code) {
     const M = await masters(), cons = await contractors();
     if (!M.np_reasons.length) { toast('No non-estimated work items set up — ask the manager (Masters › Labour)', 'warn'); return; }
+    if (S.locked) { toast('Today\u2019s report is already sent', 'warn'); return; }
     sheetOpen('Non-estimated work', dmy(S.sub.business_date), `
-      <div class="dprFld"><label>WHAT</label><select id="np_r">${M.np_reasons.map(r => `<option value="${r.reason_code}">${esc(r.reason_text)}</option>`).join('')}</select></div>
+      <div class="dprFld"><label>WHAT</label><select id="np_r">${M.np_reasons.map(r => `<option value="${r.reason_code}" ${r.reason_code === code ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select></div>
       <div class="dprFld"><label>CONTRACTOR</label><select id="np_c">${cons.map(c => `<option value="${esc(c)}">${esc(conName(c))}</option>`).join('')}</select></div>
       <div class="dprFld"><label>TRADE</label><select id="np_t">${M.trades.map(t => `<option value="${t.trade_code}">${esc(t.trade_name)}</option>`).join('')}</select></div>
       <div class="dprFld"><label>HEADS</label><div class="dprQty"><button onclick="DPR.bump('np_n',-1)">−</button><input id="np_n" type="number" inputmode="numeric" value="1" min="0"><button onclick="DPR.bump('np_n',1)">+</button></div></div>`,
@@ -8410,11 +8574,11 @@ const DPR = (function () {
   async function npSave() {
     const rows = S.np.map(r => ({ reason_code: r.reason_code, contractor: r.contractor_code, trade: r.trade_code, heads: r.head_count, loc_node_id: r.loc_node_id }));
     rows.push({ reason_code: $('np_r').value, contractor: $('np_c').value, trade: $('np_t').value, heads: num($('np_n').value) });
-    await npPush(rows); sheetClose();
+    S.qnp = ''; await npPush(rows); sheetClose();
   }
   async function npDrop(i) { const rows = S.np.filter((_, j) => j !== i).map(r => ({ reason_code: r.reason_code, contractor: r.contractor_code, trade: r.trade_code, heads: r.head_count, loc_node_id: r.loc_node_id })); await npPush(rows); }
   async function npPush(rows) {
-    try { const { error } = await sb.rpc('rpc_dpr_save_np', { p_submission_id: S.sub.id, p_rows: rows }); if (error) throw error; await engLoad(S.histSub ? S.sub.id : undefined); S.tab = 'np'; engRender(); }
+    try { const { error } = await sb.rpc('rpc_dpr_save_np', { p_submission_id: S.sub.id, p_rows: rows }); if (error) throw error; await engLoad(S.histSub ? S.sub.id : undefined); S.tab = 'works'; S.seg = 'np'; engRender(); }
     catch (e) { toast(err(e, 'Could not save'), 'error'); }
   }
 
@@ -8431,15 +8595,18 @@ const DPR = (function () {
     const g = X.groups, rep = g.filter(x => x.progress), nr = g.filter(x => !x.progress);
     let h = `<div class="dpr-sec">PROGRESS · ${dmy(X.to).toUpperCase()}<small>${rep.length} group${rep.length === 1 ? '' : 's'} reported · ${nr.length} not</small></div>`;
     if (!rep.length && !nr.length) return h + '<div class="dpr-note a">No groups on the list.</div>';
-    h += '<table class="dt"><tr><th>GROUP</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th>NOTE</th></tr>';
     rep.forEach(x => {
-      const p = x.progress, st = gState(x);
-      h += `<tr class="tt ${st === 'hind' ? 'rd' : st === 'carry' ? 'am' : ''}"><td colspan="5">${esc(x.location)} · ${esc(x.label)} — ${p.outcome === 'worked' ? esc(conName(p.contractor_code)) + ', ' + Object.entries(x.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : p.outcome === 'hindrance' ? 'Hindrance — ' + esc((x.open_hindrance || {}).reason_text || '') : '<b>No work</b>'}${st === 'carry' ? ' · dated <b>' + dsh(p.work_date) + '</b>, never sent' : ''}</td></tr>`;
-      if (p.outcome === 'worked') x.lines.forEach(l => { const lp = l.progress; if (!lp || lp.outcome !== 'worked') return;
-        h += `<tr><td></td><td>${esc(l.activity)}</td><td class="n">${fmt(lp.qty_done)} ${esc(l.uom || '')}</td><td class="n">${fmt(lp.cum_after)}</td><td>${lp.marks_finished ? 'Finished' : ''}</td></tr>`; });
+      const p = x.progress, st = gState(x), who = p.outcome === 'worked' ? Object.entries(x.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : '';
+      h += `<div class="dpr-rg ${st}"><div class="rg-h"><div><b>${esc(x.location)}</b><span>${esc(x.label)}${x.package ? ' · ' + esc(x.package) : ''}</span></div>
+        <div class="rg-w">${p.outcome === 'worked' ? '<b>' + esc(conName(p.contractor_code)) + '</b><span>' + who + '</span>' : p.outcome === 'hindrance' ? '<b style="color:var(--drd)">Hindrance</b><span>' + esc((x.open_hindrance || {}).reason_text || '') + '</span>' : '<b>No work</b>'}${st === 'carry' ? '<span class="pill p-amb">dated ' + dsh(p.work_date) + '</span>' : ''}</div></div>`;
+      if (p.outcome === 'worked') { h += '<table class="dt rg-t"><tr><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th></tr>';
+        x.lines.forEach(l => { const lp = l.progress; if (!lp || lp.outcome !== 'worked') return; const pc = num(l.est_qty) ? (num(lp.cum_after) / num(l.est_qty) * 100).toFixed(0) : '';
+          h += `<tr><td>${esc(l.activity)}${lp.marks_finished ? ' <span class="pill p-ok">finished</span>' : ''}</td><td class="n big">${fmt(lp.qty_done)} <small>${esc(l.uom || '')}</small></td><td class="n">${fmt(lp.cum_after)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td></tr>`; });
+        h += '</table>'; }
+      h += '</div>';
     });
-    if (nr.length) h += `<tr class="mut"><td colspan="5" style="color:var(--dink3)">Not reported: ${nr.map(x => esc(x.location + ' · ' + x.label)).join(', ')}</td></tr>`;
-    return h + '</table>';
+    if (nr.length) h += `<div class="dpr-note" style="color:var(--dink3)">Not reported: ${nr.map(x => esc(x.location + ' · ' + x.label)).join(', ')}</div>`;
+    return h;
   }
   function labTable(X) {
     const trades = [], byCon = {};
@@ -8493,7 +8660,7 @@ const DPR = (function () {
     try {
       const { data, error } = await sb.rpc('rpc_dpr_my_history', { p_limit: 60 });
       if (error) throw error;
-      const rows = Array.isArray(data) ? data : [];
+      const rows = Array.isArray(data) ? data : []; S.histRows = rows;
       let h = `<div class="dpr-sec">WHAT YOU SUBMITTED<small>tap to open</small></div>`;
       if (!rows.length) h += '<div class="dpr-note">Nothing before today.</div>';
       rows.forEach(r => {
@@ -8502,6 +8669,14 @@ const DPR = (function () {
       });
       $('dpr_hist').innerHTML = h;
     } catch (e) { $('dpr_hist').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load your past reports')) + '</div>'; }
+  }
+  async function histDate(d) {
+    S.wkSel = d;
+    if (d === S.today) { S.page = null; S.tab = 'works'; if (S.histSub) await engLoad(); else engRender(); return; }
+    if (!S.histRows) { const { data } = await sb.rpc('rpc_dpr_my_history', { p_limit: 120 }); S.histRows = Array.isArray(data) ? data : []; }
+    const r = S.histRows.find(x => x.progress_to === addDays(d, -1) || x.business_date === d);
+    if (!r) { toast('No report of yours for ' + dmy(d), 'info'); S.tab = 'report'; S.rtab = 'hist'; engRender(); return; }
+    histOpen(r.submission_id);
   }
   async function histOpen(id) {
     try {
@@ -8528,8 +8703,12 @@ const DPR = (function () {
   }
   function sheetClose() { const el = $('dprSheet'); if (el) el.classList.remove('on'); }
   function tab(t) { S.tab = t; engRender(); }
+  async function refresh() { S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; if (S.view === 'mgr') { S.sheet = null; S.hind = null; await mgrLoad(); } else await engLoad(S.histSub ? S.sub.id : undefined); }
   function filt(f) { S.filt = f; engRender(); }
-  function srch(v) { S.q = v; const b = $('dpr_body'); const sc = b ? b.scrollTop : 0; engWorks(); const i = document.querySelector('#dpr_body .dpr-srch input'); if (i) { i.focus(); i.setSelectionRange(v.length, v.length); } if (b) b.scrollTop = sc; }
+  function areaF(a) { S.area = a; engRender(); }
+  function seg(k) { S.seg = k; engRender(); }
+  function srchNp(v) { S.qnp = v; const b = $('dpr_body'); const sc = b ? b.scrollTop : 0; engWorks(); const i = document.querySelector('#dpr_body .dpr-srch input'); if (i) { i.focus(); i.setSelectionRange(v.length, v.length); } if (b) b.scrollTop = sc; }
+  function srch(v) { S.q = v; if (!v) { S.ct = new Set(); S.co = new Set(); S.coAll = false; } const b = $('dpr_body'); const sc = b ? b.scrollTop : 0; engWorks(); const i = document.querySelector('#dpr_body .dpr-srch input'); if (i) { i.focus(); i.setSelectionRange(v.length, v.length); } if (b) b.scrollTop = sc; }
   function rtab(t) { S.rtab = t; engRender(); }
 
   /* ==================================================================
@@ -8542,11 +8721,13 @@ const DPR = (function () {
       if (error) throw error;
       S.mQueue = data; S.mDate = data.business_date; S.mProg = data.progress_date;
       if (!S.mToday) S.mToday = data.business_date;
-      const needH = !S.hind, needS = !S.sheet || S.sheet.report_date !== S.mProg;
-      const [hr, sh] = await Promise.all([needH ? sb.rpc('rpc_dpr_hindrance_register', { p_open: null }) : Promise.resolve(null), needS ? sb.rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }) : Promise.resolve(null)]);
-      if (hr) { S.hind = (hr.data && hr.data.rows) || []; S.hSum = (hr.data && hr.data.by_party) || []; }
-      if (sh) { S.sheet = sh.data || {}; S.sheet.report_date = S.mProg; }
+      if (S.sheet && S.sheet.report_date !== S.mProg) S.sheet = null;
       S.mPage = null; mgrRender();
+      // background: today's sheet + hindrances, without blocking the queue
+      const jobs = [];
+      if (!S.hind) jobs.push(sb.rpc('rpc_dpr_hindrance_register', { p_open: null }).then(hr => { S.hind = (hr.data && hr.data.rows) || []; S.hSum = (hr.data && hr.data.by_party) || []; }));
+      if (!S.sheet) jobs.push(sb.rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { if (S.mProg === (sh.data ? S.mProg : S.mProg)) { S.sheet = sh.data || {}; S.sheet.report_date = S.mProg; } }));
+      if (jobs.length) Promise.all(jobs).then(() => { if (S.view === 'mgr' && !S.mPage) mgrRender(); });
     } catch (e) {
       $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not load the review queue')) + '</div><div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try again</button></div>';
     }
@@ -8569,7 +8750,7 @@ const DPR = (function () {
     if (uncl) h += `<div class="dpr-note a"><b>${uncl} hindrance${uncl === 1 ? '' : 's'} not attributed.</b> Say whose delay each one is — contractor, client, architect or neither. That is the extension-of-time evidence.</div>`;
     h += '<div id="dpr_body"></div>';
     $('dpr_root').innerHTML = h;
-    if (S.mTab === 'queue') mgrQueue(); else if (S.mTab === 'hind') mgrHind(); else if (S.mTab === 'sheet') mgrSheet(); else mgrPub();
+    if (S.mTab === 'queue') mgrQueue(); else if (S.mTab === 'hind') { if (S.hind) mgrHind(); else $('dpr_body').innerHTML = '<div class="dpr-load">Loading hindrances…</div>'; } else if (S.mTab === 'sheet') { if (S.sheet && S.sheet.report_date === S.mProg) mgrSheet(); else $('dpr_body').innerHTML = '<div class="dpr-load">Assembling the report…</div>'; } else mgrPub();
   }
   function subRow(s) {
     const st = s.status, pill = st === 'Submitted' ? 'p-amb' : st === 'Accepted' ? 'p-ok' : st === 'Returned' ? 'p-red' : 'p-grey';
@@ -8787,13 +8968,13 @@ const DPR = (function () {
       $('dpr_body').innerHTML = '<div class="dprList">' + S.pubList.map(s => `<div class="row" onclick="DPR.mGo('${s.report_date}')"><div class="nm"><b>${esc(s.dpr_no)}</b><span>${dmy(s.report_date)} · ${s.included} area(s) in${num(s.excluded) ? ', ' + s.excluded + ' not reported' : ''}${s.published_by ? ' · ' + esc(s.published_by) : ''}</span></div>${num(s.excluded) ? '<span class="pill p-red">' + s.excluded + ' not reported</span>' : ''}<span class="pill p-teal">open</span></div>`).join('') + '</div>';
     } catch (e) { $('dpr_body').innerHTML = '<div class="dpr-note r">' + esc(err(e, 'Could not load the archive')) + '</div>'; }
   }
-  async function mGo(reportDate) { S.mDate = addDays(reportDate, 1); S.mTab = 'sheet'; S.sheet = null; await mgrLoad(); }
-  async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.hind = null; await mgrLoad(); }
+  async function mGo(reportDate) { if (reportDate === S.mProg) return; S.mDate = addDays(reportDate, 1); S.sheet = null; await mgrLoad(); }
+  async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; await mgrLoad(); }
   function mTab(t) { S.mTab = t; mgrRender(); }
 
-  return { open, engLoad, tab, filt, srch, rtab, edit, saveGroup, setY, setT, draftSet, lab, labSet, lineSet, bump,
-    startOpen, startSearch, startLoc, startBack, startTick, startGo, regroupOpen, regroupGo,
-    npAdd, npSave, npDrop, preview, prevClose, submitGo, histOpen, histClose, sheetClose,
+  return { open, engLoad, refresh, tab, filt, areaF, seg, srch, srchNp, catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, rtab, edit, saveGroup, setY, setT, draftSet, lab, labSet, lineSet, lineSnap, bump,
+    startOpen, startSearch, startLoc, startBack, startTog, startTick, startGo, regroupOpen, regroupGo,
+    npAdd, npSave, npDrop, preview, prevClose, submitGo, histOpen, histDate, histClose, sheetClose,
     mOpen, mBack, mAccept, mReturn, mReturnGo, mTab, mDay, mGo, publish, printSheet, shareSheet,
     hOpen, hClassify, hClose, hReopen, _s: S };
 })();

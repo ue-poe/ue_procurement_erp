@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#12305a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1404,6 +1404,18 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #mod-dpr .dpr-tick.ct4{padding-left:40px;min-height:48px}
 #mod-dpr .dpr-addfab{position:sticky;bottom:0;display:flex;gap:6px;align-items:center;padding:8px 10px;background:var(--dokl);border-top:2px solid var(--dokb);font-size:11.5px;color:var(--dok);z-index:3;flex-wrap:wrap}
 #mod-dpr .dpr-addfab .sp{flex:1}
+
+/* ===== DPR v146.4 · report blocks, sub-headings, frozen banner, entry line-item head ===== */
+#mod-dpr .dpr-job .jh .a{font-size:15px}
+#mod-dpr .dpr-job .lh{display:grid;grid-template-columns:1fr auto;padding:3px 10px 3px 22px;font-size:9px;font-weight:800;color:var(--dink3);letter-spacing:.3px;background:#f7f9fc;border-top:1px solid var(--dln2)}
+#mod-dpr .dpr-sub{background:#eef2f7;font-size:10px;font-weight:800;color:var(--dink2);padding:4px 10px;letter-spacing:.4px;border-bottom:1px solid var(--dln2)}
+#mod-dpr .dpr-rg.none{border-left-color:var(--dink3)}
+#mod-dpr .dpr-rg .rg-h b{font-size:15px}
+#mod-dpr .dpr-rg .rg-h .st{color:var(--dv);font-weight:700;font-size:10.5px}
+#mod-dpr .dpr-nr{background:#fff;border-bottom:1px solid var(--dln2);padding:7px 10px;font-size:11.5px;color:var(--dink2);display:flex;justify-content:space-between;gap:8px}
+#mod-dpr .dpr-lock{background:#e9eef5;color:var(--dn);font-size:11px;padding:6px 10px;border-bottom:1px solid var(--dln);display:flex;gap:6px;align-items:center}
+/* no pinch / double-tap zoom anywhere — app-like */
+html,body{touch-action:pan-x pan-y}
 
 
 /* ===== v142 · two-tone ribbon ===== */
@@ -8052,6 +8064,15 @@ function applyRoleUI() {
    Every write goes through an RPC. The dpr_* tables grant SELECT
    only to `authenticated` (M16b), so there is no other path.
    ================================================================== */
+(function () {
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(ev => document.addEventListener(ev, e => e.preventDefault(), { passive: false }));
+  let _lastTap = 0;
+  document.addEventListener('touchend', e => {
+    const now = Date.now(), t = e.target;
+    if (now - _lastTap < 300 && !(t && t.closest && t.closest('input, textarea, select, [contenteditable]'))) e.preventDefault();
+    _lastTap = now;
+  }, { passive: false });
+})();
 const DPR = (function () {
 
   const S = {
@@ -8161,7 +8182,13 @@ const DPR = (function () {
     }
   }
 
-  const gState = g => g.progress ? (g.progress.outcome === 'hindrance' ? 'hind' : g.progress.work_date < S.to ? 'carry' : 'done') : 'pend';
+  const gStateAt = (g, to) => g.progress ? (g.progress.outcome === 'hindrance' ? 'hind' : g.progress.outcome === 'none' ? 'none' : g.progress.work_date < to ? 'carry' : 'done') : 'pend';
+  const gState = g => gStateAt(g, S.to);
+  const daysBetween = (a, b) => Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+  const elapsed = (start, asOf) => { const n = daysBetween(start, asOf) + 1; return n + ' day' + (n === 1 ? '' : 's'); };
+  const gStart = g => { const d = (g.lines || []).map(l => l.started_on).filter(Boolean).sort(); return d[0] || null; };
+  const startTxt = (d, asOf) => d ? 'Started ' + dsh(d) + ' · Elapsed ' + elapsed(d, asOf) : 'Not started';
+  const nLi = n => n + ' Line item' + (n === 1 ? '' : 's');
   const gHeads = g => sum(g.labour_heads);
   const reported = () => S.groups.filter(g => g.progress);
   const pendingG = () => S.groups.filter(g => !g.progress);
@@ -8194,7 +8221,7 @@ const DPR = (function () {
       <div><b style="color:${carried ? 'var(--dam)' : 'var(--dink3)'}">${carried}</b><span>EARLIER DATE</span></div>
       <div><b style="color:var(--dtd)">${fmt(headsToday())}</b><span>HEADS TODAY</span></div></div>`;
     h += `<div class="dpr-tabs">
-      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">Work Status Update<br><i>${reported().length} of ${S.groups.length} groups · ${S.np.length} other</i></button>
+      <button class="${S.tab === 'works' ? 'on' : ''}" onclick="DPR.tab('works')">Work Progress Log<br><i>${reported().length} of ${S.groups.length} groups · ${S.np.length} other</i></button>
       <button class="${S.tab === 'report' ? 'on' : ''}" onclick="DPR.tab('report')">Report<br><i>check &amp; send</i></button></div>`;
     if (sub.status === 'Returned') h += `<div class="dpr-note r"><b>Returned by the manager.</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''}<br>Correct what is needed and send again. This will be attempt ${num(sub.attempt_no) + 1}.</div>`;
     if (!editingOld && S.returned.length) h += S.returned.map(r => `<div class="dpr-note r" style="display:flex;gap:8px;align-items:center"><span style="flex:1"><b>${dmy(r.progress_to)} report was returned:</b> ${esc(r.return_reason || '')}</span><button class="dbtn sm" onclick="DPR.engLoad('${r.submission_id}')">Fix &amp; resend</button></div>`).join('');
@@ -8231,7 +8258,7 @@ const DPR = (function () {
       h += `<div class="dpr-grp">${esc(k)}<small>${byLoc[k].length} group${byLoc[k].length === 1 ? '' : 's'}</small></div>`;
       byLoc[k].forEach(g => h += gCard(g));
     });
-    return h + '<div class="dpr-note">Groups you leave blank are shown to the manager as <b>not reported</b>. Nothing stops you sending.</div>';
+    return h + '<div class="dpr-note">Groups you leave blank are shown to the manager as <b>Not reported</b>. Nothing stops you sending.</div>';
   }
   /* ---------- estimate catalogue search (M25/M26): collapsed tree ---------- */
   // row: [wbs_node_id, loc_node_id, activity, kind, uom, est_qty, package, wbs_path, loc_name, loc_path, in_group, finished, area]
@@ -8269,7 +8296,7 @@ const DPR = (function () {
       return `<input type="checkbox" class="cb" ${all ? 'checked' : ''} ${some ? 'data-part="1"' : ''} ${o.length ? '' : 'disabled'} onclick="event.stopPropagation()" onchange="DPR.catTickMany('${o.join(',')}',this.checked)"${extra || ''}>`; };
     const row = r => { const dis = !!(r[10] || r[11]), k = catKey(r);
       return `<label class="dpr-tick ct4 ${dis ? 'dis' : ''}"><input type="checkbox" ${dis ? 'disabled' : ''} ${S.ct.has(k) ? 'checked' : ''} onchange="DPR.catTick('${k}',this.checked)">
-        <span><b><span class="pill ${r[3] === 'H' ? 'p-vio' : 'p-teal'}">${r[3]}</span> ${esc(view === 'loc' ? r[2] : r[8])}</b><i>${fmt(r[5])} ${esc(r[4] || '')} · ${esc(view === 'loc' ? (r[6] || '') : lv.get(k)[1])}${r[10] ? ' · on “' + esc(r[10]) + '”' : ''}${r[11] ? ' · finished' : ''}</i></span></label>`; };
+        <span><b><span class="pill ${r[3] === 'H' ? 'p-vio' : 'p-teal'}">${r[3]}</span> ${esc(view === 'loc' ? r[2] : r[8])}</b><i>${fmt(r[5])} ${esc(r[4] || '')} · ${esc(view === 'loc' ? (r[6] || '') : lv.get(k)[1])}${r[10] ? ' · on “' + esc(r[10]) + '”' : ''}${r[11] ? ' · Finished' : ''}</i></span></label>`; };
     G(H, k1).forEach((a, x1) => {
       const K1 = '1|' + x1, o1 = open(K1);
       h += `<div class="dpr-th t1" onclick="DPR.catOpen('${esc(K1)}')"><span class="car">${o1 ? '▾' : '▸'}</span><b>${esc(x1)}</b><span class="cnt">${a.length}</span><span class="sp"></span><small>${view === 'loc' ? new Set(a.map(r => r[1])).size + ' units' : new Set(a.map(r => r[0])).size + ' lines'}</small></div>`;
@@ -8333,19 +8360,20 @@ const DPR = (function () {
   }
   function gCard(g) {
     const st = gState(g), p = g.progress, hd = gHeads(g);
-    const pill = st === 'hind' ? `<span class="pill p-red">${esc((g.open_hindrance || {}).reason_text || 'hindrance')}</span>`
-      : st === 'carry' ? `<span class="pill p-amb">dated ${dsh(p.work_date)}, never sent</span>` : '';
+    const pill = st === 'hind' ? `<span class="pill p-red">${esc((g.open_hindrance || {}).reason_text || 'Hindrance')}</span>`
+      : st === 'carry' ? `<span class="pill p-amb">For ${dsh(p.work_date)} · never sent</span>` : '';
     let h = `<div class="dpr-job ${st}">
-      <div class="jh" onclick="DPR.edit('${g.wgroup_id}')"><div><div class="a">${esc(g.location)} · ${esc(g.label)}</div>
-        <div class="l">${esc(g.package || '')}${g.memo_contractor ? ' · ' + esc(conName(g.memo_contractor)) : ''} · ${g.lines.length} line${g.lines.length === 1 ? '' : 's'} ${pill}</div></div>
-      <div class="r">${g.labour ? (g.labour.outcome === 'work' ? '<b>' + fmt(hd) + ' head' + (hd === 1 ? '' : 's') + ' today</b><span>' + Object.entries(g.labour_heads || {}).map(([t, v]) => esc(t) + ' ' + fmt(v)).join(' · ') + '</span>'
-          : g.labour.outcome === 'hindrance' ? '<b style="color:var(--drd)">hindrance</b><span>0 heads</span>' : '<b style="color:var(--dink3)">no labour</b><span>today</span>')
-        : '<b style="color:var(--dink3)">not yet</b><span>tap to fill</span>'}</div>
+      <div class="jh" onclick="DPR.edit('${g.wgroup_id}')"><div><div class="a">${esc(g.location)}</div>
+        <div class="l">${esc(g.package || '')}${g.memo_contractor ? ' · ' + esc(conName(g.memo_contractor)) : ''} · ${nLi(g.lines.length)} ${pill}</div></div>
+      <div class="r">${g.labour ? (g.labour.outcome === 'work' ? '<b>' + fmt(hd) + ' Head' + (hd === 1 ? '' : 's') + ' today</b><span>' + Object.entries(g.labour_heads || {}).map(([t, v]) => esc(t) + ' ' + fmt(v)).join(' · ') + '</span>'
+          : g.labour.outcome === 'hindrance' ? '<b style="color:var(--drd)">Hindrance</b><span>0 Heads</span>' : '<b style="color:var(--dink3)">No labour</b><span>Today</span>')
+        : '<b style="color:var(--dink3)">Not yet</b><span>Tap to fill</span>'}</div>
       ${S.locked ? '' : `<button class="dbtn sm jm" onclick="event.stopPropagation();DPR.regroupOpen('${g.wgroup_id}')" title="Split or combine">⋯</button>`}</div>`;
+    h += '<div class="lh"><span>LINE ITEM</span><span>DONE</span></div>';
     g.lines.forEach(l => {
       const lp = l.progress;
-      h += `<div class="ln ${lp && lp.qty_done > 0 ? '' : 'mut'}"><div>${esc(l.activity)}<div class="x">est ${fmt(l.est_qty)} ${esc(l.uom || '')} · cum ${fmt(l.cum_published)}${l.status === 'finished' ? ' · finished ✓' : ''}</div></div>
-        <div class="q">${lp ? (lp.outcome === 'worked' ? '<b>' + fmt(lp.qty_done) + ' ' + esc(l.uom || '') + '</b><i>' + dsh(lp.work_date) + (lp.marks_finished ? ' · finish' : '') + '</i>' : lp.outcome === 'hindrance' ? '<b style="color:var(--drd)">hindrance</b>' : '<b>no work</b>') : '<b>not reported</b>'}</div></div>`;
+      h += `<div class="ln ${lp && lp.qty_done > 0 ? '' : 'mut'}"><div>${esc(l.activity)}<div class="x">Est ${fmt(l.est_qty)} ${esc(l.uom || '')} · Cum ${fmt(l.cum_published)} · ${l.status === 'finished' ? 'Finished' + (l.finished_on ? ' ' + dsh(l.finished_on) : '') : startTxt(l.started_on, S.to)}</div></div>
+        <div class="q">${lp ? (lp.outcome === 'worked' ? '<b>' + fmt(lp.qty_done) + ' ' + esc(l.uom || '') + '</b>' + (lp.marks_finished ? '<i>Finished</i>' : '') : lp.outcome === 'hindrance' ? '<b style="color:var(--drd)">Hindrance</b>' : '<b>No work</b>') : '<b>Not reported</b>'}</div></div>`;
     });
     return h + '</div>';
   }
@@ -8413,7 +8441,7 @@ const DPR = (function () {
           byPkg[pk].forEach(l => {
             const dis = !!l.in_group || l.finished;
             h += `<label class="dpr-tick ${dis ? 'dis' : ''}"><input type="checkbox" ${dis ? 'disabled' : ''} ${st.ticks.has(l.wbs_node_id) ? 'checked' : ''} onchange="DPR.startTick(${l.wbs_node_id},this.checked)">
-              <span><b><span class="pill ${l.kind === 'H' ? 'p-vio' : 'p-teal'}">${l.kind}</span> ${esc(l.activity)}</b><i>${fmt(l.est_qty)} ${esc(l.uom || '')}${l.in_group ? ' · already on "' + esc(l.in_group) + '"' : ''}${l.finished ? ' · finished' : ''}</i></span></label>`;
+              <span><b><span class="pill ${l.kind === 'H' ? 'p-vio' : 'p-teal'}">${l.kind}</span> ${esc(l.activity)}</b><i>${fmt(l.est_qty)} ${esc(l.uom || '')}${l.in_group ? ' · already on "' + esc(l.in_group) + '"' : ''}${l.finished ? ' · Finished' : ''}</i></span></label>`;
           });
         });
         h += '<div class="dpr-note">Ticked lines become <b>one card</b> — one gang, labour entered once. "Each on its own" makes a card per line.</div>';
@@ -8456,7 +8484,7 @@ const DPR = (function () {
   /* ---------- editor: one group card ---------- */
   async function edit(gid) {
     const g = S.groups.find(x => x.wgroup_id === gid); if (!g) return;
-    if (S.locked) { sheetOpen(g.location + ' · ' + g.label, 'sent — read only', gReadOnly(g), '<span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>'); return; }
+    if (S.locked) { sheetOpen(g.location, (g.package || '') + ' · Sent — read only', gReadOnly(g), '<span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>'); return; }
     S.editing = g;
     const M = await masters(), cons = await contractors();
     const p = g.progress || {}, l = g.labour || {};
@@ -8472,7 +8500,7 @@ const DPR = (function () {
       memo: !Object.keys(g.labour_heads || {}).length && Object.keys(g.memo_labour || {}).length > 0, oh, M, cons
     };
     g.lines.forEach(x => { const lp = x.progress; S.draft.y_lines[x.work_id] = { on: !!(lp && lp.outcome === 'worked'), qty: lp ? num(lp.qty_done) : '', fin: !!(lp && lp.marks_finished) }; });
-    sheetOpen(g.location + ' · ' + g.label, (g.package || '') + ' · ' + g.lines.length + ' line' + (g.lines.length === 1 ? '' : 's'), '<div id="dpr_ed"></div>',
+    sheetOpen(g.location, (g.package || '') + ' · ' + nLi(g.lines.length), '<div id="dpr_ed"></div>',
       '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn ok" onclick="DPR.saveGroup()">Save group</button>');
     drawEditor();
   }
@@ -8592,20 +8620,25 @@ const DPR = (function () {
     } else { h += '<div id="dpr_hist"><div class="dpr-load">Loading…</div></div>'; $('dpr_body').innerHTML = h; engHist(); }
   }
   function sheetBody(X) {
-    const g = X.groups, rep = g.filter(x => x.progress), nr = g.filter(x => !x.progress);
-    let h = `<div class="dpr-sec">PROGRESS · ${dmy(X.to).toUpperCase()}<small>${rep.length} group${rep.length === 1 ? '' : 's'} reported · ${nr.length} not</small></div>`;
-    if (!rep.length && !nr.length) return h + '<div class="dpr-note a">No groups on the list.</div>';
-    rep.forEach(x => {
-      const p = x.progress, st = gState(x), who = p.outcome === 'worked' ? Object.entries(x.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : '';
-      h += `<div class="dpr-rg ${st}"><div class="rg-h"><div><b>${esc(x.location)}</b><span>${esc(x.label)}${x.package ? ' · ' + esc(x.package) : ''}</span></div>
-        <div class="rg-w">${p.outcome === 'worked' ? '<b>' + esc(conName(p.contractor_code)) + '</b><span>' + who + '</span>' : p.outcome === 'hindrance' ? '<b style="color:var(--drd)">Hindrance</b><span>' + esc((x.open_hindrance || {}).reason_text || '') + '</span>' : '<b>No work</b>'}${st === 'carry' ? '<span class="pill p-amb">dated ' + dsh(p.work_date) + '</span>' : ''}</div></div>`;
-      if (p.outcome === 'worked') { h += '<table class="dt rg-t"><tr><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th></tr>';
+    const to = X.to, all = X.groups;
+    const W = all.filter(g => ['done', 'carry'].includes(gStateAt(g, to))), N = all.filter(g => gStateAt(g, to) === 'none'),
+          Hd = all.filter(g => gStateAt(g, to) === 'hind'), NR = all.filter(g => !g.progress);
+    let h = `<div class="dpr-sec">DPR · ${dmy(to).toUpperCase()}<small>${W.length} Worked · ${N.length} No work · ${Hd.length} Hindrance · ${NR.length} Not reported</small></div>`;
+    if (!all.length) return h + '<div class="dpr-note a">No groups on the list.</div>';
+    const head = (x, right, extra) => `<div class="rg-h"><div><b>${esc(x.location)}</b><span>${esc(x.package || '')}${extra || ''}</span><span class="st">${startTxt(gStart(x), to)}</span></div><div class="rg-w">${right}</div></div>`;
+    if (W.length) { h += `<div class="dpr-sub">WORKED · ${W.length}</div>`;
+      W.forEach(x => { const p = x.progress, who = Object.entries(x.progress_labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ');
+        h += `<div class="dpr-rg ${gStateAt(x, to)}">` + head(x, '<b>' + esc(conName(p.contractor_code)) + '</b><span>' + who + '</span>' + (p.work_date < to ? '<span class="pill p-amb">For ' + dsh(p.work_date) + '</span>' : ''));
+        h += '<table class="dt rg-t"><tr><th>LINE ITEM</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th></tr>';
         x.lines.forEach(l => { const lp = l.progress; if (!lp || lp.outcome !== 'worked') return; const pc = num(l.est_qty) ? (num(lp.cum_after) / num(l.est_qty) * 100).toFixed(0) : '';
-          h += `<tr><td>${esc(l.activity)}${lp.marks_finished ? ' <span class="pill p-ok">finished</span>' : ''}</td><td class="n big">${fmt(lp.qty_done)} <small>${esc(l.uom || '')}</small></td><td class="n">${fmt(lp.cum_after)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td></tr>`; });
-        h += '</table>'; }
-      h += '</div>';
-    });
-    if (nr.length) h += `<div class="dpr-note" style="color:var(--dink3)">Not reported: ${nr.map(x => esc(x.location + ' · ' + x.label)).join(', ')}</div>`;
+          h += `<tr><td>${esc(l.activity)}${lp.marks_finished ? ' <span class="pill p-ok">Finished</span>' : ''}</td><td class="n big">${fmt(lp.qty_done)} <small>${esc(l.uom || '')}</small></td><td class="n">${fmt(lp.cum_after)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td></tr>`; });
+        h += '</table></div>'; }); }
+    if (N.length) { h += `<div class="dpr-sub">NO WORK · ${N.length}</div>`;
+      N.forEach(x => { h += `<div class="dpr-rg none">` + head(x, '<b>No work</b>', ' · ' + nLi(x.lines.length)) + '</div>'; }); }
+    if (Hd.length) { h += `<div class="dpr-sub">HINDRANCE · ${Hd.length}</div>`;
+      Hd.forEach(x => { const oh = x.open_hindrance || {}; h += `<div class="dpr-rg hind">` + head(x, '<b style="color:var(--drd)">Hindrance</b><span style="color:var(--drd)">' + esc(oh.reason_text || '') + (oh.from_date ? ' · Day ' + (daysBetween(oh.from_date, to) + 1) : '') + '</span>', ' · ' + nLi(x.lines.length)) + '</div>'; }); }
+    if (NR.length) { h += `<div class="dpr-sub">NOT REPORTED · ${NR.length}</div>`;
+      NR.forEach(x => { h += `<div class="dpr-nr"><span><b>${esc(x.location)}</b> · ${esc(x.package || '')}</span><span>${nLi(x.lines.length)}${gStart(x) ? '' : ' · Not started'}</span></div>`; }); }
     return h;
   }
   function labTable(X) {
@@ -8631,9 +8664,9 @@ const DPR = (function () {
     const fin = S.groups.flatMap(g => g.lines.filter(l => l.progress && l.progress.marks_finished).map(l => l.activity));
     const carried = S.groups.filter(g => gState(g) === 'carry'), hinds = S.groups.filter(g => gState(g) === 'hind');
     let checks = [];
-    if (nr.length) checks.push(nr.length + ' group' + (nr.length === 1 ? ' has' : 's have') + ' no figure — go as <b>not reported</b>');
+    if (nr.length) checks.push(nr.length + ' group' + (nr.length === 1 ? ' has' : 's have') + ' no figure — go as <b>Not reported</b>');
     if (fin.length) checks.push('Marked finished: ' + fin.map(esc).join(', ') + ' — they leave your list once published');
-    if (carried.length) checks.push(carried.map(g => esc(g.location + ' · ' + g.label) + ' is dated <b>' + dsh(g.progress.work_date) + '</b>').join('; ') + ' — goes with this report');
+    if (carried.length) checks.push(carried.map(g => esc(g.location + ' · ' + (g.package || '')) + ' is for <b>' + dsh(g.progress.work_date) + '</b>').join('; ') + ' — goes with this report');
     if (hinds.length) checks.push(hinds.length + ' hindrance' + (hinds.length === 1 ? '' : 's') + ' continue');
     if (noLab) checks.push('<b>No labour at all today.</b> If nobody worked, add a non-estimated work line saying why');
     if (istMins() <= 0) checks.push('It is past 1:00 pm — this will be marked <b>late</b>');
@@ -8689,6 +8722,7 @@ const DPR = (function () {
     const d = S.hist, s = d.submission;
     const X = { groups: d.groups || [], np: d.np || [], sub: s, to: s.progress_to };
     let h = `<div class="dpr-hd"><button class="dbtn sm" onclick="DPR.histClose()">‹ Back</button><div><b>${dmy(s.progress_to)} · ${esc(s.status)}${num(s.attempt_no) > 1 ? ' · attempt ' + s.attempt_no : ''}</b><span>sent ${s.submitted_at ? new Date(s.submitted_at).toLocaleString('en-GB') : '—'}${s.is_late ? ' (late)' : ''}${s.reviewed_at ? ' · reviewed ' + new Date(s.reviewed_at).toLocaleString('en-GB') : ''}</span></div>${s.status === 'Returned' ? `<button class="dbtn sm ok" onclick="DPR.engLoad('${s.id}')">Fix &amp; resend</button>` : ''}</div>`;
+    if (s.status === 'Submitted' || s.status === 'Accepted') h += `<div class="dpr-lock">🔒 <span>${d.frozen === false ? 'Rebuilt from the rows filed on this report (sent before snapshots were kept).' : 'As sent at ' + hm(s.submitted_at) + ' — the frozen copy. Work started later never appears here.'}</span></div>`;
     (d.attempts || []).filter(a => a.returned_at).forEach(a => { h += `<div class="dpr-note a"><b>Attempt ${a.attempt_no} returned</b> ${hm(a.returned_at)} — ${esc(a.return_reason || '')}${a.return_note ? ': ' + esc(a.return_note) : ''}</div>`; });
     h += sheetBody(X) + labTable(X);
     $('dpr_root').innerHTML = h; window.scrollTo(0, 0);
@@ -8783,19 +8817,19 @@ const DPR = (function () {
   function mgrReview() {
     const d = S.mDetail, s = d.submission, groups = d.groups || [], lab = d.labour || [], np = d.np || [];
     const look = [];
-    groups.forEach(g => { if (g.outcome === 'worked' && !num(g.photos)) look.push(esc(g.location + ' · ' + g.label) + ' worked with no photo'); if (g.carried) look.push(esc(g.location + ' · ' + g.label) + ' is dated ' + dsh(g.work_date) + ' — never sent that day'); if (g.outcome === 'hindrance') look.push(esc(g.location + ' · ' + g.label) + ' hindrance — ' + esc(g.hindrance || '')); (g.lines || []).forEach(l => { if (num(l.cum_after) > num(l.est_qty)) look.push(esc(l.activity) + ' over estimate'); }); });
+    groups.forEach(g => { if (g.outcome === 'worked' && !num(g.photos)) look.push(esc(g.location + ' · ' + (g.package || '')) + ' Worked with no photo'); if (g.carried) look.push(esc(g.location + ' · ' + (g.package || '')) + ' is for ' + dsh(g.work_date) + ' — never sent that day'); if (g.outcome === 'hindrance') look.push(esc(g.location + ' · ' + (g.package || '')) + ' Hindrance — ' + esc(g.hindrance || '')); (g.lines || []).forEach(l => { if (num(l.cum_after) > num(l.est_qty)) look.push(esc(l.activity) + ' over estimate'); }); });
     let h = `<div class="dpr-hd"><button class="dbtn sm" onclick="DPR.mBack()">‹ Back to review</button><div><b>${esc(d.engineer || '')} · progress for ${dmy(s.progress_to)}</b><span>sent ${s.submitted_at ? new Date(s.submitted_at).toLocaleString('en-GB') : '—'}${s.is_late ? ' · <b style="color:var(--dam)">late</b>' : ''} · attempt ${s.attempt_no}${num(s.days_covered) > 1 ? ' · covers ' + s.days_covered + ' days' : ''}</span></div><span class="sp" style="flex:1"></span><span class="pill ${s.status === 'Submitted' ? 'p-amb' : s.status === 'Accepted' ? 'p-ok' : 'p-red'}">${esc(s.status.toLowerCase())}</span></div>`;
     if (num(s.attempt_no) > 1 && s.return_reason) h += `<div class="dpr-note v">Attempt ${s.attempt_no}. Last returned for: ${esc(s.return_reason)}</div>`;
     if (look.length) h += `<div class="dpr-note a"><b>Look at:</b> ${look.join(' · ')}</div>`;
-    h += `<div class="dpr-sec">PROGRESS · ${dmy(s.progress_to).toUpperCase()}<small>${groups.length} group${groups.length === 1 ? '' : 's'} reported</small></div>`;
+    h += `<div class="dpr-sec">DPR · ${dmy(s.progress_to).toUpperCase()}<small>${groups.length} group${groups.length === 1 ? '' : 's'} reported</small></div>`;
     if (!groups.length) h += '<div class="dpr-note a">No progress filed.</div>';
     else {
-      h += '<table class="dt"><tr><th>GROUP · LOCATION · LINES</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM AFTER</th><th class="n">EST</th><th class="n">%</th><th class="c">📷</th><th>NOTE</th></tr>';
+      h += '<table class="dt"><tr><th>GROUP · LOCATION</th><th>LINE ITEM</th><th class="n">DONE</th><th class="n">CUM AFTER</th><th class="n">EST</th><th class="n">%</th><th class="c">📷</th><th>NOTE</th></tr>';
       groups.forEach(g => {
-        h += `<tr class="tt ${g.outcome === 'hindrance' ? 'rd' : g.carried ? 'am' : ''}"><td colspan="8">${esc(g.area || 'Unassigned')} · ${esc(g.location)} · ${esc(g.label)}${g.package ? ' (' + esc(g.package) + ')' : ''} — ${g.outcome === 'worked' ? esc(g.contractor_name || conName(g.contractor)) + ', ' + Object.entries(g.labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : g.outcome === 'hindrance' ? 'hindrance — ' + esc(g.hindrance || '') : 'no work'}${g.carried ? ' · dated <b>' + dsh(g.work_date) + '</b>' : ''}</td></tr>`;
+        h += `<tr class="tt ${g.outcome === 'hindrance' ? 'rd' : g.carried ? 'am' : ''}"><td colspan="8">${esc(g.area || 'Unassigned')} · ${esc(g.location)}${g.package ? ' · ' + esc(g.package) : ''} — ${g.outcome === 'worked' ? esc(g.contractor_name || conName(g.contractor)) + ', ' + Object.entries(g.labour || {}).map(([k, v]) => esc(k) + ' ' + fmt(v)).join(' · ') : g.outcome === 'hindrance' ? 'hindrance — ' + esc(g.hindrance || '') : 'no work'}${g.carried ? ' · For <b>' + dsh(g.work_date) + '</b>' : ''}</td></tr>`;
         (g.lines || []).forEach(l => {
           const over = num(l.cum_after) > num(l.est_qty), pc = num(l.est_qty) ? (num(l.reported ? l.cum_after : l.cum_before) / num(l.est_qty) * 100).toFixed(1) : '';
-          h += `<tr class="${l.reported && l.outcome === 'worked' ? (over ? 'am' : '') : 'mut'}"><td></td><td>${esc(l.activity)}</td><td class="n">${l.reported && l.outcome === 'worked' ? fmt(l.qty_done) + ' ' + esc(l.uom || '') : '—'}</td><td class="n">${fmt(l.reported ? l.cum_after : l.cum_before)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td><td class="c">${num(g.photos) || '—'}</td><td>${over ? '<b style="color:#a8690a">over estimate</b> ' : ''}${l.reported ? (l.marks_finished ? '<b style="color:#128a4a">marked finished</b>' : l.outcome === 'hindrance' ? 'hindrance' : l.outcome === 'none' ? 'no work' : '') : 'not reported'}</td></tr>`;
+          h += `<tr class="${l.reported && l.outcome === 'worked' ? (over ? 'am' : '') : 'mut'}"><td></td><td>${esc(l.activity)}</td><td class="n">${l.reported && l.outcome === 'worked' ? fmt(l.qty_done) + ' ' + esc(l.uom || '') : '—'}</td><td class="n">${fmt(l.reported ? l.cum_after : l.cum_before)}</td><td class="n">${fmt(l.est_qty)}</td><td class="n">${pc}</td><td class="c">${num(g.photos) || '—'}</td><td>${over ? '<b style="color:#a8690a">over estimate</b> ' : ''}${l.reported ? (l.marks_finished ? '<b style="color:#128a4a">Marked finished</b>' : l.outcome === 'hindrance' ? 'Hindrance' : l.outcome === 'none' ? 'No work' : '') : 'Not reported'}</td></tr>`;
         });
       });
       h += '</table>';
@@ -8882,9 +8916,9 @@ const DPR = (function () {
     const out = d.sheet ? (d.areas || []).filter(a => !a.included) : nrd.map(a => ({ area: a.area, reason: 'No accepted submission covers this date' + (a.home_engineers ? ' — ' + a.home_engineers : ''), works: a.running_works }));
     if (out.length) h += '<div class="dpr-sec">NOT REPORTED</div><table class="dt"><tr><th>AREA</th><th>WHY</th><th>WHAT HAPPENS</th></tr>' + out.map(a => `<tr class="rd"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td><td>${a.works != null ? a.works + ' running works carry to the next DPR' : 'carried to the next DPR'}</td></tr>`).join('') + '</table>';
     const cur = rows.filter(r => !r.carried), car = rows.filter(r => r.carried);
-    const progT = (list, hdr) => { let t = `<div class="dpr-sec">${hdr}<small>${list.length} line${list.length === 1 ? '' : 's'}</small></div><table class="dt"><tr><th>AREA</th><th>GROUP · LOCATION</th><th>LINE</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>NOTE</th></tr>`;
+    const progT = (list, hdr) => { let t = `<div class="dpr-sec">${hdr}<small>${list.length} line${list.length === 1 ? '' : 's'}</small></div><table class="dt"><tr><th>AREA</th><th>LOCATION</th><th>LINE ITEM</th><th class="n">DONE</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>NOTE</th></tr>`;
       let last = '';
-      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="8">${esc(r.location)} · ${esc(r.group)}${r.package ? ' (' + esc(r.package) + ')' : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ') || (r.outcome === 'hindrance' ? 'hindrance' : '')}${r.carried ? ' · dated ' + dsh(r.work_date) : ''}</td></tr>`; }
+      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="8">${esc(r.location)}${r.package ? ' · ' + esc(r.package) : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ') || (r.outcome === 'hindrance' ? 'Hindrance' : '')}${r.carried ? ' · For ' + dsh(r.work_date) : ''}</td></tr>`; }
         t += `<tr class="${r.outcome === 'hindrance' ? 'rd' : ''}"><td></td><td></td><td>${esc(r.activity)}</td><td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) + ' ' + esc(r.uom || '') : '—'}</td><td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td><td class="n">${num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100).toFixed(1) : ''}</td><td>${esc(r.reported_by || '')}</td><td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '') + (r.party ? ', ' + esc(r.party) : '') : r.finished ? 'Finished' : r.outcome === 'none' ? 'No work' : ''}</td></tr>`; });
       return t + '</table>'; };
     if (!cur.length) h += `<div class="dpr-sec">WORK DONE · ${dmy(S.mProg).toUpperCase()}</div><div class="dpr-note a">No accepted progress for this date yet. Accept the reports on the Review tab first.</div>`;
@@ -8927,8 +8961,8 @@ const DPR = (function () {
 <div class="meta"><div><b>AREAS REPORTED</b>${(d.areas || []).filter(a => a.included).map(a => esc(a.area)).join(', ') || '—'}</div><div><b>NOT REPORTED</b>${out.map(a => esc(a.area)).join(', ') || '—'}</div><div><b>WORK LINES</b>${rows.length}</div><div><b>HEADS ${dsh(d.labour_date || addDays(S.mProg, 1)).toUpperCase()}</b>${fmt(tot)}</div><div><b>HINDRANCES</b>${(d.hindrances || []).length}</div></div>`;
     if (out.length) h += '<h2>NOT REPORTED</h2><table><tr><th>AREA</th><th>REASON</th></tr>' + out.map(a => `<tr class="rd"><td>${esc(a.area)}</td><td>${esc(a.reason || '')}</td></tr>`).join('') + '</table>';
     const cur = rows.filter(r => !r.carried), car = rows.filter(r => r.carried);
-    const pt = list => { let t = '<table><tr><th>AREA</th><th>GROUP · LOCATION</th><th>LINE</th><th class="n">DONE</th><th>UOM</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>REMARK</th></tr>'; let last = '';
-      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="9">${esc(r.location)} · ${esc(r.group)}${r.package ? ' (' + esc(r.package) + ')' : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ')}${r.carried ? ' · dated ' + dsh(r.work_date) : ''}</td></tr>`; }
+    const pt = list => { let t = '<table><tr><th>AREA</th><th>LOCATION</th><th>LINE ITEM</th><th class="n">DONE</th><th>UOM</th><th class="n">CUM</th><th class="n">EST</th><th class="n">%</th><th>BY</th><th>REMARK</th></tr>'; let last = '';
+      list.forEach(r => { const k = r.area + '|' + r.location + '|' + r.group; if (k !== last) { last = k; t += `<tr class="tt ${r.outcome === 'hindrance' ? 'rd' : ''}"><td>${esc(r.area)}</td><td colspan="9">${esc(r.location)}${r.package ? ' · ' + esc(r.package) : ''} — ${Object.entries(r.group_labour || {}).map(([a, b]) => esc(a) + ' ' + fmt(b)).join(' · ')}${r.carried ? ' · For ' + dsh(r.work_date) : ''}</td></tr>`; }
         t += `<tr class="${r.outcome === 'hindrance' ? 'rd' : ''}"><td></td><td></td><td>${esc(r.activity)}</td><td class="n">${r.outcome === 'worked' ? fmt(r.qty_done) : '—'}</td><td>${esc(r.uom || '')}</td><td class="n">${fmt(r.cum_after)}</td><td class="n">${fmt(r.est_qty)}</td><td class="n">${num(r.est_qty) ? (num(r.cum_after) / num(r.est_qty) * 100).toFixed(1) : ''}</td><td>${esc(r.reported_by || '')}</td><td>${r.outcome === 'hindrance' ? 'Hindrance — ' + esc(r.hindrance || '') : r.finished ? 'Finished' : r.outcome === 'none' ? 'No work' : ''}</td></tr>`; });
       return t + '</table>'; };
     h += `<h2>WORK DONE · ${dmy(d.report_date || S.mProg).toUpperCase()}</h2>` + (cur.length ? pt(cur) : '<p>No progress on this date.</p>');

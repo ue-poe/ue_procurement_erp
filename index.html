@@ -8562,7 +8562,7 @@ const DPR = (function () {
     // v149 · "Add N groups & fill together": straight into Report together with the new cards ticked (mock v32 §3)
     if (fill && ids.length) {
       const have = ids.filter(id => S.groups.some(g => g.wgroup_id === id));
-      if (have.length >= 2) { S.multi = true; S.sel = new Set(have); engRender(); await multiOpen(); }
+      if (have.length >= 2) { S.sel = new Set(have); await multiOpen(); S.sel = new Set(); }
       else if (have.length === 1) edit(have[0]);
     }
   }
@@ -8681,14 +8681,14 @@ const DPR = (function () {
     const nW = gs.filter(g => g.progress && g.progress.outcome === 'worked').length, nH = gs.filter(g => gState(g) === 'hind').length, nN = gs.filter(g => gState(g) === 'none').length, nP = gs.filter(g => !g.progress).length, nNew = gs.filter(startedToday).length;
     const shared = cy && cy.labour && cy.labour.shared_id;
     let h = `<div class="dpr-job v147 ${st}${S.multi && allSel ? ' sel' : ''}">
-      <div class="jh" onclick="${S.multi ? `DPR.clubTick('${esc(c.key)}')` : `DPR.clubOpen('${esc(c.key)}')`}">${S.multi ? `<input type="checkbox" class="mcb" ${allSel ? 'checked' : ''} ${pend.length ? '' : 'disabled'} onclick="event.stopPropagation();DPR.clubTick('${esc(c.key)}')">` : ''}
+      <div class="jh" onclick="${S.multi ? `DPR.clubTick('${esc(c.key)}')` : `DPR.clubMenu('${esc(c.key)}')`}">${S.multi ? `<input type="checkbox" class="mcb" ${allSel ? 'checked' : ''} ${pend.length ? '' : 'disabled'} onclick="event.stopPropagation();DPR.clubTick('${esc(c.key)}')">` : ''}
         <div class="jb"><div class="a">${esc(g0.package || g0.label)}<span class="dclubtag">${gs.length} UNITS</span></div><div class="l">${esc(g0.loc_path || '')} · ${nLi(g0.lines.length)} each</div>
           <div class="units">${pages > 1 && p > 0 ? `<button class="pg" onclick="event.stopPropagation();DPR.clubPage('${esc(c.key)}',-1)">‹</button>` : ''}${units.map(g => `<span class="${cardState(g) === 'fin' ? 'fin' : (cardState(g) === 'pend' && st === 'part') ? 'part' : ''}" title="Open this unit on its own" onclick="event.stopPropagation();DPR.edit('${g.wgroup_id}')">${esc(g.location)}</span>`).join('')}${pages > 1 && p < pages - 1 ? `<button class="pg" onclick="event.stopPropagation();DPR.clubPage('${esc(c.key)}',1)">›</button>` : ''}${pages > 1 ? `<small style="font-size:9.5px;color:var(--dink3);align-self:center">${p + 1}/${pages}</small>` : ''}</div>
           <div class="c">${conRow.length ? conRow.map(esc).join(' <span class="pl">+</span> ') : '<span class="nc">Contractor not yet set</span>'}${wo ? `<span class="wo">${esc(wo.wo_number)}</span>` : ''}</div></div>
         <div class="jr">${tag}${S.multi || S.locked ? '' : `<button class="dbtn sm jm" onclick="event.stopPropagation();DPR.clubMenu('${esc(c.key)}')" title="Units · unclub">⋯</button>`}</div></div>`;
     h += '<div class="body"><div class="split">';
     if (st === 'new') h += `<div class="y lk"><i>${dsh(S.to).toUpperCase()} · PROGRESS</i><b>—</b><span>Started today · all ${gs.length} units</span></div>`;
-    else if (!nW && !nH && !nN) h += `<div class="y"><i>${dsh(S.to).toUpperCase()} · PROGRESS</i><b class="mut">Not yet</b><span>Tap to fill all ${gs.length}</span></div>`;
+    else if (!nW && !nH && !nN) h += `<div class="y"><i>${dsh(S.to).toUpperCase()} · PROGRESS</i><b class="mut">Not yet</b><span>Tap a unit, or Report together</span></div>`;
     else h += `<div class="y"><i>${dsh(S.to).toUpperCase()} · PROGRESS</i><b>${nW ? 'Worked · ' + fmt(headsOf(byConY(cy))) + ' heads' : nH ? 'Hindrance' : 'No work'}</b><span>${nW ? esc(headTxt(byConY(cy))) + (shared ? ' · <span class="pill p-v">shared gang</span>' : '') : ''}${[nW && nW < gs.length ? nW + ' worked' : '', nH ? nH + ' hindrance' : '', nN ? nN + ' no work' : '', nNew ? nNew + ' started today' : '', nP ? nP + ' not yet' : ''].filter(Boolean).join(' · ') ? ' · ' + [nW && nW < gs.length ? nW + ' worked' : '', nH ? nH + ' hindrance' : '', nN ? nN + ' no work' : '', nNew ? nNew + ' started today' : '', nP ? nP + ' not yet' : ''].filter(Boolean).join(' · ') : ''}</span></div>`;
     if (st === 'fin') h += `<div class="t lk"><i>${dsh(S.sub.business_date).toUpperCase()} · LABOUR</i><b>No labour today</b><span>All units completed — locked</span></div>`;
     else if (!ct) h += `<div class="t"><i>${dsh(S.sub.business_date).toUpperCase()} · LABOUR</i><b class="mut">Not yet</b><span>Tap to fill</span></div>`;
@@ -8701,21 +8701,15 @@ const DPR = (function () {
     if (st !== 'new') h += `<div class="dclublg"><span><b>2</b> done that day</span><span><b>·</b> no entry on the line</span><span class="wip"><b>WIP</b> nothing completed</span><span class="nr"><b>—</b> unit not reported</span><span class="fin"><b>✓</b> finished</span></div>`;
     return h + '</div></div>';
   }
-  async function clubOpen(key) {
-    const c = clubOf(key); if (!c) return;
-    if (S.locked) { edit(c.groups[0].wgroup_id); return; }
-    const pend = c.groups.filter(g => cardState(g) === 'pend');
-    if (pend.length >= 2) { S.multi = true; S.sel = new Set(pend.map(g => g.wgroup_id)); engRender(); await multiOpen(); }
-    else if (pend.length === 1) edit(pend[0].wgroup_id);
-    else toast('Every unit here is filled today — tap a unit to open it on its own', 'info');
-  }
   function clubTick(key) {
     const c = clubOf(key); if (!c) return; const pend = c.groups.filter(g => cardState(g) === 'pend'); if (!pend.length) { toast('Already filled today — open a unit on its own', 'warn'); return; }
     const all = pend.every(g => S.sel.has(g.wgroup_id)); pend.forEach(g => all ? S.sel.delete(g.wgroup_id) : S.sel.add(g.wgroup_id)); engRender();
   }
   function clubMenu(key) {
     const c = clubOf(key); if (!c) return; const g0 = c.groups[0];
-    let b = `<div class="dpr-sec">UNITS IN THIS CLUB · ${c.groups.length}</div>`;
+    const pend = c.groups.filter(g => cardState(g) === 'pend').length;
+    let b = pend ? `<div class="dpr-note v">To fill ${pend > 1 ? 'these ' + pend + ' units' : 'the open unit'} with one labour entry: close this, tap <b>☑ Report together</b>, tick the card, then <b>Fill together</b>.</div>` : '';
+    b += `<div class="dpr-sec">UNITS IN THIS CLUB · ${c.groups.length}</div>`;
     c.groups.forEach(g => { b += `<div class="dpr-lrow"><div class="nm"><b>${esc(g.location)}</b><span>${cardState(g) === 'pend' ? 'Not yet filled' : cardState(g) === 'fin' ? 'Finished' : cardState(g) === 'new' ? 'Started today' : 'Filled'}</span></div><button class="dbtn sm" onclick="DPR.sheetClose();DPR.edit('${g.wgroup_id}')">Open</button><button class="dbtn sm" onclick="DPR.sheetClose();DPR.regroupOpen('${g.wgroup_id}')">Split · combine</button></div>`; });
     b += `<div class="dpr-sec">SHOW SEPARATELY</div><div class="dpr-lrow"><div class="nm"><b>Unclub this floor</b><span>Each unit gets its own card again — remembered on this phone. Clubbed | Each card at the top switches every club at once.</span></div><button class="dbtn sm" onclick="DPR.unclubGo('${esc(key)}')">Unclub</button></div>`;
     sheetOpen((g0.package || g0.label) + ' · ' + c.groups.length + ' units', g0.loc_path || '', b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
@@ -9677,7 +9671,7 @@ const DPR = (function () {
   async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; await mgrLoad(); }
   function mTab(t) { S.mTab = t; mgrRender(); }
 
-  return { open, engLoad, refresh, tab, filt, areaF, seg, srch, srchNp, catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, gridOpen, clubView, clubOpen, clubTick, clubMenu, clubPage, unclubGo, clubFold, rtab, edit, saveGroup, setY, setT, linkT, draftSet, lab, labSet, conAdd, conDel, lineSet, lineSnap, lineSnapN, lineWip, stageSet, shortClose, bump,
+  return { open, engLoad, refresh, tab, filt, areaF, seg, srch, srchNp, catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, gridOpen, clubView, clubTick, clubMenu, clubPage, unclubGo, clubFold, rtab, edit, saveGroup, setY, setT, linkT, draftSet, lab, labSet, conAdd, conDel, lineSet, lineSnap, lineSnapN, lineWip, stageSet, shortClose, bump,
     multiMode, multiTick, multiOpen, saveMulti, multiFold, dropGroup,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo, regroupOpen, regroupGo,
     npAdd, npSave, npDrop, npWhat, preview, prevClose, submitGo, histOpen, histDate, histClose, sheetClose,

@@ -194,6 +194,29 @@ tr.amd-addedln td { background:#f0fdf4; }
 .amd-pop .hrow.pend .r { color:#b45309; }
 .amd-pop .hrow ul { list-style:none; margin:0; padding:0; } .amd-pop .hrow li { margin:2px 0; } .amd-pop .hrow li em { font-style:normal; color:var(--muted); display:inline-block; min-width:96px; }
 .amd-pop .who { font-size:11px; color:var(--muted); margin-top:4px; }
+/* v148 · no increment/decrement arrows anywhere in the suite */
+input[type=number]{-moz-appearance:textfield; appearance:textfield;}
+input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+/* v148 · WO/HO amendment editor */
+tr.amw-grp td{background:#f1f5fa; font-weight:600; color:#1e3a5f; font-size:12px;}
+tr.amw-grp td .sub{font-weight:400; color:var(--muted); margin-left:8px;}
+.amw-lock{padding:5px 8px; border:1px dashed var(--border); border-radius:4px; color:var(--muted); font-size:12px; background:#f8fafc;}
+.amw-lock small{display:block; font-size:10.5px;}
+.amd-hdr input.amw-chg, .amd-hdr textarea.amw-chg{border-color:var(--accent-2); background:#eff6ff;}
+textarea.amw-reqbad{border-color:var(--danger) !important; background:#fef2f2 !important;}
+.amw-stg{display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:11.5px;}
+.amw-stg-ed{background:#fbfcfe; border:1px solid #d6dee8; border-radius:6px; padding:8px 10px; margin:6px 0 2px; display:flex; flex-direction:column; gap:6px; max-width:640px;}
+.amw-stg-ed .row{display:grid; grid-template-columns:22px minmax(0,1fr) 84px 22px 90px; gap:8px; align-items:center; font-size:12px;}
+.amw-stg-ed .row .seq{font-weight:700; color:#1e3a5f; text-align:center;}
+.amw-stg-ed input{padding:4px 7px; border:1px solid var(--border); border-radius:4px; background:var(--input-bg); font:inherit; font-size:12px;}
+.amw-stg-ed input.lk{background:#f1f5f9; color:#64748b;}
+.amw-stg-ed input.amd-bad{border-color:var(--danger); background:#fef2f2;}
+.amw-stg-ed .row .lockmsg{font-size:10.5px; color:var(--muted); white-space:nowrap;}
+.amw-stg-ft{display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:space-between; font-size:11.5px; border-top:1px dashed #e2e8f0; padding-top:6px;}
+.amw-ok{color:#047857;} .amw-bad{color:var(--danger);}
+.amw-stg-ed select{padding:3px 6px; border:1px solid var(--border); border-radius:4px; font:inherit; font-size:11.5px; background:#fff;}
+tr.amw-lnclosed td{color:#64748b;} tr.amw-lnremoved td{color:#94a3b8; text-decoration:line-through;} tr.amw-lnremoved td .amd-pill{text-decoration:none;}
+.hoi-leaf.amw-lnclosed .hoi-leaf-name, .hoi-leaf.amw-lnclosed .hoi-leaf-rem{color:#64748b;} .hoi-leaf.amw-lnremoved .hoi-leaf-name{text-decoration:line-through; color:#94a3b8;}
 /* v117: scan-to-GRN — two full-height panes (form | document), review strip full width below */
 .scan-split { display:grid; grid-template-columns:minmax(280px,60fr) 10px minmax(280px,40fr); gap:6px; height:calc(100vh - 300px); min-height:480px; margin-top:12px; }
 .scan-divider { cursor:col-resize; border-radius:4px; background:linear-gradient(to right,transparent 3px,#cbd5e1 3px,#cbd5e1 7px,transparent 7px); }
@@ -2613,6 +2636,7 @@ html,body{touch-action:pan-x pan-y}
       </div>
     </div>
     <div id="hocItemTree" style="margin-top:12px;"><div class="hoi-empty">Select a Hire Order above to load its certifiable lines.</div></div>
+    <div id="hocAmwStrip"></div>
     <div id="hocItemFoot" style="margin-top:12px;display:none;">
       <div style="display:flex;justify-content:flex-end;gap:24px;align-items:center;border-top:1px solid var(--border);padding-top:12px;">
         <div style="font-size:13px;color:var(--muted);">Certified lines: <strong id="hoc_lineCount" style="color:var(--accent);">0</strong></div>
@@ -3116,6 +3140,7 @@ html,body{touch-action:pan-x pan-y}
       </div>
     </div>
     <div id="wocItemTree" style="margin-top:12px;"><div class="hoi-empty">Select a Work Order above to load its certifiable lines.</div></div>
+    <div id="wocAmwStrip"></div>
     <div id="wocItemFoot" style="margin-top:12px;display:none;">
       <div style="display:flex;justify-content:flex-end;gap:24px;align-items:center;border-top:1px solid var(--border);padding-top:12px;">
         <div style="font-size:13px;color:var(--muted);">Certified lines: <strong id="woc_lineCount" style="color:var(--accent);">0</strong></div>
@@ -5824,6 +5849,8 @@ const PGS_PERM_MAP = {
   canCreatePO:[['po','C']],     canApprovePO:[['po','A']],
   canCancelPO:[['po_cancel','C']],    canShortClosePO:[['sc_po','C']],
   canAmendPO:[['po_amend','C']],      canApproveAmendPO:[['po_amend','A']],   // v116 · mig #25
+  canAmendWO:[['wo_amend','C']],      canApproveAmendWO:[['wo_amend','A']],   // v148 · M29
+  canAmendHO:[['ho_amend','C']],      canApproveAmendHO:[['ho_amend','A']],   // v148 · M29
   canCreateGRN:[['grn','C']],   canApproveGRN:[['grn','A']],
   canCreatePOB:[['pob','C']],   canApprovePOB:[['pob','A']],
   canCreateMIS:[['mis','C']],   canApproveMIS:[['mis','A']],
@@ -5919,7 +5946,8 @@ function mapHO(r) {
     'Total Amount': r.total_amount, 'Remarks': r.remarks,
     'Rejection Reason': r.rejection_reason,
     'Status': r.status, 'Created By': r.created_by_name, 'HO Date raw': r.ho_date,
-    'Contact Person': r.contact_person
+    'Contact Person': r.contact_person,
+    'Rev No': r.rev_no, 'Amendment State': r.amendment_state, 'Amendment Id': r.amendment_id   // v148
   };
 }
 function mapHOItem(r) {
@@ -5928,7 +5956,8 @@ function mapHOItem(r) {
     'Unit Rate': r.unit_rate, 'Amount': r.amount, 'S.No': r.sno,
     '_order_item_id': r.id, '_loc_node_id': r.loc_node_id,
     '_wbs_node_id': r.wbs_node_id, '_specification': r.specification,
-    'Activity Code': r.activity_code
+    'Activity Code': r.activity_code,
+    '_line_status': r.line_status||'Active', '_split_from': r.split_from_item_id, '_added_in_rev': r.added_in_rev, '_closed_in_rev': r.closed_in_rev   // v148
   };
 }
 function mapHOC(r) {
@@ -7146,7 +7175,8 @@ function mapWO(r) {
     'Mob Recovery %': r.mob_recovery_pct,
     'Termination Notice': r.termination_notice,
     'Status': r.status, 'Created By': r.created_by_name, 'WO Date raw': r.wo_date,
-    'Contact Person': r.contact_person
+    'Contact Person': r.contact_person,
+    'Rev No': r.rev_no, 'Amendment State': r.amendment_state, 'Amendment Id': r.amendment_id   // v148
   };
 }
 
@@ -7178,6 +7208,7 @@ async function apiGetWODetails(woNumber) {
     'Unit Rate': r.unit_rate, 'Amount': r.amount, 'S.No': r.sno,
     '_order_item_id': r.id, '_wbs_node_id': r.wbs_node_id, '_loc_node_id': r.loc_node_id,
     'Activity Code': r.activity_code,
+    '_line_status': r.line_status||'Active', '_split_from': r.split_from_item_id, '_added_in_rev': r.added_in_rev, '_closed_in_rev': r.closed_in_rev,   // v148
     '_stages': (stagesByOiid[r.id]||[]).map(s => ({ id: s.id, stage_seq: s.stage_seq, stage_name: s.stage_name, stage_pct: Number(s.stage_pct) }))
   }))};
 }
@@ -13614,7 +13645,7 @@ function renderHOList() {
     const stClass = st.toLowerCase().replace(/\s/g,'-').replace(/-closed/,'');
     const actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHO('${esc(o['HO Number'])}')">View</button>`;
     return `<tr>
-      <td class="mono" data-sort="${esc(o['HO Number'])}" style="font-weight:600;">${esc(o['HO Number'])}</td>
+      <td class="mono" data-sort="${esc(o['HO Number'])}" style="font-weight:600;">${esc(o['HO Number'])}${_amwListBadge(o)}</td>
       <td data-sort="${esc(o['HO Date'])}">${fmtDate(o['HO Date'])}</td>
       <td data-sort="${esc(o['Vendor Name'])}">${esc(o['Vendor Name'])}</td>
       <td style="font-size:12px;color:var(--muted);">${esc(o['Scope']||'')}</td>
@@ -14324,6 +14355,7 @@ async function viewHO(hoNum) {
   const r = await apiGetHODetails(hoNum);
   if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header; const items = r.items || [];
+  const _hist = await _amwLoadHistory('HO', hoNum); window._amwViewCtx = { doc:'HO', h, items, hist:_hist };   // v148
   const st = h['Status'] || '';
   const perms = mergedPerms();
   const stClass = st.toLowerCase().replace(/[\s-]+/g,'-');
@@ -14361,9 +14393,10 @@ async function viewHO(hoNum) {
     actionBtns += `<button class="btn btn-danger" onclick="closeModal();cancelHO('${esc(hoNum)}')">Cancel HO</button> `;
   }
 
-  openModal(`<h3>HO — ${esc(h['HO Number'])}</h3>
+  openModal(`<h3>HO — ${esc(_amwDocLabel('HO', h))}${_amwListBadge(h)}</h3>
     ${approvalBanner}
     ${closureBanner}
+    ${_amwBanner('HO', h, _hist)}
     <div class="grid-3" style="font-size:13px;margin-bottom:12px;">
       <div><label class="muted" style="font-size:11px;">VENDOR</label><div><strong>${esc(h['Vendor Name'])}</strong></div></div>
       <div><label class="muted" style="font-size:11px;">DATE</label><div>${fmtDate(h['HO Date'])}</div></div>
@@ -14374,10 +14407,10 @@ async function viewHO(hoNum) {
     </div>
     <div class="table-wrap"><table>
       <thead><tr><th>#</th><th>Description</th><th>UOM</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr></thead>
-      <tbody>${items.map((it,i) => `<tr>
+      <tbody>${items.map((it,i) => `<tr class="${it['_line_status']==='Closed'?'amw-lnclosed':(it['_line_status']==='Removed'?'amw-lnremoved':'')}">
         <td class="center">${it['S.No']||i+1}</td>
         <td>${esc(it['Description'])}</td><td>${esc(it['UOM'])}</td>
-        <td class="num mono">${fmtINR(it['Qty'])}</td>
+        <td class="num mono">${fmtINR(it['Qty'])}${_amwPill(it['_order_item_id'], _hist)}</td>
         <td class="num mono">${fmtINR(it['Unit Rate'])}</td>
         <td class="num mono">${fmtINR(it['Amount'])}</td>
       </tr>`).join('')}</tbody>
@@ -14392,6 +14425,7 @@ async function viewHO(hoNum) {
     ${h['Remarks'] ? `<div style="margin-top:10px;padding:10px 12px;background:var(--panel-2);border-radius:4px;"><strong style="font-size:12px;">Terms &amp; Conditions / Remarks</strong><div style="margin-top:6px;">${tcToHTML(h['Remarks'])}</div></div>` : ''}
     <div class="actions-row">
       ${actionBtns}
+      ${_amwActions('HO', h, _hist)}
       <button class="btn btn-secondary" onclick="closeModal();printHOById('${esc(hoNum)}')">🖨 Print HO</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`);
@@ -14510,7 +14544,7 @@ async function _hocBuildTree(hoNum, preFillMap) {
     apiGetHODetails(hoNum), apiGetHOCumulativeQty(hoNum), _loadLocTree()
   ]);
   if (!detRes.ok) { toast('Failed to load HO details','error'); return null; }
-  const hoItems = detRes.items || [];
+  const hoItems = (detRes.items || []).filter(it => it['_line_status'] !== 'Removed');   // v148
   const prevQtyMap = {};
   (prevRes.ok ? prevRes.items : []).forEach(it => { prevQtyMap[it['_key']] = num(it['Cumulative Qty']); });
   const locMap = Object.fromEntries(locTreeArr.map(n => [String(n.id), n]));
@@ -14587,6 +14621,7 @@ async function onHOCHOChange() {
     _hocThis = {};
     _hocTree = await _hocBuildTree(hoNum, null);
     if (!_hocTree) return;
+    _amwCertFormInit('HO', hoNum);   // v148
     ['hoc_expandAllBtn','hoc_collapseAllBtn','hoc_printBtn'].forEach(id => { const e = document.getElementById(id); if (e) e.style.display = ''; });
     document.getElementById('hocItemFoot').style.display = 'block';
     hocRenderTree();
@@ -14694,6 +14729,7 @@ function hocSetThis(oiid, v) {
   const remaining = Math.max(0, f.leaf.hoQty - f.leaf.prevQty);
   let nv = v, capped = false;
   if (v !== '' && Number(v) > remaining) { nv = String(remaining); capped = true; }
+  try { _amwOverAsk('HO', oiid, f, v, remaining, capped); } catch(_) {}   // v148
   _hocThis[oiid] = nv === '' ? '' : Number(nv);
   const tqn = Number(nv)||0;
   const item = f.item, leaf = f.leaf;
@@ -14779,6 +14815,8 @@ async function saveHOC_direct() {
   if (!data.hocDate)  { toast('Certification date required','error'); return; }
   const hasQty = data.items.some(it => it.thisPeriodQty > 0);
   if (!hasQty) { toast('Enter quantity for at least one line item','error'); return; }
+  if (Object.keys((_amw.over.HO)||{}).length || (_amw.req.HO&&_amw.req.HO.adds&&_amw.req.HO.adds.length)) { toast('Lines are certified beyond the HO quantity \u2014 send the amendment proposal (or remove the extra) before saving','error',7000); return; }   // v148
+  if (await _amwCertLocked('HO', data.hoNumber)) return;   // v148
 
   const isRevision = document.getElementById('hocForm').dataset.revising;
   if (isRevision) data.isRevision = true;
@@ -16164,7 +16202,7 @@ function renderWOList() {
     }
     const rr = o['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(o['Rejection Reason'])}</span>` : '';
     return `<tr>
-      <td class="mono" style="font-weight:600;">${esc(o['WO Number'])}</td>
+      <td class="mono" style="font-weight:600;">${esc(o['WO Number'])}${_amwListBadge(o)}</td>
       <td>${fmtDate(o['WO Date'])}</td>
       <td>${esc(o['Vendor Name']||'')}</td>
       <td>${esc(o['Scope']||'')}</td>
@@ -17884,6 +17922,8 @@ async function viewWO(woNum) {
   const perms = mergedPerms();
   const stClass = st.toLowerCase().replace(/[\s-]+/g,'-');
 
+  // v148: amendment history drives the pills, banner and actions
+  const _hist = await _amwLoadHistory('WO', woNum); window._amwViewCtx = { doc:'WO', h, items, hist:_hist };
   // Build a read-only tree (activity → block → floor → unit) from saved items
   const treeHTML = await _woViewBuildTreeHTML(items);
 
@@ -17919,9 +17959,10 @@ async function viewWO(woNum) {
     actionBtns += `<button class="btn btn-danger" onclick="closeModal();terminateWO('${esc(woNum)}')">Terminate</button> `;
   }
 
-  openModal(`<h3>WO — ${esc(h['WO Number'])}</h3>
+  openModal(`<h3>WO — ${esc(_amwDocLabel('WO', h))}${_amwListBadge(h)}</h3>
     ${approvalBanner}
     ${closureBanner}
+    ${_amwBanner('WO', h, _hist)}
     <div class="grid-3" style="font-size:13px;margin-bottom:12px;">
       <div><label class="muted" style="font-size:11px;">CONTRACTOR</label><div><strong>${esc(h['Vendor Name'])}</strong></div></div>
       <div><label class="muted" style="font-size:11px;">DATE</label><div>${fmtDate(h['WO Date'])}</div></div>
@@ -17945,6 +17986,7 @@ async function viewWO(woNum) {
     ${h['Remarks'] ? `<div style="margin-top:10px;padding:10px 12px;background:var(--panel-2);border-radius:4px;"><strong style="font-size:12px;">Terms &amp; Conditions / Remarks</strong><div style="margin-top:6px;">${tcToHTML(h['Remarks'])}</div></div>` : ''}
     <div class="actions-row">
       ${actionBtns}
+      ${_amwActions('WO', h, _hist)}
       <button class="btn btn-secondary" onclick="closeModal();printWOById('${esc(woNum)}')">🖨 Print WO</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`, 'large');
@@ -17988,6 +18030,7 @@ async function _woViewBuildTreeHTML(items) {
 
   let html = '';
   Object.values(byAct).forEach((act, ai) => {
+    act.stagePill = (window._amwViewCtx && window._amwViewCtx.doc==='WO') ? _amwStagePill(act.id, window._amwViewCtx.hist) : '';   // v148
     const groups = {};
     let subTotalQty = 0, subTotalAmt = 0;
     act.rows.forEach(r => {
@@ -18002,7 +18045,7 @@ async function _woViewBuildTreeHTML(items) {
       const remKey = `${r['_wbs_node_id']}|${r['_loc_node_id']}`;
       const rem = liveRem[remKey];
       subTotalQty += qty; subTotalAmt += amt;
-      const leafData = { name: leafNode.name, path: leafNode.path||leafNode.name, qty, rate, amt, rem, uom: act.uom };
+      const leafData = { name: leafNode.name, path: leafNode.path||leafNode.name, qty, rate, amt, rem, uom: act.uom, oiid: r['_order_item_id'], lineStatus: r['_line_status']||'Active' };   // v148
       const ok = String(outerNode.id);
       if (!groups[ok]) groups[ok] = { grp: outerNode.name, subGroups: {}, leaves: [] };
       if (innerNode) {
@@ -18079,14 +18122,16 @@ function _woViewSubGrpHTML(sg) {
 function _woViewLeafHTML(l) {
   const unit = (l.uom||'').replace(/^Per\s+/i,'');
   const remTxt = (l.rem != null) ? (l.rem.toLocaleString('en-IN') + (unit?' '+esc(unit):'')) : '—';
+  const _pill = (window._amwViewCtx && window._amwViewCtx.doc==='WO') ? _amwPill(l.oiid, window._amwViewCtx.hist) : '';   // v148
+  const _lcls = l.lineStatus==='Closed' ? ' amw-lnclosed' : (l.lineStatus==='Removed' ? ' amw-lnremoved' : '');
   return `
-  <div class="hoi-leaf" style="grid-template-columns:1fr 90px 90px 90px 100px;">
+  <div class="hoi-leaf${_lcls}" style="grid-template-columns:1fr 90px 90px 90px 100px;"${l.lineStatus==='Closed'?' title="Closed at certified quantity by amendment"':(l.lineStatus==='Removed'?' title="Removed by amendment"':'')}>
     <div>
       <div class="hoi-leaf-name">${esc(l.name)}</div>
       <div class="hoi-leaf-path">${esc(l.path)}</div>
     </div>
     <div class="hoi-leaf-rem" style="text-align:center;color:var(--muted);">${remTxt}</div>
-    <div class="hoi-leaf-rem" style="text-align:right;">${fmtINR(l.qty)}</div>
+    <div class="hoi-leaf-rem" style="text-align:right;">${fmtINR(l.qty)}${_pill}</div>
     <div class="hoi-leaf-rem" style="text-align:right;">${fmtINR(l.rate)}</div>
     <div class="hoi-leaf-rem" style="text-align:right;font-weight:600;">${fmtINR(l.amt)}</div>
   </div>`;
@@ -18252,6 +18297,7 @@ async function onWOCWOChange() {
   try {
     _wocTree = await _wocBuildTree(woNum, null);
     if (!_wocTree) return;
+    _amwCertFormInit('WO', woNum);   // v148
     ['woc_expandAllBtn','woc_collapseAllBtn','woc_expandLinesBtn','woc_expandTowersBtn'].forEach(id=>{const e=document.getElementById(id); if(e) e.style.display='';});
     document.getElementById('wocItemFoot').style.display = 'block';
     _wocTree.items.forEach(it=>{ _wocOpenItem[it.id]=true; });  // v109: open to towers; floors collapsed & locked until armed
@@ -18264,7 +18310,7 @@ async function _wocBuildTree(woNum, preFill) {
     apiGetWODetails(woNum), apiGetWOCumulativeData(woNum), _loadLocTree(), _loadWbsTree()
   ]);
   if (!detRes.ok) { toast('Failed to load WO details','error'); return null; }
-  const woItems = detRes.items || [];
+  const woItems = (detRes.items || []).filter(it => it['_line_status'] !== 'Removed');   // v148
   const prevMap = {};
   (prevRes.ok ? prevRes.items : []).forEach(it => { prevMap[it['_key']] = num(it['Cumulative Qty']); });
   const stageCertified = (prevRes.ok && prevRes.stageCertified) ? prevRes.stageCertified : {};
@@ -18581,6 +18627,7 @@ function wocSetThis(oiid, v) {
   const remaining = Math.max(0, f.leaf.woQty - f.leaf.prevQty);
   let nv = v, capped = false;
   if (v !== '' && Number(v) > remaining) { nv = String(remaining); capped = true; }
+  try { _amwOverAsk('WO', oiid, f, v, remaining, capped); } catch(_) {}   // v148
   _wocThis[_wocCellKey(oiid,null)] = nv === '' ? '' : Number(nv);
   const tqn = Number(nv)||0;
   const item=f.item, leaf=f.leaf;
@@ -18702,6 +18749,8 @@ async function saveWOC_direct() {
   if (!woNum) { toast('Select a Work Order','error'); return; }
   const date = document.getElementById('woc_date').value;
   if (!date) { toast('Certification date required','error'); return; }
+  if (Object.keys((_amw.over.WO)||{}).length || (_amw.req.WO&&_amw.req.WO.adds&&_amw.req.WO.adds.length)) { toast('Lines are certified beyond the WO quantity \u2014 send the amendment proposal (or remove the extra) before saving','error',7000); return; }   // v148
+  if (await _amwCertLocked('WO', woNum)) return;   // v148
   const fd = getWOCFormData();
   if (!fd.items.length) { toast('Enter quantity or select a stage for at least one item','error'); return; }
   const isRevision = document.getElementById('wocForm').dataset.revising;
@@ -20217,8 +20266,8 @@ function renderPrintWO(d) {
     <div class="pd-co-block"><div class="pd-co-name">${esc(CO_NAME||'')}</div>
     <div class="pd-co-sub">${esc([COMPANY.projectName,COMPANY.projectAddr].filter(Boolean).join(' | '))}</div></div>
     <div class="pd-doc-block"><div class="pd-doc-type">WORK ORDER</div>
-    <div class="pd-doc-meta">WO No.: <b>${esc(d['WO Number'])}</b><br>
-    Date: <b>${fmtDate(d['WO Date'])}</b><br>
+    <div class="pd-doc-meta">WO No.: <b>${esc(_amwDocLabel('WO', d))}</b><br>
+    Date: <b>${fmtDate(d['WO Date'])}</b><br>${num(d['Rev No'])>0?`Amendment: <b>A${num(d['Rev No'])}</b> — supersedes revision ${num(d['Rev No'])-1}<br>`:''}
     Cert Mode: <b>${esc(d['Cert Mode']||'QTY')}</b><br>
     Retention: <b>${d['Retention %']}%</b></div></div></div>
   <table class="pd-vt" style="width:100%;margin-bottom:16px;">
@@ -20369,7 +20418,7 @@ function renderPrintHO(d) {
       <div class="po-heading">Hire Order</div>
       <table class="pd-po-meta">
         <tr><td>HO Date</td><td>${fmtDateIN(hoDate)}</td></tr>
-        <tr><td>HO Number</td><td style="font-weight:700;">${esc(hoNum)}</td></tr>
+        <tr><td>HO Number</td><td style="font-weight:700;">${esc(_amwDocLabel('HO', h))}${num(h['Rev No']||h.rev_no)>0?` <span style="font-weight:400;">· Amendment A${num(h['Rev No']||h.rev_no)}</span>`:''}</td></tr>
         <tr><td>Project</td><td>${esc(project)}</td></tr>
         <tr><td>Status</td><td>${esc(status)}</td></tr>
       </table>
@@ -30108,6 +30157,9 @@ async function grnScanView(path){
 // through rpc_amd_* (SECURITY INVOKER); this file never touches pu_po_*.
 // ═══════════════════════════════════════════════════════════════════════
 const _amdCache = {};   // po_number -> {hist, ts}
+// v148 · design rule: numeric inputs never increment — no wheel, no arrow keys, no spinner (CSS)
+document.addEventListener('wheel', e => { const a = document.activeElement; if (a && a.type === 'number' && a === e.target) a.blur(); }, { passive: true });
+document.addEventListener('keydown', e => { if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.target && e.target.type === 'number') e.preventDefault(); });
 function _amdDocLabel(h){ return (h&&h.po_number?h.po_number:'') + ((h&&num(h.rev_no)>0)?('-A'+num(h.rev_no)):''); }
 function _amdStateCls(st){ return String(st||'').toLowerCase().replace(/[\s/]+/g,'-'); }
 function _amdListBadge(p){
@@ -30635,6 +30687,567 @@ async function amdReject(id, poNum){
   finally{ pbDone(); }
 }
 // ── end v116 amendment block ──────────────────────────────────────────
+
+// ═══════════════════════════════════════════════════════════════════════
+// v148 · WO / HO AMENDMENT — Migration M29 (order_amendments doc_type WO/HO,
+// rpc_amd_*(p_doc_type,…) overloads, fn_amd_plan_wh, stage editor, freeze on
+// certifications & bills, fn_cert_ceiling). Mirrors the v116 PO block; the PO
+// functions above are untouched. All writes go through rpc_amd_*.
+// ═══════════════════════════════════════════════════════════════════════
+const _amw = { cache:{}, edit:null, over:{ WO:{}, HO:{} }, req:{ WO:null, HO:null }, lock:{ WO:null, HO:null } };
+function _amwT(doc){
+  return doc==='WO'
+    ? { doc:'WO', ord:'wo_orders', items:'wo_order_items', key:'wo_number', cert:'WOC', bill:'WOB', certTbl:'wo_certifications', permC:'canAmendWO', permA:'canApproveAmendWO', word:'Work Order', actWord:'Activity', nodeType:'activity', pfx:'woc', view:viewWO, list:loadWOList, num:h=>h['WO Number']||h.wo_number, hasStages:true }
+    : { doc:'HO', ord:'ho_orders', items:'ho_order_items', key:'ho_number', cert:'HOC', bill:'HOB', certTbl:'ho_certifications', permC:'canAmendHO', permA:'canApproveAmendHO', word:'Hire Order', actWord:'Equipment', nodeType:'hire_equipment', pfx:'hoc', view:viewHO, list:loadHOList, num:h=>h['HO Number']||h.ho_number, hasStages:false };
+}
+function _amwRev(h){ return num(h['Rev No']!=null?h['Rev No']:h.rev_no); }
+function _amwState(h){ return h['Amendment State']!==undefined?h['Amendment State']:h.amendment_state; }
+function _amwDocLabel(doc, h){ const T=_amwT(doc); const n=T.num(h)||''; const r=_amwRev(h); return n+(r>0?'-A'+r:''); }
+function _amwListBadge(o){
+  if(!o) return '';
+  let out='';
+  if(_amwRev(o)>0) out+=' <span class="amd-rev" title="Amended '+_amwRev(o)+' time(s)">A'+_amwRev(o)+'</span>';
+  const st=_amwState(o); if(st) out+=' <span class="status '+_amdStateCls(st)+'" title="Order is frozen while the amendment is in progress">'+esc(st)+'</span>';
+  return out;
+}
+async function _amwLoadHistory(doc, docNum){
+  const k=doc+':'+docNum; const c=_amw.cache[k];
+  if(c && (Date.now()-c.ts)<15000) return c.hist;
+  try{
+    const {data,error}=await sb.rpc('rpc_amd_history',{p_doc_type:doc,p_doc_number:docNum});
+    if(error){ console.warn('rpc_amd_history',error.message); return {amendments:[],lines:[],byKey:{},live:null}; }
+    const hist=data||{amendments:[],lines:[]};
+    try{ const rq=(hist.amendments||[]).find(a=>a.status==='Requested'); if(rq){ const {data:r2}=await sb.from('order_amendments').select('requested_by,requested_at,request_context').eq('id',rq.id).maybeSingle(); if(r2) Object.assign(rq,r2); } }catch(e){}
+    hist.byKey={};
+    (hist.lines||[]).forEach(l=>{ const key=l.item_key||l.item_id; if(key) (hist.byKey[key]=hist.byKey[key]||[]).push(l); });
+    hist.live=(hist.amendments||[]).find(a=>['Requested','Draft','Pending Approval','Rejected - Correction'].includes(a.status))||null;
+    _amw.cache[k]={hist,ts:Date.now()};
+    return hist;
+  }catch(e){ console.warn('amw history',e); return {amendments:[],lines:[],byKey:{},live:null}; }
+}
+function _amwInvalidate(doc, docNum){ delete _amw.cache[doc+':'+docNum]; }
+// Pill under the qty cell: latest approved change on this line (+count of earlier); pending outline if live.
+function _amwPill(itemKey, hist){
+  if(!itemKey||!hist) return '';
+  const rows=(hist.byKey&&hist.byKey[String(itemKey)])||[]; const live=hist.live; let pill='';
+  if(rows.length){
+    const revs=[...new Set(rows.map(r=>r.rev_no))].sort((a,b)=>b-a); const top=revs[0]; const mine=rows.filter(r=>r.rev_no===top);
+    let cls='mod', txt=''; const kind=mine[0].change_kind;
+    if(kind==='added'){ cls='add'; txt='added'; }
+    else if(kind==='split'){ cls='add'; const sp=rows.find(r=>r.field==='line'); txt=sp?esc(String(sp.new)):'split'; const rt=mine.find(r=>r.field==='unit_rate'); if(rt) txt+=' @ '+fmtINR(rt.new); }
+    else if(kind==='removed'){ cls='rem'; txt='removed'; }
+    else if(kind==='closed'){ cls='close'; const q=mine.find(r=>r.field==='qty'); txt=(q?fmtINR(q.old)+' → '+fmtINR(q.new)+' · ':'')+'closed'; }
+    else { const q=mine.find(r=>r.field==='qty'); const r=mine.find(r=>r.field==='unit_rate'); txt=q?(fmtINR(q.old)+' → '+fmtINR(q.new)):(r?'rate changed':(mine[0].field||'changed')); }
+    const more=revs.length>1?'<span class="more">+'+(revs.length-1)+'</span>':'';
+    pill='<span class="amd-pill '+cls+'" onclick="event.stopPropagation();_amwPopover(event,\''+esc(String(itemKey))+'\')"><span class="rev">A'+top+'</span>'+txt+more+'</span>';
+  }
+  if(live && live.status!=='Draft') pill+='<span class="amd-pill pend" title="Amendment A'+live.rev_no+' '+esc(live.status)+'"><span class="rev">A'+live.rev_no+'</span>'+(live.status==='Requested'?'requested':'pending')+'</span>';
+  return pill?'<div class="amd-pillwrap">'+pill+'</div>':'';
+}
+function _amwStagePill(wbsId, hist){
+  if(!hist) return ''; const rows=(hist.byKey&&hist.byKey['wbs:'+wbsId])||[]; if(!rows.length) return '';
+  const top=rows.slice().sort((a,b)=>b.rev_no-a.rev_no)[0];
+  return '<span class="amd-pill mod" style="margin-left:6px;" onclick="event.stopPropagation();_amwPopover(event,\'wbs:'+esc(String(wbsId))+'\')"><span class="rev">A'+top.rev_no+'</span>stages changed</span>';
+}
+function _amwPopover(ev, itemKey){
+  const ctx=window._amwViewCtx; if(!ctx) return;
+  const hist=ctx.hist, rows=((hist.byKey||{})[String(itemKey)]||[]).slice();
+  const it=(ctx.items||[]).find(x=>String(x['_order_item_id'])===String(itemKey))||{};
+  let pop=document.getElementById('amdPop');
+  if(!pop){ pop=document.createElement('div'); pop.id='amdPop'; pop.className='amd-pop'; document.body.appendChild(pop);
+    document.addEventListener('click',e=>{ if(!e.target.closest('#amdPop')) pop.classList.remove('on'); }); }
+  const byRev={}; rows.forEach(r=>{ (byRev[r.rev_no]=byRev[r.rev_no]||[]).push(r); });
+  const revs=Object.keys(byRev).map(Number).sort((a,b)=>b-a);
+  const amd=Object.fromEntries((hist.amendments||[]).map(a=>[a.rev_no,a]));
+  const isStg=String(itemKey).startsWith('wbs:');
+  let html='<h4><span>'+(isStg?'Stages':'Line '+esc(String(it['S.No']||''))+' · '+esc(it['Description']||''))+'</span><span class="x" onclick="document.getElementById(\'amdPop\').classList.remove(\'on\')">×</span></h4>';
+  if(hist.live && hist.live.status!=='Draft') html+='<div class="hrow pend"><div class="r">A'+hist.live.rev_no+'<small>'+esc(hist.live.status)+'</small></div><div>Awaiting approval — order frozen'+(hist.live.reason?'<div class="who">'+esc(hist.live.reason)+'</div>':'')+'</div></div>';
+  revs.forEach(rv=>{ const a=amd[rv]||{}; const kind=byRev[rv][0].change_kind;
+    html+='<div class="hrow"><div class="r">A'+rv+'<small>'+(a.approved_at?fmtDateShort(a.approved_at):'')+'</small></div><div><ul>'
+      + byRev[rv].map(c=>'<li><em>'+esc({unit_rate:'Rate',qty:'Qty',line:'Line',loc_node_id:'Location',description:'Description',uom:'UOM',specification:'Spec',stages:'Stages'}[c.field]||c.field)+'</em>'
+          +(c.field==='line'||c.field==='stages'?esc(String(c.old||''))+(c.old&&c.new?' → ':'')+esc(String(c.new||'')):(_amdFmtVal(c.field,c.old)+' → '+_amdFmtVal(c.field,c.new)))+'</li>').join('')
+      + (byRev[rv][0].consumed!=null && kind!=='added' && kind!=='split' && kind!=='stages' ? '<li><em>Certified then</em>'+fmtINR(byRev[rv][0].consumed)+'</li>':'')
+      + (a.reason?'<li><em>Reason</em>'+esc(a.reason)+'</li>':'')
+      +'</ul><div class="who">'+[a.opened_by?'Opened by '+esc(a.opened_by):'',a.amended_by?'amended by '+esc(a.amended_by):'',a.approved_by?'approved by '+esc(a.approved_by):''].filter(Boolean).join(' · ')+'</div></div></div>'; });
+  if(!isStg && !num(it['_added_in_rev'])){
+    const q0=rows.filter(r=>r.field==='qty'&&r.old!=null).sort((a,b)=>a.rev_no-b.rev_no)[0], r0=rows.filter(r=>r.field==='unit_rate'&&r.old!=null).sort((a,b)=>a.rev_no-b.rev_no)[0];
+    html+='<div class="hrow"><div class="r">Rev 0<small>'+(ctx.h&&(ctx.h['WO Date']||ctx.h['HO Date'])?fmtDate(ctx.h['WO Date']||ctx.h['HO Date']):'')+'</small></div><div><ul><li><em>Qty</em>'+fmtINR(q0?q0.old:it['Qty'])+'</li><li><em>Rate</em>'+fmtINR(r0?r0.old:it['Unit Rate'])+'</li></ul><div class="who">'+(ctx.h&&ctx.h['Created By']?'Created by '+esc(ctx.h['Created By']):'')+'</div></div></div>';
+  }
+  pop.innerHTML=html;
+  const b=ev.currentTarget.getBoundingClientRect(); let left=b.left+window.scrollX; if(left+470>window.innerWidth) left=Math.max(8,window.innerWidth-480);
+  pop.style.left=left+'px'; pop.style.top=(b.bottom+window.scrollY+6)+'px'; pop.classList.add('on');
+}
+function _amwBanner(doc, h, hist){
+  const T=_amwT(doc); const n=T.num(h); const req=hist&&hist.live&&hist.live.status==='Requested'?hist.live:null; const st=_amwState(h);
+  if(req && (!st || st==='Amendment Requested')){
+    const prop=req.request_context&&req.request_context.proposal; const admin=!!(state.isOwner||state.isSuper);
+    return '<div class="amd-banner freeze"><span class="i"></span><div><b>Amendment '+(prop&&prop.length?'proposed':'requested')+' — '+doc+' locked for certification and billing</b> by '+esc(req.requested_by||'site')+(req.requested_at?' on '+fmtDateShort(req.requested_at):'')+(prop&&prop.length?' — '+prop.length+' line'+(prop.length>1?'s':''):'')+'.<br><span style="white-space:pre-line;">'+esc(req.reason||'')+'</span>'
+      +(prop&&prop.length?' <button class="btn btn-ghost btn-sm" onclick="amwViewProposal(\''+doc+'\',\''+esc(n)+'\')">'+(admin?'View / open with request':'View request')+'</button>':'')
+      +(admin?'<br><span class="muted" style="font-size:12px;">Open for amendment attaches this request — the requested quantities are pre-filled on the draft; the '+(doc==='WO'?'Contracts':'Contracts')+' Executive sets the rate and may move the location.</span>':'')+'</div></div>';
+  }
+  if(!st) return '';
+  const live=(hist&&hist.live)||{}; const rv=_amwRev(h)+1;
+  const who=[live.opened_by?'opened by '+esc(live.opened_by):'', live.opened_at?fmtDateShort(live.opened_at):''].filter(Boolean).join(', ');
+  let body='No '+T.cert+' or '+T.bill+' can be raised against this '+doc+' until the amendment is approved or cancelled.';
+  if(st==='Under Amendment') body+=' The Contracts Executive can edit it now.';
+  else if(st==='Amendment Pending Approval') body+=' Awaiting Contracts Manager approval.';
+  else if(st==='Amendment - Correction') body+=' Returned for correction'+(live.rejection_reason?': '+esc(live.rejection_reason):'')+'.';
+  return '<div class="amd-banner freeze"><span class="i"></span><div><b>'+esc(st)+' (A'+rv+')'+(who?' — '+who:'')+'.</b><br>'+body+'</div></div>';
+}
+function _amwActions(doc, h, hist){
+  if(!h) return ''; const T=_amwT(doc); const perms=mergedPerms(); const admin=!!(state.isOwner||state.isSuper); const live=hist&&hist.live; const n=esc(T.num(h)); const st=_amwState(h); let out='';
+  if(!st || st==='Amendment Requested'){
+    const prop=live&&live.status==='Requested'&&live.request_context&&live.request_context.proposal&&live.request_context.proposal.length;
+    if(admin && ['Open','Active','Completed'].includes(h['Status']))
+      out+=(prop?'<button class="btn btn-primary" onclick="amwViewProposal(\''+doc+'\',\''+n+'\')">✎ Open for amendment — site request</button> ':'<button class="btn btn-secondary" onclick="amwOpen(\''+doc+'\',\''+n+'\')">✎ Open for amendment'+(live&&live.status==='Requested'?' (requested)':'')+'</button> ');
+    if(admin && live && live.status==='Requested') out+='<button class="btn btn-ghost" onclick="amwCancel(\''+esc(live.id)+'\',\''+doc+'\',\''+n+'\')">Dismiss request</button> ';
+    if(!admin && live && live.status==='Requested') out+='<span class="status under-amendment" style="vertical-align:middle;margin-left:6px;">Amendment requested</span> ';
+  } else {
+    const id=h['Amendment Id']||h.amendment_id;
+    if(perms[T.permC] && live && ['Draft','Rejected - Correction'].includes(live.status)) out+='<button class="btn btn-primary" onclick="closeModal();amwEdit(\''+esc(id)+'\')">✎ Amend '+doc+'</button> ';
+    if(perms[T.permA] && live && live.status==='Pending Approval') out+='<button class="btn btn-primary" onclick="closeModal();amwReview(\''+esc(id)+'\')">✓ Review amendment</button> ';
+    if(!perms[T.permA] && !perms[T.permC] && live) out+='<button class="btn btn-ghost" onclick="closeModal();amwReview(\''+esc(id)+'\')">View amendment</button> ';
+    if(admin) out+='<button class="btn btn-danger" onclick="amwCancel(\''+esc(id)+'\',\''+doc+'\',\''+n+'\')">Cancel amendment</button> ';
+  }
+  return out;
+}
+async function amwOpen(doc, docNum, proposal){
+  const T=_amwT(doc);
+  if(!(state.isOwner||state.isSuper)){ toast('Only an Admin can open a '+doc+' for amendment','error'); return; }
+  if(!proposal && !confirm('Open '+docNum+' for amendment?\n\nThe '+doc+' is frozen (no '+T.cert+' / '+T.bill+') until the amendment is approved or cancelled.')) return;
+  pbShow('Opening amendment…');
+  try{
+    const {data,error}=proposal
+      ? await sb.rpc('rpc_amd_open_v2',{p_doc_type:doc,p_doc_number:docNum,p_user:state.userName,p_proposal:proposal})
+      : await sb.rpc('rpc_amd_open',{p_doc_type:doc,p_doc_number:docNum,p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    _amwInvalidate(doc,docNum); window._modalNoBackdropClose=false;
+    toast('Opened for amendment A'+data.rev_no+(proposal?' — site request attached':''),'success');
+    closeModal(); await T.list(); await T.view(docNum);
+  }catch(e){ toast(e.message,'error',7000); }
+  finally{ pbDone(); }
+}
+async function amwCancel(id, doc, docNum){
+  const T=_amwT(doc);
+  const reason=prompt('Cancel this amendment? The '+doc+' returns to its previous state unchanged.\n\nReason (optional):'); if(reason===null) return;
+  pbShow('Cancelling…');
+  try{
+    const {error}=await sb.rpc('rpc_amd_cancel',{p_amendment_id:id,p_reason:reason||null,p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    _amwInvalidate(doc,docNum); toast('Amendment cancelled','success');
+    closeModal(); await T.list(); await T.view(docNum);
+  }catch(e){ toast(e.message,'error',6000); }
+  finally{ pbDone(); }
+}
+// Site request as sent from the WOC / HOC screen — Admin reads it and opens with it attached.
+async function amwViewProposal(doc, docNum){
+  const T=_amwT(doc); const hist=await _amwLoadHistory(doc,docNum); const live=hist.live;
+  const prop=live&&live.request_context&&live.request_context.proposal; if(!prop||!prop.length){ toast('No proposal attached to this request','warn'); return; }
+  const admin=!!(state.isOwner||state.isSuper);
+  let wbsMap={},locMap={}; try{ const [lt,wt]=await Promise.all([_loadLocTree(),_loadWbsTree()]); locMap=Object.fromEntries((lt||[]).map(n=>[String(n.id),n])); wbsMap=Object.fromEntries((wt||[]).map(n=>[String(n.id),n])); }catch(e){}
+  const wl=(w,l)=>{ const wn=wbsMap[String(w)], ln=locMap[String(l)]; return _pgsWLCell(wn?(wn.path||wn.name):null, ln?(ln.path||ln.name):null); };
+  const rows=prop.map(p=>'<tr><td>'+esc(p.description||(wbsMap[String(p.wbs_node_id)]||{}).name||'')+(p.action==='add'?' <span class="scan-chip ok" style="font-size:9.5px;padding:0 6px;">not on '+doc+'</span>':'')+'</td><td>'+wl(p.wbs_node_id,p.loc_node_id)+'</td><td>'+esc(p.uom||'')+'</td><td class="num mono">'+(p.order_qty!=null?fmtINR(p.order_qty):'—')+'</td><td class="num mono">'+(p.certified!=null?fmtINR(p.certified):'—')+'</td><td class="num mono">'+(p.certifying!=null?fmtINR(p.certifying):'—')+'</td><td class="num mono"><b>+'+fmtINR(p.extra_qty)+'</b></td></tr>').join('');
+  const pc=live.request_context.parked_cert;
+  openModal('<h3>Site request — '+esc(docNum)+' <span class="status amendment-requested" style="margin-left:8px;vertical-align:middle;">Amendment Requested</span></h3>'
+    +'<div class="meta" style="font-size:12px;color:var(--muted);margin-bottom:8px;">'+esc([live.requested_by,live.requested_at?fmtDateShort(live.requested_at):'',live.request_context.requested_from||''].filter(Boolean).join(' · '))+(pc?' · parked '+T.cert+' for '+esc(pc.period||'')+' ('+esc(String(pc.lines||''))+' line'+(pc.lines===1?'':'s')+')':'')+'</div>'
+    +'<div class="amd-banner info"><span class="i"></span><div>The site asks for extra quantity per '+T.actWord.toLowerCase()+' and location. No rate is set here — the Contracts Executive prices it and may move it to another location.</div></div>'
+    +'<div class="table-wrap"><table><thead><tr><th>'+T.actWord+'</th><th>Location</th><th>UOM</th><th class="num">'+doc+' qty</th><th class="num">Certified</th><th class="num">Certifying now</th><th class="num">Extra asked</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+    +'<div style="font-size:12.5px;margin-top:10px;"><b>Reason:</b> <span style="white-space:pre-line;">'+esc(live.reason||'')+'</span></div>'
+    +'<div class="actions-row"><button class="btn btn-ghost" onclick="closeModal();'+(doc==='WO'?'viewWO':'viewHO')+'(\''+esc(docNum)+'\')">Back to '+doc+'</button>'
+    +(admin?'<button class="btn btn-ghost" onclick="amwCancel(\''+esc(live.id)+'\',\''+doc+'\',\''+esc(docNum)+'\')">Dismiss request</button><button class="btn btn-primary" onclick="amwOpen(\''+doc+'\',\''+esc(docNum)+'\','+esc(JSON.stringify(prop.map(p=>({action:p.action,item_key:p.item_key||null,wbs_node_id:p.wbs_node_id,loc_node_id:p.loc_node_id,qty:p.qty,description:p.description,uom:p.uom,source:'site'})))).replace(/&quot;/g,'&quot;')+')">✎ Open for amendment with this request</button>':'')
+    +'</div>','large');
+}
+// ── Amend screen (Contracts Executive) ───────────────────────────────
+async function amwEdit(id){
+  pbShow('Loading amendment…');
+  try{
+    const {data:a,error}=await sb.from('order_amendments').select('*').eq('id',id).single();
+    if(error||!a) throw new Error(error?error.message:'Amendment not found');
+    const doc=a.doc_type, T=_amwT(doc);
+    if(!hasPerm(T.permC)){ toast('Not permitted — needs the amend-'+doc+' role','error'); return; }
+    if(!['Draft','Rejected - Correction'].includes(a.status)){ toast('This amendment is '+a.status+' — not editable','warn'); return; }
+    const [{data:o},{data:items}]=await Promise.all([ sb.from(T.ord).select('*').eq(T.key,a.doc_number).single(), sb.from(T.items).select('*').eq(T.key,a.doc_number).order('sno') ]);
+    let wbsMap={},locMap={}; try{ const [lt,wt]=await Promise.all([_loadLocTree(),_loadWbsTree()]); locMap=Object.fromEntries((lt||[]).map(n=>[String(n.id),n])); wbsMap=Object.fromEntries((wt||[]).map(n=>[String(n.id),n])); }catch(e){}
+    (items||[]).forEach(i=>{ i.item_key=String(i.id); i.line_status=i.line_status||'Active'; });
+    const draft=a.draft&&a.draft.lines?a.draft:{header:{},reason:a.reason||'',lines:(items||[]).filter(i=>i.line_status==='Active').map(i=>({item_key:i.item_key,action:'keep'}))};
+    draft.header=draft.header||{}; draft.reason=draft.reason||a.reason||''; draft.stages=draft.stages||{};
+    const seen=new Set(draft.lines.filter(l=>l.item_key).map(l=>String(l.item_key)));
+    (items||[]).filter(i=>i.line_status==='Active'&&!seen.has(i.item_key)).forEach(i=>draft.lines.push({item_key:i.item_key,action:'keep'}));
+    draft.lines.forEach((l,i)=>{ l._k=l.item_key?String(l.item_key):('new'+i+'_'+Date.now()); });
+    // stage templates per activity (WO): live locked flags from the DB
+    const tpl={};
+    if(T.hasStages){
+      const acts=[...new Set((items||[]).filter(i=>i.line_status!=='Removed').map(i=>String(i.wbs_node_id)))];
+      await Promise.all(acts.map(async w=>{ try{ const {data:t}=await sb.rpc('fn_amd_wo_stage_template',{p_wo_number:a.doc_number,p_wbs:Number(w)}); tpl[w]=t||[]; }catch(e){ tpl[w]=[]; } }));
+    }
+    const req=(a.request_context&&Array.isArray(a.request_context.proposal))?a.request_context.proposal:[];
+    _amw.edit={id,a,doc,T,o,items:items||[],draft,plan:null,wbsMap,locMap,tpl,stgOpen:{},req,saveT:null,dirty:false};
+    window._modalNoBackdropClose=true; openModal(_amwEditHtml(),'wide'); _amwRender(); await _amwSaveDraft(true);
+  }catch(e){ toast(e.message,'error',6000); }
+  finally{ pbDone(); }
+}
+function _amwEditHtml(){
+  const E=_amw.edit, o=E.o, a=E.a, T=E.T, hd=E.draft.header; const f=k=>hd[k]!==undefined?hd[k]:(o[k]||'');
+  const locked=T.doc==='WO'?[['GST %',o.gst_pct],['Retention %',o.retention_pct],['Mob. advance %',o.mob_advance_pct],['Mob. recovery %',o.mob_recovery_pct]]:[['GST %',o.gst_pct]];
+  return '<h3>Amend '+esc(a.doc_number)+' → A'+a.rev_no+' <span class="status '+_amdStateCls(a.status==='Draft'?'Under Amendment':'Amendment - Correction')+'" style="margin-left:8px;vertical-align:middle;">'+esc(a.status==='Draft'?'Draft':'Returned for correction')+'</span></h3>'
+   +(a.status==='Rejected - Correction'&&a.rejection_reason?'<div class="amd-banner block"><span class="i"></span><div><b>Manager note:</b> '+esc(a.rejection_reason)+'</div></div>':'')
+   +'<div class="amd-banner info"><span class="i"></span><div>Certified quantity is the floor on each line. A rate or location change on a line with certification closes that line at the certified qty and creates a new line for the balance — the system does the split.'+(T.hasStages?' Stages are set per activity: a certified stage is locked, the rest can be renamed, re-weighted, added or removed as long as they total 100%. A new activity gets its own stages (or none).':'')+'</div></div>'
+   +'<div style="font-size:12px;color:var(--muted);margin-bottom:8px;"><b>'+esc(o.vendor_name||'')+'</b> · Revision '+num(o.rev_no)+' · '+esc(o.status)+(a.opened_by?' · opened by '+esc(a.opened_by)+(a.opened_at?' '+fmtDateShort(a.opened_at):''):'')+'</div>'
+   +'<div id="amwReqStrip"></div>'
+   +'<div class="table-wrap"><table id="amwTbl"><thead><tr><th>#</th><th style="min-width:220px;">'+T.actWord+' · Location</th><th>UOM</th><th class="num">Certified</th><th class="num" style="min-width:130px;">Qty</th><th class="num" style="min-width:130px;">Estimate left</th><th class="num" style="min-width:120px;">Rate</th><th class="num">Amount</th><th></th></tr></thead><tbody id="amwBody"></tbody></table></div>'
+   +'<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;"><button class="btn btn-ghost btn-sm" onclick="_amwAddLine()">+ Add line from estimate</button><div id="amwTotals" class="amd-sum"></div></div>'
+   +'<div class="amd-hdr">'
+   +'<div><label class="muted" style="font-size:11px;">START DATE</label><input type="date" id="amwH_start_date" value="'+esc(f('start_date'))+'" oninput="_amwHdr(\'start_date\',this)"></div>'
+   +'<div><label class="muted" style="font-size:11px;">END DATE'+(T.doc==='HO'?' (HIRE UNTIL)':'')+'</label><input type="date" id="amwH_end_date" value="'+esc(f('end_date'))+'" oninput="_amwHdr(\'end_date\',this)"></div>'
+   +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">CONTACT PERSON</label><input id="amwH_contact_person" value="'+esc(f('contact_person'))+'" oninput="_amwHdr(\'contact_person\',this)"></div>'
+   +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">SCOPE</label><input id="amwH_scope" value="'+esc(f('scope'))+'" oninput="_amwHdr(\'scope\',this)"></div>'
+   +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">NOT AMENDABLE</label><div style="display:flex;gap:8px;flex-wrap:wrap;">'+locked.map(([k,v])=>'<div class="amw-lock">'+k+' <b>'+esc(String(v==null?'—':v))+'</b><small>locked — re-prices raised bills</small></div>').join('')+'</div></div>'
+   +'<div style="grid-column:1/3;"><label class="muted" style="font-size:11px;">TERMS &amp; CONDITIONS / REMARKS</label><textarea id="amwH_remarks" rows="2" oninput="_amwHdr(\'remarks\',this)">'+esc(f('remarks'))+'</textarea></div>'
+   +'<div style="grid-column:3/5;"><label class="muted" style="font-size:11px;">REASON FOR AMENDMENT <span style="color:#b91c1c;">*</span> (printed on A'+a.rev_no+', kept in history)</label><textarea id="amwReason" rows="2" oninput="_amw.edit.draft.reason=this.value;this.classList.remove(\'amw-reqbad\');_amwDirty()">'+esc(E.draft.reason||'')+'</textarea></div></div>'
+   +'<div id="amwReqWarn" style="margin-top:8px;"></div><div id="amwIssues" style="margin-top:8px;"></div>'
+   +'<div class="actions-row"><span id="amwSaveState" style="margin-right:auto;font-size:12px;color:var(--muted);"></span>'
+   +'<button class="btn btn-ghost" onclick="_amwClose()">Close</button><button class="btn btn-secondary" onclick="_amwSaveDraft(false)">Save draft</button>'
+   +'<button class="btn btn-primary" id="amwSubmitBtn" onclick="_amwSubmit()">Submit A'+a.rev_no+' for approval</button></div>';
+}
+function _amwHdr(k,el){ const E=_amw.edit; E.draft.header[k]=el.value; el.classList.toggle('amw-chg', String(el.value)!==String(E.o[k]==null?'':E.o[k])); _amwDirty(); }
+function _amwDirty(){ const E=_amw.edit; if(!E) return; E.dirty=true; const el=document.getElementById('amwSaveState'); if(el) el.textContent='Unsaved changes…'; clearTimeout(E.saveT); E.saveT=setTimeout(()=>_amwSaveDraft(true),700); }
+function _amwLineByKey(k){ return _amw.edit.draft.lines.find(l=>l._k===k); }
+function _amwItem(l){ return l&&l.item_key?_amw.edit.items.find(i=>i.item_key===String(l.item_key)):null; }
+function _amwSet(k,field,v){
+  const l=_amwLineByKey(k); if(!l) return; const it=_amwItem(l);
+  if(field==='qty'||field==='unit_rate'){ v=(v===''?null:num(v)); }
+  l[field]=v;
+  if(it){ const changed=['qty','unit_rate','loc_node_id','description','uom','specification'].some(f=>l[f]!==undefined&&l[f]!==null&&String(l[f])!==String(it[f]==null?'':it[f])); if(l.action!=='remove') l.action=changed?'modify':'keep'; }
+  _amwReqRender(); _amwDirty();
+}
+function _amwRemove(k){ const l=_amwLineByKey(k); if(!l) return; if(l.item_key){ l.action=(l.action==='remove')?'keep':'remove'; } else { _amw.edit.draft.lines=_amw.edit.draft.lines.filter(x=>x._k!==k); } _amwRender(); _amwDirty(); }
+function _amwPlanFor(k){
+  const E=_amw.edit, p=E.plan; if(!p) return null; const l=_amwLineByKey(k); if(!l) return null;
+  if(l.item_key) return (p.lines||[]).filter(x=>String(x.item_key)===String(l.item_key));
+  const addIdx=E.draft.lines.filter(x=>!x.item_key).findIndex(x=>x._k===k); const adds=(p.lines||[]).filter(x=>x.kind==='add'); return adds[addIdx]?[adds[addIdx]]:[];
+}
+function _amwBudgetFor(wbs,loc){ const p=_amw.edit.plan; if(!p) return null; return (p.budget||[]).find(b=>String(b.wbs)===String(wbs)&&String(b.loc)===String(loc))||null; }
+// ── stage editor (WO) ──
+function _amwStgBase(w){ return (_amw.edit.tpl[String(w)]||[]).map(x=>({stage_name:x.stage_name,stage_pct:num(x.stage_pct),locked:!!x.locked})); }
+function _amwStgCur(w){ const E=_amw.edit; const k=String(w); if(!E.draft.stages[k]){ E.draft.stages[k]=_amwStgBase(w).map(x=>({stage_name:x.stage_name,stage_pct:x.stage_pct})); } return E.draft.stages[k]; }
+function _amwStgLocked(w,i){ const b=_amwStgBase(w); return !!(b[i]&&b[i].locked); }
+function _amwStgSum(l){ return l.reduce((t,x)=>t+(num(x.stage_pct)||0),0); }
+function _amwStgChanged(w){ return JSON.stringify(_amwStgCur(w).map(x=>[String(x.stage_name||'').trim(),num(x.stage_pct)]))!==JSON.stringify(_amwStgBase(w).map(x=>[x.stage_name,x.stage_pct])); }
+function _amwStgToggle(w){ const E=_amw.edit; E.stgOpen[w]=!E.stgOpen[w]; _amwRender(); }
+function _amwStgAdd(w){ _amwStgCur(w).push({stage_name:'',stage_pct:null,isNew:true}); _amw.edit.stgOpen[w]=true; _amwRender(); _amwDirty(); }
+function _amwStgDel(w,i){ if(_amwStgLocked(w,i)) return; _amwStgCur(w).splice(i,1); _amwRender(); _amwDirty(); }
+function _amwStgReset(w){ delete _amw.edit.draft.stages[String(w)]; _amwStgCur(w); _amwRender(); _amwDirty(); }
+function _amwStgCopy(w,from){ if(!from) return; _amw.edit.draft.stages[String(w)]=_amwStgCur(from).map(x=>({stage_name:x.stage_name,stage_pct:x.stage_pct,isNew:true})); _amwRender(); _amwDirty(); }
+function _amwStgSet(w,i,f,v,el){
+  const l=_amwStgCur(w); if(_amwStgLocked(w,i)) return;
+  if(f==='stage_pct'){ let n=v===''?null:num(v);
+    if(n!=null){ const others=l.reduce((t,x,j)=>t+(j===i?0:(num(x.stage_pct)||0)),0); const room=Math.round((100-others)*100)/100;
+      if(n>room){ n=room; if(el){ el.value=room; el.classList.add('amd-bad'); setTimeout(()=>el.classList.remove('amd-bad'),900); } toast('Stages already total '+others.toFixed(1)+'% — at most '+room.toFixed(2)+'% is left for this stage','warn',4000); }
+      if(n<0) n=null; }
+    l[i].stage_pct=n; }
+  else l[i][f]=v;
+  const ft=document.getElementById('amwStgFt_'+String(w)); if(ft) ft.outerHTML=_amwStgFooter(w);
+  _amwDirty();
+}
+function _amwStgFooter(w){
+  const l=_amwStgCur(w), sum=_amwStgSum(l), ok=Math.abs(sum-100)<0.01; const lockPct=_amwStgBase(w).filter(x=>x.locked).reduce((t,x)=>t+x.stage_pct,0);
+  return '<div class="amw-stg-ft" id="amwStgFt_'+esc(String(w))+'"><span class="'+(l.length?(ok?'amw-ok':'amw-bad'):'')+'" style="font-weight:600;">Σ '+sum.toFixed(1)+'%'+(l.length?(ok?' ✓':' — must be 100%'):'')+(lockPct?' <span class="muted" style="font-weight:400;">· '+lockPct+'% certified and locked, '+(100-lockPct)+'% to allocate</span>':'')+(l.length&&!ok?' <span class="muted" style="font-weight:400;">· '+(100-sum).toFixed(2)+'% still to place</span>':'')+'</span>'
+    +'<span style="display:flex;gap:6px;align-items:center;"><button class="btn btn-ghost btn-sm" '+(l.length&&ok?'disabled title="Stages already total 100% — lower one before adding another"':'')+' onclick="_amwStgAdd(\''+esc(String(w))+'\')">＋ stage</button>'+(_amwStgBase(w).length?'<button class="btn btn-ghost btn-sm" onclick="_amwStgReset(\''+esc(String(w))+'\')">Reset to Rev '+num(_amw.edit.o.rev_no)+'</button>':'')+'</span></div>';
+}
+function _amwStgCell(w,isNewAct,actHasCert){
+  const E=_amw.edit; const base=_amwStgBase(w); const l=_amwStgCur(w); const open=!!E.stgOpen[w]; const chg=_amwStgChanged(w);
+  if(!base.length && actHasCert && !l.length) return '<div class="amw-stg"><span class="scan-chip nopo">no stages</span><span class="muted">certified without stages — stages cannot be added now</span></div>';
+  const chips=l.length?l.map((x,i)=>{ const lk=_amwStgLocked(w,i); return '<span class="scan-chip '+(lk?'nopo':(x.isNew?'ok':(chg?'file':'byrate')))+'" title="'+(lk?'certified in a '+E.T.cert+' — locked':'')+'">'+(i+1)+' '+esc(x.stage_name||'…')+' '+(num(x.stage_pct)||0)+'%'+(lk?' 🔒':'')+'</span>'; }).join(''):'<span class="scan-chip nopo">no stages</span>';
+  let h='<div class="amw-stg">'+chips+(chg?'<span class="amd-src">A'+E.a.rev_no+'</span>':'')+'<button class="btn btn-ghost btn-sm" onclick="_amwStgToggle(\''+esc(String(w))+'\')">'+(open?'Done':(l.length?'Edit stages':'Set stages'))+'</button></div>';
+  if(open){
+    const others=Object.keys(E.tpl).filter(a=>a!==String(w)&&_amwStgCur(a).length);
+    h+='<div class="amw-stg-ed">'+(isNewAct&&others.length?'<div style="display:flex;gap:8px;align-items:center;font-size:11.5px;"><span class="muted">Copy from:</span><select onchange="_amwStgCopy(\''+esc(String(w))+'\',this.value)"><option value="">— pick an activity on this WO —</option>'+others.map(a=>'<option value="'+esc(a)+'">'+esc((E.wbsMap[a]||{}).name||a)+'</option>').join('')+'</select></div>':'')
+     +l.map((x,i)=>{ const lk=_amwStgLocked(w,i); return '<div class="row"><span class="seq">'+(i+1)+'</span><input class="'+(lk?'lk':'')+'" value="'+esc(x.stage_name||'')+'" placeholder="Stage name (e.g. Putty completion)" '+(lk?'readonly':'oninput="_amwStgSet(\''+esc(String(w))+'\','+i+',\'stage_name\',this.value)"')+'><input type="number" class="'+(lk?'lk':'')+'" step="0.01" min="0.01" max="100" value="'+(x.stage_pct==null?'':x.stage_pct)+'" placeholder="%" '+(lk?'readonly':'oninput="_amwStgSet(\''+esc(String(w))+'\','+i+',\'stage_pct\',this.value,this)"')+'><span>%</span>'+(lk?'<span class="lockmsg">🔒 certified</span>':'<button class="btn btn-ghost btn-sm" onclick="_amwStgDel(\''+esc(String(w))+'\','+i+')">✕</button>')+'</div>'; }).join('')
+     +_amwStgFooter(w)+'</div>';
+  }
+  return h;
+}
+function _amwRender(){
+  const E=_amw.edit; const tb=document.getElementById('amwBody'); if(!tb||!E) return; const T=E.T;
+  const wl=(w,l)=>{ const wn=E.wbsMap[String(w)], ln=E.locMap[String(l)]; return _pgsWLCell(wn?(wn.path||wn.name):null, ln?(ln.path||ln.name):null); };
+  const actName=w=>{ const n=E.wbsMap[String(w)]; return n?n.name:String(w); };
+  // group draft lines (and their plan split rows) by activity
+  const groups=[]; const gi={};
+  E.draft.lines.forEach(l=>{ const it=_amwItem(l); const w=String(l.wbs_node_id!=null?l.wbs_node_id:(it?it.wbs_node_id:'')); if(!(w in gi)){ gi[w]=groups.length; groups.push({w,isNew:!it&&!E.items.some(i=>String(i.wbs_node_id)===w&&i.line_status!=='Removed'),lines:[]}); } groups[gi[w]].lines.push(l); });
+  const stgErrs=(E.plan&&E.plan.stages||[]).reduce((m,s)=>{ m[String(s.wbs_node_id)]=s.errors||[]; return m; },{});
+  let html='';
+  groups.forEach(g=>{
+    const first=g.lines[0]; const it0=_amwItem(first); const uom=first.uom||(it0?it0.uom:'')||((E.wbsMap[g.w]||{}).uom||'');
+    const actHasCert=E.items.some(i=>String(i.wbs_node_id)===g.w && num((E.plan&&(E.plan.lines||[]).find(x=>String(x.item_key)===i.item_key)||{}).consumed)>0);
+    html+='<tr class="amw-grp"><td colspan="9">'+esc(actName(g.w))+'<span class="sub">'+esc(uom)+'</span>'+(g.isNew?' <span class="scan-chip ok" style="margin-left:6px;">new '+T.actWord.toLowerCase()+'</span>':'')
+      +(T.hasStages?'<div style="font-weight:400;margin-top:5px;">'+_amwStgCell(g.w,g.isNew,actHasCert)+(stgErrs[g.w]||[]).map(e=>'<span class="amd-hint bad" style="text-align:left;">'+esc(String(e))+'</span>').join('')+'</div>':'')+'</td></tr>';
+    g.lines.forEach(l=>{
+      const it=_amwItem(l); const pl=_amwPlanFor(l._k)||[]; const main=pl.find(x=>x.kind!=='split_new')||pl[0]||null; const splitNew=pl.find(x=>x.kind==='split_new')||null;
+      const consumed=main?num(main.consumed):0; const errs=main?(main.errors||[]):[], warns=main?(main.warnings||[]):[];
+      const qty=l.qty!=null?l.qty:(it?num(it.qty):''); const rate=l.unit_rate!=null?l.unit_rate:(it?num(it.unit_rate):''); const uomL=l.uom||(it?it.uom:'')||uom;
+      const w=l.wbs_node_id!=null?l.wbs_node_id:(it?it.wbs_node_id:null), lo=l.loc_node_id||(it?it.loc_node_id:null);
+      const b=_amwBudgetFor(w,lo); const removed=l.action==='remove'; const isSplit=!!(main&&main.kind==='close');
+      const amt=main&&main.after?num(main.after.amount):(num(qty)*num(rate));
+      const qtyChanged=it&&l.qty!=null&&num(l.qty)!==num(it.qty), rateChanged=it&&l.unit_rate!=null&&num(l.unit_rate)!==num(it.unit_rate);
+      const hint=it?('floor '+fmtINR(consumed)+(qtyChanged?' · was '+fmtINR(it.qty):'')):'new line';
+      const errHtml=errs.map(e=>'<span class="amd-hint bad">'+esc(String(e))+'</span>').join('')+warns.map(e=>'<span class="amd-hint warn">'+esc(String(e))+'</span>').join('');
+      let budgetCell='—'; if(b){ budgetCell=(b.mode==='ls'?'₹ '+fmtINR(b.remaining)+' LS':fmtINR(b.remaining)+' '+esc(uomL))+'<span class="amd-hint '+(b.ok?'ok':'bad')+'">'+(b.mode==='none'?'no approved estimate':'after change '+fmtINR(num(b.remaining)-num(b.requested)))+'</span>'; }
+      const onReq=E.req.some(r=>r.item_key&&String(r.item_key)===String(l.item_key));
+      html+='<tr id="amwRow_'+esc(l._k)+'"'+(removed?' class="amd-removedln"':'')+(isSplit?' class="amd-closedln"':'')+'>'
+        +'<td'+(onReq?' style="box-shadow:inset 3px 0 0 #0ea5e9;" title="On the site request"':'')+'>'+(it?esc(String(it.sno)):'<span style="color:#15803d;font-weight:700;">new</span>')+'</td>'
+        +'<td>'+wl(w,lo)+(l.source==='site'?' <span class="amd-src">site request</span>':'')+'</td>'
+        +'<td>'+esc(uomL)+'</td><td class="num mono">'+(it?fmtINR(consumed):'—')+'</td>'
+        +'<td class="num">'+(removed||isSplit ? '<span class="mono">'+fmtINR(isSplit?consumed:qty)+'</span>'+(isSplit?'<span class="amd-pill close" style="margin-top:3px;"><span class="rev">A'+E.a.rev_no+'</span>closes at certified</span><span class="amd-hint">balance moves to line '+esc(String(main.split_to_sno||''))+'</span>':'')
+            : '<input type="number" step="0.001" min="0" class="num'+(qtyChanged||!it?' amd-changed':'')+(errs.length?' amd-bad':'')+'" value="'+esc(String(qty))+'" oninput="_amwSet(\''+esc(l._k)+'\',\'qty\',this.value)" style="width:110px;">')+'<span class="amd-hint">'+hint+'</span>'+errHtml+'</td>'
+        +'<td class="num">'+budgetCell+'</td>'
+        +'<td class="num">'+(removed?fmtINR(rate):'<input type="number" step="0.01" min="0" class="num'+(rateChanged||!it?' amd-changed':'')+'" value="'+esc(String(rate))+'" oninput="_amwSet(\''+esc(l._k)+'\',\'unit_rate\',this.value)" style="width:100px;">'+(rateChanged?'<span class="amd-hint">was '+fmtINR(it.unit_rate)+'</span>':(!it&&(rate===''||rate==null)?'<span class="amd-hint bad">rate required</span>':'')))+'</td>'
+        +'<td class="num">'+fmtINR(removed?0:amt)+'</td>'
+        +'<td>'+(it ? (consumed>0?'<button class="btn btn-ghost btn-sm" disabled title="Line has certification — reduce to certified instead">Remove</button>':'<button class="btn btn-ghost btn-sm" onclick="_amwRemove(\''+esc(l._k)+'\')">'+(removed?'Restore':'Remove')+'</button>') : '<button class="btn btn-ghost btn-sm" onclick="_amwRemove(\''+esc(l._k)+'\')">Remove</button>')+'</td></tr>';
+      if(splitNew){ const a2=splitNew.after||{}; const bb=_amwBudgetFor(a2.wbs_node_id,a2.loc_node_id);
+        html+='<tr class="amd-addedln"><td>'+esc(String(a2.sno||''))+'</td><td>'+wl(a2.wbs_node_id,a2.loc_node_id)+' <span class="amd-src">split from '+esc(String(it?it.sno:''))+'</span></td><td>'+esc(a2.uom||uomL)+'</td><td class="num mono">—</td><td class="num"><span class="mono">'+fmtINR(a2.qty)+'</span><span class="amd-hint">balance of line '+esc(String(it?it.sno:''))+'</span></td>'
+          +'<td class="num">'+(bb?fmtINR(bb.remaining)+' '+esc(a2.uom||uomL)+'<span class="amd-hint ok">split is qty-neutral</span>':'—')+'</td><td class="num"><span class="mono">'+fmtINR(a2.unit_rate)+'</span><span class="amd-hint">was '+fmtINR(it?it.unit_rate:0)+' on line '+esc(String(it?it.sno:''))+'</span></td><td class="num">'+fmtINR(a2.amount)+'</td><td></td></tr>'; }
+    });
+  });
+  tb.innerHTML=html||'<tr><td colspan="9" class="center muted">No lines</td></tr>';
+  const p=E.plan; const tot=document.getElementById('amwTotals');
+  if(tot) tot.innerHTML=p?('<div>Revision '+num(E.o.rev_no)+' gross<b>'+fmtINRSym(p.total_before)+'</b></div><div>A'+E.a.rev_no+' gross<b>'+fmtINRSym(p.total_after)+'</b></div><div>Change<b style="color:'+((num(p.total_after)-num(p.total_before))>=0?'#1d4ed8':'#b91c1c')+';">'+((num(p.total_after)-num(p.total_before))>=0?'+':'')+fmtINRSym(num(p.total_after)-num(p.total_before))+'</b></div>'):'';
+  const iss=document.getElementById('amwIssues');
+  if(iss&&p){ const bad=(p.budget||[]).filter(b=>!b.ok); const sbad=(p.stages||[]).filter(s=>(s.errors||[]).length);
+    iss.innerHTML=(bad.length||sbad.length)?'<div class="amd-banner block"><span class="i"></span><div>'+bad.map(b=>esc(actName(b.wbs))+' at '+esc(((E.locMap[String(b.loc)]||{}).name)||'')+': '+(b.mode==='none'?'no approved estimate at this location':'requested '+fmtINR(b.requested)+' of '+fmtINR(b.remaining)+' remaining')).concat(sbad.map(s=>'Stages · '+esc(actName(s.wbs_node_id))+': '+s.errors.map(e=>esc(String(e))).join('; '))).join('<br>')+'</div></div>':''; }
+  const sb2=document.getElementById('amwSubmitBtn'); if(sb2&&p) sb2.disabled=!p.ok;
+  _amwReqRender();
+}
+// site request strip on the edit screen: what the site asked, what this draft adds, what is still to place
+function _amwReqAdded(r){
+  const E=_amw.edit; if(!E) return 0;
+  if(r.item_key){ const it=E.items.find(i=>i.item_key===String(r.item_key)); const l=E.draft.lines.find(x=>String(x.item_key)===String(r.item_key)); if(!it||!l) return 0; return Math.round(((l.action==='remove'?0:(l.qty!=null?num(l.qty):num(it.qty)))-num(it.qty))*1000)/1000; }
+  return E.draft.lines.filter(l=>!l.item_key&&String(l.wbs_node_id)===String(r.wbs_node_id)&&String(l.loc_node_id)===String(r.loc_node_id)).reduce((t,l)=>t+num(l.qty),0);
+}
+function _amwReqRender(){
+  const E=_amw.edit; const el=document.getElementById('amwReqStrip'), wr=document.getElementById('amwReqWarn'); if(!el||!E) return; const R=E.req||[];
+  if(!R.length){ el.innerHTML=''; if(wr) wr.innerHTML=''; return; }
+  const a=E.a, ctx=a.request_context||{}; const short=[]; const T=E.T;
+  const actName=w=>{ const n=E.wbsMap[String(w)]; return n?n.name:String(w); }, locName=l=>{ const n=E.locMap[String(l)]; return n?(n.path||n.name):String(l||''); };
+  el.innerHTML='<div class="amd-req"><div class="hd"><b>Site request</b><span>'+esc([a.requested_by,a.requested_at?fmtDateShort(a.requested_at):'',ctx.requested_from||''].filter(Boolean).join(' · '))+'</span>'+(ctx.reason_text?'<span class="muted" style="white-space:normal;">“'+esc(ctx.reason_text)+'”</span>':'')+'</div>'
+    +'<table><thead><tr><th>'+T.actWord+' · Location</th><th>UOM</th><th class="num">'+T.doc+' qty (Rev '+num(E.o.rev_no)+')</th><th class="num">Certified</th><th class="num">Certifying now</th><th class="num">Site asks</th><th class="num">Added in A'+a.rev_no+'</th><th class="num">Still to place</th><th style="width:64px;"></th></tr></thead><tbody>'
+    +R.map((r,i)=>{ const add=_amwReqAdded(r), asks=num(r.extra_qty), left=Math.round(Math.max(0,asks-add)*1000)/1000; if(left>0.0005) short.push(esc(actName(r.wbs_node_id))+' · '+esc(locName(r.loc_node_id))+': '+fmtINR(left)+' '+esc(r.uom||'')+' of +'+fmtINR(asks));
+      return '<tr><td>'+esc(actName(r.wbs_node_id))+(r.action==='add'?' <span class="scan-chip ok" style="font-size:9.5px;padding:0 6px;">not on '+T.doc+'</span>':'')+'<span class="amd-hint" style="text-align:left;">'+esc(locName(r.loc_node_id))+'</span></td><td>'+esc(r.uom||'')+'</td><td class="num mono">'+(r.order_qty!=null?fmtINR(r.order_qty):'—')+'</td><td class="num mono">'+(r.certified!=null?fmtINR(r.certified):'—')+'</td><td class="num mono">'+(r.certifying!=null?fmtINR(r.certifying):'—')+'</td>'
+        +'<td class="num mono"><b>+'+fmtINR(asks)+'</b></td><td class="num mono">'+(add>=0?'+':'')+fmtINR(add)+'</td><td class="num">'+(left>0.0005?'<span class="scan-chip rate">'+fmtINR(left)+' '+esc(r.uom||'')+'</span>':'<span class="scan-chip ok">✓ placed'+(add>asks+0.0005?' · '+fmtINR(add-asks)+' extra':'')+'</span>')+'</td>'
+        +'<td>'+(r.action==='add'&&!E.draft.lines.some(l=>!l.item_key&&String(l.wbs_node_id)===String(r.wbs_node_id)&&String(l.loc_node_id)===String(r.loc_node_id))?'<button class="btn btn-ghost btn-sm" style="margin:0;" onclick="_amwAddFromReq('+i+')">＋ line</button>':'')+'</td></tr>'; }).join('')
+    +'</tbody></table></div>';
+  if(wr) wr.innerHTML=short.length?'<div class="amd-banner freeze"><span class="i"></span><div><b>Site request not fully placed.</b> '+short.join(' · ')+' — no '+T.doc+' line yet. If A'+a.rev_no+' is approved like this, the parked '+T.cert+' will not fit and stays locked.</div></div>':'';
+}
+function _amwAddFromReq(i){ const E=_amw.edit; const r=E.req[i]; if(!r) return; E.draft.lines.push({_k:'new'+Date.now(),item_key:null,action:'add',wbs_node_id:Number(r.wbs_node_id),loc_node_id:r.loc_node_id,qty:num(r.extra_qty),unit_rate:_amwDefaultRate(r.wbs_node_id),description:r.description||null,uom:r.uom||null,source:'site'}); _amwRender(); _amwDirty(); }
+// default rate for a new line: the order's own rate for that activity, else the estimate rate
+function _amwDefaultRate(w){ const E=_amw.edit; const it=E.items.filter(x=>String(x.wbs_node_id)===String(w)&&x.line_status==='Active').sort((a,b)=>num(b.sno)-num(a.sno))[0]; if(it&&num(it.unit_rate)>0) return num(it.unit_rate); const s=(E.scopes||[]).find(x=>String(x.wbs_node_id)===String(w)); return s?num(s.est_rate):null; }
+function _amwDraftPayload(){
+  const E=_amw.edit; const stages={};
+  Object.keys(E.draft.stages||{}).forEach(w=>{ if(!_amwStgChanged(w)) return; stages[w]=(E.draft.stages[w]||[]).map(x=>({stage_name:String(x.stage_name||'').trim(),stage_pct:num(x.stage_pct)})); });   // only amended sets travel
+  return { header:E.draft.header, reason:E.draft.reason||'', stages:E.T.hasStages?stages:undefined,
+    lines:E.draft.lines.map(l=>{ const o={item_key:l.item_key?String(l.item_key):null,action:l.item_key?(l.action||'keep'):'add'};
+      ['qty','unit_rate','uom','description','specification','wbs_node_id','loc_node_id','source'].forEach(f=>{ if(l[f]!==undefined&&l[f]!==null&&l[f]!=='') o[f]=l[f]; }); return o; }) };
+}
+async function _amwSaveDraft(silent){
+  const E=_amw.edit; if(!E) return; clearTimeout(E.saveT);
+  const st=document.getElementById('amwSaveState'); if(st) st.textContent='Saving…';
+  try{
+    const {data,error}=await sb.rpc('rpc_amd_save_draft',{p_amendment_id:E.id,p_draft:_amwDraftPayload(),p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    E.plan=data; E.dirty=false;
+    if(st) st.textContent='Saved '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})+(data.ok?'':' · '+data.error_count+' issue(s)');
+    _amwRender(); if(!silent) toast('Draft saved','success',2000);
+  }catch(e){ if(st) st.textContent='Save failed: '+e.message; if(!silent) toast(e.message,'error',6000); }
+}
+async function _amwSubmit(){
+  const E=_amw.edit; if(!E) return;
+  if(!(E.draft.reason||'').trim()){ toast('Reason for amendment is required','error'); const t=document.getElementById('amwReason'); if(t){ t.classList.add('amw-reqbad'); t.focus(); } return; }
+  const short=(E.req||[]).map(r=>({r,left:Math.round(Math.max(0,num(r.extra_qty)-_amwReqAdded(r))*1000)/1000})).filter(x=>x.left>0.0005);
+  if(short.length&&!confirm('Part of the site request is not placed on any '+E.doc+' line:\n\n'+short.map(x=>'• '+((E.wbsMap[String(x.r.wbs_node_id)]||{}).name||'')+': '+fmtINR(x.left)+' '+(x.r.uom||'')+' still to place').join('\n')+'\n\nThe parked '+E.T.cert+' will not fit after approval. Submit anyway?')) return;
+  if(!confirm('Submit amendment A'+E.a.rev_no+' of '+E.a.doc_number+' for Contracts Manager approval?')) return;
+  pbShow('Submitting…');
+  try{
+    const {error}=await sb.rpc('rpc_amd_submit',{p_amendment_id:E.id,p_draft:_amwDraftPayload(),p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    const doc=E.doc, n=E.a.doc_number, T=E.T; _amwInvalidate(doc,n); toast('A'+E.a.rev_no+' submitted for approval','success');
+    _amw.edit=null; window._modalNoBackdropClose=false; closeModal(); await T.list(); await T.view(n);
+  }catch(e){ toast(e.message,'error',7000); }
+  finally{ pbDone(); }
+}
+function _amwClose(){ const E=_amw.edit; if(E&&E.dirty&&!confirm('Discard unsaved changes? (Saved drafts are kept.)')) return; const doc=E?E.doc:null, n=E?E.a.doc_number:null, T=E?E.T:null; _amw.edit=null; window._modalNoBackdropClose=false; closeModal(); if(n){ _amwInvalidate(doc,n); T.list(); } }
+// ── estimate picker (approved activity × location pairs with live remaining) ──
+async function _amwPicker(doc, excludeNum, onPick, title){
+  const T=_amwT(doc); pbShow('Loading approved estimate…');
+  try{
+    const [tree, locTree, scopes]=await Promise.all([_loadWbsTree(),_loadLocTree(),_woFetchScopes()]);
+    const wbsMap=Object.fromEntries(tree.map(n=>[String(n.id),n])), locMap=Object.fromEntries(locTree.map(n=>[String(n.id),n]));
+    const nodes=tree.filter(n=>n.node_type===T.nodeType); const ids=nodes.map(n=>Number(n.id)); const idSet=new Set(ids);
+    if(!ids.length){ toast('No '+T.actWord.toLowerCase()+' nodes in the WBS','warn'); return; }
+    const {data:rem,error}=await sb.rpc('fn_package_remaining',{p_activity_ids:ids,p_exclude_wo:doc==='WO'?excludeNum:null,p_exclude_ho:doc==='HO'?excludeNum:null}); if(error) throw error;
+    const remBy={}; (rem||[]).forEach(r=>{ remBy[r.wbs_node_id+'|'+r.loc_node_id]={remaining:num(r.remaining),est:num(r.est_qty)}; });
+    const cells=[]; scopes.forEach(s=>{ if(s.scope_status!=='approved') return; const aid=Number(s.wbs_node_id); if(!idSet.has(aid)) return; const an=wbsMap[String(aid)], ln=locMap[String(s.loc_node_id)]; if(!an||!ln) return; const rr=remBy[aid+'|'+s.loc_node_id]||{remaining:0,est:num(s.est_qty)};
+      cells.push({wbs:aid,loc:s.loc_node_id,act:an.name,path:an.path||an.name,uom:an.uom||'',locName:ln.name,locPath:ln.path||ln.name,remaining:rr.remaining,est:rr.est,rate:num(s.est_rate),ls:s.estimate_mode==='ls'}); });
+    if(_amw.edit) _amw.edit.scopes=scopes;
+    window._amwPick={cells,onPick,doc};
+    const html='<h3>'+esc(title||'Add line from estimate')+' <span class="muted" style="font-size:12px;font-weight:400;">'+cells.length+' approved '+T.actWord.toLowerCase()+' × location pairs</span></h3>'
+      +'<input id="amwPickQ" placeholder="Search '+T.actWord.toLowerCase()+' or location…" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:4px;font:inherit;margin-bottom:8px;" oninput="_amwPickRender()">'
+      +'<div class="table-wrap" style="max-height:60vh;overflow:auto;"><table><thead><tr><th>'+T.actWord+'</th><th>Location</th><th>UOM</th><th class="num">Estimate left</th><th class="num">Est. rate</th><th></th></tr></thead><tbody id="amwPickBody"></tbody></table></div>'
+      +'<div class="actions-row"><button class="btn btn-ghost" onclick="_amwPickClose()">Cancel</button></div>';
+    window._amwPickPrev=null; openModal(html,'large'); _amwPickRender(); setTimeout(()=>{ const q=document.getElementById('amwPickQ'); if(q) q.focus(); },50);
+  }catch(e){ toast(e.message||String(e),'error',6000); }
+  finally{ pbDone(); }
+}
+function _amwPickRender(){
+  const P=window._amwPick; const tb=document.getElementById('amwPickBody'); if(!P||!tb) return;
+  const q=(document.getElementById('amwPickQ')||{}).value||''; const toks=_fuzzyTokens(q);
+  let rows=P.cells; if(toks.length) rows=rows.filter(c=>_fuzzyMatch(c.act+' '+c.locPath,toks));
+  rows=rows.slice().sort((a,b)=>a.act.localeCompare(b.act)||a.locPath.localeCompare(b.locPath)).slice(0,300);
+  tb.innerHTML=rows.map((c,i)=>'<tr><td>'+esc(c.act)+'<span class="amd-hint" style="text-align:left;">'+esc(c.path)+'</span></td><td>'+esc(c.locPath)+'</td><td>'+esc(c.uom)+'</td><td class="num mono'+(c.remaining<=0?' muted':'')+'">'+(c.ls?'₹ ':'')+fmtINR(c.remaining)+'</td><td class="num mono">'+fmtINR(c.rate)+'</td><td><button class="btn btn-ghost btn-sm" '+(c.remaining<=0?'disabled title="Nothing left at this location"':'')+' onclick="_amwPickChoose('+P.cells.indexOf(c)+')">Pick</button></td></tr>').join('')||'<tr><td colspan="6" class="center muted">No approved pair matches</td></tr>';
+}
+function _amwPickChoose(i){ const P=window._amwPick; if(!P) return; const c=P.cells[i]; window._amwPick=null; P.onPick(c); }
+function _amwPickClose(){ const P=window._amwPick; window._amwPick=null; if(_amw.edit){ window._modalNoBackdropClose=true; openModal(_amwEditHtml(),'wide'); _amwRender(); } else closeModal(); }
+async function _amwAddLine(){
+  const E=_amw.edit; if(!E) return;
+  await _amwPicker(E.doc, E.a.doc_number, c=>{
+    E.draft.lines.push({_k:'new'+Date.now(),item_key:null,action:'add',wbs_node_id:c.wbs,loc_node_id:c.loc,qty:null,unit_rate:_amwDefaultRate(c.wbs)||c.rate||null,description:c.act,uom:c.uom});
+    window._modalNoBackdropClose=true; openModal(_amwEditHtml(),'wide'); _amwRender(); _amwDirty();
+    toast('Line added — enter the quantity; rate defaults to the '+E.doc+' / estimate rate','success',3500);
+  });
+}
+// ── Review screen (Contracts Manager) ─────────────────────────────────
+async function amwReview(id){
+  pbShow('Loading amendment…');
+  try{
+    const {data,error}=await sb.rpc('rpc_amd_preview',{p_amendment_id:id}); if(error) throw new Error(error.message);
+    const a=data.amendment, p=data.plan; const doc=a.doc_type, T=_amwT(doc);
+    const {data:o}=await sb.from(T.ord).select('*').eq(T.key,a.doc_number).single();
+    let wbsMap={},locMap={}; try{ const [lt,wt]=await Promise.all([_loadLocTree(),_loadWbsTree()]); locMap=Object.fromEntries((lt||[]).map(n=>[String(n.id),n])); wbsMap=Object.fromEntries((wt||[]).map(n=>[String(n.id),n])); }catch(e){}
+    const wname=w=>{ const n=wbsMap[String(w)]; return n?(n.name||''):String(w||''); }, lname=l=>{ const n=locMap[String(l)]; return n?(n.path||n.name||''):String(l||''); };
+    const canA=hasPerm(T.permA), mine=(state.userId&&(state.userId===a.opened_by_id||state.userId===a.amended_by_id)); const pending=a.status==='Pending Approval';
+    const fld=f=>({qty:'Qty',unit_rate:'Rate',line:'Line',loc_node_id:'Location',description:'Description',uom:'UOM',specification:'Spec',stages:'Stages'}[f]||f);
+    const val=(f,v)=>{ if(v==null||v==='') return '—'; if(f==='qty'||f==='unit_rate') return fmtINR(v); if(f==='loc_node_id') return esc(lname(v)); return esc(String(v)); };
+    const src=l=>l.source==='site'?'<span class="scan-chip file">site'+(a.requested_by?' · '+esc(a.requested_by):'')+'</span>':'<span class="muted" style="font-size:11px;">contracts exec</span>';
+    const bud=(l)=>{ const b=(p.budget||[]).find(x=>String(x.wbs)===String(l.after.wbs_node_id)&&String(x.loc)===String(l.after.loc_node_id)); return b?'<span class="amd-rule'+(b.ok?'':' blocked')+'">estimate '+(b.mode==='ls'?'₹ ':'')+fmtINR(b.remaining)+(b.ok?' ✓':' ✗')+'</span>':''; };
+    let rows='';
+    (p.lines||[]).forEach(l=>{
+      if(l.kind==='keep') return;
+      const b=l.before||{}, af=l.after||{}; const label=(l.sno?l.sno+' · ':'')+esc(wname(af.wbs_node_id||b.wbs_node_id))+'<span class="amd-hint" style="text-align:left;">'+esc(lname(af.loc_node_id||b.loc_node_id))+'</span>';
+      const checks=[]; (l.errors||[]).forEach(e=>checks.push('<span class="amd-rule blocked">'+esc(String(e))+'</span>'));
+      if(l.kind==='add'){ checks.push(bud(l)); rows+='<tr><td>'+label+'</td><td>Line</td><td>—</td><td class="amd-arrow">→</td><td class="amd-new">'+fmtINR(af.qty)+' '+esc(af.uom||'')+' @ '+fmtINR(af.unit_rate)+'</td><td>'+checks.join('')+'</td><td>'+src(l)+'</td></tr>'; return; }
+      if(l.kind==='split_new'){ rows+='<tr><td>'+label+'</td><td>Line</td><td>—</td><td class="amd-arrow">→</td><td class="amd-new">'+fmtINR(af.qty)+' '+esc(af.uom||'')+' @ '+fmtINR(af.unit_rate)+'</td><td><span class="amd-rule">split from line '+esc(String(l.split_from_sno||''))+'</span><span class="amd-rule">estimate neutral ✓</span></td><td></td></tr>'; return; }
+      if(l.kind==='remove'){ rows+='<tr><td>'+label+'</td><td>Line</td><td>'+fmtINR(b.qty)+' '+esc(b.uom||'')+' @ '+fmtINR(b.unit_rate)+'</td><td class="amd-arrow">→</td><td class="amd-new">removed</td><td><span class="amd-rule">certified '+fmtINR(l.consumed)+' ✓</span>'+checks.join('')+'</td><td>'+src(l)+'</td></tr>'; return; }
+      if(l.kind==='close'){ rows+='<tr><td>'+label+'</td><td>Qty</td><td>'+fmtINR(b.qty)+' '+esc(b.uom||'')+' @ '+fmtINR(b.unit_rate)+'</td><td class="amd-arrow">→</td><td class="amd-new">'+fmtINR(af.qty)+' '+esc(b.uom||'')+' @ '+fmtINR(b.unit_rate)+' · closed</td><td><span class="amd-rule">floor '+fmtINR(l.consumed)+' ✓</span><span class="amd-rule">split → line '+esc(String(l.split_to_sno||''))+'</span>'+checks.join('')+'</td><td>'+src(l)+'</td></tr>'; return; }
+      (l.changes||[]).forEach((c,ci)=>{ rows+='<tr><td>'+(ci===0?label:'')+'</td><td>'+fld(c.field)+'</td><td>'+val(c.field,c.old)+'</td><td class="amd-arrow">→</td><td class="amd-new">'+val(c.field,c.new)+'</td><td>'+(ci===0?'<span class="amd-rule">floor '+fmtINR(l.consumed)+' ✓</span>'+bud(l)+checks.join(''):'')+'</td><td>'+(ci===0?src(l):'')+'</td></tr>'; });
+    });
+    (p.stages||[]).forEach(s=>{ const lock=(s.before||[]).filter(x=>x.locked); const sum=(s.after||[]).reduce((t,x)=>t+num(x.stage_pct),0);
+      rows+='<tr><td>Stages · '+esc(wname(s.wbs_node_id))+'</td><td>Stages</td><td>'+((s.before||[]).length?s.before.map(x=>esc(x.stage_name)+' '+num(x.stage_pct)+'%').join('<br>'):'—')+'</td><td class="amd-arrow">→</td><td class="amd-new">'+((s.after||[]).length?s.after.map((x,i)=>esc(x.stage_name)+' '+num(x.stage_pct)+'%'+((s.before||[])[i]&&s.before[i].locked?' 🔒':'')).join('<br>'):'none')+'</td><td>'+(lock.length?'<span class="amd-rule">'+lock.map(x=>esc(x.stage_name)+' '+num(x.stage_pct)+'%').join(', ')+' certified — locked ✓</span>':'')+'<span class="amd-rule'+((s.after||[]).length&&Math.abs(sum-100)>0.01?' blocked':'')+'">Σ '+sum+'%'+((s.after||[]).length&&Math.abs(sum-100)>0.01?' ✗':' ✓')+'</span><span class="amd-rule">applies to '+num(s.lines)+' line'+(num(s.lines)===1?'':'s')+'</span>'+(s.errors||[]).map(e=>'<span class="amd-rule blocked">'+esc(String(e))+'</span>').join('')+'</td><td><span class="muted" style="font-size:11px;">contracts exec</span></td></tr>'; });
+    (p.header_changes||[]).forEach(c=>{ const dt=/_date$/.test(c.field); rows+='<tr><td>Header</td><td>'+esc(c.field.replace(/_/g,' '))+'</td><td>'+esc(dt?fmtDate(c.old):String(c.old||'—'))+'</td><td class="amd-arrow">→</td><td class="amd-new">'+esc(dt?fmtDate(c.new):String(c.new||'—'))+'</td><td>'+(c.field==='end_date'&&doc==='HO'?'<span class="amd-rule">hire extension</span>':'')+'</td><td></td></tr>'; });
+    const d=num(p.total_after)-num(p.total_before);
+    rows+='<tr><td>Header</td><td>Gross value</td><td class="num">'+fmtINRSym(p.total_before)+'</td><td class="amd-arrow">→</td><td class="num amd-new">'+fmtINRSym(p.total_after)+'</td><td><span class="amd-rule">'+(d>=0?'+':'')+fmtINRSym(d)+'</span></td><td></td></tr>';
+    let mk=''; if(pending){ mk=mine?'<span style="color:#b91c1c;font-weight:600;">You opened or amended this — another Admin or Contracts Manager must approve it.</span>':'<span style="color:#047857;font-weight:600;">approver ≠ opener ≠ amender ✓</span>'; }
+    const stBadge='<span class="status '+_amdStateCls(a.status==='Pending Approval'?'Amendment Pending Approval':a.status)+'" style="margin-left:8px;vertical-align:middle;">'+esc(a.status==='Pending Approval'?'Amendment pending approval':a.status)+'</span>';
+    openModal('<h3>'+esc(a.doc_number)+'-A'+a.rev_no+' '+stBadge+'</h3>'
+      +'<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">'+esc((o&&o.vendor_name)||'')+(a.requested_by?' · requested by '+esc(a.requested_by)+(a.requested_at?' '+fmtDateShort(a.requested_at):''):'')+' · opened by '+esc(a.opened_by||'')+(a.opened_at?' '+fmtDateShort(a.opened_at):'')+' · amended by '+esc(a.amended_by||'')+(a.amended_at?' '+fmtDateShort(a.amended_at):'')+(a.approved_by?' · approved by '+esc(a.approved_by)+(a.approved_at?' '+fmtDateShort(a.approved_at):''):'')+'</div>'
+      +(a.status==='Rejected - Correction'&&a.rejection_reason?'<div class="amd-banner block"><span class="i"></span><div><b>Returned for correction:</b> '+esc(a.rejection_reason)+'</div></div>':'')
+      +(!p.ok?'<div class="amd-banner block"><span class="i"></span><div><b>'+p.error_count+' issue(s)</b> — the plan is no longer clean (certifications or estimate changed since submission). Return it for correction.</div></div>':'')
+      +'<div class="table-wrap"><table><thead><tr><th>Line</th><th>Field</th><th>Revision '+num(o&&o.rev_no)+'</th><th></th><th>A'+a.rev_no+'</th><th>Checks</th><th>Source</th></tr></thead><tbody>'+(rows||'<tr><td colspan="7" class="center muted">No changes</td></tr>')+'</tbody></table></div>'
+      +(a.reason?'<div style="font-size:12px;margin-top:10px;"><b>Reason:</b> '+esc(a.reason)+'</div>':'')
+      +(pending?'<div style="font-size:12px;margin-top:4px;">Maker-checker: '+mk+'</div>':'')
+      +'<div class="actions-row"><span style="margin-right:auto;font-size:12px;color:var(--muted);">'+(pending?'On approve: revision → A'+a.rev_no+', lines and stages updated, freeze lifted, parked '+T.cert+' released.':'')+'</span>'
+      +'<button class="btn btn-ghost" onclick="closeModal();'+(doc==='WO'?'viewWO':'viewHO')+'(\''+esc(a.doc_number)+'\')">Back to '+doc+'</button>'
+      +(pending&&canA&&!mine?'<button class="btn btn-danger" onclick="amwReject(\''+esc(id)+'\',\''+doc+'\',\''+esc(a.doc_number)+'\')">Reject for correction</button><button class="btn btn-primary" '+(p.ok?'':'disabled')+' onclick="amwApprove(\''+esc(id)+'\',\''+doc+'\',\''+esc(a.doc_number)+'\')">Approve A'+a.rev_no+'</button>':'')
+      +'</div>','wide');
+  }catch(e){ toast(e.message,'error',6000); }
+  finally{ pbDone(); }
+}
+async function amwApprove(id, doc, docNum){
+  const T=_amwT(doc); if(!hasPerm(T.permA)){ toast('Not permitted','error'); return; }
+  if(!confirm('Approve this amendment? Lines and stages are updated, history is written and the '+doc+' is unfrozen.')) return;
+  pbShow('Approving…');
+  try{
+    const {data,error}=await sb.rpc('rpc_amd_approve',{p_amendment_id:id,p_client_request_id:crypto.randomUUID(),p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    _amwInvalidate(doc,docNum); toast('Amendment A'+data.rev_no+' approved — '+docNum+' is now '+data.status,'success',5000);
+    closeModal(); await T.list(); await T.view(docNum);
+  }catch(e){ toast(e.message,'error',8000); }
+  finally{ pbDone(); }
+}
+async function amwReject(id, doc, docNum){
+  const T=_amwT(doc); if(!hasPerm(T.permA)){ toast('Not permitted','error'); return; }
+  const reason=prompt('Return this amendment for correction. Note to the Contracts Executive:'); if(!reason||!reason.trim()){ if(reason!==null) toast('A reason is required','error'); return; }
+  pbShow('Returning…');
+  try{
+    const {error}=await sb.rpc('rpc_amd_reject',{p_amendment_id:id,p_reason:reason.trim(),p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*PERM_DENIED:\s*/,''));
+    _amwInvalidate(doc,docNum); toast('Returned for correction','success'); closeModal(); await T.list(); await T.view(docNum);
+  }catch(e){ toast(e.message,'error',6000); }
+  finally{ pbDone(); }
+}
+// ── WOC / HOC entry: over-balance → site proposal → parked certification ──
+async function _amwCertFormInit(doc, docNum){
+  const T=_amwT(doc); _amw.over[doc]={}; _amw.req[doc]={docNum,adds:[],reason:''}; _amw.lock[doc]=null;
+  const el=document.getElementById(T.pfx+'AmwStrip'); if(el) el.innerHTML='';
+  try{ const {data:o}=await sb.from(T.ord).select('rev_no,amendment_state').eq(T.key,docNum).maybeSingle();
+    if(o&&o.amendment_state){ _amw.lock[doc]=o.amendment_state; if(el) el.innerHTML='<div class="amd-banner freeze"><span class="i"></span><div><b>'+esc(docNum)+' is '+esc(o.amendment_state)+' (A'+(num(o.rev_no)+1)+')</b> — no '+T.cert+' can be saved until the amendment is approved or cancelled. Your entries are kept as a draft.</div></div>'; }
+  }catch(e){}
+}
+async function _amwCertLocked(doc, docNum){
+  const T=_amwT(doc);
+  try{ const {data:o}=await sb.from(T.ord).select('rev_no,amendment_state').eq(T.key,docNum).maybeSingle();
+    if(o&&o.amendment_state){ toast(docNum+' is '+o.amendment_state+' — the '+T.cert+' cannot be saved until the amendment is approved or cancelled. Save it as a draft.','error',7000); return true; } }catch(e){}
+  return false;
+}
+// called from wocSetThis / hocSetThis with the raw typed value, the line's remaining and whether it was capped
+function _amwOverAsk(doc, oiid, f, v, remaining, capped){
+  const T=_amwT(doc); const R=_amw.req[doc]; if(!R) return;
+  const k=String(oiid);
+  if(capped){ const leaf=f.leaf, item=f.item; const asked=num(v); const extra=Math.round((asked-remaining)*1000)/1000;
+    _amw.over[doc][k]={item_key:k,wbs_node_id:leaf.wbsNodeId!=null?leaf.wbsNodeId:(item.wbsNodeId!=null?item.wbsNodeId:Number(item.id)),loc_node_id:leaf.locNodeId||leaf.locId,description:item.name,uom:item.uom,order_qty:num(doc==='WO'?leaf.woQty:leaf.hoQty),certified:num(leaf.prevQty),certifying:remaining,extra_qty:extra,locName:leaf.name,rate:num(item.rate)}; }
+  else if(_amw.over[doc][k] && num(v) <= remaining + 1e-9 && num(v) < num(_amw.over[doc][k].order_qty) - num(_amw.over[doc][k].certified) + 1e-9){ /* keep the ask; the user may have reduced to the cap on purpose */ }
+  _amwReqStripRender(doc);
+}
+function _amwReqStripRender(doc){
+  const T=_amwT(doc); const el=document.getElementById(T.pfx+'AmwStrip'); if(!el) return; const R=_amw.req[doc]; if(!R) return;
+  if(R.sent){ el.innerHTML='<div class="amd-banner freeze"><span class="i"></span><div><b>Proposal sent — '+esc(R.docNum)+' is locked for certification.</b> Your '+T.cert+' is parked as a draft; it saves in one go once the amendment is approved. Nothing else can be certified or billed on this '+doc+' meanwhile.</div></div>'; return; }
+  if(_amw.lock[doc]) return;   // frozen banner already shown
+  const over=Object.values(_amw.over[doc]); const adds=R.adds||[];
+  if(!over.length&&!adds.length){ el.innerHTML=''; return; }
+  const rows=over.map(o=>'<tr><td>'+esc(o.description)+'<span class="amd-hint" style="text-align:left;">'+esc(o.locName||'')+'</span></td><td>'+esc(o.uom||'')+'</td><td class="num mono">'+fmtINR(o.order_qty)+'</td><td class="num mono">'+fmtINR(o.certified)+'</td><td class="num mono">'+fmtINR(o.certifying)+'</td><td class="num"><input type="number" step="0.001" min="0" class="num amd-changed" value="'+o.extra_qty+'" style="width:100px;" oninput="_amw.over[\''+doc+'\'][\''+esc(o.item_key)+'\'].extra_qty=num(this.value)"><span class="amd-hint">overrun</span></td><td><button class="btn btn-ghost btn-sm" onclick="delete _amw.over[\''+doc+'\'][\''+esc(o.item_key)+'\'];_amwReqStripRender(\''+doc+'\')">Remove</button></td></tr>').join('')
+    +adds.map((a,i)=>'<tr><td>'+esc(a.description)+' <span class="scan-chip ok" style="font-size:9.5px;padding:0 6px;">not on '+doc+'</span><span class="amd-hint" style="text-align:left;">'+esc(a.locName||'')+'</span></td><td>'+esc(a.uom||'')+'</td><td class="num mono">—</td><td class="num mono">—</td><td class="num mono">—</td><td class="num"><input type="number" step="0.001" min="0" class="num amd-changed" value="'+(a.extra_qty||'')+'" style="width:100px;" oninput="_amw.req[\''+doc+'\'].adds['+i+'].extra_qty=num(this.value)"><span class="amd-hint">from estimate</span></td><td><button class="btn btn-ghost btn-sm" onclick="_amw.req[\''+doc+'\'].adds.splice('+i+',1);_amwReqStripRender(\''+doc+'\')">Remove</button></td></tr>').join('');
+  el.innerHTML='<div class="amd-banner block" style="margin-top:12px;"><span class="i"></span><div><b>'+(over.length?over.map(o=>esc(o.description)+' at '+esc(o.locName||'')).join(', ')+' '+(over.length>1?'are':'is')+' certified beyond the '+doc+' quantity.':'Work not on this '+doc+'.')+'</b> Save is locked. Propose an amendment — the certification waits until it is approved and then saves in one go.</div></div>'
+    +'<div class="amd-req" style="border-color:#fcd34d;"><div class="hd" style="background:#fffbeb;color:#78350f;"><b>Propose '+doc+' amendment</b><span>Extra quantity only — the Contracts Executive sets the rate and may move the location.</span></div>'
+    +'<table><thead><tr><th>'+T.actWord+' · Location</th><th>UOM</th><th class="num">'+doc+' qty</th><th class="num">Certified</th><th class="num">Certifying now</th><th class="num">Extra asked</th><th></th></tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div style="padding:8px 12px;display:flex;flex-direction:column;gap:8px;"><div><button class="btn btn-ghost btn-sm" onclick="_amwReqAddSearch(\''+doc+'\')">＋ '+T.actWord+' not on this '+doc+' (from estimate)</button></div>'
+    +'<div><label class="muted" style="font-size:11px;">REASON <span style="color:#b91c1c;">*</span></label><textarea id="'+T.pfx+'AmwReason" rows="2" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font:inherit;font-size:13px;background:var(--input-bg);" oninput="_amw.req[\''+doc+'\'].reason=this.value;this.classList.remove(\'amw-reqbad\')">'+esc(R.reason||'')+'</textarea></div>'
+    +'<div style="display:flex;justify-content:flex-end;"><button class="btn btn-secondary" onclick="_amwSendProposal(\''+doc+'\')">Send proposal to Admin</button></div></div></div>';
+}
+async function _amwReqAddSearch(doc){
+  const R=_amw.req[doc]; if(!R) return; const T=_amwT(doc);
+  await _amwPicker(doc, null, c=>{ closeModal(); R.adds.push({action:'add',wbs_node_id:c.wbs,loc_node_id:c.loc,description:c.act,uom:c.uom,locName:c.locPath,extra_qty:null}); _amwReqStripRender(doc); }, T.actWord+' not on '+R.docNum);
+}
+async function _amwSendProposal(doc){
+  const T=_amwT(doc); const R=_amw.req[doc]; if(!R) return;
+  const reason=(R.reason||'').trim(); const ta=document.getElementById(T.pfx+'AmwReason');
+  if(!reason){ if(ta){ ta.classList.add('amw-reqbad'); ta.focus(); } toast('Reason is required','error'); return; }
+  const prop=Object.values(_amw.over[doc]).filter(o=>num(o.extra_qty)>0).map(o=>({action:'modify',item_key:o.item_key,wbs_node_id:o.wbs_node_id,loc_node_id:o.loc_node_id,description:o.description,uom:o.uom,order_qty:o.order_qty,certified:o.certified,certifying:o.certifying,extra_qty:num(o.extra_qty),qty:Math.round((num(o.order_qty)+num(o.extra_qty))*1000)/1000}))
+    .concat((R.adds||[]).filter(a=>num(a.extra_qty)>0).map(a=>({action:'add',item_key:null,wbs_node_id:a.wbs_node_id,loc_node_id:a.loc_node_id,description:a.description,uom:a.uom,extra_qty:num(a.extra_qty),qty:num(a.extra_qty)})));
+  if(!prop.length){ toast('Nothing to propose — enter an extra quantity','error'); return; }
+  const lines=Object.keys(doc==='WO'?_wocThis:_hocThis).filter(k=>num((doc==='WO'?_wocThis:_hocThis)[k])>0).length;
+  const period=doc==='WO'?[(document.getElementById('woc_periodFrom')||{}).value,(document.getElementById('woc_periodTo')||{}).value].filter(Boolean).join(' to '):[(document.getElementById('hoc_periodFrom')||{}).value,(document.getElementById('hoc_periodTo')||{}).value].filter(Boolean).join(' to ');
+  if(!confirm('Send this proposal to the Admin?\n\n'+R.docNum+' is locked for certification and billing until the amendment is approved or dismissed. Your '+T.cert+' entries are parked as a draft.')) return;
+  pbShow('Sending proposal…');
+  try{
+    const ctx={proposal:prop,requested_from:T.cert+' entry',reason_text:reason,parked_cert:{period,lines,at:new Date().toISOString(),by:state.userName}};
+    const {data,error}=await sb.rpc('rpc_amd_request',{p_doc_type:doc,p_doc_number:R.docNum,p_reason:reason,p_context:ctx,p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*?:\s*/,''));
+    R.sent=true; _amw.lock[doc]='Amendment Requested'; _amwInvalidate(doc,R.docNum);
+    try{ await saveDraft(T.cert); }catch(e){}
+    _amwReqStripRender(doc);
+    toast(data&&data.appended?'Proposal added to the existing request on '+R.docNum:'Proposal sent — '+R.docNum+' is locked until the Admin decides. Your certification is parked as a draft.','success',7000);
+  }catch(e){ toast(e.message,'error',7000); }
+  finally{ pbDone(); }
+}
+// ── end v148 WO/HO amendment block ─────────────────────────────────────
+
 
 async function printPOById(poNum) { await printPO(poNum); }
 

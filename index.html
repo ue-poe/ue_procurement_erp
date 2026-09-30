@@ -1377,13 +1377,28 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #master-labour .lm-t th{background:#eef2f7;text-align:left;font-weight:800;font-size:9.5px;color:#51627a}
 #master-labour .lm-t td.n,#master-labour .lm-t th.n{text-align:right}#master-labour .lm-t td.c,#master-labour .lm-t th.c{text-align:center}
 #master-labour .lm-t tr.mut td{color:#8a98ad}#master-labour .lm-t tr.new td{background:#f8fafc}
-/* v153 · stage groups (mock v4) */
+/* v153.5 · stage templates (mock v5): flat PO-style table, tick = teal row */
 .stt input[type=number]::-webkit-inner-spin-button,.stt input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.stt input[type=number]{-moz-appearance:textfield}
-.stt tr.grp td{background:#e8eef7;font-weight:700}.stt tr.grp input[type=text]{font-weight:700}.stt tr.sel td{outline:2px solid #0e7c86;outline-offset:-2px}
-.stt .ind{display:inline-block;width:20px;color:#9aa8bb;text-align:center}.stt .eff{color:#6b7a8f;font-size:11px}.stt tr.sum td{background:#fafbfd;font-weight:700;color:#6b7a8f}
-.stt .ok{color:#128a4a}.stt .bad{color:#b3261e}.stt .gpill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:9px;background:#14304f;color:#fff;letter-spacing:.3px;vertical-align:middle;margin-right:6px}
-.stt .fold{width:22px;height:22px;padding:0;font-size:11px;line-height:1;margin-right:4px}.stt-tools{display:flex;gap:6px;align-items:center;margin:8px 0;flex-wrap:wrap}.stt-tools .sp{flex:1}.stt-tools .btn{white-space:nowrap}
-.lm-t .gpill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:9px;background:#14304f;color:#fff;letter-spacing:.3px;vertical-align:middle}
+#master-labour table.lm-t.stt,.modal-content table.lm-t.stt,table.lm-t.stt{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;font-size:12.5px}
+table.lm-t.stt th,table.lm-t.stt td{border:1px solid #c3ccd9;padding:0;height:34px;vertical-align:middle}
+table.lm-t.stt th{background:#eef2f7;color:#51627a;font-size:10px;font-weight:800;letter-spacing:.3px;text-align:left;padding:0 8px;height:30px}
+table.lm-t.stt th.c,table.lm-t.stt td.c{text-align:center}table.lm-t.stt th.n,table.lm-t.stt td.n{text-align:right;padding-right:8px}
+table.lm-t.stt td.c input[type=checkbox],table.lm-t.stt th.c input[type=checkbox]{width:15px;height:15px;margin:0;vertical-align:middle;cursor:pointer}
+table.lm-t.stt td.num{color:#6b7a8f;font-size:11.5px;text-align:center}
+table.lm-t.stt td input.tx{width:100%;height:33px;border:0;background:transparent;padding:0 8px;font:inherit;font-size:12.5px;color:#1d2a3a;outline:0;border-radius:0}
+table.lm-t.stt td input.w{width:100%;height:33px;border:0;background:transparent;padding:0 8px;font:inherit;font-size:13px;font-weight:700;color:#14304f;text-align:right;outline:0;border-radius:0}
+table.lm-t.stt td:has(input:focus){box-shadow:inset 0 0 0 2px #0e7c86}
+table.lm-t.stt tr.sel td{background:#e3f3f4}table.lm-t.stt tr.sel td.num{color:#0e7c86;font-weight:800}
+table.lm-t.stt tr.grp td{background:#eef2f7}table.lm-t.stt tr.grp.sel td{background:#d6ebec}
+table.lm-t.stt tr.grp td.nm{padding:0 8px 0 6px}table.lm-t.stt tr.grp td.nm .gr{display:flex;align-items:center;gap:6px;height:33px}table.lm-t.stt tr.grp td.nm .gr input.tx{flex:1;width:auto;min-width:0;font-weight:700}table.lm-t.stt tr.grp td.nm .gr .k{font-size:10.5px;color:#6b7a8f;white-space:nowrap}
+table.lm-t.stt tr.grp .fold{width:20px;height:20px;border:1px solid #c3ccd9;background:#fff;border-radius:3px;font-size:10px;line-height:1;cursor:pointer;padding:0;font-family:inherit}
+table.lm-t.stt tr.grp td.gw{font-weight:800;color:#14304f}table.lm-t.stt tr.grp td.gw small{font-weight:600;color:#6b7a8f;font-size:10px;margin-right:4px}
+table.lm-t.stt tr.in td.tx0{padding-left:22px;box-shadow:inset 4px 0 0 #eef2f7}
+table.lm-t.stt tr.tot td{background:#fafbfd;height:30px;font-size:12px;color:#6b7a8f;font-weight:700;padding:0 8px}table.lm-t.stt tr.tot td.n{color:#128a4a}table.lm-t.stt tr.tot td.n.bad{color:#b3261e}
+.gpill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:9px;background:#14304f;color:#fff;letter-spacing:.3px;vertical-align:middle}
+.stt-tools{display:flex;gap:6px;align-items:center;margin:2px 0 8px;flex-wrap:wrap}.stt-tools .sp{flex:1}.stt-tools .btn{white-space:nowrap}.stt-tools .lbl{font-size:10.5px;font-weight:800;color:#6b7a8f;letter-spacing:.3px;margin:0 2px 0 8px}
+.stt-tools .btn.stt-t{background:#0e7c86;color:#fff;border-color:#0e7c86}.stt-tools .btn.stt-t:disabled{background:#fff;color:#1d2a3a;border-color:#c3ccd9}
+.stt-foot{display:flex;align-items:center;gap:8px}.stt-foot .sp{flex:1}.stt-foot small{color:#6b7a8f;font-size:11px}
 #master-labour .lm-t input:not([type=checkbox]){border:1px solid transparent;background:transparent;font-family:inherit;font-size:12.5px;padding:4px 6px;width:100%}
 #master-labour .lm-t input:not([type=checkbox]):hover{border-color:#b6c0cc;background:#fff}#master-labour .lm-t input:not([type=checkbox]):focus{border-color:#0b7d7d;background:#fff;outline:0}
 #master-labour .lm-pill{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:3px;background:#f0f2f5;color:#51627a;border:1px solid #d3d9e2}
@@ -8877,9 +8892,9 @@ const DPR = (function () {
       const est = num(x.est_qty); let cum = 0, all100 = true;
       const G = stageGroupsOf(x), nG = G.filter(g => g.seq != null).length;
       h += `<div class="dstages"><div class="hd">STAGES · ${x.stages.length}${nG ? ' · ' + nG + ' GROUPS' : ''} · progress = Σ stage % × weight</div>`;
-      // v153 · stages grouped (mock v4): group header carries the live group % = Σ(stage weight-in-group × stage %)
+      // v153 · stages grouped: group header carries the live group % = Σ(stage weight-in-group × stage %)
       const one = s => { const base = num(s.pct_base), v = num(y.stages[s.id] != null ? y.stages[s.id] : base); cum += est * num(s.weight) / 100 * v / 100; if (v < 99.9995) all100 = false;
-        return `<div class="dstage"><div class="nm">${esc(s.name)}<small>weight ${fmt(s.group_seq != null ? s.tpl_weight : s.weight)}%${s.group_seq != null ? ' of group' : ''} · was ${Math.round(base)}%</small></div><div class="bar"><i style="width:${Math.min(100, v)}%"></i></div><div class="pc ${v >= 100 ? 'ok' : ''}">${Math.round(v)}%</div></div>
+        return `<div class="dstage"><div class="nm">${esc(s.name)}<small>weight ${fmt(s.weight)}% · was ${Math.round(base)}%</small></div><div class="bar"><i style="width:${Math.min(100, v)}%"></i></div><div class="pc ${v >= 100 ? 'ok' : ''}">${Math.round(v)}%</div></div>
           <div class="dstbtn">${[25, 50, 75, 100].map(p => `<button ${p < base ? 'disabled' : ''} class="${p === 100 ? 'ok' : ''} ${Math.round(v) === p ? 'on' : ''}" onclick="DPR.stageSet('${id}','${s.id}',${p},${Math.round(v) === p ? 'true' : 'false'})">${p === 100 ? 'Done' : p + '%'}</button>`).join('')}<input type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${Math.round(v)}" title="exact %" onchange="DPR.stageSet('${id}','${s.id}',this.value)"></div>`; };
       G.forEach(g => {
         if (g.seq == null) { g.stages.forEach(s => { h += one(s); }); return; }
@@ -9084,7 +9099,7 @@ const DPR = (function () {
     if (l.stage_mode && (l.stages || []).length) {
       // v153 · one row per group (name · share of line · group %) above the strips of its stages; loose stages as before
       const stageBlock = s => { const rows = stripRows(l, hist, toDate, s.seq); const v = rows.length ? rows.filter(r => r.kind === 'w').reduce((a, r) => r.cum, 0) : num(s.pct_base);
-        return `<div class="dstg"><div class="sn">${esc(s.name)}<small>weight ${fmt(s.group_seq != null ? s.tpl_weight : s.weight)}%${s.group_seq != null ? ' of group · ' + fmt(s.weight) + '% of line' : ''}</small><span class="sp"></span><span class="v ${v >= 100 ? 'ok' : ''}">${v >= 100 ? '✓ Done' : Math.round(v) + '%'}</span></div>${rows.length ? stripHtml(rows, 100, '', true, true) : '<div class="dns">Not started</div>'}</div>`; };
+        return `<div class="dstg"><div class="sn">${esc(s.name)}<small>weight ${fmt(s.weight)}%</small><span class="sp"></span><span class="v ${v >= 100 ? 'ok' : ''}">${v >= 100 ? '✓ Done' : Math.round(v) + '%'}</span></div>${rows.length ? stripHtml(rows, 100, '', true, true) : '<div class="dns">Not started</div>'}</div>`; };
       return stageGroupsOf(l).map(g => { if (g.seq == null) return g.stages.map(stageBlock).join('');
         const v = g.stages.reduce((a, s) => { const rows = stripRows(l, hist, toDate, s.seq); const p = rows.length ? rows.filter(r => r.kind === 'w').reduce((a2, r) => r.cum, 0) : num(s.pct_base); return a + num(s.tpl_weight) * p / 100; }, 0);
         return `<div class="dsgr"><span class="lm-pill" style="background:#14304f;color:#fff">GROUP</span>${esc(g.name)}<small>${fmt(g.weight)}% of line · ${g.stages.length} stages</small><span class="pc ${v >= 99.9995 ? 'ok' : ''}">${v >= 99.9995 ? '✓ 100%' : Math.round(v) + '%'}</span></div>` + g.stages.map(stageBlock).join(''); }).join('');
@@ -40984,98 +40999,109 @@ const DPRM = (function () {
     $('lm_body').innerHTML = h + '</table>';
   }
   function sq(v) { S.sq = v; const i = document.querySelector('#lm_body input'); const p = i ? i.selectionStart : null; stagesDraw(); const i2 = document.querySelector('#lm_body input'); if (i2) { i2.focus(); if (p != null) i2.setSelectionRange(p, p); } }
-  /* v153 · stage groups (mock v4): two-level tree — groups hold stages. Group weight = share of the activity;
-     stage weight = share of its group (or of the activity when loose). Effective % = group × stage ÷ 100 is what the DB stores on the work. */
-  const r1 = v => Math.round(num(v) * 100) / 100;
-  function stListTxt(t) {   // list cell: groups as pills with their stages, loose stages plain
+  /* v153.5 · stage templates (mock v5, approved 30 Sep): a flat list of stages, weight = % of the activity, total 100.
+     Groups are optional — tick 2+ stages → Group ticked; group weight = Σ of its stages (computed). The M29 RPC still takes
+     group weight + share-of-group, so the client converts both ways at full precision (effective weight on the work = % typed). */
+  const r2 = v => Math.round(num(v) * 100) / 100;
+  function stListTxt(t) {
     const G = t.groups || [], out = [];
-    G.forEach(g => { const st = (t.steps || []).filter(x => x.group_seq === g.seq); out.push('<span class="gpill">' + esc(g.name) + ' ' + num(g.weight) + '%</span>' + st.map(x => esc(x.name) + ' <span class="lm-pill">' + num(x.weight) + '%</span>').join(' → ')); });
-    (t.steps || []).filter(x => x.group_seq == null).forEach(x => out.push(esc(x.name) + ' <span class="lm-pill">' + num(x.weight) + '%</span>'));
+    G.forEach(g => { const st = (t.steps || []).filter(x => x.group_seq === g.seq); out.push('<span class="gpill">' + esc(g.name) + '</span> <span class="lm-pill">' + r2(g.weight) + '%</span> ' + st.map(x => esc(x.name) + ' ' + r2(num(g.weight) * num(x.weight) / 100) + '%').join(' → ')); });
+    (t.steps || []).filter(x => x.group_seq == null).forEach(x => out.push(esc(x.name) + ' <span class="lm-pill">' + r2(x.weight) + '%</span>'));
     return out.join(' <b>·</b> ');
   }
-  function stTreeOf(t) {   // payload → tree [{t:'g',name,w,kids:[{name,w}]} | {t:'s',name,w}] in seq order
+  function stTreeOf(t) {   // payload → [{t:'g',name,kids:[{name,w}]} | {t:'s',name,w}], w always = % of activity
     if (!t || !t.is_active) return [];
-    const G = (t.groups || []).map(g => ({ t: 'g', name: g.name, w: num(g.weight), kids: [], seq: g.seq }));
-    const out = []; const seen = new Set();
-    (t.steps || []).forEach(x => { if (x.group_seq != null) { const g = G.find(z => z.seq === x.group_seq); if (g) { g.kids.push({ name: x.name, w: num(x.weight) }); if (!seen.has(g.seq)) { seen.add(g.seq); out.push(g); } return; } } out.push({ t: 's', name: x.name, w: num(x.weight) }); });
+    const G = (t.groups || []).map(g => ({ t: 'g', name: g.name, kids: [], seq: g.seq, gw: num(g.weight) })), out = [], seen = new Set();
+    (t.steps || []).forEach(x => { if (x.group_seq != null) { const g = G.find(z => z.seq === x.group_seq); if (g) { g.kids.push({ name: x.name, w: g.gw * num(x.weight) / 100 }); if (!seen.has(g.seq)) { seen.add(g.seq); out.push(g); } return; } } out.push({ t: 's', name: x.name, w: num(x.weight) }); });
     G.forEach(g => { if (!seen.has(g.seq)) out.push(g); });
-    return out.map(n => { const c = Object.assign({}, n); delete c.seq; return c; });
+    return out.map(n => { const c = Object.assign({}, n); delete c.seq; delete c.gw; return c; });
   }
+  const stGsum = g => g.kids.reduce((x, y) => x + num(y.w), 0), stTotal = () => S.stEd.tree.reduce((x, n) => x + (n.t === 'g' ? stGsum(n) : num(n.w)), 0);
   function stEdit(id) {
     const a = (S.st.activities || []).find(x => x.wbs_node_id === id); if (!a) return;
-    S.stEd = { id, tree: stTreeOf(a.template), src: a.template && a.template.is_active ? a.template.source_wo_number : null, sel: null, fold: new Set() };
-    openModal(`<h3 style="display:flex;align-items:center;gap:10px">Stages — ${esc(a.name)}<span class="lm-pill" id="lm_stcount"></span><span style="flex:1"></span><button class="btn btn-ghost btn-sm" title="Close" onclick="closeModal()">✕</button></h3><div id="lm_st"></div>
-      <div class="actions-row" style="margin-top:12px"><button class="btn btn-ghost" onclick="closeModal()">Close</button><button class="btn btn-primary" onclick="DPRM.stSave()">Save stages</button></div>`, 'large');
-    window._modalNoBackdropClose = true;   // mock v2 §3 · a stray click outside never loses an edit
-    S.stA = a; stDraw(a);
+    S.stEd = { id, tree: stTreeOf(a.template), src: a.template && a.template.is_active ? a.template.source_wo_number : null, sel: new Set(), fold: new Set() };
+    openModal(`<h3 style="display:flex;align-items:center;gap:10px;margin-bottom:6px">Stages — ${esc(a.name)}<span class="lm-pill" id="lm_stcount"></span><span style="flex:1"></span><button class="btn btn-ghost btn-sm" title="Close" onclick="closeModal()">✕</button></h3><div id="lm_st"></div>
+      <div class="actions-row stt-foot" style="margin-top:12px"><small id="lm_sthint"></small><span class="sp"></span><button class="btn btn-ghost" onclick="DPRM.stClear()">Clear all — quantity mode</button><button class="btn btn-ghost" onclick="closeModal()">Close</button><button class="btn btn-primary" onclick="DPRM.stSave()">Save stages</button></div>`, 'large');
+    window._modalNoBackdropClose = true;
+    S.stA = a; stDraw();
   }
-  const stSumCls = v => Math.abs(v - 100) < 0.005 ? 'ok' : 'bad';
-  function stTop() { return S.stEd.tree.reduce((x, n) => x + num(n.w), 0); }
-  function stDraw(a) {
-    const E = S.stEd, T = E.tree; let h = '', row = 0;
-    h += `<div class="lm-note" style="border:1px solid var(--line,#c3ccd9)">${esc(a.name)} · ${esc(a.uom || '')} · ${num(a.works)} work${num(a.works) === 1 ? '' : 's'} on site (${num(a.works_staged)} already staged — unchanged by this edit). A group's weight is its share of the activity; stages inside a group add up to 100 of that group. Effective % = what the work will carry.</div>
-      <div class="stt-tools"><button class="btn btn-ghost btn-sm" onclick="DPRM.stAddGroup()">＋ Group</button><button class="btn btn-ghost btn-sm" onclick="DPRM.stAdd()">＋ Stage</button><span style="width:10px"></span><span class="eff" style="font-size:11px;color:#6b7a8f">Selected:</span><button class="btn btn-ghost btn-sm" ${E.sel ? '' : 'disabled'} onclick="DPRM.stMove(-1)">▲ Up</button><button class="btn btn-ghost btn-sm" ${E.sel ? '' : 'disabled'} onclick="DPRM.stMove(1)">▼ Down</button><span class="sp"></span><span style="font-size:11px;color:#6b7a8f">＋ Stage adds inside the ticked group · ▲▼ move the ticked row among its siblings</span></div>
-      <table class="lm-t stt" style="table-layout:fixed"><colgroup><col style="width:34px"><col style="width:34px"><col><col style="width:150px"><col style="width:86px"><col style="width:34px"></colgroup>
-      <tr><th class="c">SEL</th><th class="c">#</th><th>GROUP / STAGE</th><th class="n">WEIGHT %</th><th class="n">EFFECTIVE %</th><th></th></tr>`;
+  function stDraw() {
+    const E = S.stEd, T = E.tree, a = S.stA; let h = '', row = 0;
+    const ks = [...E.sel], stages = ks.filter(k => k[0] !== 'g'), groups = ks.filter(k => k[0] === 'g');
+    h += `<div class="stt-tools"><button class="btn btn-ghost btn-sm" onclick="DPRM.stAdd()">＋ Stage</button><span class="lbl">TICKED:</span>
+      <button class="btn btn-sm stt-t" ${stages.length >= 2 && !groups.length ? '' : 'disabled'} onclick="DPRM.stGroup()">⊞ Group ticked</button>
+      <button class="btn btn-ghost btn-sm" ${groups.length || stages.some(k => k[0] === 's') ? '' : 'disabled'} onclick="DPRM.stUngroup()">⊟ Ungroup</button>
+      <button class="btn btn-ghost btn-sm" ${ks.length === 1 ? '' : 'disabled'} onclick="DPRM.stMove(-1)">▲ Up</button><button class="btn btn-ghost btn-sm" ${ks.length === 1 ? '' : 'disabled'} onclick="DPRM.stMove(1)">▼ Down</button>
+      <button class="btn btn-ghost btn-sm" ${ks.length ? '' : 'disabled'} onclick="DPRM.stDel()">✖ Remove</button><span class="sp"></span>
+      ${(a.wo_sets || []).map((w, k) => `<button class="btn btn-ghost btn-sm" title="${esc((w.steps || []).map(x => x.name + ' ' + num(x.weight) + '%').join(' → '))}" onclick="DPRM.stSeed(${k})">Seed from ${esc(w.wo_number)}</button>`).join('')}</div>
+      <table class="lm-t stt"><colgroup><col style="width:36px"><col style="width:36px"><col><col style="width:110px"></colgroup>
+      <tr><th class="c"><input type="checkbox" ${ks.length && ks.length === T.reduce((x, n) => x + (n.t === 'g' ? n.kids.length + 1 : 1), 0) ? 'checked' : ''} onchange="DPRM.stTickAll(this.checked)"></th><th class="c">#</th><th>STAGE</th><th class="n">WEIGHT %</th></tr>`;
     T.forEach((n, i) => {
-      if (n.t === 'g') { const k = 'g' + i, on = E.sel === k, gs = n.kids.reduce((x, y) => x + num(y.w), 0), fd = E.fold.has(i);
-        h += `<tr class="grp ${on ? 'sel' : ''}"><td class="c"><input type="checkbox" ${on ? 'checked' : ''} onchange="DPRM.stTick('${k}')"></td><td class="c">${++row}</td>
-          <td><button class="btn btn-ghost btn-xs fold" onclick="DPRM.stFold(${i})">${fd ? '▸' : '▾'}</button><span class="gpill">GROUP</span><input type="text" style="width:calc(100% - 200px)" value="${esc(n.name)}" placeholder="Group name" oninput="DPRM.stSet('${k}','name',this.value)"> <span class="lm-pill ${stSumCls(gs)}">Σ ${r1(gs)}%</span> <span class="eff">${n.kids.length} stages</span></td>
-          <td class="n"><input type="number" step="0.5" min="0" max="100" value="${n.w}" style="width:60px;text-align:right" oninput="DPRM.stSet('${k}','w',this.value)" onchange="DPRM.stRedraw()"> <span class="eff">of activity</span></td><td class="n eff">${r1(n.w)}%</td><td class="c"><button class="btn btn-ghost btn-xs" onclick="DPRM.stDel('${k}')">✖</button></td></tr>`;
-        if (fd) { h += `<tr class="sum"><td></td><td></td><td class="eff">${n.kids.length} stages hidden — ▸ to expand</td><td class="n ${stSumCls(gs)}">${r1(gs)}%</td><td class="n">${r1(n.w)}%</td><td></td></tr>`; return; }
-        n.kids.forEach((x, j) => { const sk = 's' + i + '-' + j, so = E.sel === sk;
-          h += `<tr class="${so ? 'sel' : ''}"><td class="c"><input type="checkbox" ${so ? 'checked' : ''} onchange="DPRM.stTick('${sk}')"></td><td class="c">${++row}</td>
-            <td><span class="ind">${j === n.kids.length - 1 ? '└' : '├'}</span><input type="text" style="width:calc(100% - 26px)" value="${esc(x.name)}" placeholder="e.g. Shuttering" oninput="DPRM.stSet('${sk}','name',this.value)"></td>
-            <td class="n"><input type="number" step="0.5" min="0" max="100" value="${x.w}" style="width:60px;text-align:right" oninput="DPRM.stSet('${sk}','w',this.value)" onchange="DPRM.stRedraw()"> <span class="eff">of group</span></td><td class="n eff">${r1(num(n.w) * num(x.w) / 100)}%</td><td class="c"><button class="btn btn-ghost btn-xs" onclick="DPRM.stDel('${sk}')">✖</button></td></tr>`; });
-        h += `<tr class="sum"><td></td><td></td><td style="text-align:right">${esc(n.name || 'group')} — stages add up to</td><td class="n ${stSumCls(gs)}">${r1(gs)}%</td><td class="n">${r1(n.w)}%</td><td></td></tr>`;
-      } else { const k = 't' + i, on = E.sel === k;
-        h += `<tr class="${on ? 'sel' : ''}"><td class="c"><input type="checkbox" ${on ? 'checked' : ''} onchange="DPRM.stTick('${k}')"></td><td class="c">${++row}</td>
-          <td><input type="text" value="${esc(n.name)}" placeholder="e.g. Shuttering" oninput="DPRM.stSet('${k}','name',this.value)"></td>
-          <td class="n"><input type="number" step="0.5" min="0" max="100" value="${n.w}" style="width:60px;text-align:right" oninput="DPRM.stSet('${k}','w',this.value)" onchange="DPRM.stRedraw()"> <span class="eff">of activity</span></td><td class="n eff">${r1(n.w)}%</td><td class="c"><button class="btn btn-ghost btn-xs" onclick="DPRM.stDel('${k}')">✖</button></td></tr>`; }
+      if (n.t === 'g') { const k = 'g' + i, fd = E.fold.has(i);
+        h += `<tr class="grp ${E.sel.has(k) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${E.sel.has(k) ? 'checked' : ''} onchange="DPRM.stTick('${k}')"></td><td class="num">${++row}</td>
+          <td class="nm"><div class="gr"><button class="fold" onclick="DPRM.stFold(${i})">${fd ? '▸' : '▾'}</button><span class="gpill">GROUP</span><input class="tx" value="${esc(n.name)}" placeholder="Group name" oninput="DPRM.stSet('${k}','name',this.value)"><span class="k">${n.kids.length} stage${n.kids.length === 1 ? '' : 's'}</span></div></td>
+          <td class="n gw"><small>Σ</small>${r2(stGsum(n))}</td></tr>`;
+        if (!fd) n.kids.forEach((x, j) => { const sk = 's' + i + '-' + j;
+          h += `<tr class="in ${E.sel.has(sk) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${E.sel.has(sk) ? 'checked' : ''} onchange="DPRM.stTick('${sk}')"></td><td class="num">${++row}</td><td class="tx0"><input class="tx" value="${esc(x.name)}" placeholder="Stage name" oninput="DPRM.stSet('${sk}','name',this.value)"></td><td><input class="w" type="number" step="0.5" min="0" max="100" value="${r2(x.w)}" oninput="DPRM.stSet('${sk}','w',this.value)" onchange="DPRM.stRedraw()"></td></tr>`; });
+        else row += n.kids.length;
+      } else { const k = 't' + i;
+        h += `<tr class="${E.sel.has(k) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${E.sel.has(k) ? 'checked' : ''} onchange="DPRM.stTick('${k}')"></td><td class="num">${++row}</td><td><input class="tx" value="${esc(n.name)}" placeholder="Stage name" oninput="DPRM.stSet('${k}','name',this.value)"></td><td><input class="w" type="number" step="0.5" min="0" max="100" value="${r2(n.w)}" oninput="DPRM.stSet('${k}','w',this.value)" onchange="DPRM.stRedraw()"></td></tr>`; }
     });
-    const ts = stTop();
-    h += `<tr class="sum"><td></td><td></td><td style="text-align:right">Top level (groups + loose stages) adds up to</td><td class="n ${stSumCls(ts)}">${r1(ts)}%</td><td class="n">100%</td><td></td></tr></table>`;
-    if ((a.wo_sets || []).length) h += `<div class="lm-note" style="margin-top:8px">Seed from a WO stage set (lands as loose stages — group them after):<br>` + a.wo_sets.map((w, k) => `<button class="btn btn-ghost btn-xs" style="margin:3px 4px 0 0" onclick="DPRM.stSeed(${k})">${esc(w.wo_number)} · ${esc(w.contractor)}</button> <span style="font-size:10px;color:#8a98ad">${(w.steps || []).map(x => esc(x.name) + ' ' + num(x.weight) + '%').join(' → ')}</span>`).join('<br>') + '</div>';
-    if (T.length) h += `<div style="margin-top:8px"><button class="btn btn-ghost btn-xs" onclick="DPRM.stClear()">Clear all — back to quantity mode</button></div>`;
+    const tot = stTotal(), okT = Math.abs(tot - 100) < 0.005;
+    h += `<tr class="tot"><td></td><td></td><td>TOTAL — must be 100</td><td class="n ${okT ? '' : 'bad'}">${r2(tot)}%</td></tr></table>`;
     $('lm_st').innerHTML = h;
-    const c = $('lm_stcount'); if (c) c.textContent = T.filter(n => n.t === 'g').length + ' groups · ' + T.reduce((x, n) => x + (n.t === 'g' ? n.kids.length : 1), 0) + ' stages';
+    const nS = T.reduce((x, n) => x + (n.t === 'g' ? n.kids.length : 1), 0), nG = T.filter(n => n.t === 'g').length;
+    const c = $('lm_stcount'); if (c) c.textContent = nS + ' stage' + (nS === 1 ? '' : 's') + (nG ? ' · ' + nG + ' group' + (nG > 1 ? 's' : '') : '');
+    const hint = $('lm_sthint'); if (hint) hint.textContent = ks.length ? ks.length + ' ticked' : !nS ? 'No stages — quantity mode' : okT ? 'Ready to save' : 'Weights add up to ' + r2(tot) + ' — adjust before saving';
   }
-  function stRef(k) { const T = S.stEd.tree; if (k[0] === 'g' || k[0] === 't') return { arr: T, i: +k.slice(1) }; const [i, j] = k.slice(1).split('-').map(Number); return { arr: T[i].kids, i: j }; }
-  function stKeyOf(arr, i) { const T = S.stEd.tree; if (arr === T) return (T[i].t === 'g' ? 'g' : 't') + i; const gi = T.findIndex(n => n.kids === arr); return 's' + gi + '-' + i; }
+  const stRef = k => { const T = S.stEd.tree; if (k[0] !== 's') return { arr: T, i: +k.slice(1) }; const [i, j] = k.slice(1).split('-').map(Number); return { arr: T[i].kids, i: j }; };
+  const stKeyOf = (arr, i) => { const T = S.stEd.tree; return arr === T ? (T[i].t === 'g' ? 'g' : 't') + i : 's' + T.findIndex(n => n.kids === arr) + '-' + i; };
   function stSet(k, f, v) { const r = stRef(k), n = r.arr[r.i]; if (!n) return; n[f] = f === 'w' ? Number(v) : v; }
-  function stRedraw() { stDraw(S.stA); }
-  function stTick(k) { const E = S.stEd; E.sel = E.sel === k ? null : k; stDraw(S.stA); }
-  function stFold(i) { const F = S.stEd.fold; F.has(i) ? F.delete(i) : F.add(i); stDraw(S.stA); }
-  function stMove(d) { const E = S.stEd; if (!E.sel) return; const r = stRef(E.sel), j = r.i + d; if (j < 0 || j >= r.arr.length) return; [r.arr[r.i], r.arr[j]] = [r.arr[j], r.arr[r.i]]; if (r.arr === E.tree) { const f = new Set(); E.fold.forEach(x => f.add(x === r.i ? j : x === j ? r.i : x)); E.fold = f; } E.sel = stKeyOf(r.arr, j); stDraw(S.stA); }
-  function stDel(k) { const r = stRef(k), n = r.arr[r.i]; if (!n) return; if (n.t === 'g' && n.kids.length && !confirm('Delete the group "' + (n.name || '') + '" and its ' + n.kids.length + ' stages?')) return; r.arr.splice(r.i, 1); S.stEd.sel = null; S.stEd.fold = new Set(); stDraw(S.stA); }
-  function stAddGroup() { const E = S.stEd; E.tree.push({ t: 'g', name: '', w: 0, kids: [] }); E.sel = 'g' + (E.tree.length - 1); stDraw(S.stA); stFocusSel(); }
-  function stAdd() { const E = S.stEd, k = E.sel;
-    if (k && k[0] === 's') { const [i, j] = k.slice(1).split('-').map(Number); E.tree[i].kids.splice(j + 1, 0, { name: '', w: 0 }); E.sel = 's' + i + '-' + (j + 1); }
-    else if (k && k[0] === 'g') { const i = +k.slice(1); E.tree[i].kids.push({ name: '', w: 0 }); E.fold.delete(i); E.sel = 's' + i + '-' + (E.tree[i].kids.length - 1); }
-    else { E.tree.push({ t: 's', name: '', w: 0 }); E.sel = 't' + (E.tree.length - 1); }
-    stDraw(S.stA); stFocusSel(); }
-  function stFocusSel() { const inp = document.querySelector('#lm_st tr.sel input[type=text]'); if (inp) inp.focus(); }
-  function stClear() { S.stEd.tree = []; S.stEd.src = null; S.stEd.sel = null; stDraw(S.stA); }
-  function stSeed(k) { const w = (S.stA.wo_sets || [])[k]; if (!w) return; S.stEd.tree = (w.steps || []).map(x => ({ t: 's', name: x.name, w: num(x.weight) })); S.stEd.src = w.wo_number; S.stEd.sel = null; stDraw(S.stA); }
+  function stRedraw() { stDraw(); }
+  function stTick(k) { const E = S.stEd; E.sel.has(k) ? E.sel.delete(k) : E.sel.add(k); stDraw(); }
+  function stTickAll(on) { const E = S.stEd; E.sel.clear(); if (on) E.tree.forEach((n, i) => { if (n.t === 'g') { E.sel.add('g' + i); n.kids.forEach((x, j) => E.sel.add('s' + i + '-' + j)); } else E.sel.add('t' + i); }); stDraw(); }
+  function stFold(i) { const F = S.stEd.fold; F.has(i) ? F.delete(i) : F.add(i); stDraw(); }
+  function stPull() {   // ticked stages out of wherever they are, in document order; a group left empty dissolves
+    const E = S.stEd, picked = []; let at = null;
+    E.tree.forEach((n, i) => { if (n.t === 'g') n.kids.forEach((x, j) => { if (E.sel.has('s' + i + '-' + j)) { picked.push(x); x._x = true; if (at == null) at = i; } });
+      else if (E.sel.has('t' + i)) { picked.push(n); n._x = true; if (at == null) at = i; } });
+    E.tree = E.tree.map(n => n.t === 'g' ? Object.assign(n, { kids: n.kids.filter(x => !x._x) }) : n).filter(n => !n._x && !(n.t === 'g' && !n.kids.length));
+    picked.forEach(x => delete x._x); return { picked, at: Math.min(at == null ? E.tree.length : at, E.tree.length) };
+  }
+  function stGroup() { const E = S.stEd, { picked, at } = stPull(); if (picked.length < 2) { stDraw(); return; } E.tree.splice(at, 0, { t: 'g', name: '', kids: picked.map(x => ({ name: x.name, w: num(x.w) })) }); E.sel.clear(); E.sel.add('g' + at); E.fold.clear(); stDraw(); const inp = document.querySelector('#lm_st tr.sel input.tx'); if (inp) inp.focus(); }
+  function stUngroup() { const E = S.stEd, gks = [...E.sel].filter(k => k[0] === 'g').map(k => +k.slice(1)).sort((x, y) => y - x);
+    if (gks.length) gks.forEach(i => { const g = E.tree[i]; E.tree.splice(i, 1, ...g.kids.map(x => ({ t: 's', name: x.name, w: num(x.w) }))); });
+    else { const { picked, at } = stPull(); E.tree.splice(at, 0, ...picked.map(x => ({ t: 's', name: x.name, w: num(x.w) }))); }
+    E.sel.clear(); E.fold.clear(); stDraw(); }
+  function stMove(d) { const E = S.stEd; if (E.sel.size !== 1) return; const k = [...E.sel][0], r = stRef(k), j = r.i + d; if (j < 0 || j >= r.arr.length) return; [r.arr[r.i], r.arr[j]] = [r.arr[j], r.arr[r.i]]; E.sel.clear(); E.sel.add(stKeyOf(r.arr, j)); E.fold.clear(); stDraw(); }
+  function stDel() { const E = S.stEd, gks = [...E.sel].filter(k => k[0] === 'g'); if (gks.length && !confirm('Remove ' + gks.length + ' group' + (gks.length > 1 ? 's' : '') + ' with every stage inside?')) return;
+    gks.map(k => +k.slice(1)).sort((x, y) => y - x).forEach(i => { E.tree.splice(i, 1); [...E.sel].forEach(k => { if (k.startsWith('s' + i + '-')) E.sel.delete(k); }); });
+    stPull(); E.sel.clear(); E.fold.clear(); stDraw(); }
+  function stAdd() { const E = S.stEd, k = [...E.sel][0]; let key;
+    if (E.sel.size === 1 && k[0] === 's') { const [i, j] = k.slice(1).split('-').map(Number); E.tree[i].kids.splice(j + 1, 0, { name: '', w: 0 }); key = 's' + i + '-' + (j + 1); }
+    else if (E.sel.size === 1 && k[0] === 'g') { const i = +k.slice(1); E.tree[i].kids.push({ name: '', w: 0 }); E.fold.delete(i); key = 's' + i + '-' + (E.tree[i].kids.length - 1); }
+    else { E.tree.push({ t: 's', name: '', w: 0 }); key = 't' + (E.tree.length - 1); }
+    E.sel.clear(); E.sel.add(key); stDraw(); const inp = document.querySelector('#lm_st tr.sel input.tx'); if (inp) inp.focus(); }
+  function stClear() { if (S.stEd.tree.length && !confirm('Clear every stage? The activity goes back to quantity mode.')) return; S.stEd.tree = []; S.stEd.src = null; S.stEd.sel.clear(); stDraw(); }
+  function stSeed(k) { const w = (S.stA.wo_sets || [])[k]; if (!w) return; S.stEd.tree = (w.steps || []).map(x => ({ t: 's', name: x.name, w: num(x.weight) })); S.stEd.src = w.wo_number; S.stEd.sel.clear(); S.stEd.fold.clear(); stDraw(); }
   async function stSave() {
     const E = S.stEd, a = S.stA; if (!E || !a) return;
     const groups = [], steps = []; let gseq = 0;
     for (const n of E.tree) {
-      if (n.t === 'g') { gseq++; if (!(n.name || '').trim()) { toast('Group ' + gseq + ' needs a name', 'error'); return; } if (!(n.w > 0)) { toast('Group "' + n.name + '" needs a weight above 0', 'error'); return; }
-        if (!n.kids.length) { toast('Group "' + n.name + '" has no stages — add one or delete the group', 'error'); return; }
-        const gs = n.kids.reduce((x, y) => x + num(y.w), 0); if (Math.abs(gs - 100) > 0.005) { toast('Stages inside "' + n.name + '" add up to ' + r1(gs) + ', not 100', 'error'); return; }
-        groups.push({ seq: gseq, name: n.name.trim(), weight: num(n.w) });
-        for (const x of n.kids) { if (!(x.name || '').trim()) { toast('A stage in "' + n.name + '" has no name', 'error'); return; } if (!(x.w > 0)) { toast(x.name + ' needs a weight above 0', 'error'); return; } steps.push({ name: x.name.trim(), weight: num(x.w), group_seq: gseq }); }
+      if (n.t === 'g') { gseq++; if (!(n.name || '').trim()) { toast('Group ' + gseq + ' needs a name', 'error'); return; } if (!n.kids.length) { toast('Group "' + n.name + '" has no stages', 'error'); return; }
+        const gs = stGsum(n); if (!(gs > 0)) { toast('Group "' + n.name + '" adds up to 0', 'error'); return; }
+        groups.push({ seq: gseq, name: n.name.trim(), weight: gs });
+        for (const x of n.kids) { if (!(x.name || '').trim()) { toast('A stage in "' + n.name + '" has no name', 'error'); return; } if (!(x.w > 0)) { toast(x.name + ' needs a weight above 0', 'error'); return; } steps.push({ name: x.name.trim(), weight: num(x.w) / gs * 100, group_seq: gseq }); }
       } else { if (!(n.name || '').trim()) { toast('A stage has no name', 'error'); return; } if (!(n.w > 0)) { toast(n.name + ' needs a weight above 0', 'error'); return; } steps.push({ name: n.name.trim(), weight: num(n.w), group_seq: null }); }
     }
-    const top = stTop();
-    if (steps.length && Math.abs(top - 100) > 0.005) { toast('Top level adds up to ' + r1(top) + ', not 100', 'error'); return; }
+    const tot = stTotal();
+    if (steps.length && Math.abs(tot - 100) > 0.005) { toast('Weights add up to ' + r2(tot) + ', not 100', 'error'); return; }
     if (steps.length === 1) { toast('One stage is just a quantity — add a second stage or clear all', 'error'); return; }
     try { const { data, error } = await sb.rpc('rpc_dpr_stage_template_save', { p_wbs_node_id: E.id, p_steps: steps, p_is_active: steps.length > 0, p_source_wo: E.src || null, p_groups: groups }); if (error) throw error;
-      toast(steps.length ? 'Stages saved' + (groups.length ? ' · ' + groups.length + ' groups' : '') + (data && data.note ? ' — ' + data.note : '') : 'Stages cleared — quantity mode', 'success', 6000); closeModal(); stages(); }
+      toast(steps.length ? 'Stages saved' + (groups.length ? ' · ' + groups.length + ' group' + (groups.length > 1 ? 's' : '') : '') + (data && data.note ? ' — ' + data.note : '') : 'Stages cleared — quantity mode', 'success', 6000); closeModal(); stages(); }
     catch (e) { fail(e, 'Could not save stages'); }
   }
-  return { load, tab, tradeSave, npSave, rateSave, lq, setRep, sq, stEdit, stSave, stSet, stRedraw, stAdd, stAddGroup, stDel, stClear, stSeed, stTick, stFold, stMove };
+  return { load, tab, tradeSave, npSave, rateSave, lq, setRep, sq, stEdit, stSave, stSet, stRedraw, stAdd, stDel, stClear, stSeed, stTick, stTickAll, stFold, stMove, stGroup, stUngroup };
 })();
 </script>
 </body>

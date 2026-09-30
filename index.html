@@ -1262,7 +1262,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 #mod-dpr table.dt tr.am td{background:var(--daml)}
 
 /* ===== v140 · works filters, grouping, drill-down, history ===== */
-#mod-dpr .dpr-fbar{display:flex;background:#fff;border-bottom:1px solid var(--dln);padding:6px 8px;gap:6px}
+#mod-dpr .dpr-fbar{display:flex;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--dln);padding:6px 8px;gap:6px}/* v153.4 · the page never scrolls sideways: filter bars wrap, the module clips, inner scrollers (grid, strips) stay contained */#mod-dpr{overflow-x:hidden;max-width:100vw}#mod-dpr .dpr-fbar button{white-space:nowrap}
 #mod-dpr .dpr-fbar button{border:1px solid var(--dln);background:#fff;color:var(--dink2);border-radius:14px;
   padding:5px 12px;font-size:11.5px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap}
 #mod-dpr .dpr-fbar button.on{background:var(--dn);border-color:var(--dn);color:#fff}
@@ -8504,8 +8504,9 @@ const DPR = (function () {
   }
   // v149 · grid pick (mock v32 §1): activities down, units of one floor across; cell / row / column / package / ALL ticks
   function catGrid(H) {
-    // floor = the location path minus the unit itself (works for any depth of location tree)
-    const fkey = r => { const p = (r[9] || '').split(' › ').filter(Boolean); return p.length > 1 ? p.slice(0, -1).join(' › ') : (r[12] || '—'); };
+    // v153.3 · floor = the unit's ancestor path. The catalogue path holds ancestors only (unit name is r[8]), so the last
+    // segment is dropped only when it really is the unit — dropping it blindly merged a whole tower into one "floor" (93 columns)
+    const fkey = r => { const p = (r[9] || '').split(' › ').filter(Boolean); if (p.length && p[p.length - 1] === r[8]) p.pop(); return p.length ? p.join(' › ') : (r[12] || '—'); };
     const floors = new Map(); H.forEach(r => { const k = fkey(r); if (!floors.has(k)) floors.set(k, new Set()); floors.get(k).add(r[1]); });
     let fks = [...floors.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
     // tower chips when the grid spans more than one tower (⊞ Grid over the whole area)

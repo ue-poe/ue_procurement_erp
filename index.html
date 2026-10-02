@@ -2257,6 +2257,9 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dpr-host{padding:0 14px 14px}
 #mod-dpr .drp table.t tr.pk td .car{display:inline-block;width:16px;color:var(--ink2)}
 
+#mod-dpr .drp .lc .lh .tags button.rm{cursor:pointer;font:inherit;font-size:9.5px;font-weight:800;line-height:1.4;margin-left:auto}
+#mod-dpr .drp .lc .lh .tags button.rm:active{filter:brightness(.92)}
+
 </style>
 </head>
 <body>
@@ -9084,7 +9087,7 @@ const DPR = (function () {
   }
   function engFoot() {
     const f = $('dpr_ft'); if (!f) return;
-    if (S.tab === 'rep') { f.style.display = 'none'; return; }
+    if (S.tab === 'rep' || (S.seg === 'est' && S.q)) { f.style.display = 'none'; return; }   // v154 · hidden while searching / Grid — the catalogue shows its own add bar
     f.style.display = '';
     const n = dirtyCards().length + (S.npDirty ? 1 : 0);
     f.innerHTML = S.locked ? `<span class="lkmsg">🔒 <b>${stOf(stKey())[1]}${S.sub.submitted_at ? ' ' + hm(S.sub.submitted_at) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : 'Awaiting Manager'} · Cards Are Read-Only</span><button onclick="DPR.openDay('today')">View Report</button>`
@@ -9093,7 +9096,7 @@ const DPR = (function () {
 
   /* ---------- Work Progress Log: cards ---------- */
   function engLog() {
-    if (S.q) { $('dpr_body').innerHTML = catResults(); return; }
+    if (S.q) { $('dpr_body').innerHTML = catResults(); engFoot(); return; }   // v154 · catalogue / Grid has its own add bar
     const list = visible();
     if (!list.length) { $('dpr_body').innerHTML = `<div class="dc none" style="cursor:default"><div class="dh"><div class="d"><b>Nothing Here</b><span>${S.groups.length ? 'No Card Matches The Filter.' : 'Search The Estimate Above, Or ＋ Browse By Tower And Floor.'}</span></div></div></div>`; engFoot(); return; }
     let h = '', pk = '';
@@ -9115,7 +9118,7 @@ const DPR = (function () {
     let h = `<div class="lc ${k} ${op ? 'open' : ''} ${ro ? 'ro' : ''} ${d.dirty ? 'dirty' : ''}" data-w="${id}"><div class="lh" onclick="DPR.lineOpen('${id}')">
       <div class="a">${esc(l.activity)}</div><div class="l">${esc(g.location)}${g.loc_path ? ' · ' + esc(g.loc_path) : ''}${g.lines.length > 1 ? ' · ' + esc(g.label) : ''}</div>
       <div class="ec"><span>Est. <b>${fmt(l.est_qty)}</b></span><span class="cc">Site Cert. ${x.fin && !ro ? `<input type="number" inputmode="decimal" class="${cert > 0 ? '' : 'bad'}" value="${cert == null ? '' : cert}" onclick="event.stopPropagation()" onchange="DPR.certSet('${g.wgroup_id}','${id}',this.value)">` : `<b class="${cert != null ? '' : 'mut'}">${cert != null ? fmt(cert) : '—'}</b>`}</span><b>${esc(l.uom || '')}</b></div>
-      <div class="car">${op ? '▾' : '▸'}</div><div class="tags"><span class="pill ${PILL[k]}">${esc(planTxt(l))}</span>${d.out === 'hindrance' ? '<span class="pill p-red">Hindrance</span>' : ''}${l.status === 'finished' ? '<span class="pill p-ok">Finished ' + dsh(l.finished_on) + '</span>' : ''}</div>
+      <div class="car">${op ? '▾' : '▸'}</div><div class="tags"><span class="pill ${PILL[k]}">${esc(planTxt(l))}</span>${d.out === 'hindrance' ? '<span class="pill p-red">Hindrance</span>' : ''}${l.status === 'finished' ? '<span class="pill p-ok">Finished ' + dsh(l.finished_on) + '</span>' : ''}${canDrop(g) && g.lines[0].work_id === id ? `<button class="pill p-red rm" title="Remove From My List — Nothing Reported Yet" onclick="event.stopPropagation();DPR.dropGroup('${g.wgroup_id}')">× Remove</button>` : ''}</div>
       <div class="dts ld"><span>Start ${startEdit ? `<input type="date" value="${x.started || S.to}" max="${S.to}" onclick="event.stopPropagation()" onchange="DPR.lineStart('${g.wgroup_id}','${id}',this.value)">` : `<b class="${started ? '' : 'mut'}">${started ? dsh(started) : '—'}</b>${l.start_locked ? '<span class="lk">🔒</span>' : ''}`}</span>
         <span>End ${endEdit ? `<input type="date" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onclick="event.stopPropagation()" onchange="DPR.lineEnd('${g.wgroup_id}','${id}',this.value,this.min)">` : `<b class="${end ? '' : 'mut'}">${end ? dsh(end) : '—'}</b>${l.end_locked ? '<span class="lk">🔒</span>' : ''}`}</span>
         <span>Duration <b>${started ? durTxt(started, end || S.to) : '—'}</b></span></div></div><div class="body">`;
@@ -9222,10 +9225,17 @@ const DPR = (function () {
   }
   function conFilter(q) { const el = $('dpr_cl'); if (!el) return; const cs = (S._cons || []).filter(c => fz(conName(c) + ' ' + c, q)); el.innerHTML = cs.map(c => `<div class="dpr-lrow" onclick="DPR.conSet('${esc(c)}')"><div class="nm"><b>${esc(conName(c))}</b><span>${esc(c)}</span></div>›</div>`).join('') || '<div class="dpr-note">No Contractor Matches.</div>'; }
   function conSet(c) { const t = S.conTarget; if (!t) return; if (t.np != null) { npDraft()[t.np].con = c; sheetClose(); npDirty(); return; } const g = G(t.gid), l = g.lines.find(x => x.work_id === t.wid), s = t.sid ? l.stages.find(z => z.id === t.sid) : null, r = labOf(g, l, s); r.con = c; r.src = 'pick'; markDirty(g); sheetClose(); redrawCard(); }
+  const canDrop = g => !S.locked && !!g.never_reported && !g.progress && !g.labour && !dOf(g).dirty;   // v154 · only an activity nobody has reported on can be removed
   async function dropGroup(id) {
     const g = G(id); if (!g) return;
     if (!confirm('Remove "' + (g.package || g.label) + '" At ' + g.location + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.')) return;
     try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); toast('Removed', 'success'); await engLoad(); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
+  }
+  async function dropClub(key) {   // v154 · Report-together card: remove every unit nobody has reported on
+    const c = clubOf(key); if (!c) return; const gs = c.groups.filter(canDrop); if (!gs.length) return;
+    if (!confirm('Remove ' + gs.length + ' Unit' + (gs.length === 1 ? '' : 's') + ' (' + gs.map(g => g.location).join(', ') + ') Of "' + (c.groups[0].package || c.groups[0].label) + '" From Your List?\nNothing Was Reported On Them, So Nothing Is Lost.')) return;
+    let n = 0; try { for (const g of gs) { await rpc('rpc_dpr_drop_group', { p_wgroup_id: g.wgroup_id }); n++; } toast('Removed ' + n + ' Unit' + (n === 1 ? '' : 's'), 'success'); } catch (e) { toast(err(e, 'Could not remove it') + (n ? ' · ' + n + ' Removed' : ''), 'error'); }
+    await engLoad();
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -9495,7 +9505,7 @@ const DPR = (function () {
     const lab = gs.reduce((a, g) => a + cardHeads(g), 0), dirty = gs.some(g => dOf(g).dirty);
     let h = `<div class="lc club ${op ? 'open' : ''} ${ro ? 'ro' : ''} ${dirty ? 'dirty' : ''}"><div class="lh" onclick="DPR.lineOpen('${esc(key)}')">
       <div class="a">${esc(g0.package || g0.label)} · ${acts.length} Activit${acts.length === 1 ? 'y' : 'ies'} Together</div><div class="l">${esc(g0.loc_path || '')} · ${gs.map(g => esc(g.location)).join(' · ')}</div>
-      <div class="car">${op ? '▾' : '▸'}</div><div class="tags"><span class="pill p-amb">Report Together · ${gs.length} Units · ${acts.length} Activit${acts.length === 1 ? 'y' : 'ies'}</span></div>
+      <div class="car">${op ? '▾' : '▸'}</div><div class="tags"><span class="pill p-amb">Report Together · ${gs.length} Units · ${acts.length} Activit${acts.length === 1 ? 'y' : 'ies'}</span>${(() => { const n = gs.filter(canDrop).length; return n ? `<button class="pill p-red rm" title="Remove The Units Nobody Has Reported On" onclick="event.stopPropagation();DPR.dropClub('${esc(key)}')">× Remove${n < gs.length ? ' ' + n + ' Unreported' : ''}</button>` : ''; })()}</div>
       <div class="ucs">${units.map(g => `<span class="${unitDone(g) ? 'f' : ''}" title="Open This Unit On Its Own" onclick="event.stopPropagation();DPR.unclubUnit('${g.wgroup_id}')">${esc(g.location)}</span>`).join('')}${pages > 1 ? `<span onclick="event.stopPropagation();DPR.clubPage('${esc(key)}',1)">› ${p + 1}/${pages}</span>` : ''}</div>
       <div class="dts ld"><span>Start <b class="${started ? '' : 'mut'}">${started ? dsh(started) : '—'}</b></span><span>End <b class="${end ? '' : 'mut'}">${end ? dsh(end) : '—'}</b></span><span>Duration <b>${started ? durTxt(started, end || S.to) : '—'}</b></span></div></div><div class="body">`;
     if (op) acts.forEach((act, ai) => {
@@ -10060,7 +10070,7 @@ const DPR = (function () {
   }
 
   return { open, engLoad, refresh, tab, seg, filt, areaF, srch, lineOpen, foldG, outSet, rcSet, noteSet, pcSet, subDate, qtySet, snap, wip, lineStart, lineEnd, finish, unfinish, certSet,
-    labStep, labSet, labMore, labClear, labSame, conPick, conFilter, conSet, dropGroup, uTap, dTap, finishMany, unclubUnit, clubPage, clubView, saveAll,
+    labStep, labSet, labMore, labClear, labSame, conPick, conFilter, conSet, dropGroup, dropClub, uTap, dTap, finishMany, unclubUnit, clubPage, clubView, saveAll,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo, regroupOpen, regroupGo,

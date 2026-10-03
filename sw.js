@@ -4,7 +4,7 @@
    responses, so every figure on screen is live. Offline DRAFT mode —
    saving edits with no signal and syncing later — is a separate piece
    of work and is NOT what this does. */
-const VERSION = 'pgs-shell-v3';
+const VERSION = 'pgs-shell-v4';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

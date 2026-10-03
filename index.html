@@ -9008,7 +9008,9 @@ const DPR = (function () {
       d.lines[l.work_id] = L;
     });
     // labour today: this submission's rows, else the memo (previous entry) per target, else WO contractor
-    const put = (r, src) => { const k = (r.work_id || '') + '|' + (r.work_sub_id || ''); if (!d.lab[k]) d.lab[k] = { con: r.contractor, src, heads: Object.assign({}, r.heads || {}) }; };
+    // v154.1 · a Previous Entry pre-fills the CONTRACTOR only — never its head counts. Copying yesterday's heads made every
+    // untouched card report yesterday's labour again as soon as the engineer saved anything on it.
+    const put = (r, src) => { const k = (r.work_id || '') + '|' + (r.work_sub_id || ''); if (!d.lab[k]) d.lab[k] = { con: r.contractor, src, heads: src === 'today' ? Object.assign({}, r.heads || {}) : {} }; };
     (g.labour_rows || []).forEach(r => put(r, 'today'));
     if (!(g.labour_rows || []).length) (g.memo_rows || []).forEach(r => put(r, 'prev'));
     return d;
@@ -9151,6 +9153,7 @@ const DPR = (function () {
   }
   function subsBody(g, l, x, ro) {
     let h = '';
+    { const r0 = dOf(g).lab[labKey(l, null)]; if (r0 && heads(r0.heads)) h += `<div class="dpr-note" style="margin:6px 0 0"><b>Activity-Level Labour</b> — ${fmt(heads(r0.heads))} Heads Entered Against The Whole Activity, Not A Sub-Activity. Move Them To The Sub-Activity Below Or Clear Them.</div>` + labBlock(g, l, null, ro); }   // v154.1
     subGroups(l).forEach(G => {
       if (G.id) { const fk = l.work_id + '~' + G.id, fd = S.fold.has(fk), gp = grpPct(g, l, G), gm = grpMeta(l, G);
         const gs = gm.started_on || (G.subs.map(s => (x.subs[s.id] || {}).s).filter(Boolean).sort()[0]) || '', ge = G.subs.every(s => (x.subs[s.id] || {}).e) ? G.subs.map(s => x.subs[s.id].e).sort().pop() : '';
@@ -9701,12 +9704,13 @@ const DPR = (function () {
     let h = `<div class="rpills"><span class="pk">Est.<b>${fmt(l.est_qty)} ${esc(l.uom || '')}</b></span><span class="pk y">Done ${dsh(X.to)}<b>${fmt(done)} ${esc(l.uom || '')}</b></span><span class="pk">Cum.<b>${fmt(cum)} ${esc(l.uom || '')}</b></span><span class="pk pc">Progress<b>${Math.round(pc)}%</b></span>${cert != null ? `<span class="pk ok">Site Cert.<b>${fmt(cert)} ${esc(l.uom || '')}</b></span>` : ''}${x.wip ? '<span class="pk">WIP<b>0</b></span>' : ''}</div>`;
     if (d.out === 'hindrance') h += `<div class="dpr-note r" style="border:0"><b>Hindrance</b> · ${esc((g.open_hindrance || {}).reason_text || (S.masters.hindrance_reasons.find(r => r.reason_code === d.rc) || {}).reason_text || '')}${d.note ? ' — ' + esc(d.note) : ''}</div>`;
     if (!staged(l)) { const r = d.lab[labKey(l, null)]; h += `<table class="rt"><tr><th class="t">Labour Today</th><th class="t">Contractor</th></tr><tr><td class="tl"><b>${r ? labTxt(r.heads) : '—'}</b></td><td class="tl">${r ? esc(conName(r.con)) : '—'}</td></tr></table>`; }
-    else subGroups(l).forEach(Gp => {
+    else { const r0 = d.lab[labKey(l, null)]; if (r0 && heads(r0.heads)) h += `<table class="rt"><tr><th class="t">Labour Today · Activity Level (Not Split By Sub-Activity)</th><th class="t">Contractor</th></tr><tr><td class="tl"><b>${labTxt(r0.heads)}</b></td><td class="tl">${esc(conName(r0.con))}</td></tr></table>`;   // v154.1 · heads stored against the activity itself must show, not just count
+    subGroups(l).forEach(Gp => {
       const rows = Gp.subs.map(s => { const sx = x.subs[s.id] || {}, r = d.lab[labKey(l, s)] || {}; return { n: s.name, w: s.tpl_weight || s.weight, pct: subPct(g, l, s), base: subBase(s), s: sx.s, e: sx.e, heads: r.heads || {}, con: r.con }; });
       if (Gp.id) { const gp = grpPct(g, l, Gp); h += `<div class="rsub2">${esc(Gp.name)}<small>${fmt(Gp.weight)}% Of Activity · ${Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length}/${Gp.subs.length} Done</small><span class="pc ${gp >= 99.9995 ? 'ok' : ''}">${Math.round(gp)}%</span></div>`; }
       h += subTable(rows);
       if (Gp.id) h += stripFor(l, X.to, Gp, 'Day-Wise Progress · ' + Gp.name);
-    });
+    }); }
     h += stripFor(l, X.to, null, 'Day-Wise Progress · Activity');
     return h;
   }

@@ -1,10 +1,10 @@
-/* Penguin Suite service worker · v3 (v154 · Daily Reporting Plan)
+/* Penguin Suite service worker · v1
    Deliberately conservative. It caches the app shell so the icon opens
    instantly and the UI paints without signal; it never caches Supabase
    responses, so every figure on screen is live. Offline DRAFT mode —
    saving edits with no signal and syncing later — is a separate piece
    of work and is NOT what this does. */
-const VERSION = 'pgs-shell-v4';
+const VERSION = 'pgs-shell-v4';   // v156
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {

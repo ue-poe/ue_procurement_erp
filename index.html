@@ -2274,6 +2274,56 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .drp .lc .lh .tags button.rm{cursor:pointer;font:inherit;font-size:9.5px;font-weight:800;line-height:1.4;margin-left:auto}
 #mod-dpr .drp .lc .lh .tags button.rm:active{filter:brightness(.92)}
 
+/* v155.1 · Daily Report engineer screen on a laptop / computer (≥ 1000 px): full width, header in one row, cards two-up,
+   an opened card spans the row with its sub-activities side by side, sticky Save bar. Phone layout below 1000 px is unchanged. */
+@media (min-width:1000px){
+#mod-dpr .drp.eng{max-width:1500px;padding:10px 16px 0}
+#mod-dpr .drp.eng>.hc.top{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.25fr) minmax(0,1.1fr);align-items:stretch}
+#mod-dpr .drp.eng>.hc.top .hdates>div{display:flex;flex-direction:column;justify-content:center}
+#mod-dpr .drp.eng>.hc.top .hwho{padding:8px 14px}
+#mod-dpr .drp.eng>.hc.top .hk{border-top:0;border-left:1px solid var(--ln2)}
+#mod-dpr .drp.eng>.hc.top .hk>div{display:flex;flex-direction:column;justify-content:center}
+#mod-dpr .drp.eng>.hc.flt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#mod-dpr .drp.eng>.hc.flt>.hf:nth-child(2){border-top:0;border-left:1px solid var(--ln2)}
+/* Estimated / Non-Estimated nested inside the Work Progress Log tab (approved mock 5 Oct 2026) */
+#mod-dpr .drp.eng>.hc.flt{grid-template-columns:repeat(4,minmax(0,1fr))}
+#mod-dpr .drp.eng>.hc.flt>.hf:nth-child(1){grid-column:1/3}
+#mod-dpr .drp.eng>.hc.flt>.hf:nth-child(2){grid-column:3/5}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(3){display:contents}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(3)>button:nth-child(1){grid-column:1/4;grid-row:2;border-top:1px solid var(--ln2);border-bottom:0;border-right:1px solid var(--ln);display:flex;align-items:baseline;justify-content:center;gap:8px;padding:9px 4px 6px}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(3)>button:nth-child(2){grid-column:4/5;grid-row:2/4;border-top:1px solid var(--ln2);border-right:0;border-bottom:2px solid transparent}
+#mod-dpr .drp.eng>.hc.flt.rep>.ptabs:nth-child(3)>button{grid-row:2!important}
+#mod-dpr .drp.eng>.hc.flt.rep>.ptabs:nth-child(3)>button:nth-child(1){grid-column:1/4;border-bottom:2px solid transparent}
+#mod-dpr .drp.eng>.hc.flt.rep>.ptabs:nth-child(3)>button.on{border-bottom-color:var(--dn)}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(3)>button:nth-child(1) i{display:inline}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(4){grid-column:1/4;grid-row:3;justify-content:center;gap:6px;padding:2px 10px 9px;background:#f3f6fa;border-top:0;border-right:1px solid var(--ln);border-bottom:2px solid var(--dn)}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(4)>button{flex:0 0 190px;border:1px solid var(--ln);border-radius:18px;background:#fff;padding:5px 12px;display:flex;align-items:baseline;justify-content:center;gap:6px;font-size:12px}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(4)>button.on{background:var(--dn);color:#fff;border-color:var(--dn)}
+#mod-dpr .drp.eng>.hc.flt>.ptabs:nth-child(4)>button i{display:inline}
+#mod-dpr .drp.eng>.hc.flt>.hs{grid-column:1/-1;border-top:1px solid var(--ln2)}
+#mod-dpr .drp.eng>.hc.flt>.hs input{max-width:none}
+#mod-dpr .drp.eng #dpr_body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;align-items:start}
+#mod-dpr .drp.eng #dpr_body>*{grid-column:1/-1}
+#mod-dpr .drp.eng #dpr_body>.pks:not(.m):not(.o){grid-column:auto}
+#mod-dpr .drp.eng .pks.m{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;align-items:start}
+#mod-dpr .drp.eng .pks.m>*{grid-column:auto}
+#mod-dpr .drp.eng .pks.m>.pkh,#mod-dpr .drp.eng .pks.m>.lc.open{grid-column:1/-1}
+#mod-dpr .drp.eng .pkh{padding-top:4px}
+#mod-dpr .drp.eng .lc.open .body{columns:3 340px;column-gap:10px;padding:8px 10px 2px}
+#mod-dpr .drp.eng .lc.open .body>*{column-span:all}
+#mod-dpr .drp.eng .lc.open .body>.sa{column-span:none;break-inside:avoid;border:1px solid var(--ln2);border-radius:7px;margin:0 0 8px;display:block}
+#mod-dpr .drp.eng .lc.open .body>.gsg,#mod-dpr .drp.eng .lc.open .body>.dts.gd{margin-left:-10px;margin-right:-10px}
+#mod-dpr .drp.eng .lc.open .body>.gsg{margin-top:0}
+#mod-dpr .drp.eng .lc.open .body>.dts.gd{margin-bottom:8px}
+#mod-dpr .drp.eng .lc.open .body>.lab{margin-left:0;margin-right:0;max-width:520px}
+#mod-dpr .drp.eng .lc.open .body>.dsn{margin-top:8px}
+#mod-dpr .drp.eng .lc.club.open .body{columns:auto}
+#mod-dpr .drp.eng .lc.club.open .body>.sa{max-width:820px}
+#mod-dpr .drp.eng .pft{position:sticky;bottom:0;z-index:6;justify-content:flex-end;border-radius:9px 9px 0 0;margin-top:4px}
+#mod-dpr .drp.eng .pft button{flex:0 0 220px}
+#mod-dpr .drp.eng .pft .lkmsg{flex:1}
+}
+
 </style>
 </head>
 <body>
@@ -9161,13 +9211,13 @@ const DPR = (function () {
     const areas = {}; S.groups.forEach(g => { const a = g.area || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
     const areaKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
     const nAct = S.groups.filter(g => !isFin(g)).length, nFin = S.groups.length - nAct, worked = workedCards().length;
-    let h = `<div class="drp eng"><div class="hc">
+    let h = `<div class="drp eng"><div class="hc top">
       <div class="hdates"><div class="y"><i>Progress For</i><b>${dmy(S.to)}</b>${num(sub.days_covered) > 1 ? '<small>' + dsh(S.from) + ' Missed · Included</small>' : ''}</div><div class="t"><i>Labour For</i><b>${dmy(sub.business_date)}</b></div></div>
       <div class="hwho"><div><b>${esc(state.userName || 'My Report')}</b><br><span>${S.homeAreas.length ? esc(S.homeAreas.join(' · ')) + ' · ' : ''}Day Shift</span></div><div class="sp"></div><span class="st">${st[1]}${S.locked && sub.submitted_at ? ' ' + hm(sub.submitted_at) : ''}</span>${!S.locked && !editingOld ? `<span class="late">${mins > 0 ? mins + ' Min To Cut-Off' : 'Past 1 PM · Goes As Late'}</span>` : ''}${editingOld ? '<button title="Today" onclick="DPR.engLoad()">‹</button>' : ''}<button title="Reload" onclick="DPR.refresh()">↻</button></div>
       <div class="hk"><div class="g"><b>${worked}</b><span>Reported</span></div><div class="a"><b>${S.groups.length - worked}</b><span>Not Yet</span></div><div class="r"><b>${hindCards().length}</b><span>Hindrance</span></div><div class="t"><b>${fmt(allHeads())}</b><span>Heads Today</span></div></div></div>`;
     if (sub.status === 'Returned') h += `<div class="dc ret" style="cursor:default"><div class="ret-note" style="margin:9px 10px"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div></div>`;
     if (!editingOld) S.returned.forEach(r => { h += `<div class="dc ret" style="cursor:default"><div class="ret-note" style="margin:9px 10px;display:flex;gap:8px;align-items:center"><span style="flex:1"><b>${dmy(r.progress_to)} Report Returned:</b> ${esc(r.return_reason || '')}</span><button class="dbtn sm" onclick="DPR.engLoad('${r.submission_id}')">Fix &amp; Resend</button></div></div>`; });
-    h += `<div class="hc">
+    h += `<div class="hc flt ${S.tab === 'log' ? '' : 'rep'}">
       <div class="hf" style="border-top:0"><span class="lbl">Area</span><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${areaKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)}<i>${areas[a]}</i></button>`).join('')}</div>
       <div class="hf"><span class="lbl">Status</span><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active<i>${nAct}</i></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished<i>${nFin}</i></button></div>
       <div class="ptabs"><button class="${S.tab === 'log' ? 'on' : ''}" onclick="DPR.tab('log')">Work Progress Log<i>${worked} Of ${S.groups.length} Filled</i></button><button class="${S.tab === 'rep' ? 'on' : ''}" onclick="DPR.tab('rep')">Report<i>Check &amp; Send</i></button></div>
@@ -9195,9 +9245,13 @@ const DPR = (function () {
     if (!list.length) { $('dpr_body').innerHTML = `<div class="dc none" style="cursor:default"><div class="dh"><div class="d"><b>Nothing Here</b><span>${S.groups.length ? 'No Card Matches The Filter.' : 'Search The Estimate Above, Or ＋ Browse By Tower And Floor.'}</span></div></div></div>`; engFoot(); return; }
     let h = '', pk = '';
     const C = S.club ? clubsOf(list) : list.map(g => ({ key: g.wgroup_id, groups: [g] }));
-    C.forEach(c => { const g0 = c.groups[0], k = (g0.package || g0.label) + ' › ' + (g0.area || g0.loc_path || '');
-      if (k !== pk) { pk = k; const n = C.filter(x => (x.groups[0].package || x.groups[0].label) + ' › ' + (x.groups[0].area || x.groups[0].loc_path || '') === k).length; h += `<div class="pkh">${esc(k)}<small>${n} Card${n > 1 ? 's' : ''}</small></div>`; }
+    const kOf = x => (x.groups[0].package || x.groups[0].label) + ' › ' + (x.groups[0].area || x.groups[0].loc_path || '');
+    const opOf = x => x.groups.length > 1 ? S.open.has(x.key) : x.groups[0].lines.some(l => S.open.has(l.work_id));
+    C.forEach(c => { const k = kOf(c);
+      if (k !== pk) { if (pk) h += '</div>'; pk = k; const sec = C.filter(x => kOf(x) === k), n = sec.reduce((a, x) => a + (x.groups.length > 1 ? 1 : x.groups[0].lines.length), 0);
+        h += `<div class="pks ${n > 1 ? 'm' : ''} ${sec.some(opOf) ? 'o' : ''}"><div class="pkh">${esc(k)}<small>${n} Card${n > 1 ? 's' : ''}</small></div>`; }   // v155.1 · package section (desktop pairs sections and cards)
       h += c.groups.length > 1 ? clubCard(c) : lineCards(c.groups[0]); });
+    if (pk) h += '</div>';
     $('dpr_body').innerHTML = h; engFoot();
   }
   // a card per activity (line) of the group; a group with several lines shows them as consecutive cards sharing the location

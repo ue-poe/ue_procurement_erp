@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v157.1</title>
+<title>Penguin Suite v158.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -846,6 +846,37 @@ input[type="number"] {
 #mod-dpr .dp2 .d2-cal .d .b{position:absolute;left:5px;right:5px;bottom:4px;height:5px;border-radius:3px}
 #mod-dpr .dp2 .b.none{background:transparent;border:1px dashed var(--ln,#c3ccd9)}
 #mod-dpr .dp2 .b.draft{background:var(--dam)}
+#mod-dpr .dp2 .b.lab{background:#0d9488}
+/* v158 · two-section sheet */
+#mod-dpr .dp2 .d2-tog{display:inline-block;width:18px;height:18px;line-height:16px;text-align:center;border:1px solid var(--ln,#c3ccd9);border-radius:3px;background:#fff;font-size:11px;color:var(--dn);margin-right:6px;font-weight:800;padding:0;vertical-align:middle}
+#mod-dpr .dp2 .d2-tog.open{background:var(--dn);color:#fff;border-color:var(--dn)}
+#mod-dpr .dp2 .d2t.sheet td{padding:6px 7px}
+#mod-dpr .dp2 .d2t.sheet td.stt,#mod-dpr .dp2 .d2t.sheet td.con,#mod-dpr .dp2 .d2t.sheet td.dn{white-space:nowrap}
+#mod-dpr .dp2 .d2t tr.grp td{background:#f5f7fb;font-size:11.5px}
+#mod-dpr .dp2 .d2t tr.att td{background:#fffdf5}
+#mod-dpr .dp2 .d2t tr.sum td{background:#e9eef6;font-weight:800;color:var(--dn);border-top:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .d2t tr.strip td{background:#eef3fb;border-bottom:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .d2t .est{color:var(--ink3,#8a98ad);font-size:10.5px;margin-left:6px;font-weight:600}
+#mod-dpr .dp2 .d2t .sa{font-weight:700;color:#132338;font-size:12px}
+#mod-dpr .dp2 .d2t td.con a{color:var(--dn);font-size:10.5px;margin-left:5px;cursor:pointer;font-weight:700}
+#mod-dpr .dp2 .d2-mp{display:inline-flex;align-items:center;gap:7px;cursor:pointer;white-space:nowrap}
+#mod-dpr .dp2 .d2-mp b{font-size:13px;color:var(--dn)}#mod-dpr .dp2 .d2-mp i{font-style:normal;color:var(--ink2,#51627a);font-size:10.5px}
+#mod-dpr .dp2 .d2-mp .yd{color:var(--ink3,#8a98ad);font-size:10.5px}#mod-dpr .dp2 .d2-mp.bad b,#mod-dpr .dp2 .d2-mp.bad i{color:var(--drd)}
+#mod-dpr .dp2 .d2-mp .ar{display:inline-block;width:18px;height:18px;line-height:16px;text-align:center;border:1px solid var(--ln,#c3ccd9);border-radius:3px;font-size:10px;color:var(--dn);background:#fff}
+#mod-dpr .dp2 .d2-strip{display:flex;flex-direction:column;gap:5px;padding:2px 0}
+#mod-dpr .dp2 .d2-strip .ttl{font-weight:800;font-size:11px;color:var(--dn)}
+#mod-dpr .dp2 .d2-strip .crow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#mod-dpr .dp2 .d2-strip .crow .con{font-weight:700;min-width:170px}#mod-dpr .dp2 .d2-strip .crow .con a{color:var(--dn);font-size:10.5px;margin-left:5px;cursor:pointer;font-weight:700}
+#mod-dpr .dp2 .d2-strip label{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--ink2,#51627a);font-weight:700}
+#mod-dpr .dp2 .d2-strip label input{width:46px;border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:3px 3px;text-align:center;font-weight:700}
+#mod-dpr .dp2 .d2-strip .tot{margin-left:8px;font-size:11px;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .d2-strip .crow.acts{gap:8px}
+#mod-dpr .dp2 .d2-rem{border:1px solid var(--ln,#c3ccd9);background:#fff;border-radius:4px;width:24px;height:22px;font-size:12px;color:var(--ink2,#51627a);padding:0}
+#mod-dpr .dp2 .d2-rem.has{background:var(--dn);color:#fff;border-color:var(--dn)}
+#mod-dpr .dp2 .d2t input.rem{border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:3px 6px;font-size:11.5px}
+#mod-dpr .dp2 .d2-cum{display:flex;align-items:center;gap:7px;white-space:nowrap;flex-wrap:wrap}#mod-dpr .dp2 .d2-cum .sep{color:var(--ink3,#8a98ad)}#mod-dpr .dp2 .d2-cum .bar2{width:70px;flex:none}
+#mod-dpr .dp2 .d2-seg button.on.red{background:var(--drd);color:#fff;border-color:var(--drd)}
+#mod-dpr .dp2 .d2-subs>button.t i{display:block;font-style:normal;font-weight:600;font-size:10px;color:var(--ink3,#8a98ad);margin-top:1px}
 #mod-dpr .dp2 .b.sent{background:var(--dn2)}
 #mod-dpr .dp2 .b.acc{background:var(--dok)}
 #mod-dpr .dp2 .b.ret{background:var(--drd)}
@@ -9229,8 +9260,9 @@ const DPR = (function () {
     view: null,            // 'eng' | 'mgr'
     sub: null, groups: [], np: [], returned: [], homeAreas: [], today: null, from: null, to: null, locked: false, lateNow: false,
     tab: 'log', seg: 'est', filt: 'active', area: '', q: '', qnp: '',
-    page: null, gv: 'work', sub2: 'act', fq: '', ticks: new Set(), cm: false, cal: null, showT: null, prev: false, catMode: false, blank: null, W: {}, rdate: null,   // v156 · calendar day report
+    page: null, gv: 'work', sub2: 'work', fq: '', ticks: new Set(), cm: false, cal: null, showT: null, prev: false, catMode: false, blank: null, W: {}, rdate: null,   // v156 · calendar day report
     dayOpen: null,         // submission id open in the day overlay (or 'today')
+    R: null, same: true, ck: 'T', seen: new Set(), foldDef: true, mpo: null, remo: null, ylab: false,   // v158 · two reports (T today / Y yesterday) on one screen
     hist: null, histRows: null, histSub: null,
     D: {},                 // drafts per card (wgroup_id) — see newDraft()
     open: new Set(), ropen: new Set(), fold: new Set(), labMore: new Set(), fullLab: new Set(),
@@ -9286,15 +9318,7 @@ const DPR = (function () {
     sheetClose(); S.st = null; S.page = null; S.q = ''; S.ct = new Set(); S.co = new Set(); S.coAll = false; S.cf = null;
     $('dpr_root').innerHTML = '<div class="dpr-load">Loading…</div>';
     hostsHide();
-    if (S.view === 'eng') { await engLoad(); await openYesterday(); } else await mgrLoad();
-  }
-  // v157.1 · mock v2 §C: the day due now is yesterday's — open it by default while it is unsent and today's report is still empty
-  async function openYesterday() {
-    try {
-      const y = addDays(todayYmd(), -1), c = S.cal && S.cal.days[y];
-      const ySent = c && !['Draft', 'Returned'].includes(c.status), todayUsed = !!(S.sub && (S.sub.status !== 'Draft' || S.groups.some(g => g.progress || (g.labour_rows || []).length) || (S.np || []).length));
-      if (!ySent && !todayUsed) { if (c) await engLoad(y); else { S.blank = y; S.to = S.rdate = y; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; engRender(); } }
-    } catch (e) { console.warn('[DPR] openYesterday', e); }
+    if (S.view === 'eng') await engLoad(); else await mgrLoad();
   }
   function hostsHide() { ['dpr_host_areas', 'dpr_host_labour'].forEach(id => { const el = $(id); if (el) { el.classList.add('hidden'); const m = $('mod-dpr'); if (m && el.parentNode !== m) m.appendChild(el); } }); }   // hosts live outside dpr_root so a re-render never destroys them
 
@@ -9384,21 +9408,45 @@ const DPR = (function () {
   const ocOf = o => o === 'worked' ? 'w' : o === 'hindrance' ? 'h' : o === 'none' ? 'n' : '';
   const isRo = () => !!(S.locked || S.prev);
 
-  /* ---------- load ---------- */
+  /* ==================================================================
+     ENGINEER · v158 · mock v7 (06 Oct 2026): two sections on one screen, one report per date underneath.
+       Tab 1 · Work Reported · Today  dd Mon  → today's report  (S.R.T): outcome W/H/N, start dates, contractor + manpower
+       Tab 2 · Progress Reported · Yesterday dd Mon → yesterday's report (S.R.Y): outcome (pre-set by that morning), done qty / %, finish
+       A past date R picked from the calendar: T = Y = R (one report, both tabs).  Send = the Y report.
+     Context swap: S.R = { T, Y } hold {sub, groups, np, D, W, NP, npDirty, to, locked}; ctxUse(k) moves one of them into S.* so every
+     existing draft helper (dOf, lx, outOf, labUnits …) keeps working unchanged. S.ck says which one is live.
+     ================================================================== */
+  const CTX_KEYS = ['sub', 'groups', 'np', 'D', 'W', 'NP', 'npDirty', 'to', 'rdate', 'locked', 'blank'];
+  function ctxSave() { if (!S.R) return; const c = S.R[S.ck]; CTX_KEYS.forEach(k => { c[k] = S[k]; }); }
+  function ctxLoad(k) { const c = S.R[k]; S.ck = k; CTX_KEYS.forEach(f => { S[f] = c[f]; }); }
+  function ctxUse(k) { if (!S.R) return; if (S.same) k = 'T'; if (S.ck === k) return; ctxSave(); ctxLoad(k); }
+  const ctxOf = tab => tab === 'prog' ? 'Y' : 'T';
+  const tDate = () => (S.R ? S.R.T.to : S.to);
+  const yDate = () => (S.R ? S.R.Y.to : S.to);
+  function mkCtx(data) {
+    const c = { sub: data.submission, groups: data.groups || [], np: data.np || [], D: {}, W: {}, NP: null, npDirty: false, locked: !!data.locked, blank: null };
+    c.to = c.rdate = c.sub.report_date || data.report_date;
+    c.groups.forEach(g => { c.D[g.wgroup_id] = newDraft(g); g.lines.forEach(l => { c.W[l.work_id] = { g, l }; }); });
+    return c;
+  }
+  const inCtx = (k, fn) => { if (!S.R || S.same || S.ck === k) return fn(); const cur = S.ck; ctxUse(k); try { return fn(); } finally { ctxUse(cur); } };
+  const curTab = () => S.sub2 === 'prog' ? 'prog' : 'work';
+
+  /* ---------- load: today → T, yesterday → Y (past date → one report for both) ---------- */
   async function engLoad(date, keep) {
-    const sc = keep && $('d2_sc') ? $('d2_sc').scrollTop : 0;
+    const sc = keep && $('d2_sc') ? $('d2_sc').scrollTop : 0, tab = keep ? curTab() : 'work';
     try {
       await masters();
-      const data = await rpc('rpc_dpr_open_day', { p_report_date: date || null, p_shift: 'D' });
-      S.sub = data.submission; S.groups = data.groups || []; S.np = data.np || [];
-      S.today = data.today || S.today || ymd(new Date());
-      S.to = S.from = S.sub.report_date || data.report_date || S.today; S.rdate = S.to;
-      S.locked = !!data.locked; S.homeAreas = data.home_areas || S.homeAreas || []; S.returned = data.returned || [];
-      S.D = {}; S.W = {}; S.groups.forEach(g => { S.D[g.wgroup_id] = newDraft(g); g.lines.forEach(l => { S.W[l.work_id] = { g, l }; }); });
-      S.NP = null; S.npDirty = false; S.ticks = new Set(); S.cm = false; S.blank = null; S.prev = false; S.catMode = false; S.page = null;
-      if (!keep) { S.sub2 = 'act'; S.fq = ''; }
+      const dataT = await rpc('rpc_dpr_open_day', { p_report_date: date || null, p_shift: 'D' });
+      S.today = dataT.today || S.today || ymd(new Date());
+      const T = mkCtx(dataT), isToday = T.to === S.today;
+      const Y = isToday ? mkCtx(await rpc('rpc_dpr_open_day', { p_report_date: addDays(S.today, -1), p_shift: 'D' })) : T;
+      S.R = { T, Y }; S.same = !isToday; S.homeAreas = dataT.home_areas || S.homeAreas || []; S.returned = dataT.returned || [];
+      S.ck = null; ctxLoad(S.same ? 'T' : ctxOf(tab));
+      S.ticks = new Set(); S.cm = false; S.prev = false; S.catMode = false; S.page = null; S.mpo = null; S.remo = null; S.ylab = false;
+      if (!keep) { S.sub2 = 'work'; S.fq = ''; S.fold = new Set(); S.seen = new Set(); S.foldDef = true; }
       if (!S.showT) S.showT = new Set((S.masters.trades || []).slice(0, 5).map(t => t.trade_code));
-      await calLoad(monthOf(S.to), true);
+      await calLoad(monthOf(T.to), true);
       engRender(); if (keep && $('d2_sc')) $('d2_sc').scrollTop = sc; else window.scrollTo(0, 0);
     } catch (e) {
       $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not open the day')) + '</div><div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try Again</button></div>';
@@ -9414,12 +9462,13 @@ const DPR = (function () {
       ((r && r.days) || []).forEach(x => { S.cal.days[x.report_date] = x; }); S.cal.loaded[m] = true; if (r && r.today) S.today = r.today;
     } catch (e) { console.error('[DPR] calendar', e); }
   }
-  async function leaveOk() { return !(dirtyCards().length || S.npDirty) || confirm('Unsaved Changes On This Date Will Be Lost. Continue?'); }
+  const dirtyAll = () => { let n = 0; ['T', 'Y'].forEach(k => { if (k === 'Y' && S.same) return; inCtx(k, () => { n += dirtyCards().length + (S.npDirty ? 1 : 0); }); }); return n; };
+  async function leaveOk() { return !dirtyAll() || confirm('Unsaved Changes On This Date Will Be Lost. Continue?'); }
   async function pickDate(d, then) {
     if (d > todayYmd()) return;
     if (!(await leaveOk())) return;
     S.tab = 'log'; S.catMode = false; S.prev = false;
-    if (!S.cal.days[d] && d !== todayYmd()) { S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; engRender(); return; }
+    if (!S.cal.days[d] && d !== todayYmd()) { S.R = null; S.same = true; S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; engRender(); return; }
     await engLoad(d); if (then === 'send') await preview();
   }
   async function createDay() { if (S.blank) await engLoad(S.blank); }
@@ -9447,17 +9496,17 @@ const DPR = (function () {
     });
     const rows = g.labour_rows || [], by = new Map(); d.rows = {};
     rows.forEach(r => {
-      const k = r.work_sub_id ? 'S:' + r.work_sub_id : r.plan_group_id ? 'G:' + r.plan_group_id : '';   // v157.1 · sub / group rows stay on their unit
+      const k = r.work_sub_id ? 'S:' + r.work_sub_id : r.plan_group_id ? 'G:' + r.plan_group_id : '';
       if (k) { const arr = d.rows[k] = d.rows[k] || []; let c = arr.find(z => z.con === r.contractor); if (!c) { c = { con: r.contractor, heads: {} }; arr.push(c); } Object.entries(r.heads || {}).forEach(([t, v]) => { c.heads[t] = num(c.heads[t]) + num(v); }); return; }
       const c = by.get(r.contractor) || { con: r.contractor, heads: {} }; Object.entries(r.heads || {}).forEach(([t, v]) => { c.heads[t] = num(c.heads[t]) + num(v); }); by.set(r.contractor, c); });
     d.cons = [...by.values()];
     if (!d.cons.length && Object.keys(d.rows).length) { const first = Object.values(d.rows)[0][0]; d.cons = [{ con: first.con, heads: {} }]; }
-    if (!d.cons.length) { const m = (g.memo_rows || [])[0], wo = woOf(g); d.cons = [{ con: m ? m.contractor : wo ? wo.contractor_code : (g.memo_contractor || ''), heads: {} }]; }   // v157 · no WO (not issued / under amendment) → blank, never the first contractor in the list   // a previous entry pre-fills the CONTRACTOR only, never its heads (v154.1)
+    if (!d.cons.length) { const m = (g.memo_rows || [])[0], wo = woOf(g); d.cons = [{ con: m ? m.contractor : wo ? wo.contractor_code : (g.memo_contractor || ''), heads: {} }]; }   // a previous entry pre-fills the CONTRACTOR only, never its heads (v154.1); no WO → blank (v157)
     rows.forEach(r => { const b = (r.work_id || '') + '|' + (r.work_sub_id || ''); let k = b, n = 1; while (d.lab[k]) k = b + '#' + (++n); d.lab[k] = { con: r.contractor, src: 'today', heads: Object.assign({}, r.heads || {}) }; });   // legacy view for the manager's report cards
     return d;
   }
   const dOf = g => S.D[g.wgroup_id] || (S.D[g.wgroup_id] = newDraft(g));
-  // v157.1 · labour level comes from the Reporting Plan (M34 payload line.labour_level: activity | sub | group); a club is always per card
+  // labour level comes from the Reporting Plan (M34 line.labour_level: activity | sub | group); a club is always per card
   const labLevel = g => { if (g.lines.length !== 1) return 'activity'; const l = g.lines[0], v = l.labour_level || 'activity'; return v === 'sub' && staged(l) ? 'sub' : v === 'group' && kindOf(l) === 'grp' ? 'group' : 'activity'; };
   // a "unit" = one heads row set: { key, label, sub, worked }  — key 'A' (card), 'S:<sub_id>', 'G:<group_id>'
   function labUnits(g) {
@@ -9466,10 +9515,11 @@ const DPR = (function () {
     if (lv === 'sub') return unitsShown(g, (l.stages || []).filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w').map(s => ({ key: 'S:' + s.id, label: s.name, sub: (s.group_name ? s.group_name + ' · ' : '') + 'Weight ' + fmt(s.tpl_weight || s.weight) + '%', worked: subWorkedOn(s, x.subs[s.id], subBase(s)) })));
     return unitsShown(g, subGroups(l).filter(G => G.id && G.subs.some(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w')).map(G => ({ key: 'G:' + G.id, label: G.name, sub: G.subs.filter(s => x.subs[s.id].out === 'w').length + ' Sub-Activities Worked', worked: G.subs.some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) })));
   }
-  const unitHas = (g, k) => ((dOf(g).rows || {})[k] || []).some(c => heads(c.heads) > 0);
-  const unitsShown = (g, us) => us.filter(u => u.worked || unitHas(g, u.key));   // a back-dated (finished-before-date) sub / group is not asked for labour unless heads were already entered
+  const unitHas = (g, k) => (k === 'A' ? dOf(g).cons : (dOf(g).rows || {})[k] || []).some(c => heads(c.heads) > 0);
+  const unitsShown = (g, us) => us.filter(u => u.worked || unitHas(g, u.key));
   const unitRows = (g, u) => { const d = dOf(g); if (u.key === 'A') return d.cons; if (!d.rows[u.key]) d.rows[u.key] = [{ con: (d.cons[0] || {}).con || '', heads: {} }]; return d.rows[u.key]; };
   const unitHeads = (g, u) => unitRows(g, u).reduce((a, c) => a + heads(c.heads), 0);
+  const unitKeyOf = (g, l, s, Gp) => { const lv = labLevel(g); return lv === 'sub' && s ? 'S:' + s.id : lv === 'group' && Gp ? 'G:' + Gp.id : lv === 'activity' ? 'A' : null; };
   const labKey = (l, s) => l.work_id + '|' + (s ? s.id : '');
   const cardHeads = g => { const d = dOf(g); return d.cons.reduce((a, c) => a + heads(c.heads), 0) + Object.values(d.rows || {}).reduce((a, arr) => a + arr.reduce((b, c) => b + heads(c.heads), 0), 0); };
   function outOf(g, l) {
@@ -9486,26 +9536,40 @@ const DPR = (function () {
     const hl = g.lines.find(l => outOf(g, l) === 'h'); d.rc = hl ? (staged(hl) ? ((hl.stages || []).map(s => lineX(g, hl).subs[s.id]).find(y => y.out === 'h') || {}).rc : lineX(g, hl).rc) || '' : '';
   }
   const markDirty = g => { dOf(g).dirty = true; deriveCard(g); };
-  // v157.1 · "Starts Today" = the start date IS the report date; a back-dated start is "Running · Started dd Mon"
+  // "Starts Today" = the start date IS the report date; a back-dated start is "Running · Started dd Mon"
   const subStarts = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on && (!y.s || y.s === S.to);
   const dirStarts = (g, l) => { const x = lineX(g, l); return !staged(l) && x.out === 'w' && !l.started_on && (!x.started || x.started === S.to); };
-  const subFresh = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on;   // start date entered on this report (editable)
-  // v157.1 · worked ON the report date (labour is asked only for these): a part finished before the report date is back-dated history
+  const subFresh = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on;
+  // worked ON the report date (labour is asked only for these): a part finished before the report date is back-dated history
   const subWorkedOn = (s, y, base) => base < 99.9995 && y.out === 'w' && !(y.e && y.e < S.to);
   const lineWorkedOn = (g, l) => { if (finL(l)) return false; const x = lineX(g, l); return staged(l) ? (l.stages || []).some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) : x.out === 'w' && !(x.fin && x.finOn && x.finOn < S.to); };
   const lineBackDated = (g, l) => !finL(l) && outOf(g, l) === 'w' && !lineWorkedOn(g, l);
   const startsN = (g, l) => finL(l) ? 0 : staged(l) ? (l.stages || []).filter(s => subStarts(s, lineX(g, l).subs[s.id], subBase(s))).length : (dirStarts(g, l) ? 1 : 0);
-  const cardHasW = g => g.lines.some(l => lineWorkedOn(g, l));   // v157.1 · worked on the report date
+  const cardHasW = g => g.lines.some(l => lineWorkedOn(g, l));
   const cardBackDated = g => !cardHasW(g) && g.lines.some(l => lineBackDated(g, l));
   const cardActive = g => !g.lines.every(finL);
-  const cardNeedsLab = g => cardActive(g) && labUnits(g).some(u => u.worked && !heads(unitHeads(g, u)));   // v157.1 · per labour unit (card / sub / group)
+  const cardNeedsLab = g => cardActive(g) && labUnits(g).some(u => u.worked && !unitHeads(g, u));
   const npHeads = () => npDraft().reduce((a, e) => a + heads(e.heads), 0);
   const allHeads = () => S.groups.reduce((a, g) => a + cardHeads(g), 0) + npHeads();
   const workedCards = () => S.groups.filter(g => g.lines.some(l => outOf(g, l) !== ''));
   const hasH = (g, l) => !finL(l) && (outOf(g, l) === 'h' || (staged(l) && (l.stages || []).some(s => lineX(g, l).subs[s.id].out === 'h')));
   const hindCards = () => S.groups.filter(g => g.lines.some(l => hasH(g, l)));
   const dirtyCards = () => S.groups.filter(g => dOf(g).dirty);
-  function labStats() { let miss = 0, starts = 0; S.groups.forEach(g => { if (cardActive(g)) miss += labUnits(g).filter(u => u.worked && !heads(unitHeads(g, u))).length; g.lines.forEach(l => { starts += startsN(g, l); }); }); return { all: allHeads(), miss, starts }; }
+  function labStats() { let miss = 0, starts = 0; S.groups.forEach(g => { if (cardActive(g)) miss += labUnits(g).filter(u => u.worked && !unitHeads(g, u)).length; g.lines.forEach(l => { starts += startsN(g, l); }); }); return { all: allHeads(), miss, starts }; }
+  // "Needs Attention" per tab: work = W without heads / H without reason; prog = worked without a quantity / H without reason
+  function attW(g, l) {
+    if (finL(l)) return false; const x = lineX(g, l);
+    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }));
+    if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && y.out === 'h' && !y.rc; })) return true;
+    return labUnits(g).some(u => u.worked && !unitHeads(g, u));
+  }
+  function attP(g, l) {
+    if (finL(l)) return false; const x = lineX(g, l);
+    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && !x.wip && !(num(x.qty) > 0));
+    return (l.stages || []).some(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && ((y.out === 'h' && !y.rc) || (y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005)); });
+  }
+  const attOf = (g, l) => curTab() === 'prog' ? attP(g, l) : attW(g, l);
+  const attCount = () => allLines().filter(({ g, l }) => attOf(g, l)).length;
 
   /* ---------- redraw (keeps scroll + focus; every input carries data-k) ---------- */
   let _rp = 0;
@@ -9530,277 +9594,308 @@ const DPR = (function () {
     $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
     fit(); $('d2_side').innerHTML = sideHtml(); paintMain();
   }
-  function paintMain() { const m = $('d2_main'); if (!m) return; m.innerHTML = S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml(); }
+  function paintMain() { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); m.innerHTML = S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml(); }
   function calHtml() {
     const m = S.cal.month, first = new Date(m + 'T00:00:00'), dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7, today = todayYmd();
     let h = ''; for (let i = 0; i < lead; i++) h += '<span class="d pad"></span>';
     for (let n = 1; n <= dim; n++) {
-      const d = m.slice(0, 8) + String(n).padStart(2, '0'), c = S.cal.days[d], k = c ? stOf(c.published ? 'pub' : c.status)[0] : 'none', fut = d > today;
-      h += `<button class="d ${fut ? 'fut' : ''} ${d === today ? 'today' : ''} ${d === S.to ? 'sel' : ''}" ${fut ? 'disabled' : ''} title="${esc(dsh(d) + ' · ' + (c ? stOf(c.published ? 'pub' : c.status)[1] : 'Not Created'))}" onclick="DPR.pickDate('${d}')">${n}<span class="b ${k}"></span></button>`;
+      const d = m.slice(0, 8) + String(n).padStart(2, '0'), c = S.cal.days[d], fut = d > today;
+      const k = !c ? 'none' : c.published ? 'pub' : (c.status === 'Draft' && num(c.heads) > 0 && !num(c.reported)) ? 'lab' : stOf(c.status)[0];   // v158 · teal = labour entered, progress pending
+      const title = !c ? 'Not Created' : k === 'lab' ? 'Labour Entered · Progress Pending' : stOf(c.published ? 'pub' : c.status)[1];
+      h += `<button class="d ${fut ? 'fut' : ''} ${d === today ? 'today' : ''} ${d === tDate() ? 'sel' : ''}" ${fut ? 'disabled' : ''} title="${esc(dsh(d) + ' · ' + title)}" onclick="DPR.pickDate('${d}')">${n}<span class="b ${k}"></span></button>`;
     }
     return h;
   }
   function sideHtml() {
-    const today = todayYmd(), days = Object.values(S.cal.days || {}), L = S.sub ? labStats() : { all: 0, starts: 0 };
-    const ls = S.sub ? allLines().filter(({ l }) => !finL(l)) : [];
-    const rep = ls.filter(({ g, l }) => outOf(g, l) !== '').length, hind = ls.filter(({ g, l }) => hasH(g, l)).length, nw = ls.filter(({ g, l }) => outOf(g, l) === 'n').length;
+    const today = todayYmd(), days = Object.values(S.cal.days || {});
+    const T = S.R ? inCtx('T', () => ({ starts: labStats().starts, heads: allHeads(), w: allLines().filter(({ g, l }) => outOf(g, l) === 'w').length, h: allLines().filter(({ g, l }) => hasH(g, l)).length })) : { starts: 0, heads: 0, w: 0, h: 0 };
+    const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ l }) => !finL(l)).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
     const last = days.filter(x => x.submitted_at).sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)))[0];
-    const pend = days.filter(x => x.status === 'Draft' && x.report_date < today).map(x => dsh(x.report_date)).sort().join(', '), ret = days.filter(x => x.status === 'Returned').map(x => dsh(x.report_date)).sort().join(', ');
+    const pend = days.filter(x => x.status === 'Draft' && x.report_date < addDays(today, -1)).map(x => dsh(x.report_date)).sort().join(', '), ret = days.filter(x => x.status === 'Returned').map(x => dsh(x.report_date)).sort().join(', ');
     const nextOff = S.cal.month >= monthOf(today);
     return `<div class="d2-brand"><b>Daily Report</b><span>${esc(projName())}</span><i class="r">${esc(state.userName || 'Site Engineer')}</i>${S.homeAreas.length ? `<i class="r">${esc(S.homeAreas.join(' · '))}</i>` : ''}</div>
-      <div class="d2-vtabs"><button class="${S.tab === 'log' ? 'on' : ''}" onclick="DPR.tab('log')">Work Progress Log<i>${esc(dsh(S.to))} · ${esc(stOf(stKey())[1])}</i></button><button class="${S.tab === 'rep' ? 'on' : ''}" onclick="DPR.tab('rep')">Report<i>Day Reports · Preview &amp; Send</i></button></div>
+      <div class="d2-vtabs"><button class="${S.tab === 'log' ? 'on' : ''}" onclick="DPR.tab('log')">Work Progress Log<i>${S.R && !S.same ? esc(dsh(tDate())) + ' · Sending ' + esc(dsh(yDate())) : esc(dsh(S.to))} · ${esc(stOf(stKeyY())[1])}</i></button><button class="${S.tab === 'rep' ? 'on' : ''}" onclick="DPR.tab('rep')">Report<i>Day Reports · Preview &amp; Send</i></button></div>
       <div class="d2-h4">Report Date<span class="sp"></span><span class="pill p-grey">Pick A Date</span></div>
       <div class="d2-cal"><div class="mh"><button onclick="DPR.calMove(-1)">‹</button><b>${esc(mLabel(S.cal.month))}</b><button ${nextOff ? 'disabled' : ''} onclick="DPR.calMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${calHtml()}</div></div>
-      <div class="d2-leg"><span><i class="b draft"></i>Draft</span><span><i class="b sent"></i>Submitted</span><span><i class="b acc"></i>Accepted</span><span><i class="b ret"></i>Returned</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>Not Created</span></div>
-      <div class="d2-h4">This Date At A Glance</div>
-      <div class="d2-kpis"><div class="d2-kpi"><b>${ls.length}</b>Activities</div><div class="d2-kpi ok"><b>${rep}</b>Reported</div><div class="d2-kpi teal"><b>${L.starts}</b>Starting Today</div><div class="d2-kpi red"><b>${hind}</b>Hindrance</div><div class="d2-kpi"><b>${nw}</b>No Work</div><div class="d2-kpi vio"><b>${fmt(L.all)}</b>Heads</div></div>
+      <div class="d2-leg"><span><i class="b lab"></i>Labour Entered</span><span><i class="b draft"></i>Draft</span><span><i class="b sent"></i>Submitted</span><span><i class="b acc"></i>Accepted</span><span><i class="b ret"></i>Returned</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>Not Created</span></div>
+      <div class="d2-h4">Today · ${esc(dsh(tDate()))}</div>
+      <div class="d2-kpis"><div class="d2-kpi ok"><b>${T.w}</b>Working</div><div class="d2-kpi teal"><b>${T.starts}</b>Starting</div><div class="d2-kpi red"><b>${T.h}</b>Hindrance</div><div class="d2-kpi vio"><b>${fmt(T.heads)}</b>Heads</div></div>
+      ${S.R && !S.same ? `<div class="d2-h4">Yesterday · ${esc(dsh(yDate()))}</div><div class="d2-kpis"><div class="d2-kpi"><b>${Y.rep}/${Y.all}</b>Reported</div><div class="d2-kpi vio"><b>${fmt(Y.heads)}</b>Heads</div></div>` : ''}
       <div class="d2-sk"><div class="r"><span>Today</span><b>${esc(dmy(today))}</b></div><div class="r"><span>Last Submitted</span><b>${last ? esc(dts(last.submitted_at)) : '—'}</b></div><div class="r"><span>Pending Dates</span><b style="color:var(--drd)">${esc(pend || '—')}</b></div><div class="r"><span>Returned</span><b style="color:var(--drd)">${esc(ret || '—')}</b></div></div>`;
   }
+  const stKeyY = () => S.R ? inCtx('Y', stKey) : stKey();
   function blankHtml() {
     return `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.to))}</b></div><div class="meta"><div>Status <span class="pill p-grey">Not Created</span></div></div></div>
-      <div class="d2-empty"><b style="font-size:14px">No Report For This Date Yet</b><div style="margin:8px 0 14px">Create It To Enter Progress And Labour For ${esc(dsh(S.to))}. The Date And Time You Send It Are Recorded.</div><button class="d2-btn navy" onclick="DPR.createDay()">Create Report For ${esc(dsh(S.to))}</button></div></div>`;
+      <div class="d2-empty"><b style="font-size:14px">No Report For This Date Yet</b><div style="margin:8px 0 14px">Create It To Enter Work, Manpower And Progress For ${esc(dsh(S.to))}. The Date And Time You Send It Are Recorded.</div><button class="d2-btn navy" onclick="DPR.createDay()">Create Report For ${esc(dsh(S.to))}</button></div></div>`;
   }
   const lateHtml = () => {
-    if (!S.sub) return '';
-    if (S.locked || S.sub.status === 'Accepted') return S.sub.is_late ? '<div><span class="pill p-red">Sent Late</span></div>' : '';
-    const m = cutMins(); return m > 0 ? `<div><span class="pill p-amb">Due By 1 PM Of ${esc(dsh(addDays(S.to, 1)))}</span></div>` : `<div><span class="pill p-red">Late · Past 1 PM Of ${esc(dsh(addDays(S.to, 1)))}</span></div>`;
+    const sub = S.R ? S.R.Y.sub : S.sub; if (!sub) return '';
+    const locked = S.R ? S.R.Y.locked : S.locked, d = yDate();
+    if (locked || sub.status === 'Accepted') return sub.is_late ? '<div><span class="pill p-red">Sent Late</span></div>' : '';
+    const m = Math.round((new Date(addDays(d, 1) + 'T13:00:00+05:30') - Date.now()) / 60000);
+    return m > 0 ? `<div><span class="pill p-amb">Due By 1 PM ${addDays(d, 1) === todayYmd() ? 'Today' : 'Of ' + esc(dsh(addDays(d, 1)))}</span></div>` : `<div><span class="pill p-red">Late · Past 1 PM Of ${esc(dsh(addDays(d, 1)))}</span></div>`;
   };
   function logHtml() {
-    const sub = S.sub, st = stOf(stKey()), ro = isRo(), L = labStats();
+    const tab = curTab(), ro = isRo(), st = stOf(stKey());
     const areas = {}; allLines().forEach(({ g }) => { const a = g.area || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
     const aKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
-    const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().length - nFin, nOpen = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length;
-    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.to))}</b></div><div class="meta"><div>Status <span class="pill ${STP[st[0]]}">${esc(st[1])}</span></div><div>Created <b>${sub.opened_at || sub.created_at ? esc(dts(sub.opened_at || sub.created_at)) : '—'}</b></div><div>Submitted <b>${sub.submitted_at ? esc(dts(sub.submitted_at)) : '—'}</b></div>${lateHtml()}${sub.reviewed_at ? `<div>Reviewed <b>${esc(dts(sub.reviewed_at))}</b></div>` : ''}</div></div>`;
-    if (sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
+    const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().length - nFin, nOpen = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length, nAtt = attCount();
+    const Ysub = S.R ? S.R.Y.sub : S.sub, Yst = stOf(stKeyY());
+    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(tDate()))}</b></div><div class="meta">${S.same ? '' : `<div>Sending <b>${esc(dsh(yDate()))}</b> Report</div>`}<div>Status <span class="pill ${STP[Yst[0]]}">${esc(Yst[1])}</span></div><div>Submitted <b>${Ysub && Ysub.submitted_at ? esc(dts(Ysub.submitted_at)) : '—'}</b></div>${lateHtml()}${Ysub && Ysub.reviewed_at ? `<div>Reviewed <b>${esc(dts(Ysub.reviewed_at))}</b></div>` : ''}</div></div>`;
+    if (Ysub && Ysub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(Ysub.return_reason || '')}${Ysub.return_note ? ' — ' + esc(Ysub.return_note) : ''} · Correct And Resend (Attempt ${num(Ysub.attempt_no) + 1})</div>`;
+    // tabs
+    const tw = inCtx('T', () => ({ w: allLines().filter(({ g, l }) => outOf(g, l) === 'w').length, s: labStats().starts, h: allLines().filter(({ g, l }) => hasH(g, l)).length, heads: allHeads() }));
+    const yp = inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, w: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'w').length, heads: allHeads() }));
+    h += `<div class="d2-fix d2-subs"><button class="t ${tab === 'work' ? 'on' : ''}" onclick="DPR.subTab('work')">1 · Work Reported · ${S.same ? '' : 'Today '}${esc(dsh(tDate()))}<i>${tw.w} Working · ${tw.s} Start · ${tw.h} Hindrance · ${fmt(tw.heads)} Heads</i></button><button class="t ${tab === 'prog' ? 'on' : ''}" onclick="DPR.subTab('prog')">2 · Progress Reported · ${S.same ? '' : 'Yesterday '}${esc(dsh(yDate()))}<i>${yp.rep} Reported · ${fmt(yp.heads)} Heads</i></button><span class="sp"></span></div>`;
+    // toolbar
     h += `<div class="d2-fix d2-tool"><div class="d2-seg"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div>
       <span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div>
-      <span class="lbl">Status</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button></div>
-      <input class="q" data-k="cq" placeholder="Search The Estimate (WBS) To Add Work — Activity, Location, Package…" value="${esc(S.q)}" oninput="DPR.srch(this.value)">
-      ${ro ? '' : `<button class="d2-btn ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn navy" onclick="DPR.startOpen()">+ Browse Estimate</button><button class="d2-btn ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button>`}</div>`;
-    if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Labour Is Entered Once For The Club.</div>`;
-    h += `<div class="d2-fix d2-subs"><button class="t ${S.sub2 === 'act' ? 'on' : ''}" onclick="DPR.subTab('act')">Activities &amp; Progress<span class="bd">${nAct}</span></button><button class="t ${S.sub2 === 'lab' ? 'on' : ''}" onclick="DPR.subTab('lab')">Labour · This Date<span class="bd">${fmt(L.all)} Heads</span>${L.miss ? `<span class="bd red">${L.miss} Missing</span>` : ''}</button><span class="sp"></span>${L.starts ? `<span class="pill p-teal" style="margin-right:10px">${L.starts} Starting Today · In Labour Tab</span>` : ''}<span style="margin-right:10px"><button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button> <button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button></span></div>`;
+      <span class="lbl">Status</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div>
+      <input class="q" data-k="cq" placeholder="Search The Estimate (WBS) To Add Work…" value="${esc(S.q)}" oninput="DPR.srch(this.value)">
+      ${ro ? '' : `<button class="d2-btn ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn navy" onclick="DPR.startOpen()">+ Browse Estimate</button><button class="d2-btn ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button>`}
+      <span class="sp"></span>${tab === 'work' && !ro ? `<button class="d2-btn sm" onclick="DPR.sameYdAll()">Same As Yesterday · All</button>` : ''}${tab === 'prog' ? `<button class="d2-btn sm ${S.ylab ? 'on' : ''}" onclick="DPR.ylabTog()">Labour Of ${esc(dsh(yDate()))} · ${fmt(yp.heads)} Heads · ${S.ylab ? 'Back To Progress' : 'Edit'}</button>` : ''}<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button> <button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button></div>`;
+    if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Manpower Is Entered Once For The Club.</div>`;
     if (S.prev) h += `<div class="d2-fix d2-warn">${previewWarn()}</div>`;
-    h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : S.sub2 === 'act' ? tableHtml(ro) : labHtml(ro)}</div>`;
+    h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : tab === 'prog' && !S.ylab ? sheetHtml2('prog', ro) : sheetHtml2('work', ro)}</div>`;
     return h + `<div class="d2-foot" id="d2_foot">${footHtml()}</div></div>`;
   }
   function footHtml() {
-    const n = dirtyCards().length + (S.npDirty ? 1 : 0), L = labStats(), dt = esc(dsh(S.to));
-    if (S.prev) return `<span class="msg"><b>${dt}</b> · Review The Report, Then Send — Date &amp; Time Of Submission Are Recorded.</span><button class="d2-btn" onclick="DPR.prevClose()">← Back To Edit</button><button class="d2-btn ok" onclick="DPR.submitGo()">Send To Manager ✓</button>`;
+    const n = dirtyAll(), tab = curTab(), yd = esc(dsh(yDate())), td = esc(dsh(tDate())), att = attCount();
+    if (S.prev) return `<span class="msg"><b>${yd}</b> · Review The Report, Then Send — Date &amp; Time Of Submission Are Recorded.</span><button class="d2-btn" onclick="DPR.prevClose()">← Back To Edit</button><button class="d2-btn ok" onclick="DPR.submitGo()">Send ${yd} To Manager ✓</button>`;
     if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span>`;
-    return `<span class="msg">${L.miss ? `<b>${dt}</b> · <span style="color:var(--drd)"><b>${L.miss}</b> Labour Row${L.miss === 1 ? '' : 's'} Need Heads — Open The Labour Tab</span>` : `<b>${dt}</b> · ${n ? n + ' Unsaved · ' : ''}Save Draft Any Time · Send Records Date &amp; Time Of Report`}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" ${L.miss ? 'disabled title="Add Heads For Every Worked / Starting Activity First"' : ''} onclick="DPR.preview()">Preview &amp; Send →</button>`;
+    const attTxt = att ? ` · <span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : '';
+    if (tab === 'work' && !S.same) return `<span class="msg"><b>${td}</b> · ${n ? n + ' Unsaved · ' : ''}Today's Work &amp; Manpower Are Saved As Today's Draft — They Go With Tomorrow's Progress${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.subTab('prog')">Next: Progress · ${yd} →</button>`;
+    const L = inCtx('Y', labStats);
+    return `<span class="msg"><b>${yd} Report</b> · ${n ? n + ' Unsaved · ' : ''}Progress + Labour Of ${yd} · Send Records Date &amp; Time${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" ${L.miss ? 'disabled title="Add Heads For Every Worked Row First"' : ''} onclick="DPR.preview()">Preview &amp; Send ${yd} →</button>`;
   }
 
-  /* ---------- activities table ---------- */
+  /* ---------- shared bits ---------- */
   const pill = (c, t) => `<span class="pill ${c}">${t}</span>`;
   const ocSeg = (oc, call, ro) => `<span class="d2-oc">${[['w', 'W', 'Worked'], ['h', 'H', 'Hindrance'], ['n', 'N', 'No Work']].map(([k, t, ti]) => `<button class="${k} ${oc === k ? 'on' : ''}" title="${ti}" ${ro ? 'disabled' : ''} onclick="${call.replace('@', k)}">${t}</button>`).join('')}</span>`;
   const ocPill = oc => oc === 'w' ? pill('p-ok', 'Worked') : oc === 'h' ? pill('p-red', 'Hindrance') : oc === 'n' ? pill('p-grey', 'No Work') : '<span class="muted">—</span>';
   const snapTgt = (l, p) => Math.round(num(l.est_qty) * p / 100 * 1000) / 1000;
   function hreason(wid, sid, rc, oh, ro) {
     const M = S.masters;
-    return `<span class="hreason"><select data-k="r:${wid}:${sid}" class="${rc ? '' : 'bad'}" ${ro ? 'disabled' : ''} onchange="DPR.rcSet('${wid}','${sid}',this.value)"><option value="">Pick Reason…</option>${M.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select>${oh ? `<span class="hopen">Open Since ${esc(dsh(oh.from_date))}</span>` : ''}</span>`;
+    return `<span class="hreason"><select data-k="r:${wid}:${sid}" class="${rc ? '' : 'bad'}" ${ro ? 'disabled' : ''} onchange="DPR.rcSet('${wid}','${sid}',this.value)"><option value="">Pick Reason…</option>${M.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select>${oh ? `<span class="hopen">Open Since ${esc(dsh(oh.from_date))}</span>` : rc ? '' : ' ' + pill('p-red', 'Reason Missing')}</span>`;
   }
   function statusDir(g, l) {
     const x = lineX(g, l), o = x.out, st = dirStarts(g, l), base = cumBase(l);
     if (finL(l)) return pill('p-ok', 'Finished');
-    if (o === 'h') return pill('p-red', 'Hindrance');
-    if (o === 'w') { if (st) return pill('p-teal', 'Starts Today' + (x.wip ? ' · WIP' : '')); if (x.wip) return pill('p-amb', 'WIP'); if (x.fin && x.finOn && x.finOn < S.to) return pill('p-ok', 'Done ' + dsh(x.finOn)) + ' ' + pill('p-grey', 'Back-Dated'); if (x.started && x.started < S.to && !l.started_on) return pill('p-ok', 'Running') + ' ' + pill('p-grey', 'Started ' + dsh(x.started) + ' · ' + durTxt(x.started, S.to)); return pill('p-ok', 'Running'); }
-    if (o === 'n') return pill('p-grey', base > 0 ? 'No Work' : 'Not Started');
+    if (o === 'h') return pill('p-red', 'Hindrance') + (l.open_hindrance && l.open_hindrance.from_date < S.to ? ' ' + pill('p-grey', 'Since ' + dsh(l.open_hindrance.from_date)) : '');
+    if (o === 'w') { if (st) return pill('p-teal', 'Starts Today' + (x.wip ? ' · WIP' : '')); if (x.wip) return pill('p-amb', 'WIP'); if (x.fin && x.finOn && x.finOn < S.to) return pill('p-ok', 'Done ' + dsh(x.finOn)) + ' ' + pill('p-grey', 'Back-Dated'); const s0 = x.started || l.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, S.to) + 1)) : ''); }
+    if (o === 'n') return pill('p-grey', base > 0 ? 'No Work Today' : 'Not Started');
     return pill('p-grey', base > 0 || l.started_on ? 'Running' : 'Not Started');
   }
   function statusSub(s, y, base) {
     if (base >= 99.9995) return pill('p-ok', 'Done');
-    if (y.out === 'h') return pill('p-red', 'Hindrance');
+    if (y.out === 'h') return pill('p-red', 'Hindrance') + (s.open_hindrance && s.open_hindrance.from_date < S.to ? ' ' + pill('p-grey', 'Since ' + dsh(s.open_hindrance.from_date)) : '');
     if (y.out === 'w') { if (subStarts(s, y, base)) return pill('p-teal', 'Starts Today' + (y.wip ? ' · WIP' : num(y.pct) >= 99.9995 ? ' · Done' : '')); if (y.wip) return pill('p-amb', 'WIP');
       if (num(y.pct) >= 99.9995) return y.e && y.e < S.to ? pill('p-ok', 'Done ' + dsh(y.e)) + ' ' + pill('p-grey', 'Back-Dated · ' + durTxt(y.s || s.started_on, y.e)) : pill('p-ok', 'Done Today');
-      if (y.s && y.s < S.to && !s.started_on) return pill('p-ok', 'Running') + ' ' + pill('p-grey', 'Started ' + dsh(y.s) + ' · ' + durTxt(y.s, S.to)); return pill('p-ok', 'Running'); }
-    if (y.out === 'n') return pill('p-grey', base > 0 ? 'No Work' : 'Not Started');
+      const s0 = y.s || s.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, S.to) + 1)) : ''); }
+    if (y.out === 'n') return pill('p-grey', base > 0 ? 'No Work Today' : 'Not Started');
     return pill('p-grey', base > 0 || s.started_on ? 'Running' : 'Not Started');
   }
-  const tickCell = (g, l, idx, ro) => `<td class="c" style="white-space:nowrap">${S.cm && !ro ? `<input type="checkbox" data-k="t:${l.work_id}" ${S.ticks.has(l.work_id) ? 'checked' : ''} ${finL(l) ? 'disabled title="Finished"' : g.lines.length > 1 ? 'title="Ticks The Whole Club — It Merges Into The New Club"' : ''} onchange="DPR.tick('${l.work_id}',this.checked)" style="margin-right:5px;vertical-align:middle">` : ''}${idx}</td>`;   // v157 · a club ticks as a whole and merges
+  const tickCell = (g, l, idx, ro) => `<td class="c" style="white-space:nowrap">${S.cm && !ro ? `<input type="checkbox" data-k="t:${l.work_id}" ${S.ticks.has(l.work_id) ? 'checked' : ''} ${finL(l) ? 'disabled title="Finished"' : g.lines.length > 1 ? 'title="Ticks The Whole Club — It Merges Into The New Club"' : ''} onchange="DPR.tick('${l.work_id}',this.checked)" style="margin-right:5px;vertical-align:middle">` : ''}${idx}</td>`;
   const dropBtn = g => canDrop(g) && g.lines.length === 1 ? ` <button class="d2-btn sm" title="Remove From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">×</button>` : '';
   function certCell(g, l, x, r) {
     if (!x.fin || r) return '';
-    return ` Cert. <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` End <input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)">`}`;
+    return ` <span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` <input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)">`}`;
   }
-  function dirRow(it, idx, ro) {
-    const { g, l } = it, x = lineX(g, l), wid = l.work_id, est = num(l.est_qty), base = cumBase(l), fin = finL(l), r = ro || fin, o = fin ? '' : x.out;
-    const q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), starts = dirStarts(g, l), uom = esc(l.uom || ''), cnt = isCount(l.uom);
-    const nm = S.gv === 'work' ? `<span title="${esc(lineLocPath(g, l))}">${esc(lineLoc(g, l))}</span> <span class="muted">· ${esc(pathTail(lineLocPath(g, l)))}</span>` : `${esc(short(l.activity, 60))} <span class="muted">· ${esc(linePkg(g, l))}</span>`;
-    let done;
-    if (r) done = o === 'w' ? `<b>${x.wip ? 'WIP' : fmt(q)}</b> <span class="muted">${uom}</span>` : o === 'h' ? '<span class="hopen">Hindrance</span>' : '<span class="muted">—</span>';
-    else if (o === 'w') done = `<input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${x.wip ? '' : (x.qty || '')}" placeholder="${x.wip ? 'WIP' : '0'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)"> <span class="muted">${uom}</span> <span class="d2-snap">${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}%</button>`).join('')}<button class="done" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button></span>`;
-    else if (o === 'h') done = hreason(wid, '', x.rc, l.open_hindrance, false);
-    else if (o === 'n') done = '<span class="muted">No Work Today</span>';
-    else done = '<span class="muted">— Not Filled</span>';
-    const startPart = !r && o === 'w' && !l.started_on ? `Start <input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)"> ` : (l.started_on || (x.started && o === 'w')) ? `Start <b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} · ` : '';   // v157.1 · editable until locked
-    const cum = o === 'w' ? after : base, club = g.lines.length > 1 && S.gv === 'loc' ? ' ' + pill('p-amb', 'Club') : '';
-    return `<tr class="act ${fin ? 'fin' : ''}">${tickCell(g, l, idx, ro)}<td class="name" title="${esc(l.activity)}">${nm} ${pill('p-teal', 'Direct')}${club}</td>
-      <td class="n">${fmt(est)} <span class="muted">${uom}</span></td><td class="n ${est && base > est + 0.0005 ? 'over' : ''}">${fmt(base)} <span class="muted">${est ? Math.round(base / est * 100) : 0}%</span>${est && base > est + 0.0005 ? '<div>' + pill('p-red', 'Over Est.') + '</div>' : ''}</td>
-      <td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="dn">${done}</td>
-      <td class="n"><b>${fmt(cum)}</b> <span class="muted">${est ? Math.round(cum / est * 100) : 0}%</span>${x.fin && !fin ? '<div>' + pill('p-ok', 'Site Cert. Qty Due') + '</div>' : ''}</td>
-      <td class="stt">${startPart}${statusDir(g, l)}${certCell(g, l, x, r)}</td>
-      <td><input class="rem" data-k="n:${wid}" placeholder="${o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}" value="${esc(x.note)}" ${r ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)">${r ? '' : dropBtn(g)}</td></tr>`;
+  const nameCell = (g, l) => { const est = `<span class="est">Est ${fmt(l.est_qty)} ${esc(l.uom || '')}</span>`; return S.gv === 'work' ? `<b title="${esc(lineLocPath(g, l))}">${esc(lineLoc(g, l))}</b> <span class="muted">· ${esc(pathTail(lineLocPath(g, l)))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}` : `<b title="${esc(l.activity)}">${esc(short(l.activity, 60))}</b> <span class="muted">· ${esc(linePkg(g, l))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}`; };
+  // remarks: ✎ icon → inline editor row below (S.remo = key)
+  const remBtn = (key, has, ro) => `<button class="d2-rem ${has ? 'has' : ''}" title="${has ? 'Remarks (Has Text)' : 'Remarks'}" ${ro && !has ? 'disabled' : ''} onclick="DPR.remTog('${key}')">✎</button>`;
+  const remRow = (key, wid, sid, val, ph, cols, ro) => S.remo === key ? `<tr class="strip"><td></td><td colspan="${cols - 1}"><span class="muted" style="margin-right:8px">${esc(ph)}</span><input class="rem" style="width:60%" data-k="n:${wid}:${sid}" value="${esc(val)}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"> <button class="d2-btn sm" onclick="DPR.remTog('${key}')">Close</button></td></tr>` : '';
+  // fold: every parent starts collapsed (S.foldDef) until Expand All; keys seen once are remembered
+  function folded(k) { if (!S.seen.has(k)) { S.seen.add(k); if (S.foldDef) S.fold.add(k); } return S.fold.has(k); }
+  const togBtn = k => `<button class="d2-tog ${folded(k) ? '' : 'open'}" onclick="DPR.foldRow('${esc(k)}')">${folded(k) ? '▸' : '▾'}</button>`;
+
+  /* ---------- manpower (work tab): one cell per unit → strip under the row ---------- */
+  const mixTxt = m => Object.entries(m).filter(([, v]) => num(v) > 0).map(([t, v]) => esc(tAbbr(t)) + fmt(v)).join(' ') || '';
+  const tAbbr = t => { const n = tCode(t); return n.split(/[\s-]+/).map(w => w[0]).join('').slice(0, 2).toUpperCase(); };
+  function ydRows(g, key) {   // yesterday's heads for this unit: the Y report when it is a different date, else the previous entry (memo)
+    if (S.R && !S.same && S.ck === 'T') { const d = S.R.Y.D[g.wgroup_id]; if (!d) return []; return key === 'A' ? d.cons : (d.rows || {})[key] || []; }
+    if (key !== 'A') return [];
+    const by = new Map(); (g.memo_rows || []).forEach(r => { const c = by.get(r.contractor) || { con: r.contractor, heads: {} }; Object.entries(r.heads || {}).forEach(([t, v]) => { c.heads[t] = num(c.heads[t]) + num(v); }); by.set(r.contractor, c); }); return [...by.values()];
   }
-  function stageRows(it, idx, ro) {
-    const { g, l } = it, x = lineX(g, l), wid = l.work_id, fin = finL(l), r = ro || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995);
-    const folded = S.fold.has(wid), starts = startsN(g, l);
-    const nm = S.gv === 'work' ? `<span title="${esc(lineLocPath(g, l))}">${esc(lineLoc(g, l))}</span> <span class="muted">· ${esc(pathTail(lineLocPath(g, l)))}</span>` : `${esc(short(l.activity, 60))} <span class="muted">· ${esc(linePkg(g, l))}</span>`;
-    const club = g.lines.length > 1 && S.gv === 'loc' ? ' ' + pill('p-amb', 'Club') : '';
-    const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts Today') : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
-    const sd = l.started_on ? `Start <b>${esc(dsh(l.started_on))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} · ` : '';
-    let h = `<tr class="act ${fin ? 'fin' : ''}">${tickCell(g, l, idx, ro)}<td class="name" title="${esc(l.activity)}"><span class="tog" onclick="DPR.foldRow('${wid}')">${folded ? '▸' : '▾'}</span>${nm} ${pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length)}${club}</td>
-      <td class="n">${fmt(l.est_qty)} <span class="muted">${esc(l.uom || '')}</span></td><td class="n">${Math.round(pb)}%</td>
-      <td class="c">${r || !open.length ? '' : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">WIP All Open</button>`}</td>
-      <td><div class="bar2"><i style="width:${Math.min(100, pc)}%"></i></div></td>
-      <td class="n"><b>${Math.round(pc)}%</b>${x.fin && !fin ? '<div>' + pill('p-ok', 'Activity Finished – Report Cert. Qty') + '</div>' : ''}</td>
-      <td class="stt">${sd}${st}${certCell(g, l, x, r)}</td><td><input class="rem" data-k="n:${wid}" placeholder="Remarks" value="${esc(x.note)}" ${r ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)">${r ? '' : dropBtn(g)}</td></tr>`;
-    if (folded) return h;
-    subGroups(l).forEach(Gp => {
-      if (Gp.id) { const gp = grpPct(g, l, Gp), gd = grpDates(g, l, Gp); h += `<tr class="sub"><td></td><td colspan="8" style="background:#f5f7fb"><b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length}/${Gp.subs.length} Done</span> ${pill('p-vio', Math.round(gp) + '%')}<span class="muted" style="float:right">Start <b>${gd.s ? esc(dsh(gd.s)) : '—'}</b> · End <b>${gd.e ? esc(dsh(gd.e)) : '—'}</b>${gd.e ? ' · ' + esc(durTxt(gd.s, gd.e)) : ''}${gd.lock ? '<span class="lock">🔒</span>' : ''}</span></td></tr>`; }
-      Gp.subs.forEach(s => { h += subRow(g, l, s, r); });
+  const ydHeads = (g, key) => ydRows(g, key).reduce((a, c) => a + heads(c.heads), 0);
+  function mpCell(g, u, ro) {
+    const tot = unitHeads(g, u), mix = tradeMix(unitRows(g, u)), yd = ydHeads(g, u.key), key = g.wgroup_id + '|' + u.key, open = S.mpo === key, bad = u.worked && !tot;
+    return `<span class="d2-mp ${bad ? 'bad' : ''}" onclick="DPR.mpTog('${key}')"><b>${fmt(tot)}</b><i>${bad ? 'Heads Missing' : mixTxt(mix) || (tot ? '' : 'None')}</i>${yd ? `<span class="yd">Yd ${fmt(yd)}</span>` : ''}<span class="ar">${open ? '▾' : '▸'}</span></span>`;
+  }
+  function mpStrip(g, u, label, cols, ro) {
+    const key = g.wgroup_id + '|' + u.key; if (S.mpo !== key) return '';
+    const arr = unitRows(g, u), tr = colsNow(), yd = ydHeads(g, u.key);
+    let h = `<tr class="strip"><td></td><td colspan="${cols - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(label)} · ${esc(dsh(S.to))}</span>`;
+    arr.forEach((c, ci) => {
+      h += `<div class="crow"><span class="con">${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : ` <a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${u.key}')">${c.con ? 'Change' : 'Pick'}</a>${ci > 0 ? ` <a style="color:var(--drd)" onclick="DPR.rmCon('${g.wgroup_id}',${ci},'${u.key}')">×</a>` : ''}`}</span>`;
+      tr.forEach(t => { h += `<label><span>${esc(t.trade_name)}</span><input data-k="h:${g.wgroup_id}:${u.key}:${ci}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${c.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.setHead('${g.wgroup_id}',${ci},'${esc(t.trade_code)}',this.value,'${u.key}')"></label>`; });
+      h += `<span class="tot">Total <b>${fmt(heads(c.heads))}</b></span></div>`;
     });
+    h += `<div class="crow acts"><span class="muted">Yesterday ${fmt(yd)}</span>${ro ? '' : `<button class="d2-btn sm" ${yd ? '' : 'disabled'} onclick="DPR.sameYd('${g.wgroup_id}','${u.key}')">Same As Yesterday</button><button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button><button class="d2-btn sm" onclick="DPR.conPick('${g.wgroup_id}',-1,'${u.key}')">＋ Contractor</button>`}<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button></div></div></td></tr>`;
     return h;
   }
-  function subRow(g, l, s, r) {
-    const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), starts = subStarts(s, y, base), rr = r || done;
-    let dn;
-    if (done) dn = `<span class="muted">100% · ${esc(dsh(y.e || s.finished_on))}</span>`;
-    else if (r) dn = o === 'w' ? `<b>${y.wip ? 'WIP' : Math.round(pc) + '%'}</b>` : o === 'h' ? '<span class="hopen">Hindrance</span>' : '<span class="muted">—</span>';
-    else if (o === 'w') dn = `<span class="d2-pct"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" style="width:52px" value="${y.wip ? '' : Math.round(pc)}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)"> %<span class="d2-snap">${[25, 50, 75].map(p => `<button ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done" onclick="DPR.snapPct('${wid}','${sid}',100)">Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button></span></span>`;
-    else if (o === 'h') dn = hreason(wid, sid, y.rc, s.open_hindrance, false);
-    else if (o === 'n') dn = '<span class="muted">No Work Today</span>';
-    else dn = '<span class="muted">— Not Filled</span>';
-    const fresh = !r && subFresh(s, y, base), endIn = !r && o === 'w' && !y.wip && pc >= 99.9995 && !s.end_locked;   // v157.1
-    const dts2 = done ? `Start <b>${esc(dsh(y.s || s.started_on))}</b><span class="lock">🔒</span> · End <b>${esc(dsh(y.e || s.finished_on))}</b><span class="lock">🔒</span>`
-      : `${fresh ? `Start <input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)"> ` : (y.s || s.started_on) ? `Start <b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? '<span class="lock">🔒</span>' : ''} · ` : ''}${endIn ? `End <input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || S.to}" min="${y.s || s.started_on || ''}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)"> ` : ''}<div>${statusSub(s, y, base)}</div>`;
-    return `<tr class="sub"><td></td><td class="name">${esc(s.name)} <span class="muted">· Weight ${fmt(s.tpl_weight || s.weight)}%</span></td><td class="n muted">—</td><td class="n">${Math.round(base)}%</td>
-      <td class="c">${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}</td><td class="dn">${dn}</td><td class="n">${o === 'w' ? `<b>${Math.round(y.wip ? base : pc)}%</b>` : Math.round(base) + '%'}</td><td class="stt">${dts2}</td>
-      <td><input class="rem" data-k="n:${wid}:${sid}" placeholder="${o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}" value="${esc(y.note)}" ${rr ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"></td></tr>`;
+  function colsNow() {
+    const used = new Set(S.showT || []);
+    const scan = () => { S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { if (num(v) > 0) used.add(t); })); }); npDraft().forEach(e => Object.entries(e.heads).forEach(([t, v]) => { if (num(v) > 0) used.add(t); })); };
+    scan();
+    return S.masters.trades.filter(t => used.has(t.trade_code));
   }
+  const colTotal = code => S.groups.reduce((a, g) => { const d = dOf(g); return a + d.cons.concat(...Object.values(d.rows || {})).reduce((b, c) => b + num(c.heads[code]), 0); }, 0) + npDraft().reduce((a, e) => a + num(e.heads[code]), 0);
+  function mpTog(key) { S.mpo = S.mpo === key ? null : key; S.remo = null; redraw(); }
+  function remTog(key) { S.remo = S.remo === key ? null : key; S.mpo = null; redraw(); }
+  function sameYd(gid, key) { const g = G(gid), src = ydRows(g, key); if (!src.length) return; const arr = unitRows(g, { key }); arr.length = 0; src.forEach(c => arr.push({ con: c.con, heads: Object.assign({}, c.heads) })); markDirty(g); redraw(); }
+  function sameYdAll() { let n = 0; S.groups.forEach(g => { if (!cardActive(g)) return; labUnits(g).forEach(u => { if (!u.worked || unitHeads(g, u)) return; const src = ydRows(g, u.key); if (!src.length) return; const arr = unitRows(g, u); arr.length = 0; src.forEach(c => arr.push({ con: c.con, heads: Object.assign({}, c.heads) })); markDirty(g); n++; }); }); toast(n ? n + ' Row' + (n === 1 ? '' : 's') + ' Filled From Yesterday' : 'Nothing To Copy — Every Working Row Already Has Heads, Or Yesterday Had None', n ? 'success' : 'info'); redraw(); }
+  function ylabTog() { S.ylab = !S.ylab; S.mpo = null; redraw(); }
+
+  /* ---------- the sheet: same rows, two column sets (mode 'work' | 'prog') ---------- */
   function visibleLines() {
-    const q = S.fq || '';
-    return allLines().filter(({ g, l }) => (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (!S.area || (g.area || 'Unassigned') === S.area)
-      && (!q || fz(l.activity + ' ' + linePkg(g, l) + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + (g.label || '') + ' ' + (g.area || ''), q)));
+    return allLines().filter(({ g, l }) => (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (S.filt !== 'att' || attOf(g, l)) && (!S.area || (g.area || 'Unassigned') === S.area));
   }
-  function tableHtml(ro) {
-    const items = visibleLines();
+  function sheetHtml2(mode, ro) {
+    const items = visibleLines(), cols = 7, W = mode === 'work';
     if (!items.length) return `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${allLines().length ? 'No Activity Matches The Filter.' : 'Use ＋ Browse Estimate Or ⊞ Grid To Put Activities On Your List.'}</div></div>`;
     const keyOf = ({ g, l }) => S.gv === 'work' ? [linePkg(g, l) || '—', l.activity] : [lineLocPath(g, l) || g.area || '—', lineLoc(g, l) || '—'];
     const grp = new Map(); items.forEach(it => { const [a, b] = keyOf(it); if (!grp.has(a)) grp.set(a, new Map()); const m = grp.get(a); if (!m.has(b)) m.set(b, []); m.get(b).push(it); });
-    let h = `<table class="d2t"><thead><tr><th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'}</th><th class="n">Est.</th><th class="n">Cum. Before</th><th class="c" style="width:120px">Outcome</th><th>Done On ${esc(dsh(S.to))}</th><th class="n">Cum. After</th><th style="width:150px">Dates · Status</th><th style="width:9%">Remarks</th></tr></thead><tbody>`, idx = 0;
+    const head = W ? `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c" style="width:96px">Today</th><th style="width:220px">Dates · Status</th><th style="width:170px">Contractor</th><th style="width:210px">Manpower Today</th><th class="c" style="width:36px">✎</th>`
+      : `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="n" style="width:110px">Cum. Before</th><th class="c" style="width:96px">${esc(dsh(S.to))}</th><th style="width:250px">Done On ${esc(dsh(S.to))}</th><th style="width:260px">Cum. To Date · Finish</th><th class="c" style="width:36px">✎</th>`;
+    const bandCnt = all => { const w = all.filter(({ g, l }) => outOf(g, l) === 'w').length, hh = all.filter(({ g, l }) => hasH(g, l)).length, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0), att = all.filter(({ g, l }) => attOf(g, l)).length, hd = [...new Set(all.map(x => x.g))].reduce((a, g) => a + cardHeads(g), 0);
+      return W ? `${w} Working · ${nS} Start · ${hh} Hindrance · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}` : `${all.filter(({ g, l }) => outOf(g, l) !== '').length} Reported · ${hh} Hindrance · Labour ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
+    let h = `<table class="d2t sheet"><thead><tr>${head}</tr></thead><tbody>`, idx = 0;
+    // v158.1 · a club (Report Together) is ONE card: its band — with the single manpower entry — appears once. A club whose lines sit under
+    // several activity bands is hoisted to the package band; a club inside one activity band sits there. Rows below only say "On The Club ↑".
+    const banded = new Set(), skip = new Set();
+    const clubBand = g => {
+      banded.add(g.wgroup_id); const ck = 'c:' + g.wgroup_id, u = { key: 'A', worked: cardHasW(g) }, acts = [...new Set(g.lines.map(l => l.activity))].length, units = [...new Set(g.lines.map(l => lineLoc(g, l)))].length;
+      let r = `<tr class="club"><td colspan="${W ? 4 : cols}">${togBtn(ck)}${pill('p-amb', 'Report Together')}<b>${esc(g.label || '')}</b> <span class="muted">· ${acts} Activit${acts === 1 ? 'y' : 'ies'} × ${units} Unit${units === 1 ? '' : 's'} · Status &amp; Progress Per Row${W ? ' · One Manpower Entry For The Club' : ' · Labour ' + fmt(cardHeads(g)) + ' Heads · ' + esc(conName((dOf(g).cons[0] || {}).con))}</span>${ro ? '' : `<button class="d2-btn sm" style="float:right" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button>`}</td>${W ? `<td class="con">${conCell(g, 0, 'A', ro)}</td><td>${mpCell(g, u, ro)}</td><td></td>` : ''}</tr>`;
+      if (W) r += mpStrip(g, u, g.label || 'Club', cols, ro);
+      if (folded(ck)) skip.add(g.wgroup_id);
+      return r;
+    };
     grp.forEach((sub, g1) => {
-      const all = [...sub.values()].flat(), fk = 'g:' + g1, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0);
-      h += `<tr class="g1"><td colspan="9"><span class="tog" onclick="DPR.foldRow('${esc(fk)}')">${S.fold.has(fk) ? '▸' : '▾'}</span>${esc(g1)}<span class="cnt">${all.length} Activit${all.length === 1 ? 'y' : 'ies'} · ${all.filter(({ g, l }) => outOf(g, l) !== '').length} Filled · ${nS} Start Today</span></td></tr>`;
-      if (S.fold.has(fk)) return;
+      const all = [...sub.values()].flat(), fk = 'g:' + g1;
+      h += `<tr class="g1"><td colspan="${cols}">${togBtn(fk)}${esc(g1)}<span class="cnt">${all.length} Activit${all.length === 1 ? 'y' : 'ies'} · ${bandCnt(all)}</span></td></tr>`;
+      if (folded(fk)) return;
+      // clubs spanning more than one activity band under this package → band once, here
+      const span = new Map(); sub.forEach((ws, g2) => ws.forEach(({ g }) => { if (g.lines.length > 1) { if (!span.has(g.wgroup_id)) span.set(g.wgroup_id, { g, keys: new Set() }); span.get(g.wgroup_id).keys.add(g2); } }));
+      span.forEach(({ g, keys }) => { if (keys.size > 1 && !banded.has(g.wgroup_id)) h += clubBand(g); });
       sub.forEach((ws, g2) => {
-        h += `<tr class="g2"><td colspan="9">${esc(short(g2, 140))}<span class="path">${S.gv === 'work' ? ws.length + ' Location' + (ws.length === 1 ? '' : 's') : ws.length + ' Activit' + (ws.length === 1 ? 'y' : 'ies') + ' At This Unit'}</span></td></tr>`;
-        const banded = new Set();
+        const ak = 'a:' + g1 + '|' + g2;
+        h += `<tr class="g2"><td colspan="${cols}">${togBtn(ak)}${esc(short(g2, 140))}<span class="path">${S.gv === 'work' ? ws.length + ' Location' + (ws.length === 1 ? '' : 's') : ws.length + ' Activit' + (ws.length === 1 ? 'y' : 'ies') + ' At This Unit'} · ${bandCnt(ws)}</span></td></tr>`;
+        if (folded(ak)) return;
         ws.forEach(it => {
           const g = it.g;
-          if (S.gv === 'work' && g.lines.length > 1 && !banded.has(g.wgroup_id) && ws.filter(z => z.g === g).length > 1) { banded.add(g.wgroup_id); h += `<tr class="club"><td colspan="9">${pill('p-amb', 'Report Together')}${esc(g.label || '')} <span class="muted">· ${g.lines.length} Lines · Progress Per Row Below · Labour Once (Labour Tab)</span>${ro ? '' : `<button class="d2-btn sm" style="float:right" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button>`}</td></tr>`; }
-          idx++; h += staged(it.l) ? stageRows(it, idx, ro) : dirRow(it, idx, ro);
+          if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubBand(g);
+          if (skip.has(g.wgroup_id)) { idx++; return; }
+          idx++; h += staged(it.l) ? stageRows(it, idx, ro, mode) : dirRow(it, idx, ro, mode);
         });
       });
     });
+    if (W) {   // non-estimated work lives on the work tab (manpower of the day)
+      const nk = 'np', np = npDraft();
+      h += `<tr class="g1"><td colspan="${cols}">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads</span>${ro ? '' : `<button class="d2-btn sm" style="float:right" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
+      if (!folded(nk)) np.forEach((e, i) => {
+        const key = 'np|' + i, tr = colsNow(), open = S.mpo === key;
+        h += `<tr><td></td><td>${pill('p-grey', 'NP')} <b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location Yet'}</span>${ro ? '' : ` <a style="color:var(--dn);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npLocPick(${i})">Locations</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npDel(${i})">Remove</a>`}</td><td class="c">${pill('p-ok', 'W')}</td><td></td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td><td><span class="d2-mp ${heads(e.heads) ? '' : 'bad'}" onclick="DPR.mpTog('${key}')"><b>${fmt(heads(e.heads))}</b><i>${mixTxt(e.heads) || 'Heads Missing'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
+        if (open) h += `<tr class="strip"><td></td><td colspan="${cols - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span><div class="crow">${tr.map(t => `<label><span>${esc(t.trade_name)}</span><input data-k="np:${i}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${e.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${esc(t.trade_code)}',0,this.value)"></label>`).join('')}<span class="tot">Total <b>${fmt(heads(e.heads))}</b></span></div><div class="crow acts">${ro ? '' : `<button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button>`}<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button></div></div></td></tr>`;
+      });
+      const tr = colsNow(), tot = {}; S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); })); }); np.forEach(e => Object.entries(e.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); }));
+      h += `<tr class="sum"><td colspan="5">Total · ${esc(dsh(S.to))}</td><td><span class="d2-mp"><b>${fmt(allHeads())}</b><i>${tr.map(t => esc(tAbbr(t.trade_code)) + fmt(tot[t.trade_code] || 0)).join(' ')}</i></span></td><td></td></tr>`;
+    }
     return h + '</tbody></table>';
   }
-
-  /* ---------- labour tab: one row per card (club = one card); contractor × trade heads; every worked / WIP / starting activity needs heads ---------- */
-  function colsNow() {
-    const used = new Set(S.showT || []);
-    S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { if (num(v) > 0) used.add(t); })); });
-    npDraft().forEach(e => Object.entries(e.heads).forEach(([t, v]) => { if (num(v) > 0) used.add(t); }));
-    return S.masters.trades.filter(t => used.has(t.trade_code));
+  const conCell = (g, ci, key, ro) => { const c = rowsK(g, key)[ci] || {}; return `${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)" title="No Work Order Found (Not Issued Or Under Amendment) — Pick The Contractor">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a>`}${rowsK(g, key).length > 1 ? ` <span class="muted">+${rowsK(g, key).length - 1}</span>` : ''}`; };
+  // work-tab cells for a line that owns its own manpower unit (direct / activity-level) or shows where the manpower lives
+  function mpCells(g, l, s, Gp, o, ro) {
+    const lv = labLevel(g);
+    if (o === 'h') return `<td colspan="2">${hreason(l.work_id, s ? s.id : '', s ? lineX(g, l).subs[s.id].rc : lineX(g, l).rc, s ? s.open_hindrance : l.open_hindrance, ro)}</td>`;
+    if (o === 'n') return `<td colspan="2" class="muted">—</td>`;
+    if (o !== 'w') return `<td colspan="2" class="muted">— Not Filled</td>`;
+    if (g.lines.length > 1) return `<td colspan="2" class="muted">On The Club ↑</td>`;
+    const key = unitKeyOf(g, l, s, Gp);
+    if (!key) return `<td colspan="2" class="muted">${lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓'}</td>`;
+    if (key === 'A' && s) return `<td colspan="2" class="muted">On The Activity ↑</td>`;
+    if (key[0] === 'G' && s) return `<td colspan="2" class="muted">On The Group ↑</td>`;
+    const u = labUnits(g).find(z => z.key === key) || { key, worked: true };
+    return `<td class="con">${conCell(g, 0, key, ro)}</td><td>${mpCell(g, u, ro)}</td>`;
   }
-  // v157.1 · labour tab per mock v2 (06 Oct 2026): Activity | Location | Contractor | trades; band = package (Work-Wise) or path (Location-Wise)
-  const locFull = (g, l) => { const p = lineLocPath(g, l), u = lineLoc(g, l); return p && u && p.split(' › ').pop() !== u ? p + ' › ' + u : (p || u); };
-  const commonPrefix = paths => { if (!paths.length) return ''; const segs = paths.map(p => String(p || '').split(' › ').filter(Boolean)); const out = []; for (let i = 0; ; i++) { const s = segs[0][i]; if (s == null || !segs.every(x => x[i] === s)) break; out.push(s); } return out.join(' › '); };
-  const kindPill = l => pill(PILL[kindOf(l)], kindOf(l) === 'grp' ? 'Groups · ' + (l.stages || []).length : kindOf(l) === 'sub' ? 'Sub-Activities · ' + (l.stages || []).length : 'Direct');
-  // activity names of a club: shared stem once, distinguishing tails per line (only when ≥ 2 names share ≥ 15 chars at a word boundary)
-  function actList(names) {
-    const u = [...new Set(names)]; if (u.length < 2) return { stem: '', tails: u };
-    let p = u[0]; u.forEach(n => { let i = 0; while (i < p.length && i < n.length && p[i] === n[i]) i++; p = p.slice(0, i); });
-    const cut = Math.max(p.lastIndexOf(' '), p.lastIndexOf('-'), p.lastIndexOf(','));
-    p = cut > 0 ? p.slice(0, cut) : '';
-    if (p.length < 15) return { stem: '', tails: u };
-    return { stem: p.replace(/[\s\-,·]+$/, ''), tails: u.map(n => n.slice(p.length).replace(/^[\s\-,·]+/, '') || n) };
-  }
-  const labBandKey = g => S.gv === 'work' ? (linePkg(g, g.lines[0]) || '—') : (g.lines.length > 1 ? commonPrefix(g.lines.map(l => lineLocPath(g, l))) || g.area || '—' : (lineLocPath(g, g.lines[0]) || g.area || '—'));
-  function actCell(g) {
-    const d = dOf(g);
-    if (g.lines.length > 1) {
-      const A = actList(g.lines.map(l => l.activity)), locs = [...new Set(g.lines.map(l => lineLoc(g, l)))];
-      return `${S.gv === 'loc' ? `<div class="floor">${esc(linePkg(g, g.lines[0]))}</div>` : ''}${A.stem ? `<div class="stem">${esc(A.stem)}</div>` : ''}${A.tails.map(t => `<div class="${A.stem || A.tails.length > 1 ? 'sa' : 'act'}" title="${esc(t)}">${esc(t)}</div>`).join('')}<div style="margin-top:3px">${pill('p-amb', 'Report Together')} <span class="muted">${A.tails.length} Activit${A.tails.length === 1 ? 'y' : 'ies'} × ${locs.length} Unit${locs.length === 1 ? '' : 's'} · Labour Once</span></div>`;
+  function dirRow(it, idx, ro, mode) {
+    const { g, l } = it, x = lineX(g, l), wid = l.work_id, est = num(l.est_qty), base = cumBase(l), fin = finL(l), r = ro || fin, o = fin ? '' : x.out, W = mode === 'work';
+    const q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom), rk = 'r|' + wid;
+    const att = attOf(g, l) ? ' att' : '';
+    let h = `<tr class="act ${fin ? 'fin' : ''}${att}">${tickCell(g, l, idx, ro)}<td class="name">${nameCell(g, l)}</td>`;
+    if (W) {
+      const startPart = !r && o === 'w' && !l.started_on ? `Start <input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)"> ` : (l.started_on || (x.started && o === 'w')) ? `Start <b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : '';
+      h += `<td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="stt">${startPart}${statusDir(g, l)}</td>${mpCells(g, l, null, null, o, r)}<td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
+      if (o === 'w' && g.lines.length === 1 && labLevel(g) === 'activity') h += mpStrip(g, { key: 'A', worked: true }, l.activity, 7, r);
+    } else {
+      let done;
+      if (r) done = o === 'w' ? `<b>${x.wip ? 'WIP' : fmt(q)}</b> <span class="muted">${uom}</span>` : o === 'h' ? '<span class="hopen">Hindrance</span>' : '<span class="muted">—</span>';
+      else if (o === 'w') done = `<input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${x.wip ? '' : (x.qty || '')}" placeholder="${x.wip ? 'WIP' : '0'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)"> <span class="muted">${uom}</span> <span class="d2-snap">${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">✓</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button></span>`;
+      else if (o === 'h') done = hreason(wid, '', x.rc, l.open_hindrance, false);
+      else if (o === 'n') done = `<span class="muted">No Work On ${esc(dsh(S.to))}</span>`;
+      else done = '<span class="muted">— Not Filled</span>';
+      const cum = o === 'w' ? after : base, pc = est ? Math.min(100, cum / est * 100) : 0;
+      const startP = !r && o === 'w' && !l.started_on ? `<span class="muted">Start</span> <input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)"> ` : (l.started_on || (x.started && o === 'w')) ? `<span class="muted">Start</span> <b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : '';   // v158.1 · start on the progress tab too, same field as the work tab
+      h += `<td class="n">${fmt(base)} <span class="muted">${est ? Math.round(base / est * 100) : 0}%</span>${est && base > est + 0.0005 ? ' ' + pill('p-red', 'Over Est.') : ''}</td><td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="dn">${done}</td>
+        <td><div class="d2-cum"><span class="bar2"><i style="width:${pc}%"></i></span><b>${fmt(cum)}</b><span class="muted">${est ? Math.round(cum / est * 100) : 0}%</span>${startP ? '<span class="sep">·</span>' + startP : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${o === 'h' ? pill('p-red', 'Hindrance') : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
     }
-    const l = g.lines[0];
-    return `${S.gv === 'loc' ? `<div class="floor">${esc(linePkg(g, l))}</div>` : ''}<div class="act" title="${esc(l.activity)}">${esc(l.activity)}</div><div style="margin-top:2px">${kindPill(l)}</div>`;
+    return h + remRow(rk, wid, '', x.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', 7, r);
   }
-  function locCell(g) {
-    const starts = new Set(g.lines.filter(l => startsN(g, l)).map(l => l.work_id));
-    const paths = [...new Set(g.lines.map(l => lineLocPath(g, l)))], cp = g.lines.length > 1 ? commonPrefix(paths) : paths[0] || '';
-    const chip = l => { const p = lineLocPath(g, l), tail = cp && p && p !== cp ? p.slice(cp.length).replace(/^ › /, '') + ' › ' : ''; return `<span class="u ${starts.has(l.work_id) ? 's' : ''}" title="${esc(locFull(g, l))}">${esc(tail)}${esc(lineLoc(g, l))}</span>`; };
-    const units = [...new Map(g.lines.map(l => [l.work_id, l])).values()];
-    return `${S.gv === 'work' && cp ? `<div class="floor">${esc(cp)}</div>` : ''}<div class="units">${units.map(chip).join('')}</div>`;
-  }
-  function labHtml(ro) {
-    const cols = colsNow(), cards = S.groups.filter(g => cardActive(g) && (!S.area || (g.area || 'Unassigned') === S.area)), L = labStats();
-    const tot = cols.map(() => 0); let all = 0, unf = 0; const back = [];
-    let h = `<div class="d2-note"><span><b>Rule:</b> Every Activity Or Sub-Activity Worked <b>On This Date</b> — Including WIP And Those <b>Starting Today</b> — Needs Labour. Labour Is Entered Per Card, Per Sub-Activity Or Per Group As The Reporting Plan Says; A Club Is One Row. <b>${L.starts}</b> Start Today${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Row${L.miss === 1 ? '' : 's'} Need Heads</span>` : ' · All Rows Have Heads'}.</span><span class="sp"></span>${ro ? '' : '<button class="d2-btn sm ok" onclick="DPR.tradeAdd()">＋ Trade Column</button>'}</div>`;
-    const nCols = cols.length + 5;
-    h += `<table class="d2l"><thead><tr><th style="width:26%">Activity / Sub-Activity</th><th style="width:15%">Location</th><th style="width:15%">Contractor</th>${cols.map(t => `<th title="${esc(t.trade_code)}">${esc(t.trade_name)}${!ro && !(S.masters.trades.slice(0, 5).some(z => z.trade_code === t.trade_code)) && !colTotal(t.trade_code) ? `<span class="x" title="Remove Column" onclick="DPR.tradeDrop('${esc(t.trade_code)}')">×</span>` : ''}</th>`).join('')}<th>Total</th><th style="width:150px">Status</th></tr></thead><tbody>`;
-    const headsRows = (g, u, first, locHtml, statusExtra) => {   // one <tr> per contractor of a labour unit
-      const arr = unitRows(g, u), uh = unitHeads(g, u), bad = u.worked && uh === 0, kk = u.key; let r = '';
-      arr.forEach((c, ci) => {
-        const s = heads(c.heads); cols.forEach((t, i) => { tot[i] += num(c.heads[t.trade_code]); });
-        r += `<tr class="${ci ? 'extra' : ''}"><td>${ci ? '<span class="muted" style="padding-left:16px">↳ Additional Contractor</span>' : first}</td><td>${ci ? '' : locHtml}</td>
-          <td class="con">${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)" title="No Work Order Found (Not Issued Or Under Amendment) — Pick The Contractor">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${kk}')">${c.con ? 'Change' : 'Pick'}</a>${ci > 0 ? `<a style="color:var(--drd)" title="Remove Contractor" onclick="DPR.rmCon('${g.wgroup_id}',${ci},'${kk}')">×</a>` : ''}`}${!ro && ci === arr.length - 1 ? `<div style="margin-top:3px"><button class="d2-btn sm ok" onclick="DPR.conPick('${g.wgroup_id}',-1,'${kk}')">+ Contractor</button></div>` : ''}</td>
-          ${cols.map(t => `<td><input data-k="h:${g.wgroup_id}:${kk}:${ci}:${esc(t.trade_code)}" class="${bad ? 'hm' : ''}" type="number" inputmode="numeric" min="0" value="${c.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.setHead('${g.wgroup_id}',${ci},'${esc(t.trade_code)}',this.value,'${kk}')"></td>`).join('')}<td class="tot">${s}</td>
-          <td>${ci ? `<span class="muted">Row Total ${uh}</span>` : `${u.worked ? (uh ? pill('p-ok', 'Present') : pill('p-red', 'Heads Missing')) : pill('p-amb', 'Idle Labour')}${arr.length > 1 ? ' ' + pill('p-grey', arr.length + ' Contractors') : ''}${statusExtra}`}</td></tr>`;
-      });
-      return r;
-    };
-    const cardRows = g => {
-      const d = dOf(g), has = cardHasW(g), ch = cardHeads(g), starts = g.lines.reduce((a, l) => a + startsN(g, l), 0), wip = g.lines.some(l => outOf(g, l) === 'w' && (lineX(g, l).wip || Object.values(lineX(g, l).subs).some(y => y.wip)));
-      const extra = (starts ? ' ' + pill('p-teal', 'Starts Today') : '') + (wip && !starts ? ' ' + pill('p-amb', 'WIP') : '');
-      if (cardBackDated(g) && !ch) { back.push(g); return ''; }
-      if (!has && !ch) {
-        const hs = g.lines.some(l => outOf(g, l) === 'h'), ns = g.lines.some(l => outOf(g, l) === 'n');
-        if (!hs && !ns) { unf++; return ''; }
-        return `<tr class="nolab"><td>${actCell(g)}</td><td>${locCell(g)}</td><td class="con">${d.cons[0] && d.cons[0].con ? esc(conName(d.cons[0].con)) : '<span class="muted">Contractor Not Available</span>'}</td><td colspan="${cols.length}" style="text-align:left;color:${hs ? 'var(--drd)' : 'var(--ink3)'}">${hs ? 'Hindrance' : 'No Work'}</td><td class="tot">—</td><td>${pill(hs ? 'p-red' : 'p-grey', hs ? 'Hindrance' : 'No Work')}</td></tr>`;
+  function stageRows(it, idx, ro, mode) {
+    const { g, l } = it, x = lineX(g, l), wid = l.work_id, fin = finL(l), r = ro || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995), W = mode === 'work', rk = 'r|' + wid, lv = labLevel(g);
+    const fd = folded(wid), starts = startsN(g, l), est = num(l.est_qty);
+    const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts Today') : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
+    const sd = l.started_on ? `Start <b>${esc(dsh(l.started_on))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : (x.started && o === 'w') ? `Start <b>${esc(dsh(x.started))}</b> ` : '';
+    const day = (l.started_on || x.started) && o === 'w' && !starts ? ' ' + pill('p-grey', 'Day ' + (daysBetween(l.started_on || x.started, S.to) + 1)) : '';
+    let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}">${tickCell(g, l, idx, ro)}<td class="name">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td>`;
+    if (W) {
+      const u = { key: 'A', worked: cardHasW(g) };
+      h += `<td class="c">${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}</td><td class="stt">${sd}${st}${day}</td>${g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? mpCell(g, u, r) : '<span class="muted">—</span>'}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Subs' : 'Groups'}</i></span></td>`}<td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
+      if (lv === 'activity' && o === 'w' && g.lines.length === 1) h += mpStrip(g, u, l.activity, 7, r);
+    } else {
+      h += `<td class="n">${Math.round(pb)}%</td><td class="c">${r || !open.length ? (o ? ocPill(o) : '') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">WIP All Open</button>`}</td><td><span class="muted">Per Sub ↓ · ${pc - pb > 0.0005 ? '+' + Math.round(pc - pb) + '%' : 'No Change'}</span></td>
+        <td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, pc)}%"></i></span><b>${Math.round(pc)}%</b><span class="muted">${fmt(r2(est * pc / 100))} ${esc(l.uom || '')}</span>${sd ? '<span class="sep">·</span>' + sd : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
+    }
+    h += remRow(rk, wid, '', x.note, 'Remarks', 7, r);
+    if (fd) return h;
+    subGroups(l).forEach(Gp => {
+      if (Gp.id) {
+        const gk = 'gp:' + wid + '|' + Gp.id, gp = grpPct(g, l, Gp), gd = grpDates(g, l, Gp), ws = Gp.subs.filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w').length, hs = Gp.subs.filter(s => x.subs[s.id].out === 'h').length, ns = Gp.subs.filter(s => x.subs[s.id].out === 'n').length;
+        const dates = `Start <b>${gd.s ? esc(dsh(gd.s)) : '—'}</b> · End <b>${gd.e ? esc(dsh(gd.e)) : '—'}</b>${gd.e ? ' · ' + esc(durTxt(gd.s, gd.e)) : ''}${gd.lock ? '<span class="lock">🔒</span>' : ''}`;
+        const u = lv === 'group' ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: ws > 0 }) : null;
+        h += `<tr class="grp"><td></td><td>${togBtn(gk)}<b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length}/${Gp.subs.length} Done</span></td>${W ? `<td colspan="2" class="muted">${ws} W · ${hs} H · ${ns} N · ${Gp.subs.length - ws - hs - ns} Not Filled</td>${u && ws ? `<td class="con">${conCell(g, 0, u.key, r)}</td><td>${mpCell(g, u, r)}</td>` : `<td colspan="2" class="muted">${lv === 'sub' ? 'Per Sub ↓' : '—'}</td>`}<td></td>` : `<td class="n">${Math.round(grpBase(l, Gp))}%</td><td class="c">${pill('p-vio', Math.round(gp) + '%')}</td><td class="muted">${dates}</td><td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, gp)}%"></i></span><b>${Math.round(gp)}%</b></div></td><td></td>`}</tr>`;
+        if (W && u && ws) h += mpStrip(g, u, Gp.name, 7, r);
+        if (folded(gk)) return;
       }
-      all += ch;
-      const lv = labLevel(g), units = labUnits(g);
-      if (lv === 'activity') return headsRows(g, units[0], actCell(g), locCell(g), extra);
-      const l = g.lines[0];
-      let r = `<tr class="g2"><td colspan="${nCols}">${S.gv === 'loc' ? `<span class="floor">${esc(linePkg(g, l))}</span> · ` : ''}<span class="act">${esc(l.activity)}</span> ${kindPill(l)} ${pill('p-navy', lv === 'sub' ? 'Labour Per Sub-Activity' : 'Labour Per Group')} <span class="muted">· ${esc(lineLocPath(g, l))} · </span><span class="u">${esc(lineLoc(g, l))}</span>${extra}</td></tr>`;
-      if (!units.length) r += `<tr class="nolab"><td colspan="${nCols}" style="text-align:left">No Sub-Activity Marked Worked On This Date</td></tr>`;
-      units.forEach(u => { r += headsRows(g, u, `<div class="sa">${esc(u.label)}</div><div class="floor" style="padding-left:14px">${esc(u.sub)}</div>`, `<span class="muted">${esc(lineLoc(g, l))}</span>`, ''); });
-      if (d.cons.some(c => heads(c.heads))) r += headsRows(g, { key: 'A', worked: false }, `<div class="sa">Whole Activity (Unallocated)</div>`, '', '');
-      const ut = units.reduce((a, u) => a + unitHeads(g, u), 0);
-      r += `<tr class="sub"><td><span class="muted" style="padding-left:14px">Card Total</span></td><td></td><td></td>${cols.map(t => `<td class="tot">${units.reduce((a, u) => a + unitRows(g, u).reduce((b, c) => b + num(c.heads[t.trade_code]), 0), 0) || ''}</td>`).join('')}<td class="tot">${ut}</td><td class="muted">${units.filter(u => unitHeads(g, u)).length} Of ${units.length} Rows</td></tr>`;
-      return r;
-    };
-    const lgrp = new Map(); cards.forEach(g => { const k = labBandKey(g); if (!lgrp.has(k)) lgrp.set(k, []); lgrp.get(k).push(g); });
-    [...lgrp.keys()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })).forEach(k => {
-      const list = lgrp.get(k), body = list.map(cardRows).join(''); if (!body) return;
-      const nc = list.filter(g => g.lines.length > 1).length;
-      h += `<tr class="g1"><td colspan="${nCols}">${esc(k)}<span class="cnt">${list.length} Card${list.length === 1 ? '' : 's'}${nc ? ' · ' + nc + ' Report Together' : ''}</span></td></tr>` + body;
+      Gp.subs.forEach(s => { h += subRow(g, l, s, r, mode, Gp); });
     });
-    if (back.length) {
-      h += `<tr class="g1"><td colspan="${nCols}">Finished Before This Date<span class="cnt">${back.length} Card${back.length === 1 ? '' : 's'} · Labour Belongs To The Dates They Ran — Nothing Asked Here</span></td></tr>`;
-      back.forEach(g => { const l = g.lines[0], x = lineX(g, l); const fin = staged(l) ? (l.stages || []).map(s => x.subs[s.id]).filter(y => y.e && y.e < S.to).map(y => y.e).sort().pop() : x.finOn; h += `<tr class="nolab"><td>${actCell(g)}</td><td>${locCell(g)}</td><td class="con">${esc(conName((dOf(g).cons[0] || {}).con))}</td><td colspan="${cols.length}" style="text-align:left">Finished ${esc(dsh(fin))} — Back-Dated</td><td class="tot">—</td><td>${pill('p-grey', 'Finished ' + dsh(fin))}</td></tr>`; });
-    }
-    if (unf) h += `<tr class="nolab"><td colspan="${nCols}" style="text-align:left">${unf} Card${unf === 1 ? '' : 's'} Not Filled Yet — No Labour Row Until Marked Worked</td></tr>`;
-    h += `<tr class="sec"><td colspan="${nCols}">Non-Estimated Work · Reason → Locations → Contractor</td></tr>`;
-    npDraft().forEach((e, i) => {
-      const s = heads(e.heads); all += s; cols.forEach((t, j) => { tot[j] += num(e.heads[t.trade_code]); });
-      h += `<tr><td>${pill('p-grey', 'NP')} <span class="act">${esc(e.text)}</span></td><td><div class="units">${e.locs.length ? e.locs.map(x => `<span class="u">${esc(x.name || '')}</span>`).join('') : '<span class="muted">No Location Yet</span>'}</div>${ro ? '' : `<div class="floor"><a style="color:var(--dn);cursor:pointer;font-weight:700" onclick="DPR.npLocPick(${i})">Locations</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700" onclick="DPR.npDel(${i})">Remove</a></div>`}</td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td>${cols.map(t => `<td><input data-k="np:${i}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${e.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${esc(t.trade_code)}',0,this.value)"></td>`).join('')}<td class="tot">${s}</td><td></td></tr>`;
-    });
-    if (!ro) h += `<tr><td colspan="${nCols}"><button class="d2-btn sm" onclick="DPR.npAdd()">+ Non-Estimated Row</button></td></tr>`;
-    h += `<tr class="sum"><td colspan="3">Total · ${esc(dsh(S.to))}</td>${tot.map(v => `<td>${v}</td>`).join('')}<td>${all}</td><td></td></tr></tbody></table>`;
     return h;
   }
-  const colTotal = code => S.groups.reduce((a, g) => { const d = dOf(g); return a + d.cons.concat(...Object.values(d.rows || {})).reduce((b, c) => b + num(c.heads[code]), 0); }, 0) + npDraft().reduce((a, e) => a + num(e.heads[code]), 0);
+  function subRow(g, l, s, r, mode, Gp) {
+    const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = r || done, W = mode === 'work', rk = 'r|' + wid + '|' + sid, lv = labLevel(g);
+    const att = !done && (W ? ((o === 'h' && !y.rc) || (o === 'w' && lv === 'sub' && !unitHeads(g, { key: 'S:' + sid }))) : ((o === 'h' && !y.rc) || (o === 'w' && !y.wip && pc <= base + 0.0005)));
+    let h = `<tr class="sub${att ? ' att' : ''}"><td></td><td class="name"><span class="sa">${esc(s.name)}</span><span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%${!W && lv === 'sub' ? ' · Labour ' + fmt(unitHeads(g, { key: 'S:' + sid })) : ''}</span></td>`;
+    if (W) {
+      const fresh = !rr && subFresh(s, y, base);
+      const dts2 = done ? `Start <b>${esc(dsh(y.s || s.started_on))}</b> · End <b>${esc(dsh(y.e || s.finished_on))}</b><span class="lock">🔒</span>` : `${fresh ? `Start <input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)"> ` : (y.s || s.started_on) ? `Start <b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? '<span class="lock">🔒</span>' : ''} ` : ''}${statusSub(s, y, base)}`;
+      h += `<td class="c">${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}</td><td class="stt">${dts2}</td>${done ? '<td colspan="2" class="muted">—</td>' : mpCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`;
+      if (!done && o === 'w' && lv === 'sub' && g.lines.length === 1) h += mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, 7, rr);
+    } else {
+      let dn;
+      if (done) dn = `<span class="muted">100% · ${esc(dsh(y.e || s.finished_on))}</span>`;
+      else if (r) dn = o === 'w' ? `<b>${y.wip ? 'WIP' : Math.round(pc) + '%'}</b>` : o === 'h' ? '<span class="hopen">Hindrance</span>' : '<span class="muted">—</span>';
+      else if (o === 'w') dn = `<span class="d2-pct"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" style="width:52px" value="${y.wip ? '' : Math.round(pc)}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)"> %<span class="d2-snap">${[25, 50, 75].map(p => `<button ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done" onclick="DPR.snapPct('${wid}','${sid}',100)">✓</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button></span></span>`;
+      else if (o === 'h') dn = hreason(wid, sid, y.rc, s.open_hindrance, false);
+      else if (o === 'n') dn = `<span class="muted">No Work On ${esc(dsh(S.to))}</span>`;
+      else dn = '<span class="muted">— Not Filled</span>';
+      const endIn = !rr && o === 'w' && !y.wip && pc >= 99.9995 && !s.end_locked;
+      const cumP = o === 'w' ? (y.wip ? base : pc) : base;
+      const fresh = !rr && subFresh(s, y, base);
+      const startP = done ? `<span class="muted">Start</span> <b>${esc(dsh(y.s || s.started_on))}</b>` : fresh ? `<span class="muted">Start</span> <input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)">` : (y.s || s.started_on) ? `<span class="muted">Start</span> <b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? '<span class="lock">🔒</span>' : ''}` : '';
+      h += `<td class="n">${Math.round(base)}%</td><td class="c">${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}</td><td class="dn">${dn}</td><td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, cumP)}%"></i></span><b>${Math.round(cumP)}%</b>${cumP - base > 0.0005 ? `<span class="muted">+${Math.round(cumP - base)}</span>` : ''}${startP ? '<span class="sep">·</span>' + startP : ''}${endIn ? ` <span class="muted">End</span> <input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || S.to}" min="${y.s || s.started_on || ''}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)">` : ''}${!done && !W && o === 'w' && pc >= 99.9995 && !endIn && y.e ? ' ' + pill('p-ok', 'Done ' + dsh(y.e)) : ''}${done ? '' : o === 'h' ? ' ' + pill('p-red', 'Hindrance') : ''}</div></td><td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`;
+    }
+    return h + remRow(rk, wid, sid, y.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', 7, rr);
+  }
 
   /* ---------- Report tab: every date of the month with its status (calendar-driven) ---------- */
   function repHtml() {
@@ -9817,11 +9912,11 @@ const DPR = (function () {
   }
 
   /* ---------- edits ---------- */
-  function setView(v) { S.gv = v; redraw(); }
-  function subTab(t) { S.sub2 = t; redraw(); }
+  function setView(v) { S.gv = v; S.mpo = null; S.remo = null; redraw(); }
+  function subTab(t) { S.sub2 = t; S.mpo = null; S.remo = null; S.ylab = false; redraw(); }
   function fsrch(v) { S.fq = v; redraw(); }
   function foldRow(k) { S.fold.has(k) ? S.fold.delete(k) : S.fold.add(k); redraw(); }
-  function foldAll(on) { S.fold = new Set(); if (on) allLines().forEach(({ l }) => { if (staged(l)) S.fold.add(l.work_id); }); redraw(); }
+  function foldAll(on) { S.foldDef = on; if (on) S.seen.forEach(k => S.fold.add(k)); else S.fold = new Set(); S.mpo = null; S.remo = null; redraw(); }   // v158 · every parent folds; collapsed by default
   function startMark(g, l, x) { if (!l.started_on && !x.started) x.started = S.to; }
   function finAuto(g, l) {
     const x = lineX(g, l), est = num(l.est_qty);
@@ -9889,7 +9984,7 @@ const DPR = (function () {
   async function dropGroup(id) {
     const g = G(id); if (!g) return;
     if (!confirm('Remove "' + (g.package || g.label) + '" At ' + g.location + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.')) return;
-    try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); toast('Removed', 'success'); await engLoad(S.to, true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
+    try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); toast('Removed', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
   }
 
   /* ---------- Report Together (M33): any activities × any locations → one card; labour once, progress per row ---------- */
@@ -9898,14 +9993,14 @@ const DPR = (function () {
   async function makeClub() {
     const ids = [...S.ticks]; if (ids.length < 2) { toast('Tick Two Or More Activities To Report Them Together', 'warn'); return; }
     if (new Set(ids.map(w => S.W[w] && S.W[w].g.wgroup_id)).size < 2) { toast('Those Activities Already Report Together', 'warn'); return; }
-    if ((dirtyCards().length || S.npDirty) && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast(ids.length + ' Activities Now Report Together', 'success'); await engLoad(S.to, true); }
+    if (dirtyAll() && !(await saveAll(true))) return;
+    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast(ids.length + ' Activities Now Report Together', 'success'); await engLoad(tDate(), true); }
     catch (e) { toast(err(e, 'Could not club them'), 'error'); }
   }
   async function unclub(gid) {
     if (!confirm('Split This Club Back Into Single Cards? Progress Stays; Labour Entered On The Club Stays With The First Card.')) return;
-    if ((dirtyCards().length || S.npDirty) && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_unclub', { p_wgroup_id: gid }); toast('Club Split', 'success'); await engLoad(S.to, true); } catch (e) { toast(err(e, 'Could not split the club'), 'error'); }
+    if (dirtyAll() && !(await saveAll(true))) return;
+    try { await rpc('rpc_dpr_unclub', { p_wgroup_id: gid }); toast('Club Split', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not split the club'), 'error'); }
   }
 
   /* ---------- catalogue (Browse / Grid) hosted in the scroll area ---------- */
@@ -9955,11 +10050,14 @@ const DPR = (function () {
     catch (e) { toast(err(e, 'Could not save ' + (g.package || g.label)), 'error'); return false; }
   }
   async function saveAll(silent) {
-    const list = dirtyCards(); let ok = 0;
-    for (const g of list) { if (await saveCard(g)) ok++; else return false; }
-    if (S.npDirty) { if (await npPush()) ok++; else return false; }
+    let ok = 0; const ks = S.R && !S.same ? ['T', 'Y'] : ['T'];   // v158 · today's work & manpower → T report, yesterday's progress → Y report
+    for (const k of ks) {
+      if (S.R) ctxUse(k);
+      for (const g of dirtyCards()) { if (await saveCard(g)) ok++; else return false; }
+      if (S.npDirty) { if (await npPush()) ok++; else return false; }
+    }
     if (!silent) toast(ok ? 'Draft Saved' : 'Nothing To Save', ok ? 'success' : 'info');
-    await engLoad(S.to, true);
+    await engLoad(tDate(), true);
     return true;
   }
 
@@ -9974,14 +10072,15 @@ const DPR = (function () {
   }
   const worked = () => allLines().filter(({ g, l }) => outOf(g, l) !== '').length;
   async function preview() {
-    if (S.locked) { toast('Already Sent', 'warn'); return; }
-    if (dirtyCards().length || S.npDirty) { const ok = await saveAll(true); if (!ok) return; }
-    if (labStats().miss) { S.sub2 = 'lab'; paint(); toast('Add Heads For Every Worked Card First', 'warn'); return; }
+    if (S.R ? S.R.Y.locked : S.locked) { toast('Already Sent', 'warn'); return; }
+    if (dirtyAll()) { const ok = await saveAll(true); if (!ok) return; }
+    S.sub2 = 'prog'; S.ylab = false; S.mpo = null; S.remo = null; if (S.R) ctxUse('Y');
+    if (labStats().miss) { S.ylab = true; paint(); toast('Add Heads For Every Row Worked On ' + dsh(S.to) + ' First', 'warn'); return; }
     S.prev = true; S.catMode = false; paint();
   }
   function prevClose() { S.prev = false; paint(); }
   async function submitGo() {
-    try { const data = await rpc('rpc_dpr_submit', { p_submission_id: S.sub.id }); toast('Sent' + (data && data.is_late ? ' — Marked Late' : '') + ' · Attempt ' + (data ? data.attempt : 1), 'success', 6000); S.prev = false; await engLoad(S.to); S.tab = 'rep'; paint(); }
+    try { const id = S.R ? S.R.Y.sub.id : S.sub.id; const data = await rpc('rpc_dpr_submit', { p_submission_id: id }); toast('Sent' + (data && data.is_late ? ' — Marked Late' : '') + ' · Attempt ' + (data ? data.attempt : 1), 'success', 6000); S.prev = false; await engLoad(tDate()); S.tab = 'rep'; paint(); }
     catch (e) { toast(err(e, 'Could not send'), 'error'); }
   }
 
@@ -9991,9 +10090,9 @@ const DPR = (function () {
   function filt(f) { S.filt = f; redraw(); }
   function areaF(a) { S.area = a; redraw(); }
   async function refresh() {
-    if ((dirtyCards().length || S.npDirty) && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
+    if (dirtyAll() && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
     S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; S.NP = null; S.npDirty = false;
-    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await mgrLoad(); } else await engLoad(S.blank ? null : S.to, true);
+    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -10122,9 +10221,9 @@ const DPR = (function () {
       toast('Added ' + (together ? ok + ' group' + (ok === 1 ? '' : 's') : [...S.ct].length + ' activit' + ([...S.ct].length === 1 ? 'y' : 'ies')) + ' to your list', 'success');
     } catch (e) { toast(err(e, 'Could not add') + (ok ? ' — ' + ok + ' unit(s) were added before this' : ''), 'error'); }
     S.ct = new Set(); S.cat = null; S.q = ''; S.cf = null; S.catMode = false;
-    await engLoad(S.to, true);
+    await engLoad(tDate(), true);
     // v156 · "Add N groups & fill together": club the new cards across locations (M33 rpc_dpr_club)
-    if (fill && ids.length) { const wids = []; ids.forEach(id => { const g = G(id); if (g) g.lines.forEach(l => wids.push(l.work_id)); }); if (wids.length > 1) { try { await rpc('rpc_dpr_club', { p_work_ids: wids, p_label: null }); await engLoad(S.to, true); } catch (e) { toast(err(e, 'Added, but could not report them together'), 'warn'); } } }
+    if (fill && ids.length) { const wids = []; ids.forEach(id => { const g = G(id); if (g) g.lines.forEach(l => wids.push(l.work_id)); }); if (wids.length > 1) { try { await rpc('rpc_dpr_club', { p_work_ids: wids, p_label: null }); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Added, but could not report them together'), 'warn'); } } }
   }
   /* ---------- start work ---------- */
   async function startOpen(q) {
@@ -10207,7 +10306,7 @@ const DPR = (function () {
     try {
       const { data, error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: S.st.loc, p_wbs_node_ids: [...S.st.ticks], p_together: together });
       if (error) throw error;
-      sheetClose(); toast('On Your List', 'success'); S.cat = null; await engLoad(S.to, true); S.tab = 'log'; S.filt = 'active'; paint();
+      sheetClose(); toast('On Your List', 'success'); S.cat = null; await engLoad(tDate(), true); S.tab = 'log'; S.filt = 'active'; paint();
     } catch (e) { toast(err(e, 'Could not start'), 'error'); }
   }
 
@@ -10622,7 +10721,7 @@ const DPR = (function () {
     else printSheet();
   }
 
-  return { pLL, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, repGo, clubMode, tick, makeClub, unclub,
+  return { pLL, mpTog, remTog, sameYd, sameYdAll, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, repGo, clubMode, tick, makeClub, unclub,
     setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, saveAll,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,

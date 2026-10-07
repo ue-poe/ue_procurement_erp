@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v158.1</title>
+<title>Penguin Suite v158.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -264,6 +264,9 @@ tr.amw-lnclosed td{color:#64748b;} tr.amw-lnremoved td{color:#94a3b8; text-decor
 @media (max-width:1180px) { .scan-split { grid-template-columns:1fr !important; height:auto; } .scan-divider { display:none; } .scan-left { max-height:60vh; } .scan-doc { height:520px; } }
 .status.unbilled { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
 .status.paid { background: #ccfbf1; color: #065f46; border: 1px solid #5eead4; }
+.status.deleted { background: #e8e8ea; color: #555; border: 1px solid #c3c3c8; text-decoration: line-through; }
+.pay-cn { color: #4c2e9a; font-weight: 700; }
+tr.pay-del td { opacity: .62; }
 .status.unpaid { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
 .status.partial { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
 .status.partial-received { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
@@ -945,6 +948,9 @@ input[type="number"] {
 #mod-dpr .dp2 .d2t tr.sub td.name{padding-left:26px;font-weight:600;color:var(--ink2,#51627a)}
 #mod-dpr .dp2 .d2t tr.sub td.name:before{content:'↳';color:var(--ink3,#8a98ad);margin-right:5px}
 #mod-dpr .dp2 .d2t tr.fin td{color:var(--ink3,#8a98ad)}
+#mod-dpr .dp2 .d2t tr.bd td,#mod-dpr .dp2 .d2t tr.sub.bd td,#mod-dpr .dp2 .d2t tr.act.bd td,#mod-dpr .dp2 .d2t tr.grp.bd td{background:#eef0f4;color:var(--ink3,#8a98ad)}   /* v158.3 · finished on an earlier date: no labour today */
+#mod-dpr .dp2 .d2t tr.bd td .d2-oc button:not(.on){opacity:.45}
+#mod-dpr .dp2 .d2t tr.grp.gdone td{background:var(--dokl,#e4f5ec);border-left:3px solid var(--dok,#128a4a)}   /* v158.3 · group 100 % */
 #mod-dpr .dp2 .d2t tr.gap td{background:#fff;padding:0;height:0}
 #mod-dpr .dp2 .d2t td.stt{white-space:normal;line-height:1.7;min-width:150px}
 #mod-dpr .dp2 .tog{display:inline-block;width:14px;color:var(--ink3,#8a98ad);font-size:10px;margin-right:3px;cursor:pointer}
@@ -3130,7 +3136,7 @@ html,body{touch-action:pan-x pan-y}
       <button class="rpt-back" onclick="RPT.delAuditBack()">← Reports</button>
       <div>
         <div class="rpt-h1">🗑 Deletion Audit</div>
-        <div class="rpt-sub">Deleted GRNs &amp; PO Bills with reason, actor and full snapshot. Rows starting with RESTORE record a reversal.</div>
+        <div class="rpt-sub">Deleted GRNs, PO / hire / work bills, certifications and payment vouchers with reason, actor, effects and full snapshot. Rows starting with RESTORE record a reversal.</div>
       </div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
@@ -3138,6 +3144,12 @@ html,body{touch-action:pan-x pan-y}
         <option value="all">All types</option>
         <option value="GRN">GRN only</option>
         <option value="POB">PO Bill only</option>
+        <option value="HOB">Hire Bill only</option>
+        <option value="HOC">Hire Certification only</option>
+        <option value="WOB">Work Bill only</option>
+        <option value="WOC">Work Certification only</option>
+        <option value="PAY">Payment voucher only</option>
+        <option value="CN">Credit note only</option>
       </select>
       <input id="da_search" placeholder="🔍 Doc number / reason…" autocomplete="off" oninput="RPT.delAuditSearch(this.value)"
         style="padding:6px 10px;border:1px solid var(--r-border);border-radius:7px;font-size:12.5px;width:230px;font-family:inherit;">
@@ -3858,7 +3870,7 @@ html,body{touch-action:pan-x pan-y}
           <tr>
             <th>Bill Number</th><th>Date</th><th>HO Number</th><th>Cert. Number</th><th>Vendor</th>
             <th class="num">Invoice Value</th><th class="num">Net Payable</th>
-            <th class="num">Total Paid</th><th class="num">Outstanding</th>
+            <th class="num">Total Paid</th><th class="num">Credit Notes</th><th class="num">Outstanding</th>
             <th>Status</th><th class="center">Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
@@ -3867,7 +3879,7 @@ html,body{touch-action:pan-x pan-y}
             <td style="padding:4px 6px;"><input id="hobF_honum" placeholder="Filter&#8230;" oninput="renderHOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="hobF_certnum" placeholder="Filter&#8230;" oninput="renderHOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="hobF_vendor" placeholder="Filter&#8230;" oninput="renderHOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
-            <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
+            <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
             <td style="padding:4px 6px;"><select id="hobF_status" onchange="renderHOBList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Unpaid</option><option>Partial</option><option>Paid</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('hobF_number','hobF_vendor','hobF_honum','hobF_certnum','hobF_dateFrom','hobF_dateTo','hobF_status','renderHOBList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
@@ -4326,7 +4338,7 @@ html,body{touch-action:pan-x pan-y}
           <tr>
             <th>Bill Number</th><th>Date</th><th>WO Number</th><th>Cert. Number</th><th>Vendor</th>
             <th class="num">Invoice Value</th><th class="num">Net Payable</th>
-            <th class="num">Total Paid</th><th class="num">Outstanding</th>
+            <th class="num">Total Paid</th><th class="num">Credit Notes</th><th class="num">Outstanding</th>
             <th>Status</th><th class="center">Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
@@ -4335,7 +4347,7 @@ html,body{touch-action:pan-x pan-y}
             <td style="padding:4px 6px;"><input id="wobF_wonum" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="wobF_certnum" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="wobF_vendor" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
-            <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
+            <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
             <td style="padding:4px 6px;"><select id="wobF_status" onchange="renderWOBList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Unpaid</option><option>Partial</option><option>Paid</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('wobF_number','wobF_vendor','wobF_wonum','wobF_certnum','wobF_dateFrom','wobF_dateTo','wobF_status','renderWOBList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
@@ -4386,18 +4398,18 @@ html,body{touch-action:pan-x pan-y}
     </div>
     <div class="pyd-wrap"><div class="pyd-scroll">
     <table class="pyd-rt">
-      <colgroup><col style="width:19%"><col style="width:7%"><col style="width:10%"><col style="width:13%"><col style="width:11%"><col style="width:10%"><col style="width:11%"><col style="width:10%"><col style="width:9%"></colgroup>
+      <colgroup><col style="width:18%"><col style="width:7%"><col style="width:9%"><col style="width:12%"><col style="width:10%"><col style="width:9%"><col style="width:8%"><col style="width:10%"><col style="width:9%"><col style="width:8%"></colgroup>
       <thead><tr>
         <th class="l">Vendor</th><th class="l">Orders</th><th>Order value</th>
         <th>Billed <span class="pyd-stk hd">invoice · GST · TDS</span></th>
-        <th>Net payable</th><th>Paid</th>
+        <th>Net payable</th><th>Paid</th><th>Credit notes</th>
         <th class="g2">Due <span class="pyd-stk hd">overdue</span></th>
         <th class="g2">O/S advance <span class="pyd-stk hd">paid · recovered</span></th>
         <th>Held <span class="pyd-stk hd">retention · hold</span></th>
       </tr><tr class="grand" id="pyd_tot_sum"></tr></thead>
-      <tbody id="pyd_tbody"><tr><td colspan="9" class="pyd-empty">Loading…</td></tr></tbody>
+      <tbody id="pyd_tbody"><tr><td colspan="10" class="pyd-empty">Loading…</td></tr></tbody>
     </table></div></div>
-    <div class="rpt-note"><b>How figures are derived.</b> Order value = live WO/HO total + PO grand total. Invoice value, GST, TDS, retention, hold and net payable come from approved bills (WOB / HOB / POB); Paid = allocations on approved payment transfers. Due = net payable − paid, bucketed by <code>inv_pay_due</code> (or bill date + credit period) against the As-on date. Advance paid = approved on-account payments; recovered = advance / mobilization / on-account recovery booked on bills; retention/hold shown net of approved release allocations. Bills on payment hold are shown separately and are not payable. Pending-approval bills are excluded from Due and shown in "Not yet payable". Vendors are matched by name across documents.</div>
+    <div class="rpt-note"><b>How figures are derived.</b> Order value = live WO/HO total + PO grand total. Invoice value, GST, TDS, retention, hold and net payable come from approved bills (WOB / HOB / POB); Paid = allocations on approved bank transfers; Credit notes = approved credit-note vouchers set against bills; Due = net payable − paid − credit notes. Due = net payable − paid, bucketed by <code>inv_pay_due</code> (or bill date + credit period) against the As-on date. Advance paid = approved on-account payments; recovered = advance / mobilization / on-account recovery booked on bills; retention/hold shown net of approved release allocations. Bills on payment hold are shown separately and are not payable. Pending-approval bills are excluded from Due and shown in "Not yet payable". Vendors are matched by name across documents.</div>
   </div>
 
   <div id="rpt_payables_vendor" class="hidden">
@@ -4420,10 +4432,10 @@ html,body{touch-action:pan-x pan-y}
       <span data-t="stmt" onclick="RPT.payablesTab('stmt',this)">Statement</span>
     </div>
     <div id="pyd_t_bills" class="pyd-wrap"><div class="pyd-scroll"><table class="pyd-rt">
-      <colgroup><col style="width:19%"><col style="width:11%"><col style="width:12%"><col style="width:16%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:12%"></colgroup>
+      <colgroup><col style="width:18%"><col style="width:10%"><col style="width:11%"><col style="width:15%"><col style="width:9%"><col style="width:9%"><col style="width:8%"><col style="width:9%"><col style="width:11%"></colgroup>
       <thead><tr><th class="l">Bill <span class="pyd-stk hd">order · certificate · bill date</span></th><th class="l">Vendor invoice <span class="pyd-stk hd">no · date</span></th>
         <th>Invoice value <span class="pyd-stk hd">basic + GST</span></th><th>Deductions <span class="pyd-stk hd">adv rec · TDS · ret · hold</span></th>
-        <th>Net payable</th><th>Paid</th><th class="g2">Due</th><th class="l g2">Due date · status</th></tr><tr class="grand" id="pyd_tot_bills"></tr>
+        <th>Net payable</th><th>Paid</th><th>Credit notes</th><th class="g2">Due</th><th class="l g2">Due date · status</th></tr><tr class="grand" id="pyd_tot_bills"></tr>
       </thead><tbody id="pyd_bills"></tbody></table></div></div>
     <div id="pyd_t_pays" class="pyd-wrap hidden"><div class="pyd-scroll"><table class="pyd-rt">
       <colgroup><col style="width:12%"><col style="width:9%"><col style="width:7%"><col style="width:12%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:11%"><col style="width:8%"></colgroup>
@@ -4562,30 +4574,36 @@ html,body{touch-action:pan-x pan-y}
       <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadHistory()">↻ Refresh</button></div></div>
     <div class="card">
       <div class="pay-tb">
-        <input id="payHist_q" placeholder="🔍 Voucher / vendor / UTR…" style="width:230px" oninput="PAY.renderHistory()" autocomplete="off">
+        <input id="payHist_q" placeholder="🔍 Voucher / vendor / UTR / CN no…" style="width:230px" oninput="PAY.renderHistory()" autocomplete="off">
         <span class="lbl">Status</span>
         <select id="payHist_status" onchange="PAY.renderHistory()">
-          <option value="">All</option><option>Pending Approval</option><option>Approved</option><option>Rejected</option>
+          <option value="">All</option><option>Pending Approval</option><option>Approved</option><option>Rejected</option><option>Deleted</option>
         </select>
+        <span class="lbl">Type</span>
+        <select id="payHist_type" onchange="PAY.renderHistory()">
+          <option value="">All</option><option value="Transfer">Transfer</option><option value="Credit Note">Credit Note</option>
+        </select>
+        <label class="lbl" style="display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="payHist_showDel" onchange="PAY.renderHistory()"> Show deleted</label>
         <span class="lbl">From</span><input type="date" id="payHist_from" onchange="PAY.renderHistory()">
         <span class="lbl">To</span><input type="date" id="payHist_to" onchange="PAY.renderHistory()">
         <button class="btn btn-ghost btn-sm" onclick="PAY.histClear()">Clear</button>
         <span class="lbl" style="margin-left:auto" id="payHist_n"></span>
       </div>
       <div class="bwrap"><table class="pay-rt">
-        <colgroup><col style="width:9%"><col style="width:8%"><col style="width:19%"><col style="width:20%"><col style="width:7%"><col style="width:12%"><col style="width:10%"><col style="width:11%"><col style="width:10%"></colgroup>
+        <colgroup><col style="width:9%"><col style="width:8%"><col style="width:18%"><col style="width:18%"><col style="width:8%"><col style="width:12%"><col style="width:9%"><col style="width:11%"><col style="width:10%"><col style="width:5%"></colgroup>
         <thead><tr>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('payment_id')">Voucher<span id="hs_payment_id"></span></th>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('payment_date')">Paid on<span id="hs_payment_date"></span></th>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('vendor')">Vendor<span id="hs_vendor"></span></th>
           <th class="l">Paying</th>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('mode')">Mode<span id="hs_mode"></span></th>
-          <th class="l">UTR / ref</th>
+          <th class="l">UTR / CN no.</th>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('entered_by')">Entered by<span id="hs_entered_by"></span></th>
           <th style="cursor:pointer" onclick="PAY.hsort('amount_paid')">Amount<span id="hs_amount_paid"></span></th>
           <th class="l" style="cursor:pointer" onclick="PAY.hsort('approval_status')">Status<span id="hs_approval_status"></span></th>
+          <th class="l">Action</th>
         </tr></thead>
-        <tbody id="payHist_body"><tr><td colspan="9" class="pay-empty">Loading…</td></tr></tbody>
+        <tbody id="payHist_body"><tr><td colspan="10" class="pay-empty">Loading…</td></tr></tbody>
       </table></div>
     </div>
   </div>
@@ -7953,14 +7971,16 @@ async function apiGetHOBList() {
     dbSelect('hobList', () =>
       sb.from('ho_bills').select('*').order('created_at', { ascending: false })
     ),
-    sb.from('ho_payment_allocations').select('bill_number, amount, ho_payments!inner(approval_status)').eq('kind','bill').eq('ho_payments.approval_status','Approved')   // v75.6: paid = approved allocations
+    sb.from('ho_payment_allocations').select('bill_number, amount, ho_payments!inner(approval_status,payment_type)').eq('kind','bill').eq('ho_payments.approval_status','Approved').eq('bill_type','HOB')   // v75.6: paid = approved allocations · M37: CN split
   ]);
   if (!r.ok) return r;
 
-  // Sum paid amounts per bill across all PRR items
-  const paidMap = {};
+  // Sum paid (transfers) and credit notes per bill from approved allocations
+  const paidMap = {}, cnMap = {};
   (prrRes.data||[]).forEach(it => {
-    paidMap[it.bill_number] = (paidMap[it.bill_number]||0) + num(it.amount);
+    const isCN = it.ho_payments && it.ho_payments.payment_type === 'Credit Note';
+    const m = isCN ? cnMap : paidMap;
+    m[it.bill_number] = (m[it.bill_number]||0) + num(it.amount);
   });
 
   return {
@@ -7968,8 +7988,10 @@ async function apiGetHOBList() {
     bills: (r.data||[]).map(b => {
       const mapped = mapHOB(b);
       const totalPaid = paidMap[b.bill_number] || 0;
-      const outstanding = Math.max(0, num(b.net_payable) - totalPaid);
+      const cn = cnMap[b.bill_number] || 0;
+      const outstanding = Math.max(0, num(b.net_payable) - totalPaid - cn);
       mapped['Total Paid'] = totalPaid;
+      mapped['Credit Notes'] = cn;
       mapped['Outstanding'] = outstanding;
       return mapped;
     })
@@ -8403,18 +8425,22 @@ async function apiGetWOBList() {
     dbSelect('wobList', () =>
       sb.from('wo_bills').select('*').order('created_at', { ascending: false })
     ),
-    sb.from('ho_payment_allocations').select('bill_number, amount, ho_payments!inner(approval_status)').eq('kind','bill').eq('ho_payments.approval_status','Approved').eq('bill_type','WOB')
+    sb.from('ho_payment_allocations').select('bill_number, amount, ho_payments!inner(approval_status,payment_type)').eq('kind','bill').eq('ho_payments.approval_status','Approved').eq('bill_type','WOB')   // M37: CN split
   ]);
   if (!r.ok) return r;
-  const paidMap = {};
+  const paidMap = {}, cnMap = {};
   (prrRes.data||[]).forEach(it => {
-    paidMap[it.bill_number] = (paidMap[it.bill_number]||0) + num(it.amount);
+    const isCN = it.ho_payments && it.ho_payments.payment_type === 'Credit Note';
+    const m = isCN ? cnMap : paidMap;
+    m[it.bill_number] = (m[it.bill_number]||0) + num(it.amount);
   });
   return { ok: true, bills: (r.data||[]).map(b => {
     const mapped = mapWOB(b);
     const totalPaid = paidMap[b.bill_number] || 0;
+    const cn = cnMap[b.bill_number] || 0;
     mapped['Total Paid'] = totalPaid;
-    mapped['Outstanding'] = Math.max(0, num(b.net_payable) - totalPaid);
+    mapped['Credit Notes'] = cn;
+    mapped['Outstanding'] = Math.max(0, num(b.net_payable) - totalPaid - cn);
     return mapped;
   })};
 }
@@ -8932,6 +8958,7 @@ async function onSignedIn(user) {
 }
 
 async function doLogout() {
+  if (typeof DPR !== 'undefined' && DPR.unsaved() && !(await DPR.askLeave('You Are Signing Out.'))) return;   // v158.4
   _authHandled = false;
   state.user = state.role = state.userName = state.userId = null; state.roles = [];
   Object.keys(_cache).forEach(k => delete _cache[k]);
@@ -9433,14 +9460,24 @@ const DPR = (function () {
   const curTab = () => S.sub2 === 'prog' ? 'prog' : 'work';
 
   /* ---------- load: today → T, yesterday → Y (past date → one report for both) ---------- */
+  // v158.4 · an in-place reload (activities added from the WBS / Grid, a card removed, a club made) must never throw away what the
+  //          engineer has typed: dirty card drafts and the non-estimated draft move onto the fresh payload for the same date + card
+  function carryDrafts(prev, c) {
+    if (!prev || !c || prev.to !== c.to) return 0; let n = 0;
+    c.groups.forEach(g => { const d = prev.D && prev.D[g.wgroup_id]; if (d && d.dirty) { c.D[g.wgroup_id] = d; n++; } });
+    if (prev.npDirty) { c.NP = prev.NP; c.npDirty = true; n++; }
+    return n;
+  }
   async function engLoad(date, keep) {
     const sc = keep && $('d2_sc') ? $('d2_sc').scrollTop : 0, tab = keep ? curTab() : 'work';
+    let prevR = null; if (keep && S.R) { ctxSave(); prevR = S.R; } else if (keep && S.sub && !S.R) prevR = { T: { to: S.to, D: S.D, NP: S.NP, npDirty: S.npDirty }, Y: null };
     try {
       await masters();
       const dataT = await rpc('rpc_dpr_open_day', { p_report_date: date || null, p_shift: 'D' });
       S.today = dataT.today || S.today || ymd(new Date());
       const T = mkCtx(dataT), isToday = T.to === S.today;
       const Y = isToday ? mkCtx(await rpc('rpc_dpr_open_day', { p_report_date: addDays(S.today, -1), p_shift: 'D' })) : T;
+      if (prevR) { carryDrafts(prevR.T, T); if (!isToday) { if (prevR.Y && prevR.Y !== prevR.T) carryDrafts(prevR.Y, T); } else carryDrafts(prevR.Y && prevR.Y.to === Y.to ? prevR.Y : prevR.T.to === Y.to ? prevR.T : null, Y); }   // v158.4
       S.R = { T, Y }; S.same = !isToday; S.homeAreas = dataT.home_areas || S.homeAreas || []; S.returned = dataT.returned || [];
       S.ck = null; ctxLoad(S.same ? 'T' : ctxOf(tab));
       S.ticks = new Set(); S.cm = false; S.prev = false; S.catMode = false; S.page = null; S.mpo = null; S.remo = null; S.ylab = false;
@@ -9463,7 +9500,26 @@ const DPR = (function () {
     } catch (e) { console.error('[DPR] calendar', e); }
   }
   const dirtyAll = () => { let n = 0; ['T', 'Y'].forEach(k => { if (k === 'Y' && S.same) return; inCtx(k, () => { n += dirtyCards().length + (S.npDirty ? 1 : 0); }); }); return n; };
-  async function leaveOk() { return !dirtyAll() || confirm('Unsaved Changes On This Date Will Be Lost. Continue?'); }
+  // v158.4 · 3-way guard. Resolves true when it is fine to go on (nothing unsaved, saved, or discarded on purpose); false = stay.
+  let _leave = null;
+  function askLeave(what) {
+    const n = dirtyAll(); if (!n) return Promise.resolve(true);
+    return new Promise(res => {
+      _leave = res;
+      sheetOpen('Unsaved Entries', n + ' Unsaved Change' + (n === 1 ? '' : 's') + ' On ' + (S.R && !S.same ? dsh(tDate()) + ' / ' + dsh(yDate()) : dsh(S.to)),
+        `<div class="dpr-note" style="margin:10px">${esc(what || 'You Are Leaving This Report.')} The Status, Dates, Quantities And Manpower You Entered Are Not Saved Yet.<br><br><b>Save Draft</b> Keeps Them (Nothing Is Sent). <b>Discard</b> Throws Them Away. <b>Stay</b> Goes Back To The Report.</div>`,
+        `<button class="dbtn" onclick="DPR.leaveGo('stay')">Stay</button><span class="sp"></span><button class="dbtn" style="color:var(--drd)" onclick="DPR.leaveGo('discard')">Discard Changes</button><button class="dbtn pri" onclick="DPR.leaveGo('save')">Save Draft &amp; Continue</button>`);
+    });
+  }
+  async function leaveGo(k) {
+    const res = _leave; _leave = null; sheetClose(); if (!res) return;
+    if (k === 'stay') { res(false); return; }
+    if (k === 'discard') { res(true); return; }
+    const ok = await saveAll(true); if (ok) toast('Draft Saved', 'success'); res(ok);
+  }
+  const unsaved = () => S.view === 'eng' && !!S.R && dirtyAll() > 0;
+  async function leaveOk() { return askLeave('You Are Changing The Report Date.'); }
+  window.addEventListener('beforeunload', e => { if (unsaved()) { e.preventDefault(); e.returnValue = ''; } });
   async function pickDate(d, then) {
     if (d > todayYmd()) return;
     if (!(await leaveOk())) return;
@@ -9512,8 +9568,8 @@ const DPR = (function () {
   function labUnits(g) {
     const lv = labLevel(g); if (lv === 'activity') return [{ key: 'A', label: '', sub: '', worked: cardHasW(g) }];
     const l = g.lines[0], x = lineX(g, l);
-    if (lv === 'sub') return unitsShown(g, (l.stages || []).filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w').map(s => ({ key: 'S:' + s.id, label: s.name, sub: (s.group_name ? s.group_name + ' · ' : '') + 'Weight ' + fmt(s.tpl_weight || s.weight) + '%', worked: subWorkedOn(s, x.subs[s.id], subBase(s)) })));
-    return unitsShown(g, subGroups(l).filter(G => G.id && G.subs.some(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w')).map(G => ({ key: 'G:' + G.id, label: G.name, sub: G.subs.filter(s => x.subs[s.id].out === 'w').length + ' Sub-Activities Worked', worked: G.subs.some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) })));
+    if (lv === 'sub') return (l.stages || []).filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).map(s => ({ key: 'S:' + s.id, label: s.name, sub: (s.group_name ? s.group_name + ' · ' : '') + 'Weight ' + fmt(s.tpl_weight || s.weight) + '%', worked: true }));   // v158.3 · back-dated finishes carry no labour
+    return subGroups(l).filter(G => G.id && G.subs.some(s => subWorkedOn(s, x.subs[s.id], subBase(s)))).map(G => ({ key: 'G:' + G.id, label: G.name, sub: G.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length + ' Sub-Activities Worked', worked: true }));
   }
   const unitHas = (g, k) => (k === 'A' ? dOf(g).cons : (dOf(g).rows || {})[k] || []).some(c => heads(c.heads) > 0);
   const unitsShown = (g, us) => us.filter(u => u.worked || unitHas(g, u.key));
@@ -9641,7 +9697,7 @@ const DPR = (function () {
     const aKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
     const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().length - nFin, nOpen = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length, nAtt = attCount();
     const Ysub = S.R ? S.R.Y.sub : S.sub, Yst = stOf(stKeyY());
-    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(tDate()))}</b></div><div class="meta">${S.same ? '' : `<div>Sending <b>${esc(dsh(yDate()))}</b> Report</div>`}<div>Status <span class="pill ${STP[Yst[0]]}">${esc(Yst[1])}</span></div><div>Submitted <b>${Ysub && Ysub.submitted_at ? esc(dts(Ysub.submitted_at)) : '—'}</b></div>${lateHtml()}${Ysub && Ysub.reviewed_at ? `<div>Reviewed <b>${esc(dts(Ysub.reviewed_at))}</b></div>` : ''}</div></div>`;
+    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(tDate()))}</b></div><div class="meta">${S.same ? '' : `<div>Sending <b>${esc(dsh(yDate()))}</b> Report</div>`}<div>Status <span class="pill ${STP[Yst[0]]}">${esc(Yst[1])}</span></div><div>Submitted <b>${Ysub && Ysub.submitted_at ? esc(dts(Ysub.submitted_at)) : '—'}</b></div>${lateHtml()}${Ysub && Ysub.reviewed_at ? `<div>Reviewed <b>${esc(dts(Ysub.reviewed_at))}</b></div>` : ''}${Ysub && Ysub.status === 'Draft' && !ro ? `<div><button class="d2-btn sm" style="color:var(--drd)" title="Delete The Unsent ${esc(dsh(yDate()))} Report" onclick="DPR.delDay('${yDate()}')">Delete ${esc(dsh(yDate()))} Report</button></div>` : ''}</div></div>`;
     if (Ysub && Ysub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(Ysub.return_reason || '')}${Ysub.return_note ? ' — ' + esc(Ysub.return_note) : ''} · Correct And Resend (Attempt ${num(Ysub.attempt_no) + 1})</div>`;
     // tabs
     const tw = inCtx('T', () => ({ w: allLines().filter(({ g, l }) => outOf(g, l) === 'w').length, s: labStats().starts, h: allLines().filter(({ g, l }) => hasH(g, l)).length, heads: allHeads() }));
@@ -9696,7 +9752,8 @@ const DPR = (function () {
     return pill('p-grey', base > 0 || s.started_on ? 'Running' : 'Not Started');
   }
   const tickCell = (g, l, idx, ro) => `<td class="c" style="white-space:nowrap">${S.cm && !ro ? `<input type="checkbox" data-k="t:${l.work_id}" ${S.ticks.has(l.work_id) ? 'checked' : ''} ${finL(l) ? 'disabled title="Finished"' : g.lines.length > 1 ? 'title="Ticks The Whole Club — It Merges Into The New Club"' : ''} onchange="DPR.tick('${l.work_id}',this.checked)" style="margin-right:5px;vertical-align:middle">` : ''}${idx}</td>`;
-  const dropBtn = g => canDrop(g) && g.lines.length === 1 ? ` <button class="d2-btn sm" title="Remove From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">×</button>` : '';
+  const dropBtn = (g, l) => !canDrop(g) ? '' : g.lines.length === 1 ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">×</button>`
+    : ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove This Activity From The Club — Nothing Reported Yet" onclick="DPR.dropWork('${l.work_id}')">×</button>`;   // v158.2
   function certCell(g, l, x, r) {
     if (!x.fin || r) return '';
     return ` <span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` <input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)">`}`;
@@ -9707,7 +9764,9 @@ const DPR = (function () {
   const remRow = (key, wid, sid, val, ph, cols, ro) => S.remo === key ? `<tr class="strip"><td></td><td colspan="${cols - 1}"><span class="muted" style="margin-right:8px">${esc(ph)}</span><input class="rem" style="width:60%" data-k="n:${wid}:${sid}" value="${esc(val)}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"> <button class="d2-btn sm" onclick="DPR.remTog('${key}')">Close</button></td></tr>` : '';
   // fold: every parent starts collapsed (S.foldDef) until Expand All; keys seen once are remembered
   function folded(k) { if (!S.seen.has(k)) { S.seen.add(k); if (S.foldDef) S.fold.add(k); } return S.fold.has(k); }
-  const togBtn = k => `<button class="d2-tog ${folded(k) ? '' : 'open'}" onclick="DPR.foldRow('${esc(k)}')">${folded(k) ? '▸' : '▾'}</button>`;
+  const togBtn = k => `<button class="d2-tog ${folded(k) ? '' : 'open'}" data-k="${esc(k)}" onclick="DPR.foldRow(this.dataset.k)">${folded(k) ? '▸' : '▾'}</button>`;   // v158.2 · key via data attribute
+  // v158.2 · a hoisted club band folds/unfolds the ACTIVITY bands it spans (it is not their parent row, so it must not hide their rows)
+  const togMany = ks => { const all = ks.every(k => folded(k)); return `<button class="d2-tog ${all ? '' : 'open'}" data-ks="${esc(JSON.stringify(ks))}" onclick="DPR.foldKeys(this.dataset.ks)">${all ? '▸' : '▾'}</button>`; };
 
   /* ---------- manpower (work tab): one cell per unit → strip under the row ---------- */
   const mixTxt = m => Object.entries(m).filter(([, v]) => num(v) > 0).map(([t, v]) => esc(tAbbr(t)) + fmt(v)).join(' ') || '';
@@ -9756,19 +9815,21 @@ const DPR = (function () {
     if (!items.length) return `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${allLines().length ? 'No Activity Matches The Filter.' : 'Use ＋ Browse Estimate Or ⊞ Grid To Put Activities On Your List.'}</div></div>`;
     const keyOf = ({ g, l }) => S.gv === 'work' ? [linePkg(g, l) || '—', l.activity] : [lineLocPath(g, l) || g.area || '—', lineLoc(g, l) || '—'];
     const grp = new Map(); items.forEach(it => { const [a, b] = keyOf(it); if (!grp.has(a)) grp.set(a, new Map()); const m = grp.get(a); if (!m.has(b)) m.set(b, []); m.get(b).push(it); });
-    const head = W ? `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c" style="width:96px">Today</th><th style="width:220px">Dates · Status</th><th style="width:170px">Contractor</th><th style="width:210px">Manpower Today</th><th class="c" style="width:36px">✎</th>`
-      : `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="n" style="width:110px">Cum. Before</th><th class="c" style="width:96px">${esc(dsh(S.to))}</th><th style="width:250px">Done On ${esc(dsh(S.to))}</th><th style="width:260px">Cum. To Date · Finish</th><th class="c" style="width:36px">✎</th>`;
+    const head = W ? `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c" style="width:96px">Today</th><th style="width:220px">Dates · Status</th><th style="width:170px">Contractor</th><th style="width:210px">Manpower Today</th><th class="c" style="width:62px;white-space:nowrap">✎</th>`
+      : `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="n" style="width:110px">Cum. Before</th><th class="c" style="width:96px">${esc(dsh(S.to))}</th><th style="width:250px">Done On ${esc(dsh(S.to))}</th><th style="width:260px">Cum. To Date · Finish</th><th class="c" style="width:62px;white-space:nowrap">✎</th>`;
     const bandCnt = all => { const w = all.filter(({ g, l }) => outOf(g, l) === 'w').length, hh = all.filter(({ g, l }) => hasH(g, l)).length, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0), att = all.filter(({ g, l }) => attOf(g, l)).length, hd = [...new Set(all.map(x => x.g))].reduce((a, g) => a + cardHeads(g), 0);
       return W ? `${w} Working · ${nS} Start · ${hh} Hindrance · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}` : `${all.filter(({ g, l }) => outOf(g, l) !== '').length} Reported · ${hh} Hindrance · Labour ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
     let h = `<table class="d2t sheet"><thead><tr>${head}</tr></thead><tbody>`, idx = 0;
     // v158.1 · a club (Report Together) is ONE card: its band — with the single manpower entry — appears once. A club whose lines sit under
     // several activity bands is hoisted to the package band; a club inside one activity band sits there. Rows below only say "On The Club ↑".
     const banded = new Set(), skip = new Set();
-    const clubBand = g => {
+    const clubBand = (g, spanKeys) => {   // v158.2 · spanKeys = the activity-band keys a hoisted club spans (null when the band sits inside one activity band)
       banded.add(g.wgroup_id); const ck = 'c:' + g.wgroup_id, u = { key: 'A', worked: cardHasW(g) }, acts = [...new Set(g.lines.map(l => l.activity))].length, units = [...new Set(g.lines.map(l => lineLoc(g, l)))].length;
-      let r = `<tr class="club"><td colspan="${W ? 4 : cols}">${togBtn(ck)}${pill('p-amb', 'Report Together')}<b>${esc(g.label || '')}</b> <span class="muted">· ${acts} Activit${acts === 1 ? 'y' : 'ies'} × ${units} Unit${units === 1 ? '' : 's'} · Status &amp; Progress Per Row${W ? ' · One Manpower Entry For The Club' : ' · Labour ' + fmt(cardHeads(g)) + ' Heads · ' + esc(conName((dOf(g).cons[0] || {}).con))}</span>${ro ? '' : `<button class="d2-btn sm" style="float:right" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button>`}</td>${W ? `<td class="con">${conCell(g, 0, 'A', ro)}</td><td>${mpCell(g, u, ro)}</td><td></td>` : ''}</tr>`;
+      const tog = spanKeys ? togMany(spanKeys) : togBtn(ck);
+      const acts2 = ro ? '' : `<span style="float:right;white-space:nowrap">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" title="Remove The Whole Club From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
+      let r = `<tr class="club"><td colspan="${W ? 4 : cols}">${tog}${pill('p-amb', 'Report Together')}<b>${esc(g.label || '')}</b> <span class="muted">· ${acts} Activit${acts === 1 ? 'y' : 'ies'} × ${units} Unit${units === 1 ? '' : 's'} · Status &amp; Progress Per Row${W ? ' · One Manpower Entry For The Club' : ' · Labour ' + fmt(cardHeads(g)) + ' Heads · ' + esc(conName((dOf(g).cons[0] || {}).con))}</span>${acts2}</td>${W ? `<td class="con">${conCell(g, 0, 'A', ro)}</td><td>${mpCell(g, u, ro)}</td><td></td>` : ''}</tr>`;
       if (W) r += mpStrip(g, u, g.label || 'Club', cols, ro);
-      if (folded(ck)) skip.add(g.wgroup_id);
+      if (!spanKeys && folded(ck)) skip.add(g.wgroup_id);   // only a band INSIDE an activity band is the parent of its rows
       return r;
     };
     grp.forEach((sub, g1) => {
@@ -9777,14 +9838,14 @@ const DPR = (function () {
       if (folded(fk)) return;
       // clubs spanning more than one activity band under this package → band once, here
       const span = new Map(); sub.forEach((ws, g2) => ws.forEach(({ g }) => { if (g.lines.length > 1) { if (!span.has(g.wgroup_id)) span.set(g.wgroup_id, { g, keys: new Set() }); span.get(g.wgroup_id).keys.add(g2); } }));
-      span.forEach(({ g, keys }) => { if (keys.size > 1 && !banded.has(g.wgroup_id)) h += clubBand(g); });
+      span.forEach(({ g, keys }) => { if (keys.size > 1 && !banded.has(g.wgroup_id)) h += clubBand(g, [...keys].map(g2 => 'a:' + g1 + '|' + g2)); });
       sub.forEach((ws, g2) => {
         const ak = 'a:' + g1 + '|' + g2;
         h += `<tr class="g2"><td colspan="${cols}">${togBtn(ak)}${esc(short(g2, 140))}<span class="path">${S.gv === 'work' ? ws.length + ' Location' + (ws.length === 1 ? '' : 's') : ws.length + ' Activit' + (ws.length === 1 ? 'y' : 'ies') + ' At This Unit'} · ${bandCnt(ws)}</span></td></tr>`;
         if (folded(ak)) return;
         ws.forEach(it => {
           const g = it.g;
-          if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubBand(g);
+          if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubBand(g, null);
           if (skip.has(g.wgroup_id)) { idx++; return; }
           idx++; h += staged(it.l) ? stageRows(it, idx, ro, mode) : dirRow(it, idx, ro, mode);
         });
@@ -9811,6 +9872,9 @@ const DPR = (function () {
     if (o === 'n') return `<td colspan="2" class="muted">—</td>`;
     if (o !== 'w') return `<td colspan="2" class="muted">— Not Filled</td>`;
     if (g.lines.length > 1) return `<td colspan="2" class="muted">On The Club ↑</td>`;
+    const lockTxt = e => `<td colspan="2" class="muted">${pill('p-ok', 'Done' + (e ? ' ' + dsh(e) : ''))} No Labour On ${esc(dsh(S.to))} · Locked</td>`;   // v158.3
+    if (s && !subWorkedOn(s, lineX(g, l).subs[s.id], subBase(s))) return lockTxt(lineX(g, l).subs[s.id].e || s.finished_on);
+    if (!s && !lineWorkedOn(g, l)) return lockTxt(lineX(g, l).finOn || l.finished_on);
     const key = unitKeyOf(g, l, s, Gp);
     if (!key) return `<td colspan="2" class="muted">${lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓'}</td>`;
     if (key === 'A' && s) return `<td colspan="2" class="muted">On The Activity ↑</td>`;
@@ -9822,11 +9886,11 @@ const DPR = (function () {
     const { g, l } = it, x = lineX(g, l), wid = l.work_id, est = num(l.est_qty), base = cumBase(l), fin = finL(l), r = ro || fin, o = fin ? '' : x.out, W = mode === 'work';
     const q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom), rk = 'r|' + wid;
     const att = attOf(g, l) ? ' att' : '';
-    let h = `<tr class="act ${fin ? 'fin' : ''}${att}">${tickCell(g, l, idx, ro)}<td class="name">${nameCell(g, l)}</td>`;
+    let h = `<tr class="act ${fin ? 'fin' : ''}${att}${W && lineBackDated(g, l) ? ' bd' : ''}">${tickCell(g, l, idx, ro)}<td class="name">${nameCell(g, l)}</td>`;   // v158.3
     if (W) {
       const startPart = !r && o === 'w' && !l.started_on ? `Start <input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)"> ` : (l.started_on || (x.started && o === 'w')) ? `Start <b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : '';
-      h += `<td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="stt">${startPart}${statusDir(g, l)}</td>${mpCells(g, l, null, null, o, r)}<td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
-      if (o === 'w' && g.lines.length === 1 && labLevel(g) === 'activity') h += mpStrip(g, { key: 'A', worked: true }, l.activity, 7, r);
+      h += `<td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="stt">${startPart}${statusDir(g, l)}</td>${mpCells(g, l, null, null, o, r)}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+      if (o === 'w' && g.lines.length === 1 && labLevel(g) === 'activity' && lineWorkedOn(g, l)) h += mpStrip(g, { key: 'A', worked: true }, l.activity, 7, r);
     } else {
       let done;
       if (r) done = o === 'w' ? `<b>${x.wip ? 'WIP' : fmt(q)}</b> <span class="muted">${uom}</span>` : o === 'h' ? '<span class="hopen">Hindrance</span>' : '<span class="muted">—</span>';
@@ -9837,7 +9901,7 @@ const DPR = (function () {
       const cum = o === 'w' ? after : base, pc = est ? Math.min(100, cum / est * 100) : 0;
       const startP = !r && o === 'w' && !l.started_on ? `<span class="muted">Start</span> <input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)"> ` : (l.started_on || (x.started && o === 'w')) ? `<span class="muted">Start</span> <b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : '';   // v158.1 · start on the progress tab too, same field as the work tab
       h += `<td class="n">${fmt(base)} <span class="muted">${est ? Math.round(base / est * 100) : 0}%</span>${est && base > est + 0.0005 ? ' ' + pill('p-red', 'Over Est.') : ''}</td><td class="c">${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}</td><td class="dn">${done}</td>
-        <td><div class="d2-cum"><span class="bar2"><i style="width:${pc}%"></i></span><b>${fmt(cum)}</b><span class="muted">${est ? Math.round(cum / est * 100) : 0}%</span>${startP ? '<span class="sep">·</span>' + startP : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${o === 'h' ? pill('p-red', 'Hindrance') : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
+        <td><div class="d2-cum"><span class="bar2"><i style="width:${pc}%"></i></span><b>${fmt(cum)}</b><span class="muted">${est ? Math.round(cum / est * 100) : 0}%</span>${startP ? '<span class="sep">·</span>' + startP : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${o === 'h' ? pill('p-red', 'Hindrance') : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
     }
     return h + remRow(rk, wid, '', x.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', 7, r);
   }
@@ -9847,14 +9911,14 @@ const DPR = (function () {
     const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts Today') : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
     const sd = l.started_on ? `Start <b>${esc(dsh(l.started_on))}</b>${l.start_locked ? '<span class="lock">🔒</span>' : ''} ` : (x.started && o === 'w') ? `Start <b>${esc(dsh(x.started))}</b> ` : '';
     const day = (l.started_on || x.started) && o === 'w' && !starts ? ' ' + pill('p-grey', 'Day ' + (daysBetween(l.started_on || x.started, S.to) + 1)) : '';
-    let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}">${tickCell(g, l, idx, ro)}<td class="name">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td>`;
+    let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}${W && lineBackDated(g, l) ? ' bd' : ''}">${tickCell(g, l, idx, ro)}<td class="name">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td>`;
     if (W) {
       const u = { key: 'A', worked: cardHasW(g) };
-      h += `<td class="c">${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}</td><td class="stt">${sd}${st}${day}</td>${g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? mpCell(g, u, r) : '<span class="muted">—</span>'}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Subs' : 'Groups'}</i></span></td>`}<td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
-      if (lv === 'activity' && o === 'w' && g.lines.length === 1) h += mpStrip(g, u, l.activity, 7, r);
+      h += `<td class="c">${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}</td><td class="stt">${sd}${st}${day}</td>${g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier') + ' <span class="muted">No Labour On ' + esc(dsh(S.to)) + '</span>') : '<span class="muted">—</span>'}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Subs' : 'Groups'}</i></span></td>`}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+      if (lv === 'activity' && o === 'w' && g.lines.length === 1 && cardHasW(g)) h += mpStrip(g, u, l.activity, 7, r);
     } else {
       h += `<td class="n">${Math.round(pb)}%</td><td class="c">${r || !open.length ? (o ? ocPill(o) : '') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">WIP All Open</button>`}</td><td><span class="muted">Per Sub ↓ · ${pc - pb > 0.0005 ? '+' + Math.round(pc - pb) + '%' : 'No Change'}</span></td>
-        <td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, pc)}%"></i></span><b>${Math.round(pc)}%</b><span class="muted">${fmt(r2(est * pc / 100))} ${esc(l.uom || '')}</span>${sd ? '<span class="sep">·</span>' + sd : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g)}</td></tr>`;
+        <td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, pc)}%"></i></span><b>${Math.round(pc)}%</b><span class="muted">${fmt(r2(est * pc / 100))} ${esc(l.uom || '')}</span>${sd ? '<span class="sep">·</span>' + sd : ''}${x.fin && !fin ? pill('p-ok', 'Finished') + certCell(g, l, x, r) : ''}${fin ? pill('p-ok', 'Finished ' + dsh(l.finished_on)) : ''}</div></td><td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
     }
     h += remRow(rk, wid, '', x.note, 'Remarks', 7, r);
     if (fd) return h;
@@ -9862,9 +9926,11 @@ const DPR = (function () {
       if (Gp.id) {
         const gk = 'gp:' + wid + '|' + Gp.id, gp = grpPct(g, l, Gp), gd = grpDates(g, l, Gp), ws = Gp.subs.filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w').length, hs = Gp.subs.filter(s => x.subs[s.id].out === 'h').length, ns = Gp.subs.filter(s => x.subs[s.id].out === 'n').length;
         const dates = `Start <b>${gd.s ? esc(dsh(gd.s)) : '—'}</b> · End <b>${gd.e ? esc(dsh(gd.e)) : '—'}</b>${gd.e ? ' · ' + esc(durTxt(gd.s, gd.e)) : ''}${gd.lock ? '<span class="lock">🔒</span>' : ''}`;
-        const u = lv === 'group' ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: ws > 0 }) : null;
-        h += `<tr class="grp"><td></td><td>${togBtn(gk)}<b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length}/${Gp.subs.length} Done</span></td>${W ? `<td colspan="2" class="muted">${ws} W · ${hs} H · ${ns} N · ${Gp.subs.length - ws - hs - ns} Not Filled</td>${u && ws ? `<td class="con">${conCell(g, 0, u.key, r)}</td><td>${mpCell(g, u, r)}</td>` : `<td colspan="2" class="muted">${lv === 'sub' ? 'Per Sub ↓' : '—'}</td>`}<td></td>` : `<td class="n">${Math.round(grpBase(l, Gp))}%</td><td class="c">${pill('p-vio', Math.round(gp) + '%')}</td><td class="muted">${dates}</td><td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, gp)}%"></i></span><b>${Math.round(gp)}%</b></div></td><td></td>`}</tr>`;
-        if (W && u && ws) h += mpStrip(g, u, Gp.name, 7, r);
+        const wsOn = Gp.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length, nDone = Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length, gDone = nDone === Gp.subs.length;   // v158.3
+        const u = lv === 'group' ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: wsOn > 0 }) : null;
+        const doneTag = gDone ? ' ' + pill('p-ok', '✓ Done' + (gd.e ? ' ' + dsh(gd.e) : '')) : '';
+        h += `<tr class="grp${gDone ? ' gdone' : W && ws && !wsOn ? ' bd' : ''}"><td></td><td>${togBtn(gk)}<b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${doneTag}</td>${W ? `<td colspan="2" class="muted">${ws} W · ${hs} H · ${ns} N · ${Gp.subs.length - ws - hs - ns} Not Filled</td>${u && wsOn ? `<td class="con">${conCell(g, 0, u.key, r)}</td><td>${mpCell(g, u, r)}</td>` : `<td colspan="2" class="muted">${ws && !wsOn ? pill('p-ok', 'Done Earlier') + ' No Labour On ' + esc(dsh(S.to)) : lv === 'sub' ? 'Per Sub ↓' : '—'}</td>`}<td></td>` : `<td class="n">${Math.round(grpBase(l, Gp))}%</td><td class="c">${gDone ? pill('p-ok', '100%') : pill('p-vio', Math.round(gp) + '%')}</td><td class="muted">${dates}</td><td><div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, gp)}%"></i></span><b>${Math.round(gp)}%</b></div></td><td></td>`}</tr>`;
+        if (W && u && wsOn) h += mpStrip(g, u, Gp.name, 7, r);
         if (folded(gk)) return;
       }
       Gp.subs.forEach(s => { h += subRow(g, l, s, r, mode, Gp); });
@@ -9873,13 +9939,14 @@ const DPR = (function () {
   }
   function subRow(g, l, s, r, mode, Gp) {
     const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = r || done, W = mode === 'work', rk = 'r|' + wid + '|' + sid, lv = labLevel(g);
-    const att = !done && (W ? ((o === 'h' && !y.rc) || (o === 'w' && lv === 'sub' && !unitHeads(g, { key: 'S:' + sid }))) : ((o === 'h' && !y.rc) || (o === 'w' && !y.wip && pc <= base + 0.0005)));
-    let h = `<tr class="sub${att ? ' att' : ''}"><td></td><td class="name"><span class="sa">${esc(s.name)}</span><span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%${!W && lv === 'sub' ? ' · Labour ' + fmt(unitHeads(g, { key: 'S:' + sid })) : ''}</span></td>`;
+    const att = !done && (W ? ((o === 'h' && !y.rc) || (o === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }))) : ((o === 'h' && !y.rc) || (o === 'w' && !y.wip && pc <= base + 0.0005)));
+    const bd = W && !done && o === 'w' && !subWorkedOn(s, y, base);   // v158.3 · finished on an earlier date
+    let h = `<tr class="sub${att ? ' att' : ''}${bd ? ' bd' : ''}"><td></td><td class="name"><span class="sa">${esc(s.name)}</span><span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%${!W && lv === 'sub' ? ' · Labour ' + fmt(unitHeads(g, { key: 'S:' + sid })) : ''}</span></td>`;
     if (W) {
       const fresh = !rr && subFresh(s, y, base);
       const dts2 = done ? `Start <b>${esc(dsh(y.s || s.started_on))}</b> · End <b>${esc(dsh(y.e || s.finished_on))}</b><span class="lock">🔒</span>` : `${fresh ? `Start <input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)"> ` : (y.s || s.started_on) ? `Start <b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? '<span class="lock">🔒</span>' : ''} ` : ''}${statusSub(s, y, base)}`;
       h += `<td class="c">${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}</td><td class="stt">${dts2}</td>${done ? '<td colspan="2" class="muted">—</td>' : mpCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`;
-      if (!done && o === 'w' && lv === 'sub' && g.lines.length === 1) h += mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, 7, rr);
+      if (!done && !bd && o === 'w' && lv === 'sub' && g.lines.length === 1) h += mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, 7, rr);
     } else {
       let dn;
       if (done) dn = `<span class="muted">100% · ${esc(dsh(y.e || s.finished_on))}</span>`;
@@ -9904,7 +9971,7 @@ const DPR = (function () {
     for (let n = dim; n >= 1; n--) {
       const d = m.slice(0, 8) + String(n).padStart(2, '0'); if (d > today) continue;
       const c = S.cal.days[d], k = c ? (c.published ? 'pub' : stOf(c.status)[0]) : 'none', s = stOf(k);
-      const act = !c ? `<button class="d2-btn sm ghost" onclick="DPR.repGo('${d}')">Create</button>` : k === 'draft' ? `<button class="d2-btn sm navy" onclick="DPR.repGo('${d}','send')">Preview &amp; Send</button>` : k === 'ret' ? `<button class="d2-btn sm navy" onclick="DPR.repGo('${d}')">Fix &amp; Resend</button>` : `<button class="d2-btn sm" onclick="DPR.repGo('${d}')">Open</button>`;
+      const act = !c ? `<button class="d2-btn sm ghost" onclick="DPR.repGo('${d}')">Create</button>` : k === 'draft' ? `<button class="d2-btn sm navy" onclick="DPR.repGo('${d}','send')">Preview &amp; Send</button> <button class="d2-btn sm" style="color:var(--drd)" title="Delete This Unsent Report" onclick="DPR.delDay('${d}')">Delete</button>` : k === 'ret' ? `<button class="d2-btn sm navy" onclick="DPR.repGo('${d}')">Fix &amp; Resend</button>` : `<button class="d2-btn sm" onclick="DPR.repGo('${d}')">Open</button>`;
       rows += `<div class="d2-day"><div><b>${esc(dmy(d))}</b></div><div><span class="pill ${STP[k]}">${esc(s[1])}</span></div><div>${c ? `${num(c.reported)} Of ${num(c.activities)} Reported · ${fmt(c.heads)} Heads${num(c.hindrance) ? ' · ' + num(c.hindrance) + ' Hindrance' : ''}${c.dpr_no ? ' · ' + esc(c.dpr_no) : ''}${c.return_reason ? `<div class="rt">↩ ${esc(c.return_reason)}</div>` : ''}` : '<span class="muted">No Report — Open It To Enter Historical Progress</span>'}</div><div>${c && c.submitted_at ? esc(dts(c.submitted_at)) + (c.is_late ? ' · <span style="color:var(--drd)">Late</span>' : '') : '—'}</div><div>${c && c.reviewed_at ? esc(dts(c.reviewed_at)) + (c.reviewed_by ? ' · ' + esc(c.reviewed_by) : '') : '—'}</div><div>${act}</div></div>`;
     }
     return `<div class="d2-card"><div class="d2-fix d2-h4" style="border-top:0">Day Reports · ${esc(mLabel(m))}<span class="sp"></span><button class="d2-btn sm" onclick="DPR.calMove(-1)">‹</button><button class="d2-btn sm" ${m >= monthOf(today) ? 'disabled' : ''} onclick="DPR.calMove(1)">›</button></div>
@@ -9916,6 +9983,7 @@ const DPR = (function () {
   function subTab(t) { S.sub2 = t; S.mpo = null; S.remo = null; S.ylab = false; redraw(); }
   function fsrch(v) { S.fq = v; redraw(); }
   function foldRow(k) { S.fold.has(k) ? S.fold.delete(k) : S.fold.add(k); redraw(); }
+  function foldKeys(json) { let ks = []; try { ks = JSON.parse(json) || []; } catch (e) { ks = []; } ks.forEach(k => folded(k)); const all = ks.every(k => S.fold.has(k)); ks.forEach(k => { if (all) S.fold.delete(k); else S.fold.add(k); }); redraw(); }   // v158.2
   function foldAll(on) { S.foldDef = on; if (on) S.seen.forEach(k => S.fold.add(k)); else S.fold = new Set(); S.mpo = null; S.remo = null; redraw(); }   // v158 · every parent folds; collapsed by default
   function startMark(g, l, x) { if (!l.started_on && !x.started) x.started = S.to; }
   function finAuto(g, l) {
@@ -9983,8 +10051,31 @@ const DPR = (function () {
   const canDrop = g => !S.locked && !!g.never_reported && !g.progress && !g.labour && !dOf(g).dirty;   // only an activity nobody has reported on can be removed
   async function dropGroup(id) {
     const g = G(id); if (!g) return;
-    if (!confirm('Remove "' + (g.package || g.label) + '" At ' + g.location + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.')) return;
+    const what = g.lines.length > 1 ? 'The Club "' + (g.label || '') + '" (' + g.lines.length + ' Activities)' : '"' + (g.package || g.label) + '" At ' + g.location;
+    if (!confirm('Remove ' + what + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.')) return;
     try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); toast('Removed', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
+  }
+  async function dropWork(wid) {   // v158.2 · one activity out of a never-reported club (M35 rpc_dpr_drop_work)
+    const e = S.W[wid]; if (!e) return; const { g, l } = e;
+    if (!confirm('Remove "' + l.activity + '" At ' + lineLoc(g, l) + ' From The Club "' + (g.label || '') + '"?\nNothing Was Reported On It, So Nothing Is Lost. The Other ' + (g.lines.length - 1) + ' Stay Together.')) return;
+    try { const r = await rpc('rpc_dpr_drop_work', { p_work_id: wid }); toast(r && r.card_deleted ? 'Removed · The Club Is Gone' : 'Removed From The Club', 'success'); await engLoad(tDate(), true); } catch (e2) { toast(err(e2, 'Could not remove it'), 'error'); }
+  }
+  // v158.2 · delete an unsent Draft report for a date (M35 rpc_dpr_delete_day); the date goes back to Not Created
+  async function delDay(d) {
+    const c = (S.cal && S.cal.days[d]) || null; if (!c || !c.submission_id) { toast('No Report On ' + dsh(d), 'warn'); return; }
+    if (c.status !== 'Draft' || c.published) { toast('Only A Draft (Never Sent) Report Can Be Deleted', 'warn'); return; }
+    const cur = S.R ? [S.R.T.to, S.R.Y.to].indexOf(d) >= 0 : S.to === d;
+    const n = cur ? dirtyAll() : 0;
+    if (!confirm('Delete The ' + dsh(d) + ' Report?\n' + num(c.reported) + ' Of ' + num(c.activities) + ' Reported · ' + fmt(c.heads) + ' Heads' + (n ? ' · ' + n + ' Unsaved Change' + (n === 1 ? '' : 's') : '') + '\nEverything Entered For That Date Is Removed. The Date Shows As Not Created Again.')) return;
+    try {
+      const r = await rpc('rpc_dpr_delete_day', { p_submission_id: c.submission_id });
+      toast('Deleted ' + dsh(d) + ' Report' + (r && num(r.hindrances_removed) ? ' · ' + num(r.hindrances_removed) + ' Hindrance Withdrawn' : ''), 'success');
+      await calLoad(monthOf(d), true);
+      if (cur) {   // the screen was on that date: show it as Not Created (opening it again would create a fresh Draft)
+        S.R = null; S.same = true; S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; S.prev = false; S.catMode = false; S.tab = 'log';
+        engRender();
+      } else paint();
+    } catch (e) { toast(err(e, 'Could not delete the report'), 'error'); }
   }
 
   /* ---------- Report Together (M33): any activities × any locations → one card; labour once, progress per row ---------- */
@@ -10037,7 +10128,7 @@ const DPR = (function () {
     const labour_rows = [];
     const pushRows = (arr, extra, nm2) => arr.forEach(c => { const hs = {}; Object.entries(c.heads).forEach(([t, v]) => { if (num(v) > 0) hs[t] = num(v); }); if (!Object.keys(hs).length) return; if (!c.con) { problems.push('Pick The Contractor For The Heads On ' + nm2); return; }
       labour_rows.push(Object.assign({ work_id: g.lines.length === 1 ? g.lines[0].work_id : null, work_sub_id: null, contractor: c.con, heads: hs }, extra)); });
-    pushRows(d.cons, {}, g.label || g.location);
+    if (cardHasW(g)) pushRows(d.cons, {}, g.label || g.location);   // v158.3 · a card finished on an earlier date sends no labour
     const uk = new Set(labUnits(g).map(u => u.key));   // rows of a sub / group no longer marked worked are not sent
     Object.entries(d.rows || {}).filter(([k]) => uk.has(k)).forEach(([k, arr]) => pushRows(arr, k[0] === 'S' ? { work_sub_id: k.slice(2) } : { plan_group_id: k.slice(2) }, (g.label || g.location) + ' · ' + k.slice(2)));   // v157.1 · per sub / group (M34 stores plan_group_id)
     if (problems.length) { toast(problems[0], 'warn'); return null; }
@@ -10426,7 +10517,7 @@ const DPR = (function () {
     el.innerHTML = `<div class="box"><div class="hd"><div><b>${esc(title)}</b><span>${esc(sub || '')}</span></div><button class="x" onclick="DPR.sheetClose()">×</button></div><div class="bd">${body}</div><div class="ft">${foot || ''}</div></div>`;
     el.classList.add('on');
   }
-  function sheetClose() { const el = $('dprSheet'); if (el) el.classList.remove('on'); S.st = null; S.conTarget = null; if (S.npLocFor != null) { S.npLocFor = null; if (S.npDirty) engRenderBody(); } }
+  function sheetClose() { const el = $('dprSheet'); if (el) el.classList.remove('on'); S.st = null; S.conTarget = null; if (_leave) { const r = _leave; _leave = null; r(false); } /* v158.4 · × on the Unsaved sheet = Stay */ if (S.npLocFor != null) { S.npLocFor = null; if (S.npDirty) engRenderBody(); } }
 
   /* ==================================================================
      MANAGER · Daily Report module (mock v3): Review & Publish · Reporting Plan · Hindrances · Site Areas · Labour Setup · Hidden From Site
@@ -10722,7 +10813,7 @@ const DPR = (function () {
   }
 
   return { pLL, mpTog, remTog, sameYd, sameYdAll, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, repGo, clubMode, tick, makeClub, unclub,
-    setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, saveAll,
+    setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
@@ -10732,6 +10823,16 @@ const DPR = (function () {
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();
 
+// v158.4 · leaving the Daily Report with unsaved entries: intercept the tab click before any of the per-tab listeners run,
+//          ask Save / Discard / Stay, and re-fire the click once the engineer has chosen
+let _dprLeaveOk = false;
+document.querySelectorAll('.tabs').forEach(bar => bar.addEventListener('click', ev => {
+  const t = ev.target && ev.target.closest ? ev.target.closest('.tab') : null; if (!t || _dprLeaveOk) return;
+  const dprOn = document.getElementById('mod-dpr') && document.getElementById('mod-dpr').classList.contains('active');
+  if (!dprOn || t.dataset.tab === 'dpr' || typeof DPR === 'undefined' || !DPR.unsaved()) return;
+  ev.stopPropagation(); ev.preventDefault();
+  DPR.askLeave('You Are Leaving The Daily Report.').then(ok => { if (ok) { _dprLeaveOk = true; try { t.click(); } finally { _dprLeaveOk = false; } } });
+}, true));
 document.querySelectorAll('.tabs .tab').forEach(t => {
   t.addEventListener('click', () => {
     document.querySelectorAll('.tabs .tab').forEach(x => x.classList.remove('active'));
@@ -11401,6 +11502,16 @@ const E=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
 const DT=new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'});
 const NUM=new Intl.NumberFormat('en-IN',{maximumFractionDigits:3});
 function isRestore(r){return /^RESTORE\b/i.test(String(r.reason||''));}
+function daEffects(fx){   // M37: one line of what the delete changed
+  if(!fx||typeof fx!=='object')return '';
+  const b=[];
+  if(fx.cert&&fx.cert_status_after)b.push(fx.cert+' → '+fx.cert_status_after);
+  if(fx.order&&fx.order_status_after&&fx.order_status_after!==fx.order_status_before)b.push(fx.order+' → '+fx.order_status_after);
+  if(Number(fx.retention_reversed||0))b.push('retention ₹'+NUM.format(Number(fx.retention_reversed))+' reversed');
+  if(Array.isArray(fx.bills))fx.bills.forEach(x=>b.push(x.bill+' → '+x.status_after+(Number(x.outstanding_now||0)?' · o/s ₹'+NUM.format(Number(x.outstanding_now)):'')));
+  if(fx.voucher_status_before)b.push('was '+fx.voucher_status_before);
+  return b.length?'<div style="font-size:11px;color:#0f766e;margin-top:3px;">'+E(b.join(' · '))+'</div>':'';
+}
 
 function daShow(){
   window.RPT.toLanding();                       // reset the 3-pane machine first
@@ -11419,7 +11530,7 @@ async function daLoad(){
   pbShow('Loading deletion audit…');
   try{
     const{data,error}=await sb.from('pu_doc_deletion_audit')
-      .select('id,doc_type,doc_number,reason,deleted_by,deleted_at')
+      .select('id,doc_type,doc_number,reason,deleted_by,deleted_at,effects')
       .order('deleted_at',{ascending:false})
       .limit(200);
     if(error)throw error;
@@ -11455,15 +11566,16 @@ function daRender(){
       ?'<span style="font-size:10px;font-weight:700;background:#d1fae5;color:#065f46;padding:2px 8px;border-radius:99px;white-space:nowrap;">↩ RESTORED</span>'
       :'<span style="font-size:10px;font-weight:700;background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:99px;white-space:nowrap;">🗑 DELETED</span>'
        +(laterRestored?'<div style="font-size:9.5px;color:#0f766e;margin-top:2px;white-space:nowrap;">later restored</div>':'');
-    const typePill=r.doc_type==='GRN'
-      ?'<span style="font-size:10px;font-weight:700;background:#dbeafe;color:#1e40af;padding:2px 7px;border-radius:5px;">GRN</span>'
-      :'<span style="font-size:10px;font-weight:700;background:#f3e8ff;color:#6b21a8;padding:2px 7px;border-radius:5px;">PO BILL</span>';
+    const TP={GRN:['GRN','#dbeafe','#1e40af'],POB:['PO BILL','#f3e8ff','#6b21a8'],HOB:['HIRE BILL','#fef3c7','#92400e'],WOB:['WORK BILL','#fef3c7','#92400e'],
+              HOC:['HIRE CERT','#e0f2fe','#075985'],WOC:['WORK CERT','#e0f2fe','#075985'],PAY:['PAYMENT','#fee2e2','#991b1b'],CN:['CREDIT NOTE','#ede9fe','#4c2e9a']};
+    const tp=TP[r.doc_type]||[r.doc_type,'#f1f5f9','#475569'];
+    const typePill='<span style="font-size:10px;font-weight:700;background:'+tp[1]+';color:'+tp[2]+';padding:2px 7px;border-radius:5px;white-space:nowrap;">'+E(tp[0])+'</span>';
     return '<tr style="border-bottom:1px solid #f1f5f9;'+(rest?'background:#f0fdf4;':'')+'">'
       +'<td style="padding:7px 12px;white-space:nowrap;">'+DT.format(new Date(r.deleted_at))+'</td>'
       +'<td style="padding:7px 12px;">'+typePill+'</td>'
       +'<td style="padding:7px 12px;font-weight:600;white-space:nowrap;">'+E(r.doc_number)+'</td>'
       +'<td style="padding:7px 12px;">'+action+'</td>'
-      +'<td style="padding:7px 12px;max-width:340px;white-space:normal;word-break:break-word;color:var(--r-muted);">'+E(r.reason)+'</td>'
+      +'<td style="padding:7px 12px;max-width:340px;white-space:normal;word-break:break-word;color:var(--r-muted);">'+E(r.reason)+daEffects(r.effects)+'</td>'
       +'<td style="padding:7px 12px;white-space:nowrap;">'+E(r.deleted_by||'—')+'</td>'
       +'<td style="padding:7px 12px;white-space:nowrap;"><button class="rpt-back" style="padding:4px 10px;font-size:11.5px;" onclick="RPT.delAuditView(\''+E(r.id)+'\')">👁 Details</button></td>'
       +'</tr>';
@@ -11479,14 +11591,16 @@ async function daView(id){
   }catch(e){pbDone();toast('Snapshot load: '+e.message,'error',6000);return;}
   pbDone();
   const snap=row.snapshot||{};
-  const hdr=snap.header||{};
-  const items=Array.isArray(snap.items)?snap.items:[];
+  const hdr=snap.header||snap.payment||snap.cert||{};
+  const items=Array.isArray(snap.items)?snap.items:Array.isArray(snap.allocations)?snap.allocations:[];
   const layers=Array.isArray(snap.fifo_layers)?snap.fifo_layers:[];
   const mirLinks=Array.isArray(snap.mir_links_before)?snap.mir_links_before:[];
   const rest=isRestore(row);
   // header key fields — show whichever exist
   const HFIELDS=[
-    ['grn_number','GRN No'],['bill_number','Bill No'],['po_number','PO No'],
+    ['grn_number','GRN No'],['bill_number','Bill No'],['po_number','PO No'],['hoc_number','HOC No'],['woc_number','WOC No'],['ho_number','HO No'],['wo_number','WO No'],
+    ['payment_id','Voucher'],['payment_type','Type'],['cn_number','CN No'],['cn_date','CN Date'],['payment_date','Paid On'],['mode','Mode'],['utr','UTR'],['amount_paid','Amount ₹'],['approval_status','Status at deletion'],
+    ['net_payable','Net Payable ₹'],['invoice_value','Invoice Value ₹'],['gross_value','Gross Value ₹'],['retention_amount','Retention ₹'],
     ['vendor_name','Vendor'],['grn_date','GRN Date'],['bill_date','Bill Date'],
     ['status','Status at deletion'],['grand_total','Grand Total ₹'],['total_amount','Total ₹'],
     ['invoice_number','Invoice No'],['is_cash_purchase','Cash Purchase'],['created_by_name','Created By']
@@ -11500,7 +11614,8 @@ async function daView(id){
   }).join('');
   // items table — pick columns actually present
   const ICOLS=[
-    ['material_code','Code'],['material_name','Material'],['uom','UOM'],
+    ['material_code','Code'],['material_name','Material'],['description','Description'],['uom','UOM'],['bill_type','Bill Type'],['bill_number','Bill'],['kind','Kind'],
+    ['this_period_qty','Qty'],['cumulative_qty','Cum Qty'],['cert_value','Value ₹'],
     ['po_qty','PO Qty'],['prev_received_qty','Prev Recd'],
     ['this_grn_qty','Qty'],['qty','Qty'],['qty_received','Qty'],
     ['balance_qty','Balance'],
@@ -11526,7 +11641,8 @@ async function daView(id){
     +'<div style="font-size:11.5px;color:var(--r-muted);margin-bottom:10px;">'+E(row.doc_type)+' · '+(rest?'restored':'deleted')+' by <b>'+E(row.deleted_by||'—')+'</b> on '+DT.format(new Date(row.deleted_at))+'</div>'
     +'<div style="background:'+(rest?'#f0fdf4;border:1px solid #bbf7d0':'#fff7ed;border:1px solid #fed7aa')+';border-radius:7px;padding:8px 12px;font-size:12px;margin-bottom:12px;"><b>Reason:</b> '+E(row.reason)+'</div>'
     +'<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">'+(hcells||'<span style="font-size:12px;color:var(--r-muted);">No header snapshot.</span>')+'</div>'
-    +'<div style="font-size:10.5px;text-transform:uppercase;color:var(--r-muted);font-weight:700;margin-top:10px;">Line items ('+items.length+')</div>'
+    +(row.effects?'<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:7px;padding:8px 12px;font-size:12px;margin-bottom:12px;"><b>Effects:</b> '+(daEffects(row.effects).replace(/<[^>]+>/g,'')||E(JSON.stringify(row.effects)))+'</div>':'')
+    +'<div style="font-size:10.5px;text-transform:uppercase;color:var(--r-muted);font-weight:700;margin-top:10px;">'+(snap.allocations?'Allocations':'Line items')+' ('+items.length+')</div>'
     +itbl
     +'<div style="display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--r-muted);">'
     +'<span>Stock layers in snapshot: <b>'+layers.length+'</b></span>'
@@ -11715,25 +11831,25 @@ function renderTable(){
     if(P.show==='dues')bits.push('vendors with dues only');
     if(P.show==='over')bits.push('overdue only');
     const why=bits.length?'Filters active: '+bits.join(' · ')+'.':'';
-    tb.innerHTML='<tr><td colspan="9" class="pyd-empty">No vendors match.<br><span style="font-size:11.5px">'+why+
+    tb.innerHTML='<tr><td colspan="10" class="pyd-empty">No vendors match.<br><span style="font-size:11.5px">'+why+
       (P.data&&P.data.vendors.length?' There are '+P.data.vendors.length+' vendors in this project.':'')+
       '</span><br><button class="rbtn rbtn-ghost" style="margin-top:9px" onclick="RPT.payablesClear()">Clear filters</button></td></tr>';
-    setTot('pyd_tot_sum','<th class="l" colspan="9">No vendors match the current filters.</th>');return;}
-  const T={ord:0,inv:0,gst:0,tds:0,net:0,paid:0,due:0,over:0,advP:0,advR:0,ret:0,hold:0,nos:0};
+    setTot('pyd_tot_sum','<th class="l" colspan="10">No vendors match the current filters.</th>');return;}
+  const T={ord:0,inv:0,gst:0,tds:0,net:0,paid:0,cn:0,due:0,over:0,advP:0,advR:0,ret:0,hold:0,nos:0};
   tb.innerHTML=rows.map(v=>{
     const os=N(v.adv_paid)-N(v.adv_recovered),held=N(v.retention_held)+N(v.hold_held);
-    T.ord+=N(v.order_value);T.inv+=N(v.invoice_value);T.gst+=N(v.gst);T.tds+=N(v.tds);T.net+=N(v.net_payable);T.paid+=N(v.paid);T.due+=N(v.due);T.over+=N(v.overdue);T.advP+=N(v.adv_paid);T.advR+=N(v.adv_recovered);T.ret+=N(v.retention_held);T.hold+=N(v.hold_held);T.nos+=N(v.order_count);
+    T.ord+=N(v.order_value);T.inv+=N(v.invoice_value);T.gst+=N(v.gst);T.tds+=N(v.tds);T.net+=N(v.net_payable);T.paid+=N(v.paid);T.cn+=N(v.credit_notes);T.due+=N(v.due);T.over+=N(v.overdue);T.advP+=N(v.adv_paid);T.advR+=N(v.adv_recovered);T.ret+=N(v.retention_held);T.hold+=N(v.hold_held);T.nos+=N(v.order_count);
     return '<tr class="vrow" onclick="RPT.payablesVendor(\''+E(vk(v.vendor)).replace(/'/g,'&#39;')+'\')">'+
       '<td class="l"><div class="pyd-vname">'+E(v.vendor)+'</div><div class="pyd-vsub">'+E(v.trade||v.code||'')+(N(v.in_approval)?' · '+INR(v.in_approval)+' in approval':'')+'</div></td>'+
       '<td class="l">'+(v.types||[]).map(tag).join('')+stk(N(v.order_count)+' orders')+'</td>'+
       cell(v.order_value)+
       '<td>'+(N(v.invoice_value)?INR(v.invoice_value):'<span class="zero">—</span>')+stk('GST '+INR(v.gst))+stk('TDS '+(N(v.tds)?INR(v.tds):'—'))+'</td>'+
-      cell(v.net_payable)+cell(v.paid,'ok')+
+      cell(v.net_payable)+cell(v.paid,'ok')+cell(v.credit_notes,'ok')+
       '<td class="'+(N(v.due)?'due':'zero')+'">'+(N(v.due)?INR(v.due):'—')+stk(N(v.overdue)?INR(v.overdue)+' overdue':'','bad')+'</td>'+
       '<td class="'+(os>0?'due':'zero')+'">'+(os>0?INR(os):'—')+stk(N(v.adv_paid)?'paid '+INR(v.adv_paid):'')+stk(N(v.adv_recovered)?'rec '+INR(v.adv_recovered):'')+'</td>'+
       '<td class="'+(held?'':'zero')+'">'+(held?INR(held):'—')+stk(N(v.retention_held)?'ret '+INR(v.retention_held):'')+stk(N(v.hold_held)?'hold '+INR(v.hold_held):'')+'</td></tr>';
   }).join('');
-  setTot('pyd_tot_sum',th('Total · '+rows.length+' vendors','l')+th(T.nos+' orders','l')+th(INR(T.ord))+th(INR(T.inv)+stk('GST '+INR(T.gst))+stk('TDS '+INR(T.tds)))+th(INR(T.net))+th(INR(T.paid))+th(INR(T.due)+stk(INR(T.over)+' overdue'))+th(INR(T.advP-T.advR)+stk('paid '+INR(T.advP))+stk('rec '+INR(T.advR)))+th(INR(T.ret+T.hold)+stk('ret '+INR(T.ret))+stk('hold '+INR(T.hold))));
+  setTot('pyd_tot_sum',th('Total · '+rows.length+' vendors','l')+th(T.nos+' orders','l')+th(INR(T.ord))+th(INR(T.inv)+stk('GST '+INR(T.gst))+stk('TDS '+INR(T.tds)))+th(INR(T.net))+th(INR(T.paid))+th(INR(T.cn))+th(INR(T.due)+stk(INR(T.over)+' overdue'))+th(INR(T.advP-T.advR)+stk('paid '+INR(T.advP))+stk('rec '+INR(T.advR)))+th(INR(T.ret+T.hold)+stk('ret '+INR(T.ret))+stk('hold '+INR(T.hold))));
 }
 
 /* ── generic drill-down popup (horizon buckets + KPI cards) ── */
@@ -11874,7 +11990,7 @@ function openVendor(key){
   $('pyd_vsub').textContent=[v.trade,v.code,v.gstin?'GSTIN '+v.gstin:null,v.pan?'PAN '+v.pan:null].filter(Boolean).join(' · ')+' · '+projLine();
   $('pyd_poshd').textContent='Position as on '+D(P.asof);
   const os=N(v.adv_paid)-N(v.adv_recovered);
-  $('pyd_pos').innerHTML=[['Order value',INR(v.order_value),''],['Billed',INR(v.invoice_value),''],['Net payable',INR(v.net_payable),''],['Paid',INR(v.paid),'teal'],
+  $('pyd_pos').innerHTML=[['Order value',INR(v.order_value),''],['Billed',INR(v.invoice_value),''],['Net payable',INR(v.net_payable),''],['Paid',INR(v.paid),'teal'],['Credit notes',INR(v.credit_notes),'teal'],
     ['Due now',INR(v.due),N(v.due)?'warn':''],['Overdue',INR(v.overdue),N(v.overdue)?'bad':''],['O/S advance',INR(os),os>0?'warn':''],['Held (ret + hold)',INR(N(v.retention_held)+N(v.hold_held)),''],
     ['In approval',INR(v.in_approval),''],['TDS deducted',INR(v.tds),''],['GST billed',INR(v.gst),''],['Oldest overdue',N(v.oldest_overdue_days)?N(v.oldest_overdue_days)+' d':'—','']]
     .map(x=>'<div><div class="k">'+x[0]+'</div><div class="v '+x[2]+'">'+x[1]+'</div></div>').join('');
@@ -11900,10 +12016,10 @@ function renderBills(){
       '<td class="l">'+E(b.vendor_inv_no||'—')+stk(D(b.vendor_inv_date))+'</td>'+
       '<td>'+INR(b.invoice_value)+stk(INR(b.basic)+' + '+INR(b.gst))+'</td>'+
       '<td>'+(ded?INR(ded):'<span class="zero">—</span>')+stk('adv '+(N(b.adv_recovery)?INR(b.adv_recovery):'—')+' · TDS '+(N(b.tds)?INR(b.tds):'—'))+stk('ret '+(N(b.retention)?INR(b.retention):'—')+' · hold '+(N(b.hold)?INR(b.hold):'—'))+'</td>'+
-      cell(b.net_payable)+cell(b.paid,'ok')+cell(d,dueCls)+
-      '<td class="l">'+D(b.due_date)+' '+stPill(b.status)+'<div class="pyd-age">'+ageTxt+'</div></td></tr>';}).join(''):empty(8);
+      cell(b.net_payable)+cell(b.paid,'ok')+cell(b.cn,'ok')+cell(d,dueCls)+
+      '<td class="l">'+D(b.due_date)+' '+stPill(b.status)+'<div class="pyd-age">'+ageTxt+'</div></td></tr>';}).join(''):empty(9);
   const a=bs.filter(b=>b.status!=='Pending Approval');const S=k=>a.reduce((s,b)=>s+N(b[k]),0);
-  setTot('pyd_tot_bills',bs.length?th('Approved bills total','l')+th(a.length+' of '+bs.length+' bills','l')+th(INR(S('invoice_value')))+th(INR(S('adv_recovery')+S('tds')+S('retention')+S('hold')))+th(INR(S('net_payable')))+th(INR(S('paid')))+th(INR(S('due')))+th('','l'):'<th class="l" colspan="8">No bills.</th>');
+  setTot('pyd_tot_bills',bs.length?th('Approved bills total','l')+th(a.length+' of '+bs.length+' bills','l')+th(INR(S('invoice_value')))+th(INR(S('adv_recovery')+S('tds')+S('retention')+S('hold')))+th(INR(S('net_payable')))+th(INR(S('paid')))+th(INR(S('cn')))+th(INR(S('due')))+th('','l'):'<th class="l" colspan="9">No bills.</th>');
 }
 function applied(p){
   const pi=Array.isArray(p.per_invoice)?p.per_invoice:[];
@@ -12137,7 +12253,7 @@ const DF=new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'2-di
 const D=s=>{if(!s)return '—';const d=new Date(s);return isNaN(d)?String(s):DF.format(d);};
 const todayISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
 const vk=s=>String(s||'').trim().toLowerCase();
-const MODES=['NEFT','RTGS','IMPS','Cheque','Cash','UPI'];
+const MODES=['NEFT','RTGS','IMPS','Cheque','Cash','UPI','Credit Note'];   // M37: Credit Note = vendor CN settling bills, no money moves
 const uuid=()=>(crypto&&crypto.randomUUID)?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);});
 function PB(l){try{pbShow(l)}catch(e){}}
 function PBD(){try{pbDone()}catch(e){}}
@@ -12305,7 +12421,7 @@ function renderXfers(){
   const nvAll=Object.keys(lines().reduce((m,l)=>{m[l.vendor]=1;return m},{})).length;
   $('pay_xfers').innerHTML='<div class="bwrap"><table class="pay-rt pay-xt">'+
     '<colgroup><col style="width:24%"><col style="width:21%"><col style="width:12%"><col style="width:9%"><col style="width:14%"><col style="width:10%"><col></colgroup>'+
-    '<thead><tr><th class="l">'+(one?'Transfer':'Vendor')+'</th><th class="l">Paying</th><th>Amount</th><th class="l">Mode</th><th class="l">UTR / cheque no</th><th class="l">Reference</th><th class="l">Proof</th></tr></thead><tbody>'+
+    '<thead><tr><th class="l">'+(one?'Transfer':'Vendor')+'</th><th class="l">Paying</th><th>Amount</th><th class="l">Mode</th><th class="l">UTR / cheque / CN no</th><th class="l">Reference / CN date</th><th class="l">Proof</th></tr></thead><tbody>'+
     G.map((g,i)=>{
       const id='x'+i, x=P.xf[id], amt=g.lines.reduce((s,l)=>s+N(l.amount),0);
       const nv=Object.keys(g.lines.reduce((m,l)=>{m[l.vendor]=1;return m},{})).length;
@@ -12317,9 +12433,11 @@ function renderXfers(){
         '<td class="l"><span style="cursor:pointer;user-select:none" onclick="PAY.xtog(\''+id+'\')"><span style="color:var(--muted);font-size:10px">'+(open?'▾':'▸')+'</span> '+
         '<span class="xsum" style="display:inline">'+g.lines.length+' line'+(g.lines.length>1?'s':'')+' · '+E(sum.slice(0,46))+(sum.length>46?'…':'')+'</span></span></td>'+
         '<td style="font-weight:700;color:var(--accent)">'+INR2(amt)+'</td>'+
-        '<td class="l"><select onchange="PAY.xset(\''+id+'\',\'mode\',this.value)">'+MODES.map(m=>'<option '+(x.mode===m?'selected':'')+'>'+m+'</option>').join('')+'</select></td>'+
-        '<td class="l"><input id="putr_'+id+'" value="'+E(x.utr)+'" placeholder="required" oninput="PAY.xset(\''+id+'\',\'utr\',this.value)"></td>'+
-        '<td class="l"><input id="pref_'+id+'" value="'+E(x.ref)+'" placeholder="optional" oninput="PAY.xset(\''+id+'\',\'ref\',this.value)"></td>'+
+        '<td class="l"><select onchange="PAY.xset(\''+id+'\',\'mode\',this.value);PAY.xmode(\''+id+'\')">'+MODES.map(m=>'<option '+(x.mode===m?'selected':'')+'>'+m+'</option>').join('')+'</select>'+(x.mode==='Credit Note'?'<span class="xsum pay-cn">no money moves</span>':'')+'</td>'+
+        '<td class="l"><input id="putr_'+id+'" value="'+E(x.utr)+'" placeholder="'+(x.mode==='Credit Note'?'vendor CN number (required)':'required')+'" oninput="PAY.xset(\''+id+'\',\'utr\',this.value)"></td>'+
+        (x.mode==='Credit Note'
+          ?'<td class="l"><input type="date" id="pcnd_'+id+'" value="'+E(x.cndate||'')+'" title="Credit note date (required)" oninput="PAY.xset(\''+id+'\',\'cndate\',this.value)"></td>'
+          :'<td class="l"><input id="pref_'+id+'" value="'+E(x.ref)+'" placeholder="optional" oninput="PAY.xset(\''+id+'\',\'ref\',this.value)"></td>')+
         '<td class="l">'+(x.file
             ? '<span style="font-size:10.5px;display:inline-flex;align-items:center;gap:5px;max-width:100%">'+
               '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📎 '+E(x.file.name)+'</span>'+
@@ -12352,6 +12470,7 @@ function step(n){
   if(n===2)renderXfers();
 }
 function xset(id,f,v){P.xf[id][f]=v;totals()}
+function xmode(id){renderXfers()}   // M37: re-render so the CN date field appears / hides
 function xfile(id,f){
   if(f&&f.size>15728640){TOAST('Proof must be under 15 MB','error');return}
   P.xf[id]=P.xf[id]||{mode:'NEFT',utr:'',ref:''};    // row may not be rendered yet
@@ -12386,7 +12505,13 @@ function totals(){
   const errs=[];
   L.filter(l=>l.kind==='bill'&&l.amount>l.max+0.005).forEach(l=>errs.push(l.label+' exceeds outstanding'));
   if(L.some(l=>N(l.amount)<=0.005))errs.push('a line has zero amount');
-  groupsForSplit().forEach((g,i)=>{const x=P.xf['x'+i]||{};if(!String(x.utr||'').trim())errs.push('Transfer '+(i+1)+' needs a UTR / cheque no')});
+  groupsForSplit().forEach((g,i)=>{const x=P.xf['x'+i]||{};const cn=x.mode==='Credit Note';
+    if(!String(x.utr||'').trim())errs.push('Transfer '+(i+1)+' needs a '+(cn?'credit note number':'UTR / cheque no'));
+    if(cn){
+      if(!String(x.cndate||'').trim())errs.push('Credit note '+(i+1)+' needs the CN date');
+      if(g.lines.some(l=>l.kind!=='bill'))errs.push('Credit note '+(i+1)+' can only be set against bills');
+      if(Object.keys(g.lines.reduce((m,l)=>{m[l.vendor]=1;return m},{})).length>1)errs.push('Credit note '+(i+1)+' must be from a single vendor');
+    }});
   $('pay_fErr').textContent=errs.length?errs[0]+(errs.length>1?' (+'+(errs.length-1)+' more)':''):'';
   // Review & submit belongs to step 2 (where the UTR lives); step 1 offers "Next"
   P.errs=errs;
@@ -12609,7 +12734,7 @@ function review(){
     const nv=Object.keys(g.lines.reduce((m,l)=>{m[l.vendor]=1;return m},{})).length;
     return '<div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:10px">'+
       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12.5px;color:var(--navy-print);font-weight:700">'+
-      'Transfer '+(i+1)+' · '+E(x.mode||'NEFT')+' · UTR '+E(x.utr||'—')+
+      (x.mode==='Credit Note'?'Credit note '+(i+1)+' · CN '+E(x.utr||'—')+' dated '+E(x.cndate||'—'):'Transfer '+(i+1)+' · '+E(x.mode||'NEFT')+' · UTR '+E(x.utr||'—'))+
       '<span style="margin-left:auto;color:var(--accent);font-weight:800">'+INR2(amt)+'</span></div>'+
       '<div style="font-size:11.5px;color:var(--muted);margin-bottom:7px">Vendor stamp: <b style="color:var(--text)">'+(nv>1?'Multiple — '+nv+' vendors':E(g.lines[0].vendor))+'</b></div>'+
       '<table class="pay-rt"><colgroup><col style="width:46%"><col style="width:28%"><col></colgroup>'+
@@ -12635,7 +12760,10 @@ async function submit(){
       batch:G.map((g,i)=>{
         const x=P.xf['x'+i]||{};
         return {vendor:g.vendor||null,amount:Number(g.lines.reduce((s,l)=>s+N(l.amount),0).toFixed(2)),
-          mode:x.mode||'NEFT',utr:(x.utr||'').trim()||null,reference:(x.ref||'').trim()||null,
+          mode:x.mode==='Credit Note'?'NEFT':(x.mode||'NEFT'),utr:x.mode==='Credit Note'?null:((x.utr||'').trim()||null),reference:(x.ref||'').trim()||null,
+          settlement:x.mode==='Credit Note'?'credit_note':'transfer',
+          cn_number:x.mode==='Credit Note'?((x.utr||'').trim()||null):null,
+          cn_date:x.mode==='Credit Note'?((x.cndate||'').trim()||null):null,
           attachment:atts[i]||undefined,
           allocations:g.lines.map(l=>({kind:l.kind,purpose:l.purpose||null,
             bill_number:l.billNo||null,bill_type:l.billType||null,
@@ -12887,16 +13015,16 @@ function relDecide(no,t,action){
 /* ── history ────────────────────────────────────────────────────── */
 async function loadHistory(){
   const tb=$('payHist_body'); if(!tb)return;
-  tb.innerHTML='<tr><td colspan="9" class="pay-empty">Loading…</td></tr>';
+  tb.innerHTML='<tr><td colspan="10" class="pay-empty">Loading…</td></tr>';
   try{
     const r=await sb.from('ho_payments')
-      .select('payment_id,payment_date,vendor,amount_paid,mode,utr,reference,entered_by,approval_status,payment_batch_id,attachment')
+      .select('payment_id,payment_date,vendor,amount_paid,mode,utr,reference,entered_by,approval_status,payment_batch_id,attachment,payment_type,cn_number,cn_date,deleted_by_name,deleted_at,delete_reason')
       .order('payment_date',{ascending:false}).limit(500);
     if(r.error)throw r.error;
     P.hist=r.data||[];
     P.histAlloc=await fetchAlloc(P.hist.map(p=>p.payment_id));
     renderHistory();
-  }catch(e){tb.innerHTML='<tr><td colspan="9" class="pay-empty">'+E(e.message||e)+'</td></tr>'}
+  }catch(e){tb.innerHTML='<tr><td colspan="10" class="pay-empty">'+E(e.message||e)+'</td></tr>'}
 }
 function hsort(k){
   if(P.hsortK===k)P.hsortD=-P.hsortD; else {P.hsortK=k;P.hsortD=(k==='amount_paid'||k==='payment_date')?-1:1;}
@@ -12904,16 +13032,19 @@ function hsort(k){
 }
 function histClear(){
   ['payHist_q','payHist_from','payHist_to'].forEach(id=>{const e=$(id);if(e)e.value=''});
-  $('payHist_status').value=''; renderHistory();
+  $('payHist_status').value=''; const ty=$('payHist_type'); if(ty)ty.value=''; renderHistory();
 }
 function renderHistory(){
   const q=($('payHist_q').value||'').toLowerCase().trim(), st=$('payHist_status').value;
   const f=$('payHist_from').value, t=$('payHist_to').value;
+  const ty=($('payHist_type')||{}).value||'', showDel=!!($('payHist_showDel')&&$('payHist_showDel').checked);
   let rows=P.hist.filter(p=>{
     if(st&&p.approval_status!==st)return false;
+    if(!st&&!showDel&&p.approval_status==='Deleted')return false;
+    if(ty&&(p.payment_type||'Transfer')!==ty)return false;
     if(f&&String(p.payment_date)<f)return false;
     if(t&&String(p.payment_date)>t)return false;
-    if(q&&!((p.payment_id||'').toLowerCase().includes(q)||vk(p.vendor).includes(q)||(p.utr||'').toLowerCase().includes(q)||(p.reference||'').toLowerCase().includes(q)))return false;
+    if(q&&!((p.payment_id||'').toLowerCase().includes(q)||vk(p.vendor).includes(q)||(p.utr||'').toLowerCase().includes(q)||(p.reference||'').toLowerCase().includes(q)||(p.cn_number||'').toLowerCase().includes(q)))return false;
     return true;
   });
   const k=P.hsortK||'payment_date', d=P.hsortD||-1;
@@ -12925,31 +13056,37 @@ function renderHistory(){
   ['payment_id','payment_date','vendor','mode','entered_by','amount_paid','approval_status'].forEach(c=>{
     const e=$('hs_'+c); if(e)e.textContent=(c===k)?(d>0?' ▲':' ▼'):'';
   });
-  const nEl=$('payHist_n'); if(nEl)nEl.textContent=rows.length+' of '+P.hist.length+' transfers';
+  const nEl=$('payHist_n'); if(nEl)nEl.textContent=rows.length+' of '+P.hist.length+' entries';
+  const isAdm=(typeof hasRole==='function')&&hasRole('Admin');
   const cls={Approved:'padd',Rejected:'prej','Pending Approval':'ppend'};
   $('payHist_body').innerHTML=rows.length?rows.map(p=>{
     const al=(P.histAlloc||{})[p.payment_id]||[];
     const open=P.hopen[p.payment_id];
-    return '<tr><td class="l"><b>'+E(p.payment_id)+'</b>'+(p.attachment&&p.attachment.path?' <span style="cursor:pointer" title="Open proof of transfer" onclick="PAY.proof(\''+Q(p.attachment.bucket)+'\',\''+Q(p.attachment.path)+'\')">📎</span>':'')+'</td><td class="l">'+D(p.payment_date)+'</td>'+
+    const isCN=p.payment_type==='Credit Note', isDel=p.approval_status==='Deleted';
+    return '<tr'+(isDel?' class="pay-del"':'')+'><td class="l"><b>'+E(p.payment_id)+'</b>'+(p.attachment&&p.attachment.path?' <span style="cursor:pointer" title="Open proof of transfer" onclick="PAY.proof(\''+Q(p.attachment.bucket)+'\',\''+Q(p.attachment.path)+'\')">📎</span>':'')+'</td><td class="l">'+D(p.payment_date)+'</td>'+
     '<td class="l" style="white-space:normal;word-break:break-word;line-height:1.25">'+E(p.vendor||'—')+'</td>'+
     '<td class="l"><span style="cursor:pointer" onclick="PAY.htog(\''+Q(p.payment_id)+'\')"><span style="color:var(--muted);font-size:10px">'+(open?'▾':'▸')+'</span> '+allocSummary(al)+'</span></td>'+
-    '<td class="l">'+E(p.mode||'—')+'</td><td class="l">'+E(p.utr||p.reference||'—')+'</td>'+
-    '<td class="l">'+E(p.entered_by||'—')+'</td><td style="font-weight:700">'+INR2(p.amount_paid)+'</td>'+
-    '<td class="l"><span class="status '+String(p.approval_status||'').toLowerCase().replace(/\s+/g,'')+'">'+E(p.approval_status)+'</span></td></tr>'+
-    (open?allocRows(al,9):'');}).join('')
+    '<td class="l">'+(isCN?'<span class="pay-cn">Credit Note</span>':E(p.mode||'—'))+'</td>'+
+    '<td class="l">'+(isCN?E(p.cn_number||'—')+'<span class="xsum">'+D(p.cn_date)+'</span>':E(p.utr||p.reference||'—'))+'</td>'+
+    '<td class="l">'+E(p.entered_by||'—')+'</td><td style="font-weight:700'+(isDel?';text-decoration:line-through':'')+'">'+INR2(p.amount_paid)+'</td>'+
+    '<td class="l"><span class="status '+String(p.approval_status||'').toLowerCase().replace(/\s+/g,'')+'">'+E(p.approval_status)+'</span>'+
+      (isDel?'<div class="xsum" title="'+E(p.delete_reason||'')+'">'+D(p.deleted_at)+' · '+E(p.deleted_by_name||'')+'</div>':'')+'</td>'+
+    '<td class="l">'+(isDel?'<span class="xsum">audited</span>':(isAdm?'<button class="btn btn-danger btn-sm" title="Delete voucher (Admin)" onclick="promptAdminDelete(\'PAY\',\''+Q(p.payment_id)+'\')">🗑</button>':''))+'</td></tr>'+
+    (open?allocRows(al,10):'');}).join('')
     +(function(){
        const sum=st2=>rows.filter(p=>p.approval_status===st2).reduce((s,p)=>s+N(p.amount_paid),0);
        const nOf=st2=>rows.filter(p=>p.approval_status===st2).length;
-       const ap=sum('Approved'), pe=sum('Pending Approval'), rj=sum('Rejected');
+       const ap=sum('Approved'), pe=sum('Pending Approval'), rj=sum('Rejected'), dl=nOf('Deleted');
        return '<tr style="background:var(--navy-print)">'+
-         '<td class="l" colspan="7" style="color:#D4AF37;font-weight:700">'+rows.length+' transfers · '+
+         '<td class="l" colspan="7" style="color:#D4AF37;font-weight:700">'+rows.length+' entries · '+
          '<span style="color:#86efac">'+nOf('Approved')+' approved '+INR2(ap)+'</span>'+
          (pe?' · <span style="color:#fcd34d">'+nOf('Pending Approval')+' pending '+INR2(pe)+'</span>':'')+
-         (rj?' · <span style="color:#fca5a5">'+nOf('Rejected')+' rejected '+INR2(rj)+' (not paid)</span>':'')+'</td>'+
-         '<td style="color:#D4AF37;font-weight:800" title="Approved only — money actually released">'+INR2(ap)+'</td>'+
-         '<td class="l" style="color:#93a7c9;font-size:10px">approved only</td></tr>';
+         (rj?' · <span style="color:#fca5a5">'+nOf('Rejected')+' rejected '+INR2(rj)+' (not paid)</span>':'')+
+         (dl?' · <span style="color:#cbd5e1">'+dl+' deleted</span>':'')+'</td>'+
+         '<td style="color:#D4AF37;font-weight:800" title="Approved only — money actually released or credited">'+INR2(ap)+'</td>'+
+         '<td class="l" style="color:#93a7c9;font-size:10px">approved only</td><td></td></tr>';
      })()
-    :'<tr><td colspan="9" class="pay-empty">No transfers match.</td></tr>';
+    :'<tr><td colspan="10" class="pay-empty">No entries match.</td></tr>';
 }
 
 window.PAY={
@@ -12957,7 +13094,7 @@ window.PAY={
   setShow:function(v,el){P.show=v;seg(el);render()},
   setType:function(v,el){P.type=v;seg(el);render()},
   setSplit:function(v,el){P.split=v;seg(el);P.xf={};P.xopen={};renderXfers();totals()},
-  pick:pick, pickV:pickV, setAmt:setAmt, xtog:xtog, xset:xset, xfile:xfile, rmExtra:rmExtra, step:step,
+  pick:pick, pickV:pickV, setAmt:setAmt, xtog:xtog, xset:xset, xmode:xmode, xfile:xfile, rmExtra:rmExtra, step:step,
   proof:async function(bucket,path){
     try{
       const r=await sb.storage.from(bucket).createSignedUrl(path,120);
@@ -15812,6 +15949,9 @@ function renderHOCList() {
     if (perms.canCreateHOC && st === 'Rejected - Correction') {
       actionBtns += `<button class="btn btn-warn btn-sm" onclick="reviseHOC('${esc(c['HOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
+    if (hasRole('Admin')) {   // M37
+      actionBtns += `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="promptAdminDelete('HOC','${esc(c['HOC Number'])}')">🗑</button>`;
+    }
     const rejReason = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
     return `<tr>
       <td class="mono" data-sort="${esc(c['HOC Number'])}" style="font-weight:600;">${esc(c['HOC Number'])}</td>
@@ -16281,6 +16421,7 @@ async function viewHOC(hocNum) {
       : ''}
     ${(perms.canCreateHOC && h['Status'] === 'Rejected - Correction')
       ? `<button class="btn btn-warn btn-sm" onclick="closeModal();reviseHOC('${esc(hocNum)}')">✎ Revise &amp; Resubmit</button>` : ''}
+    ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('HOC','${esc(hocNum)}')">🗑 Delete certification</button>` : ''}
     <button class="btn btn-ghost" onclick="closeModal()">Close</button>`;
 
   openModal(`
@@ -16427,6 +16568,9 @@ function renderHOBList() {
     if (perms.canCreateHOB && st === 'Rejected - Correction') {
       actionBtns += `<button class="btn btn-warn btn-sm" onclick="reviseHOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
+    if (hasRole('Admin')) {   // M37: admin delete, server RPC owns blockers
+      actionBtns += `<button class="btn btn-danger btn-sm" title="Delete bill (Admin)" onclick="promptAdminDelete('HOB','${esc(b['Bill Number'])}')">🗑</button>`;
+    }
     const rejReason = b['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(b['Rejection Reason'])}</span>` : '';
     const totalPaid = num(b['Total Paid'] || 0);
     const outstanding = num(b['Outstanding'] || 0);
@@ -16439,6 +16583,7 @@ function renderHOBList() {
       <td class="num mono" data-sort="${num(b['Invoice Value'])}">${fmtINRSym(b['Invoice Value'])}</td>
       <td class="num mono" data-sort="${num(b['Net Payable'])}">${fmtINRSym(b['Net Payable'])}</td>
       <td class="num mono" data-sort="${totalPaid}" style="color:var(--success,#1a6b4a);">${fmtINRSym(totalPaid)}</td>
+      <td class="num mono" data-sort="${num(b['Credit Notes']||0)}" style="color:#4c2e9a;">${num(b['Credit Notes'])>0.005?fmtINRSym(b['Credit Notes']):'—'}</td>
       <td class="num mono" data-sort="${outstanding}" style="color:${outstanding > 0.005 ? 'var(--warn)' : 'var(--muted)'};">${fmtINRSym(outstanding)}</td>
       <td data-sort="${esc(st)}"><span class="status ${st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/ /g,'-')}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${rejReason}</td>
       <td class="center" style="white-space:nowrap;">${actionBtns}</td>
@@ -17085,6 +17230,7 @@ async function viewHOBById(billNum) {
          <button class="btn btn-warn btn-sm"    onclick="closeModal();promptReject('HOB','${esc(billNum)}','correction')">↩ Return for Correction</button>
          <button class="btn btn-danger btn-sm"  onclick="closeModal();promptReject('HOB','${esc(billNum)}','reject')">✕ Reject</button>`
       : ''}
+    ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('HOB','${esc(billNum)}')">🗑 Delete bill</button>` : ''}
     <button class="btn btn-ghost" onclick="closeModal()">Close</button>`;
 
   const closureBanner = (h['Status'] === 'Rejected' || h['Status'] === 'Rejected - Correction') ? `
@@ -19520,6 +19666,9 @@ function renderWOCList() {
     if (perms.canCreateWOC && st === 'Rejected - Correction') {
       ab += `<button class="btn btn-warn btn-sm" onclick="reviseWOC('${esc(c['WOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
+    if (hasRole('Admin')) {   // M37
+      ab += `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="promptAdminDelete('WOC','${esc(c['WOC Number'])}')">🗑</button>`;
+    }
     const rr = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
     return `<tr>
       <td class="mono" style="font-weight:600;">${esc(c['WOC Number'])}</td>
@@ -20275,6 +20424,7 @@ async function viewWOC(wocNum) {
     ${h['Remarks']?`<div style="margin-top:10px;padding:8px 12px;background:var(--panel-2);border-radius:4px;font-size:12px;"><strong>Remarks:</strong> ${esc(h['Remarks'])}</div>`:''}
     <div class="actions-row">
       <button class="btn btn-secondary" onclick="closeModal();printWOCById('${esc(wocNum)}')">🖨 Print</button>
+      ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('WOC','${esc(wocNum)}')">🗑 Delete certification</button>` : ''}
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`, 'large');
 }
@@ -20315,6 +20465,9 @@ function renderWOBList() {
     if (perms.canCreateWOB && st === 'Rejected - Correction') {
       ab += `<button class="btn btn-warn btn-sm" onclick="reviseWOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
+    if (hasRole('Admin')) {   // M37
+      ab += `<button class="btn btn-danger btn-sm" title="Delete bill (Admin)" onclick="promptAdminDelete('WOB','${esc(b['Bill Number'])}')">🗑</button>`;
+    }
     const rr = b['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(b['Rejection Reason'])}</span>` : '';
     return `<tr>
       <td class="mono" style="font-weight:600;">${esc(b['Bill Number'])}</td>
@@ -20325,6 +20478,7 @@ function renderWOBList() {
       <td class="num mono">${fmtINRSym(b['Invoice Value'])}</td>
       <td class="num mono">${fmtINRSym(b['Net Payable'])}</td>
       <td class="num mono" style="color:var(--accent);">${fmtINRSym(b['Total Paid']||0)}</td>
+      <td class="num mono" style="color:#4c2e9a;">${num(b['Credit Notes'])>0.005?fmtINRSym(b['Credit Notes']):'—'}</td>
       <td class="num mono" style="color:${num(b['Outstanding'])>0.005?'var(--warn)':'var(--muted)'};">${fmtINRSym(b['Outstanding']||0)}</td>
       <td><span class="status ${st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/ /g,'-')}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${rr}</td>
       <td class="center" style="white-space:nowrap;">${ab}</td>
@@ -20960,6 +21114,7 @@ async function viewWOBById(billNum) {
          <button class="btn btn-warn btn-sm"    onclick="closeModal();promptReject('WOB','${esc(billNum)}','correction')">↩ Return for Correction</button>
          <button class="btn btn-danger btn-sm"  onclick="closeModal();promptReject('WOB','${esc(billNum)}','reject')">✕ Reject</button>`
       : ''}
+    ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('WOB','${esc(billNum)}')">🗑 Delete bill</button>` : ''}
     <button class="btn btn-ghost" onclick="closeModal()">Close</button>`;
 
   const closureBanner = (h['Status'] === 'Rejected' || h['Status'] === 'Rejected - Correction') ? `
@@ -34343,15 +34498,39 @@ async function viewGRN(grnNum) {
 // Server RPC owns permission gate, blockers and full rollback; the
 // client only collects a mandatory reason + typed-number confirm.
 // ============================================================
+// M37: one modal for every admin-deletable document. The server RPC owns the
+// permission gate, every blocker and the full rollback + audit snapshot; the client
+// collects a mandatory reason and a typed-number confirm, then refreshes the screens.
+const ADM_DEL = {
+  GRN: { rpc:'rpc_grn_delete', key:'grn_number', label:'GRN',
+         warn:'Permanently deletes this GRN and rolls back: PO receipt status, MIR received quantities &amp; statuses, and the stock layers created by this receipt. Blocked automatically if any bill references it or its stock was already issued.',
+         after(){ loadGRNList(); loadMIRList(); if (typeof loadPOList === 'function') loadPOList(); } },
+  POB: { rpc:'rpc_pob_delete', key:'bill_number', label:'PO Bill',
+         warn:'Permanently deletes this bill and rolls its GRNs back to Verified (or Partially Billed when another live bill still covers them). Blocked automatically if any live payment voucher is allocated to it.',
+         after(){ loadPOBList(); loadGRNList(); } },
+  HOB: { rpc:'rpc_hob_delete', key:'bill_number', label:'Hire Bill',
+         warn:'Permanently deletes this bill, its lines and extra lines. Its certification goes back to <b>Unbilled</b> and reappears in "HOCs Ready to Bill". Blocked automatically if an Approved or Pending voucher (transfer or credit note) is allocated to it — delete that voucher from Payment History first.',
+         after(){ _cacheBust('hobList','unpaidBills','hocList','unbilledHOCs','hoList','openHOs'); if (typeof loadHOBList === 'function') loadHOBList(); if (typeof loadHOCList === 'function') loadHOCList(); } },
+  WOB: { rpc:'rpc_wob_delete', key:'bill_number', label:'Work Bill',
+         warn:'Permanently deletes this bill, its lines and extra lines. Retention and mobilisation-advance recovery held on it are reversed and its certification goes back to <b>Unbilled</b>. Blocked automatically if an Approved or Pending voucher is allocated to it — delete that voucher from Payment History first.',
+         after(){ _cacheBust('wobList','unpaidBills','wocList','unbilledWOCs','woList','openWOs'); if (typeof loadWOBList === 'function') loadWOBList(); if (typeof loadWOCList === 'function') loadWOCList(); } },
+  HOC: { rpc:'rpc_hoc_delete', key:'cert_number', label:'Hire Certification',
+         warn:'Permanently deletes this certification, its lines and location splits; the hire order\u2019s completion is recomputed. Blocked automatically if a bill is raised on it (delete the bill first) or a later certification exists on the same order (delete latest first).',
+         after(){ _cacheBust('hocList','unbilledHOCs','hoList','openHOs'); if (typeof loadHOCList === 'function') loadHOCList(); if (typeof loadHOList === 'function') loadHOList(); } },
+  WOC: { rpc:'rpc_woc_delete', key:'cert_number', label:'Work Certification',
+         warn:'Permanently deletes this certification, its lines and location splits; stage progress on the work order rolls back to the previous certification. Blocked automatically if a bill is raised on it (delete the bill first) or a later certification exists on the same order (delete latest first).',
+         after(){ _cacheBust('wocList','unbilledWOCs','woList','openWOs'); if (typeof loadWOCList === 'function') loadWOCList(); if (typeof loadWOList === 'function') loadWOList(); } },
+  PAY: { rpc:'rpc_payment_delete', key:'payment_id', label:'Payment Voucher',
+         warn:'Marks this voucher <b>Deleted</b> (it stays in Payment History for the record). Every bill it was allocated to is restated from the remaining approved vouchers — Paid/Partial become Unpaid or Partial and the outstanding is restored. If this is an Approved bank transfer and the money actually left the bank, record a reversal instead of deleting.',
+         after(){ _cacheBust('hobList','wobList','unpaidBills'); if (window.PAY) { try { PAY.loadHistory(); PAY.reload(); } catch(e){} }
+                  ['loadHOBList','loadWOBList','loadPOBList'].forEach(f => { if (typeof window[f] === 'function') try { window[f](); } catch(e){} }); } }
+};
 function promptAdminDelete(kind, num) {
   if (!hasRole('Admin')) { toast('Only Admin can delete documents', 'error'); return; }
-  const isGRN = kind === 'GRN';
-  const warn = isGRN
-    ? 'Permanently deletes this GRN and rolls back: PO receipt status, MIR received quantities &amp; statuses, and the stock layers created by this receipt. Blocked automatically if any bill references it, its stock was issued via MIS, or a held over-delivery was regularized.'
-    : 'Permanently deletes this bill and rolls its GRNs back to Verified (or Partially Billed when another live bill still covers them). Blocked automatically if any Payment Request (PRR) references it or payments are recorded.';
-  openModal(`<h3 style="color:var(--danger);">Delete ${kind} — ${esc(num)}</h3>
+  const m = ADM_DEL[kind]; if (!m) { toast('Unknown document kind ' + kind, 'error'); return; }
+  openModal(`<h3 style="color:var(--danger);">Delete ${esc(m.label)} — ${esc(num)}</h3>
     <div style="margin:10px 0;padding:10px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;font-size:12.5px;line-height:1.55;color:#1f2937;">
-      ${warn}<br><br><strong>A full snapshot is stored in the deletion audit before anything is removed.</strong>
+      ${m.warn}<br><br><strong>A full snapshot is stored in the deletion audit before anything is removed.</strong>
     </div>
     <div class="field"><label style="font-size:12px;font-weight:600;">Reason (mandatory — kept in the audit)</label>
       <textarea id="admDel_reason" rows="2" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:4px;font-size:13px;font-family:inherit;resize:vertical;"></textarea></div>
@@ -34371,31 +34550,37 @@ function admDelGate(num) {
 
 async function confirmAdminDelete(kind, num) {
   if (!hasRole('Admin')) { toast('Only Admin can delete documents', 'error'); return; }
+  const m = ADM_DEL[kind]; if (!m) return;
   const reason = (document.getElementById('admDel_reason')?.value || '').trim();
   if (!reason) { toast('Reason is mandatory', 'error'); return; }
   const typed = (document.getElementById('admDel_confirm')?.value || '').trim();
   if (typed !== num) { toast('Type the document number exactly to confirm', 'error'); return; }
-  const rpc = kind === 'GRN' ? 'rpc_grn_delete' : 'rpc_pob_delete';
-  const payload = kind === 'GRN'
-    ? { grn_number: num, reason, deleted_by_id: state.userId }
-    : { bill_number: num, reason, deleted_by_id: state.userId };
-  pbShow('Deleting ' + kind + '\u2026');
+  const payload = { reason, deleted_by_id: state.userId };
+  payload[m.key] = num;
+  if (kind === 'PAY') payload.confirm = typed;          // server insists on it for Approved vouchers
+  pbShow('Deleting ' + m.label + '\u2026');
   let res;
-  try { res = await puRPC(rpc, payload); }
-  catch (e) { pbDone(); toast(e.message, 'error', 8000); return; }
+  try { res = await puRPC(m.rpc, payload); }
+  catch (e) { pbDone(); toast(e.message, 'error', 9000); return; }
   pbDone(); closeModal();
-  if (kind === 'GRN') {
-    flashSuccess('GRN ' + num + ' deleted \u2014 stock, PO and MIR rolled back');
-    loadGRNList(); loadMIRList();
-    if (typeof loadPOList === 'function') loadPOList();
-  } else {
-    const r = res || {};
-    const bits = [];
+  const r = res || {};
+  const bits = [];
+  if (kind === 'POB') {
     if (r.grns_reset_to_verified) bits.push(r.grns_reset_to_verified + ' GRN(s) \u2192 Verified');
     if (r.grns_kept_partially_billed) bits.push(r.grns_kept_partially_billed + ' kept Partially Billed');
-    flashSuccess('POB ' + num + ' deleted' + (bits.length ? ' \u2014 ' + bits.join(', ') : ''));
-    loadPOBList(); loadGRNList();
+  } else if (kind === 'GRN') {
+    bits.push('stock, PO and MIR rolled back');
+  } else if (kind === 'PAY') {
+    (Array.isArray(r.bills) ? r.bills : []).forEach(b => bits.push(b.bill + ' \u2192 ' + b.status_after));
+  } else if (r.effects) {
+    const fx = r.effects;
+    if (fx.cert && fx.cert_status_after && fx.cert_status_after !== fx.cert_status_before) bits.push(fx.cert + ' \u2192 ' + fx.cert_status_after);
+    if (fx.order && fx.order_status_after && fx.order_status_after !== fx.order_status_before) bits.push(fx.order + ' \u2192 ' + fx.order_status_after);
+    if (num_(fx.retention_reversed)) bits.push('retention \u20B9' + fmtINR(fx.retention_reversed) + ' reversed');
   }
+  flashSuccess(m.label + ' ' + num + ' deleted' + (bits.length ? ' \u2014 ' + bits.join(', ') : ''));
+  try { m.after(); } catch (e) { console.warn('post-delete refresh', e); }
+  function num_(v) { return Number(v || 0); }
 }
 
 // ============================================================
@@ -40527,7 +40712,7 @@ async function pgsCreateOrgSave(){
 }
 
 
-function pgsSwitchProject(){ pgsShowSelector(); }
+function pgsSwitchProject(){ if (typeof DPR !== 'undefined' && DPR.unsaved()) { DPR.askLeave('You Are Switching Project.').then(ok => { if (ok) pgsShowSelector(); }); return; } pgsShowSelector(); }   // v158.4
 
 /* ══ v78 · universal sidebar rail ══════════════════════════════════
    Collapsing only re-points --pgs-sbw, so every module — including the

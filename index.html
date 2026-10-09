@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v160.2</title>
+<title>Penguin Suite v160.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -2684,7 +2684,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .d2t.one tr.act td.name.ind b{font-size:12.5px}
 
 /* 5 · fitter: a cell whose content is wider than the cell is zoomed down (never below 72 %), then allowed to wrap */
-#mod-dpr .dp2 .d2t.one td,#mod-dpr .dp2 .d2t.one th{overflow:hidden}
+/* v160.3 · cells no longer clip (overflow:hidden made every cell a scroll box — measuring 6,000 of them cost ~3 s per redraw); the fitter keeps content inside */
 #mod-dpr .dp2 .d2t.one .cf{display:block;transform-origin:left center}
 #mod-dpr .dp2 .d2t.one td.c .cf,#mod-dpr .dp2 .d2t.one td.dt2 .cf{margin:0 auto}
 #mod-dpr .dp2 .d2t.one td.con .cf>a{margin-left:4px}
@@ -2796,6 +2796,15 @@ html,body{touch-action:pan-x pan-y}
 @media(max-width:1300px){#mod-dpr .dp2 .rv-trend .rv-tg{grid-template-columns:1fr}}
 #mod-dpr .dp2 .d2-hd .rv-ctl{margin-left:auto;display:flex;gap:6px;align-items:center}
 #mod-dpr .dp2 .rv-one .warn+.warn{margin-left:6px}
+</style>
+<style id="dpr-v1604-css">
+/* v160.4 · no JS fitter: crowded cells wrap instead (pure CSS, no measuring) */
+#mod-dpr .dp2 .d2t.one td.dn,#mod-dpr .dp2 .d2t.one td.con{white-space:normal!important}
+#mod-dpr .dp2 .d2t.one td.dn .d2-pct,#mod-dpr .dp2 .d2t.one td.dn .d2-snap{flex-wrap:wrap;white-space:normal}
+#mod-dpr .dp2 .d2t.one td.con a{white-space:nowrap;display:inline-block}
+#mod-dpr .dp2 .d2t.one td{overflow-wrap:anywhere}
+#mod-dpr .dp2 .d2t.one td.dt2{white-space:normal}
+#mod-dpr .dp2 .d2t.one td.dt2 input.dt{max-width:100%;min-width:0}
 </style>
 <style id="dpr-v160-css">
 /* v160 · Day Sheet | Report tabs as a slim row above the date banner; Daily Report page uses the full width with half the side gap */
@@ -9584,7 +9593,8 @@ const DPR = (function () {
   const r2 = v => Math.round(num(v) * 100) / 100;
   const fmt = v => { const n = num(v); return (Math.round(n * 1000) / 1000).toLocaleString('en-IN'); };
   const dmy = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }) : '—';
-  const dsh = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '—';
+  const _dshM = new Map();
+  const dsh = d => { if (!d) return '—'; let v = _dshM.get(d); if (v === undefined) { v = new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }); _dshM.set(d, v); } return v; };   // v160.4 · memoised
   const hm  = t => t ? new Date(t).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '';
   const dts = t => t ? new Date(t).toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
   const ymd = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
@@ -9927,32 +9937,15 @@ const DPR = (function () {
     const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0;
     $('d2_side').innerHTML = sideHtml(); paintMain();
     const s2 = $('d2_sc'); if (s2) { s2.scrollTop = top; s2.scrollLeft = left; }
-    fitCells();   // v159.3 · before focus restore: wrapping a cell moves its nodes
     if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el) { el.focus(); if (ss) try { el.setSelectionRange(ss[0], ss[1]); } catch (e) {} } }
   }
-  // v159.3 · nothing may spill out of or be clipped by a sheet cell: content wider than its cell is zoomed down
-  // (to 72 %, date pickers 60 %), then allowed to wrap, then long words break. One read pass, then writes only where needed.
-  function fitCells() {
-    const sc = $('d2_sc'); if (!sc || window.innerWidth < 1000) return;
-    const cells = [...sc.querySelectorAll('table.d2t.one th, table.d2t.one tbody td')].filter(td => td.colSpan <= 3);
-    cells.forEach(td => { const w = td.childNodes.length === 1 && td.firstChild.classList && td.firstChild.classList.contains('cf') ? td.firstChild : null; if (w) { w.style.zoom = ''; w.style.whiteSpace = ''; w.style.overflowWrap = ''; } });
-    const over = cells.filter(td => td.scrollWidth > td.clientWidth + 1);
-    over.forEach(td => {
-      let w = td.childNodes.length === 1 && td.firstChild.classList && td.firstChild.classList.contains('cf') ? td.firstChild : null;
-      if (!w) { w = document.createElement('div'); w.className = 'cf'; while (td.firstChild) w.appendChild(td.firstChild); td.appendChild(w); }
-      const cs = getComputedStyle(td), avail = td.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-      const need = Math.max(w.scrollWidth, ...[...w.querySelectorAll('*')].map(e => e.scrollWidth));
-      w.style.zoom = Math.max(td.classList.contains('dt2') ? 0.6 : 0.72, Math.min(1, avail / need)).toFixed(3);
-      if (td.scrollWidth > td.clientWidth + 1) w.style.whiteSpace = 'normal';
-      if (td.scrollWidth > td.clientWidth + 1) w.style.overflowWrap = 'anywhere';
-    });
-  }
+  // v160.4 · the v159.3 cell fitter is removed — it re-measured every cell after each entry
   function fit() {
     const el = $('d2'); if (!el) return;
     if (window.innerWidth < 1000) { el.style.height = 'auto'; el.classList.remove('fit'); return; }
     el.classList.add('fit'); const top = el.getBoundingClientRect().top + window.scrollY; el.style.height = Math.max(420, window.innerHeight - top - 10) + 'px';
   }
-  if (!window._d2fit) { window._d2fit = true; window.addEventListener('resize', () => { if (document.getElementById('d2')) { fit(); fitCells(); } }); }
+  if (!window._d2fit) { window._d2fit = true; window.addEventListener('resize', () => { if (document.getElementById('d2')) fit(); }); }
   // v159 · Excel feel: Enter moves to the same kind of cell on the next row (data-k prefix), after the change is applied
   if (!window._d2enter) { window._d2enter = true; document.addEventListener('keydown', e => {
     if (e.key !== 'Enter' || !document.getElementById('d2_sc')) return; const el = e.target; if (!el || !el.dataset || !el.dataset.k || el.tagName !== 'INPUT' || el.type === 'checkbox') return;
@@ -9963,7 +9956,7 @@ const DPR = (function () {
   /* ---------- shell ---------- */
   function engRender() {
     $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
-    fit(); $('d2_side').innerHTML = sideHtml(); paintMain(); fitCells();   // v159.3
+    fit(); $('d2_side').innerHTML = sideHtml(); paintMain();
   }
   function paintMain() { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); m.innerHTML = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); }
   // v160 · Day Sheet | Report as one slim row above the date banner (moved out of the calendar column)
@@ -10122,7 +10115,7 @@ const DPR = (function () {
        # | Activity › Location · Est. | Start | Finish | Status W/H/N | Hindrance | [A] Last Reported | [B] Reported dd Mon | [C] Cum. To Date | Contractor | Manpower | ✎
      Bands (package › activity › location) and folds are the v158 ones; drafts, labour units, strips and save are unchanged.
      v159.3 (DPR_Sheet_Polish_mock_v1, approved 09 Oct 2026): Hindrance column removed — reason sits in the Status cell; 11 columns via colgroup;
-     indentation by level (td.ind + --lv); fitCells() shrinks any cell whose content is wider than the cell. */
+     indentation by level (td.ind + --lv). (v160.4: the cell fitter was removed for speed.) */
   const COLS = 11;   // v159.3 · Hindrance column folded into the Status cell
   function visibleLines() {
     return allLines().filter(({ g, l }) => (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (S.filt !== 'att' || attOf(g, l)) && (!S.area || (g.area || 'Unassigned') === S.area));
@@ -10165,7 +10158,7 @@ const DPR = (function () {
           if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubBand(g, null);
           if (skip.has(g.wgroup_id)) { idx++; return; }
           idx++; const it2 = Object.assign({}, it, { lv: g.lines.length > 1 ? 3 : 2 });   // v159.3 · club members sit one level under the club band
-          h += staged(it.l) ? stageRows3(it2, idx, ro) : dirRow3(it2, idx, ro);
+          h += `</tbody><tbody class="ln" data-w="${it.l.work_id}" data-i="${idx}" data-lv="${it2.lv}">` + (staged(it.l) ? stageRows3(it2, idx, ro) : dirRow3(it2, idx, ro)) + '</tbody><tbody>';   // v160.4
         });
       });
     });
@@ -10605,32 +10598,43 @@ const DPR = (function () {
     }
     finAuto(g, l); markDirty(g); redraw();
   }
-  function setQty(wid, v) { const { g, l, x } = lx(wid), left = Math.max(0, num(l.est_qty) - cumBase(l)); x.out = 'w'; x.wip = false; let q = Math.max(0, num(v)); if (q > left + 0.0005) { toast('Only ' + fmt(left) + ' ' + (l.uom || '') + ' Remains On This Activity', 'warn'); q = left; } x.qty = q; startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
-  function snapQty(wid, p) { const { g, l, x } = lx(wid); x.out = 'w'; x.wip = false; x.qty = Math.max(0, Math.round((snapTgt(l, p) - cumBase(l)) * 1000) / 1000); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
+  function setQty(wid, v) { const { g, l, x } = lx(wid), o0 = outOf(g, l), left = Math.max(0, num(l.est_qty) - cumBase(l)); x.out = 'w'; x.wip = false; let q = Math.max(0, num(v)); if (q > left + 0.0005) { toast('Only ' + fmt(left) + ' ' + (l.uom || '') + ' Remains On This Activity', 'warn'); q = left; } x.qty = q; startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0); }
+  function snapQty(wid, p) { const { g, l, x } = lx(wid), o0 = outOf(g, l); x.out = 'w'; x.wip = false; x.qty = Math.max(0, Math.round((snapTgt(l, p) - cumBase(l)) * 1000) / 1000); startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0); }
   function toggleWip(wid, sid) {
-    const { g, l, x } = lx(wid);
+    const { g, l, x } = lx(wid), o0 = outOf(g, l);
     if (sid) { const s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s); y.wip = !y.wip; y.out = 'w'; if (y.wip) { y.pct = base; if (!y.s && base <= 0.0005) y.s = S.to; if (base < 99.9995) y.e = ''; } startMark(g, l, x); }
     else { x.wip = !x.wip; x.out = 'w'; if (x.wip) { x.qty = 0; } startMark(g, l, x); }
-    finAuto(g, l); markDirty(g); redraw();
+    finAuto(g, l); markDirty(g); lineRedraw(wid, o0);
   }
   function setPct(wid, sid, v) {
-    const { g, l, x } = lx(wid), s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s);
+    const { g, l, x } = lx(wid), s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s), o0 = outOf(g, l);
     const p = Math.min(100, Math.max(base, Math.round(num(v)))); y.out = 'w'; y.wip = false; y.pct = p;
     if (p > 0.0005 && !y.s) y.s = S.to; if (p >= 99.9995 && !y.e) y.e = S.to; if (p < 99.9995) y.e = '';
-    startMark(g, l, x); finAuto(g, l); markDirty(g); redraw();
+    startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0);
   }
   const snapPct = (wid, sid, p) => setPct(wid, sid, p);
   function wipAll(wid) { const { g, l, x } = lx(wid); (l.stages || []).forEach(s => { const y = x.subs[s.id], base = subBase(s); if (base < 99.9995 && y.out !== 'h' && num(y.pct) <= base + 0.0005) { y.out = 'w'; y.wip = true; y.pct = base; if (!y.s && base <= 0.0005) y.s = S.to; } }); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
-  function rcSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].rc = v; else x.rc = v; markDirty(g); redraw(); }
+  function rcSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].rc = v; else x.rc = v; markDirty(g); lineRedraw(wid); }
   function noteSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].note = v; else x.note = v; markDirty(g); footRefresh(); }
+  // v160.4 · typing a value rebuilds only that activity's rows (+ footer and side counts) instead of the whole sheet.
+  //          Falls back to the full redraw when the row is not on screen, the outcome changed, or a full redraw is already queued.
+  function lineRedraw(wid, o0) {
+    const e = S.W[wid], tb = document.querySelector('#d2_sc tbody.ln[data-w="' + wid + '"]');
+    if (_rp || !e || !tb || S.prev || S.catMode || S.tab !== 'log' || (o0 !== undefined && outOf(e.g, e.l) !== o0)) { redraw(); return; }
+    const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null;
+    const it = { g: e.g, l: e.l, lv: num(tb.dataset.lv) || 2 }, idx = num(tb.dataset.i), ro = isRo();
+    tb.innerHTML = staged(e.l) ? stageRows3(it, idx, ro) : dirRow3(it, idx, ro);
+    footRefresh();
+    if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el && el !== document.activeElement) el.focus(); }
+  }
   function footRefresh() { const f = $('d2_foot'); if (f) f.innerHTML = footHtml(); const s = $('d2_side'); if (s) s.innerHTML = sideHtml(); }
-  function lineStart(wid, v) { const { g, x } = lx(wid); if (v > S.to) { toast('Cannot Start After ' + dsh(S.to), 'warn'); redraw(); return; } x.started = v; markDirty(g); redraw(); }
-  function lineEnd(wid, v, min) { const { g, x } = lx(wid); if (min && v < min) { toast('End Date Cannot Be Earlier Than ' + dsh(min), 'warn'); redraw(); return; } x.finOn = v; markDirty(g); redraw(); }
-  function certSet(wid, v) { const { g, x } = lx(wid); x.cert = v === '' ? null : Math.max(0, num(v)); markDirty(g); redraw(); }
-  function subDate(wid, sid, k, v) { const { g, x } = lx(wid), y = x.subs[sid]; if (k === 's' && y.e && v > y.e) { toast('Start Cannot Be After End', 'warn'); redraw(); return; } if (k === 'e' && y.s && v < y.s) { toast('End Cannot Be Before Start', 'warn'); redraw(); return; } if (v > S.to) { toast('Cannot Be After ' + dsh(S.to), 'warn'); redraw(); return; } y[k] = v; markDirty(g); redraw(); }
+  function lineStart(wid, v) { const { g, x } = lx(wid); if (v > S.to) { toast('Cannot Start After ' + dsh(S.to), 'warn'); redraw(); return; } x.started = v; markDirty(g); lineRedraw(wid); }
+  function lineEnd(wid, v, min) { const { g, x } = lx(wid); if (min && v < min) { toast('End Date Cannot Be Earlier Than ' + dsh(min), 'warn'); redraw(); return; } x.finOn = v; markDirty(g); lineRedraw(wid); }
+  function certSet(wid, v) { const { g, x } = lx(wid); x.cert = v === '' ? null : Math.max(0, num(v)); markDirty(g); lineRedraw(wid); }
+  function subDate(wid, sid, k, v) { const { g, x } = lx(wid), y = x.subs[sid]; if (k === 's' && y.e && v > y.e) { toast('Start Cannot Be After End', 'warn'); redraw(); return; } if (k === 'e' && y.s && v < y.s) { toast('End Cannot Be Before Start', 'warn'); redraw(); return; } if (v > S.to) { toast('Cannot Be After ' + dsh(S.to), 'warn'); redraw(); return; } y[k] = v; markDirty(g); lineRedraw(wid); }
   // labour (per card)
   const rowsK = (g, k) => k && k !== 'A' ? unitRows(g, { key: k }) : dOf(g).cons;   // v157.1 · rows of a labour unit
-  function setHead(gid, ci, t, v, k) { const g = G(gid), c = rowsK(g, k)[ci]; const n = Math.max(0, Math.round(num(v))); if (n) c.heads[t] = n; else delete c.heads[t]; markDirty(g); redraw(); }
+  function setHead(gid, ci, t, v, k) { const g = G(gid), c = rowsK(g, k)[ci]; const n = Math.max(0, Math.round(num(v))); if (n) c.heads[t] = n; else delete c.heads[t]; markDirty(g); if (g.lines.length === 1) lineRedraw(g.lines[0].work_id); else redraw(); }
   function conPick(gid, ci, k) {
     const g = G(gid), d = dOf(g), arr = rowsK(g, k); S.conTarget = { gid, ci, k: k || 'A', used: ci < 0 ? arr.map(c => c.con) : [] };
     sheetOpen(ci < 0 ? 'Add Contractor' : 'Change Contractor', g.label || '', `<div class="dpr-srch" style="padding:8px"><input id="dpr_cq" placeholder="Search Contractor…" oninput="DPR.conFilter(this.value)"></div><div id="dpr_cl"></div><div class="dpr-note">Approved Work-Order Contractors Only. Each Contractor Gets Its Own Heads Row On This Card.</div>`, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button>');

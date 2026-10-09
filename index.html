@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v160.4</title>
+<title>Penguin Suite v160.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -2837,6 +2837,13 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .rv-g .gl .rv-chip .v{white-space:nowrap;font-weight:800}
 #mod-dpr .dp2 .rv-g .gl .none{font-size:11px;color:var(--ink3,#8a98ad);padding:4px 2px}
 #mod-dpr .dp2 .rv-g .gl a{cursor:pointer;color:var(--dn);font-weight:700}#mod-dpr .dp2 .rv-g .gl .rv-chip a.v{color:var(--dok)}
+
+/* v160.5 · trend table: the first column (contractor / trade / location breadcrumb) wraps in full, rows grow; headers wrap instead of clipping */
+#mod-dpr .dp2 .rv-tt td:first-child{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;line-height:1.3;padding-top:4px;padding-bottom:4px}
+#mod-dpr .dp2 .rv-tt td:first-child .sw{float:left;margin-top:2px}
+#mod-dpr .dp2 .rv-tt td:first-child .lbl{display:block;overflow:hidden}
+#mod-dpr .dp2 .rv-tt th{white-space:normal;overflow:visible;line-height:1.2;vertical-align:middle}
+#mod-dpr .dp2 .rv-tt td{vertical-align:middle}
 </style>
 </head>
 <body>
@@ -10465,7 +10472,7 @@ const DPR = (function () {
   function rvTable(days0, dim, cls) {
     const { keys, days } = rvSeries(days0, dim), on = days.filter(x => x.tot), prev = days.slice(0, 6).reverse().find(x => x.tot);
     const row = (k, ki) => { const vals = days.map(x => x[dim][k] || 0), avg = on.length ? Math.round(on.reduce((a, x) => a + (x[dim][k] || 0), 0) / on.length) : 0, dl = vals[6] - (prev ? prev[dim][k] || 0 : 0);
-      return `<tr><td>${cls ? '' : `<i class="sw" style="background:${rvCol(dim, k, ki)}"></i>`}${esc(rvName(dim, k))}</td>${vals.map((v, i) => `<td class="n ${i === 6 ? 'cur' : ''} ${days[i].tot ? '' : 'off'}">${days[i].tot ? (v || '·') : ''}</td>`).join('')}<td class="n">${avg}</td><td class="n ${prev ? dl > 0 ? 'up' : dl < 0 ? 'dn' : '' : ''}">${prev ? (dl > 0 ? '+' : '') + dl : '—'}</td></tr>`; };
+      return `<tr><td>${cls ? '' : `<i class="sw" style="background:${rvCol(dim, k, ki)}"></i>`}<span class="lbl">${esc(rvName(dim, k))}</span></td>${vals.map((v, i) => `<td class="n ${i === 6 ? 'cur' : ''} ${days[i].tot ? '' : 'off'}">${days[i].tot ? (v || '·') : ''}</td>`).join('')}<td class="n">${avg}</td><td class="n ${prev ? dl > 0 ? 'up' : dl < 0 ? 'dn' : '' : ''}">${prev ? (dl > 0 ? '+' : '') + dl : '—'}</td></tr>`; };
     const tAvg = on.length ? Math.round(on.reduce((a, x) => a + x.tot, 0) / on.length) : 0, tD = days[6].tot - (prev ? prev.tot : 0);
     return `<table class="${cls || 'rv-tt'}"><thead><tr><th>${RV_DIM[dim]}</th>${days.map((x, i) => `<th class="n ${i === 6 ? 'cur' : ''}">${x.lab}</th>`).join('')}<th class="n">Avg / Day</th><th class="n">vs ${prev ? prev.lab : '—'}</th></tr></thead><tbody>${keys.length ? keys.map(row).join('') : `<tr><td colspan="10" class="muted">No Labour In These 7 Days.</td></tr>`}<tr class="tot"><td>Total</td>${days.map((x, i) => `<td class="n ${i === 6 ? 'cur' : ''} ${x.tot ? '' : 'off'}">${x.tot ? fmt(x.tot) : x.st === 'sun' ? 'Off' : '—'}</td>`).join('')}<td class="n">${tAvg}</td><td class="n ${prev ? tD > 0 ? 'up' : tD < 0 ? 'dn' : '' : ''}">${prev ? (tD > 0 ? '+' : '') + fmt(tD) : '—'}</td></tr></tbody></table>`;
   }

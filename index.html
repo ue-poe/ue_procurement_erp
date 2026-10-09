@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v159.1</title>
+<title>Penguin Suite v159.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -203,6 +203,8 @@ tr.amw-grp td .sub{font-weight:400; color:var(--muted); margin-left:8px;}
 .amw-lock{padding:5px 8px; border:1px dashed var(--border); border-radius:4px; color:var(--muted); font-size:12px; background:#f8fafc;}
 .amw-lock small{display:block; font-size:10.5px;}
 .amd-hdr input.amw-chg, .amd-hdr textarea.amw-chg{border-color:var(--accent-2); background:#eff6ff;}
+.amd-hdr .tc-editor.amw-chg{border-color:var(--accent-2);}
+.amd-hdr .tc-editor textarea.tc-input{width:auto;flex:1;border:none;border-radius:0;background:transparent;padding-top:3px;padding-bottom:3px;padding-right:8px;font-size:13px;}
 textarea.amw-reqbad{border-color:var(--danger) !important; background:#fef2f2 !important;}
 .amw-stg{display:flex; gap:6px; align-items:center; flex-wrap:wrap; font-size:11.5px;}
 .amw-stg-ed{background:#fbfcfe; border:1px solid #d6dee8; border-radius:6px; padding:8px 10px; margin:6px 0 2px; display:flex; flex-direction:column; gap:6px; max-width:640px;}
@@ -858,7 +860,49 @@ input[type="number"] {
 #mod-dpr .dp2 .d2t tr.grp td{background:#f5f7fb;font-size:11.5px}
 #mod-dpr .dp2 .d2t tr.att td{background:#fffdf5}
 #mod-dpr .dp2 .d2t tr.sum td{background:#e9eef6;font-weight:800;color:var(--dn);border-top:1px solid var(--ln,#c3ccd9)}
-#mod-dpr .dp2 .d2t.one{table-layout:fixed;min-width:1240px}
+#mod-dpr .dp2 .d2t.one{table-layout:fixed;width:100%;min-width:0}
+#mod-dpr .dp2 .d2-wrap{grid-template-columns:232px minmax(0,1fr);gap:8px}
+#mod-dpr .dp2 .d2-sc{overflow-x:hidden}
+#mod-dpr .dp2 .d2-hd .d2-days{display:inline-flex;border:1px solid var(--ln,#c3ccd9);border-radius:5px;overflow:hidden;vertical-align:middle;margin-left:10px}
+#mod-dpr .dp2 .d2-hd .d2-days button{border:0;border-right:1px solid var(--ln2,#e0e5ec);background:#fff;padding:3px 10px;font-size:11px;font-weight:700;color:var(--ink2,#51627a);min-width:84px;text-align:center}
+#mod-dpr .dp2 .d2-hd .d2-days button:last-child{border-right:0}
+#mod-dpr .dp2 .d2-hd .d2-days button i{display:block;font-style:normal;font-size:10px;font-weight:600;opacity:.8}
+#mod-dpr .dp2 .d2-hd .d2-days button.on{background:var(--dn);color:#fff}
+#mod-dpr .dp2 .d2-tool{gap:4px 0;padding:4px 8px}
+#mod-dpr .dp2 .d2-tool .d2-grp{display:inline-flex;align-items:center;gap:5px;padding:2px 10px 2px 8px;border-right:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .d2-tool .d2-grp:last-child{border-right:0}
+#mod-dpr .dp2 .d2-tool .d2-grp.add{flex:1;min-width:260px}
+#mod-dpr .dp2 .d2-tool .d2-grp.add input.q{flex:1;min-width:120px;padding:4px 8px;font-size:11.5px}
+#mod-dpr .dp2 .d2-tool .d2-grp .d2-btn.sm{padding:4px 8px}
+#mod-dpr .dp2 .d2t.one td{vertical-align:middle;padding:4px 5px;line-height:1.35}
+#mod-dpr .dp2 .d2t.one td.c,#mod-dpr .dp2 .d2t.one td.dt2{text-align:center}
+#mod-dpr .dp2 .d2t.one td.c .d2-oc,#mod-dpr .dp2 .d2t.one td.c .btn-w,#mod-dpr .dp2 .d2t.one td.c .pill{vertical-align:middle}
+#mod-dpr .dp2 .d2t.one td.dt2 input.dt{display:inline-block;vertical-align:middle;width:100%;max-width:112px;text-align:center}
+#mod-dpr .dp2 .d2t.one td.dt2 div{margin-top:3px;white-space:nowrap}
+#mod-dpr .dp2 .d2t.one td.dt2 div input.qty{width:56px;vertical-align:middle}
+#mod-dpr .dp2 .d2t.one td.hn select{width:100%;max-width:100%}
+#mod-dpr .dp2 .d2t.one td.dn{white-space:normal}
+#mod-dpr .dp2 .d2t.one td.dn input.qty{width:50px;vertical-align:middle}
+#mod-dpr .dp2 .d2t.one td.dn .d2-pct{display:inline-flex;align-items:center;gap:3px;flex-wrap:wrap;white-space:normal}
+#mod-dpr .dp2 .d2t.one td.dn .d2-pct input{width:50px}
+#mod-dpr .dp2 .d2t.one td.dn .d2-snap{display:inline-flex;align-items:center;vertical-align:middle;margin-left:2px}
+#mod-dpr .dp2 .d2t.one td.dn .d2-snap button{padding:2px 3px;min-width:0}
+#mod-dpr .dp2 .d2t.one td.dn .muted{display:block;font-size:10px;line-height:1.2;margin-top:2px}
+#mod-dpr .dp2 .d2t.one .d2-cum{align-items:center;gap:5px}
+#mod-dpr .dp2 .d2t.one .d2-cum .bar2{width:100%;max-width:64px}
+#mod-dpr .dp2 .d2t.one .d2-cum b{font-size:12px}
+#mod-dpr .dp2 .d2t.one td.con{line-height:1.4;font-size:11px}
+#mod-dpr .dp2 .d2t.one td.con a{margin-left:4px}
+#mod-dpr .dp2 .d2t.one .d2-mp{white-space:normal;gap:5px}
+#mod-dpr .dp2 .d2t.one .d2-mp i{white-space:normal}
+#mod-dpr .dp2 .d2t.one td.name{line-height:1.3;overflow-wrap:normal}
+#mod-dpr .dp2 .d2t.one td.name .est{display:block;margin-left:0}
+#mod-dpr .dp2 .d2t.one td.con{overflow-wrap:normal;overflow:hidden}
+#mod-dpr .dp2 .d2t.one td.name .pill{vertical-align:middle}
+#mod-dpr .dp2 .d2t.one .st2{text-align:center;margin-top:3px}
+#mod-dpr .dp2 .d2t.one tr.club td,#mod-dpr .dp2 .d2t.one tr.g1 td,#mod-dpr .dp2 .d2t.one tr.g2 td{white-space:normal}
+#mod-dpr .dp2 .d2t.one .acts2{display:inline-flex;gap:4px;margin-left:10px;vertical-align:middle;white-space:nowrap}
+#mod-dpr .dp2 .d2t.one tr.strip td{overflow:hidden}
 #mod-dpr .dp2 .d2t.one th{line-height:1.25;white-space:normal}
 #mod-dpr .dp2 .d2t.one td{overflow-wrap:break-word}
 #mod-dpr .dp2 .d2t.one td.con a{white-space:nowrap}
@@ -9469,7 +9513,10 @@ const DPR = (function () {
   const lineLocPath = (g, l) => l.loc_path != null ? l.loc_path : (g.loc_path || '');
   const pathTail = p => String(p || '').split(' › ').filter(Boolean).slice(-2).join(' › ');   // the table shows the last two levels; the full path is in the tooltip
   const linePkg = (g, l) => l.package || g.package || g.label || '';
-  const finL = l => l.status === 'finished';
+  // v159.2 · finished = the register says so OR every quantity / every sub-activity was completed on an earlier date (not yet accepted):
+  //          the row is hazed and takes no entry; nothing about it is sent again
+  const doneBefore = l => !staged(l) ? (num(l.est_qty) > 0 && cumBase(l) >= num(l.est_qty) - 0.0005) : !!(l.stages || []).length && (l.stages || []).every(s => subBase(s) >= 99.9995);
+  const finL = l => l.status === 'finished' || doneBefore(l);
   const allLines = () => { const o = []; S.groups.forEach(g => g.lines.forEach(l => o.push({ g, l }))); return o; };
   const lineX = (g, l) => dOf(g).lines[l.work_id];
   const G = id => S.groups.find(g => g.wgroup_id === id);
@@ -9757,17 +9804,16 @@ const DPR = (function () {
     const aKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
     const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().length - nFin, nOpen = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length, nAtt = attCount();
     const sub = S.sub;
-    const chip = (d, t) => `<button class="d2-btn sm ${S.to === d ? 'on' : ''}" onclick="DPR.pickDate('${d}')">${t} ${esc(dsh(d))}</button>`;
+    const chip = (d, t) => `<button class="${S.to === d ? 'on' : ''}" onclick="DPR.pickDate('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
     // v159 · header: ‹ date › · Today / Yesterday chips · status · due · delete
-    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><button class="d2-btn sm" title="Previous Day" onclick="DPR.dayMove(-1)">‹</button> <b>${esc(dLong(S.to))}</b> <button class="d2-btn sm" title="Next Day" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button> ${chip(today, 'Today')} ${chip(y1, 'Yesterday')}</div><div class="meta"><div>Status <span class="pill ${STP[st[0]]}">${esc(st[1])}</span></div><div>Submitted <b>${sub && sub.submitted_at ? esc(dts(sub.submitted_at)) : '—'}</b></div>${lateHtml()}${sub && sub.reviewed_at ? `<div>Reviewed <b>${esc(dts(sub.reviewed_at))}</b></div>` : ''}${sub && sub.status === 'Draft' && !ro ? `<div><button class="d2-btn sm" style="color:var(--drd)" title="Delete The Unsent ${esc(dsh(S.to))} Report" onclick="DPR.delDay('${S.to}')">Delete ${esc(dsh(S.to))} Report</button></div>` : ''}</div></div>`;
+    let h = `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.to))}</b> <span class="d2-days">${chip(y1, 'Yesterday')}${chip(today, 'Today')}${S.to !== today && S.to !== y1 ? chip(S.to, 'Picked') : ''}</span></div><div class="meta"><div>Status <span class="pill ${STP[st[0]]}">${esc(st[1])}</span></div><div>Submitted <b>${sub && sub.submitted_at ? esc(dts(sub.submitted_at)) : '—'}</b></div>${lateHtml()}${sub && sub.reviewed_at ? `<div>Reviewed <b>${esc(dts(sub.reviewed_at))}</b></div>` : ''}${sub && sub.status === 'Draft' && !ro ? `<div><button class="d2-btn sm" style="color:var(--drd)" title="Delete The Unsent ${esc(dsh(S.to))} Report" onclick="DPR.delDay('${S.to}')">Delete ${esc(dsh(S.to))} Report</button></div>` : ''}</div></div>`;
     if (sub && sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
     // toolbar
-    h += `<div class="d2-fix d2-tool"><div class="d2-seg"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div>
-      <span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div>
-      <span class="lbl">Status</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div>
-      <input class="q" data-k="cq" placeholder="Search The Estimate (WBS) To Add Work…" value="${esc(S.q)}" oninput="DPR.srch(this.value)">
-      ${ro ? '' : `<button class="d2-btn ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button>`}
-      <span class="sp"></span>${ro ? '' : `<button class="d2-btn sm" onclick="DPR.sameYdAll()">Same As Yesterday · All</button>`}<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button> <button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button></div>`;
+    h += `<div class="d2-fix d2-tool"><span class="d2-grp"><div class="d2-seg sm"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div></span>
+      <span class="d2-grp"><span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div></span>
+      <span class="d2-grp"><span class="lbl">Show</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div></span>
+      <span class="d2-grp"><span class="lbl">Rows</span><button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>${ro ? '' : `<button class="d2-btn sm" onclick="DPR.sameYdAll()">Same As Yesterday · All</button>`}</span>
+      ${ro ? '' : `<span class="d2-grp add"><span class="lbl">Add Work</span><input class="q" data-k="cq" placeholder="Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"><button class="d2-btn sm ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn sm navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn sm ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button></span>`}</div>`;
     if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Manpower Is Entered Once For The Club.</div>`;
     if (S.prev) h += `<div class="d2-fix d2-warn">${previewWarn()}</div>`;
     h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : S.prev ? previewHtml() : sheetHtml3(ro)}</div>`;
@@ -9877,7 +9923,7 @@ const DPR = (function () {
     const keyOf = ({ g, l }) => S.gv === 'work' ? [linePkg(g, l) || '—', l.activity] : [lineLocPath(g, l) || g.area || '—', lineLoc(g, l) || '—'];
     const grp = new Map(); items.forEach(it => { const [a, b] = keyOf(it); if (!grp.has(a)) grp.set(a, new Map()); const m = grp.get(a); if (!m.has(b)) m.set(b, []); m.get(b).push(it); });
     const dd = esc(dsh(S.to));
-    const head = `<th class="c" style="width:${S.cm && !ro ? 58 : 34}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th style="width:92px">Start Date</th><th style="width:100px">Finish Date</th><th class="c" style="width:100px">Status ${dd}<br><span style="font-weight:400">W / H / N</span></th><th style="width:110px">Hindrance</th><th class="n" style="width:70px">Last Reported<br><span style="font-weight:400">[A]</span></th><th style="width:190px">Reported ${dd}<br><span style="font-weight:400">[B]</span></th><th style="width:120px">Cum. To Date<br><span style="font-weight:400">[C] = [A] + [B]</span></th><th style="width:112px">Contractor</th><th style="width:118px">Manpower ${dd}</th><th class="c" style="width:44px;white-space:nowrap">✎</th>`;
+    const head = `<th class="c" style="width:${S.cm && !ro ? 52 : 30}px">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c" style="width:7%">Start Date</th><th class="c" style="width:8%">Finish Date</th><th class="c" style="width:7.5%">Status ${dd}<br><span style="font-weight:400">W / H / N</span></th><th style="width:8.5%">Hindrance</th><th class="n" style="width:5.5%">Last Reported<br><span style="font-weight:400">[A]</span></th><th style="width:14%">Reported ${dd}<br><span style="font-weight:400">[B]</span></th><th style="width:9.5%">Cum. To Date<br><span style="font-weight:400">[C] = [A] + [B]</span></th><th style="width:9%">Contractor</th><th style="width:9.5%">Manpower ${dd}</th><th class="c" style="width:58px;white-space:nowrap">✎</th>`;
     const bandCnt = all => { const w = all.filter(({ g, l }) => outOf(g, l) === 'w').length, hh = all.filter(({ g, l }) => hasH(g, l)).length, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0), att = all.filter(({ g, l }) => attOf(g, l)).length, hd = [...new Set(all.map(x => x.g))].reduce((a, g) => a + cardHeads(g), 0), rep = all.filter(({ g, l }) => outOf(g, l) !== '').length;
       return `${rep}/${all.length} Reported · ${w} Working · ${nS} Start · ${hh} Hindrance · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
     let h = `<table class="d2t sheet one"><thead><tr>${head}</tr></thead><tbody>`, idx = 0;
@@ -9885,7 +9931,7 @@ const DPR = (function () {
     const clubBand = (g, spanKeys) => {   // v158.2 · a club is ONE card: its band (with the single manpower entry) appears once
       banded.add(g.wgroup_id); const ck = 'c:' + g.wgroup_id, u = { key: 'A', worked: cardHasW(g) }, acts = [...new Set(g.lines.map(l => l.activity))].length, units = [...new Set(g.lines.map(l => lineLoc(g, l)))].length;
       const tog = spanKeys ? togMany(spanKeys) : togBtn(ck);
-      const acts2 = ro ? '' : `<span style="float:right;white-space:nowrap">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" title="Remove The Whole Club From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
+      const acts2 = ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" title="Remove The Whole Club From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
       let r = `<tr class="club"><td colspan="${cols - 3}">${tog}${pill('p-amb', 'Report Together')}<b>${esc(g.label || '')}</b> <span class="muted">· ${acts} Activit${acts === 1 ? 'y' : 'ies'} × ${units} Unit${units === 1 ? '' : 's'} · Status &amp; Progress Per Row · One Manpower Entry For The Club</span>${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
       if (cardHasW(g)) r += mpStrip(g, u, g.label || 'Club', cols, ro);
       if (!spanKeys && folded(ck)) skip.add(g.wgroup_id);
@@ -9911,7 +9957,7 @@ const DPR = (function () {
     });
     // non-estimated work: labour only, reason + locations in the name column
     const nk = 'np', np = npDraft();
-    h += `<tr class="g1"><td colspan="${cols}">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm" style="float:right" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
+    h += `<tr class="g1"><td colspan="${cols}">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
     if (!folded(nk)) np.forEach((e, i) => {
       const key = 'np|' + i, tr = colsNow(), open = S.mpo === key;
       h += `<tr class="np"><td></td><td>${pill('p-grey', 'NP')} <b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location Yet'}</span>${ro ? '' : ` <a style="color:var(--dn);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npLocPick(${i})">＋ Location</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npDel(${i})">Remove</a>`}</td><td colspan="2" class="muted">—</td><td class="c">${pill('p-ok', 'W')}</td><td colspan="4" class="muted">Labour Only · No Progress</td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td><td><span class="d2-mp ${heads(e.heads) ? '' : 'bad'}" onclick="DPR.mpTog('${key}')"><b>${fmt(heads(e.heads))}</b><i>${mixTxt(e.heads) || 'Heads Missing'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
@@ -9947,7 +9993,7 @@ const DPR = (function () {
     // start
     const startC = fin ? `<b>${esc(dsh(l.started_on))}</b>${lockI}` : !r && o === 'w' && !l.started_on ? `<input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)">` : (l.started_on || (x.started && o === 'w')) ? `<b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? lockI : ''}` : dash;
     // finish (+ site cert.)
-    const finC = fin ? `<b>${esc(dsh(l.finished_on))}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || S.to))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || S.to))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || S.to))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || S.to))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
     // status
     const stC = `${r ? ocPill(o) : ocSeg(o, `DPR.setOc('${wid}','@')`)}<div class="st2">${statusDir(g, l)}</div>`;
     // [B]
@@ -9967,7 +10013,7 @@ const DPR = (function () {
     const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
     const s0 = l.started_on || (o === 'w' ? x.started : '');
     const startC = s0 ? `<b>${esc(dsh(s0))}</b>${l.start_locked ? lockI : ''}` : dash;
-    const finC = fin ? `<b>${esc(dsh(l.finished_on))}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || S.to))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || S.to))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || S.to))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || S.to))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || S.to}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
     const u = { key: 'A', worked: cardHasW(g) };
     const cm = g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier') + ' <span class="muted">No Labour On ' + esc(dsh(S.to)) + '</span>') : dash}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
     let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}${lineBackDated(g, l) ? ' bd' : ''}">${tickCell(g, l, idx, ro)}<td class="name">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>
@@ -32456,12 +32502,21 @@ function _amwEditHtml(){
    +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">CONTACT PERSON</label><input id="amwH_contact_person" value="'+esc(f('contact_person'))+'" oninput="_amwHdr(\'contact_person\',this)"></div>'
    +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">SCOPE</label><input id="amwH_scope" value="'+esc(f('scope'))+'" oninput="_amwHdr(\'scope\',this)"></div>'
    +'<div style="grid-column:span 2;"><label class="muted" style="font-size:11px;">NOT AMENDABLE</label><div style="display:flex;gap:8px;flex-wrap:wrap;">'+locked.map(([k,v])=>'<div class="amw-lock">'+k+' <b>'+esc(String(v==null?'—':v))+'</b><small>locked — re-prices raised bills</small></div>').join('')+'</div></div>'
-   +'<div style="grid-column:1/3;"><label class="muted" style="font-size:11px;">TERMS &amp; CONDITIONS / REMARKS</label><textarea id="amwH_remarks" rows="2" oninput="_amwHdr(\'remarks\',this)">'+esc(f('remarks'))+'</textarea></div>'
+   +'<div style="grid-column:1/3;"><label class="muted" style="font-size:11px;">TERMS &amp; CONDITIONS / REMARKS</label><div id="amw_tc_editor" class="tc-editor" data-tc-mount></div><small style="color:var(--muted);">Tab = Indent · Shift+Tab = Outdent · Enter = New Row · Backspace On Empty = Delete</small></div>'
    +'<div style="grid-column:3/5;"><label class="muted" style="font-size:11px;">REASON FOR AMENDMENT <span style="color:#b91c1c;">*</span> (printed on A'+a.rev_no+', kept in history)</label><textarea id="amwReason" rows="2" oninput="_amw.edit.draft.reason=this.value;this.classList.remove(\'amw-reqbad\');_amwDirty()">'+esc(E.draft.reason||'')+'</textarea></div></div>'
    +'<div id="amwReqWarn" style="margin-top:8px;"></div><div id="amwIssues" style="margin-top:8px;"></div>'
    +'<div class="actions-row"><span id="amwSaveState" style="margin-right:auto;font-size:12px;color:var(--muted);"></span>'
    +'<button class="btn btn-ghost" onclick="_amwClose()">Close</button><button class="btn btn-secondary" onclick="_amwSaveDraft(false)">Save draft</button>'
    +'<button class="btn btn-primary" id="amwSubmitBtn" onclick="_amwSubmit()">Submit A'+a.rev_no+' for approval</button></div>';
+}
+// v159.2 fix: remarks hold T&C rows as JSON — never expose them in a plain textarea (any edit broke the JSON and View/Print fell back to raw text)
+function _amwMountTc(){
+  const E=_amw.edit, el=document.getElementById('amw_tc_editor'); if(!E||!el||el.dataset.mounted) return;
+  el.dataset.mounted='1';
+  const hd=E.draft.header, v=hd.remarks!==undefined?hd.remarks:(E.o.remarks||'');
+  tcDeserialize('amw_tc_editor', v||'');
+  const sync=()=>{ const E2=_amw.edit; if(!E2) return; const j=tcSerialize('amw_tc_editor'); if(j===(E2.draft.header.remarks!==undefined?E2.draft.header.remarks:(E2.o.remarks||''))) return; E2.draft.header.remarks=j; el.classList.toggle('amw-chg', j!==String(E2.o.remarks==null?'':E2.o.remarks)); _amwDirty(); };
+  el.addEventListener('input', sync); el.addEventListener('keyup', sync);
 }
 function _amwHdr(k,el){ const E=_amw.edit; E.draft.header[k]=el.value; el.classList.toggle('amw-chg', String(el.value)!==String(E.o[k]==null?'':E.o[k])); _amwDirty(); }
 function _amwDirty(){ const E=_amw.edit; if(!E) return; E.dirty=true; const el=document.getElementById('amwSaveState'); if(el) el.textContent='Unsaved changes…'; clearTimeout(E.saveT); E.saveT=setTimeout(()=>_amwSaveDraft(true),700); }
@@ -32522,7 +32577,7 @@ function _amwStgCell(w,isNewAct,actHasCert){
   return h;
 }
 function _amwRender(){
-  const E=_amw.edit; const tb=document.getElementById('amwBody'); if(!tb||!E) return; const T=E.T;
+  const E=_amw.edit; const tb=document.getElementById('amwBody'); if(!tb||!E) return; const T=E.T; _amwMountTc();
   const wl=(w,l)=>{ const wn=E.wbsMap[String(w)], ln=E.locMap[String(l)]; return _pgsWLCell(wn?(wn.path||wn.name):null, ln?(ln.path||ln.name):null); };
   const actName=w=>{ const n=E.wbsMap[String(w)]; return n?n.name:String(w); };
   // group draft lines (and their plan split rows) by activity

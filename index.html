@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v160.6</title>
+<title>Penguin Suite v161.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -3161,6 +3161,37 @@ html,body{touch-action:pan-x pan-y}
 :is(#mod-reports,#paytab-pyd) .rdot.ok{background:var(--r-ok);}:is(#mod-reports,#paytab-pyd) .rdot.warn{background:var(--r-warn);}:is(#mod-reports,#paytab-pyd) .rdot.bad{background:var(--r-bad);}
 :is(#mod-reports,#paytab-pyd) .rzero{color:#c2c9d4;}
 :is(#mod-reports,#paytab-pyd) .rpt-note{font-size:11px;color:var(--r-muted);margin-top:10px;line-height:1.6;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;}
+/* ══ v161.2 · narration-free · Payables Dashboard compaction ══ */
+#paytab-pyd .rpt-hd{margin-bottom:6px;align-items:flex-start;gap:10px;}
+#paytab-pyd .rpt-title h2{font-size:15px;}
+#paytab-pyd .pyd-chip{font-size:10px;padding:1px 8px;}
+#paytab-pyd .pyd-proj{display:block;font-size:12.5px;font-weight:600;color:var(--r-navy);margin:2px 0 0;}
+#paytab-pyd .pyd-proj .sep{margin:0 5px;color:#94a3b8;}
+#paytab-pyd .rpt-hd .pyd-asof{margin-left:auto;font-size:11px;padding-top:4px;text-align:right;}
+#paytab-pyd .pyd-acts{margin-left:auto;display:flex;gap:6px;align-items:center;}
+#paytab-pyd .rbtn{padding:5px 10px;font-size:11.5px;border-radius:6px;}
+#paytab-pyd .pyd-tb{margin-bottom:8px;gap:6px;}
+#paytab-pyd .pyd-tb input,#paytab-pyd .pyd-tb select{padding:4px 8px;font-size:12px;}
+#paytab-pyd .pyd-tb .seg span{padding:4px 9px;font-size:11px;}
+#paytab-pyd .pyd-kpis{gap:7px;margin-bottom:8px;}
+#paytab-pyd .pyd-kpi{padding:6px 10px 5px;border-radius:7px;}
+#paytab-pyd .pyd-kpi .k{font-size:9px;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#paytab-pyd .pyd-kpi .v{font-size:15px;margin-top:1px;}
+#paytab-pyd .pyd-kpi .s{font-size:10px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#paytab-pyd .pyd-drill{top:5px;right:7px;font-size:10px;}
+#paytab-pyd .pyd-hz{padding:7px 12px 9px;margin-bottom:8px;border-radius:7px;}
+#paytab-pyd .pyd-hz .hd{margin-bottom:0;}
+#paytab-pyd .pyd-hz .hd h4{font-size:11.5px;}
+#paytab-pyd .pyd-hz .hd .tot{font-size:11.5px;}
+#paytab-pyd .pyd-hzaxis{margin-top:6px;gap:5px;}
+#paytab-pyd .pyd-hzb{min-height:40px;padding:5px 8px 6px;border-radius:6px 6px 3px 3px;}
+#paytab-pyd .pyd-hzb .amt{font-size:13px;}
+#paytab-pyd .pyd-hzb .ct{font-size:10px;}
+#paytab-pyd .pyd-hzlab{margin-top:4px;gap:5px;}
+#paytab-pyd .pyd-hzlab span{font-size:9.5px;}
+#paytab-pyd .pyd-hztoday{bottom:-18px;}
+#paytab-pyd .pyd-wrap{border-radius:7px;}
+#paytab-pyd .pyd-scroll{max-height:max(320px,calc(100vh - 318px));}
 /* ══ v75.6 · Payments — Record Payment (pay- namespace) ══ */
 #mod-payments .pay-hd{display:flex;align-items:baseline;gap:12px;margin-bottom:9px;}
 #mod-payments .pay-hd h2{font-size:17px;color:var(--navy-print);margin:0;white-space:nowrap;}
@@ -3190,7 +3221,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-payments .seg span{padding:6px 11px;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--muted);user-select:none;}
 #mod-payments .seg span.on{background:var(--navy-print);color:#fff;}
 #mod-payments .bwrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-#mod-payments .bscroll{max-height:64vh;overflow-y:auto;overflow-x:hidden;}
+#mod-payments .bscroll{max-height:64vh;overflow-y:auto;overflow-x:auto;}
 #mod-payments table.pay-rt{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;}
 #mod-payments table.pay-rt th{background:var(--navy-print);color:#dbe7f8;padding:5px 8px;font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;text-align:right;font-weight:700;position:sticky;top:0;z-index:2;}
 #mod-payments table.pay-rt th.l{text-align:left;}
@@ -3263,6 +3294,82 @@ html,body{touch-action:pan-x pan-y}
 .pay-foot .v.bal{color:#7dd3fc;}
 .pay-foot .sp{margin-left:auto;display:flex;gap:9px;align-items:center;}
 .pay-foot .err{font-size:11.5px;color:#fca5a5;font-weight:600;max-width:340px;}
+/* ══ v161 · M38 · Payments ledgers ══ */
+#mod-payments table.pay-grid th{border-right:1px solid #31507a;}
+#mod-payments table.pay-grid td{border-right:1px solid #e2e8f0;}
+#mod-payments table.pay-grid td:last-child,#mod-payments table.pay-grid th:last-child{border-right:none;}
+#mod-payments table.pay-rt tr.pay-grp td{background:#eef3fa;font-weight:700;color:var(--navy-print);border-top:2px solid var(--border);}
+#mod-payments table.pay-rt tr.pay-grp td .gm{font-weight:500;color:var(--muted);font-size:11px;margin-left:8px;}
+#mod-payments table.pay-rt tr.pay-tot td{background:var(--navy-print);color:#fff;font-weight:800;}
+#mod-payments table.pay-rt tr.pay-dim td{color:#94a3b8;}
+#mod-payments .pay-sub{display:block;font-size:10.5px;color:var(--muted);line-height:1.25;white-space:normal;}
+#mod-payments .pay-dk{font-weight:700;color:#475569;font-size:9.5px;letter-spacing:.3px;}
+#mod-payments .pay-dm{color:#94a3b8;font-size:10px;}
+#mod-payments a.pay-tdsl{color:#c2410c;font-weight:700;cursor:pointer;font-size:10.5px;text-decoration:none;border-bottom:1px dashed #fdba74;}
+#mod-payments a.pay-tdsl.set{border:none;}
+#mod-payments a.pay-tdsl:hover{color:#9a3412;}
+#mod-payments .pay-pill.tds{background:#ffedd5;color:#9a3412;}
+#mod-payments .pay-pill.sec{background:#e2e8f0;color:#1e3a5f;}
+#mod-payments .pay-pill.mob{background:#ffedd5;color:#9a3412;}
+#mod-payments .pay-st{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+#mod-payments .pay-st.ok{background:#dcfce7;color:#166534;}#mod-payments .pay-st.ap{background:#fef3c7;color:#92400e;}
+#mod-payments .pay-st.part{background:#e0f2fe;color:#075985;}#mod-payments .pay-st.bad{background:#fee2e2;color:#991b1b;}#mod-payments .pay-st.mut{background:#f1f5f9;color:#475569;}
+#mod-payments .pay-bar{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:3px;}
+#mod-payments .pay-bar i{display:block;height:100%;background:var(--accent);}
+#mod-payments .pay-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:11px;}
+#mod-payments .pay-kpi{background:#fff;border:1px solid var(--border);border-radius:9px;padding:9px 12px;border-bottom:3px solid var(--border);}
+#mod-payments .pay-kpi .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;}
+#mod-payments .pay-kpi .v{font-size:18px;font-weight:800;color:var(--navy-print);margin-top:2px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+#mod-payments .pay-kpi .s{font-size:10.5px;color:var(--muted);margin-top:1px;}
+#mod-payments .pay-kpi.t{border-bottom-color:var(--accent);}#mod-payments .pay-kpi.t .v{color:#0f766e;}
+#mod-payments .pay-kpi.a{border-bottom-color:var(--warn);}#mod-payments .pay-kpi.a .v{color:#b45309;}
+#mod-payments .pay-kpi.d{border-bottom-color:var(--danger);}#mod-payments .pay-kpi.d .v{color:#b91c1c;}
+#mod-payments .pay-kpi.n{border-bottom-color:var(--navy-print);}
+#mod-payments .pay-grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;}
+#mod-payments .pay-grid4 label,#mod-payments .pay-grid6 label{display:block;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
+#mod-payments .pay-grid4 select,#mod-payments .pay-grid4 input,#mod-payments .pay-grid6 select,#mod-payments .pay-grid6 input{width:100%;}
+#mod-payments .pay-grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;}
+#mod-payments .pay-h{font-size:10.5px;color:var(--muted);margin-top:2px;}
+#mod-payments .pay-chips{display:flex;gap:6px;flex-wrap:wrap;}
+#mod-payments .pay-chip{font-size:11px;background:#f1f5f9;border:1px solid var(--border);border-radius:99px;padding:2px 9px;color:#334155;}
+#mod-payments .pay-chip b{color:var(--navy-print);}
+#mod-payments .pay-addsec{margin-left:auto;font-size:10.5px;color:var(--accent);font-weight:700;text-transform:none;letter-spacing:0;text-decoration:none;}
+#mod-payments .pay-nsec{border:1px dashed var(--accent);background:#f0fdfa;border-radius:8px;padding:10px 12px;margin-top:10px;}
+#mod-payments .pay-ovr{margin-top:10px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:7px;padding:7px 11px;font-size:12px;color:#1e3a8a;}
+#mod-payments .pay-split{display:flex;align-items:stretch;margin-top:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+#mod-payments .pay-split>div{padding:9px 12px;flex:1;}
+#mod-payments .pay-split .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;}
+#mod-payments .pay-split .v{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;}
+#mod-payments .pay-split .a{background:#f8fafc;border-right:1px solid var(--border);}
+#mod-payments .pay-split .b{background:#f0fdfa;border-right:1px solid var(--border);}#mod-payments .pay-split .b .v{color:#0f766e;}
+#mod-payments .pay-split .c{background:#fff7ed;}#mod-payments .pay-split .c .v{color:#c2410c;}
+#mod-payments .pay-note.info{background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a;}
+#mod-payments .pay-note.ok{background:#f0fdf4;border-color:#bbf7d0;color:#14532d;}
+#mod-payments .pay-wbp{margin-top:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+#mod-payments .pay-wbp .hd{background:#f1f5f9;padding:7px 11px;font-size:11.5px;font-weight:700;color:var(--navy-print);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+#mod-payments .pay-wbp .bn{background:#fff7ed;border-bottom:1px solid #fed7aa;padding:6px 11px;font-size:11.5px;color:#9a3412;}
+#mod-payments .pay-wbp table{width:100%;border-collapse:collapse;font-size:12px;}
+#mod-payments .pay-wbp td{padding:3px 11px;text-align:right;font-variant-numeric:tabular-nums;border:none;}
+#mod-payments .pay-wbp td.l{text-align:left;color:#475569;}
+#mod-payments .pay-wbp tr.t td{border-top:1px solid var(--border);font-weight:800;color:var(--navy-print);padding-top:6px;}
+#mod-payments .pay-rv{font-size:9px;font-weight:800;background:#fef3c7;color:#92400e;border-radius:3px;padding:1px 5px;margin-left:5px;}
+/* paste / drop proof zone */
+#mod-payments .pay-pz{border:1.5px dashed #94a3b8;border-radius:7px;padding:5px 8px;background:#f8fafc;cursor:pointer;outline:none;min-height:34px;transition:.12s;}
+#mod-payments .pay-pz:hover{border-color:var(--accent);}
+#mod-payments .pay-pz.act{border-color:var(--accent);border-style:solid;background:#f0fdfa;box-shadow:0 0 0 3px rgba(13,148,136,.15);}
+#mod-payments .pay-pz.drag{border-color:var(--accent-2);background:#eff6ff;}
+#mod-payments .pay-pzh{font-size:10.5px;color:var(--muted);white-space:normal;}
+#mod-payments .pay-pz.act .pay-pzh b{color:#0f766e;}
+#mod-payments .pay-pzh .br{color:var(--accent-2);font-weight:700;cursor:pointer;text-decoration:underline;}
+#mod-payments .pay-pzc{display:flex;flex-direction:column;gap:4px;margin-bottom:5px;}
+#mod-payments .pay-pzf{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:2px 6px 2px 2px;font-size:11px;min-width:0;}
+#mod-payments .pay-pzf img{width:26px;height:26px;object-fit:cover;border-radius:4px;border:1px solid #e2e8f0;flex:0 0 auto;}
+#mod-payments .pay-pzf .ic{width:26px;height:26px;border-radius:4px;background:#fee2e2;color:#991b1b;font-size:8.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+#mod-payments .pay-pzf .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--navy-print);font-weight:600;}
+#mod-payments .pay-pzf .sz{color:var(--muted);font-size:10px;flex:0 0 auto;}
+#mod-payments .pay-pzf .rm{color:#94a3b8;cursor:pointer;font-weight:700;flex:0 0 auto;padding:0 2px;}
+#mod-payments .pay-pzf .rm:hover{color:var(--danger);}
+#mod-payments .pay-hr tr.tds td{color:#c2410c;font-weight:800;}
 /* ══ v75.5 · Payables Dashboard (Reports) — pyd- namespace ══ */
 :is(#mod-reports,#paytab-pyd) .pyd-chip{font-size:11px;font-weight:600;color:var(--r-teal-d);background:#ccfbf1;border-radius:99px;padding:2px 9px;margin-left:7px;vertical-align:middle;white-space:nowrap;}
 :is(#mod-reports,#paytab-pyd) .pyd-proj{font-size:13px;font-weight:600;color:var(--r-navy);margin:3px 0 2px;}
@@ -3385,7 +3492,7 @@ html,body{touch-action:pan-x pan-y}
   <div id="rpt_landing">
     <div class="rpt-crumbs">Reports</div>
     <div class="rpt-h1">Reports</div>
-    <div class="rpt-sub">Generate presentation-ready reports across the full project lifecycle. Export to formatted Excel or PDF.</div>
+    
     <div class="rpt-catalog">
       <div class="rpt-card live" onclick="RPT.config()">
         <span class="pill">Ready</span>
@@ -3414,7 +3521,6 @@ html,body{touch-action:pan-x pan-y}
       <button class="rpt-back" onclick="RPT.delAuditBack()">← Reports</button>
       <div>
         <div class="rpt-h1">🗑 Deletion Audit</div>
-        <div class="rpt-sub">Deleted GRNs, PO / hire / work bills, certifications and payment vouchers with reason, actor, effects and full snapshot. Rows starting with RESTORE record a reversal.</div>
       </div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
@@ -3460,7 +3566,6 @@ html,body{touch-action:pan-x pan-y}
       <button class="rpt-back" onclick="RPT.toLanding()">← Reports</button>
       <div class="rpt-title">
         <h2>Material — Estimation vs PO vs GRN vs MIS</h2>
-        <div class="m">Choose what to reconcile, then Generate. Narrowing the scope fetches far less data and renders instantly.</div>
       </div>
     </div>
     <div class="cfg">
@@ -3479,7 +3584,6 @@ html,body{touch-action:pan-x pan-y}
             <span class="clr" id="rpt_matClr" onclick="RPT.clrMat()">✕</span>
             <div class="rpt-matlist" id="rpt_matList"></div>
           </div></div>
-          <div class="rpt-hint">Leave as “All materials”, or pick one. The <b>Qty + ₹ / Qty only / ₹ only</b> toggle controls which columns the report shows.</div>
         </div>
       </div>
 
@@ -3489,7 +3593,6 @@ html,body{touch-action:pan-x pan-y}
           <div class="rtsearch"><span class="mag">🔍</span><input id="rpt_locSearch" placeholder="Find a location…" oninput="RPT.locSearch()"></div>
           <div class="rtclr" onclick="RPT.locWhole()">↺ Whole project (all locations)</div>
           <div class="rtree" id="rpt_locTree"></div>
-          <div class="rpt-hint">Pick any node — the report covers it and everything under it. Filtered server-side on indexed <code>loc_node_id</code>.</div>
         </div>
       </div>
 
@@ -3499,7 +3602,6 @@ html,body{touch-action:pan-x pan-y}
           <div class="rtsearch"><span class="mag">🔍</span><input id="rpt_wbsSearch" placeholder="Find a WBS node / package…" oninput="RPT.wbsSearch()"></div>
           <div class="rtclr" onclick="RPT.wbsWhole()">↺ Whole project (all WBS)</div>
           <div class="rtree" id="rpt_wbsTree"></div>
-          <div class="rpt-hint">Pick a group or package — the report covers its descendants. Filtered server-side on indexed <code>wbs_node_id</code>.</div>
         </div>
       </div>
 
@@ -3512,7 +3614,6 @@ html,body{touch-action:pan-x pan-y}
             <div class="rstg grn on" id="rpt_st_grn" onclick="RPT.tglStage('grn')"><span class="ck">✓</span><span class="sw" style="background:var(--r-grn)"></span>GRN (Received)</div>
             <div class="rstg mis on" id="rpt_st_mis" onclick="RPT.tglStage('mis')"><span class="ck">✓</span><span class="sw" style="background:var(--r-mis)"></span>MIS (Consumed)</div>
           </div>
-          <div class="rpt-hint">Pick <b>2–4</b> stages — the report shows only those columns, with a variance between each adjacent selected pair. All four keeps the standard PO−Est &amp; MIS−GRN variances.</div>
         </div>
       </div>
 
@@ -3530,7 +3631,6 @@ html,body{touch-action:pan-x pan-y}
             <span class="rqpick" onclick="RPT.quick('90')">Last 90 days</span>
             <span class="rqpick" onclick="RPT.quick('clear')">All dates</span>
           </div>
-          <div class="rpt-hint">Filters <b>PO (po_date)</b>, <b>GRN (grn_date)</b> and <b>MIS (issue_date)</b>. Estimation has no document date, so it is unaffected. Leave blank for all dates.</div>
         </div>
       </div>
 
@@ -3575,9 +3675,6 @@ html,body{touch-action:pan-x pan-y}
         <thead id="rpt_head"></thead>
         <tbody id="rpt_body"></tbody>
       </table>
-    </div>
-    <div class="rpt-note">
-      Reconciled at <b>(work package × material package × material_code × location leaf)</b> — every stage's <code>wbs_node_id</code> is read as the <b>material package</b> it was booked to, and climbed to its work-package ancestor for the rollup. Rows stamped before tagging began (May–Jun 2026) group under <b>Unattributed</b>; totals still tie out. Estimation qty = Σ <code>wbs_material_buildup.qty_total</code>; PO = Σ <code>pu_po_items.qty</code>; GRN = Σ <code>this_grn_qty</code>; MIS = Σ <code>qty_issued</code>. Aggregated server-side by <code>rpt_material_reconcile</code>; the report projects your selected stages, measure, dates and scope.
     </div>
   </div>
 </div>
@@ -3650,7 +3747,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">Hire Orders</div>
-      <div class="section-sub">Create and manage hire orders for hired equipment and machinery</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newHO" onclick="newHO()">+ New Hire Order</button>
@@ -3805,7 +3901,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">HO Certification</div>
-      <div class="section-sub">Record certified work quantities against approved hire orders</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newHOC" onclick="newHOC()">+ New Certification</button>
@@ -3918,7 +4013,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">HO Billing</div>
-      <div class="section-sub">Generate bills against certified hire order work</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newHOB" onclick="newHOB()">+ New Bill</button>
@@ -4182,7 +4276,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">Work Orders</div>
-      <div class="section-sub">Create and manage work orders for contracted labour and works</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newWO" onclick="newWO()">+ New Work Order</button>
@@ -4325,7 +4418,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">WO Certification</div>
-      <div class="section-sub">Record certified work quantities or percentages against approved work orders</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newWOC" onclick="newWOC()">+ New Certification</button>
@@ -4421,7 +4513,6 @@ html,body{touch-action:pan-x pan-y}
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">WO Billing</div>
-      <div class="section-sub">Generate RA bills against certified work order quantities</div>
     </div>
     <div>
       <button class="btn btn-primary" id="btn_newWOB" onclick="newWOB()">+ New Bill</button>
@@ -4640,6 +4731,10 @@ html,body{touch-action:pan-x pan-y}
   <div class="sub-tabs">
     <div class="sub-tab active" onclick="switchPayTab('pyd')" data-paytab="pyd">Payables Dashboard</div>
     <div class="sub-tab" onclick="switchPayTab('pay')" data-paytab="pay">Record Payment</div>
+    <div class="sub-tab" onclick="switchPayTab('adv')" data-paytab="adv">On-Account Advances</div>
+    <div class="sub-tab" onclick="switchPayTab('ret')" data-paytab="ret">Retention Ledger</div>
+    <div class="sub-tab" onclick="switchPayTab('bhold')" data-paytab="bhold">Bill Holds</div>
+    <div class="sub-tab" onclick="switchPayTab('tds')" data-paytab="tds">TDS Ledger</div>
     <div class="sub-tab" onclick="switchPayTab('approve')" data-paytab="approve">Approvals</div>
     <div class="sub-tab" onclick="switchPayTab('holds')" data-paytab="holds">Payment Holds</div>
     <div class="sub-tab" onclick="switchPayTab('hist')" data-paytab="hist">History</div>
@@ -4650,27 +4745,22 @@ html,body{touch-action:pan-x pan-y}
   <div id="paytab-pyd" style="display:none">
   <!-- Payables Dashboard (v75.5 · moved to Payments in v155) — own panes, managed by the payables IIFE -->
   <div id="rpt_payables" class="hidden">
-    <div class="rpt-crumbs">Payments › Payables Dashboard</div>
-    <div class="rpt-hd">
-      <div class="rpt-title"><h2>💳 Payables Dashboard <span class="pyd-chip">Vendors &amp; Contractors</span></h2>
-        <div class="pyd-proj" id="pyd_proj"></div>
-        <div class="m">Order → bill → payment position per vendor, with advances, retention, holds and a dated due horizon. Approved documents only; pending approvals shown separately.</div></div>
-      <div class="rpt-actions">
-        <button class="rbtn rbtn-xl" onclick="RPT.payablesExcel()">⬇ Excel</button><button class="rbtn rbtn-pdf" onclick="RPT.payablesPdf()">⬇ PDF</button><button class="rbtn rbtn-ghost" onclick="RPT.payablesRefresh()">↻ Refresh</button>
-      </div>
+        <div class="rpt-hd">
+      <div class="rpt-title"><h2>💳 Payables Dashboard</h2><div class="pyd-proj" id="pyd_proj"></div></div>
+      <span class="pyd-asof" id="pyd_meta"></span>
     </div>
     <div class="pyd-tb">
-      <input id="pyd_q" placeholder="🔍 Vendor / order / bill no…" style="width:240px;" oninput="RPT.payablesSearch(this.value)" autocomplete="off">
+      <input id="pyd_q" placeholder="🔍 Vendor / order / bill no…" style="width:210px;" oninput="RPT.payablesSearch(this.value)" autocomplete="off">
       <span class="lbl">Order</span>
       <span class="seg" id="pyd_segType"><span class="on" data-v="all" onclick="RPT.payablesType('all',this)">All</span><span data-v="WO" onclick="RPT.payablesType('WO',this)">WO</span><span data-v="HO" onclick="RPT.payablesType('HO',this)">HO</span><span data-v="PO" onclick="RPT.payablesType('PO',this)">PO</span></span>
       <span class="lbl">Show</span>
       <span class="seg" id="pyd_segShow"><span data-v="dues" onclick="RPT.payablesShow('dues',this)">With dues</span><span class="on" data-v="all" onclick="RPT.payablesShow('all',this)">All vendors</span><span data-v="over" onclick="RPT.payablesShow('over',this)">Overdue only</span></span>
       <span class="lbl">As on</span><input type="date" id="pyd_asof" onchange="RPT.payablesAsOf(this.value)">
-      <span class="pyd-asof" id="pyd_meta"></span>
+      <span class="rpt-actions pyd-acts"><button class="rbtn rbtn-xl" onclick="RPT.payablesExcel()">⬇ Excel</button><button class="rbtn rbtn-pdf" onclick="RPT.payablesPdf()">⬇ PDF</button><button class="rbtn rbtn-ghost" onclick="RPT.payablesRefresh()">↻ Refresh</button></span>
     </div>
     <div class="pyd-kpis" id="pyd_kpis"></div>
     <div class="pyd-hz">
-      <div class="hd"><h4>Payment horizon</h4><span class="n">net payable by due date · approved bills only · click any bucket or KPI card to list the records</span><span class="tot" id="pyd_hztot"></span></div>
+      <div class="hd"><h4>Payment horizon</h4><span class="tot" id="pyd_hztot"></span></div>
       <div class="pyd-hzaxis" id="pyd_hzaxis"><div class="pyd-hztoday"></div></div>
       <div class="pyd-hzlab"><span>Overdue</span><span class="today">Due in 7 days</span><span>8 – 30 days</span><span>31 – 60 days</span><span>60+ days</span><span>Not yet payable</span></div>
     </div>
@@ -4687,7 +4777,6 @@ html,body{touch-action:pan-x pan-y}
       </tr><tr class="grand" id="pyd_tot_sum"></tr></thead>
       <tbody id="pyd_tbody"><tr><td colspan="10" class="pyd-empty">Loading…</td></tr></tbody>
     </table></div></div>
-    <div class="rpt-note"><b>How figures are derived.</b> Order value = live WO/HO total + PO grand total. Invoice value, GST, TDS, retention, hold and net payable come from approved bills (WOB / HOB / POB); Paid = allocations on approved bank transfers; Credit notes = approved credit-note vouchers set against bills; Due = net payable − paid − credit notes. Due = net payable − paid, bucketed by <code>inv_pay_due</code> (or bill date + credit period) against the As-on date. Advance paid = approved on-account payments; recovered = advance / mobilization / on-account recovery booked on bills; retention/hold shown net of approved release allocations. Bills on payment hold are shown separately and are not payable. Pending-approval bills are excluded from Due and shown in "Not yet payable". Vendors are matched by name across documents.</div>
   </div>
 
   <div id="rpt_payables_vendor" class="hidden">
@@ -4731,7 +4820,6 @@ html,body{touch-action:pan-x pan-y}
       <colgroup><col style="width:10%"><col style="width:16%"><col style="width:32%"><col style="width:14%"><col style="width:14%"><col style="width:14%"></colgroup>
       <thead><tr><th class="l">Date</th><th class="l">Document</th><th class="l">Particulars</th><th>Debit (payable ↑)</th><th>Credit (paid / deducted)</th><th class="g2">Balance payable</th></tr><tr class="grand" id="pyd_tot_stmt"></tr>
       </thead><tbody id="pyd_stmt"></tbody></table></div></div>
-    <div class="rpt-note">Statement = chronological ledger in the vendor's favour: approved bills raise the balance by invoice value; TDS, retention, holds and advance recovery reduce it on the bill date; approved PRR vouchers reduce it on the payment date. Advances (ARR), retention releases (RRR) and hold releases (HRR) are tracked in their own tabs, not in this balance.</div>
   </div>
 
   </div>
@@ -4741,7 +4829,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="pay-hd">
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;min-width:0">
         <h2>💳 Record Payment</h2>
-        <div class="m">One transfer = one bank transaction = one UTR, and may cover several vendors.</div>
       </div>
       <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.reset()">↺ Clear</button><button class="btn btn-ghost btn-sm" onclick="PAY.reload()">↻ Reload bills</button></div>
     </div>
@@ -4769,10 +4856,7 @@ html,body{touch-action:pan-x pan-y}
           <span data-v="HOB" onclick="PAY.setType('HOB',this)">HOB</span>
           <span data-v="POB" onclick="PAY.setType('POB',this)">POB</span>
         </span>
-        <span style="margin-left:auto;display:flex;gap:8px">
-          <button class="btn btn-ghost btn-sm" onclick="PAY.openOA()">+ On-account payment</button>
-          <button class="btn btn-ghost btn-sm" onclick="PAY.openRel()">+ Retention / hold release</button>
-        </span>
+        <span style="margin-left:auto;font-size:11px;color:var(--muted)">Advances and releases have their own tabs → <a href="#" onclick="switchPayTab('adv');return false">On-Account Advances</a> · <a href="#" onclick="switchPayTab('ret');return false">Retention Ledger</a> · <a href="#" onclick="switchPayTab('bhold');return false">Bill Holds</a></span>
       </div>
       <div id="pay_groups"><div class="pay-empty">Loading bills…</div></div>
     </div>
@@ -4794,6 +4878,7 @@ html,body{touch-action:pan-x pan-y}
   <div class="pay-foot" id="pay_foot" style="display:none;">
     <div><div class="k">Total payable (filtered)</div><div class="v" id="pay_fTot">₹0</div></div>
     <div><div class="k">Selected</div><div class="v sel" id="pay_fSel">₹0</div></div>
+    <div><div class="k">TDS Split · Overrides</div><div class="v sel" style="color:#fdba74" id="pay_fTds">₹0</div></div>
     <div><div class="k">Paying now</div><div class="v sel" id="pay_fPay">₹0</div></div>
     <div><div class="k">Balance after</div><div class="v bal" id="pay_fBal">₹0</div></div>
     <div class="sp">
@@ -4804,10 +4889,66 @@ html,body{touch-action:pan-x pan-y}
   </div>
   </div>
 
+  <!-- ══════════════ ON-ACCOUNT ADVANCES (v161 · M38) ══════════════ -->
+  <div id="paytab-adv" style="display:none;">
+    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>💰 On-Account Advances</h2></div>
+      <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadAdv(true)">↻ Refresh</button><button class="btn btn-primary btn-sm" onclick="PAY.advNew()">+ New Advance</button></div></div>
+    <div class="pay-kpis" id="adv_kpis"></div>
+    <div class="card">
+      <div class="pay-tb">
+        <input id="adv_q" placeholder="🔍 Vendor / order / voucher…" style="width:230px" oninput="PAY.renderAdv()" autocomplete="off">
+        <span class="lbl">Purpose</span>
+        <span class="seg" id="adv_segPur"><span class="on" data-v="all" onclick="PAY.advPur('all',this)">All</span><span data-v="ad_hoc" onclick="PAY.advPur('ad_hoc',this)">Ad-Hoc</span><span data-v="mobilization" onclick="PAY.advPur('mobilization',this)">Mobilization</span></span>
+        <span class="lbl">Status</span>
+        <span class="seg" id="adv_segSt"><span class="on" data-v="open" onclick="PAY.advSt('open',this)">Outstanding</span><span data-v="appr" onclick="PAY.advSt('appr',this)">In Approval</span><span data-v="done" onclick="PAY.advSt('done',this)">Fully Recovered</span><span data-v="all" onclick="PAY.advSt('all',this)">All</span></span>
+        <span class="lbl" style="margin-left:auto" id="adv_n"></span>
+      </div>
+      <div class="bwrap"><div class="bscroll"><table class="pay-rt pay-grid">
+        <colgroup><col style="width:8%"><col style="width:7%"><col style="width:16%"><col style="width:16%"><col style="width:9%"><col style="width:10%"><col style="width:11%"><col style="width:10%"><col style="width:13%"></colgroup>
+        <thead><tr><th class="l">Voucher</th><th class="l">Paid On</th><th class="l">Vendor</th><th class="l">Against Order</th><th class="l">Purpose</th><th>Advance</th><th>Recovered Via Bills</th><th>Outstanding</th><th class="l">Mode · UTR · Status</th></tr></thead>
+        <tbody id="adv_body"><tr><td colspan="9" class="pay-empty">Loading…</td></tr></tbody>
+      </table></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ RETENTION LEDGER · BILL HOLDS (v161 · M38) ══════════════ -->
+  <div id="paytab-ret" style="display:none;"><div id="ret_pane_ret"></div></div>
+  <div id="paytab-bhold" style="display:none;"><div id="ret_pane_hold"></div></div>
+
+  <!-- ══════════════ TDS LEDGER (v161 · M38) ══════════════ -->
+  <div id="paytab-tds" style="display:none;">
+    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>🧾 TDS Ledger</h2></div>
+      <div class="sp"><span class="lbl" style="align-self:center">FY</span><select id="tds_fy" onchange="PAY.loadTds(true)" style="padding:4px 8px"></select><button class="btn btn-ghost btn-sm" onclick="PAY.loadTds(true)">↻ Refresh</button></div></div>
+    <div class="pay-steps">
+      <div class="pay-step on" id="tds_step1" onclick="PAY.tdsStep(1)"><span class="num">1</span><span class="ttl">What Are You Remitting?</span><span class="n" id="tds_s1n"></span></div>
+      <div class="pay-step" id="tds_step2" onclick="PAY.tdsStep(2)"><span class="num">2</span><span class="ttl">Challan Details</span><span class="n" id="tds_s2n">Nothing Selected Yet</span></div>
+    </div>
+    <div class="pay-kpis" id="tds_kpis"></div>
+    <div class="card" id="tds_card1">
+      <div class="pay-tb">
+        <span class="seg" id="tds_segView"><span class="on" data-v="pend" onclick="PAY.tdsView('pend',this)">Pending Remittance</span><span data-v="all" onclick="PAY.tdsView('all',this)">All Deductions</span><span data-v="chal" onclick="PAY.tdsView('chal',this)">Challans</span><span data-v="ded" onclick="PAY.tdsView('ded',this)">Deductee Summary</span></span>
+        <input id="tds_q" placeholder="🔍 Vendor / PAN / bill…" style="width:210px" oninput="PAY.renderTds()" autocomplete="off">
+        <span class="lbl">Section</span>
+        <span class="seg" id="tds_segSec"></span>
+        <button class="btn btn-ghost btn-sm" onclick="PAY.tdsAll()" style="margin-left:auto">☑ Select All Pending</button><span class="lbl" id="tds_n"></span>
+      </div>
+      <div class="bwrap"><div class="bscroll" id="tds_wrap"><div class="pay-empty">Loading…</div></div></div>
+    </div>
+    <div class="card" id="tds_card2" style="display:none;"></div>
+    <div class="pay-foot" id="tds_foot" style="display:none;">
+      <div><div class="k">Pending (Filtered)</div><div class="v" id="tds_fTot">₹0</div></div>
+      <div><div class="k">Selected</div><div class="v sel" id="tds_fSel">0 Rows</div></div>
+      <div><div class="k">Payment · Challans</div><div class="v sel" id="tds_fCh">0</div></div>
+      <div><div class="k">Remitting Now</div><div class="v sel" style="color:#fdba74" id="tds_fPay">₹0</div></div>
+      <div class="sp"><span class="err" id="tds_fErr"></span>
+        <button class="btn btn-ghost" id="tds_fNext" style="color:#fff;border-color:#3d5578;background:transparent" onclick="PAY.tdsStep(2)">Next: Challan Details →</button>
+        <button class="btn btn-primary" id="tds_fBtn" style="display:none" onclick="PAY.tdsSubmit()">✓ Submit For Approval</button></div>
+    </div>
+  </div>
+
   <!-- ══════════════ APPROVALS ══════════════ -->
   <div id="paytab-approve" style="display:none;">
-    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>✅ Payment Approvals</h2>
-      <div class="m">Balances apply to bills only when a transfer is approved. Rejecting applies nothing.</div></div>
+    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>✅ Payment Approvals</h2></div>
       <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadApprovals()">↻ Refresh</button></div></div>
     <div class="card">
       <div class="bwrap"><table class="pay-rt">
@@ -4821,8 +4962,7 @@ html,body{touch-action:pan-x pan-y}
 
   <!-- ══════════════ PAYMENT HOLDS ══════════════ -->
   <div id="paytab-holds" style="display:none;">
-    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>🔒 Payment Holds</h2>
-      <div class="m">A hold stops money immediately. Lifting one needs approval.</div></div>
+    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>🔒 Payment Holds</h2></div>
       <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadHolds()">↻ Refresh</button></div></div>
     <div class="card">
       <div class="pay-tb">
@@ -4841,14 +4981,12 @@ html,body{touch-action:pan-x pan-y}
         <thead><tr><th class="l">Vendor</th><th class="l">Bill · order</th><th class="l">Due</th><th>Outstanding</th><th class="l">Hold reason / request</th><th class="l">Action</th></tr></thead>
         <tbody id="hold_body"><tr><td colspan="6" class="pay-empty">Loading…</td></tr></tbody>
       </table></div></div>
-      <div class="rpt-note" style="margin-top:10px"><b>How holds work.</b> A QS places a hold and it takes effect at once — the bill disappears from Record Payment and cannot be paid. Lifting a hold is a two-step: the QS requests it with a reason, and an approver decides. Every action is written to an audit log that survives the hold being lifted.</div>
     </div>
   </div>
 
   <!-- ══════════════ HISTORY ══════════════ -->
   <div id="paytab-hist" style="display:none;">
-    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>🧾 Payment History</h2>
-      <div class="m">Every transfer recorded against this project.</div></div>
+    <div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>🧾 Payment History</h2></div>
       <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadHistory()">↻ Refresh</button></div></div>
     <div class="card">
       <div class="pay-tb">
@@ -4859,7 +4997,7 @@ html,body{touch-action:pan-x pan-y}
         </select>
         <span class="lbl">Type</span>
         <select id="payHist_type" onchange="PAY.renderHistory()">
-          <option value="">All</option><option value="Transfer">Transfer</option><option value="Credit Note">Credit Note</option>
+          <option value="">All</option><option value="Transfer">Transfer</option><option value="Credit Note">Credit Note</option><option value="TDS Challan">TDS Challan</option>
         </select>
         <label class="lbl" style="display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="payHist_showDel" onchange="PAY.renderHistory()"> Show deleted</label>
         <span class="lbl">From</span><input type="date" id="payHist_from" onchange="PAY.renderHistory()">
@@ -4888,7 +5026,7 @@ html,body{touch-action:pan-x pan-y}
 
   <!-- ══════════════ MODALS ══════════════ -->
   <div class="pay-ovl" id="pay_oaOvl"><div class="pay-pop">
-    <div class="ph"><div><h3>On-account payment</h3><div class="m">Money paid with no bill behind it. Recovered against future bills of the same order.</div></div><button class="x" onclick="PAY.close('pay_oaOvl')">✕</button></div>
+    <div class="ph"><div><h3>On-account payment</h3></div><button class="x" onclick="PAY.close('pay_oaOvl')">✕</button></div>
     <div class="pb">
       <div class="pay-grid2">
         <div style="position:relative"><label>Order</label>
@@ -4905,7 +5043,7 @@ html,body{touch-action:pan-x pan-y}
   </div></div>
 
   <div class="pay-ovl" id="pay_relOvl"><div class="pay-pop">
-    <div class="ph"><div><h3>Retention / hold release</h3><div class="m">Returns money previously deducted on a bill. Approved as part of the transfer.</div></div><button class="x" onclick="PAY.close('pay_relOvl')">✕</button></div>
+    <div class="ph"><div><h3>Retention / hold release</h3></div><button class="x" onclick="PAY.close('pay_relOvl')">✕</button></div>
     <div class="pb">
       <div class="pay-grid3">
         <div><label>Kind</label><select id="pay_relKind" onchange="PAY.relKind()"><option value="retention_release">Retention release</option><option value="hold_release">Hold release</option></select></div>
@@ -4920,6 +5058,35 @@ html,body{touch-action:pan-x pan-y}
       <div id="pay_relBody"></div>
     </div>
     <div class="pf"><button class="btn btn-ghost" onclick="PAY.close('pay_relOvl')">Cancel</button><button class="btn btn-primary" id="pay_relAdd" onclick="PAY.addRel()" disabled>Add to payment</button></div>
+  </div></div>
+
+  <!-- v161 · M38 · TDS split (POB) / override (WOB · HOB) -->
+  <div class="pay-ovl" id="pay_tdsOvl"><div class="pay-pop" style="width:800px">
+    <div class="ph"><div><h3><span id="tds_mTtl">TDS</span> · <span id="tds_mBill"></span></h3><div class="m" id="tds_mSub"></div></div><button class="x" onclick="PAY.close('pay_tdsOvl')">✕</button></div>
+    <div class="pb">
+      <div class="pay-chips" id="tds_mChips"></div>
+      <div class="pay-ovr" id="tds_mOvr" style="display:none"></div>
+      <div class="pay-grid3" style="margin-top:10px">
+        <div><label>Deduction Date</label><input type="date" id="tds_mDate" onchange="PAY.tdsCalc()"><div class="pay-h" id="tds_mDateH"></div></div>
+        <div><label>TDS Period · Deposit Due</label><div id="tds_mPer" style="font-size:13px;font-weight:700;color:var(--navy-print);padding:6px 0"></div></div>
+        <div id="tds_mRsnW" style="display:none"><label>Override Reason <span style="color:var(--danger)">*</span></label><input id="tds_mRsn" placeholder="e.g. Contractor is an individual — 1% under 194C" oninput="PAY.tdsCalc()"></div>
+      </div>
+      <div class="pay-grid4" style="margin-top:9px">
+        <div style="grid-column:span 2"><label style="display:flex;align-items:center">Section<a href="#" class="pay-addsec" onclick="PAY.nsOpen();return false">＋ New Section</a></label><select id="tds_mSec" onchange="PAY.tdsSec()"></select></div>
+        <div><label>TDS On</label><span class="seg" id="tds_mBasis" style="display:flex"><span class="on" data-v="basic" style="flex:1;text-align:center" onclick="PAY.tdsBasis('basic')">Basic</span><span data-v="basic_gst" style="flex:1;text-align:center" onclick="PAY.tdsBasis('basic_gst')">Basic + GST</span></span><div class="pay-h" id="tds_mBasisH"></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>TDS Base</label><input type="number" id="tds_mBase" class="pay-amt" style="width:100%" step="0.01" oninput="PAY.tdsCalc()" onwheel="this.blur()"></div><div><label>Rate %</label><input type="number" id="tds_mRate" class="pay-amt" style="width:100%" step="0.001" oninput="PAY.tdsCalc()" onwheel="this.blur()"></div></div>
+      </div>
+      <div class="pay-nsec" id="tds_nsBox" style="display:none">
+        <div style="font-size:12px;font-weight:700;color:var(--navy-print);margin-bottom:7px">New TDS Section <span style="font-weight:500;color:var(--muted);font-size:11px">· saved to the TDS Section master for every later entry</span></div>
+        <div class="pay-grid4"><div><label>Section Code</label><input id="tds_nsCode" placeholder="e.g. 194H"></div><div><label>Nature Of Payment</label><input id="tds_nsNature" placeholder="e.g. Commission / Brokerage"></div>
+          <div><label>Default Rate %</label><input type="number" id="tds_nsRate" class="pay-amt" style="width:100%" step="0.001" onwheel="this.blur()"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>Ind / HUF %</label><input type="number" id="tds_nsInd" class="pay-amt" style="width:100%" step="0.001" placeholder="Same" onwheel="this.blur()"></div><div><label>No-PAN %</label><input type="number" id="tds_nsNopan" class="pay-amt" style="width:100%" step="0.001" placeholder="20" onwheel="this.blur()"></div></div></div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px"><span class="pay-warn" style="display:inline;margin:0" id="tds_nsErr"></span><span style="margin-left:auto"></span><button class="btn btn-ghost btn-sm" onclick="PAY.nsClose()">Cancel</button><button class="btn btn-primary btn-sm" onclick="PAY.nsSave()">Save Section</button></div>
+      </div>
+      <div class="pay-split"><div class="a"><div class="k">Outstanding On Bill</div><div class="v" id="tds_mOut">₹0</div></div><div class="b"><div class="k">To Vendor's Account</div><div class="v" id="tds_mVen">₹0</div></div><div class="c"><div class="k">To TDS Ledger</div><div class="v" id="tds_mTds">₹0</div></div></div>
+      <div id="tds_mPrev"></div>
+      <div id="tds_mMsgs"></div>
+    </div>
+    <div class="pf"><button class="btn btn-ghost" id="tds_mRm" onclick="PAY.tdsRemove()" style="color:var(--danger);border-color:#fecaca;margin-right:auto">Remove TDS · Back To Nil</button><span style="font-size:11px;color:var(--muted);margin-right:auto" id="tds_mFoot"></span><button class="btn btn-ghost" onclick="PAY.close('pay_tdsOvl')">Cancel</button><button class="btn btn-primary" id="tds_mGo" onclick="PAY.tdsApply()">Apply TDS</button></div>
   </div></div>
 
   <div class="pay-ovl" id="pay_rvOvl"><div class="pay-pop" style="width:860px">
@@ -5060,7 +5227,6 @@ html,body{touch-action:pan-x pan-y}
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
         <div>
           <h3 style="margin:0;border:none;padding:0;">Activity Master</h3>
-          <div class="section-sub">Grouped by Activity Group → Sub-head → Activity</div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <div style="position:relative;">
@@ -5099,7 +5265,7 @@ html,body{touch-action:pan-x pan-y}
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
         <div>
           <h3 style="margin:0;border:none;padding:0;">Material Master</h3>
-          <div class="section-sub">Grouped by Material Group → Sub-head → Material &nbsp;·&nbsp; <span id="mmTotalCount" style="font-weight:600;color:var(--accent);">…</span></div>
+          <div class="section-sub"><span id="mmTotalCount" style="font-weight:600;color:var(--accent);">…</span></div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <div style="position:relative;">
@@ -5288,7 +5454,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">Material Indent Requests</div>
-        <div class="section-sub">Site Manager raises indents for required materials</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newMIR" onclick="newMIR()">+ New MIR</button>
@@ -5444,7 +5609,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">RFQ &amp; Quote Comparison</div>
-        <div class="section-sub">Procurement raises RFQ, collects quotes, compares vendors for PM approval</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newRFQ" onclick="newRFQ()">+ New RFQ</button>
@@ -5507,7 +5671,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">Purchase Orders</div>
-        <div class="section-sub">Procurement creates POs from approved quote comparisons</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newPO" onclick="newPO()">+ New Purchase Order</button>
@@ -5678,7 +5841,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">Goods Receipt Notes</div>
-        <div class="section-sub">Store Executive records material receipts against approved POs</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newGRN" onclick="newGRN()">+ New GRN</button>
@@ -5693,7 +5855,6 @@ html,body{touch-action:pan-x pan-y}
         <h3 id="grn_formTitle" style="margin:0;">New Goods Receipt Note</h3>
         <button class="btn btn-ghost btn-sm" onclick="grnScanPick(false)" title="Attach the vendor invoice / delivery challan to this GRN (no reading)">📎 Attach invoice / challan</button>
         <button class="btn btn-secondary btn-sm" onclick="grnScanPick(true)" title="Read the attached document, find the PO and prefill the GRN for your verification">⇪ Scan invoice / challan</button>
-        <span class="muted" style="font-size:12px;">Attach only stores the document with the GRN · Scan finds the PO and prefills · manual entry works either way</span>
       </div>
       <div class="grid-4">
         <div class="field"><label>GRN Number</label><input id="grn_number" readonly style="opacity:.6;"></div>
@@ -5754,7 +5915,6 @@ html,body{touch-action:pan-x pan-y}
       <h3 style="display:flex;align-items:center;gap:10px;">💵 New Direct Purchase GRN
         <span style="font-size:11px;background:#ad6800;color:#fff;padding:2px 8px;border-radius:3px;font-weight:600;">DIRECT</span>
       </h3>
-      <div class="muted" style="font-size:12px;margin-bottom:12px;">Materials purchased on cash, no PO reference. Will follow regular verification flow.</div>
       <div class="grid-4">
         <div class="field"><label>GRN Number</label><input id="cgrn_number" readonly style="opacity:.6;"></div>
         <div class="field"><label class="req">GRN Date</label><input type="date" id="cgrn_date"></div>
@@ -5861,7 +6021,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">GRN Billing — PO Bills (POB)</div>
-        <div class="section-sub">Planning/QS clubs verified GRNs into a bill for PM approval</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newPOB" onclick="newPOB()">+ New PO Bill</button>
@@ -5970,7 +6129,6 @@ html,body{touch-action:pan-x pan-y}
       <h3 id="cpob_formTitle" style="display:flex;align-items:center;gap:10px;">💵 New Direct Purchase Bill
         <span style="font-size:11px;background:#ad6800;color:#fff;padding:2px 8px;border-radius:3px;font-weight:600;">DIRECT</span>
       </h3>
-      <div class="muted" style="font-size:12px;margin-bottom:12px;">Bill against cash-purchase GRNs from a single vendor. Follows the same PM approval and PRR flow.</div>
 
       <!-- Step 1: Select Vendor -->
       <div class="card" style="background:#fff7e6;border-color:#ffd591;">
@@ -6144,7 +6302,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">Material Issue (MIS)</div>
-        <div class="section-sub">Store Executive issues materials from store to work fronts</div>
       </div>
       <div>
         <button class="btn btn-primary" id="btn_newMIS" onclick="newMIS()">+ New Issue</button>
@@ -6277,7 +6434,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0;">
       <div>
         <div class="section-title">Stock Balance</div>
-        <div class="section-sub">Live stock — GRN received minus approved MIS issued. Reserved = pending approval MIS.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <button class="btn btn-ghost" onclick="loadStockBalance()">↻ Refresh</button>
@@ -6319,7 +6475,6 @@ html,body{touch-action:pan-x pan-y}
     <div class="row" style="justify-content:space-between;margin:16px 0 8px;">
       <div>
         <div class="section-title">Opening Stock Upload</div>
-        <div class="section-sub">Bulk upload opening stock as on 1st April. Admin only. Downloads a pre-defined Excel template — fill and upload.</div>
       </div>
     </div>
 
@@ -7145,6 +7300,10 @@ const PGS_PERM_MAP = {
   canConfirmPayment:[['payment_confirm','C']],
   canCreatePayConfirm:[['payment_confirm','C']],
   canApprovePayConfirm:[['payment_confirm','A']],
+  canSplitTDS:[['tds_split','C']],            // v161 · M38 · POB TDS decided in Record Payment
+  canOverrideTDS:[['tds_override','C']],      // v161 · M38 · WOB / HOB TDS override
+  canAddTDSSection:[['tds_section','C']],     // v161 · M38
+  canRemitTDS:[['tds_remit','C']],            // v161 · M38 · TDS challan voucher
   // Masters
   canAddActivityMaster:[['masters_activity','C']],     canApproveActivityMaster:[['masters_activity','A']],
   canAddContractorMaster:[['masters_contractor','C']], canApproveContractorMaster:[['masters_contractor','A']],
@@ -10980,7 +11139,6 @@ const DPR = (function () {
               <span><b><span class="pill ${l.kind === 'H' ? 'p-vio' : 'p-teal'}">${l.kind}</span> ${esc(l.activity)}</b><i>${fmt(l.est_qty)} ${esc(l.uom || '')}${l.in_group ? ' · already on "' + esc(l.in_group) + '"' : ''}${l.finished ? ' · Finished' : ''}</i></span></label>`;
           });
         });
-        h += '<div class="dpr-note">Ticked Activities Report Together As One Group. "Each On Its Own" Makes A Card Per Activity.</div>';
       }
     }
     $('dpr_st').innerHTML = h;
@@ -11340,7 +11498,7 @@ const DPR = (function () {
        <div class="${st4}"><div class="sn"><i>4</i>Resolved · Closed</div>${auto ? '<div class="f"><i>System</i><b style="color:var(--dv)">Progress Reported On This Activity — Auto-Closed ' + dsh(h.closed_on) + ', Confirm Below</b></div>' : ''}<div class="f"><i>Resolution · What Was Done</i><textarea ${ro || !cls ? 'disabled' : ''} placeholder="How It Was Resolved…" onchange="DPR.hSet('${h.id}','res',this.value)">${esc(e.res)}</textarea></div><div class="f"><i>Outcome</i><select ${ro || !cls ? 'disabled' : ''} onchange="DPR.hSet('${h.id}','outcome',this.value)">${['Resolved', 'Withdrawn · Not A Hindrance', 'Work Re-Planned Around It', 'Scope Dropped'].map(x => `<option ${e.outcome === x ? 'selected' : ''}>${x}</option>`).join('')}</select></div><div class="f"><i>Hindrance Close Date${h.close_overridden ? ' · <span class="ovr">Overridden</span>' : ''}</i><input type="date" ${ro || !cls ? 'disabled' : ''} value="${e.cd || ''}" min="${h.from_date}" max="${S.mToday || ''}" onchange="DPR.hSet('${h.id}','cd',this.value)"></div>${closed ? (can ? `<button class="go" style="background:#fff;color:var(--ink2);border:1px solid var(--ln)" onclick="DPR.hReopen('${h.id}')">Reopen</button>` : '') : auto ? `<button class="go ok" ${cls ? '' : 'disabled'} onclick="DPR.hConfirm('${h.id}')">Confirm Close</button>` : `<button class="go ok" ${cls ? '' : 'disabled'} onclick="DPR.hClose('${h.id}')">Close Hindrance</button>`}</div>
       </div>
       <div class="tl">${(h.timeline || []).map(x => `<div class="e"><span>${dts(x.at)}</span><div><b>${esc(hKind(x))}</b><div class="who">${esc(x.by || 'System')}</div></div></div>`).join('')}</div>
-      <div class="acts">${can ? `<button class="btn" onclick="DPR.hNote('${h.id}')">＋ Note</button>` : ''}<span class="note">Days Lost = Hindrance Start → Close (Or Today) · Engineers See Allocation, Target And Instruction On Their Card; They Cannot Close.</span></div></div>` : ''}</div>`;
+      <div class="acts">${can ? `<button class="btn" onclick="DPR.hNote('${h.id}')">＋ Note</button>` : ''}</div></div>` : ''}</div>`;
   }
   const hKind = x => { const d = x.data || {}; switch (x.kind) { case 'reported': return 'Raised · ' + (d.reason_code || ''); case 'note': return 'Note: ' + (x.note || ''); case 'start_changed': return 'Start Date ' + dsh(d.from) + ' → ' + dsh(d.to); case 'allocated': case 'reallocated': return (x.kind === 'allocated' ? 'Allocated To ' : 'Re-Allocated To ') + (d.allocated_to || '') + (d.target_on ? ' · Target ' + dsh(d.target_on) : '') + (x.note ? ' · ' + x.note : ''); case 'classified': case 'reclassified': return 'Classified ' + (PARTY_TXT[d.party] || d.party || '') + (d.eot ? ' · EOT' : '') + (d.claim ? ' · Claim' : '') + (d.delay ? ' · Contractor Delay' : '') + (x.note ? ' · ' + x.note : ''); case 'closed': return 'Closed ' + dsh(d.closed_on) + (d.outcome ? ' · ' + d.outcome : '') + (x.note ? ' · ' + x.note : ''); case 'auto_closed': return 'Auto-Closed · ' + (x.note || ''); case 'close_confirmed': return 'Auto-Close Confirmed · Closed ' + dsh(d.closed_on); case 'reopened': return 'Reopened' + (x.note ? ' · ' + x.note : ''); default: return x.kind; } };
   const hWho = () => [...new Set([].concat((S._cons || []).map(conName), (S.hind || []).map(h => h.allocated_to).filter(Boolean), ['Site Supervisor', 'Project Manager', 'Purchase', 'Architect', 'Client']))];
@@ -12835,7 +12993,8 @@ Object.assign(window.RPT,{
    ═════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
-const P={bills:[],orders:[],hist:[],show:'due',type:'all',split:'one',sel:{},extra:[],xf:{},xopen:{},loaded:false,busy:false,stepNo:1,appr:[],apprAlloc:{},histAlloc:{},aopen:{},hopen:{},hsortK:'payment_date',hsortD:-1,holds:[],holdView:'held',holdLog:[],holdLogErr:null};
+const P={bills:[],orders:[],hist:[],show:'due',type:'all',split:'one',sel:{},extra:[],xf:{},xopen:{},loaded:false,busy:false,stepNo:1,appr:[],apprAlloc:{},histAlloc:{},aopen:{},hopen:{},hsortK:'payment_date',hsortD:-1,holds:[],holdView:'held',holdLog:[],holdLogErr:null,
+  tds:{},tdsInfo:{},sections:[],vendors:{},adv:[],allBills:[],advPur:'all',advSt:'open',ret:null,relSel:{},relKind:'retention',retQ:{},retShow:{},tdsL:null,tdsSel:{},tdsView:'pend',tdsSec:'all',tdsStepNo:1,tdsCh:{},tdsPay:null,tdsFy:null,pzActive:'x0'};   // v161 · M38
 const $=id=>document.getElementById(id);
 const N=v=>Number(v||0);
 const E=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -12854,23 +13013,29 @@ function PB(l){try{pbShow(l)}catch(e){}}
 function PBD(){try{pbDone()}catch(e){}}
 function TOAST(m,t){try{toast(m,t||'info',6000)}catch(e){console.warn(m)}}
 
-const os=b=>N(b.net_payable)-N(b.paid);
-const ageOf=b=>{const d=b.due_date?new Date(b.due_date):null;return d?Math.round((new Date($('pay_date').value||todayISO())-d)/864e5):0;};
-
 /* ── load ───────────────────────────────────────────────────────── */
 async function reload(){
   if(P.busy)return; P.busy=true;
   $('pay_groups').innerHTML='<div class="pay-empty">Loading bills…</div>';
   PB('Loading payables…');
   try{
-    const led=await sb.rpc('rpc_vendor_ledger',{p_asof:$('pay_date').value||todayISO()});
+    const [led,tl]=await Promise.all([
+      sb.rpc('rpc_vendor_ledger',{p_asof:$('pay_date').value||todayISO()}),
+      sb.rpc('rpc_tds_ledger',{p_fy:null})            // v161 · sections + per-bill TDS facts
+    ]);
     if(led.error)throw led.error;
     const d=led.data||{};
+    P.allBills=d.bills||[];
     P.bills=(d.bills||[]).filter(b=>['Unpaid','Partial','Paid'].indexOf(b.status)>=0)
       .map(b=>({no:b.bill_number,t:b.bill_type,v:b.vendor_name,ord:b.order_no,date:b.bill_date,due_date:b.due_date,
                 net_payable:N(b.net_payable),paid:N(b.paid),ret:N(b.retention),hold:N(b.hold),
+                inv:N(b.invoice_value),basic:N(b.basic),gst:N(b.gst),adv:N(b.adv_recovery),tds:N(b.tds),
                 blocked:!!b.payment_blocked,br:b.block_reason||''}));
     P.orders=(d.orders||[]).map(o=>({no:o.order_no,t:o.order_type,v:o.vendor_name,status:o.status,total:N(o.total),mob:N(o.mob_advance)}));
+    P.adv=d.advances||[];
+    P.vendors={}; (d.vendors||[]).forEach(v=>{P.vendors[vk(v.vendor)]=v});
+    if(!tl.error&&tl.data){ tdsAbsorb(tl.data); }
+    else console.warn('PAY: TDS ledger unavailable',tl.error);
     P.loaded=true;
     render();
   }catch(e){
@@ -12879,6 +13044,15 @@ async function reload(){
     TOAST('Payments: '+(e.message||e),'error');
   }finally{P.busy=false;PBD();}
 }
+// v161: sections master + per-bill TDS facts (section / basis / base / date) keyed by bill number
+function tdsAbsorb(data){
+  P.tdsL=data; P.sections=(data.sections||[]).filter(s=>s.is_active!==false);
+  P.tdsInfo={}; (data.deductions||[]).forEach(r=>{ if(r.status!=='Split In Approval')P.tdsInfo[r.bill_number]=r; });
+}
+// v161: a TDS decision in the cart changes what the vendor is owed before approval
+const tdsDelta=b=>{const t=P.tds[b.no];return t?N(t.amount)-N(b.tds):0;};
+const os=b=>N(b.net_payable)-N(b.paid)-tdsDelta(b);
+const ageOf=b=>{const d=b.due_date?new Date(b.due_date):null;return d?Math.round((new Date($('pay_date').value||todayISO())-d)/864e5):0;};
 
 /* ── filters ────────────────────────────────────────────────────── */
 function seg(el){if(el&&el.parentNode)Array.from(el.parentNode.children).forEach(s=>s.classList.toggle('on',s===el));}
@@ -12888,7 +13062,7 @@ function visible(){
     if(P.type!=='all'&&b.t!==P.type)return false;
     if(P.show!=='all'&&b.blocked)return false;
     if(P.show==='over'&&ageOf(b)<=0)return false;
-    if(os(b)<=0.005)return false;
+    if(os(b)<=0.005&&!P.tds[b.no])return false;
     if(q&&!(vk(b.v).includes(q)||String(b.no).toLowerCase().includes(q)||String(b.ord||'').toLowerCase().includes(q)))return false;
     return true;
   });
@@ -12906,7 +13080,7 @@ function render(){
     : vis.length+' bills · '+names.length+' vendors';
   const sc=document.querySelector('#mod-payments .bscroll'), top=sc?sc.scrollTop:0;
   const af=document.activeElement, afid=(af&&af.id)?af.id:null, pos=af?af.selectionStart:null;
-  let body='';
+  let body='';const T={inv:0,ded:0,net:0,paid:0,os:0};
   names.forEach(v=>{
     const bs=byV[v], live=bs.filter(b=>!b.blocked);
     const selRows=bs.filter(b=>P.sel[b.no]!=null);
@@ -12919,33 +13093,51 @@ function render(){
       '<span><span class="vnm">'+E(v)+'</span>'+
       '<span class="vmeta">'+bs.length+' bill'+(bs.length>1?'s':'')+' · <b>'+INR(tot)+'</b> o/s</span>'+
       (selRows.length?'<span class="vsel">'+selRows.length+' sel · '+INR(selAmt)+'</span>':'')+'</span></label></td>';
-    bs.forEach((b,i)=>{body+=row(b,i===0?vc:'',i===0)});
+    bs.forEach((b,i)=>{body+=row(b,i===0?vc:'',i===0);T.inv+=b.inv;T.ded+=dedOf(b);T.net+=b.inv-dedOf(b);T.paid+=b.paid;T.os+=b.blocked?0:os(b);});
   });
   $('pay_groups').innerHTML=names.length?
-    '<div class="bwrap"><div class="bscroll"><table class="pay-rt">'+
-    '<colgroup><col style="width:22%"><col style="width:30px"><col style="width:19%"><col style="width:14%"><col style="width:10%"><col style="width:11%"><col style="width:8%"><col style="width:11%"><col style="width:118px"></colgroup>'+
-    '<thead><tr><th class="l">Vendor</th><th></th><th class="l">Bill</th><th class="l">Order</th><th class="l">Due</th><th>Net payable</th><th>Paid</th><th>Outstanding</th><th>Paying now</th></tr></thead>'+
+    '<div class="bwrap"><div class="bscroll"><table class="pay-rt pay-grid">'+
+    '<colgroup><col style="width:12%"><col style="width:30px"><col style="width:17%"><col style="width:7%"><col style="width:10%"><col style="width:15%"><col style="width:9%"><col style="width:8%"><col style="width:9%"><col style="width:104px"></colgroup>'+
+    '<thead><tr><th class="l">Vendor</th><th></th><th class="l">Bill<span class="pay-sub" style="color:#93a7c9">Order</span></th><th class="l">Due</th>'+
+    '<th>Billed<span class="pay-sub" style="color:#93a7c9">Basic · GST</span></th><th>Deductions<span class="pay-sub" style="color:#93a7c9">TDS · Adv · Ret · Hold</span></th>'+
+    '<th>Net Payable</th><th>Paid</th><th>Outstanding</th><th>Paying Now</th></tr>'+
+    '<tr class="pay-tot"><td class="l" colspan="4">Total · '+vis.length+' Bills · '+names.length+' Vendors</td><td>'+INR(T.inv)+'</td><td>'+INR(T.ded)+'</td><td>'+INR(T.net)+'</td><td>'+INR(T.paid)+'</td><td>'+INR(T.os)+'</td><td></td></tr></thead>'+
     '<tbody>'+body+'</tbody></table></div></div>'
     :'<div class="pay-empty">No bills match. Try “All incl. blocked”, or clear the search.</div>';
   const sc2=document.querySelector('#mod-payments .bscroll'); if(sc2)sc2.scrollTop=top;
   if(afid){const el=$(afid); if(el&&el.focus){el.focus(); if(pos!=null&&el.setSelectionRange){try{el.setSelectionRange(pos,pos)}catch(e){}}}}
   renderXfers(); totals();
 }
+// v161: deductions as the bill will carry them once the cart is approved
+const tdsNow=b=>P.tds[b.no]?N(P.tds[b.no].amount):N(b.tds);
+const dedOf=b=>tdsNow(b)+N(b.adv)+N(b.ret)+N(b.hold);
+function tdsCell(b){
+  const t=P.tds[b.no], i=P.tdsInfo[b.no]||null, onBill=N(b.tds)>0;
+  const sec=(i&&i.section)||'';
+  if(t&&b.t==='POB')return '<a class="pay-tdsl set" onclick="PAY.tdsOpen(\''+Q(b.no)+'\')"><span class="pay-dk">TDS</span> '+INR2(t.amount)+' <span class="pay-dm">'+E(t.section)+' · '+(t.basis==='basic_gst'?'B+G':'Basic')+' ✎</span></a>';
+  if(t)return '<a class="pay-tdsl set" onclick="PAY.tdsOpen(\''+Q(b.no)+'\')" title="'+E(t.reason||'')+'"><span class="pay-dk">TDS</span> '+INR2(t.amount)+' <span class="pay-dm">'+E(t.section)+' · Overridden ✎</span></a> <s class="pay-dm">'+INR(b.tds)+'</s>';
+  if(b.t==='POB'&&!onBill)return '<span class="pay-dk">TDS</span> <span class="pay-dm">Nil</span> '+(hasPerm('canSplitTDS')?'<a class="pay-tdsl" onclick="PAY.tdsOpen(\''+Q(b.no)+'\')">＋ Add TDS</a>':'');
+  if(b.t==='POB')return '<span class="pay-dk">TDS</span> '+INR(b.tds)+' <span class="pay-dm">🔒 '+E(sec)+'</span>';
+  return '<span class="pay-dk">TDS</span> '+INR(b.tds)+' <span class="pay-dm">'+E(sec||'On Bill')+(i&&i.override_note?' · Rev.':'')+'</span> '+(hasPerm('canOverrideTDS')&&b.paid<0.005?'<a class="pay-tdsl" onclick="PAY.tdsOpen(\''+Q(b.no)+'\')">✎ Override</a>':'');
+}
 function row(b,vc,first){
   const k=b.no, on=P.sel[k]!=null, a=ageOf(b), o=os(b);
   const cls=(first?'vend ':'')+(b.blocked?'blk':(on?'on':''));
+  const billCell='<td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><span class="pay-pill '+String(b.t).toLowerCase()+'">'+E(b.t)+'</span><b>'+E(b.no)+'</b><span class="pay-sub">'+E(b.ord||'')+'</span></td>';
+  const dl2=[N(b.adv)?'Adv '+INR(b.adv):'',N(b.ret)?'Ret '+INR(b.ret):'',N(b.hold)?'Hold '+INR(b.hold):''].filter(Boolean).join(' · ');
+  const dedCell='<td style="white-space:normal;line-height:1.25">'+(dedOf(b)?INR2(dedOf(b)):'<span class="pay-dm">—</span>')+
+    '<span class="pay-sub" style="color:var(--text)">'+tdsCell(b)+'</span>'+(dl2?'<span class="pay-sub">'+dl2+'</span>':'')+'</td>';
+  const billedCell='<td>'+INR2(b.inv)+'<span class="pay-sub">'+INR(b.basic)+' · '+INR(b.gst)+'</span></td>';
   if(b.blocked)return '<tr class="'+cls+'">'+vc+
-    '<td title="'+E(b.br)+'">🔒</td>'+
-    '<td class="l"><b>'+E(b.no)+'</b> <span class="pay-pill lock">HOLD</span></td>'+
-    '<td class="l">'+E(b.ord||'')+'</td><td class="l">'+D(b.due_date)+'</td>'+
-    '<td>'+INR2(b.net_payable)+'</td><td>—</td><td>'+INR2(o)+'</td>'+
+    '<td title="'+E(b.br)+'">🔒</td>'+billCell+
+    '<td class="l">'+D(b.due_date)+'</td>'+billedCell+dedCell+
+    '<td>'+INR2(b.inv-dedOf(b))+'</td><td>'+(N(b.paid)?INR2(b.paid):'—')+'</td><td>'+INR2(o)+'</td>'+
     '<td class="l" style="font-size:10.5px;color:#b91c1c;white-space:normal">'+E(b.br||'on payment hold')+'</td></tr>';
   return '<tr class="'+cls+'">'+vc+
-    '<td><input type="checkbox" '+(on?'checked':'')+' onclick="PAY.pick(\''+Q(k)+'\',this.checked)"></td>'+
-    '<td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><b>'+E(b.no)+'</b> <span class="pay-pill '+String(b.t).toLowerCase()+'">'+E(b.t)+'</span></td>'+
-    '<td class="l" style="color:var(--muted);white-space:normal;word-break:break-word;line-height:1.25">'+E(b.ord||'')+'</td>'+
+    '<td><input type="checkbox" '+(on?'checked':'')+' onclick="PAY.pick(\''+Q(k)+'\',this.checked)"></td>'+billCell+
     '<td class="l" style="white-space:normal;line-height:1.25">'+D(b.due_date)+'<span style="font-size:10px;display:block" class="'+(a>0?'pay-ov':'')+'">'+(a>0?a+'d late':a===0?'today':'in '+(-a)+'d')+'</span></td>'+
-    '<td>'+INR2(b.net_payable)+'</td><td>'+(N(b.paid)?INR2(b.paid):'—')+'</td>'+
+    billedCell+dedCell+
+    '<td><b>'+INR2(b.inv-dedOf(b))+'</b></td><td>'+(N(b.paid)?INR2(b.paid):'—')+'</td>'+
     '<td style="color:var(--warn);font-weight:700">'+INR2(o)+'</td>'+
     '<td><input type="number" class="pay-amt" id="pamt_'+E(k)+'" value="'+(on?P.sel[k]:'')+'" placeholder="0.00" step="0.01" '+
     'oninput="PAY.setAmt(\''+Q(k)+'\',this.value)" onwheel="this.blur()" '+(on?'':'disabled')+'>'+
@@ -12978,7 +13170,7 @@ function lines(){
   const L=[];
   Object.keys(P.sel).forEach(k=>{
     const b=P.bills.find(x=>x.no===k);
-    if(b&&N(P.sel[k])>0.005)L.push({kind:'bill',label:b.no,billNo:b.no,billType:b.t,vendor:b.v,amount:N(P.sel[k]),max:os(b)});
+    if(b&&N(P.sel[k])>0.005)L.push({kind:'bill',label:b.no,billNo:b.no,billType:b.t,vendor:b.v,amount:N(P.sel[k]),max:os(b),tds:P.tds[k]||null});
   });
   P.extra.forEach((e,i)=>L.push(Object.assign({idx:i},e)));
   return L;
@@ -13015,8 +13207,8 @@ function renderXfers(){
   const one=P.split==='one';
   const nvAll=Object.keys(lines().reduce((m,l)=>{m[l.vendor]=1;return m},{})).length;
   $('pay_xfers').innerHTML='<div class="bwrap"><table class="pay-rt pay-xt">'+
-    '<colgroup><col style="width:24%"><col style="width:21%"><col style="width:12%"><col style="width:9%"><col style="width:14%"><col style="width:10%"><col></colgroup>'+
-    '<thead><tr><th class="l">'+(one?'Transfer':'Vendor')+'</th><th class="l">Paying</th><th>Amount</th><th class="l">Mode</th><th class="l">UTR / cheque / CN no</th><th class="l">Reference / CN date</th><th class="l">Proof</th></tr></thead><tbody>'+
+    '<colgroup><col style="width:17%"><col style="width:19%"><col style="width:11%"><col style="width:8%"><col style="width:13%"><col style="width:9%"><col></colgroup>'+
+    '<thead><tr><th class="l">'+(one?'Transfer':'Vendor')+'</th><th class="l">Paying</th><th>Amount</th><th class="l">Mode</th><th class="l">UTR / cheque / CN no</th><th class="l">Reference / CN date</th><th class="l">Proof <span style="font-weight:600;color:#93a7c9;text-transform:none;letter-spacing:0">Paste (Ctrl+V) · Drop · Browse</span></th></tr></thead><tbody>'+
     G.map((g,i)=>{
       const id='x'+i, x=P.xf[id], amt=g.lines.reduce((s,l)=>s+N(l.amount),0);
       const nv=Object.keys(g.lines.reduce((m,l)=>{m[l.vendor]=1;return m},{})).length;
@@ -13033,13 +13225,7 @@ function renderXfers(){
         (x.mode==='Credit Note'
           ?'<td class="l"><input type="date" id="pcnd_'+id+'" value="'+E(x.cndate||'')+'" title="Credit note date (required)" oninput="PAY.xset(\''+id+'\',\'cndate\',this.value)"></td>'
           :'<td class="l"><input id="pref_'+id+'" value="'+E(x.ref)+'" placeholder="optional" oninput="PAY.xset(\''+id+'\',\'ref\',this.value)"></td>')+
-        '<td class="l">'+(x.file
-            ? '<span style="font-size:10.5px;display:inline-flex;align-items:center;gap:5px;max-width:100%">'+
-              '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">📎 '+E(x.file.name)+'</span>'+
-              '<label class="btn btn-ghost btn-sm" style="padding:1px 6px;font-size:10px;cursor:pointer;flex:0 0 auto">Replace'+
-              '<input type="file" accept="application/pdf,image/*" style="display:none" onchange="PAY.xfile(\''+id+'\',this.files[0])"></label>'+
-              '<button class="btn btn-ghost btn-sm" style="padding:1px 6px;font-size:10px;flex:0 0 auto" title="Remove" onclick="PAY.xfile(\''+id+'\',null)">✕</button></span>'
-            : '<input type="file" accept="application/pdf,image/*" style="font-size:10.5px;padding:2px" onchange="PAY.xfile(\''+id+'\',this.files[0])">')+'</td></tr>'+
+        '<td class="l" style="white-space:normal;vertical-align:top">'+pzHtml(id)+'</td></tr>'+     // v161 · paste / drop / browse, many files
         (open?'<tr><td colspan="7" style="background:#fbfdff;padding:7px 10px 8px"><table style="table-layout:auto;width:100%"><tbody>'+
           g.lines.map(l=>'<tr>'+
             '<td class="l" style="border:none;padding:2px 10px 2px 0;width:1%">'+badge(l)+'</td>'+
@@ -13066,11 +13252,47 @@ function step(n){
 }
 function xset(id,f,v){P.xf[id][f]=v;totals()}
 function xmode(id){renderXfers()}   // M37: re-render so the CN date field appears / hides
-function xfile(id,f){
-  if(f&&f.size>15728640){TOAST('Proof must be under 15 MB','error');return}
-  P.xf[id]=P.xf[id]||{mode:'NEFT',utr:'',ref:''};    // row may not be rendered yet
-  P.xf[id].file=f||null; renderXfers();
+// v161 · proof zone: paste (Ctrl+V) · drop · browse — several files per transfer
+function pzHtml(id){
+  const x=P.xf[id]||{}, fs=x.files||[];
+  const act=P.pzActive===id;
+  return '<div class="pay-pz'+(act?' act':'')+'" tabindex="0" onclick="PAY.pzAct(\''+id+'\',event)" onfocus="PAY.pzAct(\''+id+'\')" '+
+    'ondragover="event.preventDefault();this.classList.add(\'drag\')" ondragleave="this.classList.remove(\'drag\')" ondrop="PAY.pzDrop(\''+id+'\',event)">'+
+    (fs.length?'<div class="pay-pzc">'+fs.map((f,j)=>'<span class="pay-pzf" title="'+E(f.name)+'">'+
+      (f.url?'<img src="'+f.url+'" alt="">':'<span class="ic">'+(/\.pdf$/i.test(f.name)?'PDF':'FILE')+'</span>')+
+      '<span class="nm">'+E(f.name)+'</span><span class="sz">'+(f.size<1024?'<1 KB':f.size<1048576?Math.round(f.size/1024)+' KB':(f.size/1048576).toFixed(1)+' MB')+'</span>'+
+      '<span class="rm" onclick="PAY.pzRm(\''+id+'\','+j+',event)">✕</span></span>').join('')+'</div>':'')+
+    '<div class="pay-pzh">'+(act?'<b>Ready — press Ctrl+V</b> · ':'📎 Click, then Ctrl+V · ')+'Drop · <label class="br" onclick="event.stopPropagation()">Browse<input type="file" multiple accept="application/pdf,image/*" style="display:none" onchange="PAY.pzAdd(\''+id+'\',this.files);this.value=\'\'"></label></div></div>';
 }
+function pzAct(id,e){ if(e&&e.target&&e.target.closest('.rm,.br'))return; if(P.pzActive!==id){P.pzActive=id;renderXfers();const z=document.querySelector('#pay_xfers .pay-pz.act');if(z)z.focus();} }
+function pzAdd(id,files){
+  P.xf[id]=P.xf[id]||{mode:'NEFT',utr:'',ref:''}; const arr=P.xf[id].files=P.xf[id].files||[];
+  let big=null;
+  Array.from(files||[]).forEach(f=>{
+    if(f.size>15728640){big=f.name;return}
+    let name=f.name;
+    if(!name||/^image\.(png|jpe?g|gif|webp)$/i.test(name)){const d=new Date();name='Pasted_'+todayISO()+'_'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0')+String(d.getSeconds()).padStart(2,'0')+'_'+(arr.length+1)+'.png';}
+    arr.push({name:name,size:f.size,type:f.type,url:f.type&&f.type.startsWith('image/')?URL.createObjectURL(f):null,blob:f});
+  });
+  P.xf[id].file=arr[0]?arr[0].blob:null;   // legacy slot — older code paths read .file
+  renderXfers();
+  if(big)TOAST(big+' is over 15 MB — not attached','error');
+}
+function pzDrop(id,e){e.preventDefault();P.pzActive=id;if(e.dataTransfer&&e.dataTransfer.files.length)pzAdd(id,e.dataTransfer.files);}
+function pzRm(id,j,e){if(e)e.stopPropagation();const x=P.xf[id];if(!x||!x.files)return;x.files.splice(j,1);x.file=x.files[0]?x.files[0].blob:null;renderXfers();}
+function xfile(id,f){ P.xf[id]=P.xf[id]||{mode:'NEFT',utr:'',ref:''}; P.xf[id].files=[]; if(f)pzAdd(id,[f]); else {P.xf[id].file=null;renderXfers();} }
+// paste anywhere on step 2: one transfer → attaches to it; several → the active (teal) zone
+document.addEventListener('paste',function(e){
+  const mod=document.getElementById('mod-payments'); if(!mod||mod.style.display==='none')return;
+  const pane=document.getElementById('paytab-pay'); if(!pane||pane.style.display==='none'||P.stepNo!==2)return;
+  const cd=e.clipboardData; if(!cd)return;
+  let files=Array.from(cd.files||[]);
+  if(!files.length)files=Array.from(cd.items||[]).filter(it=>it.kind==='file').map(it=>it.getAsFile()).filter(Boolean);
+  if(!files.length)return;                     // plain text pastes into UTR etc. as normal
+  e.preventDefault();
+  const G=groupsForSplit(); const id=G.length===1?'x0':(P.pzActive||'x0');
+  pzAdd(id,files);
+});
 // Uploads to pgs-attachments under {org}/{project}/payments/. The bucket's RLS
 // enforces that prefix, so a mis-built path fails server-side rather than leaking.
 async function uploadProof(file){
@@ -13097,6 +13319,8 @@ function totals(){
   $('pay_fSel').textContent=INR(selAmt);
   $('pay_fPay').textContent=INR(pay);
   $('pay_fBal').textContent=INR(tot-billPay);
+  const tdsSplit=L.filter(l=>l.kind==='bill'&&l.tds&&l.billType==='POB').reduce((s,l)=>s+N(l.tds.amount),0), nOvr=L.filter(l=>l.kind==='bill'&&l.tds&&l.billType!=='POB').length;   // v161
+  const ft2=$('pay_fTds'); if(ft2)ft2.textContent=INR2(tdsSplit)+(nOvr?' · '+nOvr+' ovr':'');
   const errs=[];
   L.filter(l=>l.kind==='bill'&&l.amount>l.max+0.005).forEach(l=>errs.push(l.label+' exceeds outstanding'));
   if(L.some(l=>N(l.amount)<=0.005))errs.push('a line has zero amount');
@@ -13217,7 +13441,7 @@ function addOA(){
   P.extra.push({kind:'on_account',purpose:purpose,order:o.no,orderType:o.t,vendor:o.v,
     amount:Number($('pay_oaAmt').value),
     label:o.no+' · '+(purpose==='mobilization'?'mobilization':'ad-hoc')+' advance'});
-  close('pay_oaOvl'); render();
+  close('pay_oaOvl'); render(); advAfterAdd();
 }
 
 /* ── retention / hold release ───────────────────────────────────── */
@@ -13334,7 +13558,7 @@ function review(){
       '<div style="font-size:11.5px;color:var(--muted);margin-bottom:7px">Vendor stamp: <b style="color:var(--text)">'+(nv>1?'Multiple — '+nv+' vendors':E(g.lines[0].vendor))+'</b></div>'+
       '<table class="pay-rt"><colgroup><col style="width:46%"><col style="width:28%"><col></colgroup>'+
       '<thead><tr><th class="l">Allocation</th><th class="l">Vendor</th><th>Amount</th></tr></thead><tbody>'+
-      g.lines.map(l=>'<tr><td class="l">'+badge(l)+' '+E(l.label)+'</td><td class="l">'+E(l.vendor)+'</td><td>'+INR2(l.amount)+'</td></tr>').join('')+
+      g.lines.map(l=>'<tr><td class="l">'+badge(l)+' '+E(l.label)+(l.tds?' <span class="pay-pill tds">'+(l.billType==='POB'?'TDS SPLIT':'TDS OVERRIDE')+' '+INR2(l.tds.amount)+' · '+E(l.tds.section)+'</span>':'')+'</td><td class="l">'+E(l.vendor)+'</td><td>'+INR2(l.amount)+'</td></tr>').join('')+
       '<tr style="background:#f8fafc;font-weight:800"><td class="l" colspan="2">Allocations total — must equal the transfer</td><td>'+INR2(amt)+'</td></tr>'+
       '</tbody></table></div>';
   }).join('');
@@ -13348,8 +13572,9 @@ async function submit(){
   try{
     const atts=[];
     for(let i=0;i<G.length;i++){
-      const f=(P.xf['x'+i]||{}).file;
-      atts[i]=f?await uploadProof(f):null;   // upload first — a failed upload must not create a voucher
+      const fs=((P.xf['x'+i]||{}).files||[]).map(f=>f.blob).filter(Boolean);
+      const up=[]; for(const f of fs)up.push(await uploadProof(f));   // upload first — a failed upload must not create a voucher
+      atts[i]=up.length?up:null;             // v161: array of {bucket,path,name,size,mime}; readers accept object or array
     }
     const payload={date:$('pay_date').value||todayISO(),entered_by_id:(window.state&&state.userId)||null,
       batch:G.map((g,i)=>{
@@ -13363,7 +13588,7 @@ async function submit(){
           allocations:g.lines.map(l=>({kind:l.kind,purpose:l.purpose||null,
             bill_number:l.billNo||null,bill_type:l.billType||null,
             order_number:l.order||null,order_type:l.orderType||null,
-            vendor_name:l.vendor,amount:Number(N(l.amount).toFixed(2))}))};
+            vendor_name:l.vendor,amount:Number(N(l.amount).toFixed(2)),tds:l.tds||undefined}))};   // v161 · M38 tds rides to approval
       })};
     const bad=payload.batch.some(t=>t.allocations.some(a=>!a.kind||!(N(a.amount)>0)||(a.kind==='on_account'?!a.order_number:!a.bill_number)));
     if(bad)throw new Error('A payment line is incomplete — remove and re-add it.');
@@ -13379,7 +13604,7 @@ async function submit(){
     TOAST(String(e.message||e),'error');
   }finally{ if(btn)btn.disabled=false; PBD(); }
 }
-function reset(){P.sel={};P.extra=[];P.xf={};P.xopen={};step(1);if(P.loaded)render();}
+function reset(){P.sel={};P.extra=[];P.xf={};P.xopen={};P.tds={};step(1);if(P.loaded)render();}
 
 /* ── allocations for a set of vouchers (shared by Approvals + History) ── */
 async function fetchAlloc(ids){
@@ -13387,7 +13612,7 @@ async function fetchAlloc(ids){
   if(!ids.length)return out;
   for(let i=0;i<ids.length;i+=100){
     const r=await sb.from('ho_payment_allocations')
-      .select('payment_id,kind,purpose,bill_number,bill_type,order_number,order_type,vendor_name,amount')
+      .select('payment_id,kind,purpose,bill_number,bill_type,order_number,order_type,vendor_name,amount,tds_meta,challan_id')
       .in('payment_id',ids.slice(i,i+100));
     if(r.error)throw r.error;
     (r.data||[]).forEach(a=>{(out[a.payment_id]=out[a.payment_id]||[]).push(a)});
@@ -13397,9 +13622,13 @@ async function fetchAlloc(ids){
 function allocBadge(a){
   if(a.kind==='bill')return '<span class="pay-pill '+String(a.bill_type||'').toLowerCase()+'">'+E(a.bill_type)+'</span>';
   if(a.kind==='on_account')return '<span class="pay-pill oa">ON-ACCOUNT</span>';
+  if(a.kind==='tds_remittance')return '<span class="pay-pill tds">TDS</span>';
+  if(a.kind==='tds_charge')return '<span class="pay-pill tds">TDS '+E(String(a.purpose||'').replace('_',' ').toUpperCase())+'</span>';
   return '<span class="pay-pill rel">'+(a.kind==='retention_release'?'RETENTION':'HOLD')+'</span>';
 }
-const allocLabel=a=>a.kind==='on_account'?(a.order_number+' · '+(a.purpose==='mobilization'?'mobilization':'ad-hoc')+' advance'):a.bill_number;
+const allocLabel=a=>a.kind==='on_account'?(a.order_number+' · '+(a.purpose==='mobilization'?'mobilization':'ad-hoc')+' advance')
+  :a.kind==='tds_charge'?('challan '+(a.purpose||'').replace('_',' '))
+  :(a.bill_number+(a.tds_meta?' · TDS '+(a.bill_type==='POB'?'split':'override')+' '+a.tds_meta.section+' '+a.tds_meta.pct+'% = '+INR2(a.tds_meta.amount):''));   // v161
 function allocSummary(list){
   if(!list||!list.length)return '<span class="xsum">—</span>';
   const t=list.map(a=>String(allocLabel(a)).split('/').slice(-2).join('/')).join(', ');
@@ -13425,7 +13654,7 @@ async function loadApprovals(){
   tb.innerHTML='<tr><td colspan="9" class="pay-empty">Loading…</td></tr>';
   try{
     const r=await sb.from('ho_payments')
-      .select('payment_id,payment_date,vendor,amount_paid,mode,utr,reference,entered_by,payment_batch_id,attachment')
+      .select('payment_id,payment_date,vendor,amount_paid,mode,utr,reference,entered_by,payment_batch_id,attachment,payment_type')
       .eq('approval_status','Pending Approval').order('created_at');
     if(r.error)throw r.error;
     P.appr=r.data||[];
@@ -13441,9 +13670,9 @@ function renderApprovals(){
     const open=P.aopen[p.payment_id];
     const bal=Math.abs(al.reduce((s,a)=>s+N(a.amount),0)-N(p.amount_paid))>0.005;
     return '<tr>'+
-      '<td class="l"><b>'+E(p.payment_id)+'</b>'+(p.attachment&&p.attachment.path?' <span style="cursor:pointer" title="Open proof of transfer" onclick="PAY.proof(\''+Q(p.attachment.bucket)+'\',\''+Q(p.attachment.path)+'\')">📎</span>':'')+'</td>'+
+      '<td class="l"><b>'+E(p.payment_id)+'</b>'+proofLinks(p.attachment)+'</td>'+
       '<td class="l">'+D(p.payment_date)+'</td>'+
-      '<td class="l" style="white-space:normal;word-break:break-word;line-height:1.25">'+E(p.vendor||'—')+'</td>'+
+      '<td class="l" style="white-space:normal;word-break:break-word;line-height:1.25">'+typePill(p)+E(p.vendor||'—')+'</td>'+
       '<td class="l"><span style="cursor:pointer" onclick="PAY.atog(\''+Q(p.payment_id)+'\')"><span style="color:var(--muted);font-size:10px">'+(open?'▾':'▸')+'</span> '+allocSummary(al)+'</span></td>'+
       '<td class="l">'+E(p.mode||'—')+'</td><td class="l">'+E(p.utr||p.reference||'—')+'</td>'+
       '<td class="l">'+E(p.entered_by||'—')+'</td>'+
@@ -13658,10 +13887,10 @@ function renderHistory(){
     const al=(P.histAlloc||{})[p.payment_id]||[];
     const open=P.hopen[p.payment_id];
     const isCN=p.payment_type==='Credit Note', isDel=p.approval_status==='Deleted';
-    return '<tr'+(isDel?' class="pay-del"':'')+'><td class="l"><b>'+E(p.payment_id)+'</b>'+(p.attachment&&p.attachment.path?' <span style="cursor:pointer" title="Open proof of transfer" onclick="PAY.proof(\''+Q(p.attachment.bucket)+'\',\''+Q(p.attachment.path)+'\')">📎</span>':'')+'</td><td class="l">'+D(p.payment_date)+'</td>'+
+    return '<tr'+(isDel?' class="pay-del"':'')+'><td class="l"><b>'+E(p.payment_id)+'</b>'+proofLinks(p.attachment)+'</td><td class="l">'+D(p.payment_date)+'</td>'+
     '<td class="l" style="white-space:normal;word-break:break-word;line-height:1.25">'+E(p.vendor||'—')+'</td>'+
     '<td class="l"><span style="cursor:pointer" onclick="PAY.htog(\''+Q(p.payment_id)+'\')"><span style="color:var(--muted);font-size:10px">'+(open?'▾':'▸')+'</span> '+allocSummary(al)+'</span></td>'+
-    '<td class="l">'+(isCN?'<span class="pay-cn">Credit Note</span>':E(p.mode||'—'))+'</td>'+
+    '<td class="l">'+(isCN?'<span class="pay-cn">Credit Note</span>':(p.payment_type==='TDS Challan'?'<span class="pay-pill tds">TDS</span> ':'')+E(p.mode||'—'))+'</td>'+
     '<td class="l">'+(isCN?E(p.cn_number||'—')+'<span class="xsum">'+D(p.cn_date)+'</span>':E(p.utr||p.reference||'—'))+'</td>'+
     '<td class="l">'+E(p.entered_by||'—')+'</td><td style="font-weight:700'+(isDel?';text-decoration:line-through':'')+'">'+INR2(p.amount_paid)+'</td>'+
     '<td class="l"><span class="status '+String(p.approval_status||'').toLowerCase().replace(/\s+/g,'')+'">'+E(p.approval_status)+'</span>'+
@@ -13682,6 +13911,385 @@ function renderHistory(){
          '<td class="l" style="color:#93a7c9;font-size:10px">approved only</td><td></td></tr>';
      })()
     :'<tr><td colspan="10" class="pay-empty">No entries match.</td></tr>';
+}
+
+/* ═══ v161 · M38 · TDS window (POB split · WOB/HOB override) ═══ */
+const pDue=ym=>{const y=+ym.slice(0,4), m=+ym.slice(5,7); return m===3?new Date(y,3,30):new Date(m===12?y+1:y,m===12?0:m,7);};
+const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const pName=ym=>MONS[+ym.slice(5,7)-1]+' '+ym.slice(0,4);
+const isoOf=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function secOf(code){return P.sections.find(s=>s.code===code)||null;}
+function panOf(v){const m=P.vendors[vk(v)];return m&&m.pan?m.pan:'';}
+function rateFor(code,b){const s=secOf(code);if(!s)return 0;return panOf(b.v)?N(s.rate):N(s.rate_nopan);}
+function secOpts(sel){
+  const el=$('tds_mSec'); el.innerHTML=P.sections.map(s=>'<option value="'+E(s.code)+'">'+E(s.code)+' · '+E(s.nature)+' · '+s.rate+'%'+(N(s.rate_individual)!==N(s.rate)?' ('+s.rate_individual+'% Ind/HUF)':'')+'</option>').join('');
+  if(sel&&P.sections.some(s=>s.code===sel))el.value=sel;
+}
+function tdsOpen(no){
+  const b=P.bills.find(x=>x.no===no); if(!b)return;
+  const isBill=b.t!=='POB', t=P.tds[no]||null, info=P.tdsInfo[no]||null;
+  if(!P.sections.length){TOAST('TDS sections are not loaded — refresh and try again','error');return}
+  P.tdsM=no; nsClose();
+  const cur={section:(info&&info.section)||(isBill?'194C':'194Q'),basis:(info&&info.basis)||'basic',base:info?N(info.base):b.basic,
+             pct:info?N(info.pct):(isBill?(b.basic?Math.round(N(b.tds)/b.basic*10000)/100:2):0),amount:N(b.tds),date:(info&&info.tds_date)||b.date};
+  P.tdsCur=cur;
+  $('tds_mBill').textContent=no;
+  $('tds_mTtl').textContent=isBill?'TDS Override':'TDS';
+  $('tds_mSub').textContent=isBill
+    ?'TDS was set on the '+b.t+'. Finance may change it here — reason required. Applied on approval of this transfer; the original is kept for audit. The '+(b.t==='WOB'?'WOC':'HOC')+' is not touched.'
+    :'POB is Nil TDS by default. Add TDS only where it applies — the vendor is paid the balance; TDS goes to the TDS Ledger.';
+  const pan=panOf(b.v);
+  $('tds_mChips').innerHTML='<span class="pay-chip">Vendor <b>'+E(b.v)+'</b></span><span class="pay-chip">PAN <b>'+(pan?E(pan):'<span style="color:var(--danger)">Missing</span>')+'</b></span>'+
+    '<span class="pay-chip">Bill Date <b>'+D(b.date)+'</b></span><span class="pay-chip">Basic <b>'+INR2(b.basic)+'</b></span><span class="pay-chip">GST <b>'+INR2(b.gst)+'</b></span><span class="pay-chip">Invoice <b>'+INR2(b.inv)+'</b></span>';
+  $('tds_mOvr').style.display=isBill?'':'none';
+  if(isBill)$('tds_mOvr').innerHTML='<b>On Bill:</b> '+E(cur.section)+' · '+cur.pct+'% on '+INR2(cur.base)+' = <b>'+INR2(cur.amount)+'</b>'+(t?' <span class="pay-st ap" style="margin-left:6px">Currently Overridden → '+INR2(t.amount)+'</span>':'');
+  $('tds_mRsnW').style.display=isBill?'':'none'; $('tds_mRsn').value=t?(t.reason||''):'';
+  secOpts(t?t.section:cur.section);
+  tdsBasis(t?t.basis:cur.basis,true);
+  $('tds_mBase').value=(t?N(t.base):cur.base).toFixed(2);
+  $('tds_mRate').value=t?t.pct:(isBill?cur.pct:rateFor($('tds_mSec').value,b));
+  $('tds_mDate').value=t?t.date:cur.date;
+  $('tds_mRm').textContent=isBill?'Revert To Bill TDS':'Remove TDS · Back To Nil';
+  $('tds_mRm').style.display=t?'':'none';
+  $('tds_mGo').textContent=isBill?'Apply Override':'Apply TDS';
+  $('tds_mFoot').textContent='Stamped on the '+b.t+' when the transfer is approved · locked after that';
+  tdsCalc(); $('pay_tdsOvl').classList.add('on');
+}
+function tdsBasis(v,quiet){
+  const b=P.bills.find(x=>x.no===P.tdsM); if(!b)return;
+  Array.from($('tds_mBasis').children).forEach(s=>s.classList.toggle('on',s.dataset.v===v));
+  $('tds_mBasisH').textContent='Base = '+INR2(v==='basic'?b.basic:b.inv);
+  if(!quiet){$('tds_mBase').value=(v==='basic'?b.basic:b.inv).toFixed(2);tdsCalc();}
+}
+const tdsBasisVal=()=>{const on=Array.from($('tds_mBasis').children).find(s=>s.classList.contains('on'));return on?on.dataset.v:'basic';};
+function tdsSec(){const b=P.bills.find(x=>x.no===P.tdsM);if(b)$('tds_mRate').value=rateFor($('tds_mSec').value,b);tdsCalc();}
+const tdsAmt=()=>Math.round(N($('tds_mBase').value)*N($('tds_mRate').value))/100;
+function tdsCalc(){
+  const b=P.bills.find(x=>x.no===P.tdsM); if(!b)return;
+  const isBill=b.t!=='POB', sec=$('tds_mSec').value, basis=tdsBasisVal(), amt=tdsAmt(), cur=P.tdsCur, dt=$('tds_mDate').value;
+  const out=Math.max(0,N(b.net_payable)-N(b.paid)+N(b.tds));   // outstanding before any TDS
+  $('tds_mOut').textContent=INR2(out-N(b.tds)); $('tds_mVen').textContent=INR2(out-amt); $('tds_mTds').textContent=INR2(amt);
+  let m='';
+  if(dt){const ym=dt.slice(0,7), due=pDue(ym), late=due<new Date(todayISO());
+    $('tds_mPer').innerHTML=pName(ym)+' · <span style="'+(late?'color:var(--danger)':'')+'">'+D(isoOf(due))+(late?' · Already Late':'')+'</span>';
+    $('tds_mDateH').textContent=dt===b.date?'Default — '+b.t+' bill date':'Changed (bill date '+D(b.date)+')';
+    if(late&&amt>0)m+='<div class="pay-note bad">This period\'s deposit date has passed — the deduction lands in the TDS Ledger as <b>Overdue</b>; interest u/s 201(1A) runs from the deduction date.</div>';}
+  if(isBill){const d=amt-cur.amount; if(Math.abs(d)>0.005)m+='<div class="pay-note info">Override changes TDS by <b>'+(d>0?'+':'−')+INR2(Math.abs(d))+'</b> — the vendor gets '+INR2(Math.abs(d))+(d>0?' less':' more')+'. Net payable on the bill is recomputed on approval.</div>';}
+  if(basis==='basic_gst')m+='<div class="pay-note">TDS on <b>Basic + GST</b>. CBDT Circular 23/2017: where GST is shown separately on the invoice, TDS is deducted on the amount <b>excluding</b> GST — this over-deducts '+INR2(N(b.gst)*N($('tds_mRate').value)/100)+'. Allowed; the basis is saved on the bill and shown in the ledger.</div>';
+  if(!panOf(b.v)&&amt>0)m+='<div class="pay-note bad">No PAN on the vendor master — the section 206AA (no-PAN) rate was offered. Update the PAN to deduct at the normal rate.</div>';
+  if(amt>out+0.005)m+='<div class="pay-note bad">TDS exceeds what is outstanding on the bill.</div>';
+  $('tds_mMsgs').innerHTML=m;
+  // after-approval preview for the site bill
+  if(isBill){
+    const chg=Math.abs(amt-cur.amount)>0.005, net=b.inv-N(b.adv)-amt-N(b.ret)-N(b.hold);
+    $('tds_mPrev').innerHTML='<div class="pay-wbp"><div class="hd">How '+E(b.no)+' will show after approval<span style="margin-left:auto;font-weight:500;color:var(--muted)">'+(b.t==='WOB'?'WOC':'HOC')+' untouched — measured work is unchanged</span></div>'+
+      (chg?'<div class="bn">⚠ <b>TDS revised by Accounts</b> · '+D(todayISO())+' · '+E((window.state&&state.userName)||'')+' · “'+E($('tds_mRsn').value||'reason')+'” · was '+E(cur.section)+' @ '+cur.pct+'% = '+INR2(cur.amount)+'</div>':'')+
+      '<table><tr><td class="l">Invoice Value</td><td>'+INR2(b.inv)+'</td></tr>'+(N(b.adv)?'<tr><td class="l">Less: Advance / On-account Recovery</td><td>−'+INR2(b.adv)+'</td></tr>':'')+
+      '<tr><td class="l">Less: TDS ('+E(sec)+' @ '+N($('tds_mRate').value)+'%)'+(chg?'<span class="pay-rv">REVISED BY ACCOUNTS</span> <s style="color:#94a3b8">'+cur.pct+'% · '+INR2(cur.amount)+'</s>':'')+'</td><td style="color:#c2410c">−'+INR2(amt)+'</td></tr>'+
+      (N(b.ret)?'<tr><td class="l">Less: Retention</td><td>−'+INR2(b.ret)+'</td></tr>':'')+(N(b.hold)?'<tr><td class="l">Less: Hold</td><td>−'+INR2(b.hold)+'</td></tr>':'')+
+      '<tr class="t"><td class="l">Net Payable'+(chg?' <s style="color:#94a3b8;font-weight:500">'+INR2(b.inv-dedOfRaw(b))+'</s>':'')+'</td><td>'+INR2(net)+'</td></tr></table>'+
+      '<div style="padding:7px 11px;border-top:1px solid var(--border);font-size:11.5px;background:#fafbfd"><label style="display:flex;gap:6px;align-items:center;cursor:pointer;text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--text);font-weight:600;margin:0"><input type="checkbox" id="tds_mFut" style="width:auto"'+((P.tds[b.no]||{}).set_order_default?' checked':'')+'> Use '+E(sec)+' @ '+N($('tds_mRate').value)+'% as the default for future bills on '+E(b.ord||'')+'</label></div></div>';
+  } else $('tds_mPrev').innerHTML='';
+  $('tds_mGo').disabled=(isBill&&!String($('tds_mRsn').value||'').trim())||amt>out+0.005||amt<0||!sec||!dt;
+}
+const dedOfRaw=b=>N(b.tds)+N(b.adv)+N(b.ret)+N(b.hold);
+function tdsApply(){
+  const b=P.bills.find(x=>x.no===P.tdsM); if(!b)return;
+  const isBill=b.t!=='POB';
+  const t={section:$('tds_mSec').value,basis:tdsBasisVal(),base:N($('tds_mBase').value),pct:N($('tds_mRate').value),amount:tdsAmt(),date:$('tds_mDate').value};
+  if(isBill){t.reason=String($('tds_mRsn').value||'').trim();t.set_order_default=!!($('tds_mFut')&&$('tds_mFut').checked);}
+  P.tds[b.no]=t;
+  P.sel[b.no]=Number(os(b).toFixed(2));
+  close('pay_tdsOvl'); render();
+  TOAST((isBill?'TDS override on ':'TDS applied on ')+b.no+' — '+t.section+' '+t.pct+'% · TDS '+INR2(t.amount)+' · period '+pName(t.date.slice(0,7))+'. Stamped on approval.','success');
+}
+function tdsRemove(){const b=P.bills.find(x=>x.no===P.tdsM);if(!b)return;delete P.tds[b.no];if(P.sel[b.no]!=null)P.sel[b.no]=Number(os(b).toFixed(2));close('pay_tdsOvl');render();}
+/* new section (inline) */
+function nsOpen(){ if(!hasPerm('canAddTDSSection')){TOAST('Adding a TDS section needs the tds_section permission','warn');return} $('tds_nsBox').style.display='';['tds_nsCode','tds_nsNature','tds_nsRate','tds_nsInd','tds_nsNopan'].forEach(i=>{$(i).value=''});$('tds_nsErr').textContent='';$('tds_nsCode').focus(); }
+function nsClose(){ const b=$('tds_nsBox'); if(b)b.style.display='none'; }
+async function nsSave(){
+  const code=String($('tds_nsCode').value||'').trim().toUpperCase(), nature=String($('tds_nsNature').value||'').trim(), rate=N($('tds_nsRate').value);
+  if(!code||!nature||!(rate>=0)||$('tds_nsRate').value===''){$('tds_nsErr').textContent='Code, nature of payment and default rate are required';return}
+  PB('Saving section…');
+  try{
+    const r=await sb.rpc('rpc_tds_section_add',{p:{code:code,nature:nature,rate:rate,rate_individual:$('tds_nsInd').value===''?null:N($('tds_nsInd').value),rate_nopan:$('tds_nsNopan').value===''?null:N($('tds_nsNopan').value)}});
+    if(r.error)throw r.error;
+    const tl=await sb.rpc('rpc_tds_ledger',{p_fy:null}); if(!tl.error&&tl.data)tdsAbsorb(tl.data);
+    secOpts(code); nsClose(); tdsSec();
+    TOAST('Section '+code+' saved to the TDS Section master','success');
+  }catch(e){$('tds_nsErr').textContent=String(e.message||e)}
+  finally{PBD()}
+}
+
+/* ═══ v161 · proof links shared by Approvals + History (object or array) ═══ */
+function proofLinks(att){
+  if(!att)return '';
+  const list=Array.isArray(att)?att:[att];
+  return list.filter(a=>a&&a.path).map((a,i)=>' <span style="cursor:pointer" title="'+E(a.name||'Open proof of transfer')+'" onclick="PAY.proof(\''+Q(a.bucket)+'\',\''+Q(a.path)+'\')">📎'+(list.length>1?'<sup style="font-size:8px">'+(i+1)+'</sup>':'')+'</span>').join('');
+}
+const typePill=p=>p.payment_type==='TDS Challan'?'<span class="pay-pill tds">TDS CHALLAN</span> ':p.payment_type==='Credit Note'?'<span class="pay-pill" style="background:#ede9fe;color:#4c2e9a">CREDIT NOTE</span> ':'';
+const kpi=(c,k,v,s)=>'<div class="pay-kpi '+c+'"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="s">'+s+'</div></div>';
+async function ensureLoaded(){ if(!P.loaded){const d=$('pay_date');if(d&&!d.value)d.value=todayISO();await reload();} }
+
+/* ═══ v161 · On-Account Advances tab ═══ */
+async function loadAdv(force){
+  if(force||!P.loaded){ P.loaded=false; await ensureLoaded(); }
+  renderAdv();
+}
+function advRows(){
+  // FIFO: recovery is booked per order; apply it to that order's approved advances, oldest first
+  const rec={}; (P.allBills||[]).filter(b=>['Unpaid','Partial','Paid'].indexOf(b.status)>=0).forEach(b=>{const k=b.order_no;rec[k]=(rec[k]||0)+N(b.adv_recovery)});
+  const rows=(P.adv||[]).slice().sort((a,b)=>String(a.payment_date).localeCompare(String(b.payment_date))||String(a.payment_id).localeCompare(String(b.payment_id)));
+  const left=Object.assign({},rec);
+  rows.forEach(a=>{ if(a.approval_status!=='Approved'){a._rec=0;return} const k=a.order_number, r=Math.min(N(a.amount),left[k]||0); a._rec=r; left[k]=(left[k]||0)-r; });
+  const ov={}; (P.orders||[]).forEach(o=>{ov[o.no]=o});
+  rows.forEach(a=>{a._ov=ov[a.order_number]?ov[a.order_number].total:0;a._os=Math.max(0,N(a.amount)-a._rec)});
+  return rows;
+}
+function renderAdv(){
+  const tb=$('adv_body'); if(!tb)return;
+  const all=advRows(), q=($('adv_q').value||'').toLowerCase().trim();
+  const rows=all.filter(a=>{
+    if(P.advPur!=='all'&&a.purpose!==P.advPur)return false;
+    if(P.advSt==='open'&&!(a.approval_status==='Approved'&&a._os>0.005))return false;
+    if(P.advSt==='appr'&&a.approval_status!=='Pending Approval')return false;
+    if(P.advSt==='done'&&!(a.approval_status==='Approved'&&a._os<=0.005))return false;
+    if(q&&!(vk(a.vendor_name).includes(q)||String(a.order_number).toLowerCase().includes(q)||String(a.payment_id).toLowerCase().includes(q)))return false;
+    return true;
+  }).sort((a,b)=>String(b.payment_date).localeCompare(String(a.payment_date)));
+  const ok=all.filter(a=>a.approval_status==='Approved'), S=f=>ok.reduce((s,a)=>s+f(a),0);
+  const paid=S(a=>N(a.amount)), rc=S(a=>a._rec), inA=all.filter(a=>a.approval_status==='Pending Approval').reduce((s,a)=>s+N(a.amount),0);
+  $('adv_kpis').innerHTML=kpi('n','Advances Paid',INR(paid),ok.length+' Approved Vouchers')+kpi('t','Recovered Via Bills',INR(rc),(paid?Math.round(rc/paid*100):0)+'% Of Paid')+
+    kpi('a','Outstanding',INR(paid-rc),ok.filter(a=>a._os>0.005).length+' Advances Open')+kpi('','In Approval',INR(inA),all.filter(a=>a.approval_status==='Pending Approval').length+' Voucher(s)')+
+    kpi('','Mobilization · Ad-Hoc',INR(S(a=>a.purpose==='mobilization'?a._os:0))+' · '+INR(S(a=>a.purpose!=='mobilization'?a._os:0)),'Outstanding Split');
+  $('adv_n').textContent=rows.length+' of '+all.length;
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" class="pay-empty">No advances match.</td></tr>';return}
+  const T={a:0,r:0};
+  tb.innerHTML=rows.map(a=>{const pend=a.approval_status!=='Approved', pc=N(a.amount)?Math.round(a._rec/N(a.amount)*100):0; if(!pend){T.a+=N(a.amount);T.r+=a._rec}
+    const st=pend?'<span class="pay-st ap">'+E(a.approval_status)+'</span>':a._os<=0.005?'<span class="pay-st ok">Fully Recovered</span>':a._rec>0?'<span class="pay-st part">Partly Recovered</span>':'<span class="pay-st mut">Not Yet Recovered</span>';
+    return '<tr><td class="l"><b>'+E(a.payment_id)+'</b></td><td class="l">'+D(a.payment_date)+'</td>'+
+      '<td class="l" style="white-space:normal;line-height:1.25"><b style="color:var(--navy-print)">'+E(a.vendor_name)+'</b></td>'+
+      '<td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><span class="pay-pill '+String(a.order_type||'').toLowerCase()+'">'+E(a.order_type)+'</span>'+E(a.order_number)+'<span class="pay-sub">'+(a._ov?INR(a._ov):'')+'</span></td>'+
+      '<td class="l">'+(a.purpose==='mobilization'?'<span class="pay-pill mob">MOBILIZATION</span>':'<span class="pay-pill oa">AD-HOC</span>')+'</td>'+
+      '<td>'+INR(a.amount)+'</td><td>'+(pend?'—':INR(a._rec)+'<div class="pay-bar"><i style="width:'+pc+'%"></i></div>')+'</td>'+
+      '<td style="'+(a._os>0.005&&!pend?'color:var(--warn);font-weight:700':'')+'">'+(pend?'—':INR(a._os))+'</td>'+
+      '<td class="l" style="white-space:normal;line-height:1.25">'+E(a.mode||'')+(a.utr?'<span class="pay-sub">'+E(a.utr)+'</span>':'')+st+'</td></tr>';}).join('')+
+    '<tr class="pay-tot"><td class="l" colspan="5">Total · '+rows.length+' Advances</td><td>'+INR(T.a)+'</td><td>'+INR(T.r)+'</td><td>'+INR(T.a-T.r)+'</td><td></td></tr>';
+}
+async function advNew(){ await ensureLoaded(); P.advFromTab=true; openOA(); }
+// addOA from the Advances tab drops the line into the Record Payment cart and jumps to step 2
+function advAfterAdd(){ if(P.advFromTab){P.advFromTab=false; switchPayTab('pay'); step(2);} }
+
+/* ═══ v161 · Retention Ledger · Bill Holds tabs (one renderer, two panes) ═══ */
+async function loadRet(kind,force){
+  P.relKind=kind;
+  const host=$('ret_pane_'+(kind==='hold'?'hold':'ret')); if(!host)return;
+  if(force||!P.ret){
+    host.innerHTML='<div class="pay-empty">Loading…</div>';
+    try{ const r=await sb.rpc('rpc_retention_ledger'); if(r.error)throw r.error; P.ret=(r.data||{}).rows||[]; }
+    catch(e){host.innerHTML='<div class="pay-empty">'+E(e.message||e)+'</div>';return}
+  }
+  renderRet();
+}
+function retRows(){return (P.ret||[]).filter(r=>r.kind===P.relKind);}
+function renderRet(){
+  const af0=document.activeElement, afid0=(af0&&af0.id)||null, pos0=af0?af0.selectionStart:null;
+  const kind=P.relKind, isH=kind==='hold', host=$('ret_pane_'+(isH?'hold':'ret')); if(!host)return;
+  const q=String((P.retQ&&P.retQ[kind])||'').toLowerCase().trim(), show=(P.retShow&&P.retShow[kind])||'held';
+  const all=retRows(), today=new Date(todayISO());
+  const rows=all.filter(r=>(show==='all'||(show==='held'&&N(r.balance)>0.005)||(show==='due'&&N(r.balance)>0.005&&r.dlp_end_date&&new Date(r.dlp_end_date)<=today))
+    &&(!q||vk(r.vendor).includes(q)||String(r.bill_number).toLowerCase().includes(q)||String(r.order_no||'').toLowerCase().includes(q)));
+  const S=f=>all.reduce((s,r)=>s+f(r),0), dueAmt=all.filter(r=>r.dlp_end_date&&new Date(r.dlp_end_date)<=today).reduce((s,r)=>s+N(r.balance),0);
+  const oldest=Math.max(0,...all.filter(r=>N(r.balance)>0.005).map(r=>Math.round((today-new Date(r.bill_date))/864e5)));
+  const sel=P.relSel[kind]||{}; const canC=hasPerm('canCreatePayConfirm')||hasPerm('canConfirmPayment');
+  const byV={}; rows.forEach(r=>{(byV[r.vendor]=byV[r.vendor]||[]).push(r)});
+  const T={d:0,r:0,i:0,b:0}; let body='';
+  Object.keys(byV).sort().forEach(v=>{const rs=byV[v], has=rs.some(r=>sel[r.bill_number]!=null), vb=rs.reduce((s,r)=>s+N(r.balance),0);
+    rs.forEach((r,i)=>{T.d+=N(r.deducted);T.r+=N(r.released);T.i+=N(r.in_approval);T.b+=N(r.balance);
+      const b=N(r.balance), due=!isH&&r.dlp_end_date&&new Date(r.dlp_end_date)<=today, on=sel[r.bill_number]!=null;
+      body+='<tr class="'+(on?'on':b<=0.005?'pay-dim':'')+'">'+
+        (i===0?'<td class="l vc'+(has?' has':'')+'" rowspan="'+rs.length+'"><span class="vnm">'+E(v)+'</span><span class="vmeta">'+rs.length+' bill'+(rs.length>1?'s':'')+' · <b>'+INR(vb)+'</b> held</span></td>':'')+
+        '<td>'+(b>0.005&&canC?'<input type="checkbox" '+(on?'checked':'')+' onclick="PAY.relTick(\''+Q(r.bill_number)+'\',this.checked)">':'')+'</td>'+
+        '<td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><span class="pay-pill '+String(r.bill_type).toLowerCase()+'">'+E(r.bill_type)+'</span><b>'+E(r.bill_number)+'</b><span class="pay-sub">'+D(r.bill_date)+'</span></td>'+
+        '<td class="l" style="color:var(--muted);white-space:normal;word-break:break-all;line-height:1.25">'+E(r.order_no||'')+'</td>'+
+        '<td class="l" style="white-space:normal;line-height:1.25;font-size:11px">'+(isH?E(r.hold_description||'—'):(r.pct!=null?r.pct+'%':'—'))+'</td>'+
+        '<td>'+INR2(r.deducted)+'</td><td style="color:#15803d">'+(N(r.released)?INR2(r.released):'—')+'</td>'+
+        '<td>'+(N(r.in_approval)?'<span class="pay-st ap">'+INR(r.in_approval)+'</span>':'—')+'</td>'+
+        '<td style="'+(b>0.005?'color:var(--warn);font-weight:700':'')+'">'+(b>0.005?INR2(b):'<span class="pay-st ok">Released</span>')+'</td>'+
+        '<td class="l">'+(isH?'—':r.dlp_end_date?D(r.dlp_end_date)+'<span class="pay-sub" style="'+(due?'color:#15803d;font-weight:700':'')+'">'+(due?'Due now':'Not yet')+'</span>':'<span class="pay-sub">Not set</span>')+'</td>'+
+        '<td>'+(b>0.005&&canC?'<input type="number" class="pay-amt" style="width:100%" value="'+(on?N(sel[r.bill_number]).toFixed(2):'')+'" placeholder="0.00" step="0.01" '+(on?'':'disabled')+' oninput="PAY.relAmt(\''+Q(r.bill_number)+'\',this.value)" onwheel="this.blur()">':'')+'</td></tr>';});});
+  const selRows=all.filter(r=>sel[r.bill_number]!=null), pay=selRows.reduce((s,r)=>s+N(sel[r.bill_number]),0), bad=selRows.find(r=>N(sel[r.bill_number])>N(r.balance)+0.005);
+  host.innerHTML=
+    '<div class="pay-hd"><div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2>'+(isH?'✋ Bill Holds':'🏦 Retention Ledger')+'</h2>'+'</div>'+
+      '<div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.loadRet(\''+kind+'\',true)">↻ Refresh</button></div></div>'+
+    '<div class="pay-kpis">'+kpi('n',(isH?'Bill Holds':'Retention')+' Deducted Till Date',INR(S(r=>N(r.deducted))),all.length+' Bills')+kpi('t','Released',INR(S(r=>N(r.released))),'Approved Releases')+
+      kpi('','In Approval',INR(S(r=>N(r.in_approval))),'Awaiting Approval')+kpi('a','Balance Held',INR(S(r=>N(r.balance))),new Set(all.filter(r=>N(r.balance)>0.005).map(r=>r.vendor)).size+' Vendors')+
+      (isH?kpi('d','Oldest Hold',oldest+' Days','Since Bill Date'):kpi('d','Due For Release Now',INR(dueAmt),'DLP Ended'))+'</div>'+
+    '<div class="card"><div class="pay-tb"><input id="ret_q_'+kind+'" placeholder="🔍 Vendor / bill / order…" style="width:230px" value="'+E(q)+'" oninput="PAY.retQ(\''+kind+'\',this.value)" autocomplete="off">'+
+      '<span class="lbl">Show</span><span class="seg">'+[['held','Balance Held'],['due','Due For Release'],['all','All Incl. Released']].filter(x=>!(isH&&x[0]==='due')).map(x=>'<span class="'+(show===x[0]?'on':'')+'" onclick="PAY.retShow(\''+kind+'\',\''+x[0]+'\')">'+x[1]+'</span>').join('')+'</span>'+
+      '<span class="lbl" style="margin-left:auto">'+rows.length+' bills</span></div>'+
+    '<div class="bwrap"><div class="bscroll"><table class="pay-rt pay-grid"><colgroup><col style="width:14%"><col style="width:30px"><col style="width:19%"><col style="width:11%"><col style="width:'+(isH?'12%':'5%')+'"><col style="width:9%"><col style="width:8%"><col style="width:8%"><col style="width:9%"><col style="width:'+(isH?'4%':'8%')+'"><col style="width:104px"></colgroup>'+
+      '<thead><tr><th class="l">Vendor</th><th></th><th class="l">Bill<span class="pay-sub" style="color:#93a7c9">Bill Date</span></th><th class="l">Order</th><th class="l">'+(isH?'Hold Reason':'Ret %')+'</th><th>Deducted</th><th>Released</th><th>In Approval</th><th>Balance Held</th><th class="l">'+(isH?'':'Release Due')+'</th><th>Releasing Now</th></tr>'+
+      '<tr class="pay-tot"><td class="l" colspan="5">Total · '+rows.length+' Bills · '+Object.keys(byV).length+' Vendors</td><td>'+INR(T.d)+'</td><td>'+INR(T.r)+'</td><td>'+INR(T.i)+'</td><td>'+INR(T.b)+'</td><td colspan="2"></td></tr></thead>'+
+      '<tbody>'+(body||'<tr><td colspan="11" class="pay-empty">Nothing held.</td></tr>')+'</tbody></table></div></div>'+
+    '<div class="pay-foot" style="display:flex"><div><div class="k">Balance Held</div><div class="v">'+INR(T.b)+'</div></div><div><div class="k">Selected Bills</div><div class="v sel">'+selRows.length+'</div></div><div><div class="k">Releasing Now</div><div class="v sel">'+INR2(pay)+'</div></div><div><div class="k">Held After</div><div class="v bal">'+INR(T.b-pay)+'</div></div>'+
+      '<div class="sp"><span class="err">'+(bad?'Releasing more than held on '+E(bad.bill_number):'')+'</span><button class="btn btn-primary" '+(pay>0&&!bad?'':'disabled')+' onclick="PAY.relGo()">Next: How Are You Paying →</button></div></div>';
+  if(afid0){const el=$(afid0); if(el&&el.focus){el.focus(); if(pos0!=null&&el.setSelectionRange){try{el.setSelectionRange(pos0,pos0)}catch(e){}}}}
+}
+function relTick(no,on){const k=P.relKind, sel=P.relSel[k]=P.relSel[k]||{}; const r=retRows().find(x=>x.bill_number===no); if(!r)return; if(on)sel[no]=Number(N(r.balance).toFixed(2)); else delete sel[no]; renderRet();}
+function relAmt(no,v){const sel=P.relSel[P.relKind]||{}; sel[no]=N(v); const r=retRows().find(x=>x.bill_number===no); const host=$('ret_pane_'+(P.relKind==='hold'?'hold':'ret')); const bad=r&&N(v)>N(r.balance)+0.005; const err=host&&host.querySelector('.pay-foot .err'); if(err)err.textContent=bad?'Releasing more than held on '+no:''; const btn=host&&host.querySelector('.pay-foot .btn-primary'); if(btn)btn.disabled=bad||!(Object.keys(sel).reduce((s,k)=>s+N(sel[k]),0)>0); const v2=host&&host.querySelectorAll('.pay-foot .v.sel')[1]; if(v2)v2.textContent=INR2(Object.keys(sel).reduce((s,k)=>s+N(sel[k]),0));}
+async function relGo(){
+  const k=P.relKind, sel=P.relSel[k]||{}, kindCode=k==='hold'?'hold_release':'retention_release';
+  const rs=retRows().filter(r=>sel[r.bill_number]!=null&&N(sel[r.bill_number])>0.005); if(!rs.length)return;
+  await ensureLoaded();
+  rs.forEach(r=>{ P.extra=P.extra.filter(e=>!(e.kind===kindCode&&e.billNo===r.bill_number));
+    P.extra.push({kind:kindCode,billNo:r.bill_number,billType:r.bill_type,vendor:r.vendor,amount:Number(N(sel[r.bill_number]).toFixed(2)),label:r.bill_number+' · '+(k==='hold'?'hold':'retention')+' release'}); });
+  P.relSel[k]={};
+  switchPayTab('pay'); step(2); render();
+  TOAST(rs.length+' release line'+(rs.length>1?'s':'')+' added — enter the UTR and proof, then Review & submit.','info');
+}
+
+/* ═══ v161 · TDS Ledger tab ═══ */
+function fyList(){const d=new Date(), y=d.getMonth()>=3?d.getFullYear():d.getFullYear()-1; return [y,y-1,y-2].map(x=>x+'-'+String(x+1).slice(2));}
+async function loadTds(force){
+  const sel=$('tds_fy'); if(sel&&!sel.options.length){sel.innerHTML=fyList().map(f=>'<option>'+f+'</option>').join('');}
+  const fy=sel?sel.value:null;
+  if(force||!P.tdsL||P.tdsFy!==fy){
+    $('tds_wrap').innerHTML='<div class="pay-empty">Loading…</div>';
+    try{ const r=await sb.rpc('rpc_tds_ledger',{p_fy:fy||null}); if(r.error)throw r.error; tdsAbsorb(r.data||{}); P.tdsFy=fy; P.tdsSel={}; }
+    catch(e){$('tds_wrap').innerHTML='<div class="pay-empty">'+E(e.message||e)+'</div>';return}
+  }
+  buildSecSeg(); tdsStep(1); renderTds();
+}
+function buildSecSeg(){const el=$('tds_segSec'); if(!el)return; const cur=P.tdsSec||'all'; el.innerHTML='<span data-v="all" class="'+(cur==='all'?'on':'')+'" onclick="PAY.tdsSecF(\'all\',this)">All</span>'+(P.sections||[]).map(s=>'<span data-v="'+E(s.code)+'" class="'+(cur===s.code?'on':'')+'" onclick="PAY.tdsSecF(\''+Q(s.code)+'\',this)">'+E(s.code)+'</span>').join('');}
+const tdsKey=r=>r.bill_type+'|'+r.bill_number;
+const tdsRemittable=r=>r.status!=='Split In Approval'&&N(r.pending)>0.005;
+function tdsRowsVisible(){
+  const q=($('tds_q').value||'').toLowerCase().trim(), sec=P.tdsSec||'all';
+  return ((P.tdsL||{}).deductions||[]).filter(r=>(sec==='all'||r.section===sec)&&(!q||vk(r.vendor).includes(q)||String(r.pan||'').toLowerCase().includes(q)||String(r.bill_number).toLowerCase().includes(q)));
+}
+function renderTds(){
+  const L=P.tdsL||{}, sm=L.summary||{}, view=P.tdsView||'pend', wrap=$('tds_wrap'); if(!wrap)return;
+  const today=new Date(todayISO());
+  $('tds_kpis').innerHTML=kpi('n','TDS Deducted · FY',INR(sm.deducted),(L.deductions||[]).filter(r=>r.status!=='Split In Approval').length+' Deductions')+kpi('t','Remitted',INR(sm.remitted),(L.challans||[]).filter(c=>c.approval_status==='Approved').length+' Challans')+
+    kpi('','In Approval',INR(sm.in_approval),(L.challans||[]).filter(c=>c.approval_status==='Pending Approval').length+' Challan(s)')+kpi('a','Pending Remittance',INR(sm.pending),(L.deductions||[]).filter(tdsRemittable).length+' Deductions')+
+    kpi('d','Overdue',INR(sm.overdue),N(sm.overdue)?'Past the 7th · interest runs':'Nothing overdue');
+  const steps=view==='pend'; $('tds_foot').style.display=steps?'flex':'none'; document.querySelector('#paytab-tds .pay-steps').style.display=steps?'':'none';
+  let h='';
+  if(view==='pend'||view==='all'){
+    const rows=tdsRowsVisible().filter(r=>view==='all'||tdsRemittable(r)||r.status==='Split In Approval');
+    const byP={}; rows.forEach(r=>{const k=r.period+'|'+r.section;(byP[k]=byP[k]||[]).push(r)});
+    const T={a:0,r:0,b:0};
+    h='<table class="pay-rt pay-grid"><colgroup><col style="width:30px"><col style="width:14%"><col style="width:8%"><col style="width:18%"><col style="width:7%"><col style="width:9%"><col style="width:6%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col></colgroup>'+
+      '<thead><tr><th></th><th class="l">Deductee</th><th class="l">PAN</th><th class="l">Bill<span class="pay-sub" style="color:#93a7c9">Source</span></th><th class="l">Deducted On</th><th>TDS Base</th><th>Rate<span class="pay-sub" style="color:#93a7c9">Basis</span></th><th>TDS</th><th>Remitted</th><th>Pending</th><th class="l">Challan · Status</th></tr><tr class="pay-tot" id="tds_tot"></tr></thead><tbody>';
+    Object.keys(byP).sort().forEach(k=>{const [p,s]=k.split('|'), rs=byP[k], due=pDue(p), late=due<today, pend=rs.reduce((a,r)=>a+N(r.pending),0), allSplit=rs.every(r=>r.status==='Split In Approval');
+      const intEst=rs.reduce((a,r)=>{if(!tdsRemittable(r)||pDue(r.period)>=today)return a;const x=new Date(r.tds_date);const mo=(today.getFullYear()*12+today.getMonth())-(x.getFullYear()*12+x.getMonth())+1;return a+N(r.pending)*0.015*mo},0);
+      h+='<tr class="pay-grp"><td>'+(pend>0.005?'<input type="checkbox" '+(rs.filter(tdsRemittable).every(r=>P.tdsSel[tdsKey(r)])?'checked':'')+' onclick="PAY.tdsGrp(\''+Q(k)+'\',this.checked)">':'')+'</td>'+
+        '<td class="l" colspan="6">'+E(pName(p))+' · <span class="pay-pill sec">'+E(s)+'</span><span class="gm">Deposit due '+D(isoOf(due))+'</span> '+
+        (allSplit?'<span class="pay-st ap">Awaiting Split Approval</span>':pend>0.005?(late?'<span class="pay-st bad">Overdue · ~'+INR(intEst)+' interest u/s 201(1A)</span>':'<span class="pay-st part">Due in '+Math.ceil((due-today)/864e5)+'d</span>'):'<span class="pay-st ok">Fully Remitted</span>')+'</td>'+
+        '<td>'+INR2(rs.reduce((a,r)=>a+N(r.amount),0))+'</td><td>'+INR2(rs.reduce((a,r)=>a+N(r.remitted),0))+'</td><td>'+INR2(pend)+'</td><td></td></tr>';
+      rs.forEach(r=>{const b=N(r.pending), split=r.status==='Split In Approval', on=!!P.tdsSel[tdsKey(r)]; if(!split){T.a+=N(r.amount);T.r+=N(r.remitted);T.b+=b}
+        h+='<tr class="'+(on?'on':(b<=0.005&&!split)?'pay-dim':'')+'"><td>'+(tdsRemittable(r)?'<input type="checkbox" '+(on?'checked':'')+' onclick="PAY.tdsTick(\''+Q(tdsKey(r))+'\',this.checked)">':'')+'</td>'+
+          '<td class="l" style="white-space:normal;line-height:1.25"><b style="color:var(--navy-print)">'+E(r.vendor)+'</b></td><td class="l">'+(r.pan?E(r.pan):'<span class="pay-st bad">No PAN</span>')+'</td>'+
+          '<td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><span class="pay-pill '+String(r.bill_type).toLowerCase()+'">'+E(r.bill_type)+'</span>'+E(r.bill_number)+'<span class="pay-sub">'+(r.source==='split'?'Payment split':r.source==='override'?'<span style="color:#b45309">'+E(r.override_note||'Overridden')+'</span>':'Bill')+'</span></td>'+
+          '<td class="l">'+D(r.tds_date)+'</td><td>'+INR2(r.base)+'</td><td>'+r.pct+'%<span class="pay-sub">'+(r.basis==='basic_gst'?'Basic+GST':'Basic')+'</span></td><td><b>'+INR2(r.amount)+'</b></td>'+
+          '<td style="color:#15803d">'+(N(r.remitted)?INR2(r.remitted):'—')+'</td><td style="'+(b>0.005&&!split?'color:var(--warn);font-weight:700':'')+'">'+(split?'—':b>0.005?INR2(b):'—')+'</td>'+
+          '<td class="l" style="white-space:normal;line-height:1.25">'+(split?'<span class="pay-st ap">Split In Approval</span>':r.status==='Challan In Approval'?'<span class="pay-st ap">Challan In Approval</span>':r.status==='Remitted'?E(r.challan_no||'Remitted'):'<span class="pay-st mut">Not Remitted</span>')+'</td></tr>';});});
+    h+='</tbody></table>'; wrap.innerHTML=h;
+    const tot=$('tds_tot'); if(tot)tot.innerHTML='<td></td><td class="l" colspan="6">Total · '+rows.length+' Deductions</td><td>'+INR2(T.a)+'</td><td>'+INR2(T.r)+'</td><td>'+INR2(T.b)+'</td><td></td>';
+    $('tds_n').textContent=rows.length+' rows';
+  } else if(view==='chal'){
+    const rs=(L.challans||[]).filter(c=>(P.tdsSec||'all')==='all'||c.section===P.tdsSec);
+    wrap.innerHTML='<table class="pay-rt pay-grid"><colgroup><col style="width:13%"><col style="width:10%"><col style="width:7%"><col style="width:8%"><col style="width:8%"><col style="width:7%"><col style="width:14%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col></colgroup>'+
+      '<thead><tr><th class="l">Challan</th><th class="l">Period</th><th class="l">Section</th><th class="l">Paid On</th><th class="l">BSR Code</th><th class="l">Serial</th><th class="l">CIN</th><th>Tax</th><th>Interest</th><th class="l">Payment</th><th class="l">Status</th></tr></thead><tbody>'+
+      (rs.length?rs.map(c=>'<tr><td class="l"><b>'+E(c.challan_no)+'</b><span class="pay-sub">'+c.n_deductions+' deduction'+(c.n_deductions>1?'s':'')+'</span></td><td class="l">'+E(pName(c.period_from))+(c.period_to!==c.period_from?' – '+E(pName(c.period_to)):'')+'</td><td class="l"><span class="pay-pill sec">'+E(c.section)+'</span></td><td class="l">'+D(c.challan_date)+'</td><td class="l">'+E(c.bsr_code||'—')+'</td><td class="l">'+E(c.challan_serial||'—')+'</td><td class="l" style="font-size:11px">'+E(c.cin||'—')+'</td><td>'+INR2(c.tax)+'</td><td>'+(N(c.interest)?INR2(c.interest):'—')+'</td><td class="l">'+E(c.payment_id)+(c.attachment?proofLinks(c.attachment):'')+'</td><td class="l">'+(c.approval_status==='Approved'?'<span class="pay-st ok">Approved</span>':'<span class="pay-st ap">'+E(c.approval_status)+'</span>')+'</td></tr>').join(''):'<tr><td colspan="11" class="pay-empty">No challans yet.</td></tr>')+'</tbody></table>';
+    $('tds_n').textContent=rs.length+' challans';
+  } else {
+    const by={}; tdsRowsVisible().filter(r=>r.status!=='Split In Approval').forEach(r=>{const k=r.vendor+'|'+r.section;const o=by[k]=by[k]||{v:r.vendor,pan:r.pan,sec:r.section,n:0,base:0,amt:0,rem:0};o.n++;o.base+=N(r.base);o.amt+=N(r.amount);o.rem+=N(r.remitted)});
+    const rs=Object.values(by).sort((a,b)=>a.v.localeCompare(b.v));
+    wrap.innerHTML='<table class="pay-rt pay-grid"><colgroup><col style="width:26%"><col style="width:13%"><col style="width:9%"><col style="width:7%"><col style="width:13%"><col style="width:12%"><col style="width:10%"><col></colgroup>'+
+      '<thead><tr><th class="l">Deductee</th><th class="l">PAN</th><th class="l">Section</th><th>Bills</th><th>Amount Paid / Credited</th><th>TDS Deducted</th><th>Remitted</th><th>Pending</th></tr></thead><tbody>'+
+      (rs.length?rs.map(o=>'<tr><td class="l"><b style="color:var(--navy-print)">'+E(o.v)+'</b></td><td class="l">'+(o.pan?E(o.pan):'<span class="pay-st bad">No PAN · 206AA</span>')+'</td><td class="l"><span class="pay-pill sec">'+E(o.sec)+'</span></td><td>'+o.n+'</td><td>'+INR2(o.base)+'</td><td>'+INR2(o.amt)+'</td><td style="color:#15803d">'+(o.rem?INR2(o.rem):'—')+'</td><td style="color:var(--warn);font-weight:700">'+(o.amt-o.rem>0.005?INR2(o.amt-o.rem):'—')+'</td></tr>').join(''):'<tr><td colspan="8" class="pay-empty">Nothing yet.</td></tr>')+'</tbody></table>';
+    $('tds_n').textContent=rs.length+' deductee · section rows';
+  }
+  tdsFoot();
+}
+function tdsSelRows(){return ((P.tdsL||{}).deductions||[]).filter(r=>P.tdsSel[tdsKey(r)]&&tdsRemittable(r));}
+function tdsFoot(){
+  const s=tdsSelRows(), pay=s.reduce((a,r)=>a+N(r.pending),0), secs=new Set(s.map(r=>r.section)).size, all=((P.tdsL||{}).deductions||[]).filter(tdsRemittable);
+  $('tds_fTot').textContent=INR2(all.reduce((a,r)=>a+N(r.pending),0)); $('tds_fSel').textContent=s.length+' rows · '+new Set(s.map(r=>r.period)).size+' months';
+  $('tds_fCh').textContent=secs?'1 · '+secs+' challan'+(secs>1?'s':''):'0'; $('tds_fPay').textContent=INR2(pay);
+  $('tds_fNext').disabled=!s.length; $('tds_s1n').textContent=all.length+' pending · '+INR(all.reduce((a,r)=>a+N(r.pending),0));
+  $('tds_s2n').textContent=s.length?'1 payment · '+secs+' challan'+(secs>1?'s':'')+' · '+INR2(pay):'Nothing selected yet';
+}
+function tdsTick(k,on){if(on)P.tdsSel[k]=true;else delete P.tdsSel[k];renderTds();}
+function tdsGrp(k,on){((P.tdsL||{}).deductions||[]).filter(r=>r.period+'|'+r.section===k&&tdsRemittable(r)).forEach(r=>{if(on)P.tdsSel[tdsKey(r)]=true;else delete P.tdsSel[tdsKey(r)]});renderTds();}
+function tdsAll(){const p=((P.tdsL||{}).deductions||[]).filter(tdsRemittable), on=!p.every(r=>P.tdsSel[tdsKey(r)]); p.forEach(r=>{if(on)P.tdsSel[tdsKey(r)]=true;else delete P.tdsSel[tdsKey(r)]}); renderTds();}
+function tdsStep(n){
+  if(n===2&&!tdsSelRows().length)return; P.tdsStepNo=n;
+  $('tds_step1').classList.toggle('on',n===1); $('tds_step2').classList.toggle('on',n===2);
+  $('tds_card1').style.display=n===1?'':'none'; $('tds_card2').style.display=n===2?'':'none';
+  $('tds_fNext').style.display=n===2?'none':''; $('tds_fBtn').style.display=n===2?'':'none';
+  if(n===2)renderTdsPay();
+}
+function intAt(rs,pd){const Pd=new Date(pd);return rs.reduce((a,r)=>{if(pDue(r.period)>=Pd)return a;const x=new Date(r.tds_date);const m=(Pd.getFullYear()*12+Pd.getMonth())-(x.getFullYear()*12+x.getMonth())+1;return a+N(r.pending)*0.015*m},0);}
+function renderTdsPay(){
+  const s=tdsSelRows(), g={}; s.forEach(r=>(g[r.section]=g[r.section]||[]).push(r));
+  const secs=Object.keys(g).sort(); const H=P.tdsPay=P.tdsPay||{date:todayISO(),mode:'Net Banking',utr:'',ref:'',remarks:'',ay:''}; if(!H.date)H.date=todayISO();
+  const pd=H.date, tax=s.reduce((a,r)=>a+N(r.pending),0);
+  const fy=P.tdsFy||fyList()[0]; const ay=(+fy.slice(0,4)+1)+'-'+String(+fy.slice(0,4)+2).slice(2);
+  const intv=sec=>{const c=P.tdsCh[sec]||{};return c.interest!=null?N(c.interest):Math.round(intAt(g[sec],pd));};
+  $('tds_card2').innerHTML=
+    '<div class="pay-hr" style="margin-top:0;background:#f8fafc"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap"><b style="color:var(--navy-print);font-size:13.5px">TDS Payment · One Voucher</b><span class="pay-st part">'+secs.length+' challan'+(secs.length>1?'s':'')+' · '+s.length+' deductions · '+new Set(s.map(r=>r.period)).size+' months</span>'+
+      '<span style="margin-left:auto;font-size:11px;color:var(--muted)">Payee</span><b style="font-size:12px;color:var(--navy-print)">Income Tax Department · AY '+E(ay)+'</b></div>'+
+      '<div class="pay-grid6"><div><label>Payment Date</label><input type="date" value="'+E(pd)+'" onchange="PAY.tdsHdr(\'date\',this.value);PAY.tdsStep(2)"></div><div><label>Mode</label><select onchange="PAY.tdsHdr(\'mode\',this.value)">'+['Net Banking','NEFT','RTGS','Cheque'].map(m=>'<option '+(H.mode===m?'selected':'')+'>'+m+'</option>').join('')+'</select></div>'+
+      '<div><label>Bank Ref / UTR</label><input value="'+E(H.utr)+'" placeholder="One debit for all challans" oninput="PAY.tdsHdr(\'utr\',this.value)"></div><div><label>Reference</label><input value="'+E(H.ref)+'" placeholder="optional" oninput="PAY.tdsHdr(\'ref\',this.value)"></div>'+
+      '<div style="grid-column:span 2"><label>Remarks</label><input value="'+E(H.remarks)+'" placeholder="e.g. Sep + Oct TDS, all sections" oninput="PAY.tdsHdr(\'remarks\',this.value)"></div></div></div>'+
+    secs.map((sec,i)=>{const rs=g[sec].slice().sort((a,b)=>a.period.localeCompare(b.period)||a.vendor.localeCompare(b.vendor)), c=P.tdsCh[sec]=P.tdsCh[sec]||{}, t=rs.reduce((a,r)=>a+N(r.pending),0), ai=Math.round(intAt(rs,pd)), iv=intv(sec), ms=[...new Set(rs.map(r=>r.period))].sort(), late=rs.some(r=>pDue(r.period)<new Date(pd)), sm=secOf(sec);
+      const Pd=new Date(pd);
+      return '<div class="pay-hr" style="margin-top:10px;background:#fff"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap"><b style="color:var(--navy-print);font-size:13px">Challan '+(i+1)+'</b><span class="pay-pill sec">'+E(sec)+'</span><span style="font-size:11.5px;color:var(--muted)">'+E(sm?sm.nature:'')+' · '+rs.length+' deduction'+(rs.length>1?'s':'')+' · '+ms.map(pName).join(', ')+'</span>'+(late?'<span class="pay-st bad">Includes late months</span>':'')+'<span style="margin-left:auto;font-size:15px;font-weight:800;color:#c2410c">'+INR2(t+iv+N(c.late_fee)+N(c.penalty))+'</span></div>'+
+        '<div class="pay-grid6"><div><label>BSR Code</label><input value="'+E(c.bsr||'')+'" placeholder="7 digits" maxlength="7" oninput="PAY.tdsCh(\''+Q(sec)+'\',\'bsr\',this.value)"></div><div><label>Challan Serial No</label><input value="'+E(c.serial||'')+'" placeholder="5 digits" maxlength="5" oninput="PAY.tdsCh(\''+Q(sec)+'\',\'serial\',this.value)"></div>'+
+        '<div style="grid-column:span 2"><label>CIN</label><input value="'+E(c.cin||'')+'" placeholder="From the paid challan" oninput="PAY.tdsCh(\''+Q(sec)+'\',\'cin\',this.value)"></div>'+
+        '<div style="grid-column:span 2"><label>Challan Copy</label>'+(c.file?'<span style="font-size:10.5px">📎 '+E(c.file.name)+' <button class="btn btn-ghost btn-sm" style="padding:1px 6px;font-size:10px" onclick="PAY.tdsChFile(\''+Q(sec)+'\',null)">✕</button></span>':'<input type="file" accept="application/pdf,image/*" style="font-size:10.5px;padding:2px" onchange="PAY.tdsChFile(\''+Q(sec)+'\',this.files[0])">')+'</div></div>'+
+        '<div class="pay-grid6" style="margin-top:8px"><div><label>Tax</label><input class="pay-amt" style="width:100%" value="'+t.toFixed(2)+'" disabled></div>'+
+        '<div><label>Interest 201(1A) '+(c.interest!=null?'<span class="pay-st ap" style="font-size:8.5px;padding:0 5px">Manual</span>':'<span class="pay-st ok" style="font-size:8.5px;padding:0 5px">Auto</span>')+'</label><input type="number" class="pay-amt" style="width:100%" value="'+iv.toFixed(2)+'" step="0.01" onwheel="this.blur()" onchange="PAY.tdsCh(\''+Q(sec)+'\',\'interest\',this.value);PAY.tdsStep(2)"><div class="pay-h">'+(c.interest!=null?'Auto '+INR2(ai)+' · <a href="#" onclick="PAY.tdsCh(\''+Q(sec)+'\',\'interest\',null);PAY.tdsStep(2);return false">Reset</a>':ai?'1.5% × months or part, deduction → payment':'Not late')+'</div></div>'+
+        '<div><label>Late Fee 234E</label><input type="number" class="pay-amt" style="width:100%" value="'+N(c.late_fee).toFixed(2)+'" step="0.01" onwheel="this.blur()" onchange="PAY.tdsCh(\''+Q(sec)+'\',\'late_fee\',this.value);PAY.tdsStep(2)"></div><div><label>Penalty / Others</label><input type="number" class="pay-amt" style="width:100%" value="'+N(c.penalty).toFixed(2)+'" step="0.01" onwheel="this.blur()" onchange="PAY.tdsCh(\''+Q(sec)+'\',\'penalty\',this.value);PAY.tdsStep(2)"></div></div>'+
+        '<div class="bwrap" style="margin-top:10px"><table class="pay-rt pay-grid"><colgroup><col style="width:15%"><col style="width:8%"><col style="width:20%"><col style="width:8%"><col style="width:10%"><col style="width:10%"><col style="width:6%"><col style="width:9%"><col style="width:5%"><col style="width:9%"></colgroup>'+
+        '<thead><tr><th class="l">Deductee</th><th class="l">PAN</th><th class="l">Bill<span class="pay-sub" style="color:#93a7c9">Source</span></th><th class="l">Deducted On</th><th class="l">Period<span class="pay-sub" style="color:#93a7c9">Deposit Due</span></th><th>TDS Base</th><th>Rate</th><th>TDS In Challan</th><th>Late</th><th>Interest</th></tr></thead><tbody>'+
+        rs.map(r=>{const due=pDue(r.period), x=new Date(r.tds_date), mo=due<Pd?(Pd.getFullYear()*12+Pd.getMonth())-(x.getFullYear()*12+x.getMonth())+1:0, it=N(r.pending)*0.015*mo;
+          return '<tr><td class="l" style="white-space:normal;line-height:1.25"><b style="color:var(--navy-print)">'+E(r.vendor)+'</b></td><td class="l">'+(r.pan?E(r.pan):'<span class="pay-st bad">No PAN</span>')+'</td><td class="l" style="white-space:normal;word-break:break-all;line-height:1.25"><span class="pay-pill '+String(r.bill_type).toLowerCase()+'">'+E(r.bill_type)+'</span>'+E(r.bill_number)+'<span class="pay-sub">'+(r.source==='split'?'Payment split':r.source==='override'?'<span style="color:#b45309">'+E(r.override_note||'Overridden')+'</span>':'Bill')+'</span></td><td class="l">'+D(r.tds_date)+'</td><td class="l">'+E(pName(r.period))+'<span class="pay-sub" style="'+(due<Pd?'color:var(--danger);font-weight:700':'')+'">Due '+D(isoOf(due))+'</span></td><td>'+INR2(r.base)+'</td><td>'+r.pct+'%</td><td><b>'+INR2(r.pending)+'</b>'+(N(r.remitted)?'<span class="pay-sub">of '+INR2(r.amount)+'</span>':'')+'</td><td>'+(mo?'<span class="pay-st bad">'+mo+' mo</span>':'—')+'</td><td>'+(it?INR2(it):'—')+'</td></tr>';}).join('')+
+        '<tr class="pay-grp"><td class="l" colspan="5">'+E(sec)+' · '+rs.length+' deduction'+(rs.length>1?'s':'')+' · '+new Set(rs.map(r=>r.vendor)).size+' deductee(s)</td><td>'+INR2(rs.reduce((a,r)=>a+N(r.base),0))+'</td><td></td><td>'+INR2(t)+'</td><td></td><td>'+INR2(intAt(rs,pd))+'</td></tr></tbody></table></div></div>';}).join('')+
+    '<div class="pay-hr" style="margin-top:10px;background:#1e3a5f;color:#fff;border-color:#1e3a5f;display:flex;gap:26px;align-items:center"><div><div style="font-size:9.5px;color:#93a7c9;font-weight:700;text-transform:uppercase">Tax</div><b style="font-size:15px">'+INR2(tax)+'</b></div><div><div style="font-size:9.5px;color:#93a7c9;font-weight:700;text-transform:uppercase">Interest</div><b style="font-size:15px">'+INR2(secs.reduce((a,sec)=>a+intv(sec),0))+'</b></div><div><div style="font-size:9.5px;color:#93a7c9;font-weight:700;text-transform:uppercase">Total Debit</div><b style="font-size:15px;color:#fdba74">'+INR2(tax+secs.reduce((a,sec)=>a+intv(sec)+N((P.tdsCh[sec]||{}).late_fee)+N((P.tdsCh[sec]||{}).penalty),0))+'</b></div><div style="margin-left:auto;font-size:11.5px;color:#cbd5e1">One voucher · '+secs.length+' challan'+(secs.length>1?'s':'')+' · approved like any payment</div></div>'+
+    '<div class="pay-note info">Why not one challan for everything? The e-Pay Tax challan (ITNS 281) takes <b>one section code</b>. Months and deductees of the same section combine freely into one challan; different sections need their own challan — but they are paid, approved and tracked together as this one payment.</div>'+
+    '<div style="margin-top:9px"><button class="btn btn-ghost btn-sm" onclick="PAY.tdsStep(1)">← Back To Selection</button></div>';
+  $('tds_fErr').textContent=H.utr?'':'Enter the bank reference / UTR';
+}
+function tdsHdr(k,v){P.tdsPay=P.tdsPay||{};P.tdsPay[k]=v;$('tds_fErr').textContent=(P.tdsPay.utr||'').trim()?'':'Enter the bank reference / UTR';}
+function tdsChSet(sec,k,v){const c=P.tdsCh[sec]=P.tdsCh[sec]||{}; if(v===null||v==='')delete c[k]; else c[k]=(k==='interest'||k==='late_fee'||k==='penalty')?N(v):v;}
+function tdsChFile(sec,f){const c=P.tdsCh[sec]=P.tdsCh[sec]||{}; if(f&&f.size>15728640){TOAST('Challan copy must be under 15 MB','error');return} c.file=f||null; tdsStep(2);}
+async function tdsSubmit(){
+  if(!hasPerm('canRemitTDS')){TOAST('Not permitted — TDS remittance needs the tds_remit permission','error');return}
+  const s=tdsSelRows(); if(!s.length)return;
+  const H=P.tdsPay||{}; if(!(H.utr||'').trim()){TOAST('Enter the bank reference / UTR','warn');return}
+  const g={}; s.forEach(r=>(g[r.section]=g[r.section]||[]).push(r)); const secs=Object.keys(g).sort();
+  const btn=$('tds_fBtn'); if(btn)btn.disabled=true; PB('Recording TDS remittance…');
+  try{
+    const challans=[];
+    for(const sec of secs){const c=P.tdsCh[sec]||{}; const att=c.file?await uploadProof(c.file):undefined;
+      challans.push({section:sec,challan_date:H.date||todayISO(),bsr_code:(c.bsr||'').trim()||null,challan_serial:(c.serial||'').trim()||null,cin:(c.cin||'').trim()||null,
+        interest:c.interest!=null?N(c.interest):Math.round(intAt(g[sec],H.date||todayISO())),late_fee:N(c.late_fee),penalty:N(c.penalty),attachment:att,
+        lines:g[sec].map(r=>({bill_type:r.bill_type,bill_number:r.bill_number,amount:Number(N(r.pending).toFixed(2))}))});}
+    const fy=P.tdsFy||fyList()[0];
+    const payload={date:H.date||todayISO(),mode:H.mode||'Net Banking',utr:(H.utr||'').trim(),reference:(H.ref||'').trim()||null,remarks:(H.remarks||'').trim()||null,
+      assessment_year:(+fy.slice(0,4)+1)+'-'+String(+fy.slice(0,4)+2).slice(2),entered_by_id:(window.state&&state.userId)||null,challans:challans};
+    const r=await sb.rpc('rpc_tds_remit',{p:payload,p_client_request_id:uuid(),p_user:(window.state&&state.userName)||'—'});
+    if(r.error)throw r.error;
+    const d=r.data||{};
+    TOAST('TDS payment '+(d.payment_id||'')+' with '+secs.length+' challan'+(secs.length>1?'s':'')+' recorded — awaiting approval.','success');
+    P.tdsSel={}; P.tdsCh={}; P.tdsPay=null; P.tdsStepNo=1;
+    await loadTds(true); loadHistory();
+  }catch(e){console.error('TDS remit',e);TOAST(String(e.message||e),'error')}
+  finally{if(btn)btn.disabled=false;PBD()}
 }
 
 window.PAY={
@@ -13707,6 +14315,13 @@ window.PAY={
   atog:function(id){P.aopen[id]=!P.aopen[id];renderApprovals()},
   htog:function(id){P.hopen[id]=!P.hopen[id];renderHistory()},
   hsort:hsort, histClear:histClear,
+  // v161 · M38
+  tdsOpen:tdsOpen, tdsCalc:tdsCalc, tdsSec:tdsSec, tdsBasis:tdsBasis, tdsApply:tdsApply, tdsRemove:tdsRemove, nsOpen:nsOpen, nsClose:nsClose, nsSave:nsSave,
+  pzAct:pzAct, pzAdd:pzAdd, pzDrop:pzDrop, pzRm:pzRm,
+  loadAdv:loadAdv, renderAdv:renderAdv, advNew:advNew, advPur:function(v,el){P.advPur=v;seg(el);renderAdv()}, advSt:function(v,el){P.advSt=v;seg(el);renderAdv()},
+  loadRet:loadRet, renderRet:renderRet, relTick:relTick, relAmt:relAmt, relGo:relGo, retQ:function(k,v){P.retQ[k]=v;renderRet()}, retShow:function(k,v){P.retShow[k]=v;renderRet()},
+  loadTds:loadTds, renderTds:renderTds, tdsView:function(v,el){P.tdsView=v;seg(el);renderTds()}, tdsSecF:function(v,el){P.tdsSec=v;seg(el);renderTds()},
+  tdsTick:tdsTick, tdsGrp:tdsGrp, tdsAll:tdsAll, tdsStep:tdsStep, tdsHdr:tdsHdr, tdsCh:tdsChSet, tdsChFile:tdsChFile, tdsSubmit:tdsSubmit,
   boot:function(){
     const d=$('pay_date');
     if(d&&!d.value){d.value=todayISO();d.addEventListener('change',function(){reload()});}
@@ -13722,6 +14337,9 @@ function _payTabAllowed(tab){
   switch(tab){
     case 'pyd':     return true;                                                 // v155 · landing screen
     case 'pay':     return hasPerm('canCreatePayConfirm')||hasPerm('canConfirmPayment');
+    case 'adv': case 'ret': case 'bhold':                                              // v161 · ledgers read for approvers + Director, act for creators
+                    return hasPerm('canCreatePayConfirm')||hasPerm('canConfirmPayment')||hasPerm('canApprovePayConfirm')||!!state.isViewer;
+    case 'tds':     return hasPerm('canRemitTDS')||hasPerm('canSplitTDS')||hasPerm('canApprovePayConfirm')||!!state.isViewer;
     case 'approve': return hasPerm('canApprovePayConfirm')||!!state.isViewer;     // v155 · Director reads the queue
     case 'holds':   return hasPerm('canBlockPayment')||hasPerm('canReleasePaymentHold')||!!state.isViewer;
     case 'hist':    return true;
@@ -13734,12 +14352,16 @@ function switchPayTab(tab){
     t.style.display=_payTabAllowed(k)?'':'none';
   });
   if(!_payTabAllowed(tab)){
-    tab=['pyd','pay','approve','holds','hist'].find(_payTabAllowed)||'hist';
+    tab=['pyd','pay','adv','ret','bhold','tds','approve','holds','hist'].find(_payTabAllowed)||'hist';
   }
   document.querySelectorAll('#mod-payments .sub-tab').forEach(t=>t.classList.toggle('active',t.dataset.paytab===tab));
-  ['pyd','pay','approve','holds','hist'].forEach(k=>{const el=document.getElementById('paytab-'+k);if(el)el.style.display=(k===tab?'':'none')});
+  ['pyd','pay','adv','ret','bhold','tds','approve','holds','hist'].forEach(k=>{const el=document.getElementById('paytab-'+k);if(el)el.style.display=(k===tab?'':'none')});
   if(tab==='pyd')window.RPT.payables();
   if(tab==='pay')PAY.boot();
+  if(tab==='adv')PAY.loadAdv();          // v161
+  if(tab==='ret')PAY.loadRet('retention');
+  if(tab==='bhold')PAY.loadRet('hold');
+  if(tab==='tds')PAY.loadTds();
   if(tab==='approve')PAY.loadApprovals();
   if(tab==='holds')PAY.loadHolds();
   if(tab==='hist')PAY.loadHistory();
@@ -18629,7 +19251,7 @@ async function openWoActivityPicker(){
     openModal(
       '<div class="mp-modal">'
       + '<div class="mp-head" style="display:flex;align-items:flex-start;gap:10px;"><div style="flex:1;min-width:0;"><h3>Add activities from estimate</h3>'
-      +   '<div class="mp-sub">Tick a <b>package</b> for every activity under it, or switch to <b>location</b> and tick a node for everything estimated there. Only <b>approved</b> pairs appear; qty is capped at remaining. <span class="wo-ls-pill">LS \u20b9</span> lines have no quantity \u2014 enter the \u20b9 amount to order against the budget remaining.</div></div>'
+      +   '</div>'
       +   '<button class="mp-closebtn" onclick="_wpCancel()" title="Close without adding">\u2715</button></div>'
       + '<div class="pp-split">'
       +   '<div class="mp-pane">'
@@ -19058,7 +19680,7 @@ async function openHoEquipmentPicker(){
     openModal(
       '<div class="mp-modal">'
       + '<div class="mp-head" style="display:flex;align-items:flex-start;gap:10px;"><div style="flex:1;min-width:0;"><h3>Add hire equipment from estimate</h3>'
-      +   '<div class="mp-sub">Tick a <b>package</b> for every equipment under it, or switch to <b>location</b> and tick a node for everything estimated there. Only <b>approved</b> pairs appear; qty is capped at remaining.</div></div>'
+      +   '</div>'
       +   '<button class="mp-closebtn" onclick="_wpCancel()" title="Close without adding">✕</button></div>'
       + '<div class="pp-split">'
       +   '<div class="mp-pane">'
@@ -29759,7 +30381,7 @@ async function _ppOpenPicker(mode){
   openModal(
     '<div class="mp-modal">'
     + '<div class="mp-head" style="display:flex;align-items:flex-start;gap:10px;"><div style="flex:1;min-width:0;"><h3>'+T.title+'</h3>'
-    +   '<div class="mp-sub">Tick a <b>package</b> for all its materials, or switch to <b>location</b> and tick a node for everything estimated there. Search a material to scope. Only <b>approved</b> cells appear; qty is capped at remaining.</div></div>'
+    +   '</div>'
     +   '<button class="mp-closebtn" onclick="_ppCancel()" title="Close without adding">\u2715</button></div>'
     + '<div class="pp-matbar">'
     +   '<span class="pp-lbl">Material <span class="pp-lblsub">(optional scope)</span></span>'
@@ -32175,8 +32797,6 @@ function _scanProposalPreview(existing, opts){
   const mode=_prop.opts.mode; _prop.opts.poNum=po; const maker=(mode==='store'||mode==='manual');
   const invNo=inv.number||(maker?(document.getElementById('grn_invoiceNo')||{}).value:'')||''; const invDt=inv.date||(maker?(document.getElementById('grn_invoiceDate')||{}).value:'')||'';
   const h='<h3>'+(maker?'Proposed amendment \u2014 ':'Store request for ')+esc(_amdDocLabel({po_number:po,rev_no:_prop.opts.rev_no||0}))+' <small class="muted">'+(invNo?'from invoice '+esc(invNo)+(invDt?' dated '+fmtDate(invDt):''):(mode==='manual'?'manual proposal':''))+(_prop.opts.by?' \u00b7 '+esc(_prop.opts.by):'')+'</small></h3>'
-   +'<div class="amd-banner info"><span class="i"></span><div>'+(maker?'You are asking for <b>material and quantity only</b>. <b>Purchase decides the WBS / location and the rate</b> when the PO is amended; budget is checked at that step. <b>The whole PO is locked</b> from the moment you send, until the amendment is approved or cancelled; this receipt is parked and saved once, in full, after approval.'
-      :'Material and quantity only. Opening the PO does not change any line \u2014 the request travels with the amendment, and the <b>Purchase Executive places it on WBS / location and sets the rate</b>.')+'</div></div>'
    +(!maker&&_prop.opts.reason?'<div class="amd-banner freeze"><span class="i"></span><div><b>Reason:</b> <span style="white-space:pre-line;">'+esc(_prop.opts.reason)+'</span></div></div>':'')
    +(maker?'<div class="field" style="margin-bottom:10px;"><label class="req">Reason</label><input id="propReason" placeholder="e.g. vendor delivered a full load; PO balance is short" oninput="_prop.reason=this.value;_propReasonMark(false);_propSum()"><span id="propReasonErr" style="display:none;color:var(--danger);font-size:12px;font-weight:600;margin-top:4px;">Reason is required \u2014 say why the PO needs more quantity. Nothing has been sent.</span></div>':'')
    +'<div class="table-wrap"><table id="propTbl"><thead><tr><th>#</th><th>Material</th><th>UOM</th><th class="num">PO qty</th><th class="num">Received</th><th class="num">Balance</th><th class="num">'+(mode==='store'||(!maker&&invNo)?'Invoice qty':'Receiving now')+'</th><th class="num">Extra requested</th><th class="num">PO qty after</th><th>Change</th><th></th></tr></thead><tbody id="propBody"></tbody></table></div>'
@@ -32562,7 +33182,6 @@ function _amdEditHtml(){
   const f=(k)=>hd[k]!==undefined?hd[k]:(po[k]||'');
   return '<h3>Amend '+esc(po.po_number)+' \u2192 A'+a.rev_no+' <span class="status '+_amdStateCls(a.status==='Draft'?'Under Amendment':'Amendment - Correction')+'" style="margin-left:8px;vertical-align:middle;">'+esc(a.status==='Draft'?'Draft':'Returned for correction')+'</span></h3>'
    +(a.status==='Rejected - Correction'&&a.rejection_reason?'<div class="amd-banner block"><span class="i"></span><div><b>Purchase Manager note:</b> '+esc(a.rejection_reason)+'</div></div>':'')
-   +'<div class="amd-banner info"><span class="i"></span><div>Received quantities are the floor on each line. A rate or WBS/location change on a line with receipts closes that line at the received qty and creates a new line for the balance \u2014 the system does the split.</div></div>'
    +'<div style="font-size:12px;color:var(--muted);margin-bottom:8px;"><b>'+esc(po.vendor_name||'')+'</b> \u00b7 Revision '+num(po.rev_no)+' \u00b7 '+esc(po.status)+'</div>'
    +'<div id="amdReqStrip"></div>'
    +'<div class="table-wrap"><table id="amdTbl"><thead><tr><th>#</th><th style="min-width:230px;">Material</th><th style="min-width:200px;">WBS / Location</th><th>UOM</th><th class="num">Received</th><th class="num" style="min-width:130px;">Qty</th><th class="num" style="min-width:130px;">Budget left</th><th class="num" style="min-width:120px;">Rate</th><th class="num">Amount</th><th></th></tr></thead><tbody id="amdBody"></tbody></table></div>'
@@ -33041,7 +33660,6 @@ async function amwViewProposal(doc, docNum){
   const pc=live.request_context.parked_cert;
   openModal('<h3>Site request — '+esc(docNum)+' <span class="status amendment-requested" style="margin-left:8px;vertical-align:middle;">Amendment Requested</span></h3>'
     +'<div class="meta" style="font-size:12px;color:var(--muted);margin-bottom:8px;">'+esc([live.requested_by,live.requested_at?fmtDateShort(live.requested_at):'',live.request_context.requested_from||''].filter(Boolean).join(' · '))+(pc?' · parked '+T.cert+' for '+esc(pc.period||'')+' ('+esc(String(pc.lines||''))+' line'+(pc.lines===1?'':'s')+')':'')+'</div>'
-    +'<div class="amd-banner info"><span class="i"></span><div>The site asks for extra quantity per '+T.actWord.toLowerCase()+' and location. No rate is set here — the Contracts Executive prices it and may move it to another location.</div></div>'
     +'<div class="table-wrap"><table><thead><tr><th>'+T.actWord+'</th><th>Location</th><th>UOM</th><th class="num">'+doc+' qty</th><th class="num">Certified</th><th class="num">Certifying now</th><th class="num">Extra asked</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
     +'<div style="font-size:12.5px;margin-top:10px;"><b>Reason:</b> <span style="white-space:pre-line;">'+esc(live.reason||'')+'</span></div>'
     +'<div class="actions-row"><button class="btn btn-ghost" onclick="closeModal();'+(doc==='WO'?'viewWO':'viewHO')+'(\''+esc(docNum)+'\')">Back to '+doc+'</button>'
@@ -33082,7 +33700,6 @@ function _amwEditHtml(){
   const locked=T.doc==='WO'?[['GST %',o.gst_pct],['Retention %',o.retention_pct],['Mob. advance %',o.mob_advance_pct],['Mob. recovery %',o.mob_recovery_pct]]:[['GST %',o.gst_pct]];
   return '<h3>Amend '+esc(a.doc_number)+' → A'+a.rev_no+' <span class="status '+_amdStateCls(a.status==='Draft'?'Under Amendment':'Amendment - Correction')+'" style="margin-left:8px;vertical-align:middle;">'+esc(a.status==='Draft'?'Draft':'Returned for correction')+'</span></h3>'
    +(a.status==='Rejected - Correction'&&a.rejection_reason?'<div class="amd-banner block"><span class="i"></span><div><b>Manager note:</b> '+esc(a.rejection_reason)+'</div></div>':'')
-   +'<div class="amd-banner info"><span class="i"></span><div>Certified quantity is the floor on each line. A rate or location change on a line with certification closes that line at the certified qty and creates a new line for the balance — the system does the split.'+(T.hasStages?' Stages are set per activity: a certified stage is locked, the rest can be renamed, re-weighted, added or removed as long as they total 100%. A new activity gets its own stages (or none).':'')+'</div></div>'
    +'<div style="font-size:12px;color:var(--muted);margin-bottom:8px;"><b>'+esc(o.vendor_name||'')+'</b> · Revision '+num(o.rev_no)+' · '+esc(o.status)+(a.opened_by?' · opened by '+esc(a.opened_by)+(a.opened_at?' '+fmtDateShort(a.opened_at):''):'')+'</div>'
    +'<div id="amwReqStrip"></div>'
    +'<div class="table-wrap"><table id="amwTbl"><thead><tr><th>#</th><th style="min-width:220px;">'+T.actWord+' · Location</th><th>UOM</th><th class="num">Certified</th><th class="num" style="min-width:130px;">Qty</th><th class="num" style="min-width:130px;">Estimate left</th><th class="num" style="min-width:120px;">Rate</th><th class="num">Amount</th><th></th></tr></thead><tbody id="amwBody"></tbody></table></div>'
@@ -42703,11 +43320,7 @@ const AREAS = (function () {
       `<div class="arp-people">${people.map(p =>
         `<button class="arp-pbtn ${a.eng.includes(p.id) ? 'on' : ''}"
           onclick="AREAS.toggleEng('${p.id}')">${esc(p.name)}${p.has_role ? '' : ' <small>not a site engineer</small>'}</button>`
-       ).join('') || '<div style="padding:12px;color:#8a98ad">Nobody is assigned to this project yet.</div>'}</div>
-       <div class="ar-note">One engineer files one report, so each person belongs to exactly one area.
-         Somebody already on another area must be removed there first.</div>
-       <div class="ar-note">Marked <b>not a site engineer</b> means they hold no Site Engineer role on this
-         project, so they cannot file. Add the role under Users.</div>`);
+       ).join('') || '<div style="padding:12px;color:#8a98ad">Nobody is assigned to this project yet.</div>'}</div>`);
   }
   async function toggleEng(uid) {
     const a = areas.find(x => x.id === pickArea); if (!a) return;
@@ -42799,7 +43412,7 @@ const DPRM = (function () {
   /* ---- trades ---- */
   function trades() {
     const rows = (S.m.trades || []);
-    let h = '<div class="lm-note">Trades are org-wide — one list for every project. A code cannot change once used on a report; the name and order can. Retiring keeps history and stops the trade showing on the engineer\'s steppers.</div>';
+    let h = '';
     h += '<table class="lm-t"><tr><th style="width:70px">CODE</th><th>TRADE</th><th style="width:80px" class="n">ORDER</th><th style="width:80px" class="c">ACTIVE</th><th style="width:70px"></th></tr>';
     rows.forEach(r => { h += `<tr class="${r.is_active ? '' : 'mut'}"><td><b>${esc(r.trade_code)}</b>${r.used ? ' <span class="lm-pill">used</span>' : ''}</td>
       <td><input id="tr_n_${esc(r.trade_code)}" value="${esc(r.trade_name)}"></td><td class="n"><input id="tr_s_${esc(r.trade_code)}" type="number" value="${r.sort_order}" style="width:64px;text-align:right"></td>
@@ -42818,7 +43431,7 @@ const DPRM = (function () {
   /* ---- non-estimated work ---- */
   function npList() {
     const rows = (S.m.np_reasons || []);
-    let h = '<div class="lm-note">What an engineer can book labour against when it is not an estimate line — housekeeping, shifting, dewatering, idle time. This list feeds the <b>Non-estimated work</b> tab on the engineer\'s report.</div>';
+    let h = '';
     h += '<table class="lm-t"><tr><th style="width:110px">CODE</th><th>WORK</th><th style="width:80px" class="n">ORDER</th><th style="width:80px" class="c">ACTIVE</th><th style="width:70px"></th></tr>';
     rows.forEach(r => { h += `<tr class="${r.is_active ? '' : 'mut'}"><td><b>${esc(r.reason_code)}</b>${r.used ? ' <span class="lm-pill">used</span>' : ''}</td>
       <td><input id="np_n_${esc(r.reason_code)}" value="${esc(r.reason_text)}"></td><td class="n"><input id="np_s_${esc(r.reason_code)}" type="number" value="${r.sort_order}" style="width:64px;text-align:right"></td>
@@ -42837,7 +43450,7 @@ const DPRM = (function () {
   /* ---- daywork rates ---- */
   function rates() {
     const rows = (S.m.rates || []), trades = (S.m.trades || []).filter(t => t.is_active);
-    let h = '<div class="lm-note">A contractor with a rate here is paid on head-count for that trade; no row means measured work. A new rate closes the previous open one the day before it starts. Reports snapshot the rate on the day, so changing a rate never rewrites a past DPR.</div>';
+    let h = '';
     h += `<div class="lm-new pgs-vw-x"><select id="rt_c"><option value="">Contractor…</option>${S.cons.map(c => `<option value="${esc(c.contractor_code)}">${esc(c.contractor_name || c.contractor_code)}</option>`).join('')}</select>
       <select id="rt_t"><option value="">Trade…</option>${trades.map(t => `<option value="${t.trade_code}">${esc(t.trade_name)}</option>`).join('')}</select>
       <input id="rt_r" type="number" min="0" step="1" placeholder="₹ / day" style="width:100px"><input id="rt_f" type="date" value="${ymd(new Date())}">
@@ -42869,7 +43482,7 @@ const DPRM = (function () {
       S.lines = (data || []).map(l => Object.assign(l, { pkg: pm[l.parent_id] || '' }));
     }
     const q = S.lq.toLowerCase(); const hidden = S.lines.filter(l => !l.dpr_reportable);
-    let h = '<div class="lm-note">Lines an engineer never sees on site — milestone payment lines and anything else that is a billing device, not work. Hidden lines still certify and bill as normal.</div>';
+    let h = '';
     h += `<div class="lm-new"><input id="lm_lq" class="pgs-vw-keep" placeholder="Search a line to hide…" value="${esc(S.lq)}" oninput="DPRM.lq(this.value)" style="flex:1"></div>`;
     const show = q ? S.lines.filter(l => (l.name + ' ' + l.pkg).toLowerCase().indexOf(q) >= 0).slice(0, 60) : hidden;
     h += `<table class="lm-t"><tr><th>LINE</th><th style="width:36%">PACKAGE</th><th style="width:60px" class="c">KIND</th><th style="width:150px" class="c">ON SITE</th></tr>`;
@@ -42893,7 +43506,7 @@ const DPRM = (function () {
   function stagesDraw() {
     const A = (S.st.activities || []).filter(a => !S.sq || (a.name + ' ' + (a.package || '')).toLowerCase().indexOf(S.sq.toLowerCase()) >= 0);
     const withT = A.filter(a => a.template && a.template.is_active).length;
-    let h = `<div class="lm-note">A stage is a pass over the whole quantity (5 coats of paint = 5 stages, not 5× the area). Weights add up to 100 and drive the line's progress: <b>done = estimate × Σ(weight × stage %)</b>. Templates apply to work started after they are saved; work already reported by quantity keeps quantity mode. WO stage sets are offered as seeds — payment milestones are not work stages, leave those out.</div>
+    let h = `
       <div class="lm-new"><input class="pgs-vw-keep" placeholder="Filter activities…" value="${esc(S.sq)}" oninput="DPRM.sq(this.value)" style="flex:1"><span class="lm-pill">${withT} of ${(S.st.activities || []).length} with stages</span></div>
       <table class="lm-t"><tr><th>ACTIVITY</th><th>PACKAGE</th><th>STAGES</th><th class="n">WORKS</th><th></th></tr>`;
     A.forEach(a => { const t = a.template;

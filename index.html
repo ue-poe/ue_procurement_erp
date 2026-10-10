@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v160.5</title>
+<title>Penguin Suite v160.6</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -6834,46 +6834,30 @@ async function _printWOTree(woNum, h, items) {
   const vmContact = vm ? (vm.contact_person||'') : '';
   const vmPhone = vm ? (vm.phone||'') : '';
 
-  // Group items by activity, then by top-level block
+  // v160.6: group by activity, then one row per (top-level block, unit rate)
   const byAct = {};
   (items||[]).forEach(it => {
     const wid = String(it['_wbs_node_id']);
-    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', blocks: {} };
-    const blk = _topBlock(it['_loc_node_id']);
+    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [] };
     const qty = num(it['Qty']), rate = num(it['Unit Rate']), amt = num(it['Amount'])||qty*rate;
-    if (!byAct[wid].blocks[blk]) byAct[wid].blocks[blk] = { qty: 0, amt: 0, rate, units: 0 };
-    byAct[wid].blocks[blk].qty += qty;
-    byAct[wid].blocks[blk].amt += amt;
-    byAct[wid].blocks[blk].rate = rate;
-    byAct[wid].blocks[blk].units += 1;
+    const lp = _woLocParts(locMap, it['_loc_node_id']);
+    byAct[wid].lines.push({ blk: _topBlock(it['_loc_node_id']), rk: _woRk(rate), rate, qty, amt, locId: it['_loc_node_id'], pid: lp.pid, pname: lp.pname, lname: lp.lname });
   });
 
   // Build rows
   let rowsHTML = '', grandTotal = 0, sno = 0;
   Object.values(byAct).forEach(act => {
     sno++;
-    const blocks = Object.entries(act.blocks).sort((a,b)=>_siteOrder(a[0],b[0]));
-    let actQty = 0, actAmt = 0;
-    const blockRows = blocks.map(([blk, d]) => {
-      actQty += d.qty; actAmt += d.amt;
-      return `<tr>
-        <td></td>
-        <td style="padding-left:18pt;">${esc(blk)} <span style="color:#888;">(${d.units} location${d.units>1?'s':''})</span></td>
-        <td class="c">${esc(act.uom)}</td>
-        <td class="r">${fi(d.qty)}</td>
-        <td class="r">₹ ${fi(d.rate)}</td>
-        <td class="r">₹ ${fi(d.amt)}</td>
-      </tr>`;
-    }).join('');
-    grandTotal += actAmt;
+    const br = _woPrintBandRows(act.lines, act.uom, fi);
+    grandTotal += br.amt;
     rowsHTML += `<tr class="act-row">
       <td class="c">${sno}</td>
       <td><strong>${esc(act.name)}</strong></td>
       <td class="c">${esc(act.uom)}</td>
-      <td class="r"><strong>${fi(actQty)}</strong></td>
-      <td class="r"></td>
-      <td class="r"><strong>₹ ${fi(actAmt)}</strong></td>
-    </tr>${blockRows}`;
+      <td class="r"><strong>${fi(br.qty)}</strong></td>
+      <td class="r">${br.rateCell}</td>
+      <td class="r"><strong>₹ ${fi(br.amt)}</strong></td>
+    </tr>${br.html}`;
   });
 
   const gstAmt = num(h['GST Amount']||h.gst_amount||0);
@@ -7011,25 +6995,22 @@ async function _printWOCTree(wocNum, h, items) {
   if (h['Vendor Name']) { const {data}=await sb.from('wo_contractors').select('contractor_name,address,gstin').eq('contractor_name',h['Vendor Name']).maybeSingle(); if(data) vm=data; }
   const vmName=vm?vm.contractor_name:h['Vendor Name'], vmAddr=vm?(vm.address||''):'', vmGSTIN=vm?(vm.gstin||''):'';
 
-  // group by activity → block
+  // v160.6: group by activity → (block, unit rate); rate taken per line, never from the first line
   const byAct={};
   (items||[]).forEach(it=>{
     const k=String(it['_wbs_node_id']??it['Description']);
-    if(!byAct[k]) byAct[k]={name:it['Description'],uom:it['UOM']||'',rate:num(it['Unit Rate']),blocks:{}};
-    const blk=_topBlock(it['_loc_node_id']);
-    const q=num(it['This Period Qty']), v=num(it['Cert Value']);
-    if(!byAct[k].blocks[blk]) byAct[k].blocks[blk]={qty:0,amt:0,locs:new Set()};
-    byAct[k].blocks[blk].qty+=q; byAct[k].blocks[blk].amt+=v; byAct[k].blocks[blk].locs.add(it['_loc_node_id']);
+    if(!byAct[k]) byAct[k]={name:it['Description'],uom:it['UOM']||'',lines:[]};
+    const rate=num(it['Unit Rate']), q=num(it['This Period Qty']), v=num(it['Cert Value']);
+    const lp=_woLocParts(locMap, it['_loc_node_id']);
+    byAct[k].lines.push({blk:_topBlock(it['_loc_node_id']),rk:_woRk(rate),rate,qty:q,amt:v,locId:it['_loc_node_id'],pid:lp.pid,pname:lp.pname,lname:lp.lname});
   });
 
   let rowsHTML='', grand=0, sno=0;
   Object.values(byAct).forEach(act=>{
     sno++;
-    const blocks=Object.entries(act.blocks).sort((a,b)=>_siteOrder(a[0],b[0]));
-    let aQty=0,aAmt=0;
-    const brs=blocks.map(([blk,d])=>{ aQty+=d.qty; aAmt+=d.amt; return `<tr><td></td><td style="padding-left:18pt;">${esc(blk)} <span style="color:#888;">(${d.locs.size} location${d.locs.size>1?'s':''})</span></td><td class="c">${esc(act.uom)}</td><td class="r">${fi(d.qty)}</td><td class="r">₹ ${fi(act.rate)}</td><td class="r">₹ ${fi(d.amt)}</td></tr>`; }).join('');
-    grand+=aAmt;
-    rowsHTML+=`<tr class="act-row"><td class="c">${sno}</td><td><strong>${esc(act.name)}</strong></td><td class="c">${esc(act.uom)}</td><td class="r"><strong>${fi(aQty)}</strong></td><td class="r"></td><td class="r"><strong>₹ ${fi(aAmt)}</strong></td></tr>${brs}`;
+    const br=_woPrintBandRows(act.lines, act.uom, fi);
+    grand+=br.amt;
+    rowsHTML+=`<tr class="act-row"><td class="c">${sno}</td><td><strong>${esc(act.name)}</strong></td><td class="c">${esc(act.uom)}</td><td class="r"><strong>${fi(br.qty)}</strong></td><td class="r">${br.rateCell}</td><td class="r"><strong>₹ ${fi(br.amt)}</strong></td></tr>${br.html}`;
   });
 
   let wordsLine=''; try{ wordsLine=numToWordsINR(grand||0);}catch(e){}
@@ -20125,10 +20106,31 @@ async function _woViewBuildTreeHTML(items) {
   });
 
   let html = '';
+  const _f2 = n => num(n).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const _sortGroups = groups => {
+    const sg = Object.values(groups)
+      .map(g => ({ ...g, subGroups: Object.values(g.subGroups).sort((a,b)=>_siteOrder(a.subGrp,b.subGrp)), leaves: (g.leaves||[]).sort((a,b)=>_siteOrder(a.name,b.name)) }))
+      .sort((a,b)=>_siteOrder(a.grp,b.grp));
+    sg.forEach(g => (g.subGroups||[]).forEach(x => x.leaves.sort((a,b)=>_siteOrder(a.name,b.name))));
+    return sg;
+  };
+  const _groupOf = recs => {
+    const groups = {};
+    recs.forEach(x => {
+      const ok = String(x.outerNode.id);
+      if (!groups[ok]) groups[ok] = { grp: x.outerNode.name, subGroups: {}, leaves: [] };
+      if (x.innerNode) {
+        const ik = String(x.innerNode.id);
+        if (!groups[ok].subGroups[ik]) groups[ok].subGroups[ik] = { subGrp: x.innerNode.name, leaves: [] };
+        groups[ok].subGroups[ik].leaves.push(x.leafData);
+      } else groups[ok].leaves.push(x.leafData);
+    });
+    return _sortGroups(groups);
+  };
   Object.values(byAct).forEach((act, ai) => {
     act.stagePill = (window._amwViewCtx && window._amwViewCtx.doc==='WO') ? _amwStagePill(act.id, window._amwViewCtx.hist) : '';   // v148
-    const groups = {};
     let subTotalQty = 0, subTotalAmt = 0;
+    const recs = [];
     act.rows.forEach(r => {
       const chain = _locChain(r['_loc_node_id']);
       const depth = chain.length; if (!depth) return;
@@ -20142,21 +20144,47 @@ async function _woViewBuildTreeHTML(items) {
       const rem = liveRem[remKey];
       subTotalQty += qty; subTotalAmt += amt;
       const leafData = { name: leafNode.name, path: leafNode.path||leafNode.name, qty, rate, amt, rem, uom: act.uom, oiid: r['_order_item_id'], lineStatus: r['_line_status']||'Active' };   // v148
-      const ok = String(outerNode.id);
-      if (!groups[ok]) groups[ok] = { grp: outerNode.name, subGroups: {}, leaves: [] };
-      if (innerNode) {
-        const ik = String(innerNode.id);
-        if (!groups[ok].subGroups[ik]) groups[ok].subGroups[ik] = { subGrp: innerNode.name, leaves: [] };
-        groups[ok].subGroups[ik].leaves.push(leafData);
-      } else groups[ok].leaves.push(leafData);
+      const lp = _woLocParts(locMap, r['_loc_node_id']);
+      recs.push({ leafData, outerNode, innerNode, rk: _woRk(rate), rate, qty, amt, locId: r['_loc_node_id'], blk: lp.blk, pid: lp.pid, pname: lp.pname, lname: lp.lname });
     });
-    const sortedGroups = Object.values(groups)
-      .map(g => ({ ...g, subGroups: Object.values(g.subGroups).sort((a,b)=>_siteOrder(a.subGrp,b.subGrp)), leaves: (g.leaves||[]).sort((a,b)=>_siteOrder(a.name,b.name)) }))
-      .sort((a,b)=>_siteOrder(a.grp,b.grp));
-    sortedGroups.forEach(g => (g.subGroups||[]).forEach(sg => sg.leaves.sort((a,b)=>_siteOrder(a.name,b.name))));
+
+    // v160.6 rate bands — "varies" ignores lines removed by amendment
+    const liveRks = new Set(recs.filter(x => x.leafData.lineStatus !== 'Removed').map(x => x.rk));
+    const varies = liveRks.size > 1;
+    const bandMap = {};
+    recs.forEach(x => { const b = bandMap[x.rk] || (bandMap[x.rk] = { rk: x.rk, rate: x.rate, recs: [], qty: 0, amt: 0 }); b.recs.push(x); b.qty += x.qty; b.amt += x.amt; });
+    const bands = Object.values(bandMap).sort((a,b)=>a.rate-b.rate);
+    const liveRates = [...liveRks].map(Number).sort((a,b)=>a-b);
 
     const unit = (act.uom||'').replace(/^Per\s+/i,'');
     const locCount = act.rows.length;
+    const rateVal = varies
+      ? `<span class="val">₹${_f2(liveRates[0])} – ₹${_f2(liveRates[liveRates.length-1])}</span> <span style="font-size:10.5px;font-weight:700;border-radius:9px;padding:1px 8px;background:#fef3c7;color:#b45309;">${liveRks.size} Rates</span>`
+      : `<span class="val">₹${_f2(bands.length ? bands[0].rate : 0)}</span>`;
+    const _qf = n => num(n).toLocaleString('en-IN');
+    let bandTable = '', bodyHTML;
+    const colH = `<div class="hoi-colh" style="grid-template-columns:1fr 90px 90px 90px 100px;"><span>Location</span><span>Remaining</span><span>Qty</span><span>Rate ₹</span><span>Amount ₹</span></div>`;
+    if (varies) {
+      const td = 'padding:5px 8px;border:1px solid var(--border);vertical-align:middle;';
+      const th = 'padding:5px 8px;border:1px solid var(--navy-print);background:var(--navy-print);color:#fff;font-weight:600;font-size:11px;text-align:left;';
+      bandTable = `<div style="overflow-x:auto;border-top:1px solid var(--border);"><table style="width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;">
+        <thead><tr><th style="${th}width:110px;">Rate ₹ / ${esc(unit)}</th><th style="${th}">Locations</th><th style="${th}width:60px;text-align:center;">Locs</th><th style="${th}width:110px;text-align:right;">Qty</th><th style="${th}width:130px;text-align:right;">Amount ₹</th></tr></thead>
+        <tbody>${bands.map(b => {
+          const blks = [...new Set(b.recs.map(x => x.blk))].sort(_siteOrder);
+          const runs = blks.map(bk => `<b>${esc(bk)}</b>: ${esc(_woRateRuns(recs.filter(x => x.blk === bk), b.rk))}`).join('<br>');
+          return `<tr><td style="${td}font-weight:700;color:var(--navy-print);white-space:nowrap;">₹${_f2(b.rate)}</td><td style="${td}line-height:1.5;">${runs}</td><td style="${td}text-align:center;">${b.recs.length}</td><td style="${td}text-align:right;">${_qf(b.qty)} ${esc(unit)}</td><td style="${td}text-align:right;font-weight:600;">${_f2(b.amt)}</td></tr>`;
+        }).join('')}</tbody></table></div>`;
+      bodyHTML = colH + bands.map(b => `
+        <div style="display:flex;flex-wrap:wrap;gap:4px 18px;align-items:center;background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--navy-print);border-radius:4px;padding:6px 10px;margin:10px 0 4px;font-size:12px;font-variant-numeric:tabular-nums;">
+          <span style="font-weight:700;color:var(--navy-print);font-size:13px;">₹${_f2(b.rate)} / ${esc(unit)}</span>
+          <span style="color:var(--muted);">${b.recs.length} Location(s)</span>
+          <span>Qty <b>${_qf(b.qty)} ${esc(unit)}</b></span>
+          <span>Amount <b>₹${_f2(b.amt)}</b></span>
+        </div>
+        <div class="hoi-loctree">${_groupOf(b.recs).map(g => _woViewGrpHTML(g)).join('')}</div>`).join('');
+    } else {
+      bodyHTML = colH + `<div class="hoi-loctree">${_groupOf(recs).map(g => _woViewGrpHTML(g)).join('')}</div>`;
+    }
     html += `
     <div class="hoi-item" id="woViewItem_${ai}">
       <div class="hoi-head" onclick="_woViewToggle(${ai})">
@@ -20169,17 +20197,75 @@ async function _woViewBuildTreeHTML(items) {
       </div>
       <div class="hoi-subtotal woi-summary">
         <span><span class="lbl">Total Qty:</span> <span class="val">${subTotalQty.toLocaleString('en-IN')} ${esc(unit)}</span></span>
-        <span><span class="lbl">Total Amount:</span> <span class="val">₹${subTotalAmt.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</span></span>
-        <span><span class="lbl">Rate:</span> <span class="val">₹${(subTotalQty?subTotalAmt/subTotalQty:0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</span></span>
+        <span><span class="lbl">Total Amount:</span> <span class="val">₹${_f2(subTotalAmt)}</span></span>
+        <span><span class="lbl">Rate:</span> ${rateVal}</span>
         <span style="margin-left:auto;color:var(--muted);font-size:11px;">${locCount} location(s)</span>
       </div>
+      ${bandTable}
       <div class="hoi-body">
-        <div class="hoi-colh" style="grid-template-columns:1fr 90px 90px 90px 100px;"><span>Location</span><span>Remaining</span><span>Qty</span><span>Rate ₹</span><span>Amount ₹</span></div>
-        <div class="hoi-loctree">${sortedGroups.map(g => _woViewGrpHTML(g)).join('')}</div>
+        ${bodyHTML}
       </div>
     </div>`;
   });
   return html;
+}
+
+// v160.6 rate bands: one activity may carry different unit rates across locations.
+// _woRk = stable 2-dp rate key. _woLocParts = top block / direct parent / leaf for a loc node.
+// _woRateRuns = describe, within ONE block, the locations at rate key rk: parents fully at that
+// rate compress into ranges ("GF – 5th Floor"); partially covered parents list their units.
+function _woRk(r){ return (Math.round(num(r)*100)/100).toFixed(2); }
+function _woLocParts(locMap, locId){
+  const c=[]; let cur=locMap[String(locId)], g=0;
+  while(cur && g++<50){ c.unshift(cur); cur = cur.parent_id!=null ? locMap[String(cur.parent_id)] : null; }
+  const leaf=c[c.length-1], top=c[0], par=c.length>=3 ? c[c.length-2] : null;
+  return { blk: top?top.name:'—', pid: par?String(par.id):null, pname: par?par.name:'', lname: leaf?leaf.name:'—' };
+}
+function _woRateRuns(entries, rk){
+  const byP={}, order=[], flat=[];
+  entries.forEach(e=>{
+    if(e.pid==null){ if(e.rk===rk) flat.push(e.lname); return; }
+    if(!byP[e.pid]){ byP[e.pid]={name:e.pname, all:0, mine:[]}; order.push(e.pid); }
+    byP[e.pid].all++; if(e.rk===rk) byP[e.pid].mine.push(e.lname);
+  });
+  order.sort((a,b)=>_siteOrder(byP[a].name, byP[b].name));
+  const out=[]; let run=null;
+  const flush=()=>{ if(run){ out.push(run.a===run.b ? run.a : run.a+' – '+run.b); run=null; } };
+  order.forEach(pid=>{
+    const p=byP[pid];
+    if(p.mine.length && p.mine.length===p.all){ if(run) run.b=p.name; else run={a:p.name,b:p.name}; }
+    else { flush(); if(p.mine.length) out.push(p.name+': '+[...new Set(p.mine)].sort(_siteOrder).join(', ')); }
+  });
+  flush();
+  if(flat.length) out.push([...new Set(flat)].sort(_siteOrder).join(', '));
+  return out.join(', ');
+}
+// Print rows for one activity: one row per (block, rate). Lines: {blk,rk,rate,qty,amt,locId,pid,pname,lname}.
+function _woPrintBandRows(lines, uom, fi){
+  const blocks={};
+  lines.forEach(l=>{ (blocks[l.blk]||(blocks[l.blk]=[])).push(l); });
+  let qty=0, amt=0, html='';
+  const nRates=new Set(lines.map(l=>l.rk)).size;
+  Object.keys(blocks).sort(_siteOrder).forEach(blk=>{
+    const bl=blocks[blk], byR={};
+    bl.forEach(l=>{ (byR[l.rk]||(byR[l.rk]={rate:l.rate,lines:[]})).lines.push(l); });
+    const rks=Object.keys(byR).sort((a,b)=>Number(a)-Number(b)), multi=rks.length>1;
+    rks.forEach(rk=>{
+      const g=byR[rk], q=g.lines.reduce((s,x)=>s+x.qty,0), a=g.lines.reduce((s,x)=>s+x.amt,0);
+      const n=new Set(g.lines.map(x=>String(x.locId))).size;
+      qty+=q; amt+=a;
+      html+=`<tr>
+        <td></td>
+        <td style="padding-left:18pt;">${esc(blk)} <span style="color:#888;">(${n} location${n>1?'s':''})</span>${multi?`<div style="color:#555;font-size:7.5pt;margin-top:1pt;">${esc(_woRateRuns(bl,rk))}</div>`:''}</td>
+        <td class="c">${esc(uom)}</td>
+        <td class="r">${fi(q)}</td>
+        <td class="r">₹ ${fi(g.rate)}</td>
+        <td class="r">₹ ${fi(a)}</td>
+      </tr>`;
+    });
+  });
+  const rateCell = nRates>1 ? `<span style="color:#888;font-style:italic;font-size:7.5pt;">${nRates} rates</span>` : '';
+  return { html, qty, amt, rateCell };
 }
 
 function _wbsCrumbLine(path){

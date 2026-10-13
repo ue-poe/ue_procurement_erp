@@ -10,7 +10,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v161.3</title>
+<title>Penguin Suite v163</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
@@ -2825,6 +2826,107 @@ html,body{touch-action:pan-x pan-y}
 /* v160.2 · groups side by side under the activity */
 #mod-dpr .dp2 .rv-t tr.gx td{background:#fcfcfe;padding:8px 10px 10px 30px}
 #mod-dpr .dp2 .rv-gg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:8px;align-items:start}
+/* v163 · engineer: Find · flat sheet · labour table · dates · retrieve · design layer */
+/* v163 · engineer: Find On Sheet · labour table · dates · retrieve */
+#mod-dpr .dp2 .d2-row2{display:flex;gap:10px;flex:1 1 100%;min-width:0}#mod-dpr .dp2 .d2-tool .d2-row2>.d2-grp,#mod-dpr .dp2 .d2-tool .d2-row2>.d2-grp.add{flex:1 1 0;min-width:0;width:50%}#mod-dpr .dp2 .d2-row2 input.q{flex:1 1 160px;min-width:160px;width:auto}
+#mod-dpr .dp2 .d2-grp.fsg .fsc{font-size:11px;color:var(--dn);background:#fff3c4;border:1px solid #f0c36d;border-radius:10px;padding:1px 8px;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+#mod-dpr .dp2 .d2-fsr{border-bottom:1px solid var(--ln2,#e0e5ec);background:#fffdf3;padding:5px 10px;font-size:11.5px}
+#mod-dpr .dp2 .d2-fsr .hd{display:flex;align-items:center;gap:6px;color:var(--dn)}#mod-dpr .dp2 .d2-fsr .hd .sp{flex:1}
+#mod-dpr .dp2 .d2-fsr .rs{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:4px;margin-top:5px;max-height:104px;overflow:auto}
+#mod-dpr .dp2 .d2-fsr .r{display:flex;align-items:center;gap:6px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;background:#fff;padding:3px 7px;font-size:11px;cursor:pointer;min-width:0;text-align:left}
+#mod-dpr .dp2 .d2-fsr .r:hover{border-color:var(--dn);background:#f3f6fa}
+#mod-dpr .dp2 .d2-fsr .r b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .d2-fsr .r .loc{color:var(--dn);font-weight:700;white-space:nowrap}#mod-dpr .dp2 .d2-fsr .r .loc i{font-style:normal;font-weight:500;color:var(--ink3,#8a98ad)}
+#mod-dpr .dp2 .d2-fsr .r .st{font-size:10px;font-weight:800;color:var(--dam)}#mod-dpr .dp2 .d2-fsr .r .st.fin{color:var(--dok)}
+#mod-dpr .dp2 table.sheet tr.fsm>td{background:#fff3c4 !important}
+#mod-dpr .dp2 table.sheet .fsx{display:block;font-size:10.5px;font-weight:600;color:var(--dn);background:#eef3fb;border-left:3px solid var(--dn);padding:0 6px;margin-top:2px;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#mod-dpr .dp2 .d2-grp.fsg .fsc i{font-style:normal;color:var(--ink3,#8a98ad)}
+#mod-dpr .dp2 table.sheet.flat td{vertical-align:middle}#mod-dpr .dp2 table.sheet.flat td .p{display:block;font-size:10px;color:var(--ink3,#8a98ad)}#mod-dpr .dp2 table.sheet.flat td.fa{font-size:11px;white-space:normal;color:var(--ink2,#51627a)}#mod-dpr .dp2 table.sheet.flat td.fa .cl2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}#mod-dpr .dp2 table.sheet.flat td.fs{font-weight:700;white-space:normal}#mod-dpr .dp2 table.sheet.flat tr.sub td,#mod-dpr .dp2 table.sheet.flat tr.act td{background:#fff}#mod-dpr .dp2 table.sheet.flat tr.fin td{background:#f4f7f4}#mod-dpr .dp2 table.sheet.flat td.ar{background:#eef3fb}#mod-dpr .dp2 table.sheet.flat tr.act td{background:#f7f9fc}#mod-dpr .dp2 table.sheet.flat tr.club td{background:#fff6dc}#mod-dpr .dp2 table.sheet.flat tr.npr td{background:#f8f9fb}#mod-dpr .dp2 table.sheet.flat td.name .fsx,#mod-dpr .dp2 table.sheet.flat .fsx{display:none}
+#mod-dpr .dp2 tbody.ln.flash>tr>td{animation:fsfl 1.6s ease-out}
+@keyframes fsfl{0%{background:#ffd76a}100%{background:inherit}}
+#mod-dpr .dp2 .rv-dt{display:block;font-size:10.5px;font-weight:700;color:var(--dam);margin-top:2px}#mod-dpr .dp2 .rv-dt.ok{color:var(--dok)}
+#mod-dpr .dp2 .rv-g .rv-dt{margin:-2px 0 4px}
+#mod-dpr .dp2 .rv-chip .dts{display:block;font-style:normal;font-size:9.5px;font-weight:600;opacity:.8}
+#mod-dpr .dp2 .rv-chip.prev{background:repeating-linear-gradient(135deg,#eef8f1 0 6px,#e5f3ea 6px 12px);opacity:.85}
+#mod-dpr .dp2 .rv-sl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:4px}
+#mod-dpr .dp2 .rv-sl .rv-chip{display:flex;justify-content:space-between;margin:0}
+#mod-dpr .dp2 table.rv-lab td,#mod-dpr .dp2 table.rv-lab th{border-right:1px solid var(--ln2,#e0e5ec)}
+#mod-dpr .dp2 table.rv-lab tr.con td{background:#e9eef6;color:var(--dn);border-top:2px solid var(--dn)}
+#mod-dpr .dp2 table.rv-lab tr.lc td.ind{padding-left:22px;white-space:normal}#mod-dpr .dp2 table.rv-lab td,#mod-dpr .dp2 table.rv-lab th{overflow:visible;text-overflow:clip}#mod-dpr .dp2 table.rv-lab td.act{white-space:normal;width:30%}#mod-dpr .dp2 table.rv-lab td.act{color:var(--ink2,#51627a);font-size:11px}
+#mod-dpr .dp2 table.rv-lab tr.np td{background:#f6f8fc}#mod-dpr .dp2 table.rv-lab td.z{color:#c3ccd9}
+#mod-dpr .dp2 .d2-btn.amb{color:var(--dam);border-color:var(--damb);background:var(--daml)}
+#mod-dpr .d2-rl{margin:4px 0;padding-left:18px;font-size:13px;line-height:1.7}
+/* ---- v163 · design layer (DPR_Engineer_Design_mock_v2, approved 13 Oct 2026) — engineer shell only (.dp2.eng) ---- */
+#mod-dpr .dp2.eng{--dn:#1e293b;--dn2:#334155;--dv:#6366f1;--dvl:#eef2ff;--dvb:#c7d2fe;--dok:#047857;--dokl:#ecfdf5;--dokb:#a7f3d0;--drd:#b91c1c;--drdl:#fef2f2;--drdb:#fecaca;--dam:#b45309;--daml:#fffbeb;--damb:#fde68a;--ln:#cbd5e1;--ln2:#e2e8f0;--ink2:#475569;--ink3:#94a3b8;font-family:Inter,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#334155}
+#mod-dpr .dp2.eng .d2-side,#mod-dpr .dp2.eng .d2-card{border-color:#e2e8f0;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+#mod-dpr .dp2.eng .d2-brand{background:#0f172a;border-radius:10px;margin:8px}#mod-dpr .dp2.eng .d2-brand span{color:#cbd5e1}#mod-dpr .dp2.eng .d2-brand i.r{background:#1e293b;border-color:#334155;border-radius:999px}
+#mod-dpr .dp2.eng .d2-h4{text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;color:#334155}
+#mod-dpr .dp2.eng .d2-cal .d{border:0;border-radius:8px;background:#fff;justify-content:center;align-items:center;height:30px;color:#334155}#mod-dpr .dp2.eng .d2-cal .d .b{left:8px;right:8px;height:3px;bottom:3px}#mod-dpr .dp2.eng .d2-cal .d.sel{background:#1e293b;color:#fff}#mod-dpr .dp2.eng .d2-cal .d.today{box-shadow:inset 0 0 0 2px #4f46e5;border:0}#mod-dpr .dp2.eng .d2-cal .d.fut{background:#fff;color:#cbd5e1}#mod-dpr .dp2.eng .d2-cal .mh button{border-radius:6px;border-color:#e2e8f0}
+#mod-dpr .dp2.eng .d2-kpi{border-radius:10px;padding:6px 8px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;text-align:left}#mod-dpr .dp2.eng .d2-kpi b{font-size:18px}
+#mod-dpr .dp2.eng .d2-toptabs{border:0;border-bottom:1px solid #e2e8f0;border-radius:0;margin:0;background:#fff}#mod-dpr .dp2.eng .d2-toptabs button{border-right:0;padding:9px 16px 7px;font-weight:600;color:#64748b}#mod-dpr .dp2.eng .d2-toptabs button.on{color:#4338ca;background:#fff;border-bottom-color:#4f46e5}
+#mod-dpr .dp2.eng .d2-hd{padding:10px 20px;gap:16px}#mod-dpr .dp2.eng .d2-hd .date b{font-size:18px;color:#0f172a}
+#mod-dpr .dp2.eng .d2-hd .d2-days,#mod-dpr .dp2.eng .d2-seg,#mod-dpr .dp2.eng .d2-oc{background:#f1f5f9;padding:2px;border-radius:8px;border:1px solid #e2e8f0;overflow:visible}
+#mod-dpr .dp2.eng .d2-hd .d2-days button,#mod-dpr .dp2.eng .d2-seg button,#mod-dpr .dp2.eng .d2-oc button{border:0;background:transparent;border-radius:6px;color:#64748b;font-weight:600}
+#mod-dpr .dp2.eng .d2-hd .d2-days button.on,#mod-dpr .dp2.eng .d2-seg button.on{background:#fff;color:#1e293b;box-shadow:0 1px 2px rgba(0,0,0,.08)}#mod-dpr .dp2.eng .d2-seg button.on.red{background:#fff;color:#b91c1c}
+#mod-dpr .dp2.eng .d2-oc button{padding:4px 10px;min-width:32px}#mod-dpr .dp2.eng .d2-oc button.w.on{background:#fff;color:#047857;box-shadow:0 1px 2px rgba(0,0,0,.08)}#mod-dpr .dp2.eng .d2-oc button.h.on{background:#fff;color:#b91c1c;box-shadow:0 1px 2px rgba(0,0,0,.08)}#mod-dpr .dp2.eng .d2-oc button.n.on{background:#fff;color:#334155;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+#mod-dpr .dp2.eng .d2-btn{border-radius:8px;border-color:#cbd5e1;color:#334155;font-weight:600}#mod-dpr .dp2.eng .d2-btn.navy{background:#4f46e5;border-color:#4f46e5;color:#fff}#mod-dpr .dp2.eng .d2-btn.ok{background:#059669;border-color:#059669}#mod-dpr .dp2.eng .d2-btn.ghost{color:#4338ca;border-color:#c7d2fe}#mod-dpr .dp2.eng .d2-btn.ghost.on{background:#4f46e5;border-color:#4f46e5;color:#fff}
+#mod-dpr .dp2.eng .d2-tool{background:#fff;padding:8px 14px;border-bottom:1px solid #e2e8f0}#mod-dpr .dp2.eng .d2-tool .d2-grp{border-right:0;gap:8px}#mod-dpr .dp2.eng .d2-tool .d2-grp .lbl{text-transform:uppercase;letter-spacing:.06em;font-size:10px;color:#94a3b8;font-weight:600}
+#mod-dpr .dp2.eng .d2-tool input.q,#mod-dpr .dp2.eng input.qty,#mod-dpr .dp2.eng input.dt,#mod-dpr .dp2.eng .d2-strip label input,#mod-dpr .dp2.eng .d2t input.rem{border:1px solid #cbd5e1;border-radius:6px;color:#1e293b}#mod-dpr .dp2.eng .d2-tool input.q{padding:6px 10px;font-size:12.5px}#mod-dpr .dp2.eng input.qty.bad{border-color:#fca5a5;background:#fef2f2}
+#mod-dpr .dp2.eng .d2-grp.fsg .fsc{background:#fffbeb;border-color:#fde68a;color:#b45309;border-radius:999px}
+#mod-dpr .dp2.eng .d2t th{background:#f8fafc;color:#64748b;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;font-weight:600;border-right:1px solid #e2e8f0;border-bottom:1px solid #cbd5e1;padding:10px 10px}#mod-dpr .dp2.eng .d2t th .h2{color:#94a3b8;text-transform:none;letter-spacing:0}
+#mod-dpr .dp2.eng .d2t td{border-color:#cbd5e1;padding:6px 8px}#mod-dpr .dp2.eng .d2t.one td{padding:6px 8px}#mod-dpr .dp2 .dtw{position:relative;display:inline-block;border:1px solid #cbd5e1;border-radius:6px;padding:3px 7px;background:#fff;cursor:pointer;line-height:1.2;white-space:nowrap}#mod-dpr .dp2 .dtw .dtv{font-size:12px;font-weight:700;color:#1e293b}#mod-dpr .dp2 .dtw input.dt{position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;min-width:0;opacity:0;margin:0;padding:0;border:0;cursor:pointer}#mod-dpr .dp2 .dtw:focus-within{border-color:#6366f1;box-shadow:0 0 0 2px rgba(99,102,241,.2)}
+#mod-dpr .dp2.eng .d2t.one td.st2 .muted,#mod-dpr .dp2.eng .d2t.one .st2 .cap,#mod-dpr .dp2.eng .d2t.one td .muted{white-space:normal;overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one td.c .pill{padding:1px 4px;font-size:9.5px;letter-spacing:0}
+#mod-dpr .dp2.eng .d2t .st2 .pill{white-space:normal;max-width:100%;line-height:1.25}#mod-dpr .dp2.eng .d2t.one td.dt2{padding-left:4px;padding-right:4px}#mod-dpr .dp2.eng .dtw{padding:3px 4px}#mod-dpr .dp2.eng .dtw .dtv{font-size:11.5px}
+#mod-dpr .dp2.eng .d2-kpis:not(.wide){grid-template-columns:repeat(2,1fr)}#mod-dpr .dp2.eng .d2-kpi{letter-spacing:.02em;font-size:9.5px;overflow:hidden}
+#mod-dpr .dp2 .d2t td.con .cl{white-space:normal;font-size:10.5px;margin-top:2px}#mod-dpr .dp2 .d2t td.con .cl a{display:inline}#mod-dpr .dp2.eng .d2t.one.flat td.fa{white-space:normal;overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one.flat td.fa .cl2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}#mod-dpr .dp2.eng .d2t.one.flat td.fa .pill{margin-left:2px}
+#mod-dpr .dp2.eng .d2t tr.g2.club td{background:#fffbeb}#mod-dpr .dp2.eng .d2t tr.g2.club td:first-child{border-left:4px solid #f59e0b}
+#mod-dpr .dp2 .d2t td .cb+.cb,#mod-dpr .dp2 .d2t td .cbl+.cbl{border-top:1px dashed #e2e8f0;margin-top:4px;padding-top:4px}#mod-dpr .dp2 .d2t td .cbl{margin-top:4px}
+#mod-dpr .dp2 .d2t.one tr.band td{background:#f1f5f9;border-top:2px solid #cbd5e1;color:#64748b;font-size:11.5px;font-weight:400;padding:7px 10px;white-space:normal}#mod-dpr .dp2 .d2t.one tr.band td b{font-weight:400;color:#64748b;font-size:11.5px}#mod-dpr .dp2 .d2t.one tr.band td b.an,#mod-dpr .dp2 .d2t.one tr.band td b.ln{font-weight:700;font-size:12px;color:#1e293b}#mod-dpr .dp2 .d2t.one tr.band td .pill{font-weight:600}#mod-dpr .dp2 .d2t.one tr.band td.con,#mod-dpr .dp2 .d2t.one tr.band td.con b{color:#1e293b;font-weight:600}#mod-dpr .dp2 .d2t.one tr.band .d2-mp b{font-weight:700;color:#1e293b;font-size:14px}#mod-dpr .dp2 .d2t.one tr.band .dt{color:#94a3b8;font-style:normal;padding:0 6px}#mod-dpr .dp2 .d2t.one tr.band.club td{background:#fff8e6;border-top-color:#f6c453}#mod-dpr .dp2 .d2t.one tr.band.club td:first-child{border-left:4px solid #f59e0b}#mod-dpr .dp2 .d2t.one tr.band.club td.ind{padding-left:10px}#mod-dpr .dp2 .d2t.one.flat tr.band.act td:first-child{border-left:4px solid #94a3b8}#mod-dpr .dp2 .d2t.one.flat tr.band.sb td:first-child{border-left-color:#6366f1}#mod-dpr .dp2 .d2t.one.flat tr.band.fin td{background:#f4f7f4}#mod-dpr .dp2 .d2t.one tr.band .acts2{margin-left:10px}#mod-dpr .dp2.eng .d2t tr.strip td{text-align:right;padding:6px 10px 8px}#mod-dpr .dp2.eng .d2t tr.strip .d2-strip{display:inline-flex;align-items:flex-end;text-align:left;max-width:100%;border:1px solid #e2e8f0;border-radius:10px;background:#fff;padding:8px 12px;box-shadow:0 1px 2px rgba(15,23,42,.05)}#mod-dpr .dp2.eng .d2t tr.strip .d2-strip .crow{justify-content:flex-end}#mod-dpr .dp2 .d2t.one.flat tr.band .btn-w{margin-left:4px}#mod-dpr .dp2 .d2t.one.flat tr.band .d2-ud{display:inline;color:#b45309}#mod-dpr .dp2 .d2t.one.flat tr.band input.qty{width:64px}#mod-dpr .dp2 .d2t.one.flat tr.band .fsx{display:none}
+#mod-dpr .dp2.eng .d2t th{border-right-color:#cbd5e1;padding:8px 6px;font-size:10px;letter-spacing:.04em;overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t tr.club td.con{padding:6px 5px;font-size:10.5px;line-height:1.25}#mod-dpr .dp2.eng .d2t th.c,#mod-dpr .dp2.eng .d2t.one td.c{text-align:center;padding-left:3px;padding-right:3px}#mod-dpr .dp2.eng .d2t.one td.c .d2-rem{width:22px;min-width:0;padding:0;margin:0}#mod-dpr .dp2.eng .d2t tbody.ln:hover td,#mod-dpr .dp2.eng .d2t tr:hover td{background:#f8fafc}
+#mod-dpr .dp2.eng .d2t tr.club td{background:rgba(238,242,255,.4);border-bottom:1px solid #e2e8f0;font-weight:600;color:#312e81}#mod-dpr .dp2.eng .d2t tr.club td:first-child{border-left:4px solid #6366f1}
+#mod-dpr .dp2.eng .d2t tr.sub td{background:#fff}#mod-dpr .dp2.eng .d2t tr.sub td.name:before{content:none}#mod-dpr .dp2.eng .d2t tr.sub td.name{padding-left:10px;color:#1e293b}#mod-dpr .dp2.eng .d2t .sa{font-size:12.5px;color:#1e293b}
+#mod-dpr .dp2.eng .d2t.one.flat tr.act td{background:#f8fafc}#mod-dpr .dp2.eng .d2t.one.flat td.ar{background:#f8fafc}#mod-dpr .dp2.eng .d2t.one.flat tr.fin td{opacity:.7;background:#f8fafc}#mod-dpr .dp2.eng .d2t.one.flat td.fs{font-weight:600;color:#1e293b}
+#mod-dpr .dp2.eng .d2t.one.flat td .p{color:#64748b}#mod-dpr .dp2.eng .d2t.one.flat td b{color:#0f172a;font-size:14px}#mod-dpr .dp2.eng .d2t.one.flat td.fa{color:#475569}
+#mod-dpr .dp2.eng .d2t tr.g1 td{background:#f8fafc;color:#1e293b;border-bottom:1px solid #e2e8f0}#mod-dpr .dp2.eng .d2t tr.g2 td{background:#fff}#mod-dpr .dp2.eng .d2t tr.sum td{background:#f8fafc;color:#1e293b;border-top:1px solid #e2e8f0}#mod-dpr .dp2.eng .d2t tr.strip td{background:#f8fafc}
+#mod-dpr .dp2.eng .d2t tr.bd td,#mod-dpr .dp2.eng .d2t tr.sub.bd td{background:#f8fafc;color:#94a3b8}#mod-dpr .dp2.eng .d2t tr.att td{background:#fffbeb}#mod-dpr .dp2.eng table.sheet tr.fsm>td{background:#fef9c3 !important}
+#mod-dpr .dp2.eng .bar2{height:6px;border-radius:999px;background:#e2e8f0;min-width:50px}#mod-dpr .dp2.eng .bar2 i{background:#6366f1;border-radius:999px}
+#mod-dpr .dp2.eng .pill{border-radius:999px;font-size:10.5px;font-weight:600;padding:1px 8px}#mod-dpr .dp2.eng .st2 .pill{background:none;border:0;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;font-size:10px;padding:0}#mod-dpr .dp2.eng .st2 .pill.p-ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#047857;text-transform:none;letter-spacing:0;padding:1px 8px}
+#mod-dpr .dp2.eng .d2-snap button{border:1px solid #e2e8f0;border-radius:5px;color:#64748b;background:#fff;font-size:10px}#mod-dpr .dp2.eng .d2-snap button.done{color:#047857;border-color:#a7f3d0}#mod-dpr .dp2.eng .d2-snap button.wip{color:#4338ca;border-color:#c7d2fe}#mod-dpr .dp2.eng .d2-snap button.wip.on{background:#eef2ff}
+#mod-dpr .dp2.eng .d2-mp{border:1px solid #e2e8f0;border-radius:8px;padding:3px 6px;background:#fff;white-space:normal;max-width:100%}#mod-dpr .dp2.eng .d2-mp i{white-space:normal;overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one td.con{white-space:normal;overflow:visible;overflow-wrap:anywhere;font-size:11px;line-height:1.3}#mod-dpr .dp2.eng .d2t.one td.con a{display:inline;white-space:normal}#mod-dpr .dp2.eng .d2t.one.flat td.fa .cl2{overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one.flat td.fs{overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one.flat td b{font-size:13px}#mod-dpr .dp2.eng .d2t.one td.dt2 input.dt{width:100%;max-width:96px;font-size:10.5px;padding:3px 2px}#mod-dpr .dp2.eng .d2t.one td.dn .d2-pct input{width:46px}#mod-dpr .dp2.eng .d2t.one .d2-cum .bar2{width:100%;max-width:70px}#mod-dpr .dp2.eng .d2-mp .ar{border:0;color:#94a3b8}#mod-dpr .dp2.eng .d2-mp b{color:#1e293b;font-size:14px}
+#mod-dpr .dp2.eng .d2-foot{padding:10px 20px;border-top:1px solid #e2e8f0}#mod-dpr .dp2.eng .d2-foot .msg b{color:#1e293b}
+#mod-dpr .dp2.eng .d2-leg{color:#64748b}#mod-dpr .dp2.eng .d2-sk{color:#64748b}#mod-dpr .dp2.eng .d2-sk b{color:#1e293b}
+#mod-dpr .dp2.eng .d2-cum b{color:#1e293b}#mod-dpr .dp2.eng .d2t .est{color:#94a3b8}#mod-dpr .dp2.eng .d2t td.con a,#mod-dpr .dp2.eng .lk{color:#4f46e5}
+#mod-dpr .dp2.eng .d2-strip .ttl{color:#1e293b}
+
+/* v162 · manager Review & Publish (DPR_Manager_mock_v5) */
+#mod-dpr .dp2 .rvm-sub{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--ln,#c3ccd9);background:#fff;padding:0 10px 0 0}
+#mod-dpr .dp2 .rvm-sub>button:not(.d2-btn){border:0;border-bottom:2px solid transparent;background:none;padding:6px 16px;font-size:12px;font-weight:800;color:var(--ink3,#8a98ad);border-right:1px solid var(--ln2,#e0e5ec)}
+#mod-dpr .dp2 .rvm-sub>button i{font-style:normal;font-weight:600;font-size:10.5px;margin-left:6px}
+#mod-dpr .dp2 .rvm-sub>button.on{color:var(--dn);border-bottom-color:var(--dn);background:#f3f6fa}
+#mod-dpr .dp2 .rvm-sub .sp{flex:1}
+#mod-dpr .dp2 .rvm-sub .d2-btn{margin:4px 0}
+#mod-dpr .dp2 table.rvm-tab td{padding:7px 8px;font-size:12px}
+#mod-dpr .dp2 table.rvm-tab td .p{display:block;font-size:10.5px;color:var(--ink3,#8a98ad)}
+#mod-dpr .dp2 table.rvm-tab tr.clk{cursor:pointer}#mod-dpr .dp2 table.rvm-tab tr.clk:hover td{background:#f5f8fc}
+#mod-dpr .dp2 .rvm-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+#mod-dpr .dp2 .rvm-eng{display:flex;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#f7f9fc;font-size:12px}
+#mod-dpr .dp2 .rvm-eng>b{font-size:14px;color:var(--dn)}#mod-dpr .dp2 .rvm-eng .sp{flex:1}
+#mod-dpr .dp2 .rvm-nav{display:inline-flex;border:1px solid var(--ln,#c3ccd9);border-radius:5px;overflow:hidden}
+#mod-dpr .dp2 .rvm-nav button{border:0;border-right:1px solid var(--ln2,#e0e5ec);background:#fff;padding:3px 10px;font-size:11px;font-weight:700;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .rvm-nav button.on{background:var(--dn);color:#fff}
+#mod-dpr .dp2 .rvm-in{flex:0 1 340px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:6px 9px;font-size:12px}
+#mod-dpr .dp2 .rvm-cov{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 10px 0;padding:7px 10px;background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:6px;font-size:11.5px}
+#mod-dpr .dp2 .rvm-cov .t{font-weight:800;color:var(--dn);margin-right:4px}#mod-dpr .dp2 .rvm-cov .sp{flex:1}
+#mod-dpr .dp2 .rvm-cov .cv{border:1px solid var(--ln2,#e0e5ec);border-radius:12px;padding:2px 10px;background:#fafbfd;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .rvm-cov .cv.ok{border-color:var(--dokb);background:var(--dokl);color:var(--dok)}
+#mod-dpr .dp2 .rvm-cov .cv.pend{border-color:var(--damb);background:var(--daml);color:var(--dam);border-style:dashed}
+#mod-dpr .dp2 .rvm-cov .cv.out{border-color:var(--drdb);background:var(--drdl);color:var(--drd)}
+#mod-dpr .dp2 .rvm-chk{font-size:11px;font-weight:700;color:var(--ink2,#51627a);display:inline-flex;gap:5px;align-items:center}
+#mod-dpr .dp2 .rv-t tr.ar td{background:#dfe7f2;color:var(--dn);font-size:12px;padding:6px 9px;border-top:2px solid var(--dn)}
+#mod-dpr .dp2 .rv-t tr.pend td{background:repeating-linear-gradient(135deg,#fff 0 6px,#fffaf0 6px 12px)}
+#mod-dpr .dp2 .rv-tt tr.off2 td{color:var(--ink3,#8a98ad);background:#fafbfd}
+#mod-dpr .dp2 .d2-toptabs.mt button{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .d2-toptabs.mt button.rl{flex:none;margin:3px 6px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:2px 10px;color:var(--ink2,#51627a);font-size:13px}
 #mod-dpr .dp2 .rv-g{border:1px solid var(--ln,#c3ccd9);border-top:3px solid var(--dv);border-radius:5px;background:#fff;min-width:0}
 #mod-dpr .dp2 .rv-g.done{border-top-color:var(--dok)}
 #mod-dpr .dp2 .rv-g.idle{border-top-color:#c3ccd9}
@@ -9730,7 +9832,7 @@ const DPR = (function () {
     club: true, unclub: null, clubPage: {},
     st: null, cat: null, catP: null, ct: new Set(), co: new Set(), coAll: false, cv: 'loc', cf: null, ctw: null, cpk: '', catAll: false,
     // manager
-    mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null,
+    mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null, mPay: {}, mv: 'day', mEng: null, mIncl: true, mFull: false, mCal: null, mTr: null, m39: null,
     hind: null, hSum: null, hParties: null, hOpen: new Set(), hF: 'all', hArea: '', hEd: {},
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     masters: null, _conMap: null, _cons: null
@@ -9749,6 +9851,8 @@ const DPR = (function () {
   const ymd = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
   const addDays = (d, n) => { const x = new Date(d + 'T00:00:00'); x.setDate(x.getDate() + n); return ymd(x); };
   const daysBetween = (a, b) => Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+  // v163 · item 6: start / end / days elapsed (WIP) / duration (done), inclusive of both dates
+  const dSpan = (s, e, done) => !s ? (done ? 'Done' + (e ? ' ' + dsh(e) : '') : 'Not Started') : done || e ? `${dsh(s)} → ${dsh(e || S.to)} · ${daysBetween(s, e || S.to) + 1} Day${daysBetween(s, e || S.to) ? 's' : ''}` : `Start ${dsh(s)} · WIP · Day ${daysBetween(s, S.to) + 1}`;
   const durTxt = (s, e) => { if (!s) return '—'; const n = daysBetween(s, e || S.to || S.today) + 1; return n > 0 ? n + ' Day' + (n === 1 ? '' : 's') : '—'; };
   const conName = code => (S._conMap && S._conMap[code]) || code || '';
   const sum = m => Object.values(m || {}).reduce((a, b) => a + num(b), 0);
@@ -9856,7 +9960,7 @@ const DPR = (function () {
   const mLabel = m => new Date(m + 'T00:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
   const dLong = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' }) : '—';
   const todayYmd = () => S.today || ymd(new Date());
-  const cutMins = () => Math.round((new Date(addDays(S.to, 1) + 'T13:00:00+05:30') - Date.now()) / 60000);   // v156 · due by 1 PM IST of the day AFTER the report date (M33 decision 6)
+  const cutMins = () => Math.round((new Date(S.to + 'T13:00:00+05:30') - Date.now()) / 60000);   // v163.1 · due by 1 PM IST of the report date itself (M41)
   const short = (a, n) => { a = String(a || ''); n = n || 70; return a.length > n ? a.slice(0, n - 1) + '…' : a; };
   const lineLoc = (g, l) => l.location || g.location || '';
   const lineLocPath = (g, l) => l.loc_path != null ? l.loc_path : (g.loc_path || '');
@@ -9866,6 +9970,7 @@ const DPR = (function () {
   //          the row is hazed and takes no entry; nothing about it is sent again
   const doneBefore = l => !staged(l) ? (num(l.est_qty) > 0 && cumBase(l) >= num(l.est_qty) - 0.0005) : !!(l.stages || []).length && (l.stages || []).every(s => subBase(s) >= 99.9995);
   const finL = l => l.status === 'finished' || doneBefore(l);
+  const startedB = l => l.status === 'wip' || !!l.started_on || lineBasePct(l) > 0.0005;   // v163 · item 4: started before this sheet date (only these can be "Not Reported")
   const allLines = () => { const o = []; S.groups.forEach(g => g.lines.forEach(l => o.push({ g, l }))); return o; };
   const lineX = (g, l) => dOf(g).lines[l.work_id];
   const G = id => S.groups.find(g => g.wgroup_id === id);
@@ -10090,6 +10195,7 @@ const DPR = (function () {
   let _rp = 0;
   function redraw() { if (_rp) return; _rp = setTimeout(() => { _rp = 0; paint(); }, 0); }
   function paint() {
+    if (S.view === 'mgr') { if (S.mTab === 'rev') mPaint(); return; }   // v162 · manager Review & Publish reuses the Day Report helpers
     if (!$('d2_main')) return;
     const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null, ss = a && a.selectionStart != null ? [a.selectionStart, a.selectionEnd] : null;
     const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0;
@@ -10113,7 +10219,7 @@ const DPR = (function () {
 
   /* ---------- shell ---------- */
   function engRender() {
-    $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
+    $('dpr_root').innerHTML = `<div class="drp dp2 eng" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
     fit(); $('d2_side').innerHTML = sideHtml(); paintMain();
   }
   function paintMain() { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); m.innerHTML = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); }
@@ -10133,7 +10239,7 @@ const DPR = (function () {
   function sideHtml() {
     const today = todayYmd(), days = Object.values(S.cal.days || {});
     const T = S.R ? inCtx('T', () => ({ starts: labStats().starts, heads: allHeads(), w: allLines().filter(({ g, l }) => outOf(g, l) === 'w').length, h: allLines().filter(({ g, l }) => hasH(g, l)).length })) : { starts: 0, heads: 0, w: 0, h: 0 };
-    const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ l }) => !finL(l)).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
+    const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ g, l }) => !finL(l) && (outOf(g, l) !== '' || startedB(l))).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
     const last = days.filter(x => x.submitted_at).sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)))[0];
     const pend = days.filter(x => x.status === 'Draft' && x.report_date < addDays(today, -1)).map(x => dsh(x.report_date)).sort().join(', '), ret = days.filter(x => x.status === 'Returned').map(x => dsh(x.report_date)).sort().join(', ');
     const nextOff = S.cal.month >= monthOf(today);
@@ -10155,8 +10261,8 @@ const DPR = (function () {
     const sub = S.R ? S.R.Y.sub : S.sub; if (!sub) return '';
     const locked = S.R ? S.R.Y.locked : S.locked, d = yDate();
     if (locked || sub.status === 'Accepted') return sub.is_late ? '<div><span class="pill p-red">Sent Late</span></div>' : '';
-    const m = Math.round((new Date(addDays(d, 1) + 'T13:00:00+05:30') - Date.now()) / 60000);
-    return m > 0 ? `<div><span class="pill p-amb">Due By 1 PM ${addDays(d, 1) === todayYmd() ? 'Today' : 'Of ' + esc(dsh(addDays(d, 1)))}</span></div>` : `<div><span class="pill p-red">Late · Past 1 PM Of ${esc(dsh(addDays(d, 1)))}</span></div>`;
+    const m = Math.round((new Date(d + 'T13:00:00+05:30') - Date.now()) / 60000);
+    return m > 0 ? `<div><span class="pill p-amb">Due By 1 PM ${d === todayYmd() ? 'Today' : 'Of ' + esc(dsh(d))}</span></div>` : `<div><span class="pill p-red">Late · Past 1 PM Of ${esc(dsh(d))}</span></div>`;
   };
   function logHtml() {
     const ro = isRo(), st = stOf(stKey()), today = todayYmd(), y1 = addDays(today, -1);
@@ -10173,17 +10279,29 @@ const DPR = (function () {
     h += `<div class="d2-fix d2-tool"><span class="d2-grp"><div class="d2-seg sm"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div></span>
       <span class="d2-grp"><span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div></span>
       <span class="d2-grp"><span class="lbl">Show</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div></span>
-      <span class="d2-grp"><span class="lbl">Rows</span><button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>${ro ? '' : `<button class="d2-btn sm" onclick="DPR.sameYdAll()">Same As Yesterday · All</button>`}</span>
-      ${ro ? '' : `<span class="d2-grp add"><span class="lbl">Add Work</span><input class="q" data-k="cq" placeholder="Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"><button class="d2-btn sm ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn sm navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn sm ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button></span>`}</div>`;
+      <span class="d2-grp"><span class="lbl">Rows</span><div class="d2-seg sm"><button class="${S.nested ? '' : 'on'}" onclick="DPR.flatSet(true)">Flat</button><button class="${S.nested ? 'on' : ''}" onclick="DPR.flatSet(false)">Nested</button></div>${S.nested ? `<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>` : ''}</span>
+      <span class="d2-row2"><span class="d2-grp fsg"><span class="lbl">Find</span><input class="q fs" data-k="fs" placeholder="Activity · Group · Sub-Activity · Location…" value="${esc(S.fs || '')}" oninput="DPR.fsFind(this.value)">${S.fs ? `<span class="fsc">${fsCount()}</span><button class="d2-btn sm" onclick="DPR.fsFind('')">× Clear</button>` : ''}</span>
+      ${ro ? '' : `<span class="d2-grp add"><span class="lbl">Add Work</span><input class="q" data-k="cq" placeholder="Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"><button class="d2-btn sm ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn sm navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn sm ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button></span>`}</span></div>`;
     if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Manpower Is Entered Once For The Club.</div>`;
     if (S.prev) h += `<div class="d2-fix d2-warn">${previewWarn()}</div>`;
     h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : sheetHtml3(ro)}</div>`;   // v159.4 · Full Sheet in preview = the read-only sheet
     return h + `<div class="d2-foot" id="d2_foot">${footHtml()}</div></div>`;
   }
+  function fsCount() { const P = fsPlan(), its = allLines().filter(fsHit), nf = its.filter(({ l }) => finL(l)).length; let ns = 0; P.m.forEach(v => { ns += [...v].filter(x => x !== '*').length; }); return P.t < 0 ? 'No Match' : `<b>${its.length}</b> Line${its.length === 1 ? '' : 's'}${ns ? ' · <b>' + ns + '</b> Sub' + (ns === 1 ? '' : 's') : ''}${nf ? ' · ' + nf + ' Fin' : ''} <i title="Matched On">${['Name', 'Name + Loc', 'Activity · Loc'][P.t]}</i>`; }
+  function fsFind(v) { S.fs = String(v || '').trim() ? v : ''; S.mpo = null; S.remo = null; redraw(); }
+  function fsGo(wid) { const el = document.querySelector('#d2_sc tbody.ln[data-w="' + wid + '"]'); if (!el) return; el.scrollIntoView({ block: 'center' }); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  function retrieveAsk() {
+    const d = esc(dsh(S.to));
+    sheetOpen('Retrieve ' + dsh(S.to) + ' Report For Correction?', 'Sent ' + dts(S.sub.submitted_at) + ' · Attempt ' + (num(S.sub.attempt_no) || 1), `<ul class="d2-rl"><li><b>Back To Draft</b> — Every Row Opens For Editing</li><li><b>Leaves The Manager's Queue</b> — Until You Send It Again</li><li><b>Send Again</b> — Recorded As Attempt ${(num(S.sub.attempt_no) || 1) + 1} With The New Time</li><li><b>Not Possible</b> Once The Manager Has Accepted Or Returned It</li></ul>`,
+      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.retrieveGo()">↩ Retrieve ${d}</button>`);
+  }
+  async function retrieveGo() {
+    try { await rpc('rpc_dpr_retrieve', { p_submission_id: S.sub.id }); sheetClose(); toast('Retrieved — ' + dsh(S.to) + ' Is A Draft Again', 'success'); await engLoad(S.to, true); } catch (e) { toast(/rpc_dpr_retrieve|PGRST202/.test(String(e && e.message)) ? 'Retrieve Needs M40 On The Database — Ask The Admin' : err(e, 'Could not retrieve'), 'error', 7000); }
+  }
   function footHtml() {
     const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount();
     if (S.prev) return `<span class="msg"><b>${d}</b> · Review The Report, Then Send — Date &amp; Time Of Submission Are Recorded.</span><button class="d2-btn" onclick="DPR.prevClose()">← Back To Edit</button><button class="d2-btn ok" onclick="DPR.submitGo()">Send ${d} To Manager ✓</button>`;
-    if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span><button class="d2-btn" onclick="DPR.tab('rep')">← Back To Day Reports</button>`;
+    if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span>${S.sub.status === 'Submitted' && !Object.values((S.cal && S.cal.days) || {}).some(x => x.report_date > S.to) ? `<button class="d2-btn amb" onclick="DPR.retrieveAsk()">↩ Retrieve For Correction</button>` : ''}<button class="d2-btn" onclick="DPR.tab('rep')">← Back To Day Reports</button>`;   // v163 · item 3
     const L = labStats(), attTxt = att ? ` · <span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : '';
     return `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}Status, Progress &amp; Manpower Of ${d}${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send ${d} →</button>`;
   }
@@ -10219,14 +10337,16 @@ const DPR = (function () {
     : (canDropL(g, l) ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove This Activity From The Club — Nothing Reported Yet" onclick="DPR.dropWork('${l.work_id}')">×</button>` : '');   // v158.2 · v161.3 per-activity
   function certCell(g, l, x, r) {
     if (!x.fin || r) return '';
-    return ` <span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` <input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)">`}`;
+    return ` <span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` <span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}`;
   }
-  const nameCell = (g, l) => { const est = `<span class="est">Est ${fmt(l.est_qty)} ${esc(l.uom || '')}</span>`; return S.gv === 'work' ? `<b title="${esc(lineLocPath(g, l))}">${esc(lineLoc(g, l))}</b> <span class="muted">· ${esc(pathTail(lineLocPath(g, l)))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}` : `<b title="${esc(l.activity)}">${esc(short(l.activity, 60))}</b> <span class="muted">· ${esc(linePkg(g, l))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}`; };
+  const nameCell = (g, l) => nameCell0(g, l) + (S.fs ? `<span class="fsx">${esc(S.gv === 'work' ? short(l.activity, 110) : lineLoc(g, l) + ' · ' + pathTail(lineLocPath(g, l)))}</span>` : '');
+  const nameCell0 = (g, l) => { const est = `<span class="est">Est ${fmt(l.est_qty)} ${esc(l.uom || '')}</span>`; return S.gv === 'work' ? `<b title="${esc(lineLocPath(g, l))}">${esc(lineLoc(g, l))}</b> <span class="muted">· ${esc(pathTail(lineLocPath(g, l)))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}` : `<b title="${esc(l.activity)}">${esc(short(l.activity, 60))}</b> <span class="muted">· ${esc(linePkg(g, l))}</span> ${staged(l) ? pill('p-vio', (kindOf(l) === 'grp' ? 'Groups' : 'Sub-Activities') + ' · ' + (l.stages || []).length) : pill('p-teal', 'Direct')}${est}`; };
   // remarks: ✎ icon → inline editor row below (S.remo = key)
   const remBtn = (key, has, ro) => `<button class="d2-rem ${has ? 'has' : ''}" title="${has ? 'Remarks (Has Text)' : 'Remarks'}" ${ro && !has ? 'disabled' : ''} onclick="DPR.remTog('${key}')">✎</button>`;
   const remRow = (key, wid, sid, val, ph, cols, ro) => S.remo === key ? `<tr class="strip"><td></td><td colspan="${cols - 1}"><span class="muted" style="margin-right:8px">${esc(ph)}</span><input class="rem" style="width:60%" data-k="n:${wid}:${sid}" value="${esc(val)}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"> <button class="d2-btn sm" onclick="DPR.remTog('${key}')">Close</button></td></tr>` : '';
   // fold: every parent starts collapsed (S.foldDef) until Expand All; keys seen once are remembered
-  function folded(k) { if (!S.seen.has(k)) { S.seen.add(k); if (S.foldDef) S.fold.add(k); } return S.fold.has(k); }
+  function folded(k) { if (S.fs) return false;   // v163 · Find opens every matching row
+    if (!S.seen.has(k)) { S.seen.add(k); if (S.foldDef) S.fold.add(k); } return S.fold.has(k); }
   const togBtn = k => `<button class="d2-tog ${folded(k) ? '' : 'open'}" data-k="${esc(k)}" onclick="DPR.foldRow(this.dataset.k)">${folded(k) ? '▸' : '▾'}</button>`;   // v158.2 · key via data attribute
   // v158.2 · a hoisted club band folds/unfolds the ACTIVITY bands it spans (it is not their parent row, so it must not hide their rows)
   const togMany = ks => { const all = ks.every(k => folded(k)); return `<button class="d2-tog ${all ? '' : 'open'}" data-ks="${esc(JSON.stringify(ks))}" onclick="DPR.foldKeys(this.dataset.ks)">${all ? '▸' : '▾'}</button>`; };
@@ -10267,7 +10387,6 @@ const DPR = (function () {
   function mpTog(key) { S.mpo = S.mpo === key ? null : key; S.remo = null; redraw(); }
   function remTog(key) { S.remo = S.remo === key ? null : key; S.mpo = null; redraw(); }
   function sameYd(gid, key) { const g = G(gid), src = ydRows(g, key); if (!src.length) return; const arr = unitRows(g, { key }); arr.length = 0; src.forEach(c => arr.push({ con: c.con, heads: Object.assign({}, c.heads) })); markDirty(g); redraw(); }
-  function sameYdAll() { let n = 0; S.groups.forEach(g => { if (!cardActive(g)) return; labUnits(g).forEach(u => { if (!u.worked || unitHeads(g, u)) return; const src = ydRows(g, u.key); if (!src.length) return; const arr = unitRows(g, u); arr.length = 0; src.forEach(c => arr.push({ con: c.con, heads: Object.assign({}, c.heads) })); markDirty(g); n++; }); }); toast(n ? n + ' Row' + (n === 1 ? '' : 's') + ' Filled From Yesterday' : 'Nothing To Copy — Every Working Row Already Has Heads, Or Yesterday Had None', n ? 'success' : 'info'); redraw(); }
   function ylabTog() { S.ylab = !S.ylab; S.mpo = null; redraw(); }
 
   /* ---------- v159 · the day sheet: one row set, twelve columns (DPR_Sheet_mock_v1 v4, approved 08 Oct 2026) ----------
@@ -10276,15 +10395,86 @@ const DPR = (function () {
      v159.3 (DPR_Sheet_Polish_mock_v1, approved 09 Oct 2026): Hindrance column removed — reason sits in the Status cell; 11 columns via colgroup;
      indentation by level (td.ind + --lv). (v160.4: the cell fitter was removed for speed.) */
   const COLS = 11;   // v159.3 · Hindrance column folded into the Status cell
+  // v163 · Find (shared fuzzy matcher) in three levels — the first level that finds anything wins, so a location word like '1st' never drags a whole line in:
+  //   0 · the row's own name (sub-activity + its group; a direct line's activity)  1 · own name + location  2 · the line (activity · location · package · club)
+  function fsPlan() {
+    if (S._fsP && S._fsP.q === S.fs && S._fsP.n === S.groups) return S._fsP;
+    const q = S.fs, T = [new Map(), new Map(), new Map()], put = (t, wid, sid) => { if (!T[t].has(wid)) T[t].set(wid, new Set()); T[t].get(wid).add(sid || '*'); };
+    allLines().forEach(({ g, l }) => { const loc = lineLoc(g, l) + ' ' + lineLocPath(g, l), wid = l.work_id;
+      if (staged(l)) (l.stages || []).forEach(z => { const own = z.name + ' ' + (z.group_name || ''); if (fz(own, q)) put(0, wid, z.id); if (fz(own + ' ' + loc, q)) put(1, wid, z.id); });
+      else { if (fz(l.activity, q)) put(0, wid); if (fz(l.activity + ' ' + loc, q)) put(1, wid); }
+      if (fz([l.activity, loc, linePkg(g, l), g.label || ''].join(' '), q)) put(2, wid); });
+    let t = T.findIndex(m => m.size);
+    if (t === 1) {   // level ② — keep only rows whose own name carries the most search words ("A-101 1st Coat" → the 1st-coat rows at A-101, not every row on the 1st floor)
+      const toks = _fuzzyTokens(q), own = (wid, sid) => { const it = S.W[wid]; if (!it) return ''; if (sid === '*') return it.l.activity; const z = (it.l.stages || []).find(x => x.id === sid); return z ? z.name + ' ' + (z.group_name || '') : ''; };
+      const sc = new Map(); let best = 0; T[1].forEach((v, wid) => v.forEach(sid => { const n = toks.filter(k => _fuzzyMatch(own(wid, sid), [k])).length; sc.set(wid + '|' + sid, n); if (n > best) best = n; }));
+      const M = new Map(); T[1].forEach((v, wid) => v.forEach(sid => { if (sc.get(wid + '|' + sid) === best) { if (!M.has(wid)) M.set(wid, new Set()); M.get(wid).add(sid); } })); T[1] = M;
+    }
+    S._fsP = { q, n: S.groups, t, m: t < 0 ? new Map() : T[t] }; return S._fsP;
+  }
+  const fsSet = l => fsPlan().m.get(l.work_id) || new Set();
+  const fsHit = ({ l }) => fsPlan().m.has(l.work_id);
   function visibleLines() {
+    if (S.fs) return allLines().filter(fsHit);   // v163 · item 1: Find searches active AND finished lines, ignoring the Show filter
     return allLines().filter(({ g, l }) => (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (S.filt !== 'att' || attOf(g, l)) && (!S.area || (g.area || 'Unassigned') === S.area));
   }
   const dash = '<span class="muted">—</span>';
   const lockI = '<span class="lock">🔒</span>';
+  function flatHtml(ro) {
+    const items = visibleLines(), dd = esc(dsh(S.to)), FC = COLS + 3, F = S.fs ? fsPlan().m : null;
+    const key = ({ g, l }) => S.gv === 'work' ? [linePkg(g, l), l.activity, lineLocPath(g, l), lineLoc(g, l)].join('\u0001') : [lineLocPath(g, l), lineLoc(g, l), l.activity].join('\u0001');
+    items.sort((a, b) => (finL(a.l) - finL(b.l)) || key(a).localeCompare(key(b)));
+    const fix = (html, cells) => html.replace(/^<tr([^>]*)>[\s\S]*?(?=<td class="dt2">)/, (m, a) => `<tr${a}>` + cells).replace(/colspan="(\d+)"/g, (m, n) => +n >= COLS - 3 ? `colspan="${+n + 3}"` : m);   // only full-width spans (strip / remark rows) grow with the 3 extra columns
+    const lead = (g, l, grp, sub, fin, n, cls) => `<td class="c">${n}${fin ? '<br>' + pill('p-ok', 'Fin') : ''}</td><td><b>${esc(lineLoc(g, l))}</b><span class="p">${esc(pathTail(lineLocPath(g, l)))}</span></td><td class="fa" title="${esc(l.activity)}"><span class="cl2">${esc(l.activity)}</span>${g.lines.length > 1 ? ` ${pill('p-amb', 'Club')}` : ''}</td><td>${esc(grp || '—')}</td><td class="fs ${cls || ''}">${sub}</td>`;
+    let h = `<table class="d2t sheet one flat"><colgroup><col style="width:2.4%"><col style="width:8%"><col style="width:11%"><col style="width:5.5%"><col style="width:11.5%"><col style="width:6%"><col style="width:6%"><col style="width:8.6%"><col style="width:4.8%"><col style="width:9.5%"><col style="width:7.5%"><col style="width:8.5%"><col style="width:7.5%"><col style="width:3.2%"></colgroup><thead><tr><th class="c">#</th><th>Location</th><th>Activity</th><th>Group</th><th>Sub-Activity</th><th class="c">Start</th><th class="c">Finish</th><th class="c">Status ${dd}</th><th class="n">[A]</th><th>Reported ${dd} [B]</th><th>Cum. [C]</th><th>Contractor</th><th>Manpower ${dd}</th><th class="c">✎</th></tr></thead><tbody>`;
+    let n = 0; const clubDone = new Set(), dot = '<i class="dt">·</i>', J = parts => parts.filter(Boolean).join(dot);
+    const comTail = lines => { const ps = lines.map(l => String(l.loc_path || '').split(' › ').filter(Boolean)); if (!ps.length) return ''; let k = 0; while (ps.every(q => q[k] && q[k] === ps[0][k])) k++; return ps[0].slice(Math.max(0, k - 2), k).join(' › '); };   // common part of the units' paths, last two levels
+    const unitsTxt = ls => { const u = [...new Set(ls.map(l => l.location || ''))].filter(Boolean); return u.length === 1 ? `<b class="ln">${esc(u[0])}</b>` : u.length + ' Units'; };
+    const clubBand = g => {   // v163.2 · one band per club, before its first member: activity · roll-up location · units · Un-Club, with the club's one labour entry
+      clubDone.add(g.wgroup_id); const act = g.lines.filter(l => !finL(l)), acts = [...new Set((act.length ? act : g.lines).map(l => linePkg(g, l)))], u = { key: 'A', worked: cardHasW(g) };   // v163.2 · the club header names the activity's PARENT (package), where the club's manpower is reported
+      const acts2 = ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
+      let r = `<tr class="band club"><td colspan="${FC - 3}">${J([pill('p-amb', 'Club'), `<b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b>`, `<b class="ln">${esc(comTail(act.length ? act : g.lines))}</b>`, unitsTxt(act.length ? act : g.lines), '<span class="muted">Report Together · Manpower Once</span>'])}${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
+      if (cardHasW(g)) r += mpStrip(g, u, g.label || 'Club', FC, ro); return r; };
+    const actBand = (g, ls) => `<tr class="band act"><td colspan="${FC}">${J([`<b class="an">${esc(ls[0].activity)}</b>`, `<b class="ln">${esc(comTail(ls))}</b>`, unitsTxt(ls), ls.length > 1 ? '' : `<span class="muted">Est ${fmt(ls[0].est_qty)} ${esc(ls[0].uom || '')}</span>`])}</td></tr>`;   // v163.2 · visual break at every new activity (direct lines)
+    const stagedBand = (g, l, fin, ro2) => {   // v163.2 · the activity's own row as one band: facts dot-separated, the few controls inline, labour cells kept
+      const x = lineX(g, l), wid = l.work_id, r = ro2 || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995), rk = 'r|' + wid, lv = labLevel(g), starts = startsN(g, l), est = num(l.est_qty), uom = esc(l.uom || '');
+      const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
+      const s0 = l.started_on || (o === 'w' ? x.started : ''), e0 = fin ? l.finished_on : x.fin ? (x.finOn || finDef(x.started || l.started_on)) : '';
+      const finC = fin ? `Done ${l.finished_on ? esc(dsh(l.finished_on)) : 'Earlier'}${l.site_cert_qty != null ? ` · Cert. ${fmt(l.site_cert_qty)} ${uom}` : ''}` : x.fin ? (r || l.end_locked ? `Finish ${esc(dsh(e0))} · Cert. ${x.cert == null ? '—' : fmt(x.cert)} ${uom}` : `Finish <span class="dtw"><b class="dtv">${dsh(e0)}</b><input type="date" class="dt dtb" data-k="le:${wid}" value="${e0}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span> · Cert. <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> ${uom}`) : '';
+      const ud = (l.unsent_drafts || []).filter(z => num(z.qty) > 0), udT = ud.length ? `<span class="d2-ud">Incl. ${ud.map(z => fmt(z.qty) + ' ' + uom + ' ' + esc(z.status) + ' ' + dsh(z.report_date)).join(', ')}</span>` : '';
+      const wAll = r || !open.length ? '' : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`;
+      const u = { key: 'A', worked: cardHasW(g) };
+      const cm = g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier')) : dash}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
+      let h2 = `<tr class="band act sb${fin ? ' fin' : ''}${attOf(g, l) ? ' att' : ''}" data-wg="${g.wgroup_id}"><td colspan="${FC - 3}">${J([`<b class="an">${esc(l.activity)}</b>${g.lines.length > 1 ? ' ' + pill('p-amb', 'Club') : ''}`, esc(pathTail(lineLocPath(g, l))), `<b class="ln">${esc(lineLoc(g, l))}</b>`, (l.stages || []).length + ' Sub-Activities', `<span class="muted">Est ${fmt(est)} ${uom}</span>`, s0 ? esc(dSpan(s0, e0, fin || x.fin)) : '', finC, `<span class="cumt">Cum ${Math.round(pc)}% · ${fmt(r2(est * pc / 100))} ${uom}${pc - pb > 0.0005 ? ` <span class="muted">(+${Math.round(pc - pb)}% ${dd})</span>` : ''}</span>`, udT, st, wAll, lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''])}</td>${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+      if (lv === 'activity' && o === 'w' && g.lines.length === 1 && cardHasW(g)) h2 += mpStrip(g, u, l.activity, FC, r);
+      return h2 + remRow(rk, wid, '', x.note, 'Remarks', FC, r); };
+    const akey = ({ g, l }) => [l.activity, String(l.loc_path || ''), finL(l) ? 1 : 0].join('\u0001');
+    items.forEach((it, i) => { const { g, l } = it, fin = finL(l), r = ro || fin, set = F ? (F.get(l.work_id) || new Set()) : null, wid = l.work_id;
+      if (!staged(l) && (i === 0 || akey(items[i - 1]) !== akey(it))) {   // first direct line of a new activity → one band for the run; a club covering the whole run merges into it
+        let j = i; while (j < items.length && !staged(items[j].l) && akey(items[j]) === akey(it)) j++; const run = items.slice(i, j);
+        const same = run.every(z => z.g === g) && g.lines.length > 1 && !clubDone.has(g.wgroup_id) && g.lines.filter(z => !finL(z)).every(z => run.some(y => y.l === z));
+        if (same) h += clubBand(g); else h += actBand(g, run.map(z => z.l)); }
+      if (g.lines.length > 1 && !clubDone.has(g.wgroup_id)) h += clubBand(g);
+      if (!staged(l)) { n++; h += fix(dirRow3({ g, l, lv: 2 }, n, ro), lead(g, l, '', '<span class="muted">Direct</span>', fin, n)); return; }
+      if (!F || set.has('*')) h += stagedBand(g, l, fin, ro);
+      subGroups(l).forEach(Gp => { (!F || set.has('*') ? Gp.subs : Gp.subs.filter(z => set.has(z.id))).forEach(z => { n++; h += fix(subRow3(g, l, z, r, Gp, 3), lead(g, l, Gp.name, esc(z.name), fin, n)); }); }); });
+    if (!n) h += `<tr><td colspan="${FC}" class="muted">${S.fs ? 'Nothing On This Sheet Matches.' : 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.'}</td></tr>`;
+    // non-estimated work (same rows as the nested sheet)
+    const nk = 'np', np = npDraft(), npHit = e => !S.fs || fz(e.text + ' ' + (e.locs || []).map(x => x.name || '').join(' '), S.fs);
+    if (!S.fs || np.some(npHit)) { h += `<tr class="g1"><td colspan="${FC}" class="ind" style="--lv:0">Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
+      np.forEach((e, i) => { if (!npHit(e)) return; const key2 = 'np|' + i, tr = colsNow(), open = S.mpo === key2;
+        h += `<tr class="npr"><td class="c">${pill('p-grey', 'NP')}</td><td colspan="4"><b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? esc(e.locs.map(x => x.name).join(', ')) : 'No Location Yet'}</span>${ro ? '' : ` <button class="d2-btn sm" onclick="DPR.npLocPick(${i})">+ Location</button> <button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.npDel(${i})">Remove</button>`}</td><td colspan="2"></td><td class="c">${pill('p-ok', 'W')}</td><td colspan="3" class="muted">Labour Only · No Progress</td><td class="con">${esc(conName(e.con) || '—')}${ro ? '' : ` <a class="lk" onclick="DPR.npCon(${i})">Change</a>`}</td><td><span class="d2-mp" onclick="DPR.mpTog('${key2}')"><b>${fmt(heads(e.heads))}</b><i>${tradeTxt(tradeMix([e])) || 'None'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
+        if (open) h += `<tr class="strip"><td></td><td colspan="${FC - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span>${tr.map(t => `<label class="d2-tr"><span>${esc(tCode(t.trade_code))}</span><input type="number" inputmode="numeric" min="0" data-k="np:${i}:${t.trade_code}" value="${num(e.heads[t.trade_code]) || ''}" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${t.trade_code}',this.value)"></label>`).join('')}</div></td></tr>`; }); }
+    return h + sumRow(FC, dd) + `</tbody></table>`;
+  }
+  function flatSet(b) { S.nested = !b; S.mpo = null; S.remo = null; redraw(); }
   function sheetHtml3(ro) {
+    if (!S.nested || S.fs) return flatHtml(ro);   // v163 · flat is the default; Find always flat
     const items = visibleLines(), cols = COLS;
     if (!items.length) return `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${allLines().length ? 'No Activity Matches The Filter.' : 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.'}</div></div>`;
-    const keyOf = ({ g, l }) => S.gv === 'work' ? [linePkg(g, l) || '—', l.activity] : [lineLocPath(g, l) || g.area || '—', lineLoc(g, l) || '—'];
+    const fsF = ({ l }) => S.fs && finL(l) ? 'Finished › ' : '';   // v163 · Find: finished lines band separately, after the active ones
+    const keyOf = it => { const { g, l } = it; return S.gv === 'work' ? [fsF(it) + (linePkg(g, l) || '—'), l.activity] : [fsF(it) + (lineLocPath(g, l) || g.area || '—'), lineLoc(g, l) || '—']; };
+    if (S.fs) items.sort((a, b) => finL(a.l) - finL(b.l));
     const grp = new Map(); items.forEach(it => { const [a, b] = keyOf(it); if (!grp.has(a)) grp.set(a, new Map()); const m = grp.get(a); if (!m.has(b)) m.set(b, []); m.get(b).push(it); });
     const dd = esc(dsh(S.to));
     const colg = `<colgroup><col style="width:${S.cm && !ro ? 52 : 30}px"><col><col style="width:6.5%"><col style="width:7%"><col style="width:12%"><col style="width:6.5%"><col style="width:13%"><col style="width:9%"><col style="width:9.5%"><col style="width:9.5%"><col style="width:${ro ? 40 : 58}px"></colgroup>`;
@@ -10292,49 +10482,50 @@ const DPR = (function () {
     const bandCnt = all => { const w = all.filter(({ g, l }) => outOf(g, l) === 'w').length, hh = all.filter(({ g, l }) => hasH(g, l)).length, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0), att = all.filter(({ g, l }) => attOf(g, l)).length, hd = [...new Set(all.map(x => x.g))].reduce((a, g) => a + cardHeads(g), 0), rep = all.filter(({ g, l }) => outOf(g, l) !== '').length;
       return `${rep}/${all.length} Reported · ${w} Working · ${nS} Start · ${hh} Hindrance · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
     let h = `<table class="d2t sheet one">${colg}<thead><tr>${head}</tr></thead><tbody>`, idx = 0;
-    const banded = new Set(), skip = new Set();
-    const clubBand = (g, spanKeys) => {   // v158.2 · a club is ONE card: its band (with the single manpower entry) appears once
-      banded.add(g.wgroup_id); const ck = 'c:' + g.wgroup_id, u = { key: 'A', worked: cardHasW(g) }, acts = [...new Set(g.lines.map(l => l.activity))].length, units = [...new Set(g.lines.map(l => lineLoc(g, l)))].length;
-      const tog = spanKeys ? togMany(spanKeys) : togBtn(ck);
+    const banded = new Set();
+    const clubRowN = g => {   // v163.1 · one row per club, placed before its first member; label = the clubbed units (stale numeric labels dropped)
+      banded.add(g.wgroup_id); const u = { key: 'A', worked: cardHasW(g) }, units = [...new Set(g.lines.map(l => lineLoc(g, l)))];
+      const ps = g.lines.map(l => String(l.loc_path || '').split(' › ').filter(Boolean)); let k = 0; while (ps.length && ps.every(q => q[k] && q[k] === ps[0][k])) k++; const where = (ps.length ? ps[0].slice(Math.max(0, k - 2), k).join(' › ') : '') || g.location || '';   // v163.2 · roll-up level of the clubbed units
       const acts2 = ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" title="Remove The Whole Club From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
-      let r = `<tr class="club"><td colspan="${cols - 3}" class="ind" style="--lv:${spanKeys ? 1 : 2}">${tog}${pill('p-amb', 'Report Together')}<b>${esc(g.label || '')}</b> <span class="muted">· ${acts} Activit${acts === 1 ? 'y' : 'ies'} × ${units} Unit${units === 1 ? '' : 's'} · Status &amp; Progress Per Row · One Manpower Entry For The Club</span>${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
+      const actL = g.lines.filter(l => !finL(l)), acts = [...new Set((actL.length ? actL : g.lines).map(l => linePkg(g, l)))];   // v163.2 · parent (package) name on the club header
+      let r = `<tr class="club band"><td colspan="${cols - 3}" class="ind" style="--lv:2">${pill('p-amb', 'Club')}<i class="dt">·</i><b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b><i class="dt">·</i><b class="ln">${esc(where)}</b><i class="dt">·</i>${units.length} Unit${units.length === 1 ? '' : 's'}<i class="dt">·</i><span class="muted">Report Together · Manpower Once</span>${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
       if (cardHasW(g)) r += mpStrip(g, u, g.label || 'Club', cols, ro);
-      if (!spanKeys && folded(ck)) skip.add(g.wgroup_id);
       return r;
     };
     grp.forEach((sub, g1) => {
       const all = [...sub.values()].flat(), fk = 'g:' + g1;
       h += `<tr class="g1"><td colspan="${cols}" class="ind" style="--lv:0">${togBtn(fk)}${esc(g1)}<span class="cnt">${all.length} Activit${all.length === 1 ? 'y' : 'ies'} · ${bandCnt(all)}</span></td></tr>`;
       if (folded(fk)) return;
-      const span = new Map(); sub.forEach((ws, g2) => ws.forEach(({ g }) => { if (g.lines.length > 1) { if (!span.has(g.wgroup_id)) span.set(g.wgroup_id, { g, keys: new Set() }); span.get(g.wgroup_id).keys.add(g2); } }));
-      span.forEach(({ g, keys }) => { if (keys.size > 1 && !banded.has(g.wgroup_id)) h += clubBand(g, [...keys].map(g2 => 'a:' + g1 + '|' + g2)); });
+      // v163.1 · no hoisted club band — the club lives on its first activity row
       sub.forEach((ws, g2) => {
         const ak = 'a:' + g1 + '|' + g2;
         h += `<tr class="g2"><td colspan="${cols}" class="ind" style="--lv:1">${togBtn(ak)}${esc(short(g2, 140))}<span class="path">${S.gv === 'work' ? ws.length + ' Location' + (ws.length === 1 ? '' : 's') : ws.length + ' Activit' + (ws.length === 1 ? 'y' : 'ies') + ' At This Unit'} · ${bandCnt(ws)}</span></td></tr>`;
         if (folded(ak)) return;
         ws.forEach(it => {
           const g = it.g;
-          if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubBand(g, null);
-          if (skip.has(g.wgroup_id)) { idx++; return; }
-          idx++; const it2 = Object.assign({}, it, { lv: g.lines.length > 1 ? 3 : 2 });   // v159.3 · club members sit one level under the club band
+          if (g.lines.length > 1 && !banded.has(g.wgroup_id)) h += clubRowN(g);
+          idx++; const it2 = Object.assign({}, it, { lv: 2 });   // v163.1 · no club band row, members sit directly under the activity row
           h += `</tbody><tbody class="ln" data-w="${it.l.work_id}" data-i="${idx}" data-lv="${it2.lv}">` + (staged(it.l) ? stageRows3(it2, idx, ro) : dirRow3(it2, idx, ro)) + '</tbody><tbody>';   // v160.4
         });
       });
     });
     // non-estimated work: labour only, reason + locations in the name column
-    const nk = 'np', np = npDraft();
-    h += `<tr class="g1"><td colspan="${cols}" class="ind" style="--lv:0">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
-    if (!folded(nk)) np.forEach((e, i) => {
+    const nk = 'np', np = npDraft(), npHit = e => !S.fs || fz(e.text + ' ' + (e.locs || []).map(x => x.name || '').join(' '), S.fs);   // v163 · Find filters non-estimated rows too
+    if (!S.fs || np.some(npHit)) h += `<tr class="g1"><td colspan="${cols}" class="ind" style="--lv:0">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
+    if (!folded(nk)) np.forEach((e, i) => { if (!npHit(e)) return;
       const key = 'np|' + i, tr = colsNow(), open = S.mpo === key;
       h += `<tr class="np"><td></td><td class="name ind" style="--lv:1">${pill('p-grey', 'NP')} <b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location Yet'}</span>${ro ? '' : ` <a style="color:var(--dn);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npLocPick(${i})">＋ Location</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npDel(${i})">Remove</a>`}</td><td colspan="2" class="muted">—</td><td class="c stc"><div class="cq">${pill('p-ok', 'W')}</div></td><td colspan="3" class="muted">Labour Only · No Progress</td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td><td><span class="d2-mp ${heads(e.heads) ? '' : 'bad'}" onclick="DPR.mpTog('${key}')"><b>${fmt(heads(e.heads))}</b><i>${mixTxt(e.heads) || 'Heads Missing'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
       if (open) h += `<tr class="strip"><td></td><td colspan="${cols - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span><div class="crow">${tr.map(t => `<label><span>${esc(t.trade_name)}</span><input data-k="np:${i}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${e.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${esc(t.trade_code)}',0,this.value)"></label>`).join('')}<span class="tot">Total <b>${fmt(heads(e.heads))}</b></span></div><div class="crow acts">${ro ? '' : `<button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button>`}<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button></div></div></td></tr>`;
     });
-    const tr = colsNow(), tot = {}; S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); })); }); np.forEach(e => Object.entries(e.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); }));
-    const W = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'w').length, H = allLines().filter(({ g, l }) => hasH(g, l)).length, Nn = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'n').length, nf = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length;
-    h += `<tr class="sum"><td colspan="${cols - 2}">Total · ${dd} · ${W} Worked · ${H} Hindrance · ${Nn} No Work${nf ? ' · <span style="color:var(--drd)">' + nf + ' Not Marked</span>' : ''} · Estimated ${fmt(allHeads() - npHeads())} + Non-Estimated ${fmt(npHeads())} Heads</td><td><span class="d2-mp"><b>${fmt(allHeads())}</b><i>${tr.map(t => esc(tAbbr(t.trade_code)) + fmt(tot[t.trade_code] || 0)).join(' ')}</i></span></td><td></td></tr>`;
+    h += sumRow(cols, dd);
     return h + '</tbody></table>';
   }
-  const conCell = (g, ci, key, ro) => { const c = rowsK(g, key)[ci] || {}; return `${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)" title="No Work Order Found (Not Issued Or Under Amendment) — Pick The Contractor">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a>`}${rowsK(g, key).length > 1 ? ` <span class="muted">+${rowsK(g, key).length - 1}</span>` : ''}${ro ? '' : `<div><a onclick="DPR.conPick('${g.wgroup_id}',-1,'${key}')">＋ Contractor</a></div>`}`; };
+  function sumRow(cols, dd) {
+    const np = npDraft(), tr = colsNow(), tot = {}; S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); })); }); np.forEach(e => Object.entries(e.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); }));
+    const W = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'w').length, H = allLines().filter(({ g, l }) => hasH(g, l)).length, Nn = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'n').length, nf = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '' && startedB(l)).length, nns = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '' && !startedB(l)).length;
+    return `<tr class="sum"><td colspan="${cols - 2}">Total · ${dd} · ${W} Worked · ${H} Hindrance · ${Nn} No Work${nf ? ' · <span style="color:var(--drd)">' + nf + ' Not Marked</span>' : ''}${nns ? ' · <span class="muted">' + nns + ' Not Started</span>' : ''} · Estimated ${fmt(allHeads() - npHeads())} + Non-Estimated ${fmt(npHeads())} Heads</td><td><span class="d2-mp"><b>${fmt(allHeads())}</b><i>${tr.map(t => esc(tAbbr(t.trade_code)) + fmt(tot[t.trade_code] || 0)).join(' ')}</i></span></td><td></td></tr>`;
+  }
+  const conCell = (g, ci, key, ro) => { const c = rowsK(g, key)[ci] || {}; return `${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)" title="No Work Order Found (Not Issued Or Under Amendment) — Pick The Contractor">Contractor Not Available</b>'}${rowsK(g, key).length > 1 ? ` <span class="muted">+${rowsK(g, key).length - 1}</span>` : ''}${ro ? '' : `<div class="cl"><a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a> · <a onclick="DPR.conPick('${g.wgroup_id}',-1,'${key}')">＋ Contractor</a></div>`}`; };
   // contractor + manpower cells for a row (two cells, or one message spanning both)
   function cmCells(g, l, s, Gp, o, ro) {
     const lv = labLevel(g), two = t => `<td colspan="2" class="muted">${t}</td>`;
@@ -10369,9 +10560,9 @@ const DPR = (function () {
     const q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom), rk = 'r|' + wid;
     const att = attOf(g, l) ? ' att' : '', bd = lineBackDated(g, l) ? ' bd' : '';
     // start
-    const startC = fin ? `<b>${esc(dsh(l.started_on))}</b>${lockI}` : !r && o === 'w' && !l.started_on ? `<input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)">` : (l.started_on || (x.started && o === 'w')) ? `<b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? lockI : ''}` : dash;
+    const startC = fin ? `<b>${esc(dsh(l.started_on))}</b>${lockI}` : !r && o === 'w' && !l.started_on ? `<span class="dtw"><b class="dtv">${dsh(x.started || S.to)}</b><input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (l.started_on || (x.started && o === 'w')) ? `<b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? lockI : ''}` : dash;
     // finish (+ site cert.)
-    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
     // status
     const stC = `${r ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOc('${wid}','@')`)}<div class="st2">${statusDir(g, l)}</div>${fin ? '' : hinRow(wid, '', o, x.rc, l.open_hindrance, r)}`;
     // [B]
@@ -10388,20 +10579,22 @@ const DPR = (function () {
   function stageRows3(it, idx, ro) {
     const { g, l } = it, x = lineX(g, l), wid = l.work_id, fin = finL(l), r = ro || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995), rk = 'r|' + wid, lv = labLevel(g);
     const fd = folded(wid), starts = startsN(g, l), est = num(l.est_qty), uom = esc(l.uom || ''), lvl = it.lv || 2;
+    const fsAll = !S.fs || fsSet(l).has('*');   // v163 · Find: the line itself matched → every sub shows; else only the matched subs
     const nH = fin ? 0 : (l.stages || []).filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'h').length;
     const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
     const s0 = l.started_on || (o === 'w' ? x.started : '');
     const startC = s0 ? `<b>${esc(dsh(s0))}</b>${l.start_locked ? lockI : ''}` : dash;
-    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)">`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
     const u = { key: 'A', worked: cardHasW(g) };
     const cm = g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier') + ' <span class="muted">No Labour On ' + esc(dsh(S.to)) + '</span>') : dash}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
-    let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}${lineBackDated(g, l) ? ' bd' : ''}" data-wg="${g.wgroup_id}">${tickCell(g, l, idx, ro)}<td class="name ind" style="--lv:${lvl}">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>
+    let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}${lineBackDated(g, l) ? ' bd' : ''}${S.fs && fsSet(l).has('*') ? ' fsm' : ''}" data-wg="${g.wgroup_id}">${tickCell(g, l, idx, ro)}<td class="name ind" style="--lv:${lvl}">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>
       ${stTd(`${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}<div class="st2">${(r || !open.length) && o ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : '') : st}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}`)}
       <td class="n">${Math.round(pb)}%${udNote(l)}</td><td class="dn"><span class="muted">${pc - pb > 0.0005 ? '+' + Math.round(pc - pb) + '% · ' : ''}Per Sub-Activity ↓</span></td><td>${cumCell(pc, Math.round(pc) + '%', fmt(r2(est * pc / 100)) + ' ' + uom, x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '')}</td>${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
     if (lv === 'activity' && o === 'w' && g.lines.length === 1 && cardHasW(g)) h += mpStrip(g, u, l.activity, COLS, r);
     h += remRow(rk, wid, '', x.note, 'Remarks', COLS, r);
     if (fd) return h;
     subGroups(l).forEach(Gp => {
+      const fsS = fsAll ? Gp.subs : Gp.subs.filter(z => fsSet(l).has(z.id)); if (!fsS.length) return;
       if (Gp.id) {
         const gk = 'gp:' + wid + '|' + Gp.id, gp = grpPct(g, l, Gp), gb = grpBase(l, Gp), gd = grpDates(g, l, Gp), ws = Gp.subs.filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'w').length, hs = Gp.subs.filter(s => x.subs[s.id].out === 'h').length, ns = Gp.subs.filter(s => x.subs[s.id].out === 'n').length;
         const wsOn = Gp.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length, nDone = Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length, gDone = nDone === Gp.subs.length;
@@ -10412,7 +10605,7 @@ const DPR = (function () {
         if (gu && wsOn) h += mpStrip(g, gu, Gp.name, COLS, r);
         if (folded(gk)) return;
       }
-      Gp.subs.forEach(s => { h += subRow3(g, l, s, r, Gp, Gp.id ? lvl + 2 : lvl + 1); });
+      fsS.forEach(s => { h += subRow3(g, l, s, r, Gp, Gp.id ? lvl + 2 : lvl + 1); });
     });
     return h;
   }
@@ -10421,9 +10614,9 @@ const DPR = (function () {
     const att = !done && (((o === 'h' && !y.rc) || (o === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005));
     const bd = !done && o === 'w' && !subWorkedOn(s, y, base);   // v158.3 · finished on an earlier date
     const fresh = !rr && subFresh(s, y, base);
-    const startC = done ? `<b>${esc(dsh(y.s || s.started_on))}</b>${lockI}` : fresh ? `<input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)">` : (y.s || s.started_on) ? `<b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? lockI : ''}` : dash;
+    const startC = done ? `<b>${esc(dsh(y.s || s.started_on))}</b>${lockI}` : fresh ? `<span class="dtw"><b class="dtv">${dsh(y.s || S.to)}</b><input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (y.s || s.started_on) ? `<b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? lockI : ''}` : dash;
     const endIn = !rr && o === 'w' && !y.wip && pc >= 99.9995 && !s.end_locked;
-    const finC = done ? `<b>${esc(dsh(y.e || s.finished_on))}</b>${lockI}` : endIn ? `<input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || finDef(y.s || s.started_on)}" min="${y.s || s.started_on || ''}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)">` : (o === 'w' && pc >= 99.9995 && y.e) ? `<b>${esc(dsh(y.e))}</b>${s.end_locked ? lockI : ''}` : dash;
+    const finC = done ? `<b>${esc(dsh(y.e || s.finished_on))}</b>${lockI}` : endIn ? `<span class="dtw"><b class="dtv">${dsh(y.e || finDef(y.s || s.started_on))}</b><input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || finDef(y.s || s.started_on)}" min="${y.s || s.started_on || ''}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (o === 'w' && pc >= 99.9995 && y.e) ? `<b>${esc(dsh(y.e))}</b>${s.end_locked ? lockI : ''}` : dash;
     const stC = `${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}<div class="st2">${done ? '' : statusSub(s, y, base)}</div>${done ? '' : hinRow(wid, sid, o, y.rc, s.open_hindrance, rr)}`;
     let bC;
     if (done) bC = `<span class="muted">100% · ${esc(dsh(y.e || s.finished_on))}</span>`;
@@ -10431,7 +10624,7 @@ const DPR = (function () {
     else if (o === 'w') bC = `<span class="d2-pct"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" style="width:52px" value="${y.wip ? '' : Math.round(pc)}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)"> %<span class="d2-snap">${[25, 50, 75].map(p => `<button ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done" onclick="DPR.snapPct('${wid}','${sid}',100)">✓</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button></span></span><div class="muted" style="font-size:10px">Cum. % Of This Sub-Activity</div>`;
     else bC = o === 'n' ? `<span class="muted">No Work</span>` : dash;
     const cumP = o === 'w' ? (y.wip ? base : pc) : base;
-    return `<tr class="sub${att ? ' att' : ''}${bd ? ' bd' : ''}"><td></td><td class="name ind" style="--lv:${lvl || 3}"><span class="sa">${esc(s.name)}</span><span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%</span></td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>${stTd(stC)}<td class="n">${Math.round(base)}%</td><td class="dn">${bC}</td><td>${cumCell(cumP, Math.round(cumP) + '%', cumP - base > 0.0005 ? '+' + Math.round(cumP - base) : '', '')}</td>${done ? '<td colspan="2" class="muted">—</td>' : cmCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`
+    return `<tr class="sub${att ? ' att' : ''}${bd ? ' bd' : ''}${S.fs && fsSet(l).has(s.id) ? ' fsm' : ''}"><td></td><td class="name ind" style="--lv:${lvl || 3}"><span class="sa">${esc(s.name)}</span>${S.fs ? `<span class="fsx"><b>${esc(lineLoc(g, l))}</b>${s.group_name ? ' · ' + esc(s.group_name) : ''}</span>` : ''}<span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%</span></td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>${stTd(stC)}<td class="n">${Math.round(base)}%</td><td class="dn">${bC}</td><td>${cumCell(cumP, Math.round(cumP) + '%', cumP - base > 0.0005 ? '+' + Math.round(cumP - base) : '', '')}</td>${done ? '<td colspan="2" class="muted">—</td>' : cmCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`
       + (!done && !bd && o === 'w' && lv === 'sub' && g.lines.length === 1 ? mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, COLS, rr) : '')
       + remRow(rk, wid, sid, y.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', COLS, rr);
   }
@@ -10460,20 +10653,25 @@ const DPR = (function () {
       } else {
         r.today = o === 'w' ? (a - b > 0.0005 ? '+' + Math.round(a - b) + '%' : 'WIP') : '';
         (l.stages || []).forEach(s => {
-          const base = subBase(s); if (base >= 99.9995) return; const y = x.subs[s.id], p = num(y.pct);
-          if (y.out === 'w') r.subs.push({ gid: s.group_id || null, n: s.name, b: Math.round(base), a: Math.round(y.wip ? base : p), k: !y.wip && p >= 99.9995 ? 'done' : y.wip || p <= base + 0.0005 ? 'wip' : 'mv' });
-          else if (y.out === 'n') r.subs.push({ gid: s.group_id || null, n: s.name, k: 'n' });
-          else if (y.out === 'h') { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'h', rc: rvRc(y.rc) }); r.hs.push({ where: r.loc + ' · ' + s.name, what: l.activity, rc: rvRc(y.rc), since: (s.open_hindrance && s.open_hindrance.from_date) || S.to }); }
+          const base = subBase(s), y = x.subs[s.id], p = num(y.pct), ds = y.s || s.started_on || '', de = y.e || s.finished_on || '';
+          if (base >= 99.9995) { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'prev', b: 100, a: 100, ds, de }); return; }   // v163 · item 5: done on an earlier date — shown at 100 % until the whole activity is finished
+          if (y.out === 'w') { const kk = !y.wip && p >= 99.9995 ? 'done' : y.wip || p <= base + 0.0005 ? 'wip' : 'mv'; r.subs.push({ gid: s.group_id || null, n: s.name, b: Math.round(base), a: Math.round(y.wip ? base : p), k: kk, ds: ds || S.to, de: kk === 'done' ? (de || S.to) : '' }); }
+          else if (y.out === 'n') r.subs.push({ gid: s.group_id || null, n: s.name, k: 'n', b: Math.round(base), ds });
+          else if (y.out === 'h') { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'h', rc: rvRc(y.rc), ds }); r.hs.push({ where: r.loc + ' · ' + s.name, what: l.activity, rc: rvRc(y.rc), since: (s.open_hindrance && s.open_hindrance.from_date) || S.to }); }
         });
         // v160.1 · reporting by group: each group's own progress (before → after) and its sub-activity pills under it
         r.groups = subGroups(l).filter(G => G.id).map(G => { const wt = z => num(z.tpl_weight || z.weight), tw = G.subs.reduce((a, z) => a + wt(z), 0) || 1;   // v160.2 · group % normalised to its own weights (100 % when every sub is done)
           const gb = G.subs.reduce((a, z) => a + wt(z) * subBase(z), 0) / tw, ga = o === 'w' ? G.subs.reduce((a, z) => a + wt(z) * subPct(g, l, z), 0) / tw : gb, nd = G.subs.filter(z => subPct(g, l, z) >= 99.9995).length;
-          return { id: G.id, name: G.name, w: num(G.weight), b: gb, a: ga, nd, n: G.subs.length, done: nd === G.subs.length, chips: r.subs.filter(c => c.gid === G.id) }; });
+          const gdt = grpDates(g, l, G);
+          return { id: G.id, name: G.name, w: num(G.weight), b: gb, a: ga, nd, n: G.subs.length, done: nd === G.subs.length, chips: r.subs.filter(c => c.gid === G.id), ds: gdt.s, de: nd === G.subs.length ? gdt.e : '' }; });
       }
+      // v163 · item 6: activity start / end — staged lines from their sub-activities, direct lines from the line
+      if (staged(l)) { const ss = (l.stages || []).map(s => (x.subs[s.id] || {}).s || s.started_on || '').filter(Boolean).sort(); r.ds = ss[0] || (o === 'w' ? S.to : ''); r.de = (l.stages || []).every(s => subPct(g, l, s) >= 99.9995) ? ((l.stages || []).map(s => (x.subs[s.id] || {}).e || s.finished_on || S.to).sort().pop()) : ''; }
+      else { r.ds = x.started || l.started_on || (o === 'w' ? S.to : ''); r.de = r.fin ? (x.finOn || S.to) : ''; }
       rows.push(r);
     }));
     const W = rows.filter(r => r.o === 'w'), H = rows.flatMap(r => r.hs).map(h => Object.assign(h, { days: daysBetween(h.since, S.to) + 1 }));
-    const N = rows.filter(r => r.o === 'n'), NR = rows.filter(r => r.o === ''), moved = W.filter(r => r.a > r.b + 0.0005);
+    const N = rows.filter(r => r.o === 'n'), NR = rows.filter(r => r.o === '' && startedB(r.l)), NS = rows.filter(r => r.o === '' && !startedB(r.l)), moved = W.filter(r => r.a > r.b + 0.0005);   // v163 · item 4
     const fin = W.filter(r => r.fin), subFin = W.flatMap(r => r.subs.filter(s => s.k === 'done').map(s => ({ s, r }))), starts = W.filter(r => r.starts);
     const wipOnly = W.filter(r => !(r.a > r.b + 0.0005)).length + W.reduce((n, r) => n + r.subs.filter(s => s.k === 'wip').length, 0);
     // manpower: contractor × trade from the drafts (= saved rows once preview has saved) + non-estimated
@@ -10482,7 +10680,7 @@ const DPR = (function () {
     const hd = allHeads(), np = npHeads();
     let prev = null; if (S.yd) { prev = 0; S.yd.groups.forEach(g => { const d = S.yd.D[g.wgroup_id]; if (d) prev += rvRows(d).reduce((a, c) => a + heads(c.heads), 0); }); prev += (S.yd.np || []).reduce((a, r) => a + num(r.head_count), 0); }
     return { rows, W, H, N, NR, moved, fin, subFin, starts, wipOnly, by, heads: hd, np, prev, prevSh: dsh(addDays(S.to, -1)), dH: prev == null ? null : hd - prev,
-      newH: H.filter(h => h.days <= 1), oldH: H.filter(h => h.days > 1), reported: rows.filter(r => r.o !== '').length, active: rows.length };
+      newH: H.filter(h => h.days <= 1), oldH: H.filter(h => h.days > 1), reported: rows.filter(r => r.o !== '').length, active: rows.length - NS.length, NS };
   }
   const rvDelta = F => F.dH == null ? `No Report On ${F.prevSh}` : `${F.dH >= 0 ? '+' : ''}${fmt(F.dH)} vs ${F.prevSh}`;
   function rvOneLine(F) {
@@ -10514,7 +10712,7 @@ const DPR = (function () {
   function rvKpis(F) {
     const k = (cls, l, v, s, bar) => `<div class="rv-k ${cls}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div>${bar ? `<div class="mb">${bar}</div>` : ''}</div>`;
     const pc = F.active ? F.reported / F.active * 100 : 0;
-    return `<div class="rv-kpis">${k('', 'Reported', `${F.reported}<small>/ ${F.active}</small>`, `${F.NR.length} Not Reported`, `<i style="width:${pc}%;background:var(--dn)"></i>`)}
+    return `<div class="rv-kpis">${k('', 'Reported', `${F.reported}<small>/ ${F.active}</small>`, `${F.NR.length} Not Reported${F.NS && F.NS.length ? ' · ' + F.NS.length + ' Not Started' : ''}`, `<i style="width:${pc}%;background:var(--dn)"></i>`)}
       ${k('vio', 'Progress Moved', F.moved.length, `${F.starts.length} Started · ${F.wipOnly} WIP`, `<i style="width:${F.W.length ? F.moved.length / F.W.length * 100 : 0}%;background:var(--dv)"></i>`)}
       ${k('ok', 'Completed', F.fin.length + F.subFin.length, `${F.fin.length} Activit${F.fin.length === 1 ? 'y' : 'ies'} · ${F.subFin.length} Sub-Activit${F.subFin.length === 1 ? 'y' : 'ies'}`)}
       ${k(F.H.length ? 'red' : '', 'Hindrance', F.H.length, `${F.newH.length} New · ${F.oldH.length} Carried Over`)}
@@ -10522,7 +10720,7 @@ const DPR = (function () {
   }
   function rvProgress(F) {
     const dd = esc(dsh(S.to));
-    let h = `<div class="rv-c"><div class="h"><b>Progress On ${dd}</b><span class="m">${F.W.length} Worked · ${F.H.length} Hindrance · ${F.N.length} No Work · ${F.NR.length} Not Reported</span><span class="sp"></span><span class="m opt">Worked Rows Only — Hindrances And Not Reported Are On The Right</span></div>`;
+    let h = `<div class="rv-c"><div class="h"><b>Progress On ${dd}</b><span class="m">${F.W.length} Worked · ${F.H.length} Hindrance · ${F.N.length} No Work · ${F.NR.length} Not Reported${F.NS && F.NS.length ? ' · ' + F.NS.length + ' Not Started' : ''}</span><span class="sp"></span><span class="m opt">Worked Rows Only — Hindrances And Not Reported Are On The Right</span></div>`;
     if (!F.W.length) return h + `<div class="rv-foot2" style="border:0">No Activity Worked On ${dd}.</div>` + rvNp(F) + '</div>';
     h += `<table class="rv-t"><colgroup><col><col style="width:30%"><col style="width:12%"><col style="width:18%"></colgroup><thead><tr><th>Activity · Location</th><th>Cumulative · Before → After</th><th class="n">Today</th><th>Manpower · Contractor</th></tr></thead><tbody>`;
     const pk = new Map(); F.W.forEach(r => { if (!pk.has(r.pkg)) pk.set(r.pkg, new Map()); const m = pk.get(r.pkg); if (!m.has(r.act)) m.set(r.act, []); m.get(r.act).push(r); });
@@ -10536,10 +10734,10 @@ const DPR = (function () {
           const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(S.to)) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');
           const first = r.club && !clubShown.has(r.g.wgroup_id); if (r.club) clubShown.add(r.g.wgroup_id);
           const mp = r.club ? (first ? `<b>${fmt(r.heads)}</b> <span class="muted">On The Club</span>` : '<span class="muted">On The Club ↑</span>') : r.heads ? `<b>${fmt(r.heads)}</b> <span class="muted">Heads</span>` : '<span class="muted">No Labour Today</span>';
-          h += `<tr class="${r.fin ? 'fin' : ''}"><td class="loc"><b>${esc(r.loc)}</b> ${tag}<span class="p">${esc(r.path)}${r.est ? ` · Est ${fmt(r.est)} ${esc(r.uom)}` : ''}${r.fin && r.cert != null ? ` · Cert. ${fmt(r.cert)} ${esc(r.uom)}` : ''}</span></td><td>${rvBar(r.b, r.a, r.fin)}</td><td class="n"><span class="rv-td">${esc(r.today)}</span></td><td>${mp}<div class="muted">${esc(r.cons.join(', '))}</div></td></tr>`;
+          h += `<tr class="${r.fin ? 'fin' : ''}"><td class="loc"><b>${esc(r.loc)}</b> ${tag}<span class="p">${esc(r.path)}${r.est ? ` · Est ${fmt(r.est)} ${esc(r.uom)}` : ''}${r.fin && r.cert != null ? ` · Cert. ${fmt(r.cert)} ${esc(r.uom)}` : ''}</span><span class="rv-dt ${r.de ? 'ok' : ''}">${esc(dSpan(r.ds, r.de, !!r.de))}</span></td><td>${rvBar(r.b, r.a, r.fin)}</td><td class="n"><span class="rv-td">${esc(r.today)}</span></td><td>${mp}<div class="muted">${esc(r.cons.join(', '))}</div></td></tr>`;
           const loose = r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs;
           if (r.groups && r.groups.length) h += `<tr class="gx"><td colspan="4"><div class="rv-gg">${r.groups.map(G => rvGroupCard(r, G)).join('')}</div></td></tr>`;   // v160.2 · groups side by side
-          if (loose.length) h += `<tr class="subs"><td colspan="4">${loose.map(rvChip).join('')}</td></tr>`;
+          if (loose.length) h += `<tr class="subs"><td colspan="4"><div class="rv-sl">${loose.map(rvLine).join('')}</div></td></tr>`;   // v163 · one sub-activity per line with its dates
         });
       });
     });
@@ -10547,21 +10745,43 @@ const DPR = (function () {
   }
   // v160.2 · one card per group (DPR_Summary_Groups_SideBySide_mock_v1, approved 09 Oct 2026): name · weight · done count, bar, today's gain, sub-activities one per line;
   //          a 100 % group folds to one line until opened (S.rvOpen)
-  const rvLine = s => s.k === 'done' ? `<span class="rv-chip ok"><span>✓ ${esc(s.n)}</span><span class="v">${s.b}→100%</span></span>` : s.k === 'wip' ? `<span class="rv-chip wip"><span>${esc(s.n)}</span><span class="v">WIP ${s.a}%</span></span>` : s.k === 'n' ? `<span class="rv-chip"><span>${esc(s.n)}</span><span class="v">No Work</span></span>` : s.k === 'h' ? `<span class="rv-chip red"><span>${esc(s.n)}</span><span class="v">${esc(s.rc || 'Hindrance')}</span></span>` : `<span class="rv-chip vio"><span>${esc(s.n)}</span><span class="v">${s.b}→${s.a}%</span></span>`;
+  const rvSd = s => s.k === 'prev' || s.k === 'done' ? `<i class="dts">${esc(dSpan(s.ds, s.de, true))}</i>` : s.ds ? `<i class="dts">${esc(dSpan(s.ds, '', false))}</i>` : '';
+  const rvLine = s => s.k === 'prev' ? `<span class="rv-chip ok prev"><span>✓ ${esc(s.n)}${rvSd(s)}</span><span class="v">100% · Earlier</span></span>` : s.k === 'done' ? `<span class="rv-chip ok"><span>✓ ${esc(s.n)}${rvSd(s)}</span><span class="v">${s.b}→100%</span></span>` : s.k === 'wip' ? `<span class="rv-chip wip"><span>${esc(s.n)}${rvSd(s)}</span><span class="v">WIP ${s.a}%</span></span>` : s.k === 'n' ? `<span class="rv-chip"><span>${esc(s.n)}${s.b ? rvSd(s) : ''}</span><span class="v">${s.b ? s.b + '% · ' : ''}No Work</span></span>` : s.k === 'h' ? `<span class="rv-chip red"><span>${esc(s.n)}${rvSd(s)}</span><span class="v">${esc(s.rc || 'Hindrance')}</span></span>` : `<span class="rv-chip vio"><span>${esc(s.n)}${rvSd(s)}</span><span class="v">${s.b}→${s.a}%</span></span>`;
   function rvGroupCard(r, G) {
     const k = r.l.work_id + '|' + G.id, open = (S.rvOpen || new Set()).has(k), moved = G.a - G.b > 0.0005;
     const list = G.done && !open ? `<span class="rv-chip ok"><span>✓ All ${G.n} Sub-Activities Complete</span><a class="v" onclick="DPR.rvGrp('${esc(k)}')">Show ▾</a></span>`
       : G.chips.length ? G.chips.map(rvLine).join('') + (G.done ? `<a class="none lk" onclick="DPR.rvGrp('${esc(k)}')">Hide ▴</a>` : '') : `<div class="none">No Sub-Activity Reported On ${esc(dsh(S.to))}</div>`;
-    return `<div class="rv-g ${G.done ? 'done' : moved ? '' : 'idle'}"><div class="gh"><b>${esc(G.name)}</b><span class="muted">${fmt(G.w)}% Of Activity</span><span class="sp"></span><span class="ct">${G.nd}/${G.n} Done</span>${G.done ? pill('p-ok', '✓ Done') : ''}</div><div class="gb">${rvBar(G.b, G.a, G.done)}<span class="rv-td">${moved ? '+' + Math.round(G.a - G.b) + '%' : '—'}</span></div><div class="gl">${list}</div></div>`;
+    return `<div class="rv-g ${G.done ? 'done' : moved ? '' : 'idle'}"><div class="gh"><b>${esc(G.name)}</b><span class="muted">${fmt(G.w)}% Of Activity</span><span class="sp"></span><span class="ct">${G.nd}/${G.n} Done</span>${G.done ? pill('p-ok', '✓ Done') : ''}</div><div class="rv-dt ${G.de ? 'ok' : ''}">${esc(dSpan(G.ds, G.de, G.done))}</div><div class="gb">${rvBar(G.b, G.a, G.done)}<span class="rv-td">${moved ? '+' + Math.round(G.a - G.b) + '%' : '—'}</span></div><div class="gl">${list}</div></div>`;
   }
   function rvGrp(k) { S.rvOpen = S.rvOpen || new Set(); S.rvOpen.has(k) ? S.rvOpen.delete(k) : S.rvOpen.add(k); redraw(); }
-  const rvChip = s => s.k === 'done' ? `<span class="rv-chip ok">✓ ${esc(s.n)} ${s.b}→100%</span>` : s.k === 'wip' ? `<span class="rv-chip wip">${esc(s.n)} · WIP ${s.a}%</span>` : s.k === 'n' ? `<span class="rv-chip">${esc(s.n)} · No Work</span>` : s.k === 'h' ? `<span class="rv-chip red">${esc(s.n)} · ${esc(s.rc || 'Hindrance')}</span>` : `<span class="rv-chip vio">${esc(s.n)} ${s.b}→${s.a}%</span>`;
+  const rvChip = s => s.k === 'prev' || s.ds ? rvLine(s) : s.k === 'done' ? `<span class="rv-chip ok">✓ ${esc(s.n)} ${s.b}→100%</span>` : s.k === 'wip' ? `<span class="rv-chip wip">${esc(s.n)} · WIP ${s.a}%</span>` : s.k === 'n' ? `<span class="rv-chip">${esc(s.n)} · No Work</span>` : s.k === 'h' ? `<span class="rv-chip red">${esc(s.n)} · ${esc(s.rc || 'Hindrance')}</span>` : `<span class="rv-chip vio">${esc(s.n)} ${s.b}→${s.a}%</span>`;
   const rvNp = F => { const np = npDraft().filter(e => heads(e.heads) > 0); return np.length ? `<div class="rv-foot2"><b>Non-Estimated Work · ${fmt(F.np)} Heads</b> — ${np.map(e => `${esc(e.text)} ${fmt(heads(e.heads))}`).join(' · ')} <span class="muted">(Labour Only, No Progress)</span></div>` : ''; };
+  function rvLabRows(F) {   // v163 · item 2: contractor × location rows, heads by trade
+    const by = new Map(), add = (con, loc, act, hd) => { const k = con || '—'; if (!by.has(k)) by.set(k, new Map()); const m = by.get(k), lk = loc + '\u0001' + act; const r = m.get(lk) || { loc, act, hd: {} }; Object.entries(hd || {}).forEach(([t, v]) => { if (num(v) > 0) r.hd[t] = num(r.hd[t]) + num(v); }); m.set(lk, r); };
+    S.groups.forEach(g => { const rs = rvRows(dOf(g)); if (!rs.length) return; const l0 = g.lines[0] || {}, club = g.lines.length > 1;
+      const loc = club ? [...new Set(g.lines.map(l => lineLoc(g, l)))].join(', ') : lineLoc(g, l0), act = club ? (g.label || 'Report Together') + ' · ' + g.lines.length + ' Units' : l0.activity || '';
+      rs.forEach(c => add(c.con, loc + (pathTail(lineLocPath(g, l0)) ? ' · ' + pathTail(lineLocPath(g, l0)) : ''), act, c.heads)); });
+    npDraft().forEach(e => { if (heads(e.heads) > 0) add(e.con, (e.locs || []).map(x => x.name).filter(Boolean).join(', ') || '—', 'Non-Estimated · ' + e.text, e.heads); });
+    return by;
+  }
+  function rvLabTable(F) {
+    const by = rvLabRows(F), cons = [...by.keys()].sort((a, b) => [...by.get(b).values()].reduce((s, r) => s + sum(r.hd), 0) - [...by.get(a).values()].reduce((s, r) => s + sum(r.hd), 0));
+    const used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => [...by.get(c).values()].some(r => num(r.hd[t]) > 0)));
+    if (!cons.length) return '';
+    const cell = (v, b) => `<td class="n ${v ? '' : 'z'}">${v ? (b ? '<b>' + fmt(v) + '</b>' : fmt(v)) : '·'}</td>`;
+    let h = `<div class="rv-c"><div class="h"><b>Labour · ${esc(dsh(S.to))} · ${fmt(F.heads)} Heads</b><span class="m">Contractor › Location · Heads By Trade · ${rvDelta(F)}</span></div><table class="rv-tt rv-lab"><thead><tr><th style="width:21%">Contractor › Location</th><th>Activity</th>${used.map(t => `<th class="n">${esc(tCode(t))}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>`;
+    cons.forEach(c => { const rs = [...by.get(c).values()], tot = t => rs.reduce((s, r) => s + num(r.hd[t]), 0);
+      h += `<tr class="con"><td colspan="2"><b>${esc(conName(c))}</b> <span class="muted">· ${rs.length} Location${rs.length === 1 ? '' : 's'}</span></td>${used.map(t => cell(tot(t), true)).join('')}${cell(rs.reduce((s, r) => s + sum(r.hd), 0), true)}</tr>`;
+      rs.sort((a, b) => (/^Non-Estimated/.test(a.act) - /^Non-Estimated/.test(b.act)) || sum(b.hd) - sum(a.hd)).forEach(r => { h += `<tr class="lc ${/^Non-Estimated/.test(r.act) ? 'np' : ''}"><td class="ind">${esc(r.loc)}</td><td class="act">${esc(r.act)}</td>${used.map(t => cell(num(r.hd[t]))).join('')}${cell(sum(r.hd), true)}</tr>`; }); });
+    const gt = t => cons.reduce((s, c) => s + [...by.get(c).values()].reduce((a, r) => a + num(r.hd[t]), 0), 0);
+    return h + `<tr class="tot"><td colspan="2">Total · Estimated ${fmt(F.heads - F.np)} · Non-Estimated ${fmt(F.np)}</td>${used.map(t => cell(gt(t), true)).join('')}${cell(F.heads, true)}</tr></tbody></table></div>`;
+  }
   function rvSide(F, T) {
     let h = `<div class="rv-c"><div class="h"><b>Insights</b><span class="m">Worked Out From This Report</span></div><ul class="rv-ins">${rvInsights(F, T)}</ul></div>`;
     h += `<div class="rv-c"><div class="h"><b>Hindrances</b><span class="m">${F.H.length} Row${F.H.length === 1 ? '' : 's'}</span></div>${F.H.length ? F.H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}${x.days <= 1 ? ' · New' : ''}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div>`;
     const cons = Object.keys(F.by).filter(c => sum(F.by[c]) > 0).sort((a, b) => sum(F.by[b]) - sum(F.by[a])), max = Math.max(1, ...cons.map(c => sum(F.by[c])));
     const used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => num(F.by[c][t]) > 0));
+    if (S.view !== 'mgr') return h;   // v163 · item 2: the engineer's labour is one table under the progress (rvLabTable)
     h += `<div class="rv-c"><div class="h"><b>Manpower · ${fmt(F.heads)} Heads</b><span class="m">${rvDelta(F)}</span></div>${cons.length ? `<div class="rv-mp">${cons.map(c => { const t = sum(F.by[c]); return `<div class="row"><span class="n" title="${esc(conName(c))}">${esc(conName(c))}</span><span class="st" style="width:${t / max * 100}%">${used.filter(k => num(F.by[c][k])).map(k => `<i style="width:${F.by[c][k] / t * 100}%;background:${rvTrade(k).c}" title="${esc(rvTrade(k).n)} ${F.by[c][k]}">${F.by[c][k] / max >= 0.06 ? F.by[c][k] : ''}</i>`).join('')}</span><span class="v">${fmt(t)}</span></div>`; }).join('')}
       <div class="lg">${used.map(k => `<span><i style="background:${rvTrade(k).c}"></i>${esc(rvTrade(k).n)} ${fmt(cons.reduce((a, c) => a + num(F.by[c][k]), 0))}</span>`).join('')}</div></div>
       ${F.np ? `<div class="rv-split"><i style="width:${(F.heads - F.np) / F.heads * 100}%;background:var(--dn)"></i><i style="width:${F.np / F.heads * 100}%;background:#a9bfdd"></i></div><div class="rv-foot2" style="border:0;padding-top:0">Estimated Work <b>${fmt(F.heads - F.np)}</b> · Non-Estimated <b>${fmt(F.np)}</b></div>` : ''}` : '<div class="rv-foot2" style="border:0">No Labour Entered.</div>'}</div>`;
@@ -10640,10 +10860,11 @@ const DPR = (function () {
     let h = '';
     if (sent) { const st = sub.status, acc = st === 'Accepted' || st === 'Published', pub = st === 'Published';
       h += `<div class="rv-lock">🔒 <span><b>${esc(stOf(stKey())[1])}${sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</b> · ${pub ? 'Published' : acc ? 'Accepted By The Manager' : 'Awaiting The Manager'} · Read-Only — A Sent Report Cannot Be Changed.</span><span class="rv-tl"><span class="done">✓ Created</span><span class="done">✓ Submitted</span><span class="${acc ? 'done' : 'on'}">${acc ? '✓ Reviewed' : 'Review'}</span><span class="${acc ? (pub ? 'done' : 'on') : ''}">${acc ? '✓ ' : ''}Accepted</span><span class="${pub ? 'done' : ''}">${pub ? '✓ ' : ''}Published</span></span></div>`; }
-    const warn = !sent ? [F.NR.length ? `${F.NR.length} Not Filled → Go As “Not Reported”` : '', cutMins() <= 0 ? 'Past 1 PM Of ' + dsh(addDays(S.to, 1)) + ' — Will Be Marked Late' : ''].filter(Boolean) : [];
+    const warn = !sent ? [F.NR.length ? `${F.NR.length} Started Activit${F.NR.length === 1 ? 'y' : 'ies'} Not Filled → Go As “Not Reported”` : '', cutMins() <= 0 ? 'Past 1 PM Of ' + dsh(S.to) + ' — Will Be Marked Late' : ''].filter(Boolean) : [];
     h += `<div class="rv-one"><span>${rvOneLine(F)}</span>${warn.map(w => `<span class="warn">${esc(w)}</span>`).join('')}</div>`;
     h += rvKpis(F);
     h += `<div class="rv-body"><div class="rv-col">${rvProgress(F)}</div><div class="rv-col">${rvSide(F, T)}</div></div>`;
+    h += `<div style="padding:0 10px 10px" id="rv_lab">${rvLabTable(F)}</div>`;   // v163 · item 2
     h += `<div style="padding:0 10px 10px" id="rv_trend">${rvTrend(days, T)}</div>`;
     if (days.some(x => x.st === 'load')) setTimeout(() => { rvTrendLoad().then(ch => { if (ch && rvOn()) redraw(); }); }, 0);
     return h;
@@ -10653,12 +10874,12 @@ const DPR = (function () {
   function rvDim(d) { S.dim = d; redraw(); }
 
   /* ----- print: A4 copy of the summary in a hidden frame (same method the suite uses for its other prints) ----- */
-  const rvPrChip = s => esc(s.n) + (s.k === 'done' ? ' ✓ ' + s.b + '→100%' : s.k === 'wip' ? ' WIP' : s.k === 'n' ? ' No Work' : s.k === 'h' ? ' Hindrance' : ' ' + s.b + '→' + s.a + '%');
+  const rvPrChip = s => esc(s.n) + (s.k === 'prev' ? ' ✓ 100% (Earlier)' : s.k === 'done' ? ' ✓ ' + s.b + '→100%' : s.k === 'wip' ? ' WIP' : s.k === 'n' ? ' No Work' : s.k === 'h' ? ' Hindrance' : ' ' + s.b + '→' + s.a + '%');
   const rvPrGroups = r => r.groups && r.groups.length ? `<tr class="pgr"><td colspan="7"><div class="pgg">${r.groups.map(G => `<div class="pgc${G.done ? ' ok' : ''}"><div class="pgh"><b>${esc(G.name)}</b> · ${fmt(G.w)}% Of Activity · ${Math.round(G.b)}%${Math.abs(G.a - G.b) > 0.0005 ? ' → ' + Math.round(G.a) + '%' : ''} · ${G.nd}/${G.n} Done${G.done ? ' ✓' : ''}</div>${G.chips.length ? G.chips.map(c => `<div class="pgl"><span>${esc(c.n)}</span><span>${c.k === 'done' ? '✓ ' + c.b + '→100%' : c.k === 'wip' ? 'WIP' : c.k === 'n' ? 'No Work' : c.k === 'h' ? '<span class="red">' + esc(c.rc || 'Hindrance') + '</span>' : c.b + '→' + c.a + '%'}</span></div>`).join('') : '<div class="pgl muted">No Sub-Activity Reported</div>'}</div>`).join('')}</div></td></tr>` : '';
   const rvPrSubs = r => ((r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs).length ? '<br><span class="muted">' + (r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs).map(rvPrChip).join(' · ') + '</span>' : '');
   function rvPrintHtml() {
     const F = rvFacts(), days = rvWeek(), T = rvTrendFacts(days), sub = S.sub || {}, dd = esc(dsh(S.to));
-    const org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', eng = state.userName || '';
+    const org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', eng = S.view === 'mgr' ? (S.mEngName || '') : (state.userName || '');   // v162
     const cons = Object.keys(F.by).filter(c => sum(F.by[c]) > 0).sort((a, b) => sum(F.by[b]) - sum(F.by[a]));
     const used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => num(F.by[c][t]) > 0));
     const stt = r => r.o === 'w' ? (r.fin ? 'Finished' : r.starts ? 'Started' : r.a > r.b + 0.0005 ? 'Worked' : 'WIP') : r.o === 'h' ? 'Hindrance' : r.o === 'n' ? 'No Work' : 'Not Reported';
@@ -10696,17 +10917,17 @@ const DPR = (function () {
 </body></html>`;
   }
   async function rvPrint() {
-    if (rvWeek().some(x => x.st === 'load')) { toast('Loading The 7-Day Trend…', 'info'); await rvTrendLoad(); }
+    if (S.view !== 'mgr' && rvWeek().some(x => x.st === 'load')) { toast('Loading The 7-Day Trend…', 'info'); await rvTrendLoad(); }
     const old = document.getElementById('rv_print'); if (old) old.remove();
     const f = document.createElement('iframe'); f.id = 'rv_print'; f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
     document.body.appendChild(f);
-    const doc = f.contentWindow.document; doc.open(); doc.write(rvPrintHtml()); doc.close();
+    const doc = f.contentWindow.document; doc.open(); doc.write(S.view === 'mgr' ? rvPrintHtml().replace(/<h2>Labour Trend[\s\S]*?(?=<div class="sig">)/, '') : rvPrintHtml()); doc.close();
     setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Could Not Open The Print Dialog', 'error'); } }, 300);
   }
 
   /* ---------- v159 · Preview & Send = consolidated view: tiles · the sheet read-only · contractor × trade · hindrances · attention ---------- */
   function previewHtml() {
-    const lines = allLines().filter(({ l }) => !finL(l)), W = lines.filter(({ g, l }) => outOf(g, l) === 'w').length, H = lines.filter(({ g, l }) => hasH(g, l)).length, Nn = lines.filter(({ g, l }) => outOf(g, l) === 'n').length, nf = lines.filter(({ g, l }) => outOf(g, l) === '').length;
+    const lines = allLines().filter(({ l }) => !finL(l)), W = lines.filter(({ g, l }) => outOf(g, l) === 'w').length, H = lines.filter(({ g, l }) => hasH(g, l)).length, Nn = lines.filter(({ g, l }) => outOf(g, l) === 'n').length, nf = lines.filter(({ g, l }) => outOf(g, l) === '' && startedB(l)).length;
     const acts = new Set(lines.map(({ g, l }) => l.work_id)).size, L = labStats(), fin = allLines().filter(({ g, l }) => !finL(l) && lineX(g, l).fin).length;
     const tile = (k, v, c, t) => `<div class="d2-kpi ${c || ''}"><b>${v}</b>${k}${t ? `<i>${t}</i>` : ''}</div>`;
     let h = `<div class="d2-prev"><div class="d2-kpis wide">${tile('Activities', acts)}${tile('Worked', W, 'ok')}${tile('Starting', L.starts, 'teal')}${tile('Hindrance', H, 'red')}${tile('No Work', Nn)}${tile('Not Marked', nf, nf ? 'red' : '')}${tile('Finished', fin, 'ok')}${tile('Heads', fmt(L.all), 'vio')}${tile('Non-Estimated', fmt(npHeads()), 'vio')}</div>`;
@@ -10934,7 +11155,7 @@ const DPR = (function () {
     if (L.miss) w.push(L.miss + ' Labour Card' + (L.miss > 1 ? 's' : '') + ' Without Heads');
     if (un) w.push(un + ' Activit' + (un > 1 ? 'ies' : 'y') + ' Not Filled — They Go As “Not Reported”');
     if (!L.all) w.push('No Labour At All — If Nobody Worked, Add A Non-Estimated Entry Saying Why');
-    if (cutMins() <= 0) w.push('Past 1 PM Of ' + dsh(addDays(S.to, 1)) + ' — This Will Be Marked Late');
+    if (cutMins() <= 0) w.push('Past 1 PM Of ' + dsh(S.to) + ' — This Will Be Marked Late');
     const blk = S.cal ? Object.values(S.cal.days).filter(x => x.report_date < S.to && (x.status === 'Draft' || x.status === 'Returned')).sort((a, b) => a.report_date < b.report_date ? -1 : 1)[0] : null;   // v161.3
     if (blk) w.push('Your ' + dsh(blk.report_date) + ' Report Is Still ' + blk.status + ' — Send It First (Reports Go In Date Order)');
     return `<b>Before You Send · ${esc(dsh(S.to))}</b> · ${worked() } Reported · ${fmt(L.all)} Heads${w.length ? w.map(x => '<div>• ' + esc(x) + '</div>').join('') : '<div>✓ Nothing Missing — Ready To Send</div>'}`;
@@ -10962,7 +11183,7 @@ const DPR = (function () {
   async function refresh() {
     if (dirtyAll() && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
     S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; S.NP = null; S.npDirty = false;
-    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
+    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; S.mPay = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -11310,16 +11531,25 @@ const DPR = (function () {
         const data = await rpc('rpc_dpr_review_queue', S.mDate ? { p_business_date: S.mDate, p_shift: 'D' } : { p_shift: 'D' });
         S.mQueue = data; S.mDate = data.business_date; S.mProg = data.progress_date; if (!S.mToday) S.mToday = data.business_date;
         if (S.sheet && S.sheet.report_date !== S.mProg) S.sheet = null;
+        if (S.mTab === 'rev') {   // v162 · the Review & Publish screen needs every sent report, the month, the published copy and the 7-day trend before it draws
+          if (!$('d2')) $('dpr_root').innerHTML = '<div class="dpr-load">Loading…</div>';
+          await Promise.all([mLoadPays(), mCalLoad(monthOf(S.mProg)), mTrLoad(),
+            S.sheet ? null : rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { S.sheet = sh || {}; S.sheet.report_date = S.mProg; }).catch(() => {}),
+            S.pubList ? null : rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; }).catch(() => { S.pubList = []; })]);
+          if (S.mJumpTo) { if (S.mPay[S.mJumpTo]) { S.mv = 'eng'; S.mEng = S.mJumpTo; } S.mJumpTo = null; }
+          if (S.mv === 'eng' && !S.mPay[S.mEng]) S.mv = 'day';
+        }
       }
       mgrRender();
       const jobs = [];
       if (!S.hind && (hasPerm('canReviewDPR') || hasPerm('canClassifyHindrance'))) jobs.push(rpc('rpc_dpr_hindrance_register', { p_open: null }).then(hr => { S.hind = (hr && hr.rows) || []; S.hSum = (hr && hr.by_party) || []; S.hParties = (hr && hr.parties) || []; }).catch(() => { S.hind = []; }));
       if (!S.sheet && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { S.sheet = sh || {}; S.sheet.report_date = S.mProg; }).catch(() => {}));
       if (!S.pubList && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; }).catch(() => { S.pubList = []; }));
-      if (jobs.length) Promise.all(jobs).then(() => { if (S.view === 'mgr') mgrRender(); });
+      if (jobs.length) Promise.all(jobs).then(() => { if (S.view === 'mgr') { if (S.mTab === 'rev' && $('d2_main')) mPaint(); else mgrRender(); } });
     } catch (e) { $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not load the review queue')) + '</div><div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try Again</button></div>'; }
   }
   function mgrRender() {
+    if (S.mTab === 'rev' && hasPerm('canReviewDPR')) { hostsHide(); mShell(); return; }   // v162
     const q = S.mQueue || {};
     let h = `<div class="drp mgr"><div class="bar"><div class="ttl"><b>📋 Daily Report</b><span>${esc(projName())} · Site Team Module — Review, Reporting Plan, Site Areas, Labour Setup</span></div><div class="sp"></div><span class="role">${esc(state.userName || '')}</span><button class="dbtn sm" style="background:var(--dn2);color:#fff;border-color:#2e5794" title="Reload" onclick="DPR.refresh()">↻</button></div>
       <div class="tabs">${MTABS.filter(t => mCan(t[0])).map(t => `<button class="${S.mTab === t[0] ? 'on' : ''}" onclick="DPR.mTab('${t[0]}')">${t[1]}<i>${t[2]}</i></button>`).join('')}</div><div id="dpr_mbody"></div></div>`;
@@ -11331,7 +11561,7 @@ const DPR = (function () {
     const el = $(id); if (!el) return; el.classList.remove('hidden'); const m = $('mod-dpr'); if (m && el.parentNode !== m) m.appendChild(el);
     const t = $('lm_title'), p = $('lm_intro'); if (id === 'dpr_host_labour' && t) { t.textContent = title; if (p) p.textContent = intro; }
     fn(); }
-  function mTab(t) { S.mTab = t; mgrRender(); }
+  function mTab(t) { S.mTab = t; if (t === 'rev' && hasPerm('canReviewDPR')) { mgrLoad(); return; } mgrRender(); }   // v162 · Review & Publish loads its own reads
 
   /* ---------- Review & Publish ---------- */
   function revDraw() {
@@ -11360,7 +11590,7 @@ const DPR = (function () {
     right += `<div class="lc open" style="border-left-color:var(--drd)"><div class="lh" style="cursor:default"><div class="a">Hindrances · Needing Action</div><div class="l">Allocate · Classify · Close In The Hindrances Tab</div></div>${hAct.length ? hAct.map(h => `<div class="hrow"><div><b>${esc(h.activity || h.group || '')} · ${esc(h.location || '')}</b><span>Since ${dsh(h.from_date)} · ${esc(h.reason_text)} · ${esc(h.raised_by || '')}${h.allocated_to ? ' → ' + esc(h.allocated_to) + (h.target_on ? ' · Target ' + dsh(h.target_on) : '') : ''}</span></div><span class="sp2 ${hStep(h)[0]}">${hStep(h)[1]}</span><button class="btn sm" onclick="DPR.hGo('${h.id}')">Open · ${h.days_lost} Days</button></div>`).join('') : '<div class="dpr-note">Nothing Open.</div>'}</div>`;
     $('dpr_mbody').innerHTML = '<div class="rev"><div>' + left + '</div><div>' + right + '</div></div>';
   }
-  async function mGo(reportDate) { if (reportDate === S.mProg) return; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); await mgrLoad(); }
+  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
   async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.mOpen = new Set(); await mgrLoad(); }
   async function mOpen(id) {
     if (S.mOpen.has(id)) { S.mOpen.delete(id); revDraw(); return; }
@@ -11383,23 +11613,330 @@ const DPR = (function () {
     return Object.assign(pastX({ submission: s, groups, np: d.np || [], attempts: d.attempts }), { engineer: d.engineer });
   }
   function mRetNote(k, v) { S.mRet[k] = v; }
-  async function mAccept(id) { try { await rpc('rpc_dpr_accept', { p_submission_id: id }); toast('Accepted', 'success'); S.sheet = null; delete S.mDetail[id]; await mgrLoad(); } catch (e) { toast(err(e, 'Could not accept'), 'error'); } }
+  async function mAccept(id) { try { await rpc('rpc_dpr_accept', { p_submission_id: id }); toast('Accepted', 'success'); mDrop(id); delete S.mDetail[id]; await mgrLoad(); } catch (e) { toast(err(e, 'Could not accept'), 'error'); } }
   async function mReturnGo(id) {
     const n = (S.mRet[id] || '').trim(); if (!n) { toast('Say What Needs Fixing', 'warn'); return; }
-    try { await rpc('rpc_dpr_return', { p_submission_id: id, p_reason: n.slice(0, 60), p_note: n }); toast('Returned To The Engineer', 'success'); S.sheet = null; delete S.mDetail[id]; delete S.mRet[id]; await mgrLoad(); } catch (e) { toast(err(e, 'Could not return'), 'error'); }
+    try { await rpc('rpc_dpr_return', { p_submission_id: id, p_reason: n.slice(0, 60), p_note: n }); toast('Returned To The Engineer', 'success'); mDrop(id); S.mv = 'day'; delete S.mDetail[id]; delete S.mRet[id]; await mgrLoad(); } catch (e) { toast(err(e, 'Could not return'), 'error'); }
   }
   async function publish() {
     const d = S.mProg;
     if (S.sheet && S.sheet.report_date === d && S.sheet.sheet) { toast(dmy(d) + ' Is Already Published As ' + S.sheet.sheet.dpr_no, 'warn'); return; }
+    { const tr = ((S.mQueue || {}).submissions || []).filter(x => x.status === 'Submitted').length; if (tr) { toast('Accept Or Return Every Sent Report First — ' + tr + ' Still To Review', 'warn'); return; } }   // v162 · decided 13 Oct 2026
     const nr = (S.sheet && S.sheet.not_reported_draft) || [];
     if (!confirm('Publish ' + dmy(d) + '?' + (nr.length ? '\n\n' + nr.map(a => a.area).join(', ') + ' Will Show As NOT REPORTED.' : '') + '\n\nThis Freezes The Day And Advances Every Cumulative. It Cannot Be Undone.')) return;
-    try { const data = await rpc('rpc_dpr_publish', { p_report_date: d, p_shift: 'D' }); toast('Published As ' + (data ? data.dpr_no : '') + ' — ' + (data ? data.progress_applied : 0) + ' Activit' + (data && data.progress_applied === 1 ? 'y' : 'ies') + ' Applied', 'success', 7000); S.sheet = null; S.pubList = null; await mgrLoad(); }
+    try { const data = await rpc('rpc_dpr_publish', { p_report_date: d, p_shift: 'D' }); toast('Published As ' + (data ? data.dpr_no : '') + ' — ' + (data ? data.progress_applied : 0) + ' Activit' + (data && data.progress_applied === 1 ? 'y' : 'ies') + ' Applied', 'success', 7000); mDrop(null); S.pubList = null; await mgrLoad(); }
     catch (e) { toast(err(e, 'Could not publish'), 'error'); }
   }
   function viewSheet() {
     const d = S.sheet || {}; if (!S.sheet) { toast('Assembling The Report…', 'info'); return; }
     sheetOpen((d.sheet ? d.sheet.dpr_no : 'Draft DPR') + ' · ' + dmy(S.mProg), d.sheet ? 'Published ' + dts(d.sheet.published_at) + (d.published_by_name ? ' By ' + d.published_by_name : '') : 'Not Yet Published — Figures May Still Change', '<iframe style="width:100%;height:70vh;border:0;background:#fff" srcdoc="' + esc(sheetHtml(false)) + '"></iframe>', '<button class="dbtn" onclick="DPR.printSheet()">🖨 Print / PDF</button><button class="dbtn" onclick="DPR.shareSheet()">Share</button><span class="sp"></span><button class="dbtn pri" onclick="DPR.sheetClose()">Close</button>');
   }
+
+
+  /* ==================================================================
+     v162 · MANAGER · Review & Publish (DPR_Manager_mock_v5, approved 13 Oct 2026)
+       Same shell as the engineer: calendar column · module tabs as the slim top row · date banner · one date per report.
+       Engineer Reports (day) → Review Report (the engineer's own Day Report + Manager Checks, Accept / Return) → Combined DPR
+       (one cumulative report for the date, all areas) → Publish / Print.
+       Reads: rpc_dpr_review_queue (as before) + M39 rpc_dpr_review_payload / rpc_dpr_review_calendar / rpc_dpr_labour_trend.
+       An engineer's report is loaded into the same state the engineer's Day Report reads (mkCtx), so every figure is the
+       engineer's own arithmetic (rvFacts) — nothing is recomputed differently for the manager.
+     ================================================================== */
+  const M39_MISS = e => /rpc_dpr_review_payload|rpc_dpr_review_calendar|rpc_dpr_labour_trend|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
+  function mUse(P) {   // load one engineer's report into the engineer state the Day Report helpers read (manager seat holds no engineer state)
+    CTX_KEYS.forEach(k => { S[k] = P.c[k]; }); S.R = null; S.yd = null; S.prev = false; S.catMode = false; S.cm = false; S.ticks = new Set();
+    S.homeAreas = P.areas || []; S.mEngName = P.name || '';
+    if (!S.cal) S.cal = { month: monthOf(S.to), days: {}, loaded: {} };
+    if (!S.gv) S.gv = 'work'; if (!S.filt) S.filt = 'active'; S.area = ''; if (!S.fold) S.fold = new Set(); if (!S.seen) S.seen = new Set(); if (S.foldDef == null) S.foldDef = true;
+    if (!S.showT) S.showT = new Set((S.masters.trades || []).slice(0, 5).map(t => t.trade_code));
+  }
+  function mFacts(P) {
+    mUse(P); const F = rvFacts(), pv = P.data.prev;
+    F.prev = pv ? num(pv.heads) : null; F.prevSh = pv ? dsh(pv.report_date) : dsh(addDays(S.to, -1)); F.dH = F.prev == null ? null : F.heads - F.prev;
+    F.npE = npDraft().filter(e => heads(e.heads) > 0).map(e => ({ text: e.text, h: heads(e.heads), con: e.con, locs: (e.locs || []).map(x => x.name || '').filter(Boolean) }));
+    const nl = r => { const d = dOf(r.g); return !!(d.nolab && d.nolab.size); };
+    F.noLab = F.W.filter(r => !r.heads && nl(r)); F.noHeads = F.W.filter(r => !r.heads && !nl(r));
+    F.rows.forEach(r => { r.area = r.g.area || (P.areas || [])[0] || 'Unassigned'; r.eng = P.name; r.P = P; });
+    return F;
+  }
+  const mSubs = () => ((S.mQueue || {}).submissions || []);
+  const mSent = () => mSubs().filter(s => s.status === 'Submitted' || s.status === 'Accepted');
+  const mPub = () => S.sheet && S.sheet.report_date === S.mProg && S.sheet.sheet;
+  const mNotSent = () => ((S.mQueue || {}).areas || []).filter(a => !(a.submission_ids || []).some(id => mSent().some(s => s.submission_id === id)));
+  async function mLoadPays() {
+    if (S.m39 === false) return;
+    await Promise.all(mSent().map(async s => {
+      const key = s.submission_id + '|' + s.status + '|' + s.attempt_no, have = S.mPay[s.submission_id]; if (have && have.key === key) return;
+      try { const data = await rpc('rpc_dpr_review_payload', { p_submission_id: s.submission_id }); const c = mkCtx(data);
+        const P = { id: s.submission_id, key, data, c, s, name: data.engineer || s.engineer || '', areas: s.areas || [] }; P.F = mFacts(P); S.mPay[s.submission_id] = P; }
+      catch (e) { if (M39_MISS(e)) S.m39 = false; else toast(err(e, 'Could not open ' + (s.engineer || 'a report')), 'error'); }
+    }));
+  }
+  async function mCalLoad(m, force) {
+    S.mCal = S.mCal || { month: m, days: {}, loaded: {} }; S.mCal.month = m; if (S.mCal.loaded[m] && !force) return;
+    try { const r = await rpc('rpc_dpr_review_calendar', { p_month: m }); Object.keys(S.mCal.days).filter(d => d.slice(0, 7) === m.slice(0, 7)).forEach(d => delete S.mCal.days[d]); (r.days || []).forEach(d => { S.mCal.days[d.report_date] = d; }); S.mCal.loaded[m] = true; }
+    catch (e) { if (M39_MISS(e)) S.m39 = false; S.mCal.loaded[m] = 'x'; }
+  }
+  async function mTrLoad() {
+    const to = S.mProg, from = addDays(to, -6), key = from + '|' + to; if (S.mTr && S.mTr.key === key) return;
+    try { const r = await rpc('rpc_dpr_labour_trend', { p_from: from, p_to: to }); const days = [];
+      for (let i = 6; i >= 0; i--) { const d = addDays(to, -i), dy = (r.days || []).find(x => x.report_date === d);
+        const st = !dy ? (new Date(d + 'T00:00:00').getDay() === 0 ? 'sun' : 'none') : dy.published ? 'Published' : num(dy.to_review) ? 'Submitted' : 'Accepted';
+        const o = rvDayAgg([], () => null, [], d, st);
+        (r.rows || []).filter(x => x.report_date === d).forEach(x => { const n = num(x.heads); if (n <= 0) return; o.tot += n; o.con[x.contractor || '—'] = (o.con[x.contractor || '—'] || 0) + n; o.tr[x.trade] = (o.tr[x.trade] || 0) + n; o.loc[x.area || 'Unassigned'] = (o.loc[x.area || 'Unassigned'] || 0) + n; });
+        days.push(o); }
+      S.mTr = { key, days }; }
+    catch (e) { if (M39_MISS(e)) S.m39 = false; S.mTr = { key, days: null }; }
+  }
+  function mDrop(id) { if (id) delete S.mPay[id]; S.mCal = null; S.mTr = null; S.sheet = null; }
+
+  /* ----- shell ----- */
+  function mShell() { $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`; fit(); mPaint(); }
+  function mPaint() {
+    if (!$('d2_main')) return;
+    const a = document.activeElement, k = a && a.id && a.id.indexOf('mr_') === 0 ? a.id : null, sc = $('d2_sc'), top = sc ? sc.scrollTop : 0;
+    $('d2_side').innerHTML = mSide(); $('d2_main').innerHTML = mMain();
+    const s2 = $('d2_sc'); if (s2) s2.scrollTop = top; if (k && $(k)) { $(k).focus(); }
+  }
+  const mDayKey = c => !c ? 'none' : c.published ? 'pub' : num(c.to_review) ? 'sent' : num(c.accepted) ? 'acc' : (num(c.draft) || num(c.returned)) ? 'draft' : 'none';
+  function mSide() {
+    const today = todayYmd(), m = (S.mCal && S.mCal.month) || monthOf(S.mProg), first = new Date(m + 'T00:00:00'), dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7;
+    const days = (S.mCal && S.mCal.days) || {}, calOk = !!(S.mCal && S.mCal.loaded[m] === true);
+    let g = ''; for (let i = 0; i < lead; i++) g += '<span class="d pad"></span>';
+    for (let n = 1; n <= dim; n++) { const d = m.slice(0, 8) + String(n).padStart(2, '0'), c = days[d], fut = d > today, kk = mDayKey(c);
+      const t = !c ? 'No Reports' : c.published ? 'Published' + (c.dpr_no ? ' · ' + c.dpr_no : '') : num(c.to_review) ? c.to_review + ' To Review' : num(c.accepted) ? 'All Sent Accepted' : 'Open · Nothing Sent';
+      g += `<button class="d ${fut ? 'fut' : ''} ${d === today ? 'today' : ''} ${d === S.mProg ? 'sel' : ''}" ${fut ? 'disabled' : ''} title="${esc(dsh(d) + ' · ' + t)}" onclick="DPR.mGo('${d}')">${n}<span class="b ${calOk ? kk : 'none'}"></span></button>`; }
+    const subs = mSubs(), sent = mSent(), acc = sent.filter(s => s.status === 'Accepted').length, tr = sent.filter(s => s.status === 'Submitted').length, ns = mNotSent().length;
+    const hd = Object.values(S.mPay).filter(P => P.s && P.c.to === S.mProg).reduce((a, P) => a + P.F.heads, 0) || sent.reduce((a, s) => a + num(s.heads), 0);
+    const all = Object.values(days), pend = all.filter(c => !c.published && num(c.sent) && c.report_date <= today).map(c => dsh(c.report_date)).join(', '), trAll = all.reduce((a, c) => a + num(c.to_review), 0);
+    const lp = (S.pubList || [])[0];
+    return `<div class="d2-brand"><b>Daily Report</b><span>${esc(projName())}</span><i class="r">${esc(state.userName || '')}</i><i class="r">Review &amp; Publish</i></div>
+      <div class="d2-h4">Report Date<span class="sp"></span><span class="pill p-grey">Pick A Date</span></div>
+      <div class="d2-cal"><div class="mh"><button onclick="DPR.mCalMove(-1)">‹</button><b>${esc(mLabel(m))}</b><button ${m >= monthOf(today) ? 'disabled' : ''} onclick="DPR.mCalMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${g}</div></div>
+      <div class="d2-leg"><span><i class="b sent"></i>Reports To Review</span><span><i class="b draft"></i>Open · Nothing Sent</span><span><i class="b acc"></i>All Accepted</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>No Reports</span></div>
+      <div class="d2-h4">Day · ${esc(dsh(S.mProg))}</div>
+      <div class="d2-kpis"><div class="d2-kpi"><b>${sent.length}/${Math.max(subs.length, sent.length + ns)}</b>Sent</div><div class="d2-kpi ok"><b>${acc}</b>Accepted</div><div class="d2-kpi"><b>${tr}</b>To Review</div><div class="d2-kpi red"><b>${ns}</b>Not Sent</div><div class="d2-kpi vio"><b>${fmt(hd)}</b>Heads</div></div>
+      <div class="d2-sk"><div class="r"><span>Today</span><b>${esc(dmy(today))}</b></div><div class="r"><span>Last Published</span><b>${lp ? esc(dsh(lp.report_date) + ' · ' + (lp.dpr_no || '')) : '—'}</b></div>${calOk ? `<div class="r"><span>To Publish</span><b style="color:var(--drd)">${esc(pend || '—')}</b></div><div class="r"><span>To Review</span><b style="color:var(--drd)">${trAll ? trAll + ' Report' + (trAll > 1 ? 's' : '') : '—'}</b></div>` : ''}</div>`;
+  }
+  const mTabsRow = () => `<div class="d2-toptabs mt">${MTABS.filter(t => mCan(t[0])).map(t => `<button class="${S.mTab === t[0] ? 'on' : ''}" onclick="DPR.mTab('${t[0]}')">${t[1]}<i>${t[2]}</i></button>`).join('')}<span style="flex:1"></span><button class="rl" title="Reload" onclick="DPR.refresh()">↻</button></div>`;
+  function mBanner(extra) {
+    const today = todayYmd(), y1 = addDays(today, -1), pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, all = Math.max(mSubs().length, sent.length + mNotSent().length);
+    const chip = (d, t) => `<button class="${S.mProg === d ? 'on' : ''}" onclick="DPR.mGo('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
+    return `<div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.mProg))}</b> <span class="d2-days">${chip(y1, 'Yesterday')}${chip(today, 'Today')}${S.mProg !== today && S.mProg !== y1 ? chip(S.mProg, 'Picked') : ''}</span></div>
+      <div class="meta"><div>DPR ${pub ? `<span class="pill p-vio">Published · ${esc(pub.dpr_no || '')}</span>` : '<span class="pill p-amb">Open · Not Published</span>'}</div><div>Reports <b>${sent.length} Of ${all} Sent</b></div>${tr ? `<div><span class="pill p-navy">${tr} To Review</span></div>` : ''}</div>${extra || ''}</div>`;
+  }
+  function mPubBtn(pos) {
+    const pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, acc = sent.filter(s => s.status === 'Accepted').length;
+    if (pub) return `<button class="d2-btn" onclick="DPR.mPrint()">⎙ Print / PDF</button>`;
+    const why = tr ? 'Accept Or Return Every Sent Report First' : !acc ? 'Nothing Accepted Yet' : '';
+    return `<button class="d2-btn ok" ${why ? 'disabled' : ''} title="${esc(why)}" onclick="DPR.publish()">Publish DPR ${esc(dsh(S.mProg))} ✓</button>`;
+  }
+  function mSubtabs() {
+    const sent = mSent(), all = Math.max(mSubs().length, sent.length + mNotSent().length);
+    return `<div class="d2-fix rvm-sub"><button class="${S.mv === 'day' ? 'on' : ''}" onclick="DPR.mV('day')">Engineer Reports <i>${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" onclick="DPR.mV('dpr')">Combined DPR <i>One Report For ${esc(dsh(S.mProg))} · Cumulative</i></button><span class="sp"></span>${mPubBtn()}</div>`;
+  }
+  const mNeed = () => S.m39 === false ? `<div class="dpr-note r" style="margin:10px">This Screen Needs <b>M39</b> (Three Read-Only Functions) On The Database — Run <b>M39_dpr_manager_review_reads.sql</b> Once. Accept / Return / Publish Still Work From The List Below.</div>` : '';
+  function mMain() {
+    if (S.mv === 'eng' && S.mEng && S.mPay[S.mEng]) return mTabsRow() + mEngView();
+    if (S.mv === 'dpr') return mTabsRow() + mDprView();
+    S.mv = 'day'; return mTabsRow() + mDayView();
+  }
+
+  /* ----- view 1 · the day: one row per engineer / area ----- */
+  function mDayView() {
+    const subs = mSubs(), pub = mPub(), STM = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'], Returned: ['p-red', 'Returned'], Draft: ['p-amb', 'Draft · Not Sent'] };
+    let h = `<div class="d2-card">${mBanner()}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}<div style="padding:10px">`;
+    h += `<div class="rv-c"><div class="h"><b>Engineer Reports · ${esc(dsh(S.mProg))}</b><span class="m">One Report Per Engineer Per Date — Same Report The Engineer Sees</span></div><table class="rv-t rvm-tab"><colgroup><col style="width:19%"><col style="width:13%"><col style="width:15%"><col style="width:9%"><col style="width:10%"><col style="width:9%"><col style="width:8%"><col style="width:7%"><col></colgroup>
+      <thead><tr><th>Engineer · Area</th><th>Status</th><th>Sent</th><th class="n">Reported</th><th class="n">Worked · Moved</th><th class="n">Completed</th><th class="n">Hindrance</th><th class="n">Heads</th><th class="c">Action</th></tr></thead><tbody>`;
+    const rows = subs.slice().sort((a, b) => (a.status === 'Draft') - (b.status === 'Draft'));
+    rows.forEach(s => { const P = S.mPay[s.submission_id], F = P && P.F, st = STM[s.status] || ['p-grey', s.status], sentS = s.status === 'Submitted' || s.status === 'Accepted';
+      const eo = P && P.data.earlier_open, waits = s.status === 'Submitted' && eo;
+      const act = waits ? `<button class="d2-btn sm" style="border-color:var(--damb);color:var(--dam)" onclick="event.stopPropagation();DPR.mJump('${eo.report_date}','${eo.submission_id}')">Review ${esc(dsh(eo.report_date))} First →</button>`
+        : s.status === 'Submitted' ? (P ? `<button class="d2-btn sm navy" onclick="event.stopPropagation();DPR.mEng('${s.submission_id}')">Review →</button>` : '<span class="muted">Loading…</span>')
+        : s.status === 'Accepted' ? (P ? `<button class="d2-btn sm" onclick="event.stopPropagation();DPR.mEng('${s.submission_id}')">View Report</button>` : '')
+        : s.status === 'Returned' ? '<span class="muted">Waiting For Resend</span>' : '<span class="muted">Goes As Not Reported</span>';
+      h += `<tr class="${P ? 'clk' : ''} ${waits ? 'pend' : ''}" ${P ? `onclick="DPR.mEng('${s.submission_id}')"` : ''}><td><b>${esc(s.engineer || '')}</b><span class="p">${esc((s.areas || []).join(' · ') || '—')}</span></td>
+        <td>${pill(st[0], st[1])}${waits ? `<span class="p" style="color:var(--dam);font-weight:700">Waits · ${esc(dsh(eo.report_date))} ${eo.status === 'Submitted' ? 'Still To Review' : 'Is ' + esc(eo.status)}</span>` : ''}${s.status === 'Returned' && s.return_reason ? `<span class="p">${esc(s.return_reason)}</span>` : ''}</td>
+        <td>${s.submitted_at ? `${esc(dts(s.submitted_at))} ${s.is_late ? pill('p-red', 'Late') : pill('p-ok', 'On Time')}${num(s.attempt_no) > 1 ? ' · Attempt ' + s.attempt_no : ''}` : '<span class="muted">Draft Open · Not Sent</span>'}</td>
+        <td class="n">${F ? `${F.reported}/${F.active}` : sentS ? num(s.groups_reported) : '—'}</td><td class="n">${F ? `${F.W.length} · <span class="rv-td">${F.moved.length}</span>` : sentS ? num(s.groups_worked) : '—'}</td><td class="n">${F ? F.fin.length + F.subFin.length : '—'}</td>
+        <td class="n">${F ? (F.H.length ? `<b style="color:var(--drd)">${F.H.length}</b>` : '0') : sentS ? num(s.hindrances) : '—'}</td><td class="n"><b>${F ? fmt(F.heads) : sentS ? fmt(s.heads) : '—'}</b></td><td class="c">${act}</td></tr>`; });
+    mNotSent().filter(a => !(a.submission_ids || []).some(id => subs.some(s => s.submission_id === id))).forEach(a => {
+      h += `<tr><td><b>${esc(a.home_engineers || 'No Engineer Allocated')}</b><span class="p">${esc(a.area_name)}</span></td><td>${pill('p-grey', 'Not Created')}</td><td><span class="muted">No Report · ${num(a.running_works)} Running Work${num(a.running_works) === 1 ? '' : 's'}</span></td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="c"><span class="muted">Goes As Not Reported</span></td></tr>`; });
+    if (!subs.length && !mNotSent().length) h += `<tr><td colspan="9" class="muted">No Report For ${esc(dsh(S.mProg))}.</td></tr>`;
+    h += `</tbody></table><div class="rv-foot2">${pub ? `<b>Published As ${esc(pub.dpr_no || '')}</b>${pub.published_at ? ' · ' + esc(dts(pub.published_at)) : ''} · Immutable` : `<b>Publish</b> Puts Every <b>Accepted</b> Report Into One Combined DPR For ${esc(dsh(S.mProg))}. Areas Not Sent Go As <b>Not Reported</b>. Reports Are Accepted In Date Order Per Engineer. Publish Waits Until No Sent Report Is Still To Review.`}</div></div>`;
+    const Ps = mSent().map(s => S.mPay[s.submission_id]).filter(Boolean), H = [].concat(...Ps.map(P => P.F.H.map(x => Object.assign({ eng: P.name }, x))));
+    const by = {}; let hd = 0, np = 0; Ps.forEach(P => { Object.entries(P.F.by).forEach(([c, m]) => { by[c] = by[c] || {}; Object.entries(m).forEach(([t, v]) => { by[c][t] = num(by[c][t]) + num(v); }); }); hd += P.F.heads; np += P.F.np; });
+    h += `<div class="rvm-two"><div class="rv-c"><div class="h"><b>Hindrances · ${esc(dsh(S.mProg))}</b><span class="m">${H.length} Row${H.length === 1 ? '' : 's'} · Act In The Hindrances Tab</span></div>${H.length ? H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)} · ${esc(x.eng)}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div>
+      <div class="rv-c"><div class="h"><b>Manpower · ${esc(dsh(S.mProg))} · ${fmt(hd)} Heads</b><span class="m">All Sent Reports</span></div>${mMp(by, hd, np)}</div></div>`;
+    const tr = mSent().filter(s => s.status === 'Submitted').length;
+    return h + `</div></div><div class="d2-foot"><span class="msg"><b>${esc(dsh(S.mProg))}</b> · ${tr} Report${tr === 1 ? '' : 's'} To Review · ${mNotSent().length} Area${mNotSent().length === 1 ? '' : 's'} Not Sent · Open A Row To Review The Engineer's Report</span><button class="d2-btn" onclick="DPR.mV('dpr')">Combined DPR →</button></div></div>`;
+  }
+  function mMp(by, hd, np) {   // contractor × trade stacked bars (same markup as the engineer's Manpower card)
+    const cons = Object.keys(by).filter(c => sum(by[c]) > 0).sort((a, b) => sum(by[b]) - sum(by[a])), max = Math.max(1, ...cons.map(c => sum(by[c])));
+    const used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => num(by[c][t]) > 0));
+    if (!cons.length) return '<div class="rv-foot2" style="border:0">No Labour Entered.</div>';
+    return `<div class="rv-mp">${cons.map(c => { const t = sum(by[c]); return `<div class="row"><span class="n" title="${esc(conName(c))}">${esc(conName(c))}</span><span class="st" style="width:${t / max * 100}%">${used.filter(k => num(by[c][k])).map(k => `<i style="width:${by[c][k] / t * 100}%;background:${rvTrade(k).c}" title="${esc(rvTrade(k).n)} ${by[c][k]}">${by[c][k] / max >= 0.06 ? by[c][k] : ''}</i>`).join('')}</span><span class="v">${fmt(t)}</span></div>`; }).join('')}
+      <div class="lg">${used.map(k => `<span><i style="background:${rvTrade(k).c}"></i>${esc(rvTrade(k).n)} ${fmt(cons.reduce((a, c) => a + num(by[c][k]), 0))}</span>`).join('')}</div></div>
+      ${np && hd ? `<div class="rv-split"><i style="width:${(hd - np) / hd * 100}%;background:var(--dn)"></i><i style="width:${np / hd * 100}%;background:#a9bfdd"></i></div><div class="rv-foot2" style="border:0;padding-top:0">Estimated Work <b>${fmt(hd - np)}</b> · Non-Estimated <b>${fmt(np)}</b></div>` : ''}`;
+  }
+
+  /* ----- view 2 · one engineer's report (the engineer's own Day Report) + Manager Checks + Accept / Return ----- */
+  function mChecks(P) {
+    const F = P.F, s = P.s, li = (ic, cls, t, sm) => `<li><span class="ic ${cls}">${ic}</span><div><b>${t}</b>${sm ? `<span class="sm">${sm}</span>` : ''}</div></li>`, eo = P.data.earlier_open;
+    let h = s.is_late ? li('!', 'red', 'Sent Late', `Sent ${esc(dts(s.submitted_at))} — Due By 1 PM Of ${esc(dsh(S.to))}`) : li('✓', 'ok', 'Sent On Time', s.submitted_at ? 'Sent ' + esc(dts(s.submitted_at)) : '');
+    if (F.noHeads.length) h += li('!', 'amb', 'Worked Without Labour', F.noHeads.map(r => `${esc(r.loc)} · ${esc(r.act)} — ${Math.round(r.b)}% → ${Math.round(r.a)}% With 0 Heads`).join('<br>'));
+    if (F.noLab.length) h += li('○', 'grey', 'Progress Only · No Labour Today', F.noLab.map(r => `${esc(r.loc)} — Marked By The Engineer · ${Math.round(r.b)}% → ${Math.round(r.a)}%`).join('<br>'));
+    const big = F.W.filter(r => r.a - r.b >= 50); if (big.length) h += li('!', 'amb', 'Large Jump In One Day', big.map(r => `${esc(r.loc)} ${Math.round(r.b)}% → ${Math.round(r.a)}%`).join('<br>'));
+    if (F.np && F.heads) h += li('●', 'navy', `${fmt(F.np)} Heads On Non-Estimated Work`, `${Math.round(F.np / F.heads * 100)}% Of The Day's Labour`);
+    h += eo ? li('!', 'amb', 'Earlier Report Not Yet Accepted', `${esc(dsh(eo.report_date))} Is ${esc(eo.status === 'Submitted' ? 'Still To Review' : eo.status)} — Reports Are Accepted In Date Order`) : li('✓', 'ok', 'Earlier Reports Accepted', P.data.prev ? `${esc(dsh(P.data.prev.report_date))} ${esc(P.data.prev.status)}` : 'First Report Of This Engineer');
+    if (num(s.attempt_no) > 1) { const a = (P.data.attempts || []).filter(x => x.returned_at).slice(-1)[0]; h += li('↩', 'amb', `Resent · Attempt ${s.attempt_no}`, a ? `Returned ${esc(dts(a.returned_at))} · ${esc(a.return_reason || '')}` : ''); }
+    h += li('○', 'grey', F.NR.length ? `${F.NR.length} Activit${F.NR.length > 1 ? 'ies' : 'y'} Not Reported` : 'Every Activity On The Sheet Reported');
+    return `<div class="rv-c"><div class="h"><b>Manager Checks</b><span class="m">Flags To Look At Before Accepting</span></div><ul class="rv-ins">${h}</ul></div>`;
+  }
+  function mEngView() {
+    const P = S.mPay[S.mEng]; mUse(P); const F = P.F, s = P.s, st = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'] }[s.status] || ['p-grey', s.status];
+    const others = mSent().map(x => S.mPay[x.submission_id]).filter(Boolean), k = s.submission_id, eo = P.data.earlier_open, pub = mPub();
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mFull ? '' : 'on'}" onclick="DPR.mFull(false)">Summary</button><button class="${S.mFull ? 'on' : ''}" onclick="DPR.mFull(true)">Full Sheet</button></span><button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button></div>`)}`;
+    h += `<div class="d2-fix rvm-eng"><button class="d2-btn sm" onclick="DPR.mV('day')">← All Reports</button><b>${esc(P.name)}</b><span class="muted">${esc((P.areas || []).join(' · '))}</span>${pill(st[0], st[1])}<span class="muted">Sent ${esc(dts(s.submitted_at))}</span>${s.is_late ? pill('p-red', 'Late') : pill('p-ok', 'On Time')}<span class="muted">Attempt ${num(s.attempt_no) || 1}</span>${s.status === 'Accepted' && s.reviewed_at ? `<span class="muted">· Accepted ${esc(dts(s.reviewed_at))}</span>` : ''}<span class="sp"></span>${others.length > 1 ? `<span class="rvm-nav">${others.map(o => `<button class="${o.id === k ? 'on' : ''}" onclick="DPR.mEng('${o.id}')">${esc(o.name.split(' ')[0])}</button>`).join('')}</span>` : ''}</div>`;
+    if (S.mFull) h += `<div class="d2-sc" id="d2_sc">${sheetHtml3(true)}</div>`;
+    else h += `<div class="rv" id="d2_sc"><div class="rv-one"><span>${rvOneLine(F)}</span></div>${rvKpis(F)}<div class="rv-body"><div class="rv-col">${rvProgress(F)}</div><div class="rv-col">${mChecks(P)}${rvSide(F, null)}</div></div></div>`;
+    const rIn = `<input class="rvm-in" id="mr_${k}" placeholder="${s.status === 'Accepted' ? 'Reason To Return An Accepted Report…' : 'Reason For Return (Required To Return)…'}" value="${esc(S.mRet[k] || '')}" oninput="DPR.mRetNote('${k}',this.value)"><button class="d2-btn" style="color:var(--drd);border-color:var(--drdb)" onclick="DPR.mReturnGo('${k}')">↩ Return</button>`;
+    h += `<div class="d2-foot">${s.status === 'Accepted' ? `<span class="msg">✓ <b>Accepted${s.reviewed_at ? ' ' + esc(dts(s.reviewed_at)) : ''}</b> · ${pub ? 'Published In ' + esc(pub.dpr_no || '') + ' · Read-Only' : 'In The Combined DPR · Return Is Possible Until ' + esc(dsh(S.mProg)) + ' Is Published'}</span>${pub ? '' : rIn}`
+      : `<span class="msg"><b>${esc(P.name)} · ${esc(dsh(S.mProg))}</b> · ${eo ? `<span style="color:var(--dam)"><b>Accept ${esc(dsh(eo.report_date))} First</b> — Date Order</span>` : 'Accept Freezes The Figures And Fills The Labour &amp; Progress Registers'} · Return Sends It Back To Correct And Resend</span>${rIn}${eo ? `<button class="d2-btn" onclick="DPR.mJump('${eo.report_date}','${eo.submission_id}')">Open ${esc(dsh(eo.report_date))} →</button>` : `<button class="d2-btn ok" onclick="DPR.mAccept('${k}')">✓ Accept</button>`}`}</div></div>`;
+    return h;
+  }
+
+  /* ----- view 3 · Combined DPR: one cumulative report for the date, all areas ----- */
+  function mComb() {
+    const sent = mSent(), inc = sent.filter(s => s.status === 'Accepted' || (S.mIncl && s.status === 'Submitted')).map(s => S.mPay[s.submission_id]).filter(Boolean);
+    const C = { inc, rows: [], W: [], H: [], fin: [], subFin: [], starts: [], moved: [], NR: [], by: {}, heads: 0, np: 0, npE: [], prev: 0, prevOk: true };
+    inc.forEach(P => { const F = P.F; ['rows', 'W', 'fin', 'subFin', 'starts', 'moved', 'NR'].forEach(k => { C[k] = C[k].concat(F[k]); }); C.H = C.H.concat(F.H.map(x => Object.assign({ eng: P.name, area: (P.areas || [])[0] || '' }, x)));
+      Object.entries(F.by).forEach(([c, m]) => { C.by[c] = C.by[c] || {}; Object.entries(m).forEach(([t, v]) => { C.by[c][t] = num(C.by[c][t]) + num(v); }); });
+      C.heads += F.heads; C.np += F.np; C.npE = C.npE.concat(F.npE.map(e => Object.assign({ eng: P.name, area: (P.areas || [])[0] || '' }, e))); if (F.prev == null) C.prevOk = false; else C.prev += F.prev; });
+    C.pend = inc.filter(P => P.s.status === 'Submitted'); C.waitOut = sent.filter(s => !inc.some(P => P.id === s.submission_id));
+    return C;
+  }
+  function mRowHtml(r, opt) {
+    const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(S.mProg)) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');
+    const mp = r.club ? (opt.first ? `<b>${fmt(r.heads)}</b> <span class="muted">On The Club</span>` : '<span class="muted">On The Club ↑</span>') : r.heads ? `<b>${fmt(r.heads)}</b> <span class="muted">Heads</span>` : '<span class="muted">No Labour Today</span>';
+    let h = `<tr class="${r.fin ? 'fin' : ''} ${opt.pend ? 'pend' : ''}"><td class="loc"><b>${esc(r.loc)}</b> ${tag}<span class="p">${esc(r.path)}${r.est ? ` · Est ${fmt(r.est)} ${esc(r.uom)}` : ''}${r.fin && r.cert != null ? ` · Cert. ${fmt(r.cert)} ${esc(r.uom)}` : ''}</span><span class="rv-dt ${r.de ? 'ok' : ''}">${esc(dSpan(r.ds, r.de, !!r.de))}</span></td><td>${rvBar(r.b, r.a, r.fin)}</td><td class="n"><span class="rv-td">${esc(r.today)}</span></td><td>${mp}<div class="muted">${esc(r.cons.concat(r.eng ? [r.eng] : []).join(' · '))}</div></td></tr>`;
+    const loose = r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs;
+    if (r.groups && r.groups.length) h += `<tr class="gx ${opt.pend ? 'pend' : ''}"><td colspan="4"><div class="rv-gg">${r.groups.map(G => rvGroupCard(r, G)).join('')}</div></td></tr>`;
+    if (loose.length) h += `<tr class="subs ${opt.pend ? 'pend' : ''}"><td colspan="4">${loose.map(rvChip).join('')}</td></tr>`;
+    return h;
+  }
+  function mProgAll(C) {
+    const dd = esc(dsh(S.mProg));
+    let h = `<div class="rv-c"><div class="h"><b>Progress · ${dd} · All Areas</b><span class="m">Cumulative Before → After · Grouped Area › Package › Activity</span></div>`;
+    if (!C.W.length) return h + `<div class="rv-foot2" style="border:0">No Activity Worked On ${dd}${C.inc.length ? '' : ' In An Accepted Report'}.</div>` + mNpFoot(C) + '</div>';
+    h += `<table class="rv-t"><colgroup><col><col style="width:28%"><col style="width:11%"><col style="width:20%"></colgroup><thead><tr><th>Area · Activity · Location</th><th>Cumulative · Before → After</th><th class="n">Today</th><th>Manpower · Contractor · Reported By</th></tr></thead><tbody>`;
+    const ar = new Map(); C.W.forEach(r => { const a = r.area + '\u0001' + r.P.id; if (!ar.has(a)) ar.set(a, []); ar.get(a).push(r); });
+    [...ar.keys()].sort().forEach(a => { const rs = ar.get(a), P = rs[0].P, pend = P.s.status === 'Submitted';
+      h += `<tr class="ar"><td colspan="4"><b>${esc(rs[0].area)}</b> <span class="muted">· ${esc(P.name)}</span> ${pend ? pill('p-navy', 'To Review') + ' <span class="muted">· Not In The Published DPR Until Accepted</span>' : pill('p-ok', 'Accepted')}</td></tr>`;
+      const pk = new Map(); rs.forEach(r => { if (!pk.has(r.pkg)) pk.set(r.pkg, new Map()); const m = pk.get(r.pkg); if (!m.has(r.act)) m.set(r.act, []); m.get(r.act).push(r); });
+      const clubShown = new Set();
+      pk.forEach((acts, p) => { h += `<tr class="pk"><td colspan="4">${esc(p || '—')}</td></tr>`;
+        acts.forEach((list, act) => { const cl = list.find(r => r.club); h += `<tr class="ac"><td colspan="4">${esc(act)}${cl ? `<span class="m">${pill('p-amb', 'Report Together')} ${esc(cl.clubLabel)}</span>` : ''}</td></tr>`;
+          list.forEach(r => { const first = r.club && !clubShown.has(r.g.wgroup_id); if (r.club) clubShown.add(r.g.wgroup_id); h += mRowHtml(r, { first, pend }); }); }); }); });
+    return h + `</tbody></table>` + mNpFoot(C) + `</div>`;
+  }
+  const mNpFoot = C => C.npE.length ? `<div class="rv-foot2"><b>Non-Estimated Work · ${fmt(C.np)} Heads</b> — ${C.npE.map(e => `${esc(e.text)} ${fmt(e.h)} <span class="muted">(${esc(e.area || e.eng)})</span>`).join(' · ')} <span class="muted">(Labour Only, No Progress)</span></div>` : '';
+  function mInsights(C, T) {
+    const li = (ic, cls, t, sm) => `<li><span class="ic ${cls}">${ic}</span><div>${t}${sm ? `<span class="sm">${sm}</span>` : ''}</div></li>`;
+    let h = ''; const done = C.fin.map(r => `${esc(r.act)} · ${esc(r.loc)} (${esc(r.area)})`).concat(C.subFin.map(({ s, r }) => `${esc(s.n)} · ${esc(r.loc)} (${esc(r.area)})`));
+    if (done.length) h += li('✓', 'ok', `<b>${done.length} Completed On ${esc(dsh(S.mProg))}</b>`, done.slice(0, 8).join('<br>') + (done.length > 8 ? `<br>+ ${done.length - 8} More` : ''));
+    const mv = C.moved.slice().sort((a, b) => (b.a - b.b) - (a.a - a.b)).slice(0, 3);
+    if (mv.length) h += li('▲', 'vio', '<b>Biggest Progress</b>', mv.map(r => `${esc(r.loc)} (${esc(r.area)}) · ${esc(r.act)} — ${Math.round(r.b)}% → ${Math.round(r.a)}%`).join('<br>'));
+    const oldH = C.H.filter(x => x.days > 1), newH = C.H.filter(x => x.days <= 1);
+    if (oldH.length) h += li('!', 'red', `<b>${oldH.length} Hindrance${oldH.length > 1 ? 's' : ''} Carried Over</b>`, oldH.map(x => `${esc(x.where)} (${esc(x.area)}) — ${esc(x.rc || 'Reason Missing')} · Day ${x.days}`).join('<br>'));
+    if (newH.length) h += li('!', 'amb', `<b>${newH.length} New Hindrance${newH.length > 1 ? 's' : ''}</b>`, newH.map(x => `${esc(x.where)} (${esc(x.area)}) — ${esc(x.rc || 'Reason Missing')}`).join('<br>'));
+    const out = mNotSent().map(a => `${esc(a.area_name)} (${esc(a.home_engineers || 'No Engineer')} · No Report)`).concat(C.waitOut.map(s => `${esc((s.areas || []).join(', '))} (${esc(s.engineer || '')} · To Review — Not In)`));
+    if (out.length) h += li('!', 'amb', `<b>${out.length} Area${out.length > 1 ? 's' : ''} Not In This DPR</b>`, out.join('<br>'));
+    if (T && T.on) h += li('≈', 'vio', `<b>7-Day Project Labour: Avg ${fmt(T.avg)} Heads/Day</b>`, `${esc(dsh(S.mProg))}: ${fmt(C.heads)} Heads (${T.vsAvg >= 0 ? '+' : ''}${T.vsAvg}% vs Avg) · Peak ${fmt(T.peak.tot)} On ${esc(T.peak.lab)}`);
+    const top = Object.entries(C.by).map(([c, m]) => ({ c, h: sum(m) })).sort((a, b) => b.h - a.h)[0];
+    if (C.heads) h += li('↑', 'grey', `<b>Manpower ${fmt(C.heads)} Heads</b>`, top ? `${esc(conName(top.c))} Carries ${fmt(top.h)} (${Math.round(top.h / C.heads * 100)}%)` : '');
+    return h || li('·', 'grey', 'Nothing Accepted Yet.');
+  }
+  function mDprView() {
+    const C = mComb(), sent = mSent(), pub = mPub(), days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null, dd = esc(dsh(S.mProg));
+    S.to = S.mProg;
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><button class="d2-btn sm navy" onclick="DPR.mPrint()">⎙ Print / PDF</button></div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;
+    h += `<div class="rvm-cov"><span class="t">In This DPR</span>${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—');
+      return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}</div>`;
+    const nArea = (S.mQueue.areas || []).length || sent.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length;
+    const moved = C.moved.length, fin = C.fin.length + C.subFin.length, Hn = C.H.length, dH = C.prevOk && C.inc.length ? C.heads - C.prev : null;
+    h += `<div class="rv-one"><span><b>${dd} · Project Total</b> · <b>${C.W.length} Activit${C.W.length === 1 ? 'y' : 'ies'} Worked</b> Across ${inAreas} Area${inAreas === 1 ? '' : 's'} · <b>${fin} Completed</b> · ${Hn ? `<b style="color:var(--drd)">${Hn} Under Hindrance</b> · ` : ''}<b>${fmt(C.heads)} Heads</b> (${Object.keys(C.by).length} Contractor${Object.keys(C.by).length === 1 ? '' : 's'})${C.np && C.heads ? ` · ${Math.round(C.np / C.heads * 100)}% On Non-Estimated Work` : ''}${out ? ` · <b style="color:var(--drd)">${out} Area${out > 1 ? 's' : ''} Not In</b>` : ''}</span></div>`;
+    const k = (cls, l, v, s, bar) => `<div class="rv-k ${cls}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div>${bar ? `<div class="mb">${bar}</div>` : ''}</div>`;
+    h += `<div class="rv-kpis">${k('', 'Areas Reported', `${inAreas}<small>/ ${nArea}</small>`, out ? `${out} Not In` : 'All Areas In', `<i style="width:${nArea ? inAreas / nArea * 100 : 0}%;background:var(--dn)"></i>`)}${k('vio', 'Progress Moved', moved, `Of ${C.W.length} Worked · ${C.NR.length} Not Reported`)}${k('ok', 'Completed', fin, 'Activities + Sub-Activities')}${k(Hn ? 'red' : '', 'Hindrance', Hn, `${C.H.filter(x => x.days <= 1).length} New · ${C.H.filter(x => x.days > 1).length} Carried Over`)}${k('', 'Manpower', `${fmt(C.heads)}<small>Heads</small>`, `${dH == null ? '' : `<span class="${dH >= 0 ? 'up' : 'dn'}">${dH >= 0 ? '▲ +' : '▼ '}${fmt(dH)}</span> vs Previous Reports · `}NP ${fmt(C.np)}`, C.heads ? `<i style="width:${(C.heads - C.np) / C.heads * 100}%;background:var(--dn)"></i><i style="width:${C.np / C.heads * 100}%;background:#a9bfdd"></i>` : '')}</div>`;
+    const byA = mSent().map(s => { const P = S.mPay[s.submission_id], F = P && P.F, inn = C.inc.some(x => x.id === s.submission_id); return `<tr class="${inn ? '' : 'off2'}"><td><b>${esc((s.areas || []).join(' · ') || '—')}</b></td><td>${esc(s.engineer || '')}</td><td class="n">${F && inn ? F.W.length : '—'}</td><td class="n">${F && inn ? F.H.length : '—'}</td><td class="n">${F && inn ? fmt(F.heads) : s.status === 'Submitted' ? 'To Review' : '—'}</td></tr>`; }).join('')
+      + mNotSent().map(a => `<tr class="off2"><td><b>${esc(a.area_name)}</b></td><td>${esc(a.home_engineers || '—')}</td><td class="n">—</td><td class="n">—</td><td class="n">Not Reported</td></tr>`).join('');
+    h += `<div class="rv-body"><div class="rv-col">${mProgAll(C)}</div><div class="rv-col">
+      <div class="rv-c"><div class="h"><b>By Area</b><span class="m">Worked · Hindrance · Heads</span></div><table class="rv-tt"><thead><tr><th>Area</th><th>Engineer</th><th class="n">Worked</th><th class="n">Hind.</th><th class="n">Heads</th></tr></thead><tbody>${byA}<tr class="tot"><td>Total</td><td></td><td class="n">${C.W.length}</td><td class="n">${Hn}</td><td class="n">${fmt(C.heads)}</td></tr></tbody></table></div>
+      <div class="rv-c"><div class="h"><b>Insights</b><span class="m">Across All Areas</span></div><ul class="rv-ins">${mInsights(C, T)}</ul></div>
+      <div class="rv-c"><div class="h"><b>Hindrances</b><span class="m">${Hn} Row${Hn === 1 ? '' : 's'}</span></div>${Hn ? C.H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)} · ${esc(x.area)}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div>
+      <div class="rv-c"><div class="h"><b>Manpower · ${fmt(C.heads)} Heads</b><span class="m">Contractor × Trade</span></div>${mMp(C.by, C.heads, C.np)}</div></div></div>`;
+    if (days) { const keep = S.dim; h += `<div style="padding:0 10px 10px">${rvTrend(days, T).replace('Labour Trend · 7 Days', 'Labour Trend · 7 Days · Whole Project').replace('>Location<', '>Area<')}</div>`; S.dim = keep; }
+    const tr = sent.filter(s => s.status === 'Submitted').length;
+    return h + `</div><div class="d2-foot"><span class="msg"><b>Combined DPR · ${dd}</b> · ${pub ? 'Published As ' + esc(pub.dpr_no || '') + ' · Read-Only' : C.pend.length ? `<span style="color:var(--dam)">Preview Includes ${C.pend.map(P => esc(P.name)).join(', ')} (To Review) — ${C.pend.length > 1 ? 'They Join' : 'It Joins'} Only Once Accepted</span>` : tr ? `${tr} Report${tr > 1 ? 's' : ''} Still To Review — Publish Waits` : 'Accepted Reports Only — Exactly What Publish Will Freeze'}</span><button class="d2-btn" onclick="DPR.mV('day')">← Engineer Reports</button>${mPubBtn()}</div></div>`;
+  }
+
+  /* ----- print: the Combined DPR on A4 (hidden frame, same method as the engineer's print) ----- */
+  function mPrintHtml() {
+    const C = mComb(), pub = mPub(), dd = esc(dsh(S.mProg)), org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null;
+    S.to = S.mProg;
+    const cons = Object.keys(C.by).filter(c => sum(C.by[c]) > 0).sort((a, b) => sum(C.by[b]) - sum(C.by[a])), used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => num(C.by[c][t]) > 0));
+    const stt = r => r.fin ? 'Finished' : r.starts ? 'Started' : r.a > r.b + 0.0005 ? 'Worked' : 'WIP';
+    const ar = new Map(); C.W.forEach(r => { const k = r.area + '\u0001' + r.P.id; if (!ar.has(k)) ar.set(k, []); ar.get(k).push(r); });
+    let body = ''; [...ar.keys()].sort().forEach(k => { const rs = ar.get(k), P = rs[0].P;
+      body += `<tr class="ar"><td colspan="6">${esc(rs[0].area)} · ${esc(P.name)}${P.s.status === 'Submitted' ? ' · To Review (Preview)' : ''}</td></tr>`;
+      const pk = new Map(); rs.forEach(r => { const kk = (r.pkg || '—') + ' › ' + r.act; if (!pk.has(kk)) pk.set(kk, []); pk.get(kk).push(r); });
+      pk.forEach((list, kk) => { body += `<tr class="pk"><td colspan="6">${esc(kk)}${list.some(r => r.club) ? ' · Report Together' : ''}</td></tr>` + list.map(r => `<tr><td><b>${esc(r.loc)}</b> <span class="mu">${esc(r.path)}</span>${rvPrSubs(r)}</td><td>${stt(r)}</td><td class="n">${Math.round(r.b)}%</td><td class="n">${Math.round(r.a)}%</td><td class="n">${esc(r.today)}</td><td>${r.club ? fmt(r.heads) + ' (Club)' : r.heads ? fmt(r.heads) : '—'}${r.cons.length ? ' · ' + esc(r.cons.join(', ')) : ''}</td></tr>` + rvPrGroups(r).replace(/colspan="7"/g, 'colspan="6"')).join(''); }); });
+    if (C.npE.length) body += `<tr class="pk"><td colspan="6">Non-Estimated Work · ${fmt(C.np)} Heads</td></tr>` + C.npE.map(e => `<tr><td>${esc(e.text)} <span class="mu">${esc(e.area || '')}${e.locs.length ? ' · ' + esc(e.locs.join(', ')) : ''}</span></td><td>Labour Only</td><td colspan="3"></td><td>${fmt(e.h)} · ${esc(conName(e.con))}</td></tr>`).join('');
+    const outR = mNotSent().map(a => `<tr><td>${esc(a.area_name)}</td><td>${esc(a.home_engineers || 'No Engineer Allocated')} — No Report · ${num(a.running_works)} Running Works</td></tr>`).concat(C.waitOut.map(s => `<tr><td>${esc((s.areas || []).join(', '))}</td><td>${esc(s.engineer || '')} — To Review, Not Accepted</td></tr>`)).join('');
+    const ins = mInsights(C, T).replace(/<span class="ic[^>]*>[^<]*<\/span>/g, '').replace(/<li>/g, '<div class="in">').replace(/<\/li>/g, '</div>');
+    const engs = [...new Set(C.inc.map(P => P.name))].join(' · ');
+    const fin = C.fin.length + C.subFin.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, nArea = ((S.mQueue || {}).areas || []).length || inAreas;
+    return `<!doctype html><html><head><meta charset="utf-8"><title>DPR · ${dd} · ${esc(projName())}</title><style>
+ @page{size:A4;margin:12mm 11mm} *{box-sizing:border-box} body{font:9.5pt/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#132338;margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-transform:capitalize}
+ .hd{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:2px solid #12305a;padding-bottom:6px;margin-bottom:8px}.hd h1{font-size:15pt;margin:0;color:#12305a}.hd .sub{font-size:9pt;color:#51627a}.hd .r{text-align:right;font-size:9pt;color:#51627a;white-space:nowrap}
+ .draft{color:#b3261e;font-weight:800;border:2px solid #b3261e;padding:1px 8px;display:inline-block}
+ .one{border-left:3px solid #12305a;background:#f3f6fa;padding:5px 9px;margin-bottom:8px;font-weight:700}
+ .k{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:9px}.k div{border:1px solid #c3ccd9;border-radius:4px;padding:4px 7px}.k b{display:block;font-size:14pt;line-height:1.1}.k span{font-size:8pt;color:#51627a}
+ h2{font-size:10.5pt;color:#12305a;margin:10px 0 4px;border-bottom:1px solid #c3ccd9;padding-bottom:2px;page-break-after:avoid}
+ table.t{width:100%;border-collapse:collapse;font-size:8.5pt}.t th{background:#12305a;color:#fff;text-align:left;padding:3px 5px;font-weight:700;border-right:1px solid #2e5794}.t td{padding:3px 5px;border:1px solid #d5dce6;vertical-align:top}.t tr{page-break-inside:avoid}
+ .t .n{text-align:right}.t .ar td{background:#12305a14;font-weight:800;color:#12305a;border-top:2px solid #12305a}.t .pk td{background:#e9eef6;font-weight:700;color:#12305a}.t .tot td{font-weight:800;background:#f3f6fa}.t td.cur{background:#eef3fb;font-weight:800}.t th.cur{background:#0c2445}.t .off{color:#b0bac8}.t .up{color:#128a4a}.t .dn{color:#b42318}
+ .mu,.muted{color:#8a98ad}.red{color:#b42318;font-weight:700}.pgr td{padding:4px 5px 6px 18px;background:#fcfcfe}.pgg{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pgc{border:1px solid #d5dce6;border-top:2px solid #5b3fa8;border-radius:3px;padding:3px 6px;page-break-inside:avoid}.pgc.ok{border-top-color:#128a4a}.pgh{font-size:8.5pt;color:#12305a;margin-bottom:2px}.pgl{display:flex;justify-content:space-between;gap:8px;font-size:8pt;border-top:1px dotted #e0e5ec;padding:1px 0}.in{margin-bottom:4px;font-size:8.5pt;page-break-inside:avoid}.in .sm{display:block;color:#51627a}
+ .sig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:24px;font-size:8.5pt}.sig div{border-top:1px solid #8a98ad;padding-top:3px;color:#51627a;text-align:center}
+ .ft{margin-top:12px;font-size:7.5pt;color:#8a98ad;border-top:1px solid #dde3ea;padding-top:4px;display:flex;justify-content:space-between}.pb{page-break-before:always}
+</style></head><body>
+ <div class="hd"><div><h1>Daily Progress Report · ${esc(dLong(S.mProg))}</h1><div class="sub">${esc(org)}${org ? ' · ' : ''}${esc(projName())} · Combined · All Site Areas</div></div>
+ <div class="r">${pub ? `<b>${esc(pub.dpr_no || '')}</b> · Published ${esc(dts(pub.published_at))}` : '<span class="draft">DRAFT</span><br>Not Yet Published'}<br>Printed ${esc(new Date().toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }))}</div></div>
+ <div class="one">${inAreas} Of ${nArea} Areas Reported · ${C.W.length} Activit${C.W.length === 1 ? 'y' : 'ies'} Worked · ${fin} Completed · ${C.H.length} Under Hindrance · ${fmt(C.heads)} Heads</div>
+ <div class="k"><div><b>${inAreas} / ${nArea}</b><span>Areas Reported</span></div><div><b>${C.moved.length}</b><span>Progress Moved</span></div><div><b>${fin}</b><span>Completed</span></div><div><b>${C.H.length}</b><span>Hindrance</span></div><div><b>${fmt(C.heads)}</b><span>Heads · NP ${fmt(C.np)}</span></div></div>
+ <h2>Progress · ${dd} · By Area</h2><table class="t"><thead><tr><th style="width:38%">Activity · Location · Groups</th><th>Status</th><th class="n">Before</th><th class="n">After</th><th class="n">Today</th><th>Manpower · Contractor</th></tr></thead><tbody>${body || '<tr><td colspan="6" class="mu">No Activity Worked.</td></tr>'}</tbody></table>
+ <h2>Manpower · Contractor × Trade · ${dd}</h2>${cons.length ? `<table class="t"><thead><tr><th>Contractor</th>${used.map(t => `<th class="n">${esc(tCode(t))}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>${cons.map(c => `<tr><td>${esc(conName(c))}</td>${used.map(t => `<td class="n">${num(C.by[c][t]) || '·'}</td>`).join('')}<td class="n"><b>${fmt(sum(C.by[c]))}</b></td></tr>`).join('')}<tr class="tot"><td>Total</td>${used.map(t => `<td class="n">${fmt(cons.reduce((a, c) => a + num(C.by[c][t]), 0))}</td>`).join('')}<td class="n">${fmt(C.heads)}</td></tr></tbody></table>` : '<div class="mu">No Labour.</div>'}
+ <h2>Hindrances</h2>${C.H.length ? `<table class="t"><thead><tr><th>Area · Where</th><th>Activity</th><th>Reason</th><th>Since</th><th class="n">Days</th></tr></thead><tbody>${C.H.map(x => `<tr><td>${esc(x.area)} · ${esc(x.where)}</td><td>${esc(x.what)}</td><td class="red">${esc(x.rc || 'Reason Missing')}</td><td>${esc(dsh(x.since))}</td><td class="n">${x.days}</td></tr>`).join('')}</tbody></table>` : '<div class="mu">None.</div>'}
+ ${outR ? `<h2>Not Reported</h2><table class="t"><tbody>${outR}</tbody></table>` : ''}
+ <h2>Insights</h2>${ins}
+ <div class="sig"><div>Site Engineers${engs ? ' · ' + esc(engs) : ''}</div><div>Site Manager</div><div>Project Manager</div></div>
+ <div class="ft"><span>Penguin Suite · Combined DPR · ${dd} · ${esc(projName())}</span><span>${days ? 'The 7-Day Labour Trend Follows' : ''}</span></div>
+ ${days ? `<div class="pb"></div><h2>Labour Trend · 7 Days · Whole Project (${days[0].lab} – ${days[6].lab})${T && T.on ? ' · Avg ' + fmt(T.avg) + ' Heads / Day' : ''}</h2><div style="margin:2px 0 6px">${rvSvg(days, 'con', 700)}</div>${rvTable(days, 'con', 't')}<div style="height:6px"></div>${rvTable(days, 'tr', 't')}<div style="height:6px"></div>${rvTable(days, 'loc', 't').replace('>Location<', '>Area<')}` : ''}
+</body></html>`;
+  }
+  function mPrint() {
+    const old = document.getElementById('rv_print'); if (old) old.remove();
+    const f = document.createElement('iframe'); f.id = 'rv_print'; f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0'; document.body.appendChild(f);
+    const doc = f.contentWindow.document; doc.open(); doc.write(mPrintHtml()); doc.close();
+    setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Could Not Open The Print Dialog', 'error'); } }, 300);
+  }
+
+  /* ----- actions ----- */
+  function mV(v) { S.mv = v; S.mFull = false; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
+  function mEng(id) { if (!S.mPay[id]) return; S.mEng = id; S.mv = 'eng'; S.mFull = false; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
+  function mFull(b) { S.mFull = !!b; mPaint(); }
+  function mIncl(b) { S.mIncl = !!b; mPaint(); }
+  async function mCalMove(n) { const m = (S.mCal && S.mCal.month) || monthOf(S.mProg), d = new Date(m + 'T00:00:00'); d.setMonth(d.getMonth() + n); const nm = monthOf(ymd(d)); if (nm > monthOf(todayYmd())) return; await mCalLoad(nm); mPaint(); }
+  async function mJump(d, id) { S.mJumpTo = id || null; if (d !== S.mProg) await mGo(d); else if (id && S.mPay[id]) mEng(id); }
 
   /* ---------- Reporting Plan (mock v3): activities left · editor right ---------- */
   const MODE_TXT = { direct: '<span class="spill">DIRECT</span>', subs: '<span class="pill p-grey">SUB-ACTIVITIES</span>', groups: '<span class="gpill">GROUPS</span>' };
@@ -11590,13 +12127,13 @@ const DPR = (function () {
     else printSheet();
   }
 
-  return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, sameYdAll, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
+  return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
     setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved, noLabTog, openDay,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    repOpen, preview, prevClose, submitGo, sheetClose,
-    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet,
+    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo,
+    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();

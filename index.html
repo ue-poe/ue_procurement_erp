@@ -10179,7 +10179,7 @@ const DPR = (function () {
   // "Needs Attention" per tab: work = W without heads / H without reason; prog = worked without a quantity / H without reason
   function attW(g, l) {
     if (finL(l)) return false; const x = lineX(g, l);
-    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }) && !noLab(g, 'A'));
+    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && lineWorkedOn(g, l) && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }) && !noLab(g, 'A'));   // v163.6 · a back-dated finish carries no labour (v158.3) — never ask heads for it
     if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && y.out === 'h' && !y.rc; })) return true;
     return labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key));
   }

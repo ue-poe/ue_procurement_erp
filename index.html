@@ -2948,6 +2948,11 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .rv-tt td:first-child .lbl{display:block;overflow:hidden}
 #mod-dpr .dp2 .rv-tt th{white-space:normal;overflow:visible;line-height:1.2;vertical-align:middle}
 #mod-dpr .dp2 .rv-tt td{vertical-align:middle}
+
+/* v163.7 · layout: the DPR screens use the whole window (engineer cap of 1500px removed), buttons inside fixed-layout table cells shrink with an ellipsis instead of being cut, side-by-side panels keep their own height */
+#mod-dpr .drp.dp2.eng{max-width:none;margin:0}
+#mod-dpr .dp2 .rv-t td .d2-btn{max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+#mod-dpr .dp2 .rvm-two{align-items:start}
 </style>
 </head>
 <body>
@@ -9496,6 +9501,7 @@ async function doLogout() {
   _authHandled = false;
   state.user = state.role = state.userName = state.userId = null; state.roles = [];
   Object.keys(_cache).forEach(k => delete _cache[k]);
+  try { if (typeof DPR !== 'undefined' && DPR.wipeCache) await DPR.wipeCache(); } catch (e) {}   // v163.7 · no report data stays on the device after sign-out
   await sb.auth.signOut();
   document.getElementById('authGate').style.display = 'flex';
   document.getElementById('app').classList.add('hidden');
@@ -11183,7 +11189,7 @@ const DPR = (function () {
   async function refresh() {
     if (dirtyAll() && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
     S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; S.NP = null; S.npDirty = false;
-    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; S.mPay = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
+    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await ENG.wipe(); S.mScope = null; S.mPay = {}; S.mQ = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -11523,28 +11529,125 @@ const DPR = (function () {
      ================================================================== */
   const MTABS = [['rev', 'Review &amp; Publish', 'Engineer Submissions · DPR', 'canReviewDPR'], ['plan', 'Reporting Plan', 'Activities · Groups · Sub-Activities', 'canPlanDPR'], ['hnd', 'Hindrances', 'Report → Allocate → Classify → Close', 'canReviewDPR'], ['areas', 'Site Areas', 'Locations · Engineers', 'canManageAreas'], ['setup', 'Labour Setup', 'Trades · Daywork Rates · Non-Estimated Work', 'canManageAreas'], ['hid', 'Hidden From Site', 'Milestone / Payment Activities', 'canManageAreas']];
   const mCan = t => { const m = MTABS.find(x => x[0] === t); return m && (hasPerm(m[3]) || (m[3] === 'canReviewDPR' && hasPerm('canClassifyHindrance') && t === 'hnd')); };
+  /* v163.7 · Review data engine — every date already seen stays on this device (memory + IndexedDB, per user × project);
+     a date is re-read only when the server calendar says it changed; the dates around the picked one and every date with
+     reports to review are preloaded one at a time while the screen is idle */
+  const ENG = (() => {
+    const DB = 'pgs-dpr-cache', ST = 'kv', TTL = 21 * 864e5; let dbp = null, wq = {}, wt = 0, run = 0, until = 0;
+    const idb = () => dbp || (dbp = new Promise(res => { try { const r = indexedDB.open(DB, 1); r.onupgradeneeded = () => r.result.createObjectStore(ST); r.onsuccess = () => res(r.result); r.onerror = () => res(null); } catch (e) { res(null); } }));
+    const scope = () => (state.userId || '') + '|' + ((typeof pgsS !== 'undefined' && pgsS.project && pgsS.project.id) || '');
+    async function flush() { wt = 0; const b = wq; wq = {}; const db = await idb(); if (!db) return;
+      try { const os = db.transaction(ST, 'readwrite').objectStore(ST); Object.keys(b).forEach(k => b[k] === null ? os.delete(k) : os.put(Object.assign({ at: Date.now() }, b[k]), k)); } catch (e) {} }
+    function put(k, v) { wq[scope() + '|' + k] = v; if (!wt) wt = setTimeout(flush, 400); }
+    const del = k => put(k, null);
+    async function wipe() { wq = {}; const db = await idb(); if (!db) return; try { db.transaction(ST, 'readwrite').objectStore(ST).clear(); } catch (e) {} }
+    async function hydrate() {
+      const sc = scope(); if (S.mScope === sc) return; S.mScope = sc;
+      S.mQ = {}; S.mQSig = {}; S.mPay = {}; S.mPayErr = {}; S.mSheets = {}; S.mTrs = {}; S.mCal = null; S.mTr = null; S.sheet = null; S.pubList = null; S.mDate = null; S.mToday = null;
+      const db = await idb(); if (!db) return;
+      const rows = await new Promise(res => { const out = []; try { const r = db.transaction(ST, 'readonly').objectStore(ST).openCursor(IDBKeyRange.bound(sc + '|', sc + '|￿'));
+        r.onsuccess = () => { const c = r.result; if (!c) { res(out); return; } out.push([c.key, c.value]); c.continue(); }; r.onerror = () => res(out); } catch (e) { res(out); } });
+      const now = Date.now();
+      rows.forEach(([k, v]) => { const key = k.slice(sc.length + 1), t = key[0], id = key.slice(2);
+        if (!v || now - (v.at || 0) > TTL) { del(key); return; }
+        try {
+          if (t === 'q') { S.mQ[id] = v.data; S.mQSig[id] = v.sig; }
+          else if (t === 's') S.mSheets[id] = { sh: v.sh, sig: v.sig, prior: v.prior };
+          else if (t === 't') S.mTrs[id] = { r: v.r, sig: v.sig };
+          else if (t === 'p') { const P = { id, key: v.key, data: v.data, c: mkCtx(v.data), s: v.s, name: v.data.engineer || v.s.engineer || '', areas: v.s.areas || [], prior: v.prior }; P.F = mFacts(P); S.mPay[id] = P; }
+        } catch (e) { del(key); } });
+    }
+    // what the server calendar says about a date — any accept / return / send / publish changes it
+    const sigOf = d => { const c = S.mCal && S.mCal.days[d]; return c ? [c.reports, c.sent, c.to_review, c.accepted, c.returned, c.draft, c.published ? 1 : 0, c.dpr_no || ''].join('.') : '0'; };
+    const priorSig = d => Object.keys((S.mCal && S.mCal.days) || {}).filter(x => x < d).sort().map(x => x + ':' + sigOf(x)).join('|');
+    const pubd = d => !!(S.mCal && S.mCal.days[d] && S.mCal.days[d].published);
+    const trSig = to => { const a = []; for (let i = 6; i >= 0; i--) a.push(sigOf(addDays(to, -i))); return a.join('|'); };
+    // strict (the date on screen): an unpublished sheet also re-reads when an earlier date changed (its Before figures move); background preload checks the date itself only
+    const sheetOK = (d, strict) => { const c = S.mSheets[d]; return !!(c && c.sig === sigOf(d) && (!strict || pubd(d) || c.prior === priorSig(d))); };
+    async function sheetGet(d) { const sh = (await rpc('rpc_dpr_sheet', { p_report_date: d, p_shift: 'D' })) || {}; sh.report_date = d; const v = { sh, sig: sigOf(d), prior: priorSig(d) }; S.mSheets[d] = v; put('s|' + d, v); return sh; }
+    // background preload: one call at a time, only while nothing in the foreground is loading, pauses a minute on any timeout
+    const idle = () => new Promise(r => { const t = () => (S.mBusy > 0) ? setTimeout(t, 250) : r(); t(); });
+    async function prefetch() {
+      if (run || Date.now() < until || S.m39 === false) return; run = 1; const sc = scope();
+      try {
+        const d0 = S.mProg, cal = (S.mCal && S.mCal.days) || {}, today = todayYmd();
+        const near = [-1, 1, -2, 2, -3, 3].map(n => addDays(d0, n)).filter(d => d <= today);
+        const work = Object.keys(cal).filter(d => num(cal[d].to_review) > 0).sort();
+        const list = [...new Set(near.concat(work))].filter(d => d !== d0 && cal[d] && num(cal[d].sent) > 0).slice(0, 10);
+        for (const d of list) {
+          await idle(); if (scope() !== sc || S.view !== 'mgr' || S.mTab !== 'rev') break;
+          const bd = addDays(d, 1); let q = S.mQ[bd];
+          if (!q || S.mQSig[bd] !== sigOf(d)) { q = await rpc('rpc_dpr_review_queue', { p_business_date: bd, p_shift: 'D' }); S.mQ[bd] = q; S.mQSig[bd] = sigOf(d); put('q|' + bd, { data: q, sig: S.mQSig[bd] }); }
+          await idle(); if (scope() !== sc) break;
+          if (await payFetch((q.submissions || []).filter(x => x.status === 'Submitted' || x.status === 'Accepted'), d, null, true, 1)) { until = Date.now() + 60000; break; }
+          await idle(); if (scope() !== sc) break;
+          if (!sheetOK(d)) await sheetGet(d);
+        }
+      } catch (e) { until = Date.now() + 60000; }
+      finally { run = 0; }
+    }
+    return { put, del, wipe, hydrate, sigOf, priorSig, trSig, sheetOK, sheetGet, prefetch };
+  })();
+  const mTimeout = e => /57014|statement timeout/i.test(String((e && (e.code || '') + ' ' + (e.message || '')) || ''));
+  // one engineer report per submission: kept while its status / attempt is unchanged; one that waits on an earlier date is re-read once anything earlier changed
+  async function payFetch(subs, d, onEach, quiet, par) {
+    if (S.m39 === false) return false;
+    S.mPayErr = S.mPayErr || {}; const pri = ENG.priorSig(d); let to = false;
+    const todo = subs.filter(s => { const key = s.submission_id + '|' + s.status + '|' + s.attempt_no, have = S.mPay[s.submission_id];
+      return !(have && have.key === key && (quiet || !(s.status === 'Submitted' && have.data && have.data.earlier_open && have.prior !== pri))); });
+    const one = async s => {
+      const key = s.submission_id + '|' + s.status + '|' + s.attempt_no;
+      for (let t = 0; t < 2; t++) {
+        try { const data = await rpc('rpc_dpr_review_payload', { p_submission_id: s.submission_id });
+          const P = { id: s.submission_id, key, data, c: mkCtx(data), s, name: data.engineer || s.engineer || '', areas: s.areas || [], prior: pri }; P.F = mFacts(P);
+          S.mPay[s.submission_id] = P; delete S.mPayErr[s.submission_id]; ENG.put('p|' + s.submission_id, { key, data, s, prior: pri }); if (onEach) onEach(); return; }
+        catch (e) { if (M39_MISS(e)) { S.m39 = false; return; } if (quiet) { if (mTimeout(e)) to = true; return; } if (t === 0 && mTimeout(e)) continue;
+          if (!S.mPay[s.submission_id]) S.mPayErr[s.submission_id] = 1; toast(err(e, 'Could not open ' + (s.engineer || 'a report')), 'error'); if (onEach) onEach(); return; }
+      }
+    };
+    const q = todo.slice(); await Promise.all(Array.from({ length: par || 2 }, async () => { while (q.length && !to) await one(q.shift()); }));
+    return to;
+  }
+  function wipeCache() { S.mScope = null; return ENG.wipe(); }
+
   async function mgrLoad() {
     try {
-      await masters();
+      await masters(); await ENG.hydrate();
       if (!mCan(S.mTab)) S.mTab = MTABS.map(x => x[0]).find(mCan) || 'rev';
       if (hasPerm('canReviewDPR')) {
-        const data = await rpc('rpc_dpr_review_queue', S.mDate ? { p_business_date: S.mDate, p_shift: 'D' } : { p_shift: 'D' });
-        S.mQueue = data; S.mDate = data.business_date; S.mProg = data.progress_date; if (!S.mToday) S.mToday = data.business_date;
-        if (S.sheet && S.sheet.report_date !== S.mProg) S.sheet = null;
-        if (S.mTab === 'rev') {   // v162 · the Review & Publish screen needs every sent report, the month, the published copy and the 7-day trend before it draws
-          if (!$('d2')) $('dpr_root').innerHTML = '<div class="dpr-load">Loading…</div>';
-          await Promise.all([mLoadPays(), mCalLoad(monthOf(S.mProg)), mTrLoad(),
-            S.sheet ? null : rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { S.sheet = sh || {}; S.sheet.report_date = S.mProg; }).catch(() => {}),
-            S.pubList ? null : rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; }).catch(() => { S.pubList = []; })]);
-          if (S.mJumpTo) { if (S.mPay[S.mJumpTo]) { S.mv = 'eng'; S.mEng = S.mJumpTo; } S.mJumpTo = null; }
-          if (S.mv === 'eng' && !S.mPay[S.mEng]) S.mv = 'day';
-        }
+        const seq = S.mSeq = (S.mSeq || 0) + 1;   // v163.7 · a newer click wins; the screen draws from the engine first, then re-reads only what changed
+        S.mBusy = (S.mBusy || 0) + 1; let held = true; const release = () => { if (held) { held = false; S.mBusy--; } };
+        try {
+          if (S.mTab === 'rev' && S.mDate && $('d2_main')) { const pd = addDays(S.mDate, -1), cs = S.mSheets[pd];
+            S.mProg = pd; S.mQueue = S.mQ[S.mDate] || { business_date: S.mDate, progress_date: pd, submissions: [], areas: [], _loading: true };
+            S.sheet = cs ? cs.sh : null; mTrUse(pd); mPaint(); }
+          let calP = mCalLoad(monthOf(S.mDate ? addDays(S.mDate, -1) : addDays(todayYmd(), -1)), true);
+          const data = await rpc('rpc_dpr_review_queue', S.mDate ? { p_business_date: S.mDate, p_shift: 'D' } : { p_shift: 'D' });
+          if (seq !== S.mSeq) { release(); return; }
+          S.mQ[data.business_date] = data;
+          S.mQueue = data; S.mDate = data.business_date; S.mProg = data.progress_date; if (!S.mToday) S.mToday = data.business_date;
+          if (S.sheet && S.sheet.report_date !== S.mProg) S.sheet = null;
+          if (!S.sheet && S.mSheets[S.mProg]) S.sheet = S.mSheets[S.mProg].sh;
+          if (S.mTab === 'rev') {
+            const d = S.mProg, bd = S.mDate, live = () => seq === S.mSeq && S.view === 'mgr' && S.mTab === 'rev' && S.mProg === d;
+            const paint = () => { if (!live()) return; if (S.mJumpTo && S.mPay[S.mJumpTo]) { S.mv = 'eng'; S.mEng = S.mJumpTo; S.mJumpTo = null; } mPaintSoon(); };
+            mTrUse(d);
+            calP = calP.then(() => mCalLoad(monthOf(d)));
+            calP.then(() => { S.mQSig[bd] = ENG.sigOf(d); ENG.put('q|' + bd, { data, sig: S.mQSig[bd] }); paint();
+                const sOK = ENG.sheetOK(d, true); if (sOK && live()) S.sheet = S.mSheets[d].sh;
+                return Promise.all([mLoadPays(paint), mTrLoad().then(paint),
+                  sOK ? null : ENG.sheetGet(d).then(sh => { if (S.mProg === d) { S.sheet = sh; paint(); } }).catch(() => { if (S.mProg === d && !S.sheet) { S.sheet = { report_date: d }; paint(); } }),
+                  S.pubList ? null : rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; paint(); }).catch(() => { S.pubList = []; })]); })
+              .catch(() => {})
+              .then(() => { release(); if (live()) { S.mJumpTo = null; paint(); ENG.prefetch(); } });
+          } else release();
+        } catch (e) { release(); throw e; }
       }
       mgrRender();
       const jobs = [];
       if (!S.hind && (hasPerm('canReviewDPR') || hasPerm('canClassifyHindrance'))) jobs.push(rpc('rpc_dpr_hindrance_register', { p_open: null }).then(hr => { S.hind = (hr && hr.rows) || []; S.hSum = (hr && hr.by_party) || []; S.hParties = (hr && hr.parties) || []; }).catch(() => { S.hind = []; }));
-      if (!S.sheet && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { S.sheet = sh || {}; S.sheet.report_date = S.mProg; }).catch(() => {}));
-      if (!S.pubList && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; }).catch(() => { S.pubList = []; }));
+      if (!S.sheet && S.mTab !== 'rev' && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_sheet', { p_report_date: S.mProg, p_shift: 'D' }).then(sh => { S.sheet = sh || {}; S.sheet.report_date = S.mProg; }).catch(() => {}));
+      if (!S.pubList && S.mTab !== 'rev' && hasPerm('canReviewDPR')) jobs.push(rpc('rpc_dpr_published_list', { p_limit: 30 }).then(p => { S.pubList = p || []; }).catch(() => { S.pubList = []; }));
       if (jobs.length) Promise.all(jobs).then(() => { if (S.view === 'mgr') { if (S.mTab === 'rev' && $('d2_main')) mPaint(); else mgrRender(); } });
     } catch (e) { $('dpr_root').innerHTML = '<div class="dpr-note r" style="margin:16px">' + esc(err(e, 'Could not load the review queue')) + '</div><div style="margin:12px 16px"><button class="dbtn" onclick="DPR.open()">Try Again</button></div>'; }
   }
@@ -11663,35 +11766,34 @@ const DPR = (function () {
   const mSent = () => mSubs().filter(s => s.status === 'Submitted' || s.status === 'Accepted');
   const mPub = () => S.sheet && S.sheet.report_date === S.mProg && S.sheet.sheet;
   const mNotSent = () => ((S.mQueue || {}).areas || []).filter(a => !(a.submission_ids || []).some(id => mSent().some(s => s.submission_id === id)));
-  async function mLoadPays() {
-    if (S.m39 === false) return;
-    await Promise.all(mSent().map(async s => {
-      const key = s.submission_id + '|' + s.status + '|' + s.attempt_no, have = S.mPay[s.submission_id]; if (have && have.key === key) return;
-      try { const data = await rpc('rpc_dpr_review_payload', { p_submission_id: s.submission_id }); const c = mkCtx(data);
-        const P = { id: s.submission_id, key, data, c, s, name: data.engineer || s.engineer || '', areas: s.areas || [] }; P.F = mFacts(P); S.mPay[s.submission_id] = P; }
-      catch (e) { if (M39_MISS(e)) S.m39 = false; else toast(err(e, 'Could not open ' + (s.engineer || 'a report')), 'error'); }
-    }));
-  }
+  async function mLoadPays(onEach) { await payFetch(mSent(), S.mProg, onEach, false, 2); }
+  async function mRetryPay(id) { if (S.mPayErr) delete S.mPayErr[id]; mPaint(); await mLoadPays(); mPaint(); }
   async function mCalLoad(m, force) {
     S.mCal = S.mCal || { month: m, days: {}, loaded: {} }; S.mCal.month = m; if (S.mCal.loaded[m] && !force) return;
     try { const r = await rpc('rpc_dpr_review_calendar', { p_month: m }); Object.keys(S.mCal.days).filter(d => d.slice(0, 7) === m.slice(0, 7)).forEach(d => delete S.mCal.days[d]); (r.days || []).forEach(d => { S.mCal.days[d.report_date] = d; }); S.mCal.loaded[m] = true; }
-    catch (e) { if (M39_MISS(e)) S.m39 = false; S.mCal.loaded[m] = 'x'; }
+    catch (e) { if (M39_MISS(e)) S.m39 = false; if (S.mCal.loaded[m] !== true) S.mCal.loaded[m] = 'x'; }
   }
+  // 7-day trend: raw rows kept per window, rebuilt on use; re-read only when one of the seven dates changed
+  function mTrDays(r, to) { const days = [];
+    for (let i = 6; i >= 0; i--) { const d = addDays(to, -i), dy = (r.days || []).find(x => x.report_date === d);
+      const st = !dy ? (new Date(d + 'T00:00:00').getDay() === 0 ? 'sun' : 'none') : dy.published ? 'Published' : num(dy.to_review) ? 'Submitted' : 'Accepted';
+      const o = rvDayAgg([], () => null, [], d, st);
+      (r.rows || []).filter(x => x.report_date === d).forEach(x => { const n = num(x.heads); if (n <= 0) return; o.tot += n; o.con[x.contractor || '—'] = (o.con[x.contractor || '—'] || 0) + n; o.tr[x.trade] = (o.tr[x.trade] || 0) + n; o.loc[x.area || 'Unassigned'] = (o.loc[x.area || 'Unassigned'] || 0) + n; });
+      days.push(o); }
+    return days; }
+  function mTrUse(to) { const key = addDays(to, -6) + '|' + to, c = S.mTrs && S.mTrs[key]; S.mTr = c ? { key, days: mTrDays(c.r, to) } : (S.mTr && S.mTr.key === key ? S.mTr : null); }
   async function mTrLoad() {
-    const to = S.mProg, from = addDays(to, -6), key = from + '|' + to; if (S.mTr && S.mTr.key === key) return;
-    try { const r = await rpc('rpc_dpr_labour_trend', { p_from: from, p_to: to }); const days = [];
-      for (let i = 6; i >= 0; i--) { const d = addDays(to, -i), dy = (r.days || []).find(x => x.report_date === d);
-        const st = !dy ? (new Date(d + 'T00:00:00').getDay() === 0 ? 'sun' : 'none') : dy.published ? 'Published' : num(dy.to_review) ? 'Submitted' : 'Accepted';
-        const o = rvDayAgg([], () => null, [], d, st);
-        (r.rows || []).filter(x => x.report_date === d).forEach(x => { const n = num(x.heads); if (n <= 0) return; o.tot += n; o.con[x.contractor || '—'] = (o.con[x.contractor || '—'] || 0) + n; o.tr[x.trade] = (o.tr[x.trade] || 0) + n; o.loc[x.area || 'Unassigned'] = (o.loc[x.area || 'Unassigned'] || 0) + n; });
-        days.push(o); }
-      S.mTr = { key, days }; }
-    catch (e) { if (M39_MISS(e)) S.m39 = false; S.mTr = { key, days: null }; }
+    const to = S.mProg, from = addDays(to, -6), key = from + '|' + to, sig = ENG.trSig(to), c = S.mTrs[key];
+    if (c && c.sig === sig) { if (S.mProg === to) S.mTr = { key, days: mTrDays(c.r, to) }; return; }
+    try { const r = await rpc('rpc_dpr_labour_trend', { p_from: from, p_to: to }); S.mTrs[key] = { r, sig }; ENG.put('t|' + key, { r, sig }); if (S.mProg !== to) return; S.mTr = { key, days: mTrDays(r, to) }; }
+    catch (e) { if (M39_MISS(e)) S.m39 = false; if (S.mProg === to && !c) S.mTr = { key, days: null }; }
   }
-  function mDrop(id) { if (id) delete S.mPay[id]; S.mCal = null; S.mTr = null; S.sheet = null; }
+  function mDrop(id) { if (id) delete S.mPay[id]; S.sheet = null; if (S.mQ && S.mDate) delete S.mQ[S.mDate]; }
 
   /* ----- shell ----- */
   function mShell() { $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`; fit(); mPaint(); }
+  let mPaintQ = 0;
+  const mPaintSoon = () => { if (mPaintQ) return; mPaintQ = requestAnimationFrame(() => { mPaintQ = 0; mPaint(); }); };
   function mPaint() {
     if (!$('d2_main')) return;
     const a = document.activeElement, k = a && a.id && a.id.indexOf('mr_') === 0 ? a.id : null, sc = $('d2_sc'), top = sc ? sc.scrollTop : 0;
@@ -11723,12 +11825,12 @@ const DPR = (function () {
     const today = todayYmd(), y1 = addDays(today, -1), pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, all = Math.max(mSubs().length, sent.length + mNotSent().length);
     const chip = (d, t) => `<button class="${S.mProg === d ? 'on' : ''}" onclick="DPR.mGo('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
     return `<div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.mProg))}</b> <span class="d2-days">${chip(y1, 'Yesterday')}${chip(today, 'Today')}${S.mProg !== today && S.mProg !== y1 ? chip(S.mProg, 'Picked') : ''}</span></div>
-      <div class="meta"><div>DPR ${pub ? `<span class="pill p-vio">Published · ${esc(pub.dpr_no || '')}</span>` : '<span class="pill p-amb">Open · Not Published</span>'}</div><div>Reports <b>${sent.length} Of ${all} Sent</b></div>${tr ? `<div><span class="pill p-navy">${tr} To Review</span></div>` : ''}</div>${extra || ''}</div>`;
+      <div class="meta"><div>DPR ${pub ? `<span class="pill p-vio">Published · ${esc(pub.dpr_no || '')}</span>` : !S.sheet ? '<span class="pill p-grey">Checking…</span>' : '<span class="pill p-amb">Open · Not Published</span>'}</div><div>Reports <b>${sent.length} Of ${all} Sent</b></div>${tr ? `<div><span class="pill p-navy">${tr} To Review</span></div>` : ''}</div>${extra || ''}</div>`;
   }
   function mPubBtn(pos) {
     const pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, acc = sent.filter(s => s.status === 'Accepted').length;
     if (pub) return `<button class="d2-btn" onclick="DPR.mPrint()">⎙ Print / PDF</button>`;
-    const why = tr ? 'Accept Or Return Every Sent Report First' : !acc ? 'Nothing Accepted Yet' : '';
+    const why = !S.sheet ? 'Loading' : tr ? 'Accept Or Return Every Sent Report First' : !acc ? 'Nothing Accepted Yet' : '';
     return `<button class="d2-btn ok" ${why ? 'disabled' : ''} title="${esc(why)}" onclick="DPR.publish()">Publish DPR ${esc(dsh(S.mProg))} ✓</button>`;
   }
   function mSubtabs() {
@@ -11746,13 +11848,14 @@ const DPR = (function () {
   function mDayView() {
     const subs = mSubs(), pub = mPub(), STM = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'], Returned: ['p-red', 'Returned'], Draft: ['p-amb', 'Draft · Not Sent'] };
     let h = `<div class="d2-card">${mBanner()}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}<div style="padding:10px">`;
-    h += `<div class="rv-c"><div class="h"><b>Engineer Reports · ${esc(dsh(S.mProg))}</b><span class="m">One Report Per Engineer Per Date — Same Report The Engineer Sees</span></div><table class="rv-t rvm-tab"><colgroup><col style="width:19%"><col style="width:13%"><col style="width:15%"><col style="width:9%"><col style="width:10%"><col style="width:9%"><col style="width:8%"><col style="width:7%"><col></colgroup>
+    h += `<div class="rv-c"><div class="h"><b>Engineer Reports · ${esc(dsh(S.mProg))}</b><span class="m">One Report Per Engineer Per Date — Same Report The Engineer Sees</span></div><table class="rv-t rvm-tab"><colgroup><col><col style="width:158px"><col style="width:140px"><col style="width:70px"><col style="width:92px"><col style="width:86px"><col style="width:84px"><col style="width:56px"><col style="width:178px"></colgroup>
       <thead><tr><th>Engineer · Area</th><th>Status</th><th>Sent</th><th class="n">Reported</th><th class="n">Worked · Moved</th><th class="n">Completed</th><th class="n">Hindrance</th><th class="n">Heads</th><th class="c">Action</th></tr></thead><tbody>`;
+    if ((S.mQueue || {})._loading) h += `<tr><td colspan="9" class="muted" style="text-align:center;padding:14px">Loading…</td></tr>`;
     const rows = subs.slice().sort((a, b) => (a.status === 'Draft') - (b.status === 'Draft'));
     rows.forEach(s => { const P = S.mPay[s.submission_id], F = P && P.F, st = STM[s.status] || ['p-grey', s.status], sentS = s.status === 'Submitted' || s.status === 'Accepted';
       const eo = P && P.data.earlier_open, waits = s.status === 'Submitted' && eo;
       const act = waits ? `<button class="d2-btn sm" style="border-color:var(--damb);color:var(--dam)" onclick="event.stopPropagation();DPR.mJump('${eo.report_date}','${eo.submission_id}')">Review ${esc(dsh(eo.report_date))} First →</button>`
-        : s.status === 'Submitted' ? (P ? `<button class="d2-btn sm navy" onclick="event.stopPropagation();DPR.mEng('${s.submission_id}')">Review →</button>` : '<span class="muted">Loading…</span>')
+        : s.status === 'Submitted' ? (P ? `<button class="d2-btn sm navy" onclick="event.stopPropagation();DPR.mEng('${s.submission_id}')">Review →</button>` : (S.mPayErr && S.mPayErr[s.submission_id]) ? `<button class="d2-btn sm" onclick="event.stopPropagation();DPR.mRetryPay('${s.submission_id}')">↻ Retry</button>` : '<span class="muted">Loading…</span>')
         : s.status === 'Accepted' ? (P ? `<button class="d2-btn sm" onclick="event.stopPropagation();DPR.mEng('${s.submission_id}')">View Report</button>` : '')
         : s.status === 'Returned' ? '<span class="muted">Waiting For Resend</span>' : '<span class="muted">Goes As Not Reported</span>';
       h += `<tr class="${P ? 'clk' : ''} ${waits ? 'pend' : ''}" ${P ? `onclick="DPR.mEng('${s.submission_id}')"` : ''}><td><b>${esc(s.engineer || '')}</b><span class="p">${esc((s.areas || []).join(' · ') || '—')}</span></td>
@@ -12133,7 +12236,7 @@ const DPR = (function () {
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo,
-    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint,
+    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();

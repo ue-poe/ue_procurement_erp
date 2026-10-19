@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v164</title>
+<title>Penguin Suite v166.1</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -1001,6 +1001,90 @@ input[type="number"] {
 #mod-dpr .dp2 .d2-seg button:last-child{border-right:0}
 #mod-dpr .dp2 .d2-seg button.on{background:var(--dn);color:#fff}
 #mod-dpr .dp2 .d2-seg.sm button{padding:3px 8px;font-size:10.5px}
+/* v165.1 · Cards view (day sheet · Day Report · Review & Publish · Combined DPR) — DPR_Card_* mocks approved 18 Oct 2026 */
+#mod-dpr .dp2 .cd{padding:8px 10px 12px}
+#mod-dpr .dp2 .cd-wrap{padding:0}
+#mod-dpr .dp2 .cd-crumb{display:flex;align-items:center;gap:8px;padding:4px 2px 8px;font-size:12px;flex-wrap:wrap}
+#mod-dpr .dp2 .cd-crumb a{color:var(--dv);font-weight:800;cursor:pointer}#mod-dpr .dp2 .cd-crumb i{color:#aab3c2;font-style:normal}#mod-dpr .dp2 .cd-crumb b{font-weight:800}
+#mod-dpr .dp2 .cd-crumb .sp{flex:1}#mod-dpr .dp2 .cd-crumb .hint{font-size:10.5px;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-pkg{border:1px solid var(--ln,#c3ccd9);border-radius:7px;background:#fff;margin-bottom:12px}
+#mod-dpr .dp2 .cd-pkg>.hd{display:flex;align-items:center;gap:10px;padding:7px 10px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#f6f8fb;border-radius:7px 7px 0 0;cursor:pointer;flex-wrap:wrap}
+#mod-dpr .dp2 .cd-pkg>.hd .car{width:18px;height:18px;border:1px solid var(--ln,#c3ccd9);border-radius:4px;display:grid;place-items:center;font-size:9px;background:#fff;flex:none}
+#mod-dpr .dp2 .cd-pkg>.hd .nm{font-size:14px;font-weight:800;color:var(--dn);white-space:nowrap}
+#mod-dpr .dp2 .cd-pkg>.hd .meta{color:var(--ink2,#51627a);font-size:11.5px}#mod-dpr .dp2 .cd-pkg>.hd .meta b{color:#132338}
+#mod-dpr .dp2 .cd-pkg>.hd .pkgp{margin-left:auto;display:flex;align-items:center;gap:8px;white-space:nowrap}
+#mod-dpr .dp2 .cd-pkg>.hd .pkgp .pct{font-size:15px;color:var(--dv);min-width:42px;text-align:right}
+#mod-dpr .dp2 .cd-pkg>.hd .pkgp .cd-bar{width:150px;height:8px}
+#mod-dpr .dp2 .cd-pkg.closed .grid{display:none}
+#mod-dpr .dp2 .cd-pkg .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:9px;padding:9px 10px}
+#mod-dpr .dp2 .cd-pkg .grid.g{grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+#mod-dpr .dp2 .cd-bar{display:inline-block;height:6px;background:#e7e9f0;border-radius:3px;overflow:hidden;width:100%;vertical-align:middle}#mod-dpr .dp2 .cd-bar i{display:block;height:100%;background:var(--dv)}#mod-dpr .dp2 .cd-bar.p i{background:var(--dv)}
+#mod-dpr .dp2 .cd-h{color:var(--drd);font-weight:800}#mod-dpr .dp2 .cd-ok{color:var(--dok);font-weight:800}
+#mod-dpr .dp2 .cd-ac{border:1px solid var(--ln,#c3ccd9);border-radius:7px;background:#fff;cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .12s,border-color .12s;min-width:0}
+#mod-dpr .dp2 .cd-ac:hover{border-color:var(--dv);box-shadow:0 2px 10px rgba(91,63,168,.14)}
+#mod-dpr .dp2 .cd-ac.att{border-color:var(--drdb)}#mod-dpr .dp2 .cd-ac.club{border-color:var(--damb);background:#fffdf8}#mod-dpr .dp2 .cd-ac.grp{border-color:var(--dvb)}#mod-dpr .dp2 .cd-ac.na{border-color:var(--damb);background:#fffdf8}
+#mod-dpr .dp2 .cd-ac .cd-tt{padding:8px 10px 6px;border-bottom:1px solid var(--ln2,#e0e5ec);display:flex;gap:8px;align-items:flex-start}#mod-dpr .dp2 .cd-ac .cd-tt b{font-size:13px;flex:1;line-height:1.3}#mod-dpr .dp2 .cd-ac .cd-tt .sub{display:block;font-size:11px;color:var(--ink2,#51627a);font-weight:600}
+#mod-dpr .dp2 .cd-ac .cd-tt .big{font-size:20px;font-weight:800;color:var(--dv);line-height:1;text-align:right}#mod-dpr .dp2 .cd-ac .cd-tt .big small{display:block;font-size:9.5px;color:var(--ink2,#51627a);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:3px}
+#mod-dpr .dp2 .cd-ac table{width:100%;border-collapse:collapse;font-size:11.5px}#mod-dpr .dp2 .cd-ac td{padding:4px 10px;border-bottom:1px solid var(--ln2,#e0e5ec);vertical-align:top}#mod-dpr .dp2 .cd-ac td:first-child{color:var(--ink2,#51627a);width:52%}#mod-dpr .dp2 .cd-ac td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+#mod-dpr .dp2 .cd-ac .cd-ft{padding:6px 10px 8px}#mod-dpr .dp2 .cd-ac .cd-pc{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px}#mod-dpr .dp2 .cd-ac .cd-pc b{color:var(--dv)}
+#mod-dpr .dp2 .cd-ac .locs{padding:5px 10px 7px;display:flex;gap:4px;flex-wrap:wrap;border-top:1px dashed var(--ln2,#e0e5ec);margin-top:auto}
+#mod-dpr .dp2 .cd-ac .locs span{font-size:10px;border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:1px 6px;color:var(--ink2,#51627a);background:#fff}
+#mod-dpr .dp2 .cd-ac .locs span.w{border-color:var(--dokb);background:var(--dokl);color:var(--dok)}#mod-dpr .dp2 .cd-ac .locs span.h{border-color:var(--drdb);background:var(--drdl);color:var(--drd)}#mod-dpr .dp2 .cd-ac .locs span.d{border-color:var(--ln2,#e0e5ec);background:#f3f5f8;color:#8a98ad}#mod-dpr .dp2 .cd-ac .locs span.a{border-color:var(--damb);background:var(--daml);color:var(--dam)}
+#mod-dpr .dp2 .cd-ac .todayrow{display:flex;gap:6px;align-items:center;padding:6px 10px;border-top:1px solid var(--ln2,#e0e5ec);font-size:11px;background:#fbfaf6}#mod-dpr .dp2 .cd-ac .todayrow .lbl{font-size:10px;letter-spacing:.05em;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase}#mod-dpr .dp2 .cd-ac .todayrow b{font-size:15px}
+#mod-dpr .dp2 .cd-rp{display:inline-block;border:1px solid var(--ln,#c3ccd9);border-radius:999px;padding:1px 8px;font-size:10px;font-weight:800;background:#fff;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-rp.w{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .cd-rp.h{background:var(--drdl);border-color:var(--drdb);color:var(--drd)}#mod-dpr .dp2 .cd-rp.n{background:var(--daml);border-color:var(--damb);color:var(--dam)}#mod-dpr .dp2 .cd-rp.s{background:var(--dtl);border-color:var(--dtb);color:var(--dtd)}#mod-dpr .dp2 .cd-rp.d{background:#f3f5f8;color:#8a98ad}
+#mod-dpr .dp2 .cd-eng{display:inline-block;font-size:9.5px;font-weight:800;padding:0 5px;border-radius:4px;background:var(--dvl);color:var(--dv);border:1px solid var(--dvb);margin-left:5px;vertical-align:middle}
+/* location node cards */
+#mod-dpr .dp2 .cd-lc{border:1px solid var(--ln,#c3ccd9);border-radius:7px;background:#fff;margin-bottom:10px;overflow:hidden}
+#mod-dpr .dp2 .cd-lc.att{border-color:var(--drdb)}#mod-dpr .dp2 .cd-lc.fin{opacity:.78}
+#mod-dpr .dp2 .cd-lc>.hd{display:flex;gap:10px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--ln,#c3ccd9);background:#f6f8fb;flex-wrap:wrap}
+#mod-dpr .dp2 .cd-lc>.hd b{font-size:13.5px}#mod-dpr .dp2 .cd-lc>.hd .path{font-size:11px;color:var(--ink2,#51627a);margin-top:1px}
+#mod-dpr .dp2 .cd-lc>.hd .r{margin-left:auto;display:flex;gap:14px;align-items:center;font-size:11.5px;color:var(--ink2,#51627a);white-space:nowrap}
+#mod-dpr .dp2 .cd-lc>.hd .dates{display:flex;gap:12px}#mod-dpr .dp2 .cd-lc>.hd .dates b{color:#132338}#mod-dpr .dp2 .cd-lc>.hd .cum b{color:var(--dv);font-size:13px}
+#mod-dpr .dp2 .cd-t{margin:0;border:0}#mod-dpr .dp2 .cd-t thead th{position:static}
+#mod-dpr .dp2 .cd-lc.ro .body{display:grid;grid-template-columns:1.4fr 1fr}#mod-dpr .dp2 .cd-lc.ro .body>div{padding:8px 10px;min-width:0}#mod-dpr .dp2 .cd-lc.ro .body>div+div{border-left:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .cd-lc .cd-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}#mod-dpr .dp2 .cd-lc .cd-row .lbl{font-size:10px;letter-spacing:.06em;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase}
+#mod-dpr .dp2 .cd-lc .cum{display:flex;gap:10px;align-items:center;margin-bottom:6px;flex-wrap:wrap}#mod-dpr .dp2 .cd-lc .cum .rv-pb{flex:1;min-width:160px}
+#mod-dpr .dp2 .cd-lc .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12px}#mod-dpr .dp2 .cd-lc .kv span{color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-cert{margin-top:6px;background:var(--dokl);border:1px solid var(--dokb);border-radius:6px;padding:4px 8px;font-size:11.5px}
+#mod-dpr .dp2 .cd-band{border:1px solid var(--ln,#c3ccd9);background:#f6f8fb;border-radius:7px;padding:8px 10px;margin-bottom:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#mod-dpr .dp2 .cd-band>div:first-child{flex:1;min-width:240px}#mod-dpr .dp2 .cd-band b{font-size:13.5px}#mod-dpr .dp2 .cd-band a{color:var(--dv);font-weight:800;cursor:pointer}
+#mod-dpr .dp2 .cd-band.club{border-color:var(--damb);background:#fffaf0}#mod-dpr .dp2 .cd-band.grp{border-color:var(--dvb);background:var(--dvl)}
+#mod-dpr .dp2 .cd-band .r{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:flex-end}#mod-dpr .dp2 .cd-band .kv{display:grid;grid-template-columns:auto auto;gap:2px 10px;font-size:12px}#mod-dpr .dp2 .cd-band .kv span{color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-band .big{font-size:22px;font-weight:800;color:var(--dv)}#mod-dpr .dp2 .cd-band .big small{font-size:10px;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase}
+#mod-dpr .dp2 .cd-band .tchips{padding:4px 0 0}
+#mod-dpr .dp2 .cd-club{flex-basis:100%;width:100%;margin-top:4px;border-top:1px solid var(--damb)}
+/* labour cards */
+#mod-dpr .dp2 .cd-pkg.lab>.hd .cd-lsum{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+#mod-dpr .dp2 .cd-pkg.lab>.hd .cd-lsum span{border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:2px 8px;background:#fff;display:flex;gap:5px;align-items:baseline;font-size:11px}#mod-dpr .dp2 .cd-pkg.lab>.hd .cd-lsum small{font-size:9.5px;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase;letter-spacing:.04em}#mod-dpr .dp2 .cd-pkg.lab>.hd .cd-lsum .tot{background:var(--dvl);border-color:var(--dvb)}
+#mod-dpr .dp2 .tchips{display:flex;flex-wrap:wrap;gap:4px;padding:6px 10px}#mod-dpr .dp2 .tchip{border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:1px 6px;font-size:11px;background:#fafbff;white-space:nowrap}#mod-dpr .dp2 .tchip b{margin-left:4px;color:var(--dv)}
+#mod-dpr .dp2 .tbar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin:0 10px 9px;background:#e7e9f0}#mod-dpr .dp2 .tbar i{display:block;height:100%}
+#mod-dpr .dp2 .cd-lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:9px}
+#mod-dpr .dp2 .cd-ld{border:1px solid var(--ln,#c3ccd9);border-radius:7px;background:#fff;display:flex;flex-direction:column}#mod-dpr .dp2 .cd-ld.club{border-color:var(--damb);background:#fffdf8}
+#mod-dpr .dp2 .cd-ld .top{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-bottom:1px solid var(--ln2,#e0e5ec)}#mod-dpr .dp2 .cd-ld .top>div{flex:1;min-width:0}#mod-dpr .dp2 .cd-ld .top b{font-size:13px}#mod-dpr .dp2 .cd-ld .big{font-size:18px;font-weight:800}
+#mod-dpr .dp2 .cd-ld .r{display:flex;gap:5px;align-items:center;flex-wrap:wrap;padding:7px 10px}#mod-dpr .dp2 .cd-ld .r .sp{flex:1}
+#mod-dpr .dp2 .cd-hl{padding:6px 10px}
+/* v166 · package strip + club per-activity rows */
+#mod-dpr .dp2 .cd-pkg>.hd .pkgp{flex-wrap:wrap;gap:4px 14px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt{display:flex;align-items:center;gap:6px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt .cd-bar{width:110px}
+#mod-dpr .dp2 .cd-pkg>.hd .cd-pkga{white-space:nowrap}
+#mod-dpr .dp2 .cd-pkgacts{padding:6px 12px 8px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}#mod-dpr .dp2 .cd-pkg.closed .cd-pkgacts{display:none}
+#mod-dpr .dp2 .cd .cd-pkgacts .ph,#mod-dpr .dp2 .cd .cd-cacts .ph{background:none;padding:0;border:0;display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+#mod-dpr .dp2 .cd-par{display:grid;grid-template-columns:minmax(200px,1.4fr) auto 150px 40px;gap:10px;align-items:center;font-size:11.5px;border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:3px 8px;margin-bottom:3px;background:#fff}
+#mod-dpr .dp2 .cd-par .nm i{font-style:normal;font-size:9.5px;color:var(--ink2,#51627a);border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:0 5px;margin-left:5px}
+#mod-dpr .dp2 .cd-par.off{opacity:.62}#mod-dpr .dp2 .cd-par .q{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}#mod-dpr .dp2 .cd-par>b{text-align:right;color:var(--dv)}
+#mod-dpr .dp2 .cd-cacts{padding:6px 10px 4px;border-top:1px dashed var(--ln2,#e0e5ec)}#mod-dpr .dp2 .cd-cacts .cd-par{grid-template-columns:auto 1fr 36px;gap:3px 8px;padding:4px 7px}#mod-dpr .dp2 .cd-cacts .cd-par .nm{grid-column:1/-1;font-weight:700;line-height:1.25}
+#mod-dpr .dp2 .cd .rv-h{margin:4px 0}
+@media (max-width:900px){#mod-dpr .dp2 .cd-lc.ro .body{grid-template-columns:1fr}#mod-dpr .dp2 .cd-lc.ro .body>div+div{border-left:0;border-top:1px solid var(--ln,#c3ccd9)}}
+/* v165.1 · group cards inside a location node card · sub-activity rows · club location cards */
+#mod-dpr .dp2 .cd-gg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px;padding:8px 10px}
+#mod-dpr .dp2 .cd-gc{border:1px solid var(--dvb);border-radius:7px;background:var(--dvl);padding:7px 9px;min-width:0}
+#mod-dpr .dp2 .cd-gc.done{border-color:var(--dokb);background:var(--dokl)}#mod-dpr .dp2 .cd-gc.clk{cursor:pointer}#mod-dpr .dp2 .cd-gc.clk:hover{box-shadow:0 2px 10px rgba(91,63,168,.16);border-color:var(--dv)}
+#mod-dpr .dp2 .cd-gc .gh{display:flex;gap:6px;align-items:baseline;font-size:12px;margin-bottom:4px;flex-wrap:wrap}#mod-dpr .dp2 .cd-gc .gh>b{font-size:13px;color:var(--dv)}#mod-dpr .dp2 .cd-gc.done .gh>b{color:var(--dok)}#mod-dpr .dp2 .cd-gc .gh .sp{flex:1}#mod-dpr .dp2 .cd-gc .gh .pct{font-size:15px;color:var(--dv)}
+#mod-dpr .dp2 .cd-gc .gl{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+#mod-dpr .dp2 .cd-sr{display:grid;grid-template-columns:minmax(120px,1.2fr) 1fr 40px auto;gap:8px;align-items:center;font-size:11.5px;background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:3px 7px}
+#mod-dpr .dp2 .cd-sr .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#mod-dpr .dp2 .cd-sr .nm small{color:var(--ink2,#51627a);margin-left:5px}#mod-dpr .dp2 .cd-sr>b{text-align:right;font-variant-numeric:tabular-nums}#mod-dpr .dp2 .cd-sr .st{min-width:28px;text-align:right}
+#mod-dpr .dp2 .cd-gc .go{margin-top:6px;font-size:11px;font-weight:800;color:var(--dv);text-align:right}
+#mod-dpr .dp2 .cd-sub{border-top:1px solid var(--ln,#c3ccd9)}#mod-dpr .dp2 .cd-sub .sh{display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fbfcfe;border-bottom:1px solid var(--ln2,#e0e5ec);font-size:12px;flex-wrap:wrap}#mod-dpr .dp2 .cd-sub .sh .sp{flex:1}#mod-dpr .dp2 .cd-sub .sh .dates{display:flex;gap:12px;font-size:11px;color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-sub .sh .dates b{color:#132338}
+#mod-dpr .dp2 .cd-lc .cd-sub .body{display:grid;grid-template-columns:1.4fr 1fr}#mod-dpr .dp2 .cd-lc .cd-sub .body>div{padding:8px 10px;min-width:0}#mod-dpr .dp2 .cd-lc .cd-sub .body>div+div{border-left:1px solid var(--ln,#c3ccd9)}
 #mod-dpr .dp2 .d2-tool input.q{flex:1;min-width:140px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:6px 9px;font-size:12px}
 #mod-dpr .dp2 .d2-btn{border:1px solid var(--ln,#c3ccd9);background:#fff;border-radius:5px;padding:6px 11px;font-size:11.5px;font-weight:700;color:#132338;white-space:nowrap}
 #mod-dpr .dp2 .d2-btn.navy{background:var(--dn);color:#fff;border-color:var(--dn)}
@@ -2890,6 +2974,17 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2.eng .d2-tool{background:#fff;padding:8px 14px;border-bottom:1px solid #e2e8f0}#mod-dpr .dp2.eng .d2-tool .d2-grp{border-right:0;gap:8px}#mod-dpr .dp2.eng .d2-tool .d2-grp .lbl{text-transform:uppercase;letter-spacing:.06em;font-size:10px;color:#94a3b8;font-weight:600}
 #mod-dpr .dp2.eng .d2-tool input.q,#mod-dpr .dp2.eng input.qty,#mod-dpr .dp2.eng input.dt,#mod-dpr .dp2.eng .d2-strip label input,#mod-dpr .dp2.eng .d2t input.rem{border:1px solid #cbd5e1;border-radius:6px;color:#1e293b}#mod-dpr .dp2.eng .d2-tool input.q{padding:6px 10px;font-size:12.5px}#mod-dpr .dp2.eng input.qty.bad{border-color:#fca5a5;background:#fef2f2}
 #mod-dpr .dp2.eng .d2-grp.fsg .fsc{background:#fffbeb;border-color:#fde68a;color:#b45309;border-radius:999px}
+/* v165 · M42: two dated blocks on one sheet — Progress · Yesterday (teal) and Work Status · Today (indigo) */
+#mod-dpr .dp2.eng .d2t thead tr.cg th{top:0;height:22px;padding:3px 8px;text-align:center;font-size:10px;letter-spacing:.08em;border-bottom:1px solid #e2e8f0;z-index:4}
+#mod-dpr .dp2.eng .d2t thead tr.cg th.y{background:#ccfbf1;color:#0f766e}#mod-dpr .dp2.eng .d2t thead tr.cg th.t{background:#e0e7ff;color:#4338ca}
+#mod-dpr .dp2.eng .d2t thead tr.cols th{top:22px}
+#mod-dpr .dp2.eng .d2t th.y{background:#f0fdfa;color:#0f766e}#mod-dpr .dp2.eng .d2t th.t{background:#eef2ff;color:#4338ca}
+#mod-dpr .dp2.eng .d2t.one td.y{background:#f7fefc}#mod-dpr .dp2.eng .d2t.one td.t{background:#f8f9ff}
+#mod-dpr .dp2.eng .d2t.one tr.act td.y,#mod-dpr .dp2.eng .d2t.one.flat tr.act td.y{background:#f0fdfa}#mod-dpr .dp2.eng .d2t.one tr.act td.t,#mod-dpr .dp2.eng .d2t.one.flat tr.act td.t{background:#eef2ff}
+#mod-dpr .dp2.eng .d2t.one td.stc.tc .cq .lift{display:block;font-size:10px;color:#64748b;line-height:1.3}
+#mod-dpr .dp2.eng .d2t.one td.stc .ylab{display:block;font-size:9.5px;color:#64748b;line-height:1.3;margin-top:2px;text-align:center}
+#mod-dpr .dp2.eng .d2t.one td .ovr{color:#b45309;font-weight:700;font-size:10px}
+#mod-dpr .dp2.eng .d2t.one td.stc .fbt{display:block;font-size:10px;color:#94a3b8;line-height:1.3}
 #mod-dpr .dp2.eng .d2t th{background:#f8fafc;color:#64748b;text-transform:uppercase;letter-spacing:.06em;font-size:10.5px;font-weight:600;border-right:1px solid #e2e8f0;border-bottom:1px solid #cbd5e1;padding:10px 10px}#mod-dpr .dp2.eng .d2t th .h2{color:#94a3b8;text-transform:none;letter-spacing:0}
 #mod-dpr .dp2.eng .d2t td{border-color:#cbd5e1;padding:6px 8px}#mod-dpr .dp2.eng .d2t.one td{padding:6px 8px}#mod-dpr .dp2 .dtw{position:relative;display:inline-block;border:1px solid #cbd5e1;border-radius:6px;padding:3px 7px;background:#fff;cursor:pointer;line-height:1.2;white-space:nowrap}#mod-dpr .dp2 .dtw .dtv{font-size:12px;font-weight:700;color:#1e293b}#mod-dpr .dp2 .dtw input.dt{position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;min-width:0;opacity:0;margin:0;padding:0;border:0;cursor:pointer}#mod-dpr .dp2 .dtw:focus-within{border-color:#6366f1;box-shadow:0 0 0 2px rgba(99,102,241,.2)}
 #mod-dpr .dp2.eng .d2t.one td.st2 .muted,#mod-dpr .dp2.eng .d2t.one .st2 .cap,#mod-dpr .dp2.eng .d2t.one td .muted{white-space:normal;overflow-wrap:anywhere}#mod-dpr .dp2.eng .d2t.one td.c .pill{padding:1px 4px;font-size:9.5px;letter-spacing:0}
@@ -9846,6 +9941,9 @@ new MutationObserver(function () {
 })();
 const DPR = (function () {
   /* ==================================================================
+     v166.1 · Cards totals prefetched at sheet open (M43 + M44 in parallel) and kept per user × project in localStorage: last answer paints at once, a fresh read replaces it in the background
+     v166 · Cards: package header = whole-package Cert Vs Est per UOM + strip of every activity (M44), club card = one row per clubbed activity (M43) — DPR_Card_Package_mock_v3 approved 19 Oct 2026
+     v165.1 · Cards view (DPR_Card_View / DPR_Card_Report / DPR_Card_Manager mocks, approved 18 Oct 2026) beside Flat / Nested / Summary / Table
      v159 · Daily Report module — engineer DAY SHEET per DPR_Sheet_mock_v1 v4 (08 Oct 2026, approved), on v158's drafts/save,
      v154 · (history) engineer sheet per DRP_Engineer_APPROVED_v15 (2 Oct 2026),
      manager module per DRP_Manager_APPROVED_v3 (2 Oct 2026), on M30 (Daily Reporting Plan).
@@ -9867,6 +9965,7 @@ const DPR = (function () {
     mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null, mPay: {}, mv: 'day', mEng: null, mIncl: true, mFull: false, mCal: null, mTr: null, m39: null,
     hind: null, hSum: null, hParties: null, hOpen: new Set(), hF: 'all', hArea: '', hEd: {},
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
+    cards: false, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: false, mCards: false, _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgReq: false, cdPkgOff: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null
   };
 
@@ -10009,6 +10108,26 @@ const DPR = (function () {
   const lx = wid => { const e = S.W[wid]; return { g: e.g, l: e.l, x: dOf(e.g).lines[wid] }; };
   const ocOf = o => o === 'worked' ? 'w' : o === 'hindrance' ? 'h' : o === 'none' ? 'n' : '';
   const isRo = () => !!(S.locked || S.prev);
+  // v165 · M42: the sheet of date D carries progress + status AS OF D−1 (PD) and the work status + manpower OF D (S.to)
+  const PD = () => S.pd || addDays(S.to, -1);
+  const bookedTo = g => [g.loc_path, g.location].filter(Boolean).join(' › ') || '—';   // the club's booked node (M42 LCA): payload gives the parent path + the node's own name
+  const tOf = (g, l) => { const x = lineX(g, l); return x.t || (x.t = { out: '', rc: '', note: '', started: '' }); };
+  const subT = y => y.t || (y.t = { out: '', rc: '', note: '', s: '' });
+  const finT = (g, l) => finL(l) || !!lineX(g, l).fin;   // finished as of today (register, done-before, or this sheet's own finish) → no status today, no labour
+  const subDoneT = (s, y) => subBase(s) >= 99.9995 || (y.out === 'w' && !y.wip && num(y.pct) >= 99.9995);
+  const openT = (g, l) => (l.stages || []).filter(s => !subDoneT(s, lineX(g, l).subs[s.id]));
+  function outT(g, l) {   // today's W/H/N of a line (a staged line derives it from its open sub-activities, like outOf)
+    if (finT(g, l)) return ''; const x = lineX(g, l); if (!staged(l)) return tOf(g, l).out;
+    const op = openT(g, l), os = op.map(s => subT(x.subs[s.id]).out);
+    if (os.some(o => o === 'w')) return 'w'; if (op.length && os.every(o => o === 'h')) return 'h'; return os.some(o => o) ? 'n' : '';
+  }
+  const ocWord = o => o === 'w' ? 'worked' : o === 'h' ? 'hindrance' : 'none';
+  const lineStartedAsOf = (g, l) => l.started_asof_today || l.started_on || (lineX(g, l).out === 'w' ? (lineX(g, l).started || PD()) : '');   // started on or before today
+  const subStartedAsOf = (s, y) => s.started_on || (y.out === 'w' ? (y.s || PD()) : '') || (subT(y).s && subT(y).s < S.to ? subT(y).s : '');
+  // yesterday's labour (read-only on this sheet): heads this engineer booked on PD for a card / sub / group
+  function prevHeads(g, key) { const rows = ((S.lprev || {}).rows || []).filter(r => r.wgroup_id === g.wgroup_id && (key === 'A' ? true : key[0] === 'S' ? r.work_sub_id === key.slice(2) : r.plan_group_id === key.slice(2))); return rows.reduce((a, r) => a + heads(r.heads || {}), 0); }
+  const prevSrc = () => { const src = (S.lprev || {}).source || 'none'; return src === 'register' ? 'Registered' : src === 'submitted' ? 'Sent' : src === 'draft' ? 'Draft' : ''; };
+  const ylabTxt = (g, key) => { const n = prevHeads(g, key); return n ? `<span class="ylab">Labour ${esc(dsh(PD()))} · ${fmt(n)} Heads · ${prevSrc()}</span>` : ''; };
 
   /* ==================================================================
      ENGINEER · v158 · mock v7 (06 Oct 2026): two sections on one screen, one report per date underneath.
@@ -10018,7 +10137,7 @@ const DPR = (function () {
      Context swap: S.R = { T, Y } hold {sub, groups, np, D, W, NP, npDirty, to, locked}; ctxUse(k) moves one of them into S.* so every
      existing draft helper (dOf, lx, outOf, labUnits …) keeps working unchanged. S.ck says which one is live.
      ================================================================== */
-  const CTX_KEYS = ['sub', 'groups', 'np', 'D', 'W', 'NP', 'npDirty', 'to', 'rdate', 'locked', 'blank'];
+  const CTX_KEYS = ['sub', 'groups', 'np', 'D', 'W', 'NP', 'npDirty', 'to', 'rdate', 'locked', 'blank', 'pd', 'lprev'];   // v165 · pd = progress date (D−1), lprev = yesterday's labour (M42 labour_prev)
   function ctxSave() { if (!S.R) return; const c = S.R[S.ck]; CTX_KEYS.forEach(k => { c[k] = S[k]; }); }
   function ctxLoad(k) { const c = S.R[k]; S.ck = k; CTX_KEYS.forEach(f => { S[f] = c[f]; }); }
   function ctxUse(k) { if (!S.R) return; if (S.same) k = 'T'; if (S.ck === k) return; ctxSave(); ctxLoad(k); }
@@ -10028,6 +10147,7 @@ const DPR = (function () {
   function mkCtx(data) {
     const c = { sub: data.submission, groups: data.groups || [], np: data.np || [], D: {}, W: {}, NP: null, npDirty: false, locked: !!data.locked, blank: null };
     c.to = c.rdate = c.sub.report_date || data.report_date;
+    c.pd = data.progress_date || addDays(c.to, -1); c.lprev = data.labour_prev || null;   // v165 · M42 payload_v 42
     c.groups.forEach(g => { c.D[g.wgroup_id] = newDraft(g); g.lines.forEach(l => { c.W[l.work_id] = { g, l }; }); });
     return c;
   }
@@ -10055,6 +10175,7 @@ const DPR = (function () {
     return (!cy || cy.status === 'Draft' || cy.status === 'Returned') ? y : todayYmd();
   }
   async function engLoad(date, keep) {
+    S.cd = null; S.cdTotReq = null; S.cdPkgReq = false; S.cdTotStale = true; S.cdPkgStale = true;   // v166.1 · keep the cached totals, refresh them behind the new date
     const sc = keep && $('d2_sc') ? $('d2_sc').scrollTop : 0;
     let prevT = null; if (keep && S.R) { ctxSave(); prevT = S.R.T; } else if (keep && S.sub && !S.R) prevT = { to: S.to, D: S.D, NP: S.NP, npDirty: S.npDirty };
     try {
@@ -10066,6 +10187,7 @@ const DPR = (function () {
       if (prevT) carryDrafts(prevT, T);   // v158.4
       S.R = { T, Y: T }; S.same = true; S.homeAreas = dataT.home_areas || S.homeAreas || []; S.returned = dataT.returned || [];
       S.ck = null; ctxLoad('T');
+      cdPrefetch(T.groups);   // v166.1 · Cards totals start loading now, not on the first Cards click
       S.yd = null;
       try { const pd = addDays(T.to, -1); if (!(S.cal && S.cal.loaded[monthOf(pd)])) await calLoad(monthOf(pd)); if (S.cal && S.cal.days[pd]) { const dy = await rpc('rpc_dpr_open_day', { p_report_date: pd, p_shift: 'D' }); S.yd = mkCtx(dy); } } catch (e) { S.yd = null; }   // memo only (never creates a report; never shown as one)
       S.ticks = new Set(); S.cm = false; S.prev = false; S.catMode = false; S.page = null; S.mpo = null; S.remo = null; S.ylab = false;
@@ -10133,14 +10255,19 @@ const DPR = (function () {
     g.lines.forEach(l => {
       const lp = l.progress || null;
       if (lp && lp.no_labour) d.nolab.add('A');
-      const L = { out: lp ? ocOf(lp.outcome) : (l.open_hindrance ? 'h' : ''), rc: (lp && lp.reason_code) || (l.open_hindrance || {}).reason_code || '', note: lp && lp.remarks && !/^WIP/.test(lp.remarks) ? lp.remarks : '',
+      const ys = l.yday_status || null, ohy = l.open_hindrance_yday || null, tp = l.today || null;   // v165 · M42: yesterday's status row (saved on the D−1 sheet) pre-sets the yesterday W/H/N; the D row pre-sets today
+      const L = { out: lp ? ocOf(lp.outcome) : ys ? ocOf(ys.outcome) : (ohy ? 'h' : ''), rc: (lp && lp.reason_code) || (ys && ys.reason_code) || (ohy || {}).reason_code || '', note: lp && lp.remarks && !/^WIP/.test(lp.remarks) ? lp.remarks : '',
+        t: { out: tp ? ocOf(tp.outcome) : '', rc: (tp && tp.reason_code) || '', note: (tp && tp.remarks) || '', started: (tp && tp.started_on) || '' },
         qty: lp && lp.outcome === 'worked' ? num(lp.qty_done) : 0, wip: !!(lp && lp.outcome === 'worked' && !(num(lp.qty_done) > 0) && !staged(l)),
         started: (lp && lp.started_on) || l.started_on || '', fin: !!(lp && lp.marks_finished), finOn: (lp && lp.finished_on) || '', cert: lp && lp.site_cert_qty != null ? num(lp.site_cert_qty) : null, subs: {} };
       (l.stages || []).forEach(s => {
         const sp = (l.stage_progress || {})[s.id], sd = (l.stage_dates || {})[s.id] || {}, so = (l.stage_out || {})[s.id] || null, base = subBase(s), pct = sp != null ? num(sp) : base;
-        let o = so ? ocOf(so.outcome) : (pct > base + 0.0005 ? 'w' : ''); if (!so && !o && s.open_hindrance) o = 'h';
-        L.subs[s.id] = { out: o, rc: (so && so.reason_code) || (s.open_hindrance || {}).reason_code || '', note: (so && so.remarks) || '', pct, wip: !!(so && so.outcome === 'worked' && pct <= base + 0.0005), s: sd.started_on || s.started_on || '', e: sd.finished_on || s.finished_on || '' };
+        const yss = ((ys || {}).stages || {})[s.id] || null, shy = (l.stages_hindrance_yday || {})[s.id] || null, tps = ((tp || {}).stages || {})[s.id] || null;   // v165
+        let o = so ? ocOf(so.outcome) : (pct > base + 0.0005 ? 'w' : yss ? ocOf(yss.outcome) : ''); if (!so && !o && shy) o = 'h';
+        L.subs[s.id] = { out: o, rc: (so && so.reason_code) || (yss && yss.reason_code) || (shy || {}).reason_code || '', note: (so && so.remarks) || '', pct, wip: !!(so && so.outcome === 'worked' && pct <= base + 0.0005), s: sd.started_on || s.started_on || '', e: sd.finished_on || s.finished_on || '',
+          t: { out: tps ? ocOf(tps.outcome) : '', rc: (tps && tps.reason_code) || '', note: (tps && tps.remarks) || '', s: (tps && tps.started_on) || '' } };
         if (so && so.no_labour) { d.nolab.add('S:' + s.id); if (s.group_id) d.nolab.add('G:' + s.group_id); }   // v161.3
+        s.open_hindrance_yday = shy;   // v165 · the sub's hindrance as of PD (its open_hindrance is as of D)
       });
       d.lines[l.work_id] = L;
     });
@@ -10180,20 +10307,25 @@ const DPR = (function () {
     if (open.length && os.every(o => o === 'h')) return 'h';
     return os.some(o => o) ? 'n' : '';
   }
-  function deriveCard(g) {
-    const os = g.lines.map(l => outOf(g, l)), d = dOf(g);
+  function deriveCard(g) {   // v165 · the card's outcome follows TODAY (M42: dpr_group_progress.outcome = today's); yesterday's only when nothing is marked for today
+    const d = dOf(g), ot = g.lines.map(l => outT(g, l)), os = ot.some(Boolean) ? ot : g.lines.map(l => outOf(g, l));
     d.out = os.some(o => o === 'w') ? 'worked' : os.some(o => o === 'h') ? 'hindrance' : 'none';
-    const hl = g.lines.find(l => outOf(g, l) === 'h'); d.rc = hl ? (staged(hl) ? ((hl.stages || []).map(s => lineX(g, hl).subs[s.id]).find(y => y.out === 'h') || {}).rc : lineX(g, hl).rc) || '' : '';
+    const hl = g.lines.find(l => outT(g, l) === 'h'); d.rc = hl ? (staged(hl) ? (openT(g, hl).map(s => subT(lineX(g, hl).subs[s.id])).find(y => y.out === 'h') || {}).rc : tOf(g, hl).rc) || '' : '';
+    d.clubH = g.lines.length > 1 && ot.length > 0 && ot.every(o => o === 'h');   // every member hindered today → one period for the whole club (card level)
   }
   const markDirty = g => { dOf(g).dirty = true; deriveCard(g); };
   // "Starts Today" = the start date IS the report date; a back-dated start is "Running · Started dd Mon"
-  const subStarts = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on && (!y.s || y.s === S.to);
-  const dirStarts = (g, l) => { const x = lineX(g, l); return !staged(l) && x.out === 'w' && !l.started_on && (!x.started || x.started === S.to); };
+  // v165 · "Starting Today" = today's W on a part that had not started as of today; the yesterday block has its own (Y) variants for its Status cell
+  const subStarts = (s, y, base) => !subDoneT(s, y) && subT(y).out === 'w' && !subStartedAsOf(s, y) && (!subT(y).s || subT(y).s === S.to);
+  const dirStarts = (g, l) => !staged(l) && !finT(g, l) && tOf(g, l).out === 'w' && !lineStartedAsOf(g, l);
+  const subStartsY = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on && (!y.s || y.s === PD());
+  const dirStartsY = (g, l) => { const x = lineX(g, l); return !staged(l) && x.out === 'w' && !l.started_on && (!x.started || x.started === PD()); };
   const subFresh = (s, y, base) => base <= 0.0005 && y.out === 'w' && !s.start_locked && !s.started_on;
   // worked ON the report date (labour is asked only for these): a part finished before the report date is back-dated history
-  const subWorkedOn = (s, y, base) => base < 99.9995 && y.out === 'w' && !(y.e && y.e < S.to);
-  const lineWorkedOn = (g, l) => { if (finL(l)) return false; const x = lineX(g, l); return staged(l) ? (l.stages || []).some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) : x.out === 'w' && !(x.fin && x.finOn && x.finOn < S.to); };
-  const lineBackDated = (g, l) => !finL(l) && outOf(g, l) === 'w' && !lineWorkedOn(g, l);
+  // v165 · M42: labour is asked for the parts worked TODAY (Status D = W); a part done as of yesterday carries none
+  const subWorkedOn = (s, y, base) => !subDoneT(s, y) && subT(y).out === 'w';
+  const lineWorkedOn = (g, l) => { if (finT(g, l)) return false; const x = lineX(g, l); return staged(l) ? (l.stages || []).some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) : tOf(g, l).out === 'w'; };
+  const lineBackDated = () => false;   // v165 · the back-dated haze is gone: a finish is always yesterday's fact, today's cell says Finished
   const startsN = (g, l) => finL(l) ? 0 : staged(l) ? (l.stages || []).filter(s => subStarts(s, lineX(g, l).subs[s.id], subBase(s))).length : (dirStarts(g, l) ? 1 : 0);
   const cardHasW = g => g.lines.some(l => lineWorkedOn(g, l));
   const cardBackDated = g => !cardHasW(g) && g.lines.some(l => lineBackDated(g, l));
@@ -10204,14 +10336,17 @@ const DPR = (function () {
   const npHeads = () => npDraft().reduce((a, e) => a + heads(e.heads), 0);
   const allHeads = () => S.groups.reduce((a, g) => a + cardHeads(g), 0) + npHeads();
   const workedCards = () => S.groups.filter(g => g.lines.some(l => outOf(g, l) !== ''));
-  const hasH = (g, l) => !finL(l) && (outOf(g, l) === 'h' || (staged(l) && (l.stages || []).some(s => lineX(g, l).subs[s.id].out === 'h')));
+  const hasH = (g, l) => !finL(l) && (outOf(g, l) === 'h' || (staged(l) && (l.stages || []).some(s => lineX(g, l).subs[s.id].out === 'h')));   // yesterday
+  const hasHT = (g, l) => !finT(g, l) && (outT(g, l) === 'h' || (staged(l) && openT(g, l).some(s => subT(lineX(g, l).subs[s.id]).out === 'h')));   // v165 · today
+  const tReasonMissing = (g, l) => !finT(g, l) && (staged(l) ? openT(g, l).some(s => { const t = subT(lineX(g, l).subs[s.id]); return t.out === 'h' && !t.rc; }) : (tOf(g, l).out === 'h' && !tOf(g, l).rc));
   const hindCards = () => S.groups.filter(g => g.lines.some(l => hasH(g, l)));
   const dirtyCards = () => S.groups.filter(g => dOf(g).dirty);
   function labStats() { let miss = 0, starts = 0; S.groups.forEach(g => { if (cardActive(g)) miss += labUnits(g).filter(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key)).length; g.lines.forEach(l => { starts += startsN(g, l); }); }); return { all: allHeads(), miss, starts }; }
   // "Needs Attention" per tab: work = W without heads / H without reason; prog = worked without a quantity / H without reason
   function attW(g, l) {
     if (finL(l)) return false; const x = lineX(g, l);
-    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && lineWorkedOn(g, l) && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }) && !noLab(g, 'A'));   // v163.6 · a back-dated finish carries no labour (v158.3) — never ask heads for it
+    if (tReasonMissing(g, l)) return true;   // v165 · today's hindrance without a reason
+    if (!staged(l)) return (x.out === 'h' && !x.rc) || (lineWorkedOn(g, l) && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }) && !noLab(g, 'A'));   // v163.6 · a back-dated finish carries no labour (v158.3) — never ask heads for it
     if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && y.out === 'h' && !y.rc; })) return true;
     return labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key));
   }
@@ -10270,7 +10405,7 @@ const DPR = (function () {
   }
   function sideHtml() {
     const today = todayYmd(), days = Object.values(S.cal.days || {});
-    const T = S.R ? inCtx('T', () => ({ starts: labStats().starts, heads: allHeads(), w: allLines().filter(({ g, l }) => outOf(g, l) === 'w').length, h: allLines().filter(({ g, l }) => hasH(g, l)).length })) : { starts: 0, heads: 0, w: 0, h: 0 };
+    const T = S.R ? inCtx('T', () => ({ starts: labStats().starts, heads: allHeads(), w: allLines().filter(({ g, l }) => outT(g, l) === 'w').length, h: allLines().filter(({ g, l }) => hasHT(g, l)).length })) : { starts: 0, heads: 0, w: 0, h: 0 };   // v165 · today's status
     const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ g, l }) => !finL(l) && (outOf(g, l) !== '' || startedB(l))).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
     const last = days.filter(x => x.submitted_at).sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)))[0];
     const pend = days.filter(x => x.status === 'Draft' && x.report_date < addDays(today, -1)).map(x => dsh(x.report_date)).sort().join(', '), ret = days.filter(x => x.status === 'Returned').map(x => dsh(x.report_date)).sort().join(', ');
@@ -10281,7 +10416,7 @@ const DPR = (function () {
       <div class="d2-leg"><span><i class="b lab"></i>Labour Entered</span><span><i class="b draft"></i>Draft</span><span><i class="b sent"></i>Submitted</span><span><i class="b acc"></i>Accepted</span><span><i class="b ret"></i>Returned</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>Not Created</span></div>
       <div class="d2-h4">${S.to === today ? 'Today' : S.to === addDays(today, -1) ? 'Yesterday' : 'Sheet'} · ${esc(dsh(S.to))}</div>
       <div class="d2-kpis"><div class="d2-kpi ok"><b>${T.w}</b>Working</div><div class="d2-kpi teal"><b>${T.starts}</b>Starting</div><div class="d2-kpi red"><b>${T.h}</b>Hindrance</div><div class="d2-kpi vio"><b>${fmt(T.heads)}</b>Heads</div></div>
-      <div class="d2-kpis"><div class="d2-kpi"><b>${Y.rep}/${Y.all}</b>Reported</div><div class="d2-kpi red"><b>${attCount()}</b>Attention</div></div>
+      <div class="d2-kpis"><div class="d2-kpi"><b>${Y.rep}/${Y.all}</b>Progress ${esc(dsh(PD()))}</div><div class="d2-kpi red"><b>${attCount()}</b>Attention</div></div>
       <div class="d2-sk"><div class="r"><span>Today</span><b>${esc(dmy(today))}</b></div><div class="r"><span>Last Submitted</span><b>${last ? esc(dts(last.submitted_at)) : '—'}</b></div><div class="r"><span>Pending Dates</span><b style="color:var(--drd)">${esc(pend || '—')}</b></div><div class="r"><span>Returned</span><b style="color:var(--drd)">${esc(ret || '—')}</b></div></div>`;
   }
   const stKeyY = () => S.R ? inCtx('Y', stKey) : stKey();
@@ -10311,7 +10446,7 @@ const DPR = (function () {
     h += `<div class="d2-fix d2-tool"><span class="d2-grp"><div class="d2-seg sm"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div></span>
       <span class="d2-grp"><span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div></span>
       <span class="d2-grp"><span class="lbl">Show</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div></span>
-      <span class="d2-grp"><span class="lbl">Rows</span><div class="d2-seg sm"><button class="${S.nested ? '' : 'on'}" onclick="DPR.flatSet(true)">Flat</button><button class="${S.nested ? 'on' : ''}" onclick="DPR.flatSet(false)">Nested</button></div>${S.nested ? `<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>` : ''}</span>
+      <span class="d2-grp"><span class="lbl">Rows</span><div class="d2-seg sm"><button class="${!S.nested && !S.cards ? 'on' : ''}" onclick="DPR.flatSet(true)">Flat</button><button class="${S.nested ? 'on' : ''}" onclick="DPR.flatSet(false)">Nested</button><button class="${S.cards ? 'on' : ''}" onclick="DPR.cardsSet(true)">Cards</button></div>${S.nested ? `<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>` : ''}</span>
       <span class="d2-row2"><span class="d2-grp fsg"><span class="lbl">Find</span><input class="q fs" data-k="fs" placeholder="Activity · Group · Sub-Activity · Location…" value="${esc(S.fs || '')}" oninput="DPR.fsFind(this.value)">${S.fs ? `<span class="fsc">${fsCount()}</span><button class="d2-btn sm" onclick="DPR.fsFind('')">× Clear</button>` : ''}</span>
       ${ro ? '' : `<span class="d2-grp add"><span class="lbl">Add Work</span><input class="q" data-k="cq" placeholder="Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"><button class="d2-btn sm ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn sm navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn sm ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button></span>`}</span></div>`;
     if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Manpower Is Entered Once For The Club.</div>`;
@@ -10335,7 +10470,7 @@ const DPR = (function () {
     if (S.prev) return `<span class="msg"><b>${d}</b> · Review The Report, Then Send — Date &amp; Time Of Submission Are Recorded.</span><button class="d2-btn" onclick="DPR.prevClose()">← Back To Edit</button><button class="d2-btn ok" onclick="DPR.submitGo()">Send ${d} To Manager ✓</button>`;
     if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span>${S.sub.status === 'Submitted' && !Object.values((S.cal && S.cal.days) || {}).some(x => x.report_date > S.to) ? `<button class="d2-btn amb" onclick="DPR.retrieveAsk()">↩ Retrieve For Correction</button>` : ''}<button class="d2-btn" onclick="DPR.tab('rep')">← Back To Day Reports</button>`;   // v163 · item 3
     const L = labStats(), attTxt = att ? ` · <span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : '';
-    return `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}Status, Progress &amp; Manpower Of ${d}${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send ${d} →</button>`;
+    return `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}Progress Of ${esc(dsh(PD()))} · Status &amp; Manpower Of ${d}${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send ${d} →</button>`;
   }
 
   /* ---------- shared bits ---------- */
@@ -10348,20 +10483,21 @@ const DPR = (function () {
     return `<span class="hreason"><select data-k="r:${wid}:${sid}" class="${rc ? '' : 'bad'}" ${ro ? 'disabled' : ''} onchange="DPR.rcSet('${wid}','${sid}',this.value)"><option value="">Pick Reason…</option>${M.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select>${oh ? `<span class="hopen">Open Since ${esc(dsh(oh.from_date))}</span>` : rc ? '' : ' ' + pill('p-red', 'Reason Missing')}</span>`;
   }
   function statusDir(g, l) {
-    const x = lineX(g, l), o = x.out, st = dirStarts(g, l), base = cumBase(l);
+    const x = lineX(g, l), o = x.out, st = dirStartsY(g, l), base = cumBase(l), oh = l.open_hindrance_yday || null, pd = PD();   // v165 · this cell is AS OF PD (yesterday)
     if (finL(l)) return pill('p-ok', 'Finished');
-    if (o === 'h') return pill('p-red', 'Hindrance') + (l.open_hindrance && l.open_hindrance.from_date < S.to ? ' ' + pill('p-grey', 'Since ' + dsh(l.open_hindrance.from_date)) : '');
-    if (o === 'w') { if (st) return pill('p-teal', 'Starts Today' + (x.wip ? ' · WIP' : '')); if (x.wip) return pill('p-amb', 'WIP'); if (x.fin && x.finOn && x.finOn < S.to) return pill('p-ok', 'Done ' + dsh(x.finOn)) + ' ' + pill('p-grey', 'Back-Dated'); const s0 = x.started || l.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, S.to) + 1)) : ''); }
-    if (o === 'n') return pill('p-grey', base > 0 ? 'No Work Today' : 'Not Started');
+    if (o === 'h') return pill('p-red', 'Hindrance') + (oh && oh.from_date < pd ? ' ' + pill('p-grey', 'Since ' + dsh(oh.from_date)) : '');
+    if (o === 'w') { if (st) return pill('p-teal', 'Started ' + dsh(pd) + (x.wip ? ' · WIP' : '')); if (x.wip) return pill('p-amb', 'WIP'); if (x.fin && x.finOn && x.finOn < pd) return pill('p-ok', 'Done ' + dsh(x.finOn)) + ' ' + pill('p-grey', 'Back-Dated'); const s0 = x.started || l.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, pd) + 1)) : ''); }
+    if (o === 'n') return pill('p-grey', base > 0 ? 'No Work' : 'Not Started');
     return pill('p-grey', base > 0 || l.started_on ? 'Running' : 'Not Started');
   }
   function statusSub(s, y, base) {
     if (base >= 99.9995) return pill('p-ok', 'Done');
-    if (y.out === 'h') return pill('p-red', 'Hindrance') + (s.open_hindrance && s.open_hindrance.from_date < S.to ? ' ' + pill('p-grey', 'Since ' + dsh(s.open_hindrance.from_date)) : '');
-    if (y.out === 'w') { if (subStarts(s, y, base)) return pill('p-teal', 'Starts Today' + (y.wip ? ' · WIP' : num(y.pct) >= 99.9995 ? ' · Done' : '')); if (y.wip) return pill('p-amb', 'WIP');
-      if (num(y.pct) >= 99.9995) return y.e && y.e < S.to ? pill('p-ok', 'Done ' + dsh(y.e)) + ' ' + pill('p-grey', 'Back-Dated · ' + durTxt(y.s || s.started_on, y.e)) : pill('p-ok', 'Done Today');
-      const s0 = y.s || s.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, S.to) + 1)) : ''); }
-    if (y.out === 'n') return pill('p-grey', base > 0 ? 'No Work Today' : 'Not Started');
+    const oh = s.open_hindrance_yday || null, pd = PD();   // v165 · as of PD
+    if (y.out === 'h') return pill('p-red', 'Hindrance') + (oh && oh.from_date < pd ? ' ' + pill('p-grey', 'Since ' + dsh(oh.from_date)) : '');
+    if (y.out === 'w') { if (subStartsY(s, y, base)) return pill('p-teal', 'Started ' + dsh(pd) + (y.wip ? ' · WIP' : num(y.pct) >= 99.9995 ? ' · Done' : '')); if (y.wip) return pill('p-amb', 'WIP');
+      if (num(y.pct) >= 99.9995) return y.e && y.e < pd ? pill('p-ok', 'Done ' + dsh(y.e)) + ' ' + pill('p-grey', 'Back-Dated · ' + durTxt(y.s || s.started_on, y.e)) : pill('p-ok', 'Done ' + dsh(pd));
+      const s0 = y.s || s.started_on; return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, pd) + 1)) : ''); }
+    if (y.out === 'n') return pill('p-grey', base > 0 ? 'No Work' : 'Not Started');
     return pill('p-grey', base > 0 || s.started_on ? 'Running' : 'Not Started');
   }
   const tickCell = (g, l, idx, ro) => `<td class="c" style="white-space:nowrap">${S.cm && !ro ? `<input type="checkbox" data-k="t:${l.work_id}" ${S.ticks.has(l.work_id) ? 'checked' : ''} ${finL(l) ? 'disabled title="Finished"' : g.lines.length > 1 ? 'title="Ticks The Whole Club — It Merges Into The New Club"' : ''} onchange="DPR.tick('${l.work_id}',this.checked)" style="margin-right:5px;vertical-align:middle">` : ''}${idx}</td>`;
@@ -10426,7 +10562,10 @@ const DPR = (function () {
      Bands (package › activity › location) and folds are the v158 ones; drafts, labour units, strips and save are unchanged.
      v159.3 (DPR_Sheet_Polish_mock_v1, approved 09 Oct 2026): Hindrance column removed — reason sits in the Status cell; 11 columns via colgroup;
      indentation by level (td.ind + --lv). (v160.4: the cell fitter was removed for speed.) */
-  const COLS = 11;   // v159.3 · Hindrance column folded into the Status cell
+  const COLS = 12;   // v159.3 · Hindrance column folded into the Status cell · v165 · + Status <D> (today) before Contractor
+  // v165 · two-row header: the band row names the two dated blocks, the column row carries the dates
+  const bandHead = (lead, tail) => `<tr class="cg"><th class="b" colspan="${lead}"></th><th class="y" colspan="4">Progress · Yesterday ${esc(dsh(PD()))} EOD</th><th class="t" colspan="3">Work Status · Today ${esc(dsh(S.to))}</th><th class="b" colspan="${tail}"></th></tr>`;
+  const certOver = (l, x) => { const est = num(l.est_qty); return x.cert != null && est > 0 && x.cert > est + 0.0005 ? ` <span class="ovr" title="Site Certified Above The Estimate — Accepted As Measured">+${Math.round((x.cert - est) / est * 100)}% Over Est.</span>` : ''; };
   // v163 · Find (shared fuzzy matcher) in three levels — the first level that finds anything wins, so a location word like '1st' never drags a whole line in:
   //   0 · the row's own name (sub-activity + its group; a direct line's activity)  1 · own name + location  2 · the line (activity · location · package · club)
   function fsPlan() {
@@ -10444,7 +10583,7 @@ const DPR = (function () {
     }
     S._fsP = { q, n: S.groups, t, m: t < 0 ? new Map() : T[t] }; return S._fsP;
   }
-  const fsSet = l => fsPlan().m.get(l.work_id) || new Set();
+  const fsSet = l => S._cdF ? (S._cdF.get(l.work_id) || new Set()) : (fsPlan().m.get(l.work_id) || new Set());   // v165.1 · the card group drill narrows a line to one group's sub-activities
   const fsHit = ({ l }) => fsPlan().m.has(l.work_id);
   function visibleLines() {
     if (S.fs) return allLines().filter(fsHit);   // v163 · item 1: Find searches active AND finished lines, ignoring the Show filter
@@ -10458,27 +10597,29 @@ const DPR = (function () {
     items.sort((a, b) => (finL(a.l) - finL(b.l)) || key(a).localeCompare(key(b)));
     const fix = (html, cells) => html.replace(/^<tr([^>]*)>[\s\S]*?(?=<td class="dt2">)/, (m, a) => `<tr${a}>` + cells).replace(/colspan="(\d+)"/g, (m, n) => +n >= COLS - 3 ? `colspan="${+n + 3}"` : m);   // only full-width spans (strip / remark rows) grow with the 3 extra columns
     const lead = (g, l, grp, sub, fin, n, cls) => `<td class="c">${n}${fin ? '<br>' + pill('p-ok', 'Fin') : ''}</td><td><b>${esc(lineLoc(g, l))}</b><span class="p">${esc(pathTail(lineLocPath(g, l)))}</span></td><td class="fa" title="${esc(l.activity)}"><span class="cl2">${esc(l.activity)}</span>${g.lines.length > 1 ? ` ${pill('p-amb', 'Club')}` : ''}</td><td>${esc(grp || '—')}</td><td class="fs ${cls || ''}">${sub}</td>`;
-    let h = `<table class="d2t sheet one flat"><colgroup><col style="width:2.4%"><col style="width:8%"><col style="width:11%"><col style="width:5.5%"><col style="width:11.5%"><col style="width:6%"><col style="width:6%"><col style="width:8.6%"><col style="width:4.8%"><col style="width:9.5%"><col style="width:7.5%"><col style="width:8.5%"><col style="width:7.5%"><col style="width:3.2%"></colgroup><thead><tr><th class="c">#</th><th>Location</th><th>Activity</th><th>Group</th><th>Sub-Activity</th><th class="c">Start</th><th class="c">Finish</th><th class="c">Status ${dd}</th><th class="n">[A]</th><th>Reported ${dd} [B]</th><th>Cum. [C]</th><th>Contractor</th><th>Manpower ${dd}</th><th class="c">✎</th></tr></thead><tbody>`;
+    const pdd = esc(dsh(PD()));   // v165 · yesterday's date on the progress block
+    let h = `<table class="d2t sheet one flat"><colgroup><col style="width:2.4%"><col style="width:7.4%"><col style="width:10%"><col style="width:5%"><col style="width:10.6%"><col style="width:5.6%"><col style="width:6%"><col style="width:8.4%"><col style="width:4.4%"><col style="width:9%"><col style="width:6.8%"><col style="width:8.4%"><col style="width:7.4%"><col style="width:6.6%"><col style="width:2.6%"></colgroup><thead>${bandHead(7, 1)}<tr class="cols"><th class="c">#</th><th>Location</th><th>Activity</th><th>Group</th><th>Sub-Activity</th><th class="c">Start</th><th class="c">Finish</th><th class="c y">Status ${pdd}<span class="h2">Progress · Hindrance</span></th><th class="n y">[A]</th><th class="y">Reported ${pdd} EOD [B]</th><th class="y">Cum. [C]</th><th class="c t">Status ${dd}<span class="h2">Contractor · Manpower</span></th><th class="t">Contractor</th><th class="t">Manpower ${dd}</th><th class="c">✎</th></tr></thead><tbody>`;
     let n = 0; const clubDone = new Set(), dot = '<i class="dt">·</i>', J = parts => parts.filter(Boolean).join(dot);
     const comTail = lines => { const ps = lines.map(l => String(l.loc_path || '').split(' › ').filter(Boolean)); if (!ps.length) return ''; let k = 0; while (ps.every(q => q[k] && q[k] === ps[0][k])) k++; return ps[0].slice(Math.max(0, k - 2), k).join(' › '); };   // common part of the units' paths, last two levels
     const unitsTxt = ls => { const u = [...new Set(ls.map(l => l.location || ''))].filter(Boolean); return u.length === 1 ? `<b class="ln">${esc(u[0])}</b>` : u.length + ' Units'; };
     const clubBand = g => {   // v163.2 · one band per club, before its first member: activity · roll-up location · units · Un-Club, with the club's one labour entry
       clubDone.add(g.wgroup_id); const act = g.lines.filter(l => !finL(l)), acts = [...new Set((act.length ? act : g.lines).map(l => linePkg(g, l)))], u = { key: 'A', worked: cardHasW(g) };   // v163.2 · the club header names the activity's PARENT (package), where the club's manpower is reported
       const acts2 = ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
-      let r = `<tr class="band club"><td colspan="${FC - 3}">${J([pill('p-amb', 'Club'), `<b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b>`, `<b class="ln">${esc(comTail(act.length ? act : g.lines))}</b>`, unitsTxt(act.length ? act : g.lines), '<span class="muted">Report Together · Manpower Once</span>'])}${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
+      let r = `<tr class="band club"><td colspan="${FC - 4}">${J([pill('p-amb', 'Club'), `<b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b>`, `<b class="ln">${esc(comTail(act.length ? act : g.lines))}</b>`, unitsTxt(act.length ? act : g.lines), '<span class="muted">Report Together · Manpower Once</span>', `<span class="muted">Manpower Booked To <b>${esc(bookedTo(g))}</b></span>`])}${acts2}</td>${stTdT(tSum(g.lines.map(l => ({ g, l }))))}<td class="con t">${conCell(g, 0, 'A', ro)}</td><td class="t">${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
       if (cardHasW(g)) r += mpStrip(g, u, g.label || 'Club', FC, ro); return r; };
     const actBand = (g, ls) => `<tr class="band act"><td colspan="${FC}">${J([`<b class="an">${esc(ls[0].activity)}</b>`, `<b class="ln">${esc(comTail(ls))}</b>`, unitsTxt(ls), ls.length > 1 ? '' : `<span class="muted">Est ${fmt(ls[0].est_qty)} ${esc(ls[0].uom || '')}</span>`])}</td></tr>`;   // v163.2 · visual break at every new activity (direct lines)
     const stagedBand = (g, l, fin, ro2) => {   // v163.2 · the activity's own row as one band: facts dot-separated, the few controls inline, labour cells kept
       const x = lineX(g, l), wid = l.work_id, r = ro2 || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995), rk = 'r|' + wid, lv = labLevel(g), starts = startsN(g, l), est = num(l.est_qty), uom = esc(l.uom || '');
-      const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
+      const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? pill('p-ok', 'Running') : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
       const s0 = l.started_on || (o === 'w' ? x.started : ''), e0 = fin ? l.finished_on : x.fin ? (x.finOn || finDef(x.started || l.started_on)) : '';
-      const finC = fin ? `Done ${l.finished_on ? esc(dsh(l.finished_on)) : 'Earlier'}${l.site_cert_qty != null ? ` · Cert. ${fmt(l.site_cert_qty)} ${uom}` : ''}` : x.fin ? (r || l.end_locked ? `Finish ${esc(dsh(e0))} · Cert. ${x.cert == null ? '—' : fmt(x.cert)} ${uom}` : `Finish <span class="dtw"><b class="dtv">${dsh(e0)}</b><input type="date" class="dt dtb" data-k="le:${wid}" value="${e0}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span> · Cert. <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> ${uom}`) : '';
+      const finC = fin ? `Done ${l.finished_on ? esc(dsh(l.finished_on)) : 'Earlier'}${l.site_cert_qty != null ? ` · Cert. ${fmt(l.site_cert_qty)} ${uom}` : ''}` : x.fin ? (r || l.end_locked ? `Finish ${esc(dsh(e0))} · Cert. ${x.cert == null ? '—' : fmt(x.cert)} ${uom}` : `Finish <span class="dtw"><b class="dtv">${dsh(e0)}</b><input type="date" class="dt dtb" data-k="le:${wid}" value="${e0}" min="${lineMinEnd(g, l)}" max="${PD()}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span> · Cert. <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> ${uom}${certOver(l, x)}`) : '';
       const ud = (l.unsent_drafts || []).filter(z => num(z.qty) > 0), udT = ud.length ? `<span class="d2-ud">Incl. ${ud.map(z => fmt(z.qty) + ' ' + uom + ' ' + esc(z.status) + ' ' + dsh(z.report_date)).join(', ')}</span>` : '';
       const wAll = r || !open.length ? '' : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`;
       const u = { key: 'A', worked: cardHasW(g) };
-      const cm = g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier')) : dash}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
-      let h2 = `<tr class="band act sb${fin ? ' fin' : ''}${attOf(g, l) ? ' att' : ''}" data-wg="${g.wgroup_id}"><td colspan="${FC - 3}">${J([`<b class="an">${esc(l.activity)}</b>${g.lines.length > 1 ? ' ' + pill('p-amb', 'Club') : ''}`, esc(pathTail(lineLocPath(g, l))), `<b class="ln">${esc(lineLoc(g, l))}</b>`, (l.stages || []).length + ' Sub-Activities', `<span class="muted">Est ${fmt(est)} ${uom}</span>`, s0 ? esc(dSpan(s0, e0, fin || x.fin)) : '', finC, `<span class="cumt">Cum ${Math.round(pc)}% · ${fmt(r2(est * pc / 100))} ${uom}${pc - pb > 0.0005 ? ` <span class="muted">(+${Math.round(pc - pb)}% ${dd})</span>` : ''}</span>`, udT, st, wAll, lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''])}</td>${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
-      if (lv === 'activity' && o === 'w' && g.lines.length === 1 && cardHasW(g)) h2 += mpStrip(g, u, l.activity, FC, r);
+      const oT = outT(g, l);   // v165
+      const cm = g.lines.length > 1 ? '<td colspan="2" class="muted t">On The Club ↑</td>' : lv === 'activity' ? `<td class="con t">${conCell(g, 0, 'A', r)}</td><td class="t">${oT === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done')) : dash}</td>` : `<td class="con t">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td class="t"><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
+      let h2 = `<tr class="band act sb${fin ? ' fin' : ''}${attOf(g, l) ? ' att' : ''}" data-wg="${g.wgroup_id}"><td colspan="${FC - 4}">${J([`<b class="an">${esc(l.activity)}</b>${g.lines.length > 1 ? ' ' + pill('p-amb', 'Club') : ''}`, esc(pathTail(lineLocPath(g, l))), `<b class="ln">${esc(lineLoc(g, l))}</b>`, (l.stages || []).length + ' Sub-Activities', `<span class="muted">Est ${fmt(est)} ${uom}</span>`, s0 ? esc(dSpan(s0, e0, fin || x.fin)) : '', finC, `<span class="cumt">Cum ${Math.round(pc)}% · ${fmt(r2(est * pc / 100))} ${uom}${pc - pb > 0.0005 ? ` <span class="muted">(+${Math.round(pc - pb)}% ${pdd})</span>` : ''}</span>`, udT, st, wAll, lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : '', fin || lv !== 'activity' ? '' : ylabTxt(g, 'A').replace('class="ylab"', 'class="muted"')])}</td>${tCell(g, l, null, r)}${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+      if (lv === 'activity' && oT === 'w' && g.lines.length === 1 && cardHasW(g)) h2 += mpStrip(g, u, l.activity, FC, r);
       return h2 + remRow(rk, wid, '', x.note, 'Remarks', FC, r); };
     const akey = ({ g, l }) => [l.activity, String(l.loc_path || ''), finL(l) ? 1 : 0].join('\u0001');
     items.forEach((it, i) => { const { g, l } = it, fin = finL(l), r = ro || fin, set = F ? (F.get(l.work_id) || new Set()) : null, wid = l.work_id;
@@ -10495,12 +10636,13 @@ const DPR = (function () {
     const nk = 'np', np = npDraft(), npHit = e => !S.fs || fz(e.text + ' ' + (e.locs || []).map(x => x.name || '').join(' '), S.fs);
     if (!S.fs || np.some(npHit)) { h += `<tr class="g1"><td colspan="${FC}" class="ind" style="--lv:0">Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
       np.forEach((e, i) => { if (!npHit(e)) return; const key2 = 'np|' + i, tr = colsNow(), open = S.mpo === key2;
-        h += `<tr class="npr"><td class="c">${pill('p-grey', 'NP')}</td><td colspan="4"><b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? esc(e.locs.map(x => x.name).join(', ')) : 'No Location Yet'}</span>${ro ? '' : ` <button class="d2-btn sm" onclick="DPR.npLocPick(${i})">+ Location</button> <button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.npDel(${i})">Remove</button>`}</td><td colspan="2"></td><td class="c">${pill('p-ok', 'W')}</td><td colspan="3" class="muted">Labour Only · No Progress</td><td class="con">${esc(conName(e.con) || '—')}${ro ? '' : ` <a class="lk" onclick="DPR.npCon(${i})">Change</a>`}</td><td><span class="d2-mp" onclick="DPR.mpTog('${key2}')"><b>${fmt(heads(e.heads))}</b><i>${tradeTxt(tradeMix([e])) || 'None'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
+        h += `<tr class="npr"><td class="c">${pill('p-grey', 'NP')}</td><td colspan="4"><b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? esc(e.locs.map(x => x.name).join(', ')) : 'No Location Yet'}</span>${ro ? '' : ` <button class="d2-btn sm" onclick="DPR.npLocPick(${i})">+ Location</button> <button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.npDel(${i})">Remove</button>`}</td><td colspan="2"></td><td class="c">${pill('p-ok', 'W')}</td><td colspan="4" class="muted">Labour Only · No Progress</td><td class="con">${esc(conName(e.con) || '—')}${ro ? '' : ` <a class="lk" onclick="DPR.npCon(${i})">Change</a>`}</td><td><span class="d2-mp" onclick="DPR.mpTog('${key2}')"><b>${fmt(heads(e.heads))}</b><i>${tradeTxt(tradeMix([e])) || 'None'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
         if (open) h += `<tr class="strip"><td></td><td colspan="${FC - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span>${tr.map(t => `<label class="d2-tr"><span>${esc(tCode(t.trade_code))}</span><input type="number" inputmode="numeric" min="0" data-k="np:${i}:${t.trade_code}" value="${num(e.heads[t.trade_code]) || ''}" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${t.trade_code}',this.value)"></label>`).join('')}</div></td></tr>`; }); }
     return h + sumRow(FC, dd) + `</tbody></table>`;
   }
-  function flatSet(b) { S.nested = !b; S.mpo = null; S.remo = null; redraw(); }
+  function flatSet(b) { S.nested = !b; S.cards = false; S.cd = null; S.mpo = null; S.remo = null; redraw(); }   // v165.1 · Cards is the third Rows option (cardsSet)
   function sheetHtml3(ro) {
+    if (S.cards && !S.fs) return cdSheet(ro);   // v165.1 · Rows · Cards (Find stays flat)
     if (!S.nested || S.fs) return flatHtml(ro);   // v163 · flat is the default; Find always flat
     const items = visibleLines(), cols = COLS;
     if (!items.length) return `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${allLines().length ? 'No Activity Matches The Filter.' : 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.'}</div></div>`;
@@ -10509,18 +10651,20 @@ const DPR = (function () {
     if (S.fs) items.sort((a, b) => finL(a.l) - finL(b.l));
     const grp = new Map(); items.forEach(it => { const [a, b] = keyOf(it); if (!grp.has(a)) grp.set(a, new Map()); const m = grp.get(a); if (!m.has(b)) m.set(b, []); m.get(b).push(it); });
     const dd = esc(dsh(S.to));
-    const colg = `<colgroup><col style="width:${S.cm && !ro ? 52 : 30}px"><col><col style="width:6.5%"><col style="width:7%"><col style="width:12%"><col style="width:6.5%"><col style="width:13%"><col style="width:9%"><col style="width:9.5%"><col style="width:9.5%"><col style="width:${ro ? 40 : 58}px"></colgroup>`;
-    const head = `<th class="c">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c">Start Date</th><th class="c">Finish Date</th><th class="c">Status ${dd}<span class="h2">W / H / N · Hindrance Reason</span></th><th class="n">Last Reported<span class="h2">[A]</span></th><th>Reported ${dd}<span class="h2">[B]</span></th><th>Cum. To Date<span class="h2">[C] = [A] + [B]</span></th><th>Contractor</th><th>Manpower ${dd}</th><th class="c">✎</th>`;
+    const pdd = esc(dsh(PD()));   // v165
+    const colg = `<colgroup><col style="width:${S.cm && !ro ? 52 : 30}px"><col><col style="width:6.2%"><col style="width:6.6%"><col style="width:11.5%"><col style="width:6%"><col style="width:12%"><col style="width:8.4%"><col style="width:10.5%"><col style="width:9%"><col style="width:9%"><col style="width:${ro ? 40 : 58}px"></colgroup>`;
+    const head = `<th class="c">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c">Start Date</th><th class="c">Finish Date</th><th class="c y">Status ${pdd}<span class="h2">W / H / N · Progress · Hindrance</span></th><th class="n y">Last Reported<span class="h2">[A]</span></th><th class="y">Reported ${pdd} EOD<span class="h2">[B]</span></th><th class="y">Cum. To Date<span class="h2">[C] = [A] + [B]</span></th><th class="c t">Status ${dd}<span class="h2">W / H / N · Contractor · Manpower</span></th><th class="t">Contractor</th><th class="t">Manpower ${dd}</th><th class="c">✎</th>`;
     const bandCnt = all => { const w = all.filter(({ g, l }) => outOf(g, l) === 'w').length, hh = all.filter(({ g, l }) => hasH(g, l)).length, nS = all.reduce((a, { g, l }) => a + startsN(g, l), 0), att = all.filter(({ g, l }) => attOf(g, l)).length, hd = [...new Set(all.map(x => x.g))].reduce((a, g) => a + cardHeads(g), 0), rep = all.filter(({ g, l }) => outOf(g, l) !== '').length;
-      return `${rep}/${all.length} Reported · ${w} Working · ${nS} Start · ${hh} Hindrance · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
-    let h = `<table class="d2t sheet one">${colg}<thead><tr>${head}</tr></thead><tbody>`, idx = 0;
+      const wT = all.filter(({ g, l }) => outT(g, l) === 'w').length;   // v165
+      return `${rep}/${all.length} Reported ${esc(dsh(PD()))} · ${w} Worked · ${hh} Hindrance · Today ${wT} Working · ${nS} Starting · ${fmt(hd)} Heads${att ? ' · <span style="color:var(--drd)">' + att + ' Need Attention</span>' : ''}`; };
+    let h = `<table class="d2t sheet one">${colg}<thead>${bandHead(4, 1)}<tr class="cols">${head}</tr></thead><tbody>`, idx = 0;
     const banded = new Set();
     const clubRowN = g => {   // v163.1 · one row per club, placed before its first member; label = the clubbed units (stale numeric labels dropped)
       banded.add(g.wgroup_id); const u = { key: 'A', worked: cardHasW(g) }, units = [...new Set(g.lines.map(l => lineLoc(g, l)))];
       const ps = g.lines.map(l => String(l.loc_path || '').split(' › ').filter(Boolean)); let k = 0; while (ps.length && ps.every(q => q[k] && q[k] === ps[0][k])) k++; const where = (ps.length ? ps[0].slice(Math.max(0, k - 2), k).join(' › ') : '') || g.location || '';   // v163.2 · roll-up level of the clubbed units
       const acts2 = ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" title="Remove The Whole Club From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
       const actL = g.lines.filter(l => !finL(l)), acts = [...new Set((actL.length ? actL : g.lines).map(l => linePkg(g, l)))];   // v163.2 · parent (package) name on the club header
-      let r = `<tr class="club band"><td colspan="${cols - 3}" class="ind" style="--lv:2">${pill('p-amb', 'Club')}<i class="dt">·</i><b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b><i class="dt">·</i><b class="ln">${esc(where)}</b><i class="dt">·</i>${units.length} Unit${units.length === 1 ? '' : 's'}<i class="dt">·</i><span class="muted">Report Together · Manpower Once</span>${acts2}</td><td class="con">${conCell(g, 0, 'A', ro)}</td><td>${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
+      let r = `<tr class="club band"><td colspan="${cols - 4}" class="ind" style="--lv:2">${pill('p-amb', 'Club')}<i class="dt">·</i><b class="an">${esc(acts[0])}${acts.length > 1 ? ' +' + (acts.length - 1) : ''}</b><i class="dt">·</i><b class="ln">${esc(where)}</b><i class="dt">·</i>${units.length} Unit${units.length === 1 ? '' : 's'}<i class="dt">·</i><span class="muted">Report Together · Manpower Once</span><i class="dt">·</i><span class="muted">Manpower Booked To <b>${esc(bookedTo(g))}</b></span>${acts2}</td>${stTdT(tSum(g.lines.map(l => ({ g, l }))))}<td class="con t">${conCell(g, 0, 'A', ro)}</td><td class="t">${cardHasW(g) ? mpCell(g, u, ro) : dash}</td><td></td></tr>`;
       if (cardHasW(g)) r += mpStrip(g, u, g.label || 'Club', cols, ro);
       return r;
     };
@@ -10546,7 +10690,7 @@ const DPR = (function () {
     if (!S.fs || np.some(npHit)) h += `<tr class="g1"><td colspan="${cols}" class="ind" style="--lv:0">${togBtn(nk)}Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
     if (!folded(nk)) np.forEach((e, i) => { if (!npHit(e)) return;
       const key = 'np|' + i, tr = colsNow(), open = S.mpo === key;
-      h += `<tr class="np"><td></td><td class="name ind" style="--lv:1">${pill('p-grey', 'NP')} <b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location Yet'}</span>${ro ? '' : ` <a style="color:var(--dn);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npLocPick(${i})">＋ Location</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npDel(${i})">Remove</a>`}</td><td colspan="2" class="muted">—</td><td class="c stc"><div class="cq">${pill('p-ok', 'W')}</div></td><td colspan="3" class="muted">Labour Only · No Progress</td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td><td><span class="d2-mp ${heads(e.heads) ? '' : 'bad'}" onclick="DPR.mpTog('${key}')"><b>${fmt(heads(e.heads))}</b><i>${mixTxt(e.heads) || 'Heads Missing'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
+      h += `<tr class="np"><td></td><td class="name ind" style="--lv:1">${pill('p-grey', 'NP')} <b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location Yet'}</span>${ro ? '' : ` <a style="color:var(--dn);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npLocPick(${i})">＋ Location</a> · <a style="color:var(--drd);cursor:pointer;font-weight:700;font-size:10.5px" onclick="DPR.npDel(${i})">Remove</a>`}</td><td colspan="2" class="muted">—</td><td class="c stc"><div class="cq">${pill('p-ok', 'W')}</div></td><td colspan="4" class="muted">Labour Only · No Progress</td><td class="con">${e.con ? esc(conName(e.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td><td><span class="d2-mp ${heads(e.heads) ? '' : 'bad'}" onclick="DPR.mpTog('${key}')"><b>${fmt(heads(e.heads))}</b><i>${mixTxt(e.heads) || 'Heads Missing'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
       if (open) h += `<tr class="strip"><td></td><td colspan="${cols - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span><div class="crow">${tr.map(t => `<label><span>${esc(t.trade_name)}</span><input data-k="np:${i}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${e.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${esc(t.trade_code)}',0,this.value)"></label>`).join('')}<span class="tot">Total <b>${fmt(heads(e.heads))}</b></span></div><div class="crow acts">${ro ? '' : `<button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button>`}<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button></div></div></td></tr>`;
     });
     h += sumRow(cols, dd);
@@ -10555,48 +10699,78 @@ const DPR = (function () {
   function sumRow(cols, dd) {
     const np = npDraft(), tr = colsNow(), tot = {}; S.groups.forEach(g => { const d = dOf(g); d.cons.concat(...Object.values(d.rows || {})).forEach(c => Object.entries(c.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); })); }); np.forEach(e => Object.entries(e.heads).forEach(([t, v]) => { tot[t] = (tot[t] || 0) + num(v); }));
     const W = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'w').length, H = allLines().filter(({ g, l }) => hasH(g, l)).length, Nn = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === 'n').length, nf = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '' && startedB(l)).length, nns = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '' && !startedB(l)).length;
-    return `<tr class="sum"><td colspan="${cols - 2}">Total · ${dd} · ${W} Worked · ${H} Hindrance · ${Nn} No Work${nf ? ' · <span style="color:var(--drd)">' + nf + ' Not Marked</span>' : ''}${nns ? ' · <span class="muted">' + nns + ' Not Started</span>' : ''} · Estimated ${fmt(allHeads() - npHeads())} + Non-Estimated ${fmt(npHeads())} Heads</td><td><span class="d2-mp"><b>${fmt(allHeads())}</b><i>${tr.map(t => esc(tAbbr(t.trade_code)) + fmt(tot[t.trade_code] || 0)).join(' ')}</i></span></td><td></td></tr>`;
+    const WT = allLines().filter(({ g, l }) => outT(g, l) === 'w').length, HT = allLines().filter(({ g, l }) => hasHT(g, l)).length, NT = allLines().filter(({ g, l }) => outT(g, l) === 'n').length, ST = allLines().reduce((a, { g, l }) => a + startsN(g, l), 0);   // v165 · today
+    return `<tr class="sum"><td colspan="${cols - 2}">Progress ${esc(dsh(PD()))} · ${W} Worked · ${H} Hindrance · ${Nn} No Work${nf ? ' · <span style="color:var(--drd)">' + nf + ' Not Marked</span>' : ''}${nns ? ' · <span class="muted">' + nns + ' Not Started</span>' : ''} &nbsp;|&nbsp; Today ${dd} · ${WT} Working · ${ST} Starting · ${HT} Hindrance · ${NT} No Work · Estimated ${fmt(allHeads() - npHeads())} + Non-Estimated ${fmt(npHeads())} Heads</td><td><span class="d2-mp"><b>${fmt(allHeads())}</b><i>${tr.map(t => esc(tAbbr(t.trade_code)) + fmt(tot[t.trade_code] || 0)).join(' ')}</i></span></td><td></td></tr>`;
   }
   const conCell = (g, ci, key, ro) => { const c = rowsK(g, key)[ci] || {}; return `${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)" title="No Work Order Found (Not Issued Or Under Amendment) — Pick The Contractor">Contractor Not Available</b>'}${rowsK(g, key).length > 1 ? ` <span class="muted">+${rowsK(g, key).length - 1}</span>` : ''}${ro ? '' : `<div class="cl"><a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a> · <a onclick="DPR.conPick('${g.wgroup_id}',-1,'${key}')">＋ Contractor</a></div>`}`; };
   // contractor + manpower cells for a row (two cells, or one message spanning both)
-  function cmCells(g, l, s, Gp, o, ro) {
-    const lv = labLevel(g), two = t => `<td colspan="2" class="muted">${t}</td>`;
+  function cmCells(g, l, s, Gp, o0, ro) {   // v165 · follows TODAY's status (o0, yesterday's, is ignored)
+    const lv = labLevel(g), two = t => `<td colspan="2" class="muted t">${t}</td>`, x = lineX(g, l);
+    if (s && subDoneT(s, x.subs[s.id])) return two(pill('p-ok', 'Done' + (x.subs[s.id].e || s.finished_on ? ' ' + dsh(x.subs[s.id].e || s.finished_on) : '')) + ' No Labour Today');
+    if (!s && finT(g, l)) return two(pill('p-ok', 'Finished') + ' No Labour Today');
+    const o = s ? subT(x.subs[s.id]).out : outT(g, l);
     if (o !== 'w') return two(o === 'h' ? pill('p-red', 'Hindrance') + ' No Labour' : o === 'n' ? 'No Work · No Labour' : '— Not Filled');
     if (g.lines.length > 1) return two('On The Club ↑');
-    const lockTxt = e => two(pill('p-ok', 'Done' + (e ? ' ' + dsh(e) : '')) + ' No Labour On ' + esc(dsh(S.to)) + ' · Locked');   // v158.3
-    if (s && !subWorkedOn(s, lineX(g, l).subs[s.id], subBase(s))) return lockTxt(lineX(g, l).subs[s.id].e || s.finished_on);
-    if (!s && !lineWorkedOn(g, l)) return lockTxt(lineX(g, l).finOn || l.finished_on);
     const key = unitKeyOf(g, l, s, Gp);
     if (!key) return two(lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓');
     if (key === 'A' && s) return two('On The Activity ↑');
     if (key[0] === 'G' && s) return two('On The Group ↑');
     const u = labUnits(g).find(z => z.key === key) || { key, worked: true };
-    return `<td class="con">${conCell(g, 0, key, ro)}</td><td>${mpCell(g, u, ro)}</td>`;
+    return `<td class="con t">${conCell(g, 0, key, ro)}</td><td class="t">${mpCell(g, u, ro)}</td>`;
   }
   // v159.3 · hindrance reason lives under the status pill: picker (edit) / reason text (read-only) / open-since note
-  function hinRow(wid, sid, o, rc, oh, ro) {
-    const since = oh ? `<span class="hopen">Open Since ${esc(dsh(oh.from_date))}${o === 'h' || ro ? '' : ' · Mark W To Close'}</span>` : '';
+  function hinRow(wid, sid, o, rc, oh, ro, tod) {   // v165 · tod = today's cell (rt: keys → DPR.rcSetT); an open period on the today cell is lifted by W (shown by statusT), so it only notes 'Open Since' while nothing is marked
+    const since = oh && !(tod && o === 'w') ? `<span class="hopen">Open Since ${esc(dsh(oh.from_date))}${o === 'h' || ro ? '' : (tod ? ' · Mark W To Lift' : ' · Mark W To Close')}</span>` : '';
     if (o !== 'h') return since ? `<div class="hrw">${since}</div>` : '';
     const rtx = rc ? ((S.masters.hindrance_reasons.find(r => r.reason_code === rc) || {}).reason_text || rc) : '';
     if (ro) return `<div class="hrw"><span class="rt">${rc ? esc(rtx) : 'Reason Missing'}</span></div>`;
     const opts = `<option value="">Pick Reason…</option>${S.masters.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}`;
-    const sel = cls => `<select data-k="r:${wid}:${sid}" class="${cls}" onchange="DPR.rcSet('${wid}','${sid}',this.value)">${opts}</select>`;
+    const sel = cls => `<select data-k="${tod ? 'rt' : 'r'}:${wid}:${sid}" class="${cls}" onchange="DPR.${tod ? 'rcSetT' : 'rcSet'}('${wid}','${sid}',this.value)">${opts}</select>`;
     return rc ? `<div class="hrw"><label class="rpk" title="Change Reason"><span class="rt">${esc(rtx)} <i>▾</i></span>${sel('')}</label></div>`
       : `<div class="hrw">${sel('bad')}${pill('p-red', 'Reason Missing')}</div>`;
   }
-  const stTd = inner => `<td class="c stc"><div class="cq">${inner}</div></td>`;
+  const stTd = inner => `<td class="c stc y"><div class="cq">${inner}</div></td>`;
+  const stTdT = inner => `<td class="c stc t tc"><div class="cq">${inner}</div></td>`;
+  // v165 · Work Status · Today D: the text under today's W/H/N
+  function statusT(g, l, s) {
+    const x = lineX(g, l), y = s ? x.subs[s.id] : null, t = s ? subT(y) : tOf(g, l), o = t.out, oh = s ? s.open_hindrance : l.open_hindrance, d = S.to, pd = PD();
+    const s0 = s ? subStartedAsOf(s, y) : lineStartedAsOf(g, l), started = !!s0 || (s ? subBase(s) > 0.0005 : cumBase(l) > 0.0005);
+    if (o === 'h') return pill('p-red', 'Hindrance') + ' ' + pill('p-grey', 'Since ' + dsh(oh && oh.from_date < d ? oh.from_date : d));
+    if (o === 'w') {
+      const lift = oh && oh.from_date <= pd ? (() => { const lost = daysBetween(oh.from_date, pd) + 1; return `<span class="lift">Lifted ${esc(dsh(d))} · ${lost} Day${lost === 1 ? '' : 's'} Lost</span>`; })() : '';   // W on an open period lifts it as of yesterday evening
+      if (s ? subStarts(s, y, subBase(s)) : dirStarts(g, l)) return pill('p-teal', 'Starting Today') + `<span class="lift">Start ${esc(dsh(t.s || t.started || d))}</span>` + lift;
+      if (lift) return pill('p-ok', 'Resumed') + lift;
+      return pill('p-ok', 'Running') + (s0 ? ' ' + pill('p-grey', 'Day ' + (daysBetween(s0, d) + 1)) : '');
+    }
+    if (o === 'n') return pill('p-grey', started ? 'No Work Today' : 'Not Started');
+    return oh ? '' : pill('p-grey', started ? '—' : 'Not Started');
+  }
+  function tCell(g, l, s, ro) {   // the whole today-status <td> for a direct line (s = null), a staged line's own row (s = null, staged) or a sub-activity row
+    const x = lineX(g, l), wid = l.work_id, sid = s ? s.id : '';
+    if (finL(l)) return stTdT(pill('p-grey', 'Finished'));
+    if (!s && x.fin) return stTdT(pill('p-grey', 'Finished ' + dsh(x.finOn || finDef(x.started || l.started_on))) + '<span class="fbt">No Status Needed</span>');
+    if (!s && staged(l)) {
+      const op = openT(g, l), o = outT(g, l), nH = op.filter(z => subT(x.subs[z.id]).out === 'h').length;
+      if (!op.length) return stTdT(pill('p-grey', 'All Done') + '<span class="fbt">No Status Needed</span>');
+      return stTdT(`${ro ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked Today" onclick="DPR.wAllT('${wid}')">W All</button>`}<div class="st2">${o === 'w' && startsN(g, l) ? pill('p-teal', lineStartedAsOf(g, l) ? startsN(g, l) + ' Starting Today' : 'Starting Today') : o ? '' : '<span class="muted">Per Sub ↓</span>'}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}`);
+    }
+    if (s && subDoneT(s, x.subs[sid])) { const y = x.subs[sid]; return stTdT(pill('p-grey', 'Done' + (y.e || s.finished_on ? ' ' + dsh(y.e || s.finished_on) : ''))); }
+    const t = s ? subT(x.subs[sid]) : tOf(g, l), o = t.out, oh = s ? s.open_hindrance : l.open_hindrance;
+    return stTdT(`${ro ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOcT('${wid}','@'${s ? `,'${sid}'` : ''})`)}<div class="st2">${statusT(g, l, s)}</div>${hinRow(wid, sid, o, t.rc, oh, ro, true)}`);
+  }
+  const tSum = ls => { const w = ls.filter(({ g, l }) => outT(g, l) === 'w').length, h = ls.filter(({ g, l }) => hasHT(g, l)).length, n = ls.filter(({ g, l }) => outT(g, l) === 'n').length; return `<span class="muted" style="white-space:nowrap">${w} W · ${h} H · ${n} N</span>`; };
   const udNote = l => { const u = (l.unsent_drafts || []).filter(x => num(x.qty) > 0); return u.length ? `<div class="d2-ud">Incl. ${u.map(x => fmt(x.qty) + ' ' + esc(l.uom || '') + ' In ' + (x.mine ? 'Your ' : esc((x.engineer || '').split(' ')[0]) + '’s ') + esc(x.status) + ' ' + dsh(x.report_date)).join(' · ')}</div>` : ''; };   // v161.3
   const cumCell = (pc, big, small, extra) => `<div class="d2-cum"><span class="bar2"><i style="width:${Math.min(100, Math.max(0, pc))}%"></i></span><b>${big}</b>${small ? `<span class="muted">${small}</span>` : ''}${extra || ''}</div>`;
   function dirRow3(it, idx, ro) {
     const { g, l } = it, x = lineX(g, l), wid = l.work_id, est = num(l.est_qty), base = cumBase(l), fin = finL(l), r = ro || fin, o = fin ? '' : x.out, lvl = it.lv || 2;
     const q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom), rk = 'r|' + wid;
-    const att = attOf(g, l) ? ' att' : '', bd = lineBackDated(g, l) ? ' bd' : '';
-    // start
-    const startC = fin ? `<b>${esc(dsh(l.started_on))}</b>${lockI}` : !r && o === 'w' && !l.started_on ? `<span class="dtw"><b class="dtv">${dsh(x.started || S.to)}</b><input type="date" class="dt" data-k="ls:${wid}" value="${x.started || S.to}" max="${S.to}" onchange="DPR.lineStart('${wid}',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (l.started_on || (x.started && o === 'w')) ? `<b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? lockI : ''}` : dash;
+    const att = attOf(g, l) ? ' att' : '', bd = '', pd = PD(), oT = outT(g, l);   // v165
+    // start (yesterday's fact: defaults to PD, never after it)
+    const startC = fin ? `<b>${esc(dsh(l.started_on))}</b>${lockI}` : !r && o === 'w' && !l.started_on ? `<span class="dtw"><b class="dtv">${dsh(x.started || pd)}</b><input type="date" class="dt" data-k="ls:${wid}" value="${x.started || pd}" max="${pd}" onchange="DPR.lineStart('${wid}',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (l.started_on || (x.started && o === 'w')) ? `<b>${esc(dsh(l.started_on || x.started))}</b>${l.start_locked ? lockI : ''}` : oT === 'w' && dirStarts(g, l) ? `<b>${esc(dsh(tOf(g, l).started || S.to))}</b> <span class="muted">Today</span>` : dash;
     // finish (+ site cert.)
-    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
-    // status
-    const stC = `${r ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOc('${wid}','@')`)}<div class="st2">${statusDir(g, l)}</div>${fin ? '' : hinRow(wid, '', o, x.rc, l.open_hindrance, r)}`;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>${certOver(l, x)}` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${pd}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>${certOver(l, x)}</div>`) : dash;
+    // status (yesterday)
+    const stC = `${r ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOc('${wid}','@')`)}<div class="st2">${statusDir(g, l)}</div>${fin ? '' : hinRow(wid, '', o, x.rc, l.open_hindrance_yday, r)}${fin ? '' : ylabTxt(g, 'A')}`;
     // [B]
     let bC;
     if (r) bC = o === 'w' ? `<b>${x.wip ? 'WIP' : fmt(q)}</b> <span class="muted">${uom}</span>` : dash;
@@ -10604,25 +10778,25 @@ const DPR = (function () {
     else bC = o === 'n' ? `<span class="muted">No Work</span>` : dash;
     const cum = o === 'w' ? after : base, pc = est ? Math.min(100, cum / est * 100) : 0;
     let h = `<tr class="act ${fin ? 'fin' : ''}${att}${bd}" data-wg="${g.wgroup_id}">${tickCell(g, l, idx, ro)}<td class="name ind" style="--lv:${lvl}">${nameCell(g, l)}</td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>${stTd(stC)}
-      <td class="n">${fmt(base)} <span class="muted">${uom}</span><div class="muted">${est ? Math.round(base / est * 100) : 0}%${est && base > est + 0.0005 ? ' ' + pill('p-red', 'Over Est.') : ''}</div>${udNote(l)}</td><td class="dn">${bC}</td><td>${cumCell(pc, fmt(cum) + ' ' + uom, (est ? Math.round(cum / est * 100) : 0) + '%', x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '')}</td>${cmCells(g, l, null, null, o, r)}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
-    if (o === 'w' && g.lines.length === 1 && labLevel(g) === 'activity' && lineWorkedOn(g, l)) h += mpStrip(g, { key: 'A', worked: true }, l.activity, COLS, r);
+      <td class="n y">${fmt(base)} <span class="muted">${uom}</span><div class="muted">${est ? Math.round(base / est * 100) : 0}%${est && base > est + 0.0005 ? ' ' + pill('p-red', 'Over Est.') : ''}</div>${udNote(l)}</td><td class="dn y">${bC}</td><td class="y">${cumCell(pc, fmt(cum) + ' ' + uom, (est ? Math.round(cum / est * 100) : 0) + '%', x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '')}</td>${tCell(g, l, null, r)}${cmCells(g, l, null, null, o, r)}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+    if (oT === 'w' && g.lines.length === 1 && labLevel(g) === 'activity' && lineWorkedOn(g, l)) h += mpStrip(g, { key: 'A', worked: true }, l.activity, COLS, r);
     return h + remRow(rk, wid, '', x.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', COLS, r);
   }
   function stageRows3(it, idx, ro) {
     const { g, l } = it, x = lineX(g, l), wid = l.work_id, fin = finL(l), r = ro || fin, o = outOf(g, l), pc = linePct(g, l), pb = lineBasePct(l), open = (l.stages || []).filter(s => subBase(s) < 99.9995), rk = 'r|' + wid, lv = labLevel(g);
-    const fd = folded(wid), starts = startsN(g, l), est = num(l.est_qty), uom = esc(l.uom || ''), lvl = it.lv || 2;
-    const fsAll = !S.fs || fsSet(l).has('*');   // v163 · Find: the line itself matched → every sub shows; else only the matched subs
+    const fd = folded(wid), starts = startsN(g, l), est = num(l.est_qty), uom = esc(l.uom || ''), lvl = it.lv || 2, pd = PD(), oT = outT(g, l);   // v165
+    const fsAll = !(S.fs || S._cdF) || fsSet(l).has('*');   // v163 · Find: the line itself matched → every sub shows; else only the matched subs · v165.1 · card group drill
     const nH = fin ? 0 : (l.stages || []).filter(s => subBase(s) < 99.9995 && x.subs[s.id].out === 'h').length;
-    const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : pill('p-ok', 'Running')) : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
+    const st = fin ? pill('p-ok', 'Finished') : o === 'h' ? pill('p-red', 'Hindrance') : o === 'w' ? pill('p-ok', 'Running') : o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', pb > 0 || l.started_on ? 'Running' : 'Not Started');
     const s0 = l.started_on || (o === 'w' ? x.started : '');
-    const startC = s0 ? `<b>${esc(dsh(s0))}</b>${l.start_locked ? lockI : ''}` : dash;
-    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span></div>`) : dash;
+    const startC = s0 ? `<b>${esc(dsh(s0))}</b>${l.start_locked ? lockI : ''}` : oT === 'w' && starts ? `<b>${esc(dsh(S.to))}</b> <span class="muted">Today</span>` : dash;
+    const finC = fin ? `<b>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</b>${lockI}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}` : x.fin ? (r ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>${certOver(l, x)}` : `${l.end_locked ? `<b>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</b>${lockI}` : `<span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${pd}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}<div><span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>${certOver(l, x)}</div>`) : dash;
     const u = { key: 'A', worked: cardHasW(g) };
-    const cm = g.lines.length > 1 ? '<td colspan="2" class="muted">On The Club ↑</td>' : lv === 'activity' ? `<td class="con">${conCell(g, 0, 'A', r)}</td><td>${o === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done Earlier') + ' <span class="muted">No Labour On ' + esc(dsh(S.to)) + '</span>') : dash}</td>` : `<td class="con">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
+    const cm = g.lines.length > 1 ? '<td colspan="2" class="muted t">On The Club ↑</td>' : lv === 'activity' ? `<td class="con t">${conCell(g, 0, 'A', r)}</td><td class="t">${oT === 'w' ? (cardHasW(g) ? mpCell(g, u, r) : pill('p-ok', 'Done') + ' <span class="muted">No Labour Today</span>') : finT(g, l) ? pill('p-ok', 'Finished') + ' <span class="muted">No Labour Today</span>' : dash}</td>` : `<td class="con t">${conCell(g, 0, 'A', r)}<div class="muted">Default For Rows Below</div></td><td class="t"><span class="d2-mp"><b>${fmt(cardHeads(g))}</b><i>Σ ${lv === 'sub' ? 'Sub-Activities' : 'Groups'}</i></span></td>`;
     let h = `<tr class="act ${fin ? 'fin' : ''}${attOf(g, l) ? ' att' : ''}${lineBackDated(g, l) ? ' bd' : ''}${S.fs && fsSet(l).has('*') ? ' fsm' : ''}" data-wg="${g.wgroup_id}">${tickCell(g, l, idx, ro)}<td class="name ind" style="--lv:${lvl}">${togBtn(wid)}${nameCell(g, l)} ${lv !== 'activity' ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : 'Manpower Per Group') : ''}</td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>
-      ${stTd(`${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}<div class="st2">${(r || !open.length) && o ? (starts ? pill('p-teal', 'Starts ' + dsh(S.to)) : '') : st}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}`)}
-      <td class="n">${Math.round(pb)}%${udNote(l)}</td><td class="dn"><span class="muted">${pc - pb > 0.0005 ? '+' + Math.round(pc - pb) + '% · ' : ''}Per Sub-Activity ↓</span></td><td>${cumCell(pc, Math.round(pc) + '%', fmt(r2(est * pc / 100)) + ' ' + uom, x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '')}</td>${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
-    if (lv === 'activity' && o === 'w' && g.lines.length === 1 && cardHasW(g)) h += mpStrip(g, u, l.activity, COLS, r);
+      ${stTd(`${r || !open.length ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked, No Progress" onclick="DPR.wipAll('${wid}')">W All</button>`}<div class="st2">${(r || !open.length) && o ? '' : st}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}${fin ? '' : ylabTxt(g, 'A')}`)}
+      <td class="n y">${Math.round(pb)}%${udNote(l)}</td><td class="dn y"><span class="muted">${pc - pb > 0.0005 ? '+' + Math.round(pc - pb) + '% · ' : ''}Per Sub-Activity ↓</span></td><td class="y">${cumCell(pc, Math.round(pc) + '%', fmt(r2(est * pc / 100)) + ' ' + uom, x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '')}</td>${tCell(g, l, null, r)}${cm}<td class="c" style="white-space:nowrap">${remBtn(rk, !!x.note, r)}${r ? '' : dropBtn(g, l)}</td></tr>`;
+    if (lv === 'activity' && oT === 'w' && g.lines.length === 1 && cardHasW(g)) h += mpStrip(g, u, l.activity, COLS, r);
     h += remRow(rk, wid, '', x.note, 'Remarks', COLS, r);
     if (fd) return h;
     subGroups(l).forEach(Gp => {
@@ -10632,8 +10806,10 @@ const DPR = (function () {
         const wsOn = Gp.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length, nDone = Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length, gDone = nDone === Gp.subs.length;
         const gu = lv === 'group' ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: wsOn > 0 }) : null;
         const doneTag = gDone ? ' ' + pill('p-ok', '✓ Done' + (gd.e ? ' ' + dsh(gd.e) : '')) : '';
-        const gcm = gu && wsOn ? `<td class="con">${conCell(g, 0, gu.key, r)}</td><td>${mpCell(g, gu, r)}</td>` : `<td colspan="2" class="muted">${ws && !wsOn ? pill('p-ok', 'Done Earlier') + ' No Labour On ' + esc(dsh(S.to)) : lv === 'sub' ? 'Per Sub-Activity ↓' : lv === 'group' ? '—' : 'On The Activity ↑'}</td>`;
-        h += `<tr class="grp${gDone ? ' gdone' : ws && !wsOn ? ' bd' : ''}"><td></td><td class="ind" style="--lv:${lvl + 1}">${togBtn(gk)}<b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${doneTag}</td><td class="dt2">${gd.s ? `<b>${esc(dsh(gd.s))}</b>` : dash}</td><td class="dt2">${gd.e ? `<b>${esc(dsh(gd.e))}</b>${gd.lock ? lockI : ''} <span class="muted">${esc(durTxt(gd.s, gd.e))}</span>` : dash}</td>${stTd(`<span class="muted" style="white-space:nowrap">${ws} W · ${hs} H · ${ns} N</span>${hs ? `<div class="hrw"><span class="rt">${hs} Hindrance ↓</span></div>` : ''}`)}<td class="n">${Math.round(gb)}%</td><td class="dn"><span class="muted">${gp - gb > 0.0005 ? '+' + Math.round(gp - gb) + '%' : '—'}</span></td><td>${cumCell(gp, Math.round(gp) + '%', '', '')}</td>${gcm}<td></td></tr>`;
+        const wsT = Gp.subs.filter(s => !subDoneT(s, x.subs[s.id]) && subT(x.subs[s.id]).out === 'w').length, hsT = Gp.subs.filter(s => !subDoneT(s, x.subs[s.id]) && subT(x.subs[s.id]).out === 'h').length, nsT = Gp.subs.filter(s => !subDoneT(s, x.subs[s.id]) && subT(x.subs[s.id]).out === 'n').length;   // v165 · today
+        const gT = stTdT(gDone ? pill('p-grey', 'Done') : `<span class="muted" style="white-space:nowrap">${wsT} W · ${hsT} H · ${nsT} N</span>${hsT ? `<div class="hrw"><span class="rt">${hsT} Hindrance ↓</span></div>` : ''}${lv === 'group' && !gDone ? ylabTxt(g, 'G:' + Gp.id) : ''}`);
+        const gcm = gu && wsOn ? `<td class="con t">${conCell(g, 0, gu.key, r)}</td><td class="t">${mpCell(g, gu, r)}</td>` : `<td colspan="2" class="muted t">${gDone ? pill('p-ok', 'Done') + ' No Labour Today' : lv === 'sub' ? 'Per Sub-Activity ↓' : lv === 'group' ? '—' : 'On The Activity ↑'}</td>`;
+        h += `<tr class="grp${gDone ? ' gdone' : ws && !wsOn ? ' bd' : ''}"><td></td><td class="ind" style="--lv:${lvl + 1}">${togBtn(gk)}<b>${esc(Gp.name)}</b> <span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${doneTag}</td><td class="dt2">${gd.s ? `<b>${esc(dsh(gd.s))}</b>` : dash}</td><td class="dt2">${gd.e ? `<b>${esc(dsh(gd.e))}</b>${gd.lock ? lockI : ''} <span class="muted">${esc(durTxt(gd.s, gd.e))}</span>` : dash}</td>${stTd(`<span class="muted" style="white-space:nowrap">${ws} W · ${hs} H · ${ns} N</span>${hs ? `<div class="hrw"><span class="rt">${hs} Hindrance ↓</span></div>` : ''}`)}<td class="n y">${Math.round(gb)}%</td><td class="dn y"><span class="muted">${gp - gb > 0.0005 ? '+' + Math.round(gp - gb) + '%' : '—'}</span></td><td class="y">${cumCell(gp, Math.round(gp) + '%', '', '')}</td>${gT}${gcm}<td></td></tr>`;
         if (gu && wsOn) h += mpStrip(g, gu, Gp.name, COLS, r);
         if (folded(gk)) return;
       }
@@ -10643,24 +10819,330 @@ const DPR = (function () {
   }
   function subRow3(g, l, s, r, Gp, lvl) {
     const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = r || done, rk = 'r|' + wid + '|' + sid, lv = labLevel(g);
-    const att = !done && (((o === 'h' && !y.rc) || (o === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005));
-    const bd = !done && o === 'w' && !subWorkedOn(s, y, base);   // v158.3 · finished on an earlier date
+    const t = subT(y), pd = PD(), oT = done || subDoneT(s, y) ? '' : t.out;   // v165
+    const att = !done && (((o === 'h' && !y.rc) || (oT === 'h' && !t.rc) || (oT === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005));
+    const bd = false;
     const fresh = !rr && subFresh(s, y, base);
-    const startC = done ? `<b>${esc(dsh(y.s || s.started_on))}</b>${lockI}` : fresh ? `<span class="dtw"><b class="dtv">${dsh(y.s || S.to)}</b><input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || S.to}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (y.s || s.started_on) ? `<b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? lockI : ''}` : dash;
+    const startC = done ? `<b>${esc(dsh(y.s || s.started_on))}</b>${lockI}` : fresh ? `<span class="dtw"><b class="dtv">${dsh(y.s || pd)}</b><input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || pd}" max="${pd}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (y.s || s.started_on) ? `<b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? lockI : ''}` : oT === 'w' && subStarts(s, y, base) ? `<b>${esc(dsh(t.s || S.to))}</b> <span class="muted">Today</span>` : dash;
     const endIn = !rr && o === 'w' && !y.wip && pc >= 99.9995 && !s.end_locked;
-    const finC = done ? `<b>${esc(dsh(y.e || s.finished_on))}</b>${lockI}` : endIn ? `<span class="dtw"><b class="dtv">${dsh(y.e || finDef(y.s || s.started_on))}</b><input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || finDef(y.s || s.started_on)}" min="${y.s || s.started_on || ''}" max="${S.to}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (o === 'w' && pc >= 99.9995 && y.e) ? `<b>${esc(dsh(y.e))}</b>${s.end_locked ? lockI : ''}` : dash;
-    const stC = `${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}<div class="st2">${done ? '' : statusSub(s, y, base)}</div>${done ? '' : hinRow(wid, sid, o, y.rc, s.open_hindrance, rr)}`;
+    const finC = done ? `<b>${esc(dsh(y.e || s.finished_on))}</b>${lockI}` : endIn ? `<span class="dtw"><b class="dtv">${dsh(y.e || finDef(y.s || s.started_on))}</b><input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || finDef(y.s || s.started_on)}" min="${y.s || s.started_on || ''}" max="${pd}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (o === 'w' && pc >= 99.9995 && y.e) ? `<b>${esc(dsh(y.e))}</b>${s.end_locked ? lockI : ''}` : dash;
+    const stC = `${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, r)}<div class="st2">${done ? '' : statusSub(s, y, base)}</div>${done ? '' : hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, rr)}${done || lv !== 'sub' ? '' : ylabTxt(g, 'S:' + sid)}`;
     let bC;
     if (done) bC = `<span class="muted">100% · ${esc(dsh(y.e || s.finished_on))}</span>`;
     else if (r) bC = o === 'w' ? `<b>${y.wip ? 'WIP' : '+' + Math.round(pc - base) + '%'}</b>` : dash;
     else if (o === 'w') bC = `<span class="d2-pct"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" style="width:52px" value="${y.wip ? '' : Math.round(pc)}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)"> %<span class="d2-snap">${[25, 50, 75].map(p => `<button ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done" onclick="DPR.snapPct('${wid}','${sid}',100)">✓</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button></span></span><div class="muted" style="font-size:10px">Cum. % Of This Sub-Activity</div>`;
     else bC = o === 'n' ? `<span class="muted">No Work</span>` : dash;
     const cumP = o === 'w' ? (y.wip ? base : pc) : base;
-    return `<tr class="sub${att ? ' att' : ''}${bd ? ' bd' : ''}${S.fs && fsSet(l).has(s.id) ? ' fsm' : ''}"><td></td><td class="name ind" style="--lv:${lvl || 3}"><span class="sa">${esc(s.name)}</span>${S.fs ? `<span class="fsx"><b>${esc(lineLoc(g, l))}</b>${s.group_name ? ' · ' + esc(s.group_name) : ''}</span>` : ''}<span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%</span></td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>${stTd(stC)}<td class="n">${Math.round(base)}%</td><td class="dn">${bC}</td><td>${cumCell(cumP, Math.round(cumP) + '%', cumP - base > 0.0005 ? '+' + Math.round(cumP - base) : '', '')}</td>${done ? '<td colspan="2" class="muted">—</td>' : cmCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`
-      + (!done && !bd && o === 'w' && lv === 'sub' && g.lines.length === 1 ? mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, COLS, rr) : '')
+    return `<tr class="sub${att ? ' att' : ''}${bd ? ' bd' : ''}${S.fs && fsSet(l).has(s.id) ? ' fsm' : ''}"><td></td><td class="name ind" style="--lv:${lvl || 3}"><span class="sa">${esc(s.name)}</span>${S.fs ? `<span class="fsx"><b>${esc(lineLoc(g, l))}</b>${s.group_name ? ' · ' + esc(s.group_name) : ''}</span>` : ''}<span class="est">Weight ${fmt(s.tpl_weight || s.weight)}%</span></td><td class="dt2">${startC}</td><td class="dt2">${finC}</td>${stTd(stC)}<td class="n y">${Math.round(base)}%</td><td class="dn y">${bC}</td><td class="y">${cumCell(cumP, Math.round(cumP) + '%', cumP - base > 0.0005 ? '+' + Math.round(cumP - base) : '', '')}</td>${tCell(g, l, s, rr)}${done ? '<td colspan="2" class="muted t">—</td>' : cmCells(g, l, s, Gp, o, rr)}<td class="c">${remBtn(rk, !!y.note, rr)}</td></tr>`
+      + (!done && oT === 'w' && lv === 'sub' && g.lines.length === 1 ? mpStrip(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, COLS, rr) : '')
       + remRow(rk, wid, sid, y.note, o === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks', COLS, rr);
   }
 
+  /* ==================================================================
+     v165.1 · CARDS view — DPR_Card_View_mock_v1 (day sheet), DPR_Card_Report_mock_v1 (Day Report) and DPR_Card_Manager_mock_v1
+     (Review & Publish), approved 18 Oct 2026. Kept side by side with the existing views:
+       Rows  Flat | Nested | Cards            on the engineer's day sheet (entry — the cards carry the sheet's own rows)
+       Summary | Cards | Full Sheet           on the Day Report (preview / sent) and on the manager's Review Report
+       Table | Cards                          on the Combined DPR
+     Package bands (roll-up) → activity cards → group cards (Reporting Plan groups) → one card per location node;
+     Report Together clubs are their own cards under the parent package (manpower on the club); Labour Deployed as
+     contractor cards → deployment cards. S.cd = drill { lvl:'a'|'g'|'lab', a:key, gi:groupName, c:contractor } (null = packages).
+     ================================================================== */
+  const cdKey = (g, l) => (linePkg(g, l) || '—') + '\u0001' + l.activity;
+  const cdQ = v => esc(String(v == null ? '' : v)).replace(/'/g, '&#39;');   // onclick-safe string argument
+  const cdPct = (c, e) => e > 0 ? Math.min(999, Math.round(c / e * 100)) : 0;
+  const cdBar = (p, cls) => `<span class="cd-bar ${cls || ''}"><i style="width:${Math.min(100, Math.max(0, p))}%"></i></span>`;
+  const cdUom = ns => [...new Set(ns.map(n => n.uom).filter(Boolean))].join(' / ');
+  const cdRcT = (g, l) => { if (finL(l)) return ''; const x = lineX(g, l); const rc = staged(l) ? ((openT(g, l).map(z => subT(x.subs[z.id])).find(t => t.out === 'h') || {}).rc) : tOf(g, l).rc; return rvRc(rc || ''); };   // today's hindrance reason (context-bound → taken at model time)
+  const cdTrades = g => tradeTxt(tradeMix(rvRows(dOf(g))));
+  const cdCons = n => n.r ? n.r.cons : (n.g ? [...new Set(rvRows(dOf(n.g)).map(c => conName(c.con)))] : []);
+  function cdNodeLive(g, l) {
+    const fin = finL(l), x = lineX(g, l), est = num(l.est_qty), pct = fin ? 100 : Math.min(100, linePct(g, l)), b = fin ? 100 : lineBasePct(l);
+    const cert = fin ? (l.site_cert_qty != null ? num(l.site_cert_qty) : est) : (x.fin && x.cert != null ? num(x.cert) : r2(est * pct / 100));
+    return { g, l, key: cdKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, loc: lineLoc(g, l), path: lineLocPath(g, l), est, uom: l.uom || '', pct, b, cert, fin, finT: fin || !!x.fin,
+      hz: !fin && (hasH(g, l) || hasHT(g, l)), o: fin ? '' : outOf(g, l), oT: fin ? '' : outT(g, l), heads: g.lines.length > 1 ? 0 : cardHeads(g), club: g.lines.length > 1, starts: !fin && startsN(g, l) > 0,
+      ds: fin ? l.started_on : (x.started || l.started_on || ''), de: fin ? l.finished_on : (x.fin ? (x.finOn || '') : ''), att: !fin && attOf(g, l), area: g.area || 'Unassigned', eng: '', r: null, P: null, rcT: cdRcT(g, l), trades: cdTrades(g) };
+  }
+  function cdNodesLive() { const vis = new Set(visibleLines().map(({ l }) => l.work_id)); return allLines().map(({ g, l }) => Object.assign(cdNodeLive(g, l), { vis: vis.has(l.work_id) })); }
+  function cdNodesF(F, P) {   // read-only: the Day Report rows (active lines) + the finished lines of the loaded context
+    const out = [], seen = new Set(), eng = P ? P.name : '';
+    F.rows.forEach(r => { seen.add(r.l.work_id); const est = r.est, pct = Math.min(100, r.a);
+      out.push({ g: r.g, l: r.l, key: cdKey(r.g, r.l), pkg: r.pkg || '—', act: r.act, loc: r.loc, path: r.path, est, uom: r.uom, pct, b: r.b, cert: r.fin && r.cert != null ? num(r.cert) : r2(est * pct / 100), fin: false, finT: !!r.fin,
+        hz: r.hs.length > 0 || !!r.hT, o: r.o, oT: r.oT, heads: r.club ? 0 : r.heads, club: r.club, starts: !!r.startsT, ds: r.ds, de: r.de, att: false, area: r.area || r.g.area || 'Unassigned', eng: r.eng || eng, r, P: P || r.P || null, vis: true, rcT: cdRcT(r.g, r.l), trades: cdTrades(r.g) }); });
+    S.groups.forEach(g => g.lines.forEach(l => { if (seen.has(l.work_id) || !finL(l)) return; const est = num(l.est_qty);
+      out.push({ g, l, key: cdKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, loc: lineLoc(g, l), path: lineLocPath(g, l), est, uom: l.uom || '', pct: 100, b: 100, cert: l.site_cert_qty != null ? num(l.site_cert_qty) : est, fin: true, finT: true,
+        hz: false, o: '', oT: '', heads: 0, club: g.lines.length > 1, starts: false, ds: l.started_on, de: l.finished_on, att: false, area: g.area || 'Unassigned', eng, r: null, P: P || null, vis: true, rcT: '', trades: '' }); }));
+    return out;
+  }
+  function cdClubs(nodes, live) {   // one club per Report Together card, under the parent package (the club header names the PACKAGE — 14 Oct 2026 rule)
+    const by = new Map();
+    nodes.filter(n => n.club).forEach(n => { const id = n.g.wgroup_id; if (!by.has(id)) by.set(id, { g: n.g, nodes: [], eng: n.eng, P: n.P }); by.get(id).nodes.push(n); });
+    return [...by.values()].map(c => { const act = c.nodes.filter(n => !n.fin), use = act.length ? act : c.nodes, g = c.g;
+      c.pkg = use[0].pkg; c.level = bookedTo(g); c.units = [...new Set(use.map(n => n.loc))]; c.key = 'club\u0001' + g.wgroup_id;
+      c.heads = live ? cardHeads(g) : (use[0].r ? use[0].r.heads : 0); c.cons = live ? [...new Set(rvRows(dOf(g)).map(x => conName(x.con)))] : (use[0].r ? use[0].r.cons : []);
+      c.oT = use.some(n => n.oT === 'w') ? 'w' : use.some(n => n.oT === 'h') ? 'h' : use.some(n => n.oT === 'n') ? 'n' : '';
+      c.vis = c.nodes.some(n => n.vis); return c; });
+  }
+  function cdStats(ns) {
+    const est = ns.reduce((a, n) => a + n.est, 0), cert = ns.reduce((a, n) => a + n.cert, 0);
+    const L = new Map(); ns.forEach(n => { const k = n.loc + '\u0001' + n.path; L.set(k, (L.get(k) || false) || !n.fin); });   // one location node, however many lines sit on it
+    return { active: [...L.values()].filter(Boolean).length, total: L.size, est, cert, pct: cdPct(cert, est), hz: ns.filter(n => n.hz).length, heads: ns.reduce((a, n) => a + n.heads, 0), rep: ns.filter(n => !n.fin && n.o !== '').length, w: ns.filter(n => n.oT === 'w').length, h: ns.filter(n => n.oT === 'h' || n.hz).length, n: ns.filter(n => n.oT === 'n').length, s: ns.filter(n => n.starts).length, d: ns.filter(n => n.fin || n.finT).length, att: ns.filter(n => n.att).length };
+  }
+  const cdChipCls = n => n.fin || n.finT ? 'd' : n.hz ? 'h' : n.oT === 'w' ? 'w' : n.att ? 'a' : '';
+  const cdEng = n => n.eng && S.view === 'mgr' && S.mv === 'dpr' ? ` <span class="cd-eng">${esc(n.eng)}</span>` : '';
+  const cdKind = ns => { const l = (ns.find(n => !n.fin) || ns[0]).l; return !staged(l) ? pill('p-teal', 'Direct') : kindOf(l) === 'grp' ? pill('p-vio', (l.stage_groups || []).length + ' Groups') : pill('p-vio', (l.stages || []).length + ' Sub-Activities'); };
+  const cdHasGroups = ns => ns.some(n => kindOf(n.l) === 'grp');
+  const cdGrpNames = ns => { const o = []; ns.forEach(n => subGroups(n.l).filter(G => G.id).forEach(G => { if (!o.includes(G.name)) o.push(G.name); })); return o; };
+  function cdGrpPct(n, name, live) {   // one location's % on one Reporting Plan group (by name — location plans may carry their own ids)
+    const G = subGroups(n.l).find(x => x.id && x.name === name); if (!G) return null;
+    if (n.fin) return 100; if (live) return Math.min(100, grpPct(n.g, n.l, G));
+    const rg = n.r && (n.r.groups || []).find(x => x.name === name); return rg ? Math.min(100, rg.a) : Math.min(100, grpBase(n.l, G));
+  }
+  function cdModel(mode) {   // mode 'live' (entry) · 'rep' (engineer report / manager review, context loaded) · 'mgr' (combined: S.cdC)
+    let nodes, live = mode === 'live';
+    if (live) nodes = cdNodesLive();
+    else if (mode === 'rep') nodes = cdNodesF(S.cdF, S.cdP || null);
+    else { nodes = []; (S.cdC || []).forEach(P => { mUse(P); nodes = nodes.concat(cdNodesF(P.F, P)); }); S.to = S.mProg; nodes.forEach(n => { n.key += '\u0001' + n.eng; }); }   // combined: one card per activity per engineer
+    const clubs = cdClubs(nodes, live);
+    const pk = new Map(); nodes.forEach(n => { if (!pk.has(n.pkg)) pk.set(n.pkg, { name: n.pkg, acts: new Map(), clubs: [], all: [] }); const p = pk.get(n.pkg); p.all.push(n); if (n.club) return; if (!p.acts.has(n.key)) p.acts.set(n.key, []); p.acts.get(n.key).push(n); });
+    cdTotEnsure(nodes); cdPkgEnsure(nodes);   // M43 · activity totals under the parent node · M44 · whole-package totals (async, cached per date)
+    clubs.forEach(c => { if (!pk.has(c.pkg)) pk.set(c.pkg, { name: c.pkg, acts: new Map(), clubs: [], all: [] }); pk.get(c.pkg).clubs.push(c); });
+    return { mode, live, nodes, clubs, pkgs: [...pk.values()].sort((a, b) => a.name.localeCompare(b.name)) };
+  }
+  /* ----- M43 · activity totals under the parent node: rpc_dpr_card_totals, one read per date, cached in S.cdTot ----- */
+  const cdTotK = l => (l.wbs_node_id || '') + '|' + (l.loc_node_id || '');
+  /* v166.1 · totals cache: the last M43 / M44 answer per user × project, painted at once on the next open and refreshed behind it */
+  const cdCK = () => 'pgs_dpr_cd|' + (state.userId || '') + '|' + ((typeof pgsS !== 'undefined' && pgsS.project && pgsS.project.id) || '');
+  function cdCacheLoad() {
+    if (S.cdTot || S.cdPkg) return; let v = null; try { v = JSON.parse(localStorage.getItem(cdCK()) || 'null'); } catch (e) { v = null; }
+    if (!v || !v.tot) return;
+    S.cdTot = v.tot || {}; S.cdTotStale = true; if (v.pkgRows && v.pkgRows.length) { cdPkgIndex(v.pkgRows); S.cdPkgStale = true; }
+  }
+  function cdCacheSave() { try { localStorage.setItem(cdCK(), JSON.stringify({ at: Date.now(), tot: S.cdTot || {}, pkgRows: (S.cdPkg && S.cdPkg.rows) || [] })); } catch (e) {} }
+  function cdPkgIndex(rows) { const P = { byAct: {}, byName: {}, byId: {}, rows };
+    rows.forEach(r => { P.byAct[r.wbs_node_id] = r; const p = P.byId[r.package_id] || (P.byId[r.package_id] = { id: r.package_id, name: r.package_name, acts: [] }); p.acts.push(r); P.byName[r.package_name] = p; }); S.cdPkg = P; }
+  // called as soon as a sheet / a report payload is in hand — the Cards never wait for the first click
+  function cdPrefetch(groups) { cdCacheLoad(); const ns = []; (groups || []).forEach(g => g.lines.forEach(l => ns.push({ l }))); if (ns.length) { cdTotEnsure(ns); cdPkgEnsure(ns); } }
+  function cdTotEnsure(nodes) {
+    if (S.cdTotOff) return; S.cdTot = S.cdTot || {}; S.cdTotReq = S.cdTotReq || new Set();
+    const stale = !!S.cdTotStale; S.cdTotStale = false;
+    const want = []; nodes.forEach(n => { const l = n.l; if (!l.wbs_node_id || !l.loc_node_id) return; const k = cdTotK(l); if ((S.cdTot[k] && !stale) || S.cdTotReq.has(k)) return; S.cdTotReq.add(k); want.push({ wbs_node_id: l.wbs_node_id, loc_node_id: l.loc_node_id }); });
+    if (!want.length) return;
+    const view = S.view;
+    rpc('rpc_dpr_card_totals', { p_pairs: want }).then(rows => { (rows || []).forEach(r => { S.cdTot[r.wbs_node_id + '|' + r.loc_node_id] = r; }); cdCacheSave(); if (S.view !== view || !S.cards && !S.rvCards && !S.mCards) return; if (view === 'mgr') mPaint(); else redraw(); })
+      .catch(e => { if (/rpc_dpr_card_totals|PGRST202|Could not find the function/i.test(String(e && e.message))) S.cdTotOff = true; else { want.forEach(w => S.cdTotReq.delete(w.wbs_node_id + '|' + w.loc_node_id)); console.warn('[DPR] card totals', e); } });
+  }
+  function cdTotOf(ns) {   // sum over the DISTINCT (activity, parent) pairs behind these nodes; null until at least one node has its row (v166: tolerant — a missing pair is counted, not fatal)
+    if (!S.cdTot) return null; const seen = new Set(); let est = 0, cum = 0, nl = 0, uom = '', miss = 0, hit = 0; const names = [];
+    for (const n of ns) { const r = S.cdTot[cdTotK(n.l)]; if (!r) { miss++; continue; } hit++; const k = r.wbs_node_id + '|' + r.parent_id; if (seen.has(k)) continue; seen.add(k); est += num(r.est_total); cum += num(r.cum_total); nl += num(r.n_locs); uom = uom || r.uom || ''; if (!names.includes(r.parent_name)) names.push(r.parent_name); }
+    if (!hit) return null;
+    return { est, cum, n_locs: nl, uom, pct: cdPct(cum, est), parents: names.join(', '), miss };
+  }
+  /* ----- M44 · whole-package totals: rpc_dpr_package_totals, one read per date, cached in S.cdPkg ----- */
+  function cdPkgEnsure(nodes) {
+    if (S.cdPkgOff || S.cdPkgReq || (S.cdPkg && !S.cdPkgStale)) return; S.cdPkgStale = false;
+    const ids = [...new Set(nodes.map(n => n.l.wbs_node_id).filter(Boolean))]; if (!ids.length) return;
+    S.cdPkgReq = true; const view = S.view;
+    rpc('rpc_dpr_package_totals', { p_wbs_node_ids: ids }).then(rows => { cdPkgIndex(rows || []); cdCacheSave(); if (S.view !== view || !S.cards && !S.rvCards && !S.mCards) return; if (view === 'mgr') mPaint(); else redraw(); })
+      .catch(e => { S.cdPkgReq = false; if (/rpc_dpr_package_totals|PGRST202|Could not find the function/i.test(String(e && e.message))) S.cdPkgOff = true; else console.warn('[DPR] package totals', e); });
+  }
+  const cdPkgOf = p => { if (!S.cdPkg) return null; const n0 = p.all.find(n => S.cdPkg.byAct[n.l.wbs_node_id]); return (n0 && S.cdPkg.byId[S.cdPkg.byAct[n0.l.wbs_node_id].package_id]) || S.cdPkg.byName[p.name] || null; };
+  const cdByUom = rows => { const by = {}; rows.forEach(r => { const k = r.uom || '—'; by[k] = by[k] || { e: 0, c: 0 }; by[k].e += num(r.est); by[k].c += num(r.cum); }); return Object.keys(by).map(k => ({ uom: k, est: by[k].e, cum: by[k].c, pct: cdPct(by[k].c, by[k].e) })); };
+  function cdPkgTog(name) { S.cdPkgOpen = S.cdPkgOpen || new Set(); S.cdPkgOpen.has(name) ? S.cdPkgOpen.delete(name) : S.cdPkgOpen.add(name); if (S.view === 'mgr') mPaint(); else redraw(); }
+  const cdActRow = (name, cum, est, uom, off, extra) => `<div class="cd-par ${off ? 'off' : ''}"><span class="nm">${esc(name)}${off ? ' <i>Not On Sheet</i>' : ''}${extra || ''}</span><span class="q">${fmt(cum)} / ${fmt(est)} ${esc(uom || '')}</span>${cdBar(cdPct(cum, est))}<b>${cdPct(cum, est)}%</b></div>`;
+  const cdTotNote = () => S.cdTotOff ? ' <span class="muted" title="Sheet Lines Only — rpc_dpr_card_totals (M43) Is Not On The Database">Sheet</span>' : ' <span class="muted">…</span>';
+  /* ----- navigation ----- */
+  function cdGo(lvl, a, gi, w) {
+    S.cd = lvl === 'p' ? null : { lvl, a: a || '', gi: lvl === 'lab' ? '' : (gi || ''), c: lvl === 'lab' ? (gi || '') : '', w: w || '' }; S.mpo = null; S.remo = null;
+    if (S.view === 'mgr') mPaint(); else redraw();
+    setTimeout(() => { const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }, 20);
+  }
+  function cardsSet(on) { S.cards = !!on; if (on) S.nested = false; S.cd = null; S.mpo = null; S.remo = null; redraw(); }
+  function cdFoldAll(on) { S.cdFold = on ? new Set(S.cdSeen || []) : new Set(); if (S.view === 'mgr') mPaint(); else redraw(); }
+  function cdFold(k) { S.cdFold = S.cdFold || new Set(); S.cdFold.has(k) ? S.cdFold.delete(k) : S.cdFold.add(k); if (S.view === 'mgr') mPaint(); else redraw(); }
+  const cdFolded = k => { S.cdSeen = S.cdSeen || new Set(); S.cdSeen.add(k); return !!(S.cdFold && S.cdFold.has(k)); };
+  function rvCards(on) { S.rvCards = !!on; if (on) S.rvFull = false; S.cd = null; S.mpo = null; S.remo = null; paint(); }
+  function mCards(on) { S.mCards = !!on; if (on) S.mFull = false; S.cd = null; mPaint(); }
+  const cdTog = (live, ro) => live && !ro ? `<button class="d2-btn sm" onclick="DPR.cdFoldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.cdFoldAll(false)">Expand All</button>` : `<button class="d2-btn sm" onclick="DPR.cdFoldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.cdFoldAll(false)">Expand All</button>`;
+  function cdCrumb(M, o) {
+    const cd = S.cd, A = cd && cd.lvl !== 'lab' ? cdFind(M, cd.a) : null;
+    let h = `<div class="cd-crumb"><a onclick="DPR.cdGo('p')">All Packages</a>`;
+    if (cd && cd.lvl === 'lab') h += `<i>›</i><span>Labour Deployed · ${esc(dsh(S.to))}</span><i>›</i><b>${cd.c ? esc(conName(cd.c)) : 'Contractor Not Available'}</b><button class="d2-btn sm" onclick="DPR.cdGo('p')">↑ Up</button>`;
+    else if (cd && A) { const grp = A.club ? false : cdHasGroups(A.nodes);
+      h += `<i>›</i>${cd.lvl === 'g' ? `<a onclick="DPR.cdGo('a','${cdQ(cd.a)}')">${esc(A.name)}</a>` : `<b>${A.club ? 'Report Together · ' : ''}${esc(A.name)}</b>`}`;
+      if (cd.lvl === 'g') { const n = A.nodes.find(x => x.l.work_id === cd.w); h += `<i>›</i><b>${esc(n ? n.loc : '')}</b><i>›</i><b>${esc(cd.gi)}</b>`; } else h += `<i>›</i><b>Locations</b>`;
+      h += `<button class="d2-btn sm" onclick="${cd.lvl === 'g' ? `DPR.cdGo('a','${cdQ(cd.a)}')` : `DPR.cdGo('p')`}">↑ Up</button>`; }
+    h += `<span class="sp"></span>${!cd ? cdTog(M.live, o.ro) : ''}<span class="hint">${!cd ? 'Click A Card To Open Its Groups Or Location Nodes' : cd.lvl === 'g' ? 'One Location Node · One Group' + (M.live && !o.ro ? ' · Same Cells As The Sheet' : '') : cd.lvl === 'lab' ? 'One Card Per Deployment' + (M.live && !o.ro ? ' · Edit Manpower On The Location Card' : '') : 'One Card Per Location Node' + (M.live && !o.ro ? ' · Open A Group To Enter It' : '')}</span></div>`;
+    return h;
+  }
+  function cdFind(M, key) {
+    if (!key) return null;
+    if (key.indexOf('club\u0001') === 0) { const c = M.clubs.find(x => x.key === key); return c ? { club: true, c, name: c.pkg, nodes: c.nodes, pkg: c.pkg } : null; }
+    for (const p of M.pkgs) if (p.acts.has(key)) return { club: false, name: key.split('\u0001')[1], nodes: p.acts.get(key), pkg: p.name };
+    return null;
+  }
+  /* ----- level 1 · packages + activity / club cards ----- */
+  function cdPkgs(M, o) {
+    let h = '';
+    M.pkgs.forEach(p => {
+      const acts = [...p.acts.entries()].filter(([, ns]) => ns.some(n => n.vis)), clubs = p.clubs.filter(c => c.vis); if (!acts.length && !clubs.length) return;
+      const all = p.all, st = cdStats(all), fk = 'cd:' + p.name, fd = cdFolded(fk), nClub = p.clubs.length, T = cdTotOf(all), PK = cdPkgOf(p), onSheet = new Set(all.map(n => n.l.wbs_node_id));
+      const pkRows = PK ? PK.acts.map(r => ({ name: r.activity, cum: num(r.cum_total), est: num(r.est_total), uom: r.uom, off: !onSheet.has(r.wbs_node_id) })) : null, pkU = pkRows ? cdByUom(pkRows) : null, pkOpen = S.cdPkgOpen && S.cdPkgOpen.has(p.name);
+      h += `<section class="cd-pkg ${fd ? 'closed' : ''}"><div class="hd" onclick="DPR.cdFold('${cdQ(fk)}')"><span class="car">${fd ? '▸' : '▾'}</span><b class="nm">${esc(p.name)}</b><span class="meta">${acts.length} Activit${acts.length === 1 ? 'y' : 'ies'}${nClub ? ' · ' + nClub + ' Report Together' : ''} · ${st.active} / ${st.total} Locations Active · ${fmt(st.heads + p.clubs.reduce((a, c) => a + c.heads, 0))} Heads Today · <span class="${st.hz ? 'cd-h' : 'cd-ok'}">${st.hz ? st.hz + ' Hindrance' : 'No Hindrance'}</span>${st.att ? ` · <span class="cd-h">${st.att} Need Attention</span>` : ''}</span>
+        <span class="pkgp">${pkU ? pkU.map(u => `<span class="uomt"><span class="meta">Package · ${esc(u.uom)} <b>${fmt(u.cum)} / ${fmt(u.est)}</b></span>${cdBar(u.pct)}<b class="pct">${u.pct}%</b></span>`).join('') : `<span class="uomt"><span class="meta">Cert Vs Est <b>${T ? fmt(T.cum) + ' / ' + fmt(T.est) + ' ' + esc(T.uom || cdUom(all)) : fmt(st.cert) + ' / ' + fmt(st.est) + ' ' + esc(cdUom(all))}</b>${T ? '' : cdTotNote()}</span>${cdBar(T ? T.pct : st.pct)}<b class="pct">${T ? T.pct : st.pct}%</b></span>`}</span>${pkRows ? `<button class="d2-btn sm cd-pkga" onclick="event.stopPropagation();DPR.cdPkgTog('${cdQ(p.name)}')">${pkRows.length} Activit${pkRows.length === 1 ? 'y' : 'ies'} ${pkOpen ? '▴' : '▾'}</button>` : ''}</div>
+        ${pkRows && pkOpen ? `<div class="cd-pkgacts"><div class="ph"><span>Activity Package · Cert Vs Estimation · All Locations</span><span>${pkRows.filter(r => !r.off).length} On ${M.live ? 'Your' : 'The'} Sheet · ${pkRows.filter(r => r.off).length} Not On Sheet</span></div>${pkRows.map(r => cdActRow(r.name, r.cum, r.est, r.uom, r.off)).join('')}</div>` : ''}
+        <div class="grid">${clubs.map(c => cdClubCard(c, M, o)).join('')}${acts.map(([k, ns]) => cdActCard(k, ns, M, o)).join('')}</div></section>`;
+    });
+    if (!h) h = `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${M.nodes.length ? 'No Activity Matches The Filter.' : M.live ? 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.' : 'Nothing Reported.'}</div></div>`;
+    return h;
+  }
+  function cdActCard(key, ns, M, o) {
+    const st = cdStats(ns), hzN = ns.filter(n => n.hz), cons = [...new Set([].concat(...ns.filter(n => !n.club).map(cdCons)))], lv = M.live, T = cdTotOf(ns);
+    const hz = hzN.length ? `<span class="cd-h">${esc(hzN.slice(0, 2).map(n => n.loc).join(', '))}${hzN.length > 2 ? ' +' + (hzN.length - 2) : ''}</span>` : '<span class="cd-ok">None</span>';
+    const starts = ns.filter(n => n.ds).map(n => n.ds).sort()[0] || '', el = starts ? daysBetween(starts, S.to) + 1 : 0;
+    const chips = ns.filter(n => n.vis).map(n => `<span class="${cdChipCls(n)}" title="${esc(n.path)}">${esc(n.loc)}</span>`).join('');
+    const today = [st.w ? `<span class="cd-rp w">${st.w} Working</span>` : '', st.s ? `<span class="cd-rp s">${st.s} Starting</span>` : '', st.h ? `<span class="cd-rp h">${st.h} Hindrance</span>` : '', st.n ? `<span class="cd-rp n">${st.n} No Work</span>` : '', st.d ? `<span class="cd-rp d">${st.d} Finished</span>` : ''].join('');
+    const open = `DPR.cdGo('a','${cdQ(key)}')`;
+    return `<article class="cd-ac ${cdHasGroups(ns) ? 'grp' : ''} ${st.att ? 'att' : ''}" onclick="${open}"><div class="cd-tt"><b>${esc(ns[0].act)}${cdEng(ns[0])}</b>${cdKind(ns)}</div>
+      <table><tr><td>Location Nodes Active</td><td>${st.active} / ${st.total}${T ? ` <span class="muted">· ${T.n_locs} In ${esc(T.parents)}</span>` : ''}</td></tr><tr><td>Workers Deployed Today</td><td>${fmt(st.heads)} Heads${cons.length && !lv ? ` <span class="muted">· ${esc(cons.join(', '))}</span>` : ''}</td></tr><tr><td>Cert Vs Estimation${T ? ` <span class="muted">· ${esc(T.parents)}</span>` : ''}</td><td>${T ? fmt(T.cum) + ' / ' + fmt(T.est) + ' ' + esc(T.uom || cdUom(ns)) : fmt(st.cert) + ' / ' + fmt(st.est) + ' ' + esc(cdUom(ns)) + cdTotNote()}</td></tr><tr><td>Hindrance Status</td><td>${hz}</td></tr>${lv ? '' : `<tr><td>Progress Reported ${esc(dsh(PD()))}</td><td>${st.rep} / ${st.total} Locations</td></tr><tr><td>Started · Elapsed</td><td>${starts ? esc(dsh(starts)) + ' · ' + el + ' Day' + (el === 1 ? '' : 's') : '—'}</td></tr>`}</table>
+      <div class="cd-ft"><div class="cd-pc"><span>Progress · Certified Vs Estimation${T ? ' · ' + esc(T.parents) : ''}</span><b>${T ? T.pct : st.pct}%</b></div>${cdBar(T ? T.pct : st.pct)}</div>
+      <div class="locs">${lv ? chips : today || chips}</div></article>`;
+  }
+  function cdClubCard(c, M, o) {
+    const st = cdStats(c.nodes), hz = st.hz ? `<span class="cd-h">${st.hz} Unit${st.hz === 1 ? '' : 's'}</span>` : '<span class="cd-ok">None</span>';
+    const seen = new Set(), chips = c.nodes.filter(n => n.vis && !seen.has(n.loc) && seen.add(n.loc)).map(n => `<span class="${cdChipCls(n)}" title="${esc(n.path)}">${esc(n.loc)}</span>`).join('');
+    return `<article class="cd-ac club ${st.att ? 'att' : ''}" onclick="DPR.cdGo('a','${cdQ(c.key)}')"><div class="cd-tt"><b>${esc(c.pkg)}${cdEng(c.nodes[0])}<span class="sub">${esc(c.level)} · ${c.units.length} Unit${c.units.length === 1 ? '' : 's'}</span></b>${pill('p-amb', 'Report Together')}</div>
+      <table><tr><td>Location Nodes Active</td><td>${st.active} / ${st.total}</td></tr><tr><td>Workers Deployed Today</td><td>${fmt(c.heads)} Heads${c.cons.length ? ` <span class="muted">· ${esc(c.cons.join(', '))}</span>` : ''}</td></tr><tr><td>Hindrance Status</td><td>${hz}</td></tr></table>
+      <div class="cd-cacts"><div class="ph"><span>Cert Vs Estimation · Per Activity${(() => { const T0 = cdTotOf(c.nodes); return T0 && T0.parents ? ' · ' + esc(T0.parents) : ''; })()}</span><span>${[...new Set(c.nodes.map(n => n.l.wbs_node_id || n.act))].length} Activities</span></div>${(() => { const by = new Map(); c.nodes.forEach(n => { const k = n.l.wbs_node_id || n.act; if (!by.has(k)) by.set(k, []); by.get(k).push(n); });
+        return [...by.values()].map(ns => { const T1 = cdTotOf(ns), s1 = cdStats(ns); return T1 ? cdActRow(ns[0].act, T1.cum, T1.est, T1.uom || ns[0].uom) : cdActRow(ns[0].act, s1.cert, s1.est, ns[0].uom, false, cdTotNote()); }).join(''); })()}</div>
+      <div class="locs">${chips}</div><div class="todayrow"><span class="lbl">Club Manpower</span><b>${fmt(c.heads)}</b><span class="muted">Booked To ${esc(c.level)}${c.oT ? ' · ' + (c.oT === 'w' ? 'Working' : c.oT === 'h' ? 'Hindrance' : 'No Work') + ' Today' : ''}</span></div></article>`;
+  }
+  /* ----- level 3 · one card per location node ----- */
+  const cdDates = n => `<span class="dates"><span>Start <b>${esc(n.ds ? dsh(n.ds) : '—')}</b></span><span>Finish <b>${esc(n.de ? dsh(n.de) : '—')}</b></span><span>${n.de ? 'Duration <b>' + esc(durTxt(n.ds, n.de)) + '</b>' : n.ds ? 'Elapsed <b>' + (daysBetween(n.ds, S.to) + 1) + ' Days</b>' : ''}</span></span>`;
+  function cdLocs(M, o, A) {
+    const gi = S.cd.lvl === 'g' ? (S.cd.gi || '') : '', vis0 = A.nodes.filter(n => n.vis).length ? A.nodes.filter(n => n.vis) : A.nodes, ns = gi ? A.nodes.filter(n => n.l.work_id === S.cd.w) : vis0, dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
+    let h = '';
+    if (A.club) h += cdClubBand(A.c, M, o);
+    else if (gi && ns.length) { const n0 = ns[0], G = subGroups(n0.l).find(x => x.id && x.name === gi) || { weight: 0, subs: [] }, others = subGroups(n0.l).filter(x => x.id && x.name !== gi).map(x => x.name);
+      h += `<div class="cd-band grp"><div><span class="pill p-vio">Group</span> <b>${esc(gi)}</b> <span class="muted">· ${esc(n0.loc)} · Weight ${fmt(G.weight)}% · ${esc(G.subs.map(s => s.name + ' ' + fmt(s.tpl_weight || s.weight) + '%').join(' · '))}</span></div><span class="muted">${others.length ? 'Other Group: ' + others.map(x => `<a onclick="DPR.cdGo('g','${cdQ(S.cd.a)}','${cdQ(x)}','${cdQ(S.cd.w)}')">${esc(x)} →</a>`).join(' ') : ''}</span></div>`; }
+    if (A.club) return h + cdClubLocs(ns, A, M, o);
+    if (M.live) {   // entry: the sheet's own rows for this node (same cells, same handlers, same manpower strip)
+      const colg = `<colgroup><col style="width:${S.cm && !o.ro ? 52 : 30}px"><col><col style="width:6.2%"><col style="width:6.6%"><col style="width:11.5%"><col style="width:6%"><col style="width:12%"><col style="width:8.4%"><col style="width:10.5%"><col style="width:9%"><col style="width:9%"><col style="width:${o.ro ? 40 : 58}px"></colgroup>`;
+      const head = `<thead>${bandHead(4, 1)}<tr class="cols"><th class="c">#</th><th>${S.gv === 'work' ? 'Location' : 'Activity'} · Est.</th><th class="c">Start Date</th><th class="c">Finish Date</th><th class="c y">Status ${pdd}<span class="h2">W / H / N · Progress · Hindrance</span></th><th class="n y">Last Reported<span class="h2">[A]</span></th><th class="y">Reported ${pdd} EOD<span class="h2">[B]</span></th><th class="y">Cum. To Date<span class="h2">[C] = [A] + [B]</span></th><th class="c t">Status ${dd}<span class="h2">W / H / N · Contractor · Manpower</span></th><th class="cd-tt">Contractor</th><th class="cd-tt">Manpower ${dd}</th><th class="c">✎</th></tr></thead>`;
+      if (gi) { S._cdF = new Map(); ns.forEach(n => { const G = subGroups(n.l).find(x => x.id && x.name === gi); S._cdF.set(n.l.work_id, new Set(G ? G.subs.map(s => s.id) : [])); }); }
+      try {
+        ns.forEach((n, i) => { const it = { g: n.g, l: n.l, lv: 1 }, wid = n.l.work_id;
+          if (!gi && kindOf(n.l) === 'grp' && !n.fin) { h += `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span><div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span></div></div><div class="cd-gg">${cdGrpCards(n, M, A)}</div></article>`; return; }   // v165.1 · Activity → Location Node → Group
+          S.seen.add(wid); S.fold.delete(wid); subGroups(n.l).forEach(Gp => { if (Gp.id) { const gk = 'gp:' + wid + '|' + Gp.id; S.seen.add(gk); S.fold.delete(gk); } });   // a node card shows its rows open
+          h += `<article class="cd-lc ${n.fin ? 'fin' : ''} ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}${gi ? ' · ' + esc(gi) : ''}</span><div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span></div></div>
+            <table class="d2t sheet one cd-t">${colg}${head}<tbody class="ln" data-w="${wid}" data-i="${i + 1}" data-lv="1">${staged(n.l) ? stageRows3(it, i + 1, o.ro) : dirRow3(it, i + 1, o.ro)}</tbody></table></article>`; });
+      } finally { S._cdF = null; }
+      return h;
+    }
+    ns.forEach(n => { h += cdLocRo(n, A, gi); });
+    return h;
+  }
+  function cdClubBand(c, M, o) {
+    const g = c.g, u = { key: 'A', worked: M.live ? cardHasW(g) : c.oT === 'w' }, dd = esc(dsh(S.to));
+    const acts2 = !M.live || o.ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
+    let h = `<div class="cd-band club"><div>${pill('p-amb', 'Report Together')} <b>${esc(c.pkg)}</b> <span class="muted">· ${esc(c.level)} · ${esc(c.units.join(', '))}</span><div class="muted" style="margin-top:3px">Progress Per Unit Below · Labour Once Here · Booked To <b>${esc(c.level)}</b></div></div>`;
+    if (M.live) {
+      const colg = `<colgroup><col style="width:30px"><col><col style="width:6.2%"><col style="width:6.6%"><col style="width:11.5%"><col style="width:6%"><col style="width:12%"><col style="width:8.4%"><col style="width:10.5%"><col style="width:9%"><col style="width:9%"><col style="width:${o.ro ? 40 : 58}px"></colgroup>`;
+      h += `</div><table class="d2t sheet one cd-t cd-club">${colg}<tbody><tr class="club band"><td colspan="${COLS - 4}" class="ind" style="--lv:0">${pill('p-amb', 'Club')}<i class="dt">·</i><b class="an">${esc(c.pkg)}</b><i class="dt">·</i><b class="ln">${esc(c.level)}</b><i class="dt">·</i>${c.units.length} Unit${c.units.length === 1 ? '' : 's'}<i class="dt">·</i><span class="muted">Manpower Once · ${dd}</span>${acts2}</td>${stTdT(tSum(g.lines.map(l => ({ g, l }))))}<td class="con t">${conCell(g, 0, 'A', o.ro)}</td><td class="cd-tt">${cardHasW(g) ? mpCell(g, u, o.ro) : dash}</td><td></td></tr>${cardHasW(g) ? mpStrip(g, u, g.label || 'Club', COLS, o.ro) : ''}</tbody></table>`;
+      return h;
+    }
+    return h + `<div class="r">${c.oT ? `<span class="cd-rp ${c.oT}">${c.oT === 'w' ? 'Working' : c.oT === 'h' ? 'Hindrance' : 'No Work'}</span>` : ''}<span class="kv"><span>Contractor</span><b>${esc(c.cons.join(', ') || '—')}</b><span>Heads</span><b class="big">${fmt(c.heads)}</b></span></div></div>`;
+  }
+  function cdLocRo(n, A, gi, inClub) {   // read-only node card (Day Report rows: cumulative bar, groups side by side, sub-activity lines)
+    const r = n.r, dd = esc(dsh(PD()));
+    const ys = n.fin ? pill('p-grey', 'Finished' + (n.de ? ' ' + dsh(n.de) : '')) : !r ? pill('p-grey', '—') : r.o === 'w' ? (r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(PD())) : r.a > r.b + 0.0005 ? pill('p-ok', 'Worked') : pill('p-amb', 'WIP')) : r.o === 'h' ? pill('p-red', 'Hindrance') + (r.hs.length ? ' <span class="cd-h">' + esc(r.hs.map(x => x.rc || 'Reason Missing').join(', ')) + '</span>' : '') : r.o === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', startedB(n.l) ? 'Not Reported' : 'Not Started');
+    const today = n.fin || n.finT ? pill('p-grey', 'Finished' + (n.de ? ' ' + dsh(n.de) : '')) : n.starts ? pill('p-teal', 'Starts Today') : n.oT === 'w' ? pill('p-ok', 'Working') : n.oT === 'h' ? pill('p-red', 'Hindrance') + (n.rcT ? ' <span class="cd-h">' + esc(n.rcT) + '</span>' : '') : n.oT === 'n' ? pill('p-grey', 'No Work') : pill('p-grey', '—');
+    let prog = '';
+    if (r && !n.fin) {
+      const groups = (r.groups || []).filter(G => !gi || G.name === gi), loose = r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs;
+      prog = `<div class="cum">${rvBar(r.b, r.a, r.fin)}<span class="rv-td">${esc(r.today || '—')}</span><span class="muted">${fmt(n.cert)} / ${fmt(n.est)} ${esc(n.uom)}</span></div>`;
+      if (groups.length) prog += `<div class="rv-gg">${groups.map(G => rvGroupCard(r, G)).join('')}</div>`;
+      if (loose.length && !gi) prog += `<div class="rv-sl">${loose.map(rvLine).join('')}</div>`;
+      if (r.fin && r.cert != null) prog += `<div class="cd-cert"><b>Activity Finished</b> · Site Cert. Qty <b>${fmt(r.cert)} ${esc(n.uom)}</b> · Finish ${esc(dsh(r.de || PD()))}</div>`;
+    } else if (n.fin) prog = `<div class="cum">${rvBar(100, 100, true)}<span class="muted">Site Cert. <b>${fmt(n.cert)} ${esc(n.uom)}</b> · Est ${fmt(n.est)} ${esc(n.uom)}</span></div>`;
+    const cons = cdCons(n), lab = n.club ? `<div class="muted">Labour Reported Once On The Club${A.c ? ' · ' + fmt(A.c.heads) + ' Heads Booked To ' + esc(A.c.level) : ''}</div>` : (n.fin || n.finT) ? '' : `<div class="kv"><span>Contractor</span><b>${esc(cons.join(', ') || '—')}</b><span>Manpower</span><b>${fmt(n.heads)} Heads</b>${n.heads && n.trades ? `<span>Trades</span><b>${n.trades}</b>` : ''}</div>`;
+    if (inClub) return `<div class="cd-sub"><div class="sh"><b>${esc(n.act)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span><span class="sp"></span>${cdDates(n)}</div><div class="body"><div><div class="cd-row"><span class="lbl">Progress · ${dd} EOD</span>${ys}</div>${prog}</div><div><div class="cd-row"><span class="lbl">Today · ${esc(dsh(S.to))}</span>${today}</div>${lab}</div></div></div>`;
+    return `<article class="cd-lc ro ${n.fin ? 'fin' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}${gi ? ' · ' + esc(gi) : ''}${cdEng(n)}</span><div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}</div></div>
+      <div class="body"><div><div class="cd-row"><span class="lbl">Progress · ${dd} EOD</span>${ys}</div>${prog}</div><div><div class="cd-row"><span class="lbl">Today · ${esc(dsh(S.to))}</span>${today}</div>${lab}</div></div></article>`;
+  }
+  const cdLocRoBody = (n, A, gi, inClub) => cdLocRo(n, A, gi, inClub);
+  /* ----- group cards inside a location node card (Activity → Location Node → Group): sub-activities one per row, % + bar ----- */
+  function cdGrpCards(n, M, A) {
+    const g = n.g, l = n.l, x = M.live ? lineX(g, l) : null, key = S.cd.a, wid = l.work_id;
+    return subGroups(l).filter(G => G.id).map(G => {
+      const gp = cdGrpPct(n, G.name, M.live), gb = Math.min(100, grpBase(l, G)), done = gp >= 99.9995;
+      const sp = s => M.live ? Math.min(100, subPct(g, l, s)) : (n.r ? ((((n.r.groups || []).find(z => z.name === G.name) || {}).chips || []).find(c => c.n === s.name) || {}).a : null);
+      const rows = G.subs.map(s => { const b = subBase(s), p = sp(s) == null ? b : sp(s), y = x ? x.subs[s.id] : null, t = y ? subT(y) : null;
+        const st = b >= 99.9995 ? pill('p-ok', 'Done') : y && (y.out === 'h' || t.out === 'h') ? pill('p-red', 'H') : y && (y.out === 'w' || t.out === 'w') ? pill('p-ok', 'W') : y && (y.out === 'n' || t.out === 'n') ? pill('p-grey', 'N') : '';
+        return `<div class="cd-sr"><span class="nm">${esc(s.name)}<small>${fmt(s.tpl_weight || s.weight)}%</small></span>${cdBar(p, 'p')}<b>${Math.round(p)}%</b><span class="st">${st}</span></div>`; }).join('');
+      const nd = G.subs.filter(s => (sp(s) == null ? subBase(s) : sp(s)) >= 99.9995).length;
+      const open = M.live && !n.fin ? ` onclick="DPR.cdGo('g','${cdQ(key)}','${cdQ(G.name)}','${cdQ(wid)}')"` : '';
+      return `<div class="cd-gc ${done ? 'done' : ''} ${open ? 'clk' : ''}"${open}><div class="gh"><b>${esc(G.name)}</b><span class="muted">· ${fmt(G.weight)}% Of Activity · ${nd}/${G.subs.length} Done</span><span class="sp"></span>${done ? pill('p-ok', '✓ Done') : ''}<b class="pct">${Math.round(gp)}%</b>${gp - gb > 0.0005 ? `<span class="muted">(+${Math.round(gp - gb)}%)</span>` : ''}</div>${cdBar(gp, 'p')}<div class="gl">${rows}</div>${open ? '<div class="go">Open Group →</div>' : ''}</div>`;
+    }).join('');
+  }
+  /* ----- a club's locations: one card per location node, every clubbed activity at that node inside it ----- */
+  function cdClubLocs(ns, A, M, o) {
+    const by = new Map(); ns.forEach(n => { const k = n.loc + '\u0001' + n.path; if (!by.has(k)) by.set(k, []); by.get(k).push(n); });
+    const dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
+    const colg = `<colgroup><col style="width:${S.cm && !o.ro ? 52 : 30}px"><col><col style="width:6.2%"><col style="width:6.6%"><col style="width:11.5%"><col style="width:6%"><col style="width:12%"><col style="width:8.4%"><col style="width:10.5%"><col style="width:9%"><col style="width:9%"><col style="width:${o.ro ? 40 : 58}px"></colgroup>`;
+    const head = `<thead>${bandHead(4, 1)}<tr class="cols"><th class="c">#</th><th>Activity · Est.</th><th class="c">Start Date</th><th class="c">Finish Date</th><th class="c y">Status ${pdd}<span class="h2">W / H / N · Progress · Hindrance</span></th><th class="n y">Last Reported<span class="h2">[A]</span></th><th class="y">Reported ${pdd} EOD<span class="h2">[B]</span></th><th class="y">Cum. To Date<span class="h2">[C] = [A] + [B]</span></th><th class="c t">Status ${dd}<span class="h2">W / H / N · Contractor · Manpower</span></th><th class="t">Contractor</th><th class="t">Manpower ${dd}</th><th class="c">✎</th></tr></thead>`;
+    let h = '', i = 0;
+    by.forEach(list => { const n0 = list[0], est = list.reduce((a, n) => a + n.est, 0), cert = list.reduce((a, n) => a + n.cert, 0), fin = list.every(n => n.fin), att = list.some(n => n.att);
+      h += `<article class="cd-lc ${fin ? 'fin' : ''} ${att ? 'att' : ''} ${M.live ? '' : 'ro'}"><div class="hd"><div><b>${esc(n0.loc)}</b> <span class="muted">· ${list.length} Activit${list.length === 1 ? 'y' : 'ies'} · Est ${fmt(est)} ${esc(cdUom(list))}</span><div class="path">${esc(A.name)} · ${esc(n0.path)}</div></div><div class="r"><span class="cum">Cum. <b>${cdPct(cert, est)}%</b> · ${fmt(cert)} / ${fmt(est)} ${esc(cdUom(list))}</span></div></div>`;
+      if (M.live) { const gv = S.gv; S.gv = 'loc';   // the name cell shows the ACTIVITY (the card already names the location)
+        try { h += `<table class="d2t sheet one cd-t">${colg}${head}`; list.forEach(n => { const wid = n.l.work_id; S.seen.add(wid); S.fold.delete(wid); subGroups(n.l).forEach(Gp => { if (Gp.id) { const gk = 'gp:' + wid + '|' + Gp.id; S.seen.add(gk); S.fold.delete(gk); } }); i++; const it = { g: n.g, l: n.l, lv: 1 }; h += `<tbody class="ln" data-w="${wid}" data-i="${i}" data-lv="1">${staged(n.l) ? stageRows3(it, i, o.ro) : dirRow3(it, i, o.ro)}</tbody>`; }); h += '</table>'; } finally { S.gv = gv; } }
+      else h += list.map(n => cdLocRoBody(n, A, '', true)).join('');
+      h += '</article>'; });
+    return h;
+  }
+  /* ----- Labour Deployed · contractor cards → deployment cards ----- */
+  function cdLabRows(eng) {   // current context: one row per contractor × card (club = one row on its booked node) + non-estimated
+    const out = [];
+    S.groups.forEach(g => { const rs = rvRows(dOf(g)); if (!rs.length) return; const club = g.lines.length > 1, l0 = g.lines[0] || {};
+      rs.forEach(c => out.push({ con: c.con || '', hd: c.heads, club, g, l: club ? null : l0, key: club ? 'club\u0001' + g.wgroup_id : cdKey(g, l0), loc: club ? bookedTo(g) : lineLoc(g, l0), path: club ? [...new Set(g.lines.map(l => lineLoc(g, l)))].join(', ') : pathTail(lineLocPath(g, l0)), act: club ? (linePkg(g, l0) || g.label || 'Report Together') : (l0.activity || ''), eng: eng || '' })); });
+    npDraft().forEach(e => { if (heads(e.heads) > 0) out.push({ con: e.con || '', hd: e.heads, np: true, loc: (e.locs || []).map(x => x.name).filter(Boolean).join(', ') || '—', path: '', act: 'Non-Estimated · ' + e.text, eng: eng || '' }); });
+    return out;
+  }
+  function cdLabAll(M) { if (M.mode !== 'mgr') return cdLabRows(''); let o = []; (S.cdC || []).forEach(P => { mUse(P); o = o.concat(cdLabRows(P.name)); }); S.to = S.mProg; return o; }
+  const cdTrSum = rows => { const t = {}; rows.forEach(x => Object.entries(x.hd || {}).forEach(([k, v]) => { if (num(v) > 0) t[k] = (t[k] || 0) + num(v); })); return t; };
+  const cdTrOrder = t => (S.masters.trades || []).map(x => x.trade_code).filter(k => t[k]).concat(Object.keys(t).filter(k => !(S.masters.trades || []).some(x => x.trade_code === k)));
+  const cdChips = t => `<div class="tchips">${cdTrOrder(t).map(k => `<span class="tchip">${esc(tCode(k))}<b>${fmt(t[k])}</b></span>`).join('')}</div>`;
+  const cdTbar = t => { const n = sum(t); return n ? `<div class="tbar">${cdTrOrder(t).map(k => `<i style="width:${t[k] / n * 100}%;background:${rvTrade(k).c}" title="${esc(tCode(k))} ${fmt(t[k])}"></i>`).join('')}</div>` : ''; };
+  function cdLabour(M, o) {
+    const rows = cdLabAll(M), by = new Map(); rows.forEach(x => { const k = x.con || '\u0000'; if (!by.has(k)) by.set(k, []); by.get(k).push(x); });
+    const all = cdTrSum(rows), g = sum(all), cons = [...by.keys()].sort((a, b) => sum(cdTrSum(by.get(b))) - sum(cdTrSum(by.get(a)))), fk = 'cd:lab', fd = cdFolded(fk);
+    if (!cons.length) return '';
+    const cards = cons.map(k => { const ls = by.get(k), t = cdTrSum(ls), na = k === '\u0000', n = sum(t);
+      return `<article class="cd-ac lab ${na ? 'na' : ''}" onclick="DPR.cdGo('lab','','${cdQ(k === '\u0000' ? '' : k)}')"><div class="cd-tt"><b>${na ? '<span class="cd-h">Contractor Not Available</span>' : esc(conName(k))}</b><span class="big">${fmt(n)}<small>Heads ${esc(dsh(S.to))}</small></span></div>
+        <table><tr><td>Deployments</td><td>${ls.length}</td></tr><tr><td>Activities</td><td>${new Set(ls.map(x => x.act)).size}</td></tr><tr><td>Report Together Clubs</td><td>${ls.filter(x => x.club).length || '—'}</td></tr><tr><td>Share Of Today</td><td>${g ? Math.round(n / g * 100) : 0}%</td></tr></table>${cdChips(t)}${cdTbar(t)}</article>`; }).join('');
+    return `<section class="cd-pkg lab ${fd ? 'closed' : ''}"><div class="hd" onclick="DPR.cdFold('${fk}')"><span class="car">${fd ? '▸' : '▾'}</span><b class="nm">Labour Deployed · ${esc(dsh(S.to))}</b><span class="meta">${cons.length} Contractor${cons.length === 1 ? '' : 's'} · ${rows.length} Deployment${rows.length === 1 ? '' : 's'} · Clubs Booked To Their Shared Node</span>
+      <span class="cd-lsum">${cdTrOrder(all).map(k => `<span><small>${esc(tCode(k))}</small><b>${fmt(all[k])}</b></span>`).join('')}<span class="tot"><small>Total</small><b>${fmt(g)}</b></span></span></div><div class="grid">${cards}</div></section>`;
+  }
+  function cdLabDetail(M, o) {
+    const c = S.cd.c || '', rows = cdLabAll(M).filter(x => (x.con || '') === c), t = cdTrSum(rows);
+    let h = `<div class="cd-band"><div><span class="pill p-navy">Contractor</span> <b>${c ? esc(conName(c)) : '<span class="cd-h">Contractor Not Available</span>'}</b> <span class="muted">· ${rows.length} Deployment${rows.length === 1 ? '' : 's'} · ${new Set(rows.map(x => x.act)).size} Activities</span>${cdChips(t)}</div><span class="big">${fmt(sum(t))} <small>Heads</small></span></div><div class="cd-lgrid">`;
+    rows.forEach(x => { const ed = M.live && !o.ro && !x.np ? `<button class="d2-btn sm" onclick="DPR.cdGo('a','${cdQ(x.key)}')">Edit On Card →</button>` : '';
+      h += `<article class="cd-ld ${x.club ? 'club' : ''}"><div class="top"><div><b>${esc(x.loc)}</b> <span class="muted">· ${esc(x.path)}</span><div class="muted">${esc(x.act)}${x.club ? ' · ' + pill('p-amb', 'Report Together') : ''}${x.eng && M.mode === 'mgr' ? ' · ' + esc(x.eng) : ''}</div></div><span class="big">${fmt(sum(x.hd))}</span></div><div class="r">${cdTrOrder(x.hd).filter(k => num(x.hd[k]) > 0).map(k => `<span class="tchip">${esc(tCode(k))}<b>${fmt(x.hd[k])}</b></span>`).join('')}<span class="sp"></span>${ed}</div></article>`; });
+    return h + '</div>';
+  }
+  /* ----- hindrances (report cards) ----- */
+  const cdHind = H => `<section class="cd-pkg"><div class="hd" style="cursor:default"><b class="nm">Hindrances</b><span class="meta">${H.length} Row${H.length === 1 ? '' : 's'}</span></div><div class="cd-hl">${H.length ? H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)}${x.eng ? ' · ' + esc(x.eng) : ''}${x.area ? ' · ' + esc(x.area) : ''}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}${x.days <= 1 ? ' · New' : ''}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div></section>`;
+  /* ----- the card board ----- */
+  function cdView(M, o) {
+    const cd = S.cd; let body;
+    if (cd && cd.lvl === 'lab') body = cdLabDetail(M, o);
+    else if (cd) { const A = cdFind(M, cd.a); if (!A) { S.cd = null; body = cdPkgs(M, o) + (o.tail || ''); } else body = cdLocs(M, o, A); }
+    else body = cdPkgs(M, o) + cdLabour(M, o) + (o.tail || '');
+    return `<div class="cd">${cdCrumb(M, o)}${body}</div>`;
+  }
+  function cdSheet(ro) { return cdView(cdModel('live'), { ro }); }                      // engineer day sheet (Rows · Cards)
+  function cdReport(F, P, tail) { S.cdF = F; S.cdP = P || null; return cdView(cdModel('rep'), { ro: true, tail: tail || '' }); }   // Day Report / manager review (Cards)
+  function cdCombined(C, tail) { S.cdC = C.inc; return cdView(cdModel('mgr'), { ro: true, tail: tail || '' }); }   // Combined DPR (Cards)
   /* ---------- v159.4 · Day Report view (DPR_Day_Report_View_mock_v2, approved 09 Oct 2026) ----------
        One summary screen for Preview & Send (Draft) and for a sent report opened from the Report tab or the calendar.
        Summary | Full Sheet toggle; Print (sent report) builds an A4 copy in a hidden frame; 7-day labour trend by
@@ -10681,15 +11163,15 @@ const DPR = (function () {
         fin: o === 'w' && !!x.fin, cert: x.cert, starts: startsN(g, l) > 0, heads: cardHeads(g), cons: [...new Set(rvRows(dOf(g)).map(c => conName(c.con)))], subs: [], hs: [] };
       if (!staged(l)) {
         r.today = o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(num(x.qty)) + ' ' + uom) : '';
-        if (o === 'h') r.hs.push({ where: r.loc, what: l.activity, rc: rvRc(x.rc), since: (l.open_hindrance && l.open_hindrance.from_date) || S.to });
+        if (o === 'h') r.hs.push({ where: r.loc, what: l.activity, rc: rvRc(x.rc), since: (l.open_hindrance_yday && l.open_hindrance_yday.from_date) || PD() });   // v165
       } else {
         r.today = o === 'w' ? (a - b > 0.0005 ? '+' + Math.round(a - b) + '%' : 'WIP') : '';
         (l.stages || []).forEach(s => {
           const base = subBase(s), y = x.subs[s.id], p = num(y.pct), ds = y.s || s.started_on || '', de = y.e || s.finished_on || '';
           if (base >= 99.9995) { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'prev', b: 100, a: 100, ds, de }); return; }   // v163 · item 5: done on an earlier date — shown at 100 % until the whole activity is finished
-          if (y.out === 'w') { const kk = !y.wip && p >= 99.9995 ? 'done' : y.wip || p <= base + 0.0005 ? 'wip' : 'mv'; r.subs.push({ gid: s.group_id || null, n: s.name, b: Math.round(base), a: Math.round(y.wip ? base : p), k: kk, ds: ds || S.to, de: kk === 'done' ? (de || S.to) : '' }); }
+          if (y.out === 'w') { const kk = !y.wip && p >= 99.9995 ? 'done' : y.wip || p <= base + 0.0005 ? 'wip' : 'mv'; r.subs.push({ gid: s.group_id || null, n: s.name, b: Math.round(base), a: Math.round(y.wip ? base : p), k: kk, ds: ds || PD(), de: kk === 'done' ? (de || PD()) : '' }); }   // v165
           else if (y.out === 'n') r.subs.push({ gid: s.group_id || null, n: s.name, k: 'n', b: Math.round(base), ds });
-          else if (y.out === 'h') { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'h', rc: rvRc(y.rc), ds }); r.hs.push({ where: r.loc + ' · ' + s.name, what: l.activity, rc: rvRc(y.rc), since: (s.open_hindrance && s.open_hindrance.from_date) || S.to }); }
+          else if (y.out === 'h') { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'h', rc: rvRc(y.rc), ds }); r.hs.push({ where: r.loc + ' · ' + s.name, what: l.activity, rc: rvRc(y.rc), since: (s.open_hindrance_yday && s.open_hindrance_yday.from_date) || PD() }); }   // v165
         });
         // v160.1 · reporting by group: each group's own progress (before → after) and its sub-activity pills under it
         r.groups = subGroups(l).filter(G => G.id).map(G => { const wt = z => num(z.tpl_weight || z.weight), tw = G.subs.reduce((a, z) => a + wt(z), 0) || 1;   // v160.2 · group % normalised to its own weights (100 % when every sub is done)
@@ -10698,11 +11180,13 @@ const DPR = (function () {
           return { id: G.id, name: G.name, w: num(G.weight), b: gb, a: ga, nd, n: G.subs.length, done: nd === G.subs.length, chips: r.subs.filter(c => c.gid === G.id), ds: gdt.s, de: nd === G.subs.length ? gdt.e : '' }; });
       }
       // v163 · item 6: activity start / end — staged lines from their sub-activities, direct lines from the line
-      if (staged(l)) { const ss = (l.stages || []).map(s => (x.subs[s.id] || {}).s || s.started_on || '').filter(Boolean).sort(); r.ds = ss[0] || (o === 'w' ? S.to : ''); r.de = (l.stages || []).every(s => subPct(g, l, s) >= 99.9995) ? ((l.stages || []).map(s => (x.subs[s.id] || {}).e || s.finished_on || S.to).sort().pop()) : ''; }
-      else { r.ds = x.started || l.started_on || (o === 'w' ? S.to : ''); r.de = r.fin ? (x.finOn || S.to) : ''; }
+      if (staged(l)) { const ss = (l.stages || []).map(s => (x.subs[s.id] || {}).s || s.started_on || '').filter(Boolean).sort(); r.ds = ss[0] || (o === 'w' ? PD() : ''); r.de = (l.stages || []).every(s => subPct(g, l, s) >= 99.9995) ? ((l.stages || []).map(s => (x.subs[s.id] || {}).e || s.finished_on || PD()).sort().pop()) : ''; }
+      else { r.ds = x.started || l.started_on || (o === 'w' ? PD() : ''); r.de = r.fin ? (x.finOn || PD()) : ''; }   // v165 · progress facts are yesterday's
+      r.oT = outT(g, l); r.hT = hasHT(g, l); r.startsT = startsN(g, l) > 0;
       rows.push(r);
     }));
-    const W = rows.filter(r => r.o === 'w'), H = rows.flatMap(r => r.hs).map(h => Object.assign(h, { days: daysBetween(h.since, S.to) + 1 }));
+    const W = rows.filter(r => r.o === 'w'), H = rows.flatMap(r => r.hs).map(h => Object.assign(h, { days: daysBetween(h.since, PD()) + 1 }));   // v165 · days lost as of yesterday
+    const WT = rows.filter(r => r.oT === 'w').length, HT = rows.filter(r => r.hT).length, ST = rows.filter(r => r.startsT).length;
     const N = rows.filter(r => r.o === 'n'), NR = rows.filter(r => r.o === '' && startedB(r.l)), NS = rows.filter(r => r.o === '' && !startedB(r.l)), moved = W.filter(r => r.a > r.b + 0.0005);   // v163 · item 4
     const fin = W.filter(r => r.fin), subFin = W.flatMap(r => r.subs.filter(s => s.k === 'done').map(s => ({ s, r }))), starts = W.filter(r => r.starts);
     const wipOnly = W.filter(r => !(r.a > r.b + 0.0005)).length + W.reduce((n, r) => n + r.subs.filter(s => s.k === 'wip').length, 0);
@@ -10711,12 +11195,13 @@ const DPR = (function () {
     S.groups.forEach(g => rvRows(dOf(g)).forEach(c => add(c.con, c.heads))); npDraft().forEach(e => add(e.con, e.heads));
     const hd = allHeads(), np = npHeads();
     let prev = null; if (S.yd) { prev = 0; S.yd.groups.forEach(g => { const d = S.yd.D[g.wgroup_id]; if (d) prev += rvRows(d).reduce((a, c) => a + heads(c.heads), 0); }); prev += (S.yd.np || []).reduce((a, r) => a + num(r.head_count), 0); }
-    return { rows, W, H, N, NR, moved, fin, subFin, starts, wipOnly, by, heads: hd, np, prev, prevSh: dsh(addDays(S.to, -1)), dH: prev == null ? null : hd - prev,
+    return { rows, W, H, N, NR, moved, fin, subFin, starts, wipOnly, by, heads: hd, np, prev, prevSh: dsh(PD()), dH: prev == null ? null : hd - prev, WT, HT, ST, pd: PD(),
       newH: H.filter(h => h.days <= 1), oldH: H.filter(h => h.days > 1), reported: rows.filter(r => r.o !== '').length, active: rows.length - NS.length, NS };
   }
   const rvDelta = F => F.dH == null ? `No Report On ${F.prevSh}` : `${F.dH >= 0 ? '+' : ''}${fmt(F.dH)} vs ${F.prevSh}`;
   function rvOneLine(F) {
-    const p = [`<b>${F.W.length} Activit${F.W.length === 1 ? 'y' : 'ies'} Worked</b>`];
+    const p = [`<b>${F.W.length} Activit${F.W.length === 1 ? 'y' : 'ies'} Worked</b> On ${esc(dsh(F.pd))}`];
+    p.push(`Today <b>${F.WT} Working</b>${F.ST ? ' · ' + F.ST + ' Starting' : ''}${F.HT ? ' · <b style="color:var(--drd)">' + F.HT + ' Hindered</b>' : ''}`);   // v165
     if (F.fin.length + F.subFin.length) p.push(`<b>${F.fin.length + F.subFin.length} Completed</b>`);
     if (F.starts.length) p.push(`${F.starts.length} Started`);
     if (F.H.length) p.push(`<b style="color:var(--drd)">${F.H.length} Under Hindrance</b>`);
@@ -10895,14 +11380,17 @@ const DPR = (function () {
     const warn = !sent ? [F.NR.length ? `${F.NR.length} Started Activit${F.NR.length === 1 ? 'y' : 'ies'} Not Filled → Go As “Not Reported”` : '', cutMins() <= 0 ? 'Past 1 PM Of ' + dsh(S.to) + ' — Will Be Marked Late' : ''].filter(Boolean) : [];
     h += `<div class="rv-one"><span>${rvOneLine(F)}</span>${warn.map(w => `<span class="warn">${esc(w)}</span>`).join('')}</div>`;
     h += rvKpis(F);
+    if (S.rvCards) h += `<div class="cd-wrap">${cdReport(F, null, cdHind(F.H))}</div>`;   // v165.1 · Cards: packages → activities → groups → location nodes, labour cards, hindrances
+    else {
     h += `<div class="rv-body"><div class="rv-col">${rvProgress(F)}</div><div class="rv-col">${rvSide(F, T)}</div></div>`;
     h += `<div style="padding:0 10px 10px" id="rv_lab">${rvLabTable(F)}</div>`;   // v163 · item 2
+    }
     h += `<div style="padding:0 10px 10px" id="rv_trend">${rvTrend(days, T)}</div>`;
     if (days.some(x => x.st === 'load')) setTimeout(() => { rvTrendLoad().then(ch => { if (ch && rvOn()) redraw(); }); }, 0);
     return h;
   }
-  const rvCtl = () => (S.prev || rvSent()) && !S.catMode ? `<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.rvFull ? '' : 'on'}" onclick="DPR.rvMode(false)">Summary</button><button class="${S.rvFull ? 'on' : ''}" onclick="DPR.rvMode(true)">Full Sheet</button></span>${rvSent() ? `<button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button>` : ''}</div>` : '';
-  function rvMode(full) { S.rvFull = !!full; S.mpo = null; S.remo = null; paint(); }
+  const rvCtl = () => (S.prev || rvSent()) && !S.catMode ? `<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.rvFull || S.rvCards ? '' : 'on'}" onclick="DPR.rvMode(false)">Summary</button><button class="${S.rvCards && !S.rvFull ? 'on' : ''}" onclick="DPR.rvCards(true)">Cards</button><button class="${S.rvFull ? 'on' : ''}" onclick="DPR.rvMode(true)">Full Sheet</button></span>${rvSent() ? `<button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button>` : ''}</div>` : '';
+  function rvMode(full) { S.rvFull = !!full; S.rvCards = false; S.cd = null; S.mpo = null; S.remo = null; paint(); }
   function rvDim(d) { S.dim = d; redraw(); }
 
   /* ----- print: A4 copy of the summary in a hidden frame (same method the suite uses for its other prints) ----- */
@@ -10987,24 +11475,24 @@ const DPR = (function () {
   }
 
   /* ---------- edits ---------- */
-  function setView(v) { S.gv = v; S.mpo = null; S.remo = null; redraw(); }
+  function setView(v) { S.gv = v; S.cd = null; S.mpo = null; S.remo = null; redraw(); }
   function subTab(t) { S.sub2 = t; S.mpo = null; S.remo = null; S.ylab = false; redraw(); }
   function fsrch(v) { S.fq = v; redraw(); }
   function foldRow(k) { S.fold.has(k) ? S.fold.delete(k) : S.fold.add(k); redraw(); }
   function foldKeys(json) { let ks = []; try { ks = JSON.parse(json) || []; } catch (e) { ks = []; } ks.forEach(k => folded(k)); const all = ks.every(k => S.fold.has(k)); ks.forEach(k => { if (all) S.fold.delete(k); else S.fold.add(k); }); redraw(); }   // v158.2
   function foldAll(on) { S.foldDef = on; if (on) S.seen.forEach(k => S.fold.add(k)); else S.fold = new Set(); S.mpo = null; S.remo = null; redraw(); }   // v158 · every parent folds; collapsed by default
-  function startMark(g, l, x) { if (!l.started_on && !x.started) x.started = S.to; }
-  const finDef = start => { const d = addDays(S.to, -1); return start && d < start ? start : d; };   // v161.3 · a completion marked on a sheet defaults to the day before that sheet (never before the start)
+  function startMark(g, l, x) { if (!l.started_on && !x.started) x.started = PD(); }   // v165 · yesterday's start
+  const finDef = start => { const d = PD(); return start && d < start ? start : d; };   // v161.3 · a completion defaults to the progress date (yesterday); never before the start
   function finAuto(g, l) {
     const x = lineX(g, l), est = num(l.est_qty);
     const done = staged(l) ? allSubsDone(g, l) && lineMoved(g, l) : x.out === 'w' && est > 0 && cumBase(l) + (x.wip ? 0 : num(x.qty)) >= est - 0.0005;
-    if (done) { if (!x.fin) { x.fin = true; x.finOn = x.finOn || finDef(x.started || l.started_on); if (x.cert == null) x.cert = l.site_cert_qty != null ? num(l.site_cert_qty) : est; } } else { x.fin = false; x.cert = null; x.finOn = ''; }
+    if (done) { if (!x.fin) { x.fin = true; x.finOn = x.finOn || finDef(x.started || l.started_on); if (x.cert == null) x.cert = l.site_cert_qty != null ? num(l.site_cert_qty) : null; } } else { x.fin = false; x.cert = null; x.finOn = ''; }   // v165 · M42: Site Cert. Qty starts blank (no Est. pre-fill), required to finish, no ceiling
   }
   function setOc(wid, oc, sid) {
     const { g, l, x } = lx(wid);
     if (sid) {
       const s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s); y.out = y.out === oc ? '' : oc;
-      if (y.out !== 'w') { y.pct = base; y.wip = false; if (!s.started_on && base <= 0.0005) y.s = ''; if (base < 99.9995) y.e = ''; } else if (base <= 0.0005 && !y.s) y.s = S.to;
+      if (y.out !== 'w') { y.pct = base; y.wip = false; if (!s.started_on && base <= 0.0005) y.s = ''; if (base < 99.9995) y.e = ''; } else if (base <= 0.0005 && !y.s) y.s = PD();
       if (y.out === 'w') startMark(g, l, x);
     } else {
       x.out = x.out === oc ? '' : oc;
@@ -11016,25 +11504,34 @@ const DPR = (function () {
   function snapQty(wid, p) { const { g, l, x } = lx(wid), o0 = outOf(g, l); x.out = 'w'; x.wip = false; x.qty = Math.max(0, Math.round((snapTgt(l, p) - cumBase(l)) * 1000) / 1000); startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0); }
   function toggleWip(wid, sid) {
     const { g, l, x } = lx(wid), o0 = outOf(g, l);
-    if (sid) { const s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s); y.wip = !y.wip; y.out = 'w'; if (y.wip) { y.pct = base; if (!y.s && base <= 0.0005) y.s = S.to; if (base < 99.9995) y.e = ''; } startMark(g, l, x); }
+    if (sid) { const s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s); y.wip = !y.wip; y.out = 'w'; if (y.wip) { y.pct = base; if (!y.s && base <= 0.0005) y.s = PD(); if (base < 99.9995) y.e = ''; } startMark(g, l, x); }
     else { x.wip = !x.wip; x.out = 'w'; if (x.wip) { x.qty = 0; } startMark(g, l, x); }
     finAuto(g, l); markDirty(g); lineRedraw(wid, o0);
   }
   function setPct(wid, sid, v) {
     const { g, l, x } = lx(wid), s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s), o0 = outOf(g, l);
     const p = Math.min(100, Math.max(base, Math.round(num(v)))); y.out = 'w'; y.wip = false; y.pct = p;
-    if (p > 0.0005 && !y.s) y.s = S.to; if (p >= 99.9995 && !y.e) y.e = finDef(y.s || s.started_on); if (p < 99.9995) y.e = '';
+    if (p > 0.0005 && !y.s) y.s = PD(); if (p >= 99.9995 && !y.e) y.e = finDef(y.s || s.started_on); if (p < 99.9995) y.e = '';
     startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0);
   }
   const snapPct = (wid, sid, p) => setPct(wid, sid, p);
-  function wipAll(wid) { const { g, l, x } = lx(wid); (l.stages || []).forEach(s => { const y = x.subs[s.id], base = subBase(s); if (base < 99.9995 && y.out !== 'h' && num(y.pct) <= base + 0.0005) { y.out = 'w'; y.wip = true; y.pct = base; if (!y.s && base <= 0.0005) y.s = S.to; } }); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
+  function wipAll(wid) { const { g, l, x } = lx(wid); (l.stages || []).forEach(s => { const y = x.subs[s.id], base = subBase(s); if (base < 99.9995 && y.out !== 'h' && num(y.pct) <= base + 0.0005) { y.out = 'w'; y.wip = true; y.pct = base; if (!y.s && base <= 0.0005) y.s = PD(); } }); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
   function rcSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].rc = v; else x.rc = v; markDirty(g); lineRedraw(wid); }
+  // v165 · Work Status · Today D (drives contractor + manpower; a W on an open hindrance lifts it; a W on an unstarted part starts it today)
+  function setOcT(wid, oc, sid) {
+    const { g, l, x } = lx(wid);
+    if (sid) { const s = l.stages.find(z => z.id === sid), y = x.subs[sid], t = subT(y); if (subDoneT(s, y)) return; t.out = t.out === oc ? '' : oc; t.s = t.out === 'w' && !subStartedAsOf(s, y) ? S.to : ''; if (t.out !== 'h') t.rc = ''; }
+    else { if (finT(g, l)) return; const t = tOf(g, l); t.out = t.out === oc ? '' : oc; t.started = t.out === 'w' && !lineStartedAsOf(g, l) ? S.to : ''; if (t.out !== 'h') t.rc = ''; }
+    markDirty(g); redraw();
+  }
+  function wAllT(wid) { const { g, l, x } = lx(wid); openT(g, l).forEach(s => { const y = x.subs[s.id], t = subT(y); if (t.out !== 'h') { t.out = 'w'; t.s = subStartedAsOf(s, y) ? '' : S.to; } }); markDirty(g); redraw(); }
+  function rcSetT(wid, sid, v) { const { g, l, x } = lx(wid); if (sid) subT(x.subs[sid]).rc = v; else tOf(g, l).rc = v; markDirty(g); lineRedraw(wid); }
   function noteSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].note = v; else x.note = v; markDirty(g); footRefresh(); }
   // v160.4 · typing a value rebuilds only that activity's rows (+ footer and side counts) instead of the whole sheet.
   //          Falls back to the full redraw when the row is not on screen, the outcome changed, or a full redraw is already queued.
   function lineRedraw(wid, o0) {
     const e = S.W[wid], tb = document.querySelector('#d2_sc tbody.ln[data-w="' + wid + '"]');
-    if (_rp || !e || !tb || S.prev || S.catMode || S.tab !== 'log' || (o0 !== undefined && outOf(e.g, e.l) !== o0)) { redraw(); return; }
+    if (_rp || !e || !tb || S.prev || S.catMode || S.tab !== 'log' || (o0 !== undefined && outOf(e.g, e.l) !== o0) || !S.nested) { redraw(); return; }   // v165 · the flat sheet has no per-line tbody — full redraw
     const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null;
     const it = { g: e.g, l: e.l, lv: num(tb.dataset.lv) || 2 }, idx = num(tb.dataset.i), ro = isRo();
     tb.innerHTML = staged(e.l) ? stageRows3(it, idx, ro) : dirRow3(it, idx, ro);
@@ -11042,10 +11539,10 @@ const DPR = (function () {
     if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el && el !== document.activeElement) el.focus(); }
   }
   function footRefresh() { const f = $('d2_foot'); if (f) f.innerHTML = footHtml(); const s = $('d2_side'); if (s) s.innerHTML = sideHtml(); }
-  function lineStart(wid, v) { const { g, x } = lx(wid); if (v > S.to) { toast('Cannot Start After ' + dsh(S.to), 'warn'); redraw(); return; } x.started = v; markDirty(g); lineRedraw(wid); }
+  function lineStart(wid, v) { const { g, x } = lx(wid); if (v > PD()) { toast('Cannot Start After ' + dsh(PD()) + ' On This Sheet — Mark W Under Status ' + dsh(S.to) + ' To Start Today', 'warn'); redraw(); return; } x.started = v; markDirty(g); lineRedraw(wid); }
   function lineEnd(wid, v, min) { const { g, x } = lx(wid); if (min && v < min) { toast('End Date Cannot Be Earlier Than ' + dsh(min), 'warn'); redraw(); return; } x.finOn = v; markDirty(g); lineRedraw(wid); }
-  function certSet(wid, v) { const { g, x } = lx(wid); x.cert = v === '' ? null : Math.max(0, num(v)); markDirty(g); lineRedraw(wid); }
-  function subDate(wid, sid, k, v) { const { g, x } = lx(wid), y = x.subs[sid]; if (k === 's' && y.e && v > y.e) { toast('Start Cannot Be After End', 'warn'); redraw(); return; } if (k === 'e' && y.s && v < y.s) { toast('End Cannot Be Before Start', 'warn'); redraw(); return; } if (v > S.to) { toast('Cannot Be After ' + dsh(S.to), 'warn'); redraw(); return; } y[k] = v; markDirty(g); lineRedraw(wid); }
+  function certSet(wid, v) { const { g, x } = lx(wid); x.cert = v === '' ? null : Math.max(0, Math.round(num(v) * 1000) / 1000); markDirty(g); lineRedraw(wid); }   // v165 · 3 dp, no ceiling (M42)
+  function subDate(wid, sid, k, v) { const { g, x } = lx(wid), y = x.subs[sid]; if (k === 's' && y.e && v > y.e) { toast('Start Cannot Be After End', 'warn'); redraw(); return; } if (k === 'e' && y.s && v < y.s) { toast('End Cannot Be Before Start', 'warn'); redraw(); return; } if (v > PD()) { toast('Cannot Be After ' + dsh(PD()), 'warn'); redraw(); return; } y[k] = v; markDirty(g); lineRedraw(wid); }
   // labour (per card)
   const rowsK = (g, k) => k && k !== 'A' ? unitRows(g, { key: k }) : dOf(g).cons;   // v157.1 · rows of a labour unit
   function setHead(gid, ci, t, v, k) { const g = G(gid), c = rowsK(g, k)[ci]; const n = Math.max(0, Math.round(num(v))); if (n) c.heads[t] = n; else delete c.heads[t]; markDirty(g); if (g.lines.length === 1) lineRedraw(g.lines[0].work_id); else redraw(); }
@@ -11129,8 +11626,9 @@ const DPR = (function () {
     const d = dOf(g), lines = [], problems = [], hd = S.masters.hindrance_reasons;
     for (const l of g.lines) {
       const x = d.lines[l.work_id]; if (finL(l)) continue;
-      const o = outOf(g, l), nm = l.activity + ' · ' + lineLoc(g, l);
-      if (o === '' && !x.fin) continue;
+      let o = outOf(g, l); const nm = l.activity + ' · ' + lineLoc(g, l), oT = outT(g, l);
+      if (o === '' && !x.fin && oT === '') continue;
+      if (o === '' && !x.fin) { if (startedB(l)) { problems.push('Fill The ' + dsh(PD()) + ' Status (W / H / N) On ' + nm + ' — Its ' + dsh(S.to) + ' Status Is Marked'); } else o = 'n'; }   // v165 · today marked, yesterday blank: a part not yet started is No Work yesterday; a running one must be told
       const ln = { work_id: l.work_id, outcome: o === 'w' ? 'worked' : o === 'h' ? 'hindrance' : 'none' };
       if (staged(l)) {
         ln.stages = l.stages.map(s => { const y = x.subs[s.id], b = subBase(s), so = b >= 99.9995 ? 'none' : y.out === 'w' ? 'worked' : y.out === 'h' ? 'hindrance' : 'none';
@@ -11141,10 +11639,19 @@ const DPR = (function () {
         ln.qty = x.wip ? 0 : num(x.qty); if (x.wip) ln.remarks = 'WIP — Worked, Nothing Completed'; else if (x.note) ln.remarks = x.note;
         const left = Math.max(0, num(l.est_qty) - cumBase(l)); if (ln.qty > left + 0.0005) problems.push('Only ' + fmt(left) + ' ' + (l.uom || '') + ' Remains On ' + l.activity); if (isCount(l.uom) && Math.abs(ln.qty - Math.round(ln.qty)) > 0.0005) problems.push(l.activity + ' Is Counted In Whole ' + l.uom);
       } else { ln.reason_code = o === 'h' ? x.rc || null : null; ln.remarks = x.note || null; if (o === 'h' && !x.rc) problems.push('Pick The Hindrance Reason On ' + nm); }
-      if (o === 'w') { if (!l.started_on || !l.start_locked) ln.started_on = x.started || l.started_on || S.to; if (staged(l) && x.note) ln.remarks = x.note; }
+      if (o === 'w') { if (!l.started_on || !l.start_locked) ln.started_on = x.started || l.started_on || PD(); if (staged(l) && x.note) ln.remarks = x.note; }
       ln.finish = !!x.fin;
       if (o === 'w') ln.no_labour = noLab(g, 'A');   // v161.3
       if (x.fin) { if (x.cert == null || !(x.cert > 0)) problems.push('Site Cert. Qty Missing On ' + l.activity); ln.finished_on = x.finOn || finDef(x.started || l.started_on); ln.site_cert_qty = x.cert; if (x.finOn && x.finOn < lineMinEnd(g, l)) problems.push(l.activity + ' Cannot End Before Its Last Sub-Activity'); }
+      // v165 · M42 today block (status of D → dpr_progress_updates provisional row; drives the card outcome + labour). None for a line finished as of yesterday.
+      if (!x.fin && oT !== '') {
+        const t = tOf(g, l), T = { outcome: ocWord(oT), reason_code: null, remarks: null, started_on: null };
+        if (staged(l)) {
+          T.stages = openT(g, l).map(s => { const y = x.subs[s.id], tt = subT(y); if (!tt.out) return null; if (tt.out === 'h' && !tt.rc) problems.push('Pick Today’s Hindrance Reason On ' + s.name + ' (' + nm + ')');
+            return { id: s.id, outcome: ocWord(tt.out), reason_code: tt.out === 'h' ? tt.rc : null, remarks: tt.note || null, started_on: tt.out === 'w' && subStarts(s, y, subBase(s)) ? (tt.s || S.to) : null }; }).filter(Boolean);
+        } else { if (oT === 'h') { T.reason_code = t.rc || null; if (!t.rc) problems.push('Pick Today’s Hindrance Reason On ' + nm); } T.remarks = t.note || null; if (oT === 'w' && dirStarts(g, l)) T.started_on = t.started || S.to; }
+        ln.today = T;
+      }
       lines.push(ln);
     }
     const labour_rows = [];
@@ -11154,7 +11661,7 @@ const DPR = (function () {
     const uk = new Set(labUnits(g).map(u => u.key));   // rows of a sub / group no longer marked worked are not sent
     Object.entries(d.rows || {}).filter(([k]) => uk.has(k)).forEach(([k, arr]) => pushRows(arr, k[0] === 'S' ? { work_sub_id: k.slice(2) } : { plan_group_id: k.slice(2) }, (g.label || g.location) + ' · ' + k.slice(2)));   // v157.1 · per sub / group (M34 stores plan_group_id)
     if (problems.length) { toast(problems[0], 'warn'); return null; }
-    return { outcome: d.out === 'worked' ? 'worked' : d.out, reason_code: d.out === 'hindrance' ? d.rc || null : null, remarks: null, labour_rows, lines, no_labour: noLab(g, 'A') };   // v161.3
+    return { outcome: d.out === 'worked' ? 'worked' : d.out, reason_code: d.out === 'hindrance' ? d.rc || null : null, remarks: null, labour_rows, lines, no_labour: noLab(g, 'A') };   // v161.3 · v165: outcome follows today; a club hindered on every member today → outcome hindrance = one card-level period (M42 server)
   }
   async function saveCard(g) {
     const P = payloadOf(g); if (!P) return false;
@@ -11185,7 +11692,8 @@ const DPR = (function () {
   function previewWarn() {
     const w = [], L = labStats(), un = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length;
     if (L.miss) w.push(L.miss + ' Labour Card' + (L.miss > 1 ? 's' : '') + ' Without Heads');
-    if (un) w.push(un + ' Activit' + (un > 1 ? 'ies' : 'y') + ' Not Filled — They Go As “Not Reported”');
+    if (un) w.push(un + ' Activit' + (un > 1 ? 'ies' : 'y') + ' Without A ' + dsh(PD()) + ' Status — They Go As “Not Reported”');
+    const unT = allLines().filter(({ g, l }) => !finT(g, l) && outT(g, l) === '' && startedB(l)).length; if (unT) w.push(unT + ' Running Activit' + (unT > 1 ? 'ies' : 'y') + ' Without A ' + dsh(S.to) + ' Status');   // v165
     if (!L.all) w.push('No Labour At All — If Nobody Worked, Add A Non-Estimated Entry Saying Why');
     if (cutMins() <= 0) w.push('Past 1 PM Of ' + dsh(S.to) + ' — This Will Be Marked Late');
     const blk = S.cal ? Object.values(S.cal.days).filter(x => x.report_date < S.to && (x.status === 'Draft' || x.status === 'Returned')).sort((a, b) => a.report_date < b.report_date ? -1 : 1)[0] : null;   // v161.3
@@ -11209,7 +11717,7 @@ const DPR = (function () {
 
   /* ---------- small state setters ---------- */
   function engRenderBody() { redraw(); }
-  async function tab(t) { if (t === S.tab) return; S.tab = t; S.catMode = false; S.prev = false; if (t === 'rep' && S.cal) await calLoad(S.cal.month, true); paint(); }
+  async function tab(t) { if (t === S.tab) return; S.tab = t; S.cd = null; S.catMode = false; S.prev = false; if (t === 'rep' && S.cal) await calLoad(S.cal.month, true); paint(); }
   function filt(f) { S.filt = f; redraw(); }
   function areaF(a) { S.area = a; redraw(); }
   async function refresh() {
@@ -11626,7 +12134,7 @@ const DPR = (function () {
       for (let t = 0; t < 2; t++) {
         try { const data = await rpc('rpc_dpr_review_payload', { p_submission_id: s.submission_id });
           const P = { id: s.submission_id, key, data, c: mkCtx(data), s, name: data.engineer || s.engineer || '', areas: s.areas || [], prior: pri }; P.F = mFacts(P);
-          S.mPay[s.submission_id] = P; delete S.mPayErr[s.submission_id]; ENG.put('p|' + s.submission_id, { key, data, s, prior: pri }); if (onEach) onEach(); return; }
+          S.mPay[s.submission_id] = P; delete S.mPayErr[s.submission_id]; cdPrefetch(P.c.groups); /* v166.1 */ ENG.put('p|' + s.submission_id, { key, data, s, prior: pri }); if (onEach) onEach(); return; }
         catch (e) { if (M39_MISS(e)) { S.m39 = false; return; } if (quiet) { if (mTimeout(e)) to = true; return; } if (t === 0 && mTimeout(e)) continue;
           if (!S.mPay[s.submission_id]) S.mPayErr[s.submission_id] = 1; toast(err(e, 'Could not open ' + (s.engineer || 'a report')), 'error'); if (onEach) onEach(); return; }
       }
@@ -11719,7 +12227,7 @@ const DPR = (function () {
     right += `<div class="lc open" style="border-left-color:var(--drd)"><div class="lh" style="cursor:default"><div class="a">Hindrances · Needing Action</div><div class="l">Allocate · Classify · Close In The Hindrances Tab</div></div>${hAct.length ? hAct.map(h => `<div class="hrow"><div><b>${esc(h.activity || h.group || '')} · ${esc(h.location || '')}</b><span>Since ${dsh(h.from_date)} · ${esc(h.reason_text)} · ${esc(h.raised_by || '')}${h.allocated_to ? ' → ' + esc(h.allocated_to) + (h.target_on ? ' · Target ' + dsh(h.target_on) : '') : ''}</span></div><span class="sp2 ${hStep(h)[0]}">${hStep(h)[1]}</span><button class="btn sm" onclick="DPR.hGo('${h.id}')">Open · ${h.days_lost} Days</button></div>`).join('') : '<div class="dpr-note">Nothing Open.</div>'}</div>`;
     $('dpr_mbody').innerHTML = '<div class="rev"><div>' + left + '</div><div>' + right + '</div></div>';
   }
-  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
+  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.cdTotReq = null; S.cdPkgReq = false; S.cdTotStale = true; S.cdPkgStale = true; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
   async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.mOpen = new Set(); await mgrLoad(); }
   async function mOpen(id) {
     if (S.mOpen.has(id)) { S.mOpen.delete(id); revDraw(); return; }
@@ -11925,9 +12433,10 @@ const DPR = (function () {
   function mEngView() {
     const P = S.mPay[S.mEng]; mUse(P); const F = P.F, s = P.s, st = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'] }[s.status] || ['p-grey', s.status];
     const others = mSent().map(x => S.mPay[x.submission_id]).filter(Boolean), k = s.submission_id, eo = P.data.earlier_open, pub = mPub();
-    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mFull ? '' : 'on'}" onclick="DPR.mFull(false)">Summary</button><button class="${S.mFull ? 'on' : ''}" onclick="DPR.mFull(true)">Full Sheet</button></span><button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button></div>`)}`;
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mFull || S.mCards ? '' : 'on'}" onclick="DPR.mFull(false)">Summary</button><button class="${S.mCards && !S.mFull ? 'on' : ''}" onclick="DPR.mCards(true)">Cards</button><button class="${S.mFull ? 'on' : ''}" onclick="DPR.mFull(true)">Full Sheet</button></span><button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button></div>`)}`;
     h += `<div class="d2-fix rvm-eng"><button class="d2-btn sm" onclick="DPR.mV('day')">← All Reports</button><b>${esc(P.name)}</b><span class="muted">${esc((P.areas || []).join(' · '))}</span>${pill(st[0], st[1])}<span class="muted">Sent ${esc(dts(s.submitted_at))}</span>${s.is_late ? pill('p-red', 'Late') : pill('p-ok', 'On Time')}<span class="muted">Attempt ${num(s.attempt_no) || 1}</span>${s.status === 'Accepted' && s.reviewed_at ? `<span class="muted">· Accepted ${esc(dts(s.reviewed_at))}</span>` : ''}<span class="sp"></span>${others.length > 1 ? `<span class="rvm-nav">${others.map(o => `<button class="${o.id === k ? 'on' : ''}" onclick="DPR.mEng('${o.id}')">${esc(o.name.split(' ')[0])}</button>`).join('')}</span>` : ''}</div>`;
     if (S.mFull) h += `<div class="d2-sc" id="d2_sc">${sheetHtml3(true)}</div>`;
+    else if (S.mCards) h += `<div class="rv" id="d2_sc"><div class="rv-one"><span>${rvOneLine(F)}</span></div>${rvKpis(F)}<div class="cd-wrap">${cdReport(F, P, cdHind(F.H))}</div></div>`;   // v165.1 · Cards (no Manager Checks / Insights — 18 Oct 2026)
     else h += `<div class="rv" id="d2_sc"><div class="rv-one"><span>${rvOneLine(F)}</span></div>${rvKpis(F)}<div class="rv-body"><div class="rv-col">${rvProgress(F)}</div><div class="rv-col">${mChecks(P)}${rvSide(F, null)}</div></div></div>`;
     const rIn = `<input class="rvm-in" id="mr_${k}" placeholder="${s.status === 'Accepted' ? 'Reason To Return An Accepted Report…' : 'Reason For Return (Required To Return)…'}" value="${esc(S.mRet[k] || '')}" oninput="DPR.mRetNote('${k}',this.value)"><button class="d2-btn" style="color:var(--drd);border-color:var(--drdb)" onclick="DPR.mReturnGo('${k}')">↩ Return</button>`;
     h += `<div class="d2-foot">${s.status === 'Accepted' ? `<span class="msg">✓ <b>Accepted${s.reviewed_at ? ' ' + esc(dts(s.reviewed_at)) : ''}</b> · ${pub ? 'Published In ' + esc(pub.dpr_no || '') + ' · Read-Only' : 'In The Combined DPR · Return Is Possible Until ' + esc(dsh(S.mProg)) + ' Is Published'}</span>${pub ? '' : rIn}`
@@ -11989,7 +12498,7 @@ const DPR = (function () {
   function mDprView() {
     const C = mComb(), sent = mSent(), pub = mPub(), days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null, dd = esc(dsh(S.mProg));
     S.to = S.mProg;
-    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><button class="d2-btn sm navy" onclick="DPR.mPrint()">⎙ Print / PDF</button></div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mCards ? '' : 'on'}" onclick="DPR.mCards(false)">Table</button><button class="${S.mCards ? 'on' : ''}" onclick="DPR.mCards(true)">Cards</button></span><button class="d2-btn sm navy" onclick="DPR.mPrint()">⎙ Print / PDF</button></div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;   // v165.1 · Table | Cards
     h += `<div class="rvm-cov"><span class="t">In This DPR</span>${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—');
       return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}</div>`;
     const nArea = (S.mQueue.areas || []).length || sent.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length;
@@ -11999,7 +12508,8 @@ const DPR = (function () {
     h += `<div class="rv-kpis">${k('', 'Areas Reported', `${inAreas}<small>/ ${nArea}</small>`, out ? `${out} Not In` : 'All Areas In', `<i style="width:${nArea ? inAreas / nArea * 100 : 0}%;background:var(--dn)"></i>`)}${k('vio', 'Progress Moved', moved, `Of ${C.W.length} Worked · ${C.NR.length} Not Reported`)}${k('ok', 'Completed', fin, 'Activities + Sub-Activities')}${k(Hn ? 'red' : '', 'Hindrance', Hn, `${C.H.filter(x => x.days <= 1).length} New · ${C.H.filter(x => x.days > 1).length} Carried Over`)}${k('', 'Manpower', `${fmt(C.heads)}<small>Heads</small>`, `${dH == null ? '' : `<span class="${dH >= 0 ? 'up' : 'dn'}">${dH >= 0 ? '▲ +' : '▼ '}${fmt(dH)}</span> vs Previous Reports · `}NP ${fmt(C.np)}`, C.heads ? `<i style="width:${(C.heads - C.np) / C.heads * 100}%;background:var(--dn)"></i><i style="width:${C.np / C.heads * 100}%;background:#a9bfdd"></i>` : '')}</div>`;
     const byA = mSent().map(s => { const P = S.mPay[s.submission_id], F = P && P.F, inn = C.inc.some(x => x.id === s.submission_id); return `<tr class="${inn ? '' : 'off2'}"><td><b>${esc((s.areas || []).join(' · ') || '—')}</b></td><td>${esc(s.engineer || '')}</td><td class="n">${F && inn ? F.W.length : '—'}</td><td class="n">${F && inn ? F.H.length : '—'}</td><td class="n">${F && inn ? fmt(F.heads) : s.status === 'Submitted' ? 'To Review' : '—'}</td></tr>`; }).join('')
       + mNotSent().map(a => `<tr class="off2"><td><b>${esc(a.area_name)}</b></td><td>${esc(a.home_engineers || '—')}</td><td class="n">—</td><td class="n">—</td><td class="n">Not Reported</td></tr>`).join('');
-    h += `<div class="rv-body"><div class="rv-col">${mProgAll(C)}</div><div class="rv-col">
+    if (S.mCards) h += `<div class="cd-wrap">${cdCombined(C, cdHind(C.H))}</div>`;   // v165.1 · Cards: all engineers merged, engineer chip on every card
+    else h += `<div class="rv-body"><div class="rv-col">${mProgAll(C)}</div><div class="rv-col">
       <div class="rv-c"><div class="h"><b>By Area</b><span class="m">Worked · Hindrance · Heads</span></div><table class="rv-tt"><thead><tr><th>Area</th><th>Engineer</th><th class="n">Worked</th><th class="n">Hind.</th><th class="n">Heads</th></tr></thead><tbody>${byA}<tr class="tot"><td>Total</td><td></td><td class="n">${C.W.length}</td><td class="n">${Hn}</td><td class="n">${fmt(C.heads)}</td></tr></tbody></table></div>
       <div class="rv-c"><div class="h"><b>Insights</b><span class="m">Across All Areas</span></div><ul class="rv-ins">${mInsights(C, T)}</ul></div>
       <div class="rv-c"><div class="h"><b>Hindrances</b><span class="m">${Hn} Row${Hn === 1 ? '' : 's'}</span></div>${Hn ? C.H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)} · ${esc(x.area)}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div>
@@ -12060,9 +12570,9 @@ const DPR = (function () {
   }
 
   /* ----- actions ----- */
-  function mV(v) { S.mv = v; S.mFull = false; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
-  function mEng(id) { if (!S.mPay[id]) return; S.mEng = id; S.mv = 'eng'; S.mFull = false; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
-  function mFull(b) { S.mFull = !!b; mPaint(); }
+  function mV(v) { S.mv = v; S.mFull = false; S.cd = null; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
+  function mEng(id) { if (!S.mPay[id]) return; S.mEng = id; S.mv = 'eng'; S.mFull = false; S.cd = null; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
+  function mFull(b) { S.mFull = !!b; if (b) S.mCards = false; S.cd = null; mPaint(); }
   function mIncl(b) { S.mIncl = !!b; mPaint(); }
   async function mCalMove(n) { const m = (S.mCal && S.mCal.month) || monthOf(S.mProg), d = new Date(m + 'T00:00:00'); d.setMonth(d.getMonth() + n); const nm = monthOf(ymd(d)); if (nm > monthOf(todayYmd())) return; await mCalLoad(nm); mPaint(); }
   async function mJump(d, id) { S.mJumpTo = id || null; if (d !== S.mProg) await mGo(d); else if (id && S.mPay[id]) mEng(id); }
@@ -12257,11 +12767,11 @@ const DPR = (function () {
   }
 
   return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
-    setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved, noLabTog, openDay,
+    setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, setOcT, wAllT, rcSetT, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved, noLabTog, openDay,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo,
+    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, rvCards, mCards, cdPkgTog,   // v166 · Cards
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };

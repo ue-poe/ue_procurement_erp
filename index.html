@@ -1080,7 +1080,37 @@ input[type="number"] {
 #mod-dpr .dp2 .cd-gc.done{border-color:var(--dokb);background:var(--dokl)}#mod-dpr .dp2 .cd-gc.clk{cursor:pointer}#mod-dpr .dp2 .cd-gc.clk:hover{box-shadow:0 2px 10px rgba(91,63,168,.16);border-color:var(--dv)}
 #mod-dpr .dp2 .cd-gc .gh{display:flex;gap:6px;align-items:baseline;font-size:12px;margin-bottom:4px;flex-wrap:wrap}#mod-dpr .dp2 .cd-gc .gh>b{font-size:13px;color:var(--dv)}#mod-dpr .dp2 .cd-gc.done .gh>b{color:var(--dok)}#mod-dpr .dp2 .cd-gc .gh .sp{flex:1}#mod-dpr .dp2 .cd-gc .gh .pct{font-size:15px;color:var(--dv)}
 #mod-dpr .dp2 .cd-gc .gl{margin-top:6px;display:flex;flex-direction:column;gap:3px}
-#mod-dpr .dp2 .cd-sr{display:grid;grid-template-columns:minmax(120px,1.2fr) 1fr 40px auto;gap:8px;align-items:center;font-size:11.5px;background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:3px 7px}
+#mod-dpr .dp2 .cd-sr{display:grid;grid-template-columns:minmax(120px,1.2fr) 1fr 40px auto 16px;gap:8px;align-items:center;font-size:11.5px;background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:3px 7px}
+/* v166.2 · row bars coloured by state: done green · worked indigo + today's increment bright teal · running (no new progress) indigo · hindrance red · no work slate · not started empty */
+#mod-dpr .dp2 .cd-bar.s2{display:inline-flex;background:#e7e9f0}#mod-dpr .dp2 .cd-bar.s2 i{display:block;height:100%;flex:none}
+#mod-dpr .dp2 .cd-bar.s2 i.b{background:var(--dv)}#mod-dpr .dp2 .cd-bar.s2 i.d{background:#14b8a6}
+#mod-dpr .dp2 .cd-bar.s2.done i.b,#mod-dpr .dp2 .cd-bar.s2.done i.d{background:var(--dok)}
+#mod-dpr .dp2 .cd-bar.s2.hin i.b{background:var(--drd)}#mod-dpr .dp2 .cd-bar.s2.hin{background:var(--drdl)}
+#mod-dpr .dp2 .cd-bar.s2.nw i.b{background:#64748b}
+#mod-dpr .dp2 .cd-bar.s2.ns{background:#eef0f4;border:1px dashed #cbd5e1}
+#mod-dpr .dp2 .cd-sr>b{color:var(--dv)}#mod-dpr .dp2 .cd-sr.dn>b{color:var(--dok)}
+/* v166.2 · entry on the card (DPR_Card_Entry_mock_v3, approved 20 Oct 2026): row → panel */
+#mod-dpr .dp2 .cd-sr.clk{cursor:pointer}#mod-dpr .dp2 .cd-sr.clk:hover{border-color:var(--dvb);box-shadow:0 1px 6px rgba(91,63,168,.12)}
+#mod-dpr .dp2 .cd-sr .chev{color:#aab3c2;text-align:right;font-size:11px}#mod-dpr .dp2 .cd-sr.open{border-color:var(--dv);border-bottom-left-radius:0;border-bottom-right-radius:0;background:#fbfbff}#mod-dpr .dp2 .cd-sr.open .chev{color:var(--dv)}
+#mod-dpr .dp2 .cd-sr.att{border-color:var(--drdb);background:#fff7f7}
+#mod-dpr .dp2 .cd-gc.plain{padding:4px}#mod-dpr .dp2 .cd-gc .gh .natt{background:var(--drdl);color:var(--drd);font-weight:800;padding:1px 8px;border-radius:999px;font-size:10.5px}#mod-dpr .dp2 .cd-gc .gh .dates b{color:#132338}
+#mod-dpr .dp2 .cd-ep{border:1px solid var(--dv);border-top:0;border-radius:0 0 5px 5px;background:#fff;margin:-3px 0 2px}
+#mod-dpr .dp2 .cd-ep .eh,#mod-dpr .dp2 .cd-ep .eb{display:grid;grid-template-columns:1.1fr 1.5fr .8fr 1.1fr}
+#mod-dpr .dp2 .cd-ep .eh{border-bottom:1px solid var(--ln,#c3ccd9)}#mod-dpr .dp2 .cd-ep .eh span{font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 8px;border-right:1px solid var(--ln,#c3ccd9);text-align:center}
+#mod-dpr .dp2 .cd-ep .eh span:last-child{border-right:0}#mod-dpr .dp2 .cd-ep .eh .y{background:#ccfbf1;color:#0f766e}#mod-dpr .dp2 .cd-ep .eh .t{background:#e0e7ff;color:#3730a3}#mod-dpr .dp2 .cd-ep .eh small{display:block;font-weight:600;text-transform:none;letter-spacing:0;opacity:.85}
+#mod-dpr .dp2 .cd-ep .eb>div{padding:8px;border-right:1px solid var(--ln,#c3ccd9);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0}
+#mod-dpr .dp2 .cd-ep .eb>div:last-child{border-right:0}#mod-dpr .dp2 .cd-ep .eb .d2-cum{align-items:center}
+#mod-dpr .dp2 .cd-ep .ge-date{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--ln,#c3ccd9);border-radius:6px;padding:2px 7px;font-weight:700;background:#fff;font-size:11px}#mod-dpr .dp2 .cd-ep .ge-date i{font-style:normal;color:var(--ink2,#51627a);font-weight:500}
+#mod-dpr .dp2 .cd-ep .ef{display:flex;align-items:center;gap:8px;padding:5px 8px;border-top:1px solid var(--ln,#c3ccd9);background:#f8fafc;font-size:11px;flex-wrap:wrap}#mod-dpr .dp2 .cd-ep .ef .lab{font-weight:700;color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-ep .ef .lab b{color:var(--dv)}
+#mod-dpr .dp2 .cd-ep .ef input.rem{flex:1;min-width:140px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:3px 7px;font:inherit;font-size:11.5px}
+#mod-dpr .dp2 .cd-mp{border-top:1px solid var(--ln,#c3ccd9);background:#fbfbff;padding:6px 8px 8px}#mod-dpr .dp2 .cd-mp.full{border:1px solid var(--ln,#c3ccd9);border-radius:7px;background:#fff;margin:6px 0 8px}
+#mod-dpr .dp2 .cd-mp .ttl{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}#mod-dpr .dp2 .cd-mp .ttl b{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--dn)}
+#mod-dpr .dp2 .cd-mp .lvl{font-size:10px;color:var(--ink2,#51627a);background:#f6f8fb;border:1px solid var(--ln,#c3ccd9);border-radius:999px;padding:1px 7px}#mod-dpr .dp2 .cd-mp .lvl.ok{color:var(--dok);border-color:var(--dokb);background:var(--dokl)}#mod-dpr .dp2 .cd-mp .lvl.bad{color:var(--drd);border-color:var(--drdb);background:var(--drdl)}#mod-dpr .dp2 .cd-mp .lvl a{color:var(--dn);font-weight:800;cursor:pointer}
+#mod-dpr .dp2 .cd-mp .d2-strip .crow{border:1px solid var(--ln,#c3ccd9);border-radius:7px;padding:5px 8px;background:#f8fafc}#mod-dpr .dp2 .cd-mp .d2-strip .crow.acts{border:0;background:none;padding:0 2px}
+#mod-dpr .dp2 .cd-mph .d2-mp{cursor:pointer}
+#mod-dpr .dp2 .cd-gs{display:flex;flex-direction:column;gap:8px;padding:8px 10px}
+#mod-dpr .dp2 .cd-band .r .kv b .con-nm{font-weight:800}
+@media (max-width:900px){#mod-dpr .dp2 .cd-ep .eh,#mod-dpr .dp2 .cd-ep .eb{grid-template-columns:1fr 1fr}#mod-dpr .dp2 .cd-ep .eb>div:nth-child(2){border-right:0}#mod-dpr .dp2 .cd-ep .eb>div:nth-child(-n+2){border-bottom:1px solid var(--ln,#c3ccd9)}}
 #mod-dpr .dp2 .cd-sr .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#mod-dpr .dp2 .cd-sr .nm small{color:var(--ink2,#51627a);margin-left:5px}#mod-dpr .dp2 .cd-sr>b{text-align:right;font-variant-numeric:tabular-nums}#mod-dpr .dp2 .cd-sr .st{min-width:28px;text-align:right}
 #mod-dpr .dp2 .cd-gc .go{margin-top:6px;font-size:11px;font-weight:800;color:var(--dv);text-align:right}
 #mod-dpr .dp2 .cd-sub{border-top:1px solid var(--ln,#c3ccd9)}#mod-dpr .dp2 .cd-sub .sh{display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fbfcfe;border-bottom:1px solid var(--ln2,#e0e5ec);font-size:12px;flex-wrap:wrap}#mod-dpr .dp2 .cd-sub .sh .sp{flex:1}#mod-dpr .dp2 .cd-sub .sh .dates{display:flex;gap:12px;font-size:11px;color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-sub .sh .dates b{color:#132338}
@@ -9941,6 +9971,7 @@ new MutationObserver(function () {
 })();
 const DPR = (function () {
   /* ==================================================================
+     v166.2 · Cards: entry on the card — a row opens its entry panel under it (Status PD · Reported [B] · Cum. [C] · Status D); labour by plan level on the club band / node band / group header / inside the panel (DPR_Card_Entry_mock_v3 approved 20 Oct 2026)
      v166.1 · Cards totals prefetched at sheet open (M43 + M44 in parallel) and kept per user × project in localStorage: last answer paints at once, a fresh read replaces it in the background
      v166 · Cards: package header = whole-package Cert Vs Est per UOM + strip of every activity (M44), club card = one row per clubbed activity (M43) — DPR_Card_Package_mock_v3 approved 19 Oct 2026
      v165.1 · Cards view (DPR_Card_View / DPR_Card_Report / DPR_Card_Manager mocks, approved 18 Oct 2026) beside Flat / Nested / Summary / Table
@@ -10535,14 +10566,18 @@ const DPR = (function () {
   }
   function mpStrip(g, u, label, cols, ro) {
     const key = g.wgroup_id + '|' + u.key; if (S.mpo !== key) return '';
+    return `<tr class="strip"><td></td><td colspan="${cols - 1}">${mpStripInner(g, u, label, ro, false)}</td></tr>`;
+  }
+  function mpStripInner(g, u, label, ro, fixed) {   // v166.2 · the strip's body — under a sheet row (mpStrip) or on a card (fixed = no Close button)
+    const key = g.wgroup_id + '|' + u.key;
     const arr = unitRows(g, u), tr = colsNow(), yd = ydHeads(g, u.key);
-    let h = `<tr class="strip"><td></td><td colspan="${cols - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(label)} · ${esc(dsh(S.to))}</span>`;
+    let h = `<div class="d2-strip"><span class="ttl">Manpower · ${esc(label)} · ${esc(dsh(S.to))}</span>`;
     arr.forEach((c, ci) => {
       h += `<div class="crow"><span class="con">${c.con ? esc(conName(c.con)) : '<b style="color:var(--drd)">Contractor Not Available</b>'}${ro ? '' : ` <a onclick="DPR.conPick('${g.wgroup_id}',${ci},'${u.key}')">${c.con ? 'Change' : 'Pick'}</a>${ci > 0 ? ` <a style="color:var(--drd)" onclick="DPR.rmCon('${g.wgroup_id}',${ci},'${u.key}')">×</a>` : ''}`}</span>`;
       tr.forEach(t => { h += `<label><span>${esc(t.trade_name)}</span><input data-k="h:${g.wgroup_id}:${u.key}:${ci}:${esc(t.trade_code)}" type="number" inputmode="numeric" min="0" value="${c.heads[t.trade_code] || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.setHead('${g.wgroup_id}',${ci},'${esc(t.trade_code)}',this.value,'${u.key}')"></label>`; });
       h += `<span class="tot">Total <b>${fmt(heads(c.heads))}</b></span></div>`;
     });
-    h += `<div class="crow acts"><span class="muted">Yesterday ${fmt(yd)}</span>${ro ? '' : `<button class="d2-btn sm" ${yd ? '' : 'disabled'} onclick="DPR.sameYd('${g.wgroup_id}','${u.key}')">Same As Yesterday</button><button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button><button class="d2-btn sm" onclick="DPR.conPick('${g.wgroup_id}',-1,'${u.key}')">＋ Contractor</button>`}<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button></div></div></td></tr>`;
+    h += `<div class="crow acts"><span class="muted">Yesterday ${fmt(yd)}</span>${ro ? '' : `<button class="d2-btn sm" ${yd ? '' : 'disabled'} onclick="DPR.sameYd('${g.wgroup_id}','${u.key}')">Same As Yesterday</button><button class="d2-btn sm" onclick="DPR.tradeAdd()">＋ Trade</button><button class="d2-btn sm" onclick="DPR.conPick('${g.wgroup_id}',-1,'${u.key}')">＋ Contractor</button>`}${fixed ? '' : `<button class="d2-btn sm" onclick="DPR.mpTog('${key}')">Close</button>`}</div></div>`;
     return h;
   }
   function colsNow() {
@@ -10745,18 +10780,19 @@ const DPR = (function () {
     if (o === 'n') return pill('p-grey', started ? 'No Work Today' : 'Not Started');
     return oh ? '' : pill('p-grey', started ? '—' : 'Not Started');
   }
-  function tCell(g, l, s, ro) {   // the whole today-status <td> for a direct line (s = null), a staged line's own row (s = null, staged) or a sub-activity row
+  const tCell = (g, l, s, ro) => stTdT(tInner(g, l, s, ro));   // the whole today-status <td>
+  function tInner(g, l, s, ro) {   // v166.2 · the today-status content for a direct line (s = null), a staged line's own row (s = null, staged) or a sub-activity row — in a <td> (tCell) or on a card panel
     const x = lineX(g, l), wid = l.work_id, sid = s ? s.id : '';
-    if (finL(l)) return stTdT(pill('p-grey', 'Finished'));
-    if (!s && x.fin) return stTdT(pill('p-grey', 'Finished ' + dsh(x.finOn || finDef(x.started || l.started_on))) + '<span class="fbt">No Status Needed</span>');
+    if (finL(l)) return pill('p-grey', 'Finished');
+    if (!s && x.fin) return pill('p-grey', 'Finished ' + dsh(x.finOn || finDef(x.started || l.started_on))) + '<span class="fbt">No Status Needed</span>';
     if (!s && staged(l)) {
       const op = openT(g, l), o = outT(g, l), nH = op.filter(z => subT(x.subs[z.id]).out === 'h').length;
-      if (!op.length) return stTdT(pill('p-grey', 'All Done') + '<span class="fbt">No Status Needed</span>');
-      return stTdT(`${ro ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked Today" onclick="DPR.wAllT('${wid}')">W All</button>`}<div class="st2">${o === 'w' && startsN(g, l) ? pill('p-teal', lineStartedAsOf(g, l) ? startsN(g, l) + ' Starting Today' : 'Starting Today') : o ? '' : '<span class="muted">Per Sub ↓</span>'}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}`);
+      if (!op.length) return pill('p-grey', 'All Done') + '<span class="fbt">No Status Needed</span>';
+      return `${ro ? (o ? ocPill(o) : '<span class="muted">Per Sub ↓</span>') : `<button class="btn-w" title="Mark Every Open Sub-Activity Worked Today" onclick="DPR.wAllT('${wid}')">W All</button>`}<div class="st2">${o === 'w' && startsN(g, l) ? pill('p-teal', lineStartedAsOf(g, l) ? startsN(g, l) + ' Starting Today' : 'Starting Today') : o ? '' : '<span class="muted">Per Sub ↓</span>'}</div>${nH ? `<div class="hrw"><span class="rt">${nH} Hindrance ↓</span></div>` : ''}`;
     }
-    if (s && subDoneT(s, x.subs[sid])) { const y = x.subs[sid]; return stTdT(pill('p-grey', 'Done' + (y.e || s.finished_on ? ' ' + dsh(y.e || s.finished_on) : ''))); }
+    if (s && subDoneT(s, x.subs[sid])) { const y = x.subs[sid]; return pill('p-grey', 'Done' + (y.e || s.finished_on ? ' ' + dsh(y.e || s.finished_on) : '')); }
     const t = s ? subT(x.subs[sid]) : tOf(g, l), o = t.out, oh = s ? s.open_hindrance : l.open_hindrance;
-    return stTdT(`${ro ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOcT('${wid}','@'${s ? `,'${sid}'` : ''})`)}<div class="st2">${statusT(g, l, s)}</div>${hinRow(wid, sid, o, t.rc, oh, ro, true)}`);
+    return `${ro ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOcT('${wid}','@'${s ? `,'${sid}'` : ''})`)}<div class="st2">${statusT(g, l, s)}</div>${hinRow(wid, sid, o, t.rc, oh, ro, true)}`;
   }
   const tSum = ls => { const w = ls.filter(({ g, l }) => outT(g, l) === 'w').length, h = ls.filter(({ g, l }) => hasHT(g, l)).length, n = ls.filter(({ g, l }) => outT(g, l) === 'n').length; return `<span class="muted" style="white-space:nowrap">${w} W · ${h} H · ${n} N</span>`; };
   const udNote = l => { const u = (l.unsent_drafts || []).filter(x => num(x.qty) > 0); return u.length ? `<div class="d2-ud">Incl. ${u.map(x => fmt(x.qty) + ' ' + esc(l.uom || '') + ' In ' + (x.mine ? 'Your ' : esc((x.engineer || '').split(' ')[0]) + '’s ') + esc(x.status) + ' ' + dsh(x.report_date)).join(' · ')}</div>` : ''; };   // v161.3
@@ -10817,10 +10853,12 @@ const DPR = (function () {
     });
     return h;
   }
+  const subAttOf = (g, l, s) => { const x = lineX(g, l), y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), t = subT(y), oT = done || subDoneT(s, y) ? '' : t.out, lv = labLevel(g), sid = s.id;
+    return !done && (((o === 'h' && !y.rc) || (oT === 'h' && !t.rc) || (oT === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005)); };
   function subRow3(g, l, s, r, Gp, lvl) {
     const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = r || done, rk = 'r|' + wid + '|' + sid, lv = labLevel(g);
     const t = subT(y), pd = PD(), oT = done || subDoneT(s, y) ? '' : t.out;   // v165
-    const att = !done && (((o === 'h' && !y.rc) || (oT === 'h' && !t.rc) || (oT === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005));
+    const att = subAttOf(g, l, s);   // v166.2 · shared with the card rows
     const bd = false;
     const fresh = !rr && subFresh(s, y, base);
     const startC = done ? `<b>${esc(dsh(y.s || s.started_on))}</b>${lockI}` : fresh ? `<span class="dtw"><b class="dtv">${dsh(y.s || pd)}</b><input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || pd}" max="${pd}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)" onclick="if(this.showPicker)this.showPicker()"></span>` : (y.s || s.started_on) ? `<b>${esc(dsh(y.s || s.started_on))}</b>${s.start_locked ? lockI : ''}` : oT === 'w' && subStarts(s, y, base) ? `<b>${esc(dsh(t.s || S.to))}</b> <span class="muted">Today</span>` : dash;
@@ -10972,7 +11010,7 @@ const DPR = (function () {
       h += `<i>›</i>${cd.lvl === 'g' ? `<a onclick="DPR.cdGo('a','${cdQ(cd.a)}')">${esc(A.name)}</a>` : `<b>${A.club ? 'Report Together · ' : ''}${esc(A.name)}</b>`}`;
       if (cd.lvl === 'g') { const n = A.nodes.find(x => x.l.work_id === cd.w); h += `<i>›</i><b>${esc(n ? n.loc : '')}</b><i>›</i><b>${esc(cd.gi)}</b>`; } else h += `<i>›</i><b>Locations</b>`;
       h += `<button class="d2-btn sm" onclick="${cd.lvl === 'g' ? `DPR.cdGo('a','${cdQ(cd.a)}')` : `DPR.cdGo('p')`}">↑ Up</button>`; }
-    h += `<span class="sp"></span>${!cd ? cdTog(M.live, o.ro) : ''}<span class="hint">${!cd ? 'Click A Card To Open Its Groups Or Location Nodes' : cd.lvl === 'g' ? 'One Location Node · One Group' + (M.live && !o.ro ? ' · Same Cells As The Sheet' : '') : cd.lvl === 'lab' ? 'One Card Per Deployment' + (M.live && !o.ro ? ' · Edit Manpower On The Location Card' : '') : 'One Card Per Location Node' + (M.live && !o.ro ? ' · Open A Group To Enter It' : '')}</span></div>`;
+    h += `<span class="sp"></span>${!cd ? cdTog(M.live, o.ro) : ''}<span class="hint">${!cd ? 'Click A Card To Open Its Groups Or Location Nodes' : cd.lvl === 'g' ? 'One Location Node · One Group' + (M.live && !o.ro ? ' · Same Cells As The Sheet' : '') : cd.lvl === 'lab' ? 'One Card Per Deployment' + (M.live && !o.ro ? ' · Edit Manpower On The Location Card' : '') : 'One Card Per Location Node' + (M.live && !o.ro ? ' · Tap A Row To Enter' : '')}</span></div>`;
     return h;
   }
   function cdFind(M, key) {
@@ -11032,7 +11070,7 @@ const DPR = (function () {
       if (gi) { S._cdF = new Map(); ns.forEach(n => { const G = subGroups(n.l).find(x => x.id && x.name === gi); S._cdF.set(n.l.work_id, new Set(G ? G.subs.map(s => s.id) : [])); }); }
       try {
         ns.forEach((n, i) => { const it = { g: n.g, l: n.l, lv: 1 }, wid = n.l.work_id;
-          if (!gi && kindOf(n.l) === 'grp' && !n.fin) { h += `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span><div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span></div></div><div class="cd-gg">${cdGrpCards(n, M, A)}</div></article>`; return; }   // v165.1 · Activity → Location Node → Group
+          if (!gi && !n.fin) { h += cdNodeCard(n, M, A, o); return; }   // v166.2 · Activity → Location Node → rows that open their entry panel (DPR_Card_Entry_mock_v3)
           S.seen.add(wid); S.fold.delete(wid); subGroups(n.l).forEach(Gp => { if (Gp.id) { const gk = 'gp:' + wid + '|' + Gp.id; S.seen.add(gk); S.fold.delete(gk); } });   // a node card shows its rows open
           h += `<article class="cd-lc ${n.fin ? 'fin' : ''} ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}${gi ? ' · ' + esc(gi) : ''}</span><div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span></div></div>
             <table class="d2t sheet one cd-t">${colg}${head}<tbody class="ln" data-w="${wid}" data-i="${i + 1}" data-lv="1">${staged(n.l) ? stageRows3(it, i + 1, o.ro) : dirRow3(it, i + 1, o.ro)}</tbody></table></article>`; });
@@ -11046,10 +11084,11 @@ const DPR = (function () {
     const g = c.g, u = { key: 'A', worked: M.live ? cardHasW(g) : c.oT === 'w' }, dd = esc(dsh(S.to));
     const acts2 = !M.live || o.ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
     let h = `<div class="cd-band club"><div>${pill('p-amb', 'Report Together')} <b>${esc(c.pkg)}</b> <span class="muted">· ${esc(c.level)} · ${esc(c.units.join(', '))}</span><div class="muted" style="margin-top:3px">Progress Per Unit Below · Labour Once Here · Booked To <b>${esc(c.level)}</b></div></div>`;
-    if (M.live) {
-      const colg = `<colgroup><col style="width:30px"><col><col style="width:6.2%"><col style="width:6.6%"><col style="width:11.5%"><col style="width:6%"><col style="width:12%"><col style="width:8.4%"><col style="width:10.5%"><col style="width:9%"><col style="width:9%"><col style="width:${o.ro ? 40 : 58}px"></colgroup>`;
-      h += `</div><table class="d2t sheet one cd-t cd-club">${colg}<tbody><tr class="club band"><td colspan="${COLS - 4}" class="ind" style="--lv:0">${pill('p-amb', 'Club')}<i class="dt">·</i><b class="an">${esc(c.pkg)}</b><i class="dt">·</i><b class="ln">${esc(c.level)}</b><i class="dt">·</i>${c.units.length} Unit${c.units.length === 1 ? '' : 's'}<i class="dt">·</i><span class="muted">Manpower Once · ${dd}</span>${acts2}</td>${stTdT(tSum(g.lines.map(l => ({ g, l }))))}<td class="con t">${conCell(g, 0, 'A', o.ro)}</td><td class="cd-tt">${cardHasW(g) ? mpCell(g, u, o.ro) : dash}</td><td></td></tr>${cardHasW(g) ? mpStrip(g, u, g.label || 'Club', COLS, o.ro) : ''}</tbody></table>`;
-      return h;
+    if (M.live) {   // v166.2 · the club band carries the status count, the contractor and the one manpower cell; the strip opens under the band
+      const key = g.wgroup_id + '|A';
+      h += `<div class="r">${tSum(g.lines.map(l => ({ g, l })))}<span class="kv"><span>Contractor</span><b>${conCell(g, 0, 'A', o.ro)}</b></span>${cardHasW(g) ? mpCell(g, u, o.ro) : `<span class="muted">No Labour Today</span>`}${acts2}</div>`;
+      if (cardHasW(g) && S.mpo === key) h += `<div class="cd-mp full">${mpStripInner(g, u, g.label || 'Club', o.ro, false)}</div>`;
+      return h + '</div>';
     }
     return h + `<div class="r">${c.oT ? `<span class="cd-rp ${c.oT}">${c.oT === 'w' ? 'Working' : c.oT === 'h' ? 'Hindrance' : 'No Work'}</span>` : ''}<span class="kv"><span>Contractor</span><b>${esc(c.cons.join(', ') || '—')}</b><span>Heads</span><b class="big">${fmt(c.heads)}</b></span></div></div>`;
   }
@@ -11085,6 +11124,94 @@ const DPR = (function () {
       return `<div class="cd-gc ${done ? 'done' : ''} ${open ? 'clk' : ''}"${open}><div class="gh"><b>${esc(G.name)}</b><span class="muted">· ${fmt(G.weight)}% Of Activity · ${nd}/${G.subs.length} Done</span><span class="sp"></span>${done ? pill('p-ok', '✓ Done') : ''}<b class="pct">${Math.round(gp)}%</b>${gp - gb > 0.0005 ? `<span class="muted">(+${Math.round(gp - gb)}%)</span>` : ''}</div>${cdBar(gp, 'p')}<div class="gl">${rows}</div>${open ? '<div class="go">Open Group →</div>' : ''}</div>`;
     }).join('');
   }
+  /* ==================================================================
+     v166.2 · ENTRY ON THE CARD — DPR_Card_Entry_mock_v3, approved 20 Oct 2026.
+     The group card keeps its one-line rows (name · weight · bar · % · status); tapping a row opens its ENTRY PANEL right
+     under it: Status <PD> (W/H/N · hindrance · start date when it started yesterday) | Reported [B] (box · 25/50/75/✓/WIP ·
+     finish date once 100 %) | Cum. [C] | Status <D> (W/H/N today) — the sheet's own draft fields and handlers. Labour follows
+     the Reporting Plan level: Club → mpCell + strip on the club band · Activity → on the node card band · Group → on the
+     group header · Sub-Activity → inside the row's panel. Direct lines and plain sub-activity plans use the same row + panel.
+     S.cdRo = open panel keys ('ro:' + work_id + '|' + sub_id).
+     ================================================================== */
+  const cdBar2 = (base, cum, st) => { const b = Math.min(100, Math.max(0, base)), c = Math.min(100, Math.max(0, cum)), d = Math.max(0, c - b); return `<span class="cd-bar s2 ${st}"><i class="b" style="width:${b}%"></i><i class="d" style="width:${d}%"></i></span>`; };   // v166.2 · colour by state: done · worked (+today) · hindrance · no work · not started
+  const cdRoK = (wid, sid) => 'ro:' + wid + '|' + (sid || '');
+  const cdRoOpen = k => !!(S.cdRo && S.cdRo.has(k));
+  function cdRowTog(k) { S.cdRo = S.cdRo || new Set(); S.cdRo.has(k) ? S.cdRo.delete(k) : S.cdRo.add(k); S.remo = null; redraw(); }
+  const cdLabPtr = (g, lv) => g.lines.length > 1 ? 'On The Club ↑' : lv === 'activity' ? 'On The Activity ↑' : lv === 'group' ? 'On The Group ↑' : '';
+  function cdMpBlock(g, u, label, lvlTxt, node, ro) {   // an always-open manpower strip (Per Sub-Activity, inside the panel)
+    const tot = unitHeads(g, u), nol = noLab(g, u.key);
+    return `<div class="cd-mp"><div class="ttl"><b>Manpower · ${esc(dsh(S.to))}</b><span class="lvl">${esc(lvlTxt)}</span><span class="lvl">Booked To ${esc(node)}</span>${tot ? `<span class="lvl ok">Σ ${fmt(tot)} Heads</span>` : nol ? `<span class="lvl">No Labour Today${ro ? '' : ` · <a onclick="DPR.noLabTog('${g.wgroup_id}','${u.key}')">Undo</a>`}</span>` : `<span class="lvl bad">Heads Missing${ro ? '' : ` · <a onclick="DPR.noLabTog('${g.wgroup_id}','${u.key}')">No Labour Today</a>`}</span>`}</div>${nol ? '' : mpStripInner(g, u, label, ro, true)}</div>`;
+  }
+  const cdMpHead = (g, u, ro) => `<span class="cd-mph">${mpCell(g, u, ro)}</span>`;   // the "heads ▾" button on a band / header (mpTog opens the strip under it)
+  const cdMpUnder = (g, u, label, ro) => S.mpo === g.wgroup_id + '|' + u.key ? `<div class="cd-mp full">${mpStripInner(g, u, label, ro, false)}</div>` : '';
+  function cdPanel(g, l, s, Gp, ro, node) {   // the entry panel under a row: s = sub-activity, s = null → direct line
+    const x = lineX(g, l), wid = l.work_id, sid = s ? s.id : '', lv = labLevel(g), pd = PD(), dd = esc(dsh(S.to)), pdd = esc(dsh(pd)), fin = finL(l);
+    let stC, bC, cumC, lab = '', note, ph = 'Remarks';
+    if (s) {
+      const y = x.subs[sid], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = ro || done, t = subT(y), oT = done || subDoneT(s, y) ? '' : t.out, fresh = !rr && subFresh(s, y, base);
+      const startC = fresh ? `<div class="st2"><span class="muted">Started</span> <span class="dtw"><b class="dtv">${dsh(y.s || pd)}</b><input type="date" class="dt" data-k="ss:${wid}:${sid}" value="${y.s || pd}" max="${pd}" onchange="DPR.subDate('${wid}','${sid}','s',this.value)" onclick="if(this.showPicker)this.showPicker()"></span></div>` : '';
+      stC = `${done ? pill('p-ok', 'Done') : ocSeg(o, `DPR.setOc('${wid}','@','${sid}')`, ro)}<div class="st2">${done ? '' : statusSub(s, y, base)}</div>${startC}${done ? '' : hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, rr)}${done || lv !== 'sub' ? '' : ylabTxt(g, 'S:' + sid)}`;
+      const endIn = !rr && o === 'w' && !y.wip && pc >= 99.9995 && !s.end_locked, e0 = y.e || s.finished_on;
+      const finC = done ? `<span class="ge-date">Finish <i>${esc(dsh(e0) || '—')}</i></span>` : endIn ? `<div class="st2"><span class="muted">Finish</span> <span class="dtw"><b class="dtv">${dsh(y.e || finDef(y.s || s.started_on))}</b><input type="date" class="dt" data-k="se:${wid}:${sid}" value="${y.e || finDef(y.s || s.started_on)}" min="${y.s || s.started_on || ''}" max="${pd}" onchange="DPR.subDate('${wid}','${sid}','e',this.value)" onclick="if(this.showPicker)this.showPicker()"></span></div>` : (o === 'w' && pc >= 99.9995 && y.e) ? `<div class="st2"><span class="ge-date">Finish <i>${esc(dsh(y.e))}</i>${s.end_locked ? lockI : ''}</span></div>` : '';
+      if (done) bC = finC;
+      else if (ro) bC = (o === 'w' ? `<b>${y.wip ? 'WIP' : '+' + Math.round(pc - base) + '%'}</b>` : dash) + finC;
+      else if (o === 'w') bC = `<span class="d2-pct"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" style="width:52px" value="${y.wip ? '' : Math.round(pc)}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)"> %<span class="d2-snap">${[25, 50, 75].map(p => `<button ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done" onclick="DPR.snapPct('${wid}','${sid}',100)">✓</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button></span></span>` + finC;
+      else bC = o === 'n' ? `<span class="muted">No Work</span>` : dash;
+      const cumP = o === 'w' ? (y.wip ? base : pc) : base;
+      cumC = cumCell(cumP, Math.round(cumP) + '%', cumP - base > 0.0005 ? '+' + Math.round(cumP - base) : '', '');
+      if (!done && oT === 'w' && lv === 'sub' && g.lines.length === 1) lab = cdMpBlock(g, labUnits(g).find(z => z.key === 'S:' + sid) || { key: 'S:' + sid, worked: true }, s.name, 'Per Sub-Activity · ' + s.name, node, rr);
+      note = y.note; if (o === 'h') ph = 'Hindrance Note (Goes To The Register)';
+      ro = rr;
+    } else {   // direct line (dirRow3's cells)
+      const est = num(l.est_qty), base = cumBase(l), r = ro || fin, o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, after = base + q, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
+      const startC = !r && o === 'w' && !l.started_on ? `<div class="st2"><span class="muted">Started</span> <span class="dtw"><b class="dtv">${dsh(x.started || pd)}</b><input type="date" class="dt" data-k="ls:${wid}" value="${x.started || pd}" max="${pd}" onchange="DPR.lineStart('${wid}',this.value)" onclick="if(this.showPicker)this.showPicker()"></span></div>` : '';
+      stC = `${r ? (o === 'h' ? '' : ocPill(o)) : ocSeg(o, `DPR.setOc('${wid}','@')`)}<div class="st2">${statusDir(g, l)}</div>${startC}${fin ? '' : hinRow(wid, '', o, x.rc, l.open_hindrance_yday, r)}${fin ? '' : ylabTxt(g, 'A')}`;
+      const finC = fin ? `<div class="st2"><span class="ge-date">Finish <i>${l.finished_on ? esc(dsh(l.finished_on)) : 'Done Earlier'}</i></span>${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)}</span>` : ''}</div>` : x.fin ? (r ? `<div class="st2"><span class="ge-date">Finish <i>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</i></span> <span class="muted">Cert. ${x.cert == null ? '—' : fmt(x.cert)}</span>${certOver(l, x)}</div>` : `<div class="st2">${l.end_locked ? `<span class="ge-date">Finish <i>${esc(dsh(x.finOn || finDef(x.started || l.started_on)))}</i>${lockI}</span>` : `<span class="muted">Finish</span> <span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${wid}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${pd}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}</div><div class="st2"><span class="muted">Site Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>${certOver(l, x)}</div>`) : '';
+      if (r) bC = (o === 'w' ? `<b>${x.wip ? 'WIP' : fmt(q)}</b> <span class="muted">${uom}</span>` : dash) + finC;
+      else if (o === 'w') bC = `<input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${x.wip ? '' : (x.qty || '')}" placeholder="${x.wip ? 'WIP' : '0'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)"> <span class="muted">${uom}</span> <span class="d2-snap">${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">✓</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button></span>` + finC;
+      else bC = o === 'n' ? `<span class="muted">No Work</span>` : dash;
+      const cum = o === 'w' ? after : base, pc = est ? Math.min(100, cum / est * 100) : 0;
+      cumC = cumCell(pc, fmt(cum) + ' ' + uom, (est ? Math.round(cum / est * 100) : 0) + '%' + (base > 0 ? ' · Last ' + fmt(base) : ''), x.fin && !fin ? ' ' + pill('p-ok', 'Finished') : fin ? ' ' + pill('p-ok', 'Finished') : '');
+      note = x.note; if (o === 'h') ph = 'Hindrance Note (Goes To The Register)';
+      ro = r;
+    }
+    const ptr = cdLabPtr(g, lv), rk = 'r|' + wid + (sid ? '|' + sid : '');
+    return `<div class="cd-ep"><div class="eh"><span class="y">Status ${pdd}<small>W / H / N · Hindrance</small></span><span class="y">Reported [B]<small>Last [A] + ${pdd}</small></span><span class="y">Cum. [C]</span><span class="t">Status ${dd}<small>W / H / N</small></span></div><div class="eb"><div class="stc y"><div class="cq">${stC}</div></div><div class="dn y">${bC}</div><div class="y">${cumC}</div><div class="stc t tc"><div class="cq">${tInner(g, l, s, ro)}</div></div></div>${lab}<div class="ef">${ptr && !fin ? `<span class="lab">Labour · <b>${ptr}</b></span>` : ''}<span class="muted">${esc(ph)}</span><input class="rem" data-k="n:${wid}:${sid}" value="${esc(note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"><button class="d2-btn sm" onclick="DPR.cdRowTog('${cdQ(cdRoK(wid, sid))}')">Close ▴</button></div></div>`;
+  }
+  function cdSubRow(g, l, s, Gp, ro, node) {   // one-line sub-activity row + its panel when open
+    const x = lineX(g, l), y = x.subs[s.id], base = subBase(s), p = Math.min(100, subPct(g, l, s)), t = subT(y), lv = labLevel(g), k = cdRoK(l.work_id, s.id), open = cdRoOpen(k), att = subAttOf(g, l, s);
+    const st = base >= 99.9995 ? pill('p-ok', 'Done') : y.out === 'h' || t.out === 'h' ? pill('p-red', 'H') : y.out === 'w' || t.out === 'w' ? pill('p-ok', 'W') : y.out === 'n' || t.out === 'n' ? pill('p-grey', 'N') : '';
+    const hd = lv === 'sub' && base < 99.9995 && subWorkedOn(s, y, base) ? (() => { const n = unitHeads(g, { key: 'S:' + s.id }); return n ? ' ' + pill('p-grey', fmt(n)) : noLab(g, 'S:' + s.id) ? ' ' + pill('p-grey', 'NL') : ' ' + pill('p-red', '0'); })() : '';
+    const bst = base >= 99.9995 ? 'done' : y.out === 'h' || t.out === 'h' ? 'hin' : (y.out === 'w' && !y.wip && p > base + 0.0005) ? 'wk' : y.out === 'w' || t.out === 'w' ? 'run' : y.out === 'n' || t.out === 'n' ? 'nw' : base > 0.0005 ? 'run' : 'ns';
+    return `<div class="cd-sr clk ${open ? 'open' : ''} ${att ? 'att' : ''}" onclick="DPR.cdRowTog('${cdQ(k)}')"><span class="nm">${esc(s.name)}<small>${fmt(s.tpl_weight || s.weight)}%</small></span>${cdBar2(base, p, bst)}<b>${Math.round(p)}%</b><span class="st">${st}${hd}</span><span class="chev">${open ? '▾' : '▸'}</span></div>${open ? cdPanel(g, l, s, Gp, ro, node) : ''}`;
+  }
+  function cdDirRow(n, g, l, ro, inClub) {   // a direct line as one row (+ panel) — on its own node card or inside a club node card
+    const k = cdRoK(l.work_id, ''), open = cdRoOpen(k), x = lineX(g, l), fin = finL(l), o = fin ? '' : x.out, oT = fin ? '' : outT(g, l);
+    const st = fin || x.fin ? pill('p-ok', 'Finished') : o === 'h' || oT === 'h' ? pill('p-red', 'H') : o === 'w' || oT === 'w' ? pill('p-ok', 'W') : o === 'n' || oT === 'n' ? pill('p-grey', 'N') : '';
+    const bst = fin || x.fin ? 'done' : o === 'h' || oT === 'h' ? 'hin' : (o === 'w' && !x.wip && num(x.qty) > 0) ? 'wk' : o === 'w' || oT === 'w' ? 'run' : o === 'n' || oT === 'n' ? 'nw' : n.b > 0.0005 ? 'run' : 'ns';
+    return `<div class="cd-sr clk ${open ? 'open' : ''} ${n.att ? 'att' : ''}" onclick="DPR.cdRowTog('${cdQ(k)}')"><span class="nm">${esc(inClub ? l.activity : 'Direct · ' + l.activity)}<small>Est ${fmt(n.est)} ${esc(n.uom)}</small></span>${cdBar2(n.b, n.pct, bst)}<b>${Math.round(n.pct)}%</b><span class="st">${st}</span><span class="chev">${open ? '▾' : '▸'}</span></div>${open ? cdPanel(g, l, null, null, ro, n.loc) : ''}`;
+  }
+  function cdGrpEntry(n, Gp, ro) {   // one group card: header (name · share · done · bar · % · dates · heads when Per Group) + one-line rows
+    const g = n.g, l = n.l, x = lineX(g, l), lv = labLevel(g);
+    const gp = Math.min(100, grpPct(g, l, Gp)), gb = Math.min(100, grpBase(l, Gp)), nDone = Gp.subs.filter(s => subPct(g, l, s) >= 99.9995).length, done = nDone === Gp.subs.length, gd = grpDates(g, l, Gp);
+    const wsOn = Gp.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length, nAtt = Gp.subs.filter(s => subAttOf(g, l, s)).length;
+    const gu = lv === 'group' && Gp.id ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: wsOn > 0 }) : null;
+    const dates = `<span class="muted dates">Start <b>${esc(gd.s ? dsh(gd.s) : '—')}</b> · ${gd.e ? `Finish <b>${esc(dsh(gd.e))}</b> · ${esc(durTxt(gd.s, gd.e))}` : `Elapsed <b>${esc(gd.s ? durTxt(gd.s, '') : '—')}</b>`}</span>`;
+    const head = Gp.id ? `<div class="gh"><b>${esc(Gp.name)}</b><span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${done ? pill('p-ok', '✓ Done') : nAtt ? `<span class="natt">${nAtt} Needs Attention</span>` : ''}<span class="sp"></span>${dates}${gu && !done ? (wsOn ? cdMpHead(g, gu, ro) : '<span class="muted">No Sub-Activity Working Today</span>') : lv !== 'sub' && !done ? `<span class="muted">${cdLabPtr(g, lv)}</span>` : ''}<b class="pct">${Math.round(gp)}%</b>${gp - gb > 0.0005 ? `<span class="muted">(+${Math.round(gp - gb)}%)</span>` : ''}</div>${cdBar(gp, 'p')}${gu && wsOn && !done ? cdMpUnder(g, gu, Gp.name, ro) : ''}` : '';
+    return `<div class="cd-gc ${done ? 'done' : ''} ${Gp.id ? '' : 'plain'}">${head}<div class="gl">${Gp.subs.map(s => cdSubRow(g, l, s, Gp, ro, n.loc)).join('')}</div></div>`;
+  }
+  function cdLineBlock(n, M, A, o, inClub) {   // one line inside a node card: direct → row; staged → its group cards
+    const g = n.g, l = n.l, ro = !!o.ro;
+    if (!staged(l)) return cdDirRow(n, g, l, ro, inClub);
+    const bands = inClub ? `<div class="cd-band grp"><div><b>${esc(l.activity)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)} · ${(l.stages || []).length} Sub-Activities</span></div><span class="muted">${cdLabPtr(g, labLevel(g))}</span></div>` : '';
+    return bands + subGroups(l).map(Gp => cdGrpEntry(n, Gp, ro)).join('');
+  }
+  function cdNodeCard(n, M, A, o) {   // the location node card (single activity): band with dates · cum · heads when Per Activity; then rows / group cards
+    const g = n.g, l = n.l, x = lineX(g, l), ro = !!o.ro, lv = labLevel(g), u = { key: 'A', worked: cardHasW(g) };
+    S.seen.add(l.work_id); S.fold.delete(l.work_id);
+    const mp = lv === 'activity' && !finT(g, l) ? (cardHasW(g) ? cdMpHead(g, u, ro) : `<span class="muted">No Labour Today</span>`) : lv !== 'activity' ? `<span class="muted">Σ ${fmt(cardHeads(g))} Heads · ${lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓'}</span>` : '';
+    return `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span> ${staged(l) ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : lv === 'group' ? 'Manpower Per Group' : 'Manpower Per Activity') : ''}<div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span>${mp}${ro ? '' : dropBtn(g, l)}</div></div>${lv === 'activity' && cardHasW(g) ? cdMpUnder(g, u, l.activity, ro) : ''}<div class="cd-gs">${cdLineBlock(n, M, A, o, false)}</div></article>`;
+  }
   /* ----- a club's locations: one card per location node, every clubbed activity at that node inside it ----- */
   function cdClubLocs(ns, A, M, o) {
     const by = new Map(); ns.forEach(n => { const k = n.loc + '\u0001' + n.path; if (!by.has(k)) by.set(k, []); by.get(k).push(n); });
@@ -11094,8 +11221,7 @@ const DPR = (function () {
     let h = '', i = 0;
     by.forEach(list => { const n0 = list[0], est = list.reduce((a, n) => a + n.est, 0), cert = list.reduce((a, n) => a + n.cert, 0), fin = list.every(n => n.fin), att = list.some(n => n.att);
       h += `<article class="cd-lc ${fin ? 'fin' : ''} ${att ? 'att' : ''} ${M.live ? '' : 'ro'}"><div class="hd"><div><b>${esc(n0.loc)}</b> <span class="muted">· ${list.length} Activit${list.length === 1 ? 'y' : 'ies'} · Est ${fmt(est)} ${esc(cdUom(list))}</span><div class="path">${esc(A.name)} · ${esc(n0.path)}</div></div><div class="r"><span class="cum">Cum. <b>${cdPct(cert, est)}%</b> · ${fmt(cert)} / ${fmt(est)} ${esc(cdUom(list))}</span></div></div>`;
-      if (M.live) { const gv = S.gv; S.gv = 'loc';   // the name cell shows the ACTIVITY (the card already names the location)
-        try { h += `<table class="d2t sheet one cd-t">${colg}${head}`; list.forEach(n => { const wid = n.l.work_id; S.seen.add(wid); S.fold.delete(wid); subGroups(n.l).forEach(Gp => { if (Gp.id) { const gk = 'gp:' + wid + '|' + Gp.id; S.seen.add(gk); S.fold.delete(gk); } }); i++; const it = { g: n.g, l: n.l, lv: 1 }; h += `<tbody class="ln" data-w="${wid}" data-i="${i}" data-lv="1">${staged(n.l) ? stageRows3(it, i, o.ro) : dirRow3(it, i, o.ro)}</tbody>`; }); h += '</table>'; } finally { S.gv = gv; } }
+      if (M.live) h += `<div class="cd-gs">${list.map(n => cdLineBlock(n, M, A, o, true)).join('')}</div>`;   // v166.2 · one row per clubbed activity → entry panel (labour on the club band)
       else h += list.map(n => cdLocRoBody(n, A, '', true)).join('');
       h += '</article>'; });
     return h;
@@ -12771,7 +12897,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, rvCards, mCards, cdPkgTog,   // v166 · Cards
+    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog,   // v166 · Cards · v166.2 cdRowTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };

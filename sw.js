@@ -1,11 +1,15 @@
-/* Penguin Suite service worker · v4 (v159 deploy)
+/* Penguin Suite service worker · v5 (C1 deploy)
    Deliberately conservative. It caches the app shell so the icon opens
    instantly and the UI paints without signal; it never caches Supabase
    responses, so every figure on screen is live. Offline DRAFT mode —
    saving edits with no signal and syncing later — is a separate piece
-   of work and is NOT what this does. */
-const VERSION = 'pgs-shell-v4';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+   of work and is NOT what this does.
+   v5 (C1): construction.html and its manifest join the precached shell;
+   a failed navigation falls back to the page that was asked for. */
+const VERSION = 'pgs-shell-v5';
+const SHELL = ['./', './index.html', './manifest.webmanifest',
+               './construction.html', './construction.webmanifest',
+               './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting()));
@@ -20,8 +24,9 @@ self.addEventListener('fetch', e => {
   if (u.hostname.endsWith('supabase.co') || u.pathname.startsWith('/auth') || e.request.method !== 'GET') return;
   // app shell: network first, cache fallback — so a new deploy wins
   if (u.origin === location.origin) {
+    const fallback = /construction\.html$/.test(u.pathname) ? './construction.html' : './index.html';
     e.respondWith(fetch(e.request).then(r => {
       const copy = r.clone(); caches.open(VERSION).then(c => c.put(e.request, copy)); return r;
-    }).catch(() => caches.match(e.request).then(m => m || caches.match('./index.html'))));
+    }).catch(() => caches.match(e.request).then(m => m || caches.match(fallback))));
   }
 });

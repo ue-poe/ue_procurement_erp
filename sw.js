@@ -1,4 +1,9 @@
-/* Penguin Suite service worker · v5 (C1 deploy)
+/* Penguin Suite service worker · v10 (C5 deploy: construction.html v5 — Cards only)
+   v9 (C4.1 deploy: construction.html v4.1)
+   v8 (C4 deploy: construction.html v4 — C3 bands withdrawn)
+   v7 (C3 deploy: construction.html v3)
+   v6 (C2 deploy: construction.html v2)
+   v5 (C1 deploy)
    Deliberately conservative. It caches the app shell so the icon opens
    instantly and the UI paints without signal; it never caches Supabase
    responses, so every figure on screen is live. Offline DRAFT mode —
@@ -6,7 +11,7 @@
    of work and is NOT what this does.
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
-const VERSION = 'pgs-shell-v5';
+const VERSION = 'pgs-shell-v12';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

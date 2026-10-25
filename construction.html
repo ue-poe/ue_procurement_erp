@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v1</title>
+<title>Penguin Construction v5.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -1061,7 +1061,20 @@ input[type="number"] {
 /* v166 · package strip + club per-activity rows */
 #mod-dpr .dp2 .cd-pkg>.hd .pkgp{flex-wrap:wrap;gap:4px 14px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt{display:flex;align-items:center;gap:6px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt .cd-bar{width:110px}
 #mod-dpr .dp2 .cd-pkg>.hd .cd-pkga{white-space:nowrap}
-#mod-dpr .dp2 .cd-pkgacts{padding:6px 12px 8px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}#mod-dpr .dp2 .cd-pkg.closed .cd-pkgacts{display:none}
+#mod-dpr .dp2 .cd-pkgacts{padding:6px 12px 8px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}
+/* C4/C5.1 · combined DPR: Activity Overview strip — one activity card per started activity, one row per Site Area (styled as .cd-ac) */
+#mod-dpr .drp .cd-ov,#mod-dpr .dp2 .cd-ov,.cd-ov{padding:8px 10px 0;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}.cd-pkg.closed .cd-ov{display:none}
+#mod-dpr .drp .cd-ov .ph,#mod-dpr .dp2 .cd-ov .ph,.cd-ov .ph{background:none;color:var(--ink2,#51627a);padding:0 2px;border:0;display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+#mod-dpr .drp .cd-ov .grid,#mod-dpr .dp2 .cd-ov .grid,.cd-ov .grid{padding:5px 0 10px}
+#mod-dpr .drp .cd-oa,#mod-dpr .dp2 .cd-oa,.cd-oa{cursor:default;border-color:var(--dvb,#c7d2fe)}
+#mod-dpr .drp .cd-oa .cd-tt,#mod-dpr .dp2 .cd-oa .cd-tt,.cd-oa .cd-tt{background:var(--dvl,#eef2ff);border-bottom:1px solid var(--dvb,#c7d2fe);border-radius:6px 6px 0 0}
+#mod-dpr .drp .cd-oa .cd-tt b,.cd-oa .cd-tt b{color:var(--dn)}
+#mod-dpr .drp .cd-oa td.r,#mod-dpr .dp2 .cd-oa td.r,.cd-oa td.r{text-align:right;white-space:nowrap}
+#mod-dpr .drp .cd-oa td.r b,#mod-dpr .dp2 .cd-oa td.r b,.cd-oa td.r b{font-variant-numeric:tabular-nums}
+#mod-dpr .drp .cd-oa td.r .ob,#mod-dpr .dp2 .cd-oa td.r .ob,.cd-oa td.r .ob{display:inline-block;width:70px;margin:0 6px 0 8px;vertical-align:middle}
+#mod-dpr .drp .cd-oa td.r i,#mod-dpr .dp2 .cd-oa td.r i,.cd-oa td.r i{font-style:normal;color:var(--dv);font-weight:800;display:inline-block;min-width:32px;text-align:right}
+#mod-dpr .drp .cd-oa tr.off td,#mod-dpr .dp2 .cd-oa tr.off td,.cd-oa tr.off td{color:var(--ink2,#51627a)}#mod-dpr .drp .cd-oa tr.off td.r,.cd-oa tr.off td.r{font-style:italic;font-weight:600}
+#mod-dpr .drp .cd-oa td:first-child,.cd-oa td:first-child{color:var(--ink2,#51627a)}#mod-dpr .drp .cd-oa tr.all td:first-child,.cd-oa tr.all td:first-child{color:var(--dn);font-weight:800}#mod-dpr .dp2 .cd-pkg.closed .cd-pkgacts{display:none}
 #mod-dpr .dp2 .cd .cd-pkgacts .ph,#mod-dpr .dp2 .cd .cd-cacts .ph{background:none;padding:0;border:0;display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--ink2,#51627a);font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
 #mod-dpr .dp2 .cd-par{display:grid;grid-template-columns:minmax(200px,1.4fr) auto 150px 40px;gap:10px;align-items:center;font-size:11.5px;border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:3px 8px;margin-bottom:3px;background:#fff}
 #mod-dpr .dp2 .cd-par .nm i{font-style:normal;font-size:9.5px;color:var(--ink2,#51627a);border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:0 5px;margin-left:5px}
@@ -3955,7 +3968,7 @@ const DPR = (function () {
     mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null, mPay: {}, mv: 'day', mEng: null, mIncl: true, mFull: false, mCal: null, mTr: null, m39: null,
     hind: null, hSum: null, hParties: null, hOpen: new Set(), hF: 'all', hArea: '', hEd: {},
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
-    cards: false, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: false, mCards: false, _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgReq: false, cdPkgOff: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
+    cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null
   };
 
@@ -4165,7 +4178,7 @@ const DPR = (function () {
     return (!cy || cy.status === 'Draft' || cy.status === 'Returned') ? y : todayYmd();
   }
   async function engLoad(date, keep) {
-    S.cd = null; S.cdTotReq = null; S.cdPkgReq = false; S.cdTotStale = true; S.cdPkgStale = true;   // v166.1 · keep the cached totals, refresh them behind the new date
+    S.cd = null; S.cdTotReq = null; S.cdPkgReq = {}; S.cdTotStale = true; S.cdPkgStale = true;   // v166.1 · keep the cached totals, refresh them behind the new date
     const sc = keep && $('d2_sc') ? $('d2_sc').scrollTop : 0;
     let prevT = null; if (keep && S.R) { ctxSave(); prevT = S.R.T; } else if (keep && S.sub && !S.R) prevT = { to: S.to, D: S.D, NP: S.NP, npDirty: S.npDirty };
     try {
@@ -4177,7 +4190,7 @@ const DPR = (function () {
       if (prevT) carryDrafts(prevT, T);   // v158.4
       S.R = { T, Y: T }; S.same = true; S.homeAreas = dataT.home_areas || S.homeAreas || []; S.returned = dataT.returned || [];
       S.ck = null; ctxLoad('T');
-      cdPrefetch(T.groups);   // v166.1 · Cards totals start loading now, not on the first Cards click
+      cdPrefetch(T.groups, true);   // v166.1 · Cards totals start loading now, not on the first Cards click · C2 · scoped to the engineer's areas
       S.yd = null;
       try { const pd = addDays(T.to, -1); if (!(S.cal && S.cal.loaded[monthOf(pd)])) await calLoad(monthOf(pd)); if (S.cal && S.cal.days[pd]) { const dy = await rpc('rpc_dpr_open_day', { p_report_date: pd, p_shift: 'D' }); S.yd = mkCtx(dy); } } catch (e) { S.yd = null; }   // memo only (never creates a report; never shown as one)
       S.ticks = new Set(); S.cm = false; S.prev = false; S.catMode = false; S.page = null; S.mpo = null; S.remo = null; S.ylab = false;
@@ -4436,7 +4449,7 @@ const DPR = (function () {
     h += `<div class="d2-fix d2-tool"><span class="d2-grp"><div class="d2-seg sm"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div></span>
       <span class="d2-grp"><span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div></span>
       <span class="d2-grp"><span class="lbl">Show</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div></span>
-      <span class="d2-grp"><span class="lbl">Rows</span><div class="d2-seg sm"><button class="${!S.nested && !S.cards ? 'on' : ''}" onclick="DPR.flatSet(true)">Flat</button><button class="${S.nested ? 'on' : ''}" onclick="DPR.flatSet(false)">Nested</button><button class="${S.cards ? 'on' : ''}" onclick="DPR.cardsSet(true)">Cards</button></div>${S.nested ? `<button class="d2-btn sm" onclick="DPR.foldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.foldAll(false)">Expand All</button>` : ''}</span>
+      
       <span class="d2-row2"><span class="d2-grp fsg"><span class="lbl">Find</span><input class="q fs" data-k="fs" placeholder="Activity · Group · Sub-Activity · Location…" value="${esc(S.fs || '')}" oninput="DPR.fsFind(this.value)">${S.fs ? `<span class="fsc">${fsCount()}</span><button class="d2-btn sm" onclick="DPR.fsFind('')">× Clear</button>` : ''}</span>
       ${ro ? '' : `<span class="d2-grp add"><span class="lbl">Add Work</span><input class="q" data-k="cq" placeholder="Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)"><button class="d2-btn sm ${S.catMode && S.cv === 'grid' ? 'ghost on' : ''}" onclick="DPR.gridOpen()">⊞ Grid</button><button class="d2-btn sm navy" onclick="DPR.startOpen()">+ Add Activities</button><button class="d2-btn sm ghost ${S.cm ? 'on' : ''}" onclick="DPR.clubMode()">☑ Report Together</button></span>`}</span></div>`;
     if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tick Any Activities At Any Locations In The # Column → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> · Progress Stays Per Activity × Unit; Manpower Is Entered Once For The Club.</div>`;
@@ -4634,7 +4647,7 @@ const DPR = (function () {
         if (open) h += `<tr class="strip"><td></td><td colspan="${FC - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span>${tr.map(t => `<label class="d2-tr"><span>${esc(tCode(t.trade_code))}</span><input type="number" inputmode="numeric" min="0" data-k="np:${i}:${t.trade_code}" value="${num(e.heads[t.trade_code]) || ''}" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${t.trade_code}',this.value)"></label>`).join('')}</div></td></tr>`; }); }
     return h + sumRow(FC, dd) + `</tbody></table>`;
   }
-  function flatSet(b) { S.nested = !b; S.cards = false; S.cd = null; S.mpo = null; S.remo = null; redraw(); }   // v165.1 · Cards is the third Rows option (cardsSet)
+  function flatSet(b) { S.nested = false; S.cards = true; S.cd = null; S.mpo = null; S.remo = null; redraw(); }   // C5 · Flat / Nested retired — Cards only   // v165.1 · Cards is the third Rows option (cardsSet)
   function sheetHtml3(ro) {
     if (S.cards && !S.fs) return cdSheet(ro);   // v165.1 · Rows · Cards (Find stays flat)
     if (!S.nested || S.fs) return flatHtml(ro);   // v163 · flat is the default; Find always flat
@@ -4902,24 +4915,38 @@ const DPR = (function () {
     else { nodes = []; (S.cdC || []).forEach(P => { mUse(P); nodes = nodes.concat(cdNodesF(P.F, P)); }); S.to = S.mProg; nodes.forEach(n => { n.key += '\u0001' + n.eng; }); }   // combined: one card per activity per engineer
     const clubs = cdClubs(nodes, live);
     const pk = new Map(); nodes.forEach(n => { if (!pk.has(n.pkg)) pk.set(n.pkg, { name: n.pkg, acts: new Map(), clubs: [], all: [] }); const p = pk.get(n.pkg); p.all.push(n); if (n.club) return; if (!p.acts.has(n.key)) p.acts.set(n.key, []); p.acts.get(n.key).push(n); });
-    cdTotEnsure(nodes); cdPkgEnsure(nodes);   // M43 · activity totals under the parent node · M44 · whole-package totals (async, cached per date)
+    const scope = cdScope(nodes, mode, live); cdTotEnsure(nodes); cdPkgEnsure(nodes, scope);   // M43 · activity totals under the parent node · M44/M48 · package totals scoped to the engineer's areas (async, cached per date × scope)
     clubs.forEach(c => { if (!pk.has(c.pkg)) pk.set(c.pkg, { name: c.pkg, acts: new Map(), clubs: [], all: [] }); pk.get(c.pkg).clubs.push(c); });
-    return { mode, live, nodes, clubs, pkgs: [...pk.values()].sort((a, b) => a.name.localeCompare(b.name)) };
+    return { mode, live, nodes, clubs, scope, pkgs: [...pk.values()].sort((a, b) => a.name.localeCompare(b.name)) };
   }
   /* ----- M43 · activity totals under the parent node: rpc_dpr_card_totals, one read per date, cached in S.cdTot ----- */
   const cdTotK = l => (l.wbs_node_id || '') + '|' + (l.loc_node_id || '');
   /* v166.1 · totals cache: the last M43 / M44 answer per user × project, painted at once on the next open and refreshed behind it */
   const cdCK = () => 'pgs_dpr_cd|' + (state.userId || '') + '|' + ((typeof pgsS !== 'undefined' && pgsS.project && pgsS.project.id) || '');
   function cdCacheLoad() {
-    if (S.cdTot || S.cdPkg) return; let v = null; try { v = JSON.parse(localStorage.getItem(cdCK()) || 'null'); } catch (e) { v = null; }
+    if (S.cdTot || (S.cdPkgS && Object.keys(S.cdPkgS).length)) return; let v = null; try { v = JSON.parse(localStorage.getItem(cdCK()) || 'null'); } catch (e) { v = null; }
     if (!v || !v.tot) return;
-    S.cdTot = v.tot || {}; S.cdTotStale = true; if (v.pkgRows && v.pkgRows.length) { cdPkgIndex(v.pkgRows); S.cdPkgStale = true; }
+    S.cdTot = v.tot || {}; S.cdTotStale = true;
+    // C2 · package totals are cached per scope ('' = project-wide, otherwise the sorted Site Area ids of the sheet)
+    const ps = v.pkgS || (v.pkgRows && v.pkgRows.length ? { '': v.pkgRows } : {});
+    Object.keys(ps).forEach(k => { const v2 = ps[k]; const rows = Array.isArray(v2) ? v2 : (v2 && v2.rows) || [], ids = Array.isArray(v2) ? [] : (v2 && v2.ids) || []; if (rows.length) cdPkgIndex(rows, k, ids); }); S.cdPkgStale = true;
   }
-  function cdCacheSave() { try { localStorage.setItem(cdCK(), JSON.stringify({ at: Date.now(), tot: S.cdTot || {}, pkgRows: (S.cdPkg && S.cdPkg.rows) || [] })); } catch (e) {} }
-  function cdPkgIndex(rows) { const P = { byAct: {}, byName: {}, byId: {}, rows };
-    rows.forEach(r => { P.byAct[r.wbs_node_id] = r; const p = P.byId[r.package_id] || (P.byId[r.package_id] = { id: r.package_id, name: r.package_name, acts: [] }); p.acts.push(r); P.byName[r.package_name] = p; }); S.cdPkg = P; }
-  // called as soon as a sheet / a report payload is in hand — the Cards never wait for the first click
-  function cdPrefetch(groups) { cdCacheLoad(); const ns = []; (groups || []).forEach(g => g.lines.forEach(l => ns.push({ l }))); if (ns.length) { cdTotEnsure(ns); cdPkgEnsure(ns); } }
+  function cdCacheSave() { try { const pkgS = {}; Object.keys(S.cdPkgS || {}).forEach(k => { pkgS[k] = { rows: S.cdPkgS[k].rows, ids: [...(S.cdPkgS[k].ids || [])] }; }); localStorage.setItem(cdCK(), JSON.stringify({ at: Date.now(), tot: S.cdTot || {}, pkgS })); } catch (e) {} }
+  function cdPkgIndex(rows, key, ids) { const P = { byAct: {}, byName: {}, byId: {}, rows, ids: new Set(ids || []), scoped: !!(rows[0] && rows[0].scoped) };
+    rows.forEach(r => { P.byAct[r.wbs_node_id] = r; const p = P.byId[r.package_id] || (P.byId[r.package_id] = { id: r.package_id, name: r.package_name, acts: [] }); p.acts.push(r); P.byName[r.package_name] = p; }); S.cdPkgS = S.cdPkgS || {}; S.cdPkgS[key || ''] = P; if (!key) S.cdPkg = P; }
+  /* C2 · scope of the package totals: the engineer's own Site Areas (from the sheet's groups: g.area_id); the combined DPR stays project-wide.
+     A sheet with no areas yet asks the database for the caller's active areas (p_mine). If M48 is not live the answer stays project-wide and says so. */
+  const CD_ALL = { key: '', ids: [], mine: false, label: 'All Locations' };
+  function cdScope(nodes, mode, mine) {
+    if (mode === 'mgr' || S.cdPkgNoScope) return CD_ALL;
+    const by = {}; nodes.forEach(n => { const g = n.g; if (g && g.area_id && !by[g.area_id]) by[g.area_id] = g.area || 'Area'; });
+    const arr = Object.keys(by).map(id => ({ id, nm: by[id] })).sort((a, b) => a.nm.localeCompare(b.nm) || a.id.localeCompare(b.id));
+    if (arr.length) return { key: arr.map(x => x.id).join(','), ids: arr.map(x => x.id), mine: false, label: arr.map(x => x.nm).join(' · ') };
+    if (mine) return { key: 'mine', ids: [], mine: true, label: (S.homeAreas && S.homeAreas.length) ? S.homeAreas.join(' · ') : 'Your Areas' };
+    return CD_ALL;
+  }
+  // called as soon as a sheet / a report payload is in hand — the Cards never wait for the first click (mine = the engineer's own live sheet)
+  function cdPrefetch(groups, mine) { cdCacheLoad(); const ns = []; (groups || []).forEach(g => g.lines.forEach(l => ns.push({ l, g }))); if (ns.length) { cdTotEnsure(ns); cdPkgEnsure(ns, cdScope(ns, mine ? 'live' : 'rep', !!mine)); } }
   function cdTotEnsure(nodes) {
     if (S.cdTotOff) return; S.cdTot = S.cdTot || {}; S.cdTotReq = S.cdTotReq || new Set();
     const stale = !!S.cdTotStale; S.cdTotStale = false;
@@ -4936,15 +4963,40 @@ const DPR = (function () {
     return { est, cum, n_locs: nl, uom, pct: cdPct(cum, est), parents: names.join(', '), miss };
   }
   /* ----- M44 · whole-package totals: rpc_dpr_package_totals, one read per date, cached in S.cdPkg ----- */
-  function cdPkgEnsure(nodes) {
-    if (S.cdPkgOff || S.cdPkgReq || (S.cdPkg && !S.cdPkgStale)) return; S.cdPkgStale = false;
-    const ids = [...new Set(nodes.map(n => n.l.wbs_node_id).filter(Boolean))]; if (!ids.length) return;
-    S.cdPkgReq = true; const view = S.view;
-    rpc('rpc_dpr_package_totals', { p_wbs_node_ids: ids }).then(rows => { cdPkgIndex(rows || []); cdCacheSave(); if (S.view !== view || !S.cards && !S.rvCards && !S.mCards) return; if (view === 'mgr') mPaint(); else redraw(); })
-      .catch(e => { S.cdPkgReq = false; if (/rpc_dpr_package_totals|PGRST202|Could not find the function/i.test(String(e && e.message))) S.cdPkgOff = true; else console.warn('[DPR] package totals', e); });
+  function cdPkgEnsure(nodes, sc) {   // C2 · one cached answer per scope; a stale flag marks every cached scope for a refresh behind the paint
+    sc = sc || cdScope(nodes, 'rep', false); const k = sc.key; S.cdPkgS = S.cdPkgS || {}; S.cdPkgReq = S.cdPkgReq || {};
+    if (S.cdPkgStale) { S.cdPkgStaleK = new Set(Object.keys(S.cdPkgS)); S.cdPkgStale = false; }
+    const want = [...new Set(nodes.map(n => n.l.wbs_node_id).filter(Boolean))]; if (!want.length) return;
+    const K = S.cdPkgS[k], have = K && K.ids, missing = have ? want.filter(id => !have.has(id)) : want;   // C4.1 · the answer depends on the ids asked: a cached scope must cover every id on this view
+    if (S.cdPkgOff || S.cdPkgReq[k] || (K && !missing.length && !(S.cdPkgStaleK && S.cdPkgStaleK.has(k)))) return;
+    if (S.cdPkgStaleK) S.cdPkgStaleK.delete(k);
+    const ids = have ? [...new Set([...have, ...want])] : want;
+    S.cdPkgReq[k] = true; const view = S.view, args = { p_wbs_node_ids: ids };
+    if (sc.ids.length) args.p_area_ids = sc.ids; else if (sc.mine) args.p_mine = true;
+    rpc('rpc_dpr_package_totals', args).then(rows => { delete S.cdPkgReq[k]; cdPkgIndex(rows || [], k, ids); cdCacheSave(); if (S.view !== view || !S.cards && !S.rvCards && !S.mCards) return; if (view === 'mgr') mPaint(); else redraw(); })
+      .catch(e => { delete S.cdPkgReq[k]; const miss = /rpc_dpr_package_totals|PGRST202|Could not find the function/i.test(String(e && e.message));
+        if (miss && k) { S.cdPkgNoScope = true; console.warn('[DPR] package totals: M48 scope not on the database — project-wide'); cdPkgEnsure(nodes, CD_ALL); }   // M44 only: fall back once, say so on the header
+        else if (miss) S.cdPkgOff = true; else console.warn('[DPR] package totals', e); });
   }
-  const cdPkgOf = p => { if (!S.cdPkg) return null; const n0 = p.all.find(n => S.cdPkg.byAct[n.l.wbs_node_id]); return (n0 && S.cdPkg.byId[S.cdPkg.byAct[n0.l.wbs_node_id].package_id]) || S.cdPkg.byName[p.name] || null; };
+  const cdPkgOf = (p, sc) => { const K = S.cdPkgS && S.cdPkgS[(sc || CD_ALL).key]; if (!K) return null; const n0 = p.all.find(n => K.byAct[n.l.wbs_node_id]); const P = (n0 && K.byId[K.byAct[n0.l.wbs_node_id].package_id]) || K.byName[p.name] || null; return P ? Object.assign({ scoped: K.scoped }, P) : null; };
   const cdByUom = rows => { const by = {}; rows.forEach(r => { const k = r.uom || '—'; by[k] = by[k] || { e: 0, c: 0 }; by[k].e += num(r.est); by[k].c += num(r.cum); }); return Object.keys(by).map(k => ({ uom: k, est: by[k].e, cum: by[k].c, pct: cdPct(by[k].c, by[k].e) })); };
+  /* C4 · combined DPR (mock v5, 25 Oct 2026): under the package header, one compact card per activity — the project-wide Cert Vs Est on top,
+     then one row per Site Area (review-queue order) with that area's Cert Vs Est from M48 scoped to the area. Open by default; folds per package. */
+  function cdOverview(p, pkRows, M) {
+    const qa = (S.mQueue || {}).areas || []; if (!qa.length) return null;
+    qa.forEach(a => cdPkgEnsure(M.nodes, { key: a.area_id, ids: [a.area_id], mine: false, label: a.area_name }));
+    const open = !(S.cdOvClosed && S.cdOvClosed.has(p.name));
+    const shown = pkRows.filter(r => !r.off || r.cum > 0);   // C4.1 · only reported or started activities — not every estimated line under the package
+    if (!shown.length) return null;
+    const cards = shown.map(r => { const pc = cdPct(r.cum, r.est);
+      const rows = qa.map(a => { const K = S.cdPkgS && S.cdPkgS[a.area_id], x = K && K.scoped ? K.byAct[r.id] : null, ap = x ? cdPct(num(x.cum_total), num(x.est_total)) : 0;
+        return `<tr class="${K && !x ? 'off' : ''}"><td>${esc(a.area_name)}</td><td class="r">${!K ? '…' : !x ? 'Not Estimated Yet' : `<b>${fmt(num(x.cum_total))} / ${fmt(num(x.est_total))} ${esc(x.uom || '')}</b><span class="ob">${cdBar(ap)}</span><i>${ap}%</i>`}</td></tr>`; }).join('');
+      return `<article class="cd-ac cd-oa" onclick="event.stopPropagation()"><div class="cd-tt"><b>${esc(r.name)}</b>${pill('p-vio', 'Overview')}${r.off ? pill('p-amb', 'Not On Sheet') : ''}</div>
+        <table><tr class="all"><td>All Locations</td><td class="r"><b>${fmt(r.cum)} / ${fmt(r.est)} ${esc(r.uom || '')}</b><span class="ob">${cdBar(pc)}</span><i>${pc}%</i></td></tr>${rows}</table>
+        <div class="cd-ft"><div class="cd-pc"><span>Progress · Certified Vs Estimation · All Locations</span><b>${pc}%</b></div>${cdBar(pc)}</div></article>`; });
+    return { open, html: `<div class="cd-ov"><div class="ph"><span>Activity Overview · Cert Vs Estimation · By Site Area</span><span>${shown.length} Activit${shown.length === 1 ? 'y' : 'ies'}${pkRows.length > shown.length ? ' · ' + (pkRows.length - shown.length) + ' Not Started' : ''} · ${qa.length} Area${qa.length === 1 ? '' : 's'}</span></div><div class="grid">${cards.join('')}</div></div>` };
+  }
+  function cdOvTog(name) { S.cdOvClosed = S.cdOvClosed || new Set(); S.cdOvClosed.has(name) ? S.cdOvClosed.delete(name) : S.cdOvClosed.add(name); if (S.view === 'mgr') mPaint(); else redraw(); }
   function cdPkgTog(name) { S.cdPkgOpen = S.cdPkgOpen || new Set(); S.cdPkgOpen.has(name) ? S.cdPkgOpen.delete(name) : S.cdPkgOpen.add(name); if (S.view === 'mgr') mPaint(); else redraw(); }
   const cdActRow = (name, cum, est, uom, off, extra) => `<div class="cd-par ${off ? 'off' : ''}"><span class="nm">${esc(name)}${off ? ' <i>Not On Sheet</i>' : ''}${extra || ''}</span><span class="q">${fmt(cum)} / ${fmt(est)} ${esc(uom || '')}</span>${cdBar(cdPct(cum, est))}<b>${cdPct(cum, est)}%</b></div>`;
   const cdTotNote = () => S.cdTotOff ? ' <span class="muted" title="Sheet Lines Only — rpc_dpr_card_totals (M43) Is Not On The Database">Sheet</span>' : ' <span class="muted">…</span>';
@@ -4954,12 +5006,12 @@ const DPR = (function () {
     if (S.view === 'mgr') mPaint(); else redraw();
     setTimeout(() => { const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }, 20);
   }
-  function cardsSet(on) { S.cards = !!on; if (on) S.nested = false; S.cd = null; S.mpo = null; S.remo = null; redraw(); }
+  function cardsSet(on) { S.cards = true; S.nested = false; S.cd = null; S.mpo = null; S.remo = null; redraw(); }
   function cdFoldAll(on) { S.cdFold = on ? new Set(S.cdSeen || []) : new Set(); if (S.view === 'mgr') mPaint(); else redraw(); }
   function cdFold(k) { S.cdFold = S.cdFold || new Set(); S.cdFold.has(k) ? S.cdFold.delete(k) : S.cdFold.add(k); if (S.view === 'mgr') mPaint(); else redraw(); }
   const cdFolded = k => { S.cdSeen = S.cdSeen || new Set(); S.cdSeen.add(k); return !!(S.cdFold && S.cdFold.has(k)); };
-  function rvCards(on) { S.rvCards = !!on; if (on) S.rvFull = false; S.cd = null; S.mpo = null; S.remo = null; paint(); }
-  function mCards(on) { S.mCards = !!on; if (on) S.mFull = false; S.cd = null; mPaint(); }
+  function rvCards(on) { S.rvCards = true; S.rvFull = false; S.cd = null; S.mpo = null; S.remo = null; paint(); }
+  function mCards(on) { S.mCards = true; S.mFull = false; S.cd = null; mPaint(); }
   const cdTog = (live, ro) => live && !ro ? `<button class="d2-btn sm" onclick="DPR.cdFoldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.cdFoldAll(false)">Expand All</button>` : `<button class="d2-btn sm" onclick="DPR.cdFoldAll(true)">Collapse All</button><button class="d2-btn sm" onclick="DPR.cdFoldAll(false)">Expand All</button>`;
   function cdCrumb(M, o) {
     const cd = S.cd, A = cd && cd.lvl !== 'lab' ? cdFind(M, cd.a) : null;
@@ -4983,11 +5035,11 @@ const DPR = (function () {
     let h = '';
     M.pkgs.forEach(p => {
       const acts = [...p.acts.entries()].filter(([, ns]) => ns.some(n => n.vis)), clubs = p.clubs.filter(c => c.vis); if (!acts.length && !clubs.length) return;
-      const all = p.all, st = cdStats(all), fk = 'cd:' + p.name, fd = cdFolded(fk), nClub = p.clubs.length, T = cdTotOf(all), PK = cdPkgOf(p), onSheet = new Set(all.map(n => n.l.wbs_node_id));
-      const pkRows = PK ? PK.acts.map(r => ({ name: r.activity, cum: num(r.cum_total), est: num(r.est_total), uom: r.uom, off: !onSheet.has(r.wbs_node_id) })) : null, pkU = pkRows ? cdByUom(pkRows) : null, pkOpen = S.cdPkgOpen && S.cdPkgOpen.has(p.name);
+      const all = p.all, st = cdStats(all), fk = 'cd:' + p.name, fd = cdFolded(fk), nClub = p.clubs.length, T = cdTotOf(all), PK = cdPkgOf(p, M.scope), onSheet = new Set(all.map(n => n.l.wbs_node_id)), scL = PK && PK.scoped ? M.scope.label : 'All Locations';
+      const pkRows = PK ? PK.acts.map(r => ({ id: r.wbs_node_id, name: r.activity, cum: num(r.cum_total), est: num(r.est_total), uom: r.uom, off: !onSheet.has(r.wbs_node_id) })) : null, pkU = pkRows ? cdByUom(pkRows) : null, pkOpen = S.cdPkgOpen && S.cdPkgOpen.has(p.name), ov = M.mode === 'mgr' && pkRows ? cdOverview(p, pkRows, M) : null;   // C4 · combined DPR: Activity Overview instead of the activities panel
       h += `<section class="cd-pkg ${fd ? 'closed' : ''}"><div class="hd" onclick="DPR.cdFold('${cdQ(fk)}')"><span class="car">${fd ? '▸' : '▾'}</span><b class="nm">${esc(p.name)}</b><span class="meta">${acts.length} Activit${acts.length === 1 ? 'y' : 'ies'}${nClub ? ' · ' + nClub + ' Report Together' : ''} · ${st.active} / ${st.total} Locations Active · ${fmt(st.heads + p.clubs.reduce((a, c) => a + c.heads, 0))} Heads Today · <span class="${st.hz ? 'cd-h' : 'cd-ok'}">${st.hz ? st.hz + ' Hindrance' : 'No Hindrance'}</span>${st.att ? ` · <span class="cd-h">${st.att} Need Attention</span>` : ''}</span>
-        <span class="pkgp">${pkU ? pkU.map(u => `<span class="uomt"><span class="meta">Package · ${esc(u.uom)} <b>${fmt(u.cum)} / ${fmt(u.est)}</b></span>${cdBar(u.pct)}<b class="pct">${u.pct}%</b></span>`).join('') : `<span class="uomt"><span class="meta">Cert Vs Est <b>${T ? fmt(T.cum) + ' / ' + fmt(T.est) + ' ' + esc(T.uom || cdUom(all)) : fmt(st.cert) + ' / ' + fmt(st.est) + ' ' + esc(cdUom(all))}</b>${T ? '' : cdTotNote()}</span>${cdBar(T ? T.pct : st.pct)}<b class="pct">${T ? T.pct : st.pct}%</b></span>`}</span>${pkRows ? `<button class="d2-btn sm cd-pkga" onclick="event.stopPropagation();DPR.cdPkgTog('${cdQ(p.name)}')">${pkRows.length} Activit${pkRows.length === 1 ? 'y' : 'ies'} ${pkOpen ? '▴' : '▾'}</button>` : ''}</div>
-        ${pkRows && pkOpen ? `<div class="cd-pkgacts"><div class="ph"><span>Activity Package · Cert Vs Estimation · All Locations</span><span>${pkRows.filter(r => !r.off).length} On ${M.live ? 'Your' : 'The'} Sheet · ${pkRows.filter(r => r.off).length} Not On Sheet</span></div>${pkRows.map(r => cdActRow(r.name, r.cum, r.est, r.uom, r.off)).join('')}</div>` : ''}
+        <span class="pkgp">${pkU ? pkU.map(u => `<span class="uomt"><span class="meta">${PK.scoped ? esc(scL) : 'Package'} · ${esc(u.uom)} <b>${fmt(u.cum)} / ${fmt(u.est)}</b></span>${cdBar(u.pct)}<b class="pct">${u.pct}%</b></span>`).join('') : `<span class="uomt"><span class="meta">Cert Vs Est <b>${T ? fmt(T.cum) + ' / ' + fmt(T.est) + ' ' + esc(T.uom || cdUom(all)) : fmt(st.cert) + ' / ' + fmt(st.est) + ' ' + esc(cdUom(all))}</b>${T ? '' : cdTotNote()}</span>${cdBar(T ? T.pct : st.pct)}<b class="pct">${T ? T.pct : st.pct}%</b></span>`}</span>${ov ? `<button class="d2-btn sm cd-pkga" onclick="event.stopPropagation();DPR.cdOvTog('${cdQ(p.name)}')">Overview ${ov.open ? '▴' : '▾'}</button>` : pkRows ? `<button class="d2-btn sm cd-pkga" onclick="event.stopPropagation();DPR.cdPkgTog('${cdQ(p.name)}')">${pkRows.length} Activit${pkRows.length === 1 ? 'y' : 'ies'} ${pkOpen ? '▴' : '▾'}</button>` : ''}</div>
+        ${ov ? (ov.open ? ov.html : '') : pkRows && pkOpen ? `<div class="cd-pkgacts"><div class="ph"><span>Activity Package · Cert Vs Estimation · ${esc(scL)}</span><span>${pkRows.filter(r => !r.off).length} On ${M.live ? 'Your' : 'The'} Sheet · ${pkRows.filter(r => r.off).length} Not On Sheet</span></div>${pkRows.map(r => cdActRow(r.name, r.cum, r.est, r.uom, r.off)).join('')}</div>` : ''}
         <div class="grid">${clubs.map(c => cdClubCard(c, M, o)).join('')}${acts.map(([k, ns]) => cdActCard(k, ns, M, o)).join('')}</div></section>`;
     });
     if (!h) h = `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${M.nodes.length ? 'No Activity Matches The Filter.' : M.live ? 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.' : 'Nothing Reported.'}</div></div>`;
@@ -5474,8 +5526,8 @@ const DPR = (function () {
     if (days.some(x => x.st === 'load')) setTimeout(() => { rvTrendLoad().then(ch => { if (ch && rvOn()) redraw(); }); }, 0);
     return h;
   }
-  const rvCtl = () => (S.prev || rvSent()) && !S.catMode ? `<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.rvFull || S.rvCards ? '' : 'on'}" onclick="DPR.rvMode(false)">Summary</button><button class="${S.rvCards && !S.rvFull ? 'on' : ''}" onclick="DPR.rvCards(true)">Cards</button><button class="${S.rvFull ? 'on' : ''}" onclick="DPR.rvMode(true)">Full Sheet</button></span>${rvSent() ? `<button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button>` : ''}</div>` : '';
-  function rvMode(full) { S.rvFull = !!full; S.rvCards = false; S.cd = null; S.mpo = null; S.remo = null; paint(); }
+  const rvCtl = () => (S.prev || rvSent()) && !S.catMode ? `<div class="rv-ctl">${rvSent() ? `<button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button>` : ''}</div>` : '';
+  function rvMode(full) { S.rvFull = false; S.rvCards = true; S.cd = null; S.mpo = null; S.remo = null; paint(); }   // C5 · Summary / Full Sheet retired — Cards only
   function rvDim(d) { S.dim = d; redraw(); }
 
   /* ----- print: A4 copy of the summary in a hidden frame (same method the suite uses for its other prints) ----- */
@@ -5556,7 +5608,7 @@ const DPR = (function () {
       rows += `<div class="d2-day"><div><b>${esc(dmy(d))}</b></div><div><span class="pill ${STP[k]}">${esc(s[1])}</span></div><div>${c ? `${num(c.reported)} Of ${num(c.activities)} Reported · ${fmt(c.heads)} Heads${num(c.hindrance) ? ' · ' + num(c.hindrance) + ' Hindrance' : ''}${c.dpr_no ? ' · ' + esc(c.dpr_no) : ''}${c.return_reason ? `<div class="rt">↩ ${esc(c.return_reason)}</div>` : ''}` : '<span class="muted">No Report — Open It To Enter Historical Progress</span>'}</div><div>${c && c.submitted_at ? esc(dts(c.submitted_at)) + (c.is_late ? ' · <span style="color:var(--drd)">Late</span>' : '') : '—'}</div><div>${c && c.reviewed_at ? esc(dts(c.reviewed_at)) + (c.reviewed_by ? ' · ' + esc(c.reviewed_by) : '') : '—'}</div><div>${act}</div></div>`;
     }
     return `<div class="d2-card"><div class="d2-fix d2-h4" style="border-top:0">Day Reports · ${esc(mLabel(m))}<span class="sp"></span><button class="d2-btn sm" onclick="DPR.calMove(-1)">‹</button><button class="d2-btn sm" ${m >= monthOf(today) ? 'disabled' : ''} onclick="DPR.calMove(1)">›</button></div>
-      <div class="d2-rep"><div class="d2-day hd"><div>Date</div><div>Status</div><div>Summary</div><div>Submitted</div><div>Reviewed</div><div></div></div>${rows}<div class="d2-warn" style="margin:10px"><b>View Report</b> Opens The Day Report Summary (Read-Only, With ⎙ Print); <b>Full Sheet</b> Shows Every Row. <b>Send</b> Stamps The Submitted Date &amp; Time. A Sent Report Is Immutable; A Returned One Reopens As Draft For The Same Date.</div></div></div>`;
+      <div class="d2-rep"><div class="d2-day hd"><div>Date</div><div>Status</div><div>Summary</div><div>Submitted</div><div>Reviewed</div><div></div></div>${rows}<div class="d2-warn" style="margin:10px"><b>View Report</b> Opens The Day Report Cards (Read-Only, With ⎙ Print). <b>Send</b> Stamps The Submitted Date &amp; Time. A Sent Report Is Immutable; A Returned One Reopens As Draft For The Same Date.</div></div></div>`;
   }
 
   /* ---------- edits ---------- */
@@ -6312,7 +6364,7 @@ const DPR = (function () {
     right += `<div class="lc open" style="border-left-color:var(--drd)"><div class="lh" style="cursor:default"><div class="a">Hindrances · Needing Action</div><div class="l">Allocate · Classify · Close In The Hindrances Tab</div></div>${hAct.length ? hAct.map(h => `<div class="hrow"><div><b>${esc(h.activity || h.group || '')} · ${esc(h.location || '')}</b><span>Since ${dsh(h.from_date)} · ${esc(h.reason_text)} · ${esc(h.raised_by || '')}${h.allocated_to ? ' → ' + esc(h.allocated_to) + (h.target_on ? ' · Target ' + dsh(h.target_on) : '') : ''}</span></div><span class="sp2 ${hStep(h)[0]}">${hStep(h)[1]}</span><button class="btn sm" onclick="DPR.hGo('${h.id}')">Open · ${h.days_lost} Days</button></div>`).join('') : '<div class="dpr-note">Nothing Open.</div>'}</div>`;
     $('dpr_mbody').innerHTML = '<div class="rev"><div>' + left + '</div><div>' + right + '</div></div>';
   }
-  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.cdTotReq = null; S.cdPkgReq = false; S.cdTotStale = true; S.cdPkgStale = true; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
+  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.cdTotReq = null; S.cdPkgReq = {}; S.cdTotStale = true; S.cdPkgStale = true; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
   async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.mOpen = new Set(); await mgrLoad(); }
   async function mOpen(id) {
     if (S.mOpen.has(id)) { S.mOpen.delete(id); revDraw(); return; }
@@ -6524,7 +6576,7 @@ const DPR = (function () {
   function mEngView() {
     const P = S.mPay[S.mEng]; mUse(P); const F = P.F, s = P.s, st = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'] }[s.status] || ['p-grey', s.status];
     const others = mSent().map(x => S.mPay[x.submission_id]).filter(Boolean), k = s.submission_id, eo = P.data.earlier_open, pub = mPub();
-    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mFull || S.mCards ? '' : 'on'}" onclick="DPR.mFull(false)">Summary</button><button class="${S.mCards && !S.mFull ? 'on' : ''}" onclick="DPR.mCards(true)">Cards</button><button class="${S.mFull ? 'on' : ''}" onclick="DPR.mFull(true)">Full Sheet</button></span><button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button></div>`)}`;
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><button class="d2-btn sm navy" onclick="DPR.rvPrint()">⎙ Print</button></div>`)}`;
     h += `<div class="d2-fix rvm-eng"><button class="d2-btn sm" onclick="DPR.mV('day')">← All Reports</button><b>${esc(P.name)}</b><span class="muted">${esc((P.areas || []).join(' · '))}</span>${pill(st[0], st[1])}<span class="muted">Sent ${esc(dts(s.submitted_at))}</span>${s.is_late ? pill('p-red', 'Late') : pill('p-ok', 'On Time')}<span class="muted">Attempt ${num(s.attempt_no) || 1}</span>${s.status === 'Accepted' && s.reviewed_at ? `<span class="muted">· Accepted ${esc(dts(s.reviewed_at))}</span>` : ''}<span class="sp"></span>${others.length > 1 ? `<span class="rvm-nav">${others.map(o => `<button class="${o.id === k ? 'on' : ''}" onclick="DPR.mEng('${o.id}')">${esc(o.name.split(' ')[0])}</button>`).join('')}</span>` : ''}</div>`;
     if (S.mFull) h += `<div class="d2-sc" id="d2_sc">${sheetHtml3(true)}</div>`;
     else if (S.mCards) h += `<div class="rv" id="d2_sc"><div class="rv-one"><span>${rvOneLine(F)}</span></div>${rvKpis(F)}<div class="cd-wrap">${cdReport(F, P, cdHind(F.H))}</div></div>`;   // v165.1 · Cards (no Manager Checks / Insights — 18 Oct 2026)
@@ -6589,7 +6641,7 @@ const DPR = (function () {
   function mDprView() {
     const C = mComb(), sent = mSent(), pub = mPub(), days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null, dd = esc(dsh(S.mProg));
     S.to = S.mProg;
-    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl"><span class="d2-seg sm"><button class="${S.mCards ? '' : 'on'}" onclick="DPR.mCards(false)">Table</button><button class="${S.mCards ? 'on' : ''}" onclick="DPR.mCards(true)">Cards</button></span>${mPdfBtns()}</div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;   // v165.1 · Table | Cards
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl">${mPdfBtns()}</div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;   // v165.1 · Table | Cards
     h += `<div class="rvm-cov"><span class="t">In This DPR</span>${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—');
       return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}</div>`;
     const nArea = (S.mQueue.areas || []).length || sent.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length;
@@ -6795,7 +6847,7 @@ const DPR = (function () {
   /* ----- actions ----- */
   function mV(v) { S.mv = v; S.mFull = false; S.cd = null; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
   function mEng(id) { if (!S.mPay[id]) return; S.mEng = id; S.mv = 'eng'; S.mFull = false; S.cd = null; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
-  function mFull(b) { S.mFull = !!b; if (b) S.mCards = false; S.cd = null; mPaint(); }
+  function mFull(b) { S.mFull = false; S.mCards = true; S.cd = null; mPaint(); }   // C5 · Summary / Full Sheet / Table retired — Cards only
   function mIncl(b) { S.mIncl = !!b; mPaint(); }
   async function mCalMove(n) { const m = (S.mCal && S.mCal.month) || monthOf(S.mProg), d = new Date(m + 'T00:00:00'); d.setMonth(d.getMonth() + n); const nm = monthOf(ymd(d)); if (nm > monthOf(todayYmd())) return; await mCalLoad(nm); mPaint(); }
   async function mJump(d, id) { S.mJumpTo = id || null; if (d !== S.mProg) await mGo(d); else if (id && S.mPay[id]) mEng(id); }
@@ -6995,7 +7047,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog,   // v166 · Cards · v166.2 cdRowTog
+    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog,   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };

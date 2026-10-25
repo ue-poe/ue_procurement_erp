@@ -1,0 +1,17 @@
+{
+  "name": "Penguin Construction",
+  "short_name": "Construction",
+  "description": "Daily Report · Site Progress · QA/QC — Urban Excellence LLP",
+  "id": "./construction.html",
+  "start_url": "./construction.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c2445",
+  "theme_color": "#1B2A47",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

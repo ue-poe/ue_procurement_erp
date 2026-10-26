@@ -4890,7 +4890,7 @@ const DPR = (function () {
     const fin = finL(l), x = lineX(g, l), est = num(l.est_qty), pct = fin ? 100 : Math.min(100, linePct(g, l)), b = fin ? 100 : lineBasePct(l);
     const cert = fin ? (l.site_cert_qty != null ? num(l.site_cert_qty) : est) : (x.fin && x.cert != null ? num(x.cert) : r2(est * pct / 100));
     return { g, l, key: cdKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, loc: lineLoc(g, l), path: lineLocPath(g, l), est, uom: l.uom || '', pct, b, cert, fin, finT: fin || !!x.fin,
-      hz: !fin && (hasH(g, l) || hasHT(g, l)), o: fin ? '' : outOf(g, l), oT: fin ? '' : outT(g, l), heads: g.lines.length > 1 ? 0 : cardHeads(g), club: g.lines.length > 1, starts: !fin && startsN(g, l) > 0,
+      hz: !fin && (hasH(g, l) || hasHT(g, l)), o: fin ? '' : outOf(g, l), oT: fin ? '' : outT(g, l), heads: g.lines.length > 1 ? 0 : cardHeads(g), club: g.lines.length > 1, starts: !fin && startsN(g, l) > 0 && !startedB(l) /* C6.1 node-level */,
       ds: fin ? l.started_on : (x.started || l.started_on || ''), de: fin ? l.finished_on : (x.fin ? (x.finOn || '') : ''), att: !fin && attOf(g, l), area: g.area || 'Unassigned', eng: '', r: null, P: null, rcT: cdRcT(g, l), trades: cdTrades(g) };
   }
   function cdNodesLive() { const vis = new Set(visibleLines().map(({ l }) => l.work_id)); return allLines().map(({ g, l }) => Object.assign(cdNodeLive(g, l), { vis: vis.has(l.work_id) })); }
@@ -5336,7 +5336,7 @@ const DPR = (function () {
       if (finL(l)) return;
       const x = lineX(g, l), o = outOf(g, l), b = lineBasePct(l), a = o === 'w' ? linePct(g, l) : b, est = num(l.est_qty), uom = l.uom || '';
       const r = { g, l, o, b, a, est, uom, act: l.activity, pkg: linePkg(g, l), loc: lineLoc(g, l), path: lineLocPath(g, l), club: g.lines.length > 1, clubLabel: g.label || '',
-        fin: o === 'w' && !!x.fin, cert: x.cert, starts: startsN(g, l) > 0, heads: cardHeads(g), cons: [...new Set(rvRows(dOf(g)).map(c => conName(c.con)))], subs: [], hs: [] };
+        fin: o === 'w' && !!x.fin, cert: x.cert, starts: o === 'w' && !startedB(l), heads: cardHeads(g), /* C6.1 node started on PD */ cons: [...new Set(rvRows(dOf(g)).map(c => conName(c.con)))], subs: [], hs: [] };
       if (!staged(l)) {
         r.today = o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(num(x.qty)) + ' ' + uom) : '';
         if (o === 'h') r.hs.push({ where: r.loc, what: l.activity, rc: rvRc(x.rc), since: (l.open_hindrance_yday && l.open_hindrance_yday.from_date) || PD() });   // v165
@@ -5358,7 +5358,7 @@ const DPR = (function () {
       // v163 · item 6: activity start / end — staged lines from their sub-activities, direct lines from the line
       if (staged(l)) { const ss = (l.stages || []).map(s => (x.subs[s.id] || {}).s || s.started_on || '').filter(Boolean).sort(); r.ds = ss[0] || (o === 'w' ? PD() : ''); r.de = (l.stages || []).every(s => subPct(g, l, s) >= 99.9995) ? ((l.stages || []).map(s => (x.subs[s.id] || {}).e || s.finished_on || PD()).sort().pop()) : ''; }
       else { r.ds = x.started || l.started_on || (o === 'w' ? PD() : ''); r.de = r.fin ? (x.finOn || PD()) : ''; }   // v165 · progress facts are yesterday's
-      r.oT = outT(g, l); r.hT = hasHT(g, l); r.startsT = startsN(g, l) > 0;
+      r.oT = outT(g, l); r.hT = hasHT(g, l); r.startsT = startsN(g, l) > 0 && !startedB(l) && o !== 'w';   // C6.1 · node-level
       rows.push(r);
     }));
     const W = rows.filter(r => r.o === 'w'), H = rows.flatMap(r => r.hs).map(h => Object.assign(h, { days: daysBetween(h.since, PD()) + 1 }));   // v165 · days lost as of yesterday
@@ -5424,7 +5424,7 @@ const DPR = (function () {
         const cl = rs.find(r => r.club);
         h += `<tr class="ac"><td colspan="4">${esc(act)}${cl ? `<span class="m">${pill('p-amb', 'Report Together')} ${esc(cl.clubLabel)}</span>` : ''}</td></tr>`;
         rs.forEach(r => {
-          const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(S.to)) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');
+          const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(PD())) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');   // C6.1
           const first = r.club && !clubShown.has(r.g.wgroup_id); if (r.club) clubShown.add(r.g.wgroup_id);
           const mp = r.club ? (first ? `<b>${fmt(r.heads)}</b> <span class="muted">On The Club</span>` : '<span class="muted">On The Club ↑</span>') : r.heads ? `<b>${fmt(r.heads)}</b> <span class="muted">Heads</span>` : '<span class="muted">No Labour Today</span>';
           h += `<tr class="${r.fin ? 'fin' : ''}"><td class="loc"><b>${esc(r.loc)}</b> ${tag}<span class="p">${esc(r.path)}${r.est ? ` · Est ${fmt(r.est)} ${esc(r.uom)}` : ''}${r.fin && r.cert != null ? ` · Cert. ${fmt(r.cert)} ${esc(r.uom)}` : ''}</span><span class="rv-dt ${r.de ? 'ok' : ''}">${esc(dSpan(r.ds, r.de, !!r.de))}</span></td><td>${rvBar(r.b, r.a, r.fin)}</td><td class="n"><span class="rv-td">${esc(r.today)}</span></td><td>${mp}<div class="muted">${esc(r.cons.join(', '))}</div></td></tr>`;
@@ -6637,7 +6637,7 @@ const DPR = (function () {
     return C;
   }
   function mRowHtml(r, opt) {
-    const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(S.mProg)) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');
+    const tag = r.fin ? pill('p-ok', 'Finished') : r.starts ? pill('p-teal', 'Started ' + dsh(PD())) : r.a > r.b + 0.0005 ? '' : pill('p-amb', 'WIP');   // C6.1
     const mp = r.club ? (opt.first ? `<b>${fmt(r.heads)}</b> <span class="muted">On The Club</span>` : '<span class="muted">On The Club ↑</span>') : r.heads ? `<b>${fmt(r.heads)}</b> <span class="muted">Heads</span>` : '<span class="muted">No Labour Today</span>';
     let h = `<tr class="${r.fin ? 'fin' : ''} ${opt.pend ? 'pend' : ''}"><td class="loc"><b>${esc(r.loc)}</b> ${tag}<span class="p">${esc(r.path)}${r.est ? ` · Est ${fmt(r.est)} ${esc(r.uom)}` : ''}${r.fin && r.cert != null ? ` · Cert. ${fmt(r.cert)} ${esc(r.uom)}` : ''}</span><span class="rv-dt ${r.de ? 'ok' : ''}">${esc(dSpan(r.ds, r.de, !!r.de))}</span></td><td>${rvBar(r.b, r.a, r.fin)}</td><td class="n"><span class="rv-td">${esc(r.today)}</span></td><td>${mp}<div class="muted">${esc(r.cons.concat(r.eng ? [r.eng] : []).join(' · '))}</div></td></tr>`;
     const loose = r.groups && r.groups.length ? r.subs.filter(c => !c.gid) : r.subs;

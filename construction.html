@@ -1062,6 +1062,26 @@ input[type="number"] {
 #mod-dpr .dp2 .cd-pkg>.hd .pkgp{flex-wrap:wrap;gap:4px 14px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt{display:flex;align-items:center;gap:6px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt .cd-bar{width:110px}
 #mod-dpr .dp2 .cd-pkg>.hd .cd-pkga{white-space:nowrap}
 #mod-dpr .dp2 .cd-pkgacts{padding:6px 12px 8px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}
+/* C6 · Non-Estimated Work on the card board (DPR_NonEstimated_Cards_mock_v1) */
+#mod-dpr .dp2 .cd-pkg.ne>.hd .add{margin-left:auto}
+#mod-dpr .dp2 .cd-ac.ne{cursor:default;background:#fbfcfe}
+#mod-dpr .dp2 .cd-ac.ne:hover{border-color:var(--ln,#c3ccd9);box-shadow:none}
+#mod-dpr .dp2 .cd-ac.ne.bad{border-color:var(--drdb)}
+#mod-dpr .dp2 .cd-ac.ne .cd-tt .pill{flex:0 0 auto}
+#mod-dpr .dp2 .cd-ac.ne td:first-child{width:86px;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-ac.ne td a{color:var(--dv);font-weight:800;cursor:pointer;font-size:10.5px;margin-left:6px;white-space:nowrap}
+#mod-dpr .dp2 .cd-ac.ne .lchip{display:inline-block;font-size:10px;border:1px solid var(--ln,#c3ccd9);border-radius:4px;padding:0 4px 0 6px;margin:0 3px 3px 0;background:#fff;color:#334155}
+#mod-dpr .dp2 .cd-ac.ne .lchip i{font-style:normal;color:var(--drd);cursor:pointer;margin-left:4px;font-weight:800}
+#mod-dpr .dp2 .ne-tr{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:5px;padding:7px 10px}
+#mod-dpr .dp2 .ne-tr label{display:flex;align-items:center;justify-content:space-between;gap:4px;border:1px solid var(--ln,#c3ccd9);border-radius:5px;padding:2px 3px 2px 7px;background:#fff;font-size:10.5px;font-weight:700;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .ne-tr label.on{border-color:var(--dvb);background:var(--dvl);color:var(--dv)}
+#mod-dpr .dp2 .ne-tr input{width:42px;border:1px solid var(--ln2,#e2e8f0);border-radius:4px;padding:2px 4px;text-align:right;font:inherit;font-weight:800;color:#132338;background:#fff;-moz-appearance:textfield}
+#mod-dpr .dp2 .ne-tr input::-webkit-outer-spin-button,#mod-dpr .dp2 .ne-tr input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#mod-dpr .dp2 .ne-ft{display:flex;gap:6px;align-items:center;padding:6px 10px 8px;border-top:1px dashed var(--ln2,#e2e8f0);margin-top:auto}
+#mod-dpr .dp2 .ne-ft .sp{flex:1}
+#mod-dpr .dp2 .ne-ft .rm{color:var(--drd)}
+#mod-dpr .dp2 .cd-ac.ne-new{border-style:dashed;align-items:center;justify-content:center;min-height:150px;color:var(--dv);font-weight:800;font-size:12.5px;background:#fff}
+#mod-dpr .dp2 .cd-ac.ne-new:hover{background:var(--dvl)}
 /* C4/C5.1 · combined DPR: Activity Overview strip — one activity card per started activity, one row per Site Area (styled as .cd-ac) */
 #mod-dpr .drp .cd-ov,#mod-dpr .dp2 .cd-ov,.cd-ov{padding:8px 10px 0;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}.cd-pkg.closed .cd-ov{display:none}
 #mod-dpr .drp .cd-ov .ph,#mod-dpr .dp2 .cd-ov .ph,.cd-ov .ph{background:none;color:var(--ink2,#51627a);padding:0 2px;border:0;display:flex;justify-content:space-between;gap:8px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
@@ -4446,7 +4466,7 @@ const DPR = (function () {
     if (sub && sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
     if (rvOn()) return h + `<div class="rv" id="d2_sc">${rvHtml()}</div><div class="d2-foot" id="d2_foot">${footHtml()}</div></div>`;   // v159.4 · Day Report summary (preview + sent report)
     // toolbar
-    h += `<div class="d2-fix d2-tool"><span class="d2-grp"><div class="d2-seg sm"><button class="${S.gv === 'work' ? 'on' : ''}" onclick="DPR.setView('work')">Work-Wise</button><button class="${S.gv === 'loc' ? 'on' : ''}" onclick="DPR.setView('loc')">Location-Wise</button></div></span>
+    h += `<div class="d2-fix d2-tool">
       <span class="d2-grp"><span class="lbl">Area</span><div class="d2-seg sm"><button class="${S.area ? '' : 'on'}" onclick="DPR.areaF('')">All</button>${aKeys.map(a => `<button class="${S.area === a ? 'on' : ''}" onclick="DPR.areaF('${esc(a)}')">${esc(a)} <span class="muted">${areas[a]}</span></button>`).join('')}</div></span>
       <span class="d2-grp"><span class="lbl">Show</span><div class="d2-seg sm"><button class="${S.filt === 'active' ? 'on' : ''}" onclick="DPR.filt('active')">Active <span class="muted">${nAct}</span></button><button class="${S.filt === 'fin' ? 'on' : ''}" onclick="DPR.filt('fin')">Finished <span class="muted">${nFin}</span></button><button class="${S.filt === 'open' ? 'on' : ''}" onclick="DPR.filt('open')">Not Filled <span class="muted">${nOpen}</span></button><button class="${S.filt === 'att' ? 'on red' : ''}" onclick="DPR.filt('att')">Needs Attention <span class="muted">${nAtt}</span></button></div></span>
       
@@ -4644,7 +4664,7 @@ const DPR = (function () {
     if (!S.fs || np.some(npHit)) { h += `<tr class="g1"><td colspan="${FC}" class="ind" style="--lv:0">Non-Estimated Work<span class="cnt">${np.length} Row${np.length === 1 ? '' : 's'} · ${fmt(npHeads())} Heads · Labour Only, No Progress</span>${ro ? '' : `<button class="d2-btn sm acts2" onclick="DPR.npAdd()">+ Non-Estimated Row</button>`}</td></tr>`;
       np.forEach((e, i) => { if (!npHit(e)) return; const key2 = 'np|' + i, tr = colsNow(), open = S.mpo === key2;
         h += `<tr class="npr"><td class="c">${pill('p-grey', 'NP')}</td><td colspan="4"><b>${esc(e.text)}</b> <span class="muted">${e.locs.length ? esc(e.locs.map(x => x.name).join(', ')) : 'No Location Yet'}</span>${ro ? '' : ` <button class="d2-btn sm" onclick="DPR.npLocPick(${i})">+ Location</button> <button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.npDel(${i})">Remove</button>`}</td><td colspan="2"></td><td class="c">${pill('p-ok', 'W')}</td><td colspan="4" class="muted">Labour Only · No Progress</td><td class="con">${esc(conName(e.con) || '—')}${ro ? '' : ` <a class="lk" onclick="DPR.npCon(${i})">Change</a>`}</td><td><span class="d2-mp" onclick="DPR.mpTog('${key2}')"><b>${fmt(heads(e.heads))}</b><i>${tradeTxt(tradeMix([e])) || 'None'}</i><span class="ar">${open ? '▾' : '▸'}</span></span></td><td></td></tr>`;
-        if (open) h += `<tr class="strip"><td></td><td colspan="${FC - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span>${tr.map(t => `<label class="d2-tr"><span>${esc(tCode(t.trade_code))}</span><input type="number" inputmode="numeric" min="0" data-k="np:${i}:${t.trade_code}" value="${num(e.heads[t.trade_code]) || ''}" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${t.trade_code}',this.value)"></label>`).join('')}</div></td></tr>`; }); }
+        if (open) h += `<tr class="strip"><td></td><td colspan="${FC - 1}"><div class="d2-strip"><span class="ttl">Manpower · ${esc(e.text)}</span>${tr.map(t => `<label class="d2-tr"><span>${esc(tCode(t.trade_code))}</span><input type="number" inputmode="numeric" min="0" data-k="np:${i}:${t.trade_code}" value="${num(e.heads[t.trade_code]) || ''}" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${t.trade_code}',0,this.value)"></label>`).join('')}</div></td></tr>`; }); }
     return h + sumRow(FC, dd) + `</tbody></table>`;
   }
   function flatSet(b) { S.nested = false; S.cards = true; S.cd = null; S.mpo = null; S.remo = null; redraw(); }   // C5 · Flat / Nested retired — Cards only   // v165.1 · Cards is the third Rows option (cardsSet)
@@ -5269,12 +5289,31 @@ const DPR = (function () {
   }
   /* ----- hindrances (report cards) ----- */
   const cdHind = H => `<section class="cd-pkg"><div class="hd" style="cursor:default"><b class="nm">Hindrances</b><span class="meta">${H.length} Row${H.length === 1 ? '' : 's'}</span></div><div class="cd-hl">${H.length ? H.map(x => `<div class="rv-h"><div><span class="w">${esc(x.where)}</span> <span class="muted">· ${esc(x.what)}${x.eng ? ' · ' + esc(x.eng) : ''}${x.area ? ' · ' + esc(x.area) : ''}</span></div><div class="d"><b>${x.days}</b><span>Day${x.days > 1 ? 's' : ''}</span></div><div><span class="r">${esc(x.rc || 'Reason Missing')}</span> <span class="muted">· Since ${esc(dsh(x.since))}${x.days <= 1 ? ' · New' : ''}</span></div></div>`).join('') : '<div class="rv-foot2" style="border:0">None.</div>'}</div></section>`;
+  /* ----- C6 · Non-Estimated Work (DPR_NonEstimated_Cards_mock_v1, approved 26 Oct 2026) ----- */
+  function cdNp(M, o) {
+    if (!M.live) return '';
+    const ro = o.ro, np = npDraft(), fk = 'cd:np', fd = cdFolded(fk);
+    if (ro && !np.length) return '';
+    const base = colsNow(), mt = S.masters.trades || [];
+    const bad = e => !e.con || !heads(e.heads), nBad = np.filter(bad).length, H = npHeads();
+    const cards = np.map((e, i) => {
+      const on = new Set(base.map(t => t.trade_code)); Object.keys(e.heads).forEach(t => on.add(t));
+      const trs = (on.size ? mt.filter(t => on.has(t.trade_code)) : mt.filter(t => t.is_active !== false));
+      const n = heads(e.heads), b = bad(e);
+      const locs = e.locs.length ? e.locs.map(x => `<span class="lchip" title="${esc(x.path || '')}">${esc(x.name || '')}${ro ? '' : `<i onclick="DPR.npLocDel(${i},'${esc(x.loc_node_id)}')">×</i>`}</span>`).join('') : '<span class="muted">No Location Yet</span>';
+      return `<article class="cd-ac ne ${b ? 'bad' : ''}"><div class="cd-tt"><b>${esc(e.text)}</b>${pill('p-grey', 'NE')}<span class="big" ${n ? '' : 'style="color:var(--drd)"'}>${fmt(n)}<small>${n ? 'Heads ' + esc(dsh(S.to)) : 'Heads Missing'}</small></span></div>
+        <table><tr><td>Where</td><td>${locs}${ro ? '' : `<a onclick="DPR.npLocPick(${i})">+ Location</a>`}</td></tr><tr><td>Contractor</td><td>${e.con ? esc(conName(e.con)) : '<b class="cd-h">Contractor Not Picked</b>'}${ro ? '' : `<a onclick="DPR.npCon(${i})">${e.con ? 'Change' : 'Pick'}</a>`}</td></tr></table>
+        <div class="ne-tr">${trs.map(t => `<label class="${num(e.heads[t.trade_code]) > 0 ? 'on' : ''}" title="${esc(t.trade_name)}">${esc(tCode(t.trade_code))}<input type="number" inputmode="numeric" min="0" data-k="np:${i}:${esc(t.trade_code)}" value="${num(e.heads[t.trade_code]) || ''}" placeholder="0" ${ro ? 'disabled' : ''} onchange="DPR.npStep(${i},'${esc(t.trade_code)}',0,this.value)"></label>`).join('')}</div>
+        ${ro ? '' : `<div class="ne-ft"><button class="d2-btn sm" onclick="DPR.tradeAdd()">+ Trade</button><span class="sp"></span><button class="d2-btn sm rm" onclick="DPR.npDel(${i})">Remove</button></div>`}</article>`; }).join('');
+    return `<section class="cd-pkg ne ${fd ? 'closed' : ''}"><div class="hd" onclick="DPR.cdFold('${fk}')"><span class="car">${fd ? '▸' : '▾'}</span><b class="nm">Non-Estimated Work</b><span class="meta">${np.length} Row${np.length === 1 ? '' : 's'}${H ? ` · <b>${fmt(H)}</b> Heads Today` : ''} · Labour Only, No Progress${nBad ? ` · <span class="cd-h">${nBad} Need Attention</span>` : ''}</span>${ro ? '' : `<button class="d2-btn sm acts2 add" onclick="event.stopPropagation();DPR.npAdd()">+ Non-Estimated Row</button>`}</div>
+      <div class="grid">${cards}${ro ? '' : `<article class="cd-ac ne-new" onclick="DPR.npAdd()">+ Add Non-Estimated Work</article>`}</div></section>`;
+  }
   /* ----- the card board ----- */
   function cdView(M, o) {
     const cd = S.cd; let body;
     if (cd && cd.lvl === 'lab') body = cdLabDetail(M, o);
     else if (cd) { const A = cdFind(M, cd.a); if (!A) { S.cd = null; body = cdPkgs(M, o) + (o.tail || ''); } else body = cdLocs(M, o, A); }
-    else body = cdPkgs(M, o) + cdLabour(M, o) + (o.tail || '');
+    else body = cdPkgs(M, o) + cdNp(M, o) + cdLabour(M, o) + (o.tail || '');   // C6 · Non-Estimated section on the live sheet
     return `<div class="cd">${cdCrumb(M, o)}${body}</div>`;
   }
   function cdSheet(ro) { return cdView(cdModel('live'), { ro }); }                      // engineer day sheet (Rows · Cards)

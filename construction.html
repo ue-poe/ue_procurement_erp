@@ -4533,13 +4533,13 @@ const DPR = (function () {
   /* ----- the hold sheet (new hold · edit) ----- */
   function holdOpen(scope, wid, xid) {
     if (isRo() || S.holdOff) return;
-    let g, l, s = null, G = null, title, sub, loc;
+    let g, l, s = null, Gp = null, title, sub, loc;
     if (scope === 'club') { g = G(wid); if (!g) return; l = g.lines[0]; title = 'Hold · Report Together'; sub = (g.label || bookedTo(g)) + ' · ' + g.lines.length + ' Activities · Holds As One'; loc = g.loc_node_id || l.loc_node_id; }
     else { const e = S.W[wid]; if (!e) return; g = e.g; l = e.l; loc = l.loc_node_id;
       if (scope === 'sub') { s = (l.stages || []).find(z => z.id === xid); if (!s) return; title = 'Hold · ' + s.name; sub = l.activity + ' · ' + lineLoc(g, l) + (s.group_name ? ' · ' + s.group_name : '') + ' · This Sub-Activity Only'; }
-      else if (scope === 'group') { G = subGroups(l).find(z => z.id === xid); if (!G) return; title = 'Hold · ' + G.name; sub = l.activity + ' · ' + lineLoc(g, l) + ' · ' + G.subs.filter(z => subBase(z) < 99.9995).length + ' Open Rows Hold As One'; }
+      else if (scope === 'group') { Gp = subGroups(l).find(z => z.id === xid); if (!Gp) return; title = 'Hold · ' + Gp.name; sub = l.activity + ' · ' + lineLoc(g, l) + ' · ' + Gp.subs.filter(z => subBase(z) < 99.9995).length + ' Open Rows Hold As One'; }
       else { title = 'Hold · ' + l.activity; sub = lineLoc(g, l) + (staged(l) ? ' · Every Open Sub-Activity Holds As One' : ' · Direct Line'); } }
-    S.hEd = { id: null, scope, wid: scope === 'club' ? '' : wid, sid: s ? s.id : '', gid: G ? G.id : '', cid: scope === 'club' ? wid : '', from: S.to, reason: '', wait: '', mode: 'finished', wsub: '', review: '', title, sub, loc, targets: null, tErr: '' };
+    S.hEd = { id: null, scope, wid: scope === 'club' ? '' : wid, sid: s ? s.id : '', gid: Gp ? Gp.id : '', cid: scope === 'club' ? wid : '', from: S.to, reason: '', wait: '', mode: 'finished', wsub: '', review: '', title, sub, loc, targets: null, tErr: '' };
     holdPaint(); holdTargets();
   }
   function holdEditOpen(id) {

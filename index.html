@@ -2668,7 +2668,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
         <thead>
           <tr>
             <th>WO Number</th><th>Date</th><th>Vendor</th><th>Scope</th>
-            <th class="num">WO Value</th><th>Cert Mode</th><th>Status</th><th class="center">Actions</th>
+            <th class="num">WO Value</th><th>Cert Mode</th><th>Status</th><th>Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
             <td style="padding:4px 6px;"><input id="woF_number" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
@@ -2763,7 +2763,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
         <thead>
           <tr>
             <th>Cert. Number</th><th>Date</th><th>WO Number</th><th>Vendor</th>
-            <th class="num">Gross Value</th><th>Status</th><th class="center">Actions</th>
+            <th class="num">Gross Value</th><th>Status</th><th>Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
             <td style="padding:4px 6px;"><input id="wocF_number" placeholder="Filter&#8230;" oninput="renderWOCList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
@@ -2981,7 +2981,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
             <th>Bill Number</th><th>Date</th><th>WO Number</th><th>Cert. Number</th><th>Vendor</th>
             <th class="num">Invoice Value</th><th class="num">Net Payable</th>
             <th class="num">Total Paid</th><th class="num">Credit Notes</th><th class="num">Outstanding</th>
-            <th>Status</th><th class="center">Actions</th>
+            <th>Status</th><th>Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
             <td style="padding:4px 6px;"><input id="wobF_number" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
@@ -2994,7 +2994,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('wobF_number','wobF_vendor','wobF_wonum','wobF_certnum','wobF_dateFrom','wobF_dateTo','wobF_status','renderWOBList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
         </thead>
-        <tbody id="wob_listBody"><tr><td colspan="11" class="center muted">Loading…</td></tr></tbody>
+        <tbody id="wob_listBody"><tr><td colspan="12" class="center muted">Loading…</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -15313,6 +15313,11 @@ function renderWOList() {
   if(fSt)   rows=rows.filter(o=>o['Status']===fSt);
   if(fFrom) rows=rows.filter(o=>o['WO Date']&&o['WO Date']>=fFrom);
   if(fTo)   rows=rows.filter(o=>o['WO Date']&&o['WO Date']<=fTo);
+  rows = _applyTableSort('wo_listBody', rows, [   // v170.1: PO-style sortable columns
+    o=>o['WO Number']||'', o=>o['WO Date']||'', o=>o['Vendor Name']||'', o=>o['Scope']||'',
+    o=>num(o['Total Amount']), o=>o['Cert Mode']||'QTY', o=>o['Status']||'',
+  ]);
+  setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
   if (!rows.length) { tbody.innerHTML = '<tr><td colspan="8" class="center muted">No work orders found.</td></tr>'; return; }
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(o => {
@@ -15321,22 +15326,22 @@ function renderWOList() {
     let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWO('${esc(o['WO Number'])}')">View</button>`;
     // v108: Approve / Return / Reject live in the View modal only
     if (perms.canCreateWO && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" onclick="reviseWO('${esc(o['WO Number'])}')">✎ Revise</button>`;
+      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWO('${esc(o['WO Number'])}')">✎ Revise</button>`;
     }
     if (perms.canApproveWO && (st === 'Open'||st === 'Active')) {
-      ab += `<button class="btn btn-ghost btn-sm" onclick="shortCloseWO('${esc(o['WO Number'])}')">Short-Close</button>
-        <button class="btn btn-danger btn-sm" onclick="terminateWO('${esc(o['WO Number'])}')">Terminate</button>`;
+      ab += `<button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="shortCloseWO('${esc(o['WO Number'])}')">Short-Close</button><button class="btn btn-danger btn-sm" style="margin-left:4px;" onclick="terminateWO('${esc(o['WO Number'])}')">Terminate</button>`;
     }
     const rr = o['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(o['Rejection Reason'])}</span>` : '';
+    // v170.1: PO list theme — mono doc no., plain-number amounts (₹ implied by header), bold key total, left-aligned actions
     return `<tr>
-      <td class="mono" style="font-weight:600;">${esc(o['WO Number'])}${_amwListBadge(o)}</td>
+      <td class="mono">${esc(o['WO Number'])}</td>
       <td>${fmtDate(o['WO Date'])}</td>
       <td>${esc(o['Vendor Name']||'')}</td>
       <td>${esc(o['Scope']||'')}</td>
-      <td class="num mono">${fmtINRSym(o['Total Amount'])}</td>
+      <td class="num" style="font-weight:600;">${fmtINR(o['Total Amount'])}</td>
       <td><span style="font-size:11px;padding:2px 7px;border-radius:8px;background:#dbeafe;color:#1e40af;">${esc(o['Cert Mode']||'QTY')}</span></td>
-      <td><span class="status ${stClass}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${rr}</td>
-      <td class="center" style="white-space:nowrap;">${ab}</td>
+      <td><span class="status ${stClass}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${_amwListBadge(o)}${rr}</td>
+      <td style="white-space:nowrap;">${ab}</td>
     </tr>`;
   }).join('');
 }
@@ -16834,7 +16839,7 @@ function getWOFormData() {
     vendorCode:  document.getElementById('wo_vendorCode').value,
     scope:       document.getElementById('wo_scope').value,
     gstPct, grossAmount: gross, gstAmount: gstAmt, totalAmount: gross+gstAmt,
-    retentionPct: num(document.getElementById('wo_retentionPct').value),
+    retentionPct: Math.max(0, Math.min(100, num(document.getElementById('wo_retentionPct').value))),   // v170.1: clamp 0–100, blank = 0
     mobAdvPct:   num(document.getElementById('wo_mobAdvPct').value)||null,
     mobAdvAmt:   num(document.getElementById('wo_mobAdvAmt').value)||null,
     // v75.7: recovery rate defaults to the advance rate when left blank
@@ -16934,7 +16939,7 @@ async function reviseWO(woNum) {
   document.getElementById('wo_scope').value     = h['Scope']||'';
   tcDeserialize('wo_tc_editor', h['Remarks']||'');
   document.getElementById('wo_gstPct').value    = h['GST %']||18;
-  document.getElementById('wo_retentionPct').value = h['Retention %']||5;
+  document.getElementById('wo_retentionPct').value = (h['Retention %'] ?? 5);   // v170.1: 0 % must survive revise (was ||5)
   document.getElementById('wo_mobAdvPct').value  = h['Mob Advance %']||'';
   document.getElementById('wo_mobAdvAmt').value  = h['Mob Advance Amount']||'';
   if(document.getElementById('wo_mobRecoveryPct')) document.getElementById('wo_mobRecoveryPct').value = h['Mob Recovery %']||'';
@@ -17402,32 +17407,35 @@ function renderWOCList() {
   if(fSt)   rows=rows.filter(c=>c['Status']===fSt);
   if(fFrom) rows=rows.filter(c=>c['WOC Date']&&c['WOC Date']>=fFrom);
   if(fTo)   rows=rows.filter(c=>c['WOC Date']&&c['WOC Date']<=fTo);
+  rows = _applyTableSort('woc_listBody', rows, [   // v170.1: PO-style sortable columns
+    c=>c['WOC Number']||'', c=>c['WOC Date']||'', c=>c['WO Number']||'', c=>c['Vendor Name']||'',
+    c=>num(c['Gross Value']), c=>c['Status']||'',
+  ]);
+  setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
   if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="center muted">No certifications found.</td></tr>'; return; }
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(c => {
     const st = c['Status']||'Unbilled';
-    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOC('${esc(c['WOC Number'])}')">View</button>
-      <button class="btn btn-ghost btn-sm" onclick="printWOCById('${esc(c['WOC Number'])}')">Print</button>`;
+    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOC('${esc(c['WOC Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOCById('${esc(c['WOC Number'])}')">Print</button>`;
     if (perms.canApproveWOC && st === 'Pending Approval') {   // v74.2: was canCreateWOB — approver-side only
-      ab += `<button class="btn btn-primary btn-sm" onclick="approveWOC('${esc(c['WOC Number'])}')">Approve</button>
-        <button class="btn btn-warn btn-sm" onclick="promptReject('WOC','${esc(c['WOC Number'])}','correction')">↩ Return</button>
-        <button class="btn btn-danger btn-sm" onclick="promptReject('WOC','${esc(c['WOC Number'])}','reject')">✕ Reject</button>`;
+      ab += `<button class="btn btn-primary btn-sm" style="margin-left:4px;" onclick="approveWOC('${esc(c['WOC Number'])}')">Approve</button><button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','correction')">↩ Return</button><button class="btn btn-danger btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','reject')">✕ Reject</button>`;
     }
     if (perms.canCreateWOC && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" onclick="reviseWOC('${esc(c['WOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
+      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWOC('${esc(c['WOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
     if (hasRole('Admin')) {   // M37
-      ab += `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="promptAdminDelete('WOC','${esc(c['WOC Number'])}')">🗑</button>`;
+      ab += `<button class="btn btn-danger btn-sm" style="margin-left:4px;" title="Delete certification (Admin)" onclick="promptAdminDelete('WOC','${esc(c['WOC Number'])}')">🗑</button>`;
     }
     const rr = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
+    // v170.1: PO list theme
     return `<tr>
-      <td class="mono" style="font-weight:600;">${esc(c['WOC Number'])}</td>
+      <td class="mono">${esc(c['WOC Number'])}</td>
       <td>${fmtDate(c['WOC Date'])}</td>
       <td class="mono">${esc(c['WO Number'])}</td>
       <td>${esc(c['Vendor Name'])}</td>
-      <td class="num mono">${fmtINRSym(c['Gross Value'])}</td>
+      <td class="num" style="font-weight:600;">${fmtINR(c['Gross Value'])}</td>
       <td><span class="status ${st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/ /g,'-')}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${rr}</td>
-      <td class="center" style="white-space:nowrap;">${ab}</td>
+      <td style="white-space:nowrap;">${ab}</td>
     </tr>`;
   }).join('');
 }
@@ -18219,31 +18227,38 @@ function renderWOBList() {
   if(fSt)   rows=rows.filter(b=>b['Status']===fSt);
   if(fFrom) rows=rows.filter(b=>b['Bill Date']&&b['Bill Date']>=fFrom);
   if(fTo)   rows=rows.filter(b=>b['Bill Date']&&b['Bill Date']<=fTo);
-  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="11" class="center muted">No bills found.</td></tr>'; return; }
+  rows = _applyTableSort('wob_listBody', rows, [   // v170.1: PO-style sortable columns
+    b=>b['Bill Number']||'', b=>b['Bill Date']||'', b=>b['WO Number']||'', b=>b['WOC Number']||'', b=>b['Vendor Name']||'',
+    b=>num(b['Invoice Value']), b=>num(b['Net Payable']), b=>num(b['Total Paid']), b=>num(b['Credit Notes']), b=>num(b['Outstanding']),
+    b=>b['Status']||'',
+  ]);
+  setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="12" class="center muted">No bills found.</td></tr>'; return; }
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(b => {
     const st = b['Status']||'Unpaid';
     let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOBById('${esc(b['Bill Number'])}')">View</button>`;
     if (perms.canCreateWOB && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" onclick="reviseWOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
+      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
     }
     if (hasRole('Admin')) {   // M37
-      ab += `<button class="btn btn-danger btn-sm" title="Delete bill (Admin)" onclick="promptAdminDelete('WOB','${esc(b['Bill Number'])}')">🗑</button>`;
+      ab += `<button class="btn btn-danger btn-sm" style="margin-left:4px;" title="Delete bill (Admin)" onclick="promptAdminDelete('WOB','${esc(b['Bill Number'])}')">🗑</button>`;
     }
     const rr = b['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(b['Rejection Reason'])}</span>` : '';
+    // v170.1: PO list theme
     return `<tr>
-      <td class="mono" style="font-weight:600;">${esc(b['Bill Number'])}</td>
+      <td class="mono">${esc(b['Bill Number'])}</td>
       <td>${fmtDate(b['Bill Date'])}</td>
       <td class="mono">${esc(b['WO Number'])}</td>
       <td class="mono">${esc(b['WOC Number'])}</td>
       <td>${esc(b['Vendor Name'])}</td>
-      <td class="num mono">${fmtINRSym(b['Invoice Value'])}</td>
-      <td class="num mono">${fmtINRSym(b['Net Payable'])}</td>
-      <td class="num mono" style="color:var(--accent);">${fmtINRSym(b['Total Paid']||0)}</td>
-      <td class="num mono" style="color:#4c2e9a;">${num(b['Credit Notes'])>0.005?fmtINRSym(b['Credit Notes']):'—'}</td>
-      <td class="num mono" style="color:${num(b['Outstanding'])>0.005?'var(--warn)':'var(--muted)'};">${fmtINRSym(b['Outstanding']||0)}</td>
+      <td class="num">${fmtINR(b['Invoice Value'])}</td>
+      <td class="num" style="font-weight:600;">${fmtINR(b['Net Payable'])}</td>
+      <td class="num" style="color:var(--accent);">${fmtINR(b['Total Paid']||0)}</td>
+      <td class="num" style="color:#4c2e9a;">${num(b['Credit Notes'])>0.005?fmtINR(b['Credit Notes']):'—'}</td>
+      <td class="num" style="color:${num(b['Outstanding'])>0.005?'var(--warn)':'var(--muted)'};">${fmtINR(b['Outstanding']||0)}</td>
       <td><span class="status ${st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/ /g,'-')}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${rr}</td>
-      <td class="center" style="white-space:nowrap;">${ab}</td>
+      <td style="white-space:nowrap;">${ab}</td>
     </tr>`;
   }).join('');
 }
@@ -18364,7 +18379,7 @@ async function onWOBWOCChange() {
   const woRes = await apiGetWODetails(woNum);
   if (woRes.ok) {
     document.getElementById('wob_gstPct').value       = woRes.header['GST %']||18;
-    document.getElementById('wob_retentionPct').value = woRes.header['Retention %']??5;
+    document.getElementById('wob_retentionPct').value = (woRes.header['Retention %'] ?? 0);   // v170.1: WO retention is the source of truth (0 stays 0)
     // Mob advance outstanding
     const mobAdvTotal = num(woRes.header['Mob Advance Amount'])||(num(woRes.header['Total Amount'])*num(woRes.header['Mob Advance %']||0)/100);
     const { data:prevBills } = await sb.from('wo_bills').select('mob_advance_recovery').eq('wo_number', woNum).not('status','in','("Rejected","Rejected - Correction")');
@@ -22887,7 +22902,7 @@ function _draftCaptureWO() {
     vendorCode:document.getElementById('wo_vendorCode')?.value || null,
     scope:     document.getElementById('wo_scope')?.value || null,
     gstPct:    document.getElementById('wo_gstPct')?.value || '18',
-    retentionPct: document.getElementById('wo_retentionPct')?.value || null,
+    retentionPct: document.getElementById('wo_retentionPct')?.value ?? null,   // v170.1: keep '0' / '' as typed
     mobAdvPct: document.getElementById('wo_mobAdvPct')?.value || null,
     mobRecoveryPct: document.getElementById('wo_mobRecoveryPct')?.value || null,
     mobAdvAmt: document.getElementById('wo_mobAdvAmt')?.value || null,
@@ -36098,6 +36113,9 @@ function makeSortable(tableOrId) {
     'grn_listBody':  () => renderGRNList(),
     'mir_listBody':  () => renderMIRList(),
     'po_listBody':   () => typeof renderPOList       === 'function' ? renderPOList()       : null,
+    'wo_listBody':   () => typeof renderWOList       === 'function' ? renderWOList()       : null,   // v170.1
+    'woc_listBody':  () => typeof renderWOCList      === 'function' ? renderWOCList()      : null,   // v170.1
+    'wob_listBody':  () => typeof renderWOBList      === 'function' ? renderWOBList()      : null,   // v170.1
     'qc_listBody':   () => typeof renderQCList       === 'function' ? renderQCList()       : null,
     'pob_listBody':  () => typeof renderPOBList      === 'function' ? renderPOBList()      : null,
     'mis_listBody':  () => typeof renderMISList      === 'function' ? renderMISList()      : null,

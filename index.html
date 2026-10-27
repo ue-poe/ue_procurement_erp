@@ -6979,6 +6979,7 @@ async function apiReviseWO(woNumber, data) {
         gst_amount: data.gstAmount, total_amount: data.totalAmount,
         remarks: data.remarks||null, contact_person: data.contactPerson||null,
         project: data.project, cert_mode: 'QTY',
+        retention_pct: data.retentionPct??0,   // v170.2: revise never sent retention — _fn_update_row only writes keys present, so the original value stuck
         mob_advance_pct: data.mobAdvPct||null, mob_advance_amount: data.mobAdvAmt||null,
         mob_recovery_pct: data.mobRecoveryPct||null,
         status: 'Pending Approval', rejection_reason: null,

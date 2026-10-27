@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.2</title>
+<title>Penguin Construction v5.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -1062,6 +1062,47 @@ input[type="number"] {
 #mod-dpr .dp2 .cd-pkg>.hd .pkgp{flex-wrap:wrap;gap:4px 14px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt{display:flex;align-items:center;gap:6px}#mod-dpr .dp2 .cd-pkg>.hd .pkgp .uomt .cd-bar{width:110px}
 #mod-dpr .dp2 .cd-pkg>.hd .cd-pkga{white-space:nowrap}
 #mod-dpr .dp2 .cd-pkgacts{padding:6px 12px 8px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfcfe}
+/* v5.3 · M49 · Waiting / On Hold (DPR_Hold_mock_v2) — the closed shelf, package bands, activity cards, held rows, hold sheet */
+#mod-dpr .dp2 .cd-pkg.wait{border-color:#cbd5e1}
+#mod-dpr .dp2 .cd-pkg.wait>.hd{background:#f1f5f9;background-image:repeating-linear-gradient(135deg,transparent 0 8px,rgba(100,116,139,.06) 8px 16px)}
+#mod-dpr .dp2 .cd-pkg.wait>.hd .nm{color:#475569}
+#mod-dpr .dp2 .cd-pkg.wait .wbody{padding:8px 10px}
+#mod-dpr .dp2 .cd-wpk{border:1px solid #cbd5e1;border-radius:7px;background:#fff;margin-bottom:8px}
+#mod-dpr .dp2 .cd-wpk>.h{display:flex;align-items:center;gap:10px;padding:6px 10px;background:#f8fafc;border-bottom:1px solid var(--ln2,#e0e5ec);border-radius:7px 7px 0 0;flex-wrap:wrap}
+#mod-dpr .dp2 .cd-wpk>.h .nm{font-weight:800;color:var(--dn);font-size:13px}
+#mod-dpr .dp2 .cd-wpk>.h .meta{font-size:11.5px;color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-wpk .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:9px;padding:9px 10px}
+#mod-dpr .dp2 .cd-ac.hold{border-color:#cbd5e1;background:#fafbfc}
+#mod-dpr .dp2 .cd-ac.hold .cd-tt b{color:var(--ink2,#51627a)}
+#mod-dpr .dp2 .cd-ac.hold.rdy{border-color:#99d8d0}
+#mod-dpr .dp2 .cd-ac.hold .locs{display:flex;flex-wrap:wrap;gap:4px;padding:6px 9px 8px}
+#mod-dpr .dp2 .cd-ac.hold .locs span{border:1px dashed #cbd5e1;border-radius:4px;padding:1px 6px;font-size:10.5px;color:#475569;background:#fff}
+#mod-dpr .dp2 .cd-rdy{color:#0f766e;font-weight:700}#mod-dpr .dp2 .cd-due{color:#b45309;font-weight:700}
+#mod-dpr .dp2 .cd-lc.w{border-color:#cbd5e1}#mod-dpr .dp2 .cd-lc.w>.hd{background:#f8fafc}
+#mod-dpr .dp2 .cd-band.wait{background:#f1f5f9;border-color:#cbd5e1}#mod-dpr .dp2 .cd-band.wait a{color:var(--dn);cursor:pointer;font-weight:700;margin-right:6px}
+#mod-dpr .dp2 .cd-gc.wait{background:#f8fafc;border-color:#cbd5e1}
+#mod-dpr .dp2 .cd-sr.hold{grid-template-columns:minmax(120px,1fr) minmax(160px,2fr) 40px auto auto;background:#f1f5f9;border-style:dashed;border-color:#cbd5e1;color:var(--ink2,#51627a);cursor:default}
+#mod-dpr .dp2 .cd-sr.hold .nm{color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-sr.hold>b{color:#475569}
+#mod-dpr .dp2 .cd-sr.hold .wt{display:flex;flex-wrap:wrap;gap:3px 8px;align-items:center;min-width:0;white-space:normal}
+#mod-dpr .dp2 .cd-sr.hold .wt .rsn{flex-basis:100%;font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mod-dpr .dp2 .cd-sr.hold .acts{display:flex;gap:4px;justify-content:flex-end}
+#mod-dpr .dp2 .cd-sr.hold.ready{background:#ecfdf8;border-color:#99d8d0}
+#mod-dpr .dp2 .cd-sr.hold.due{border-color:#f5c58a}
+#mod-dpr .dp2 .cd-wn{font-size:10.5px;color:#475569;background:#f1f5f9;border:1px dashed #cbd5e1;border-radius:5px;padding:2px 7px;margin-top:4px;cursor:pointer}
+#mod-dpr .dp2 .d2-btn.hb{color:#475569}
+#mod-dpr .dp2 .rv-k.hold .v{color:#475569}
+.dprSheet .hs{padding:8px 10px;display:grid;gap:8px;background:#fff}
+.dprSheet .hs .f{display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;align-items:start}
+.dprSheet .hs .f label{font-size:11px;font-weight:700;color:#51627a;padding-top:5px}
+.dprSheet .hs .f .v{display:grid;gap:4px;min-width:0}.dprSheet .hs .f .v .muted{font-size:10.5px;color:#8a98ad}
+.dprSheet .hs .hs-in{font:inherit;font-size:12.5px;border:1px solid #bcc6d4;border-radius:4px;padding:5px 7px;width:100%;max-width:100%;background:#fff}
+.dprSheet .hs textarea.hs-in{resize:vertical;min-height:46px}
+.dprSheet .hs .d2-seg.sm{display:inline-flex}
+.dprSheet .hs-ft{font-size:10.5px;color:#475569;background:#f1f5f9;border:1px dashed #cbd5e1;border-radius:5px;padding:5px 8px}
+@media(max-width:700px){.dprSheet .hs .f{grid-template-columns:1fr}#mod-dpr .dp2 .cd-sr.hold{grid-template-columns:1fr auto;grid-auto-rows:auto}#mod-dpr .dp2 .cd-sr.hold .wt{grid-column:1/-1}}
+.dprSheet .hs .d2-seg{display:inline-flex;border:1px solid #bcc6d4;border-radius:5px;overflow:hidden;background:#fff}
+.dprSheet .hs .d2-seg button{border:0;background:none;padding:5px 11px;font-size:11.5px;font-weight:700;color:#51627a;border-right:1px solid #e0e5ec;font-family:inherit;cursor:pointer}
+.dprSheet .hs .d2-seg button:last-child{border-right:0}.dprSheet .hs .d2-seg button.on{background:#12305a;color:#fff}.dprSheet .hs .d2-seg button:disabled{color:#b0bac8;cursor:default}
 /* C6 · Non-Estimated Work on the card board (DPR_NonEstimated_Cards_mock_v1) */
 #mod-dpr .dp2 .cd-pkg.ne>.hd .add{margin-left:auto}
 #mod-dpr .dp2 .cd-ac.ne{cursor:default;background:#fbfcfe}
@@ -3898,6 +3939,7 @@ const PGS_VIEW_DENY = new RegExp([
   '^((am|mm)(Save|Add)\\w*|ch(Add|Save|Edit|Delete)\\w*|st(Add|Del|Edit|Save|Seed|Group|Ungroup|Move))$',
   '^(h(Alloc|Classify|Close|Confirm|Reopen|Note|Start|Set)|p(AddG|AddS|Del|Discard|Save|Mv|LocNew|LocDel|SetV|Tick|TickAll))$',
   '^(np(Add|AddGo|Save|Del|LocDel|LocPick|Con|Step)|lab(Step|Same|Clear))$',
+  '^(holdOpen|holdEditOpen|holdGo|resumeAsk|resumeGo|resumeAll|resumeAllGo|holdDaysSave)$',   // v5.3 · M49
   '^(pgp(Assign|Revoke|AskActive|ConfirmActive|ToggleInvite)|pgs(NewOrg|NewProject|CreateOrgSave|CreateProjectSave|PCSaveOrg|PCSaveProject))$',
   // v155.1 · missed in v155: amendment decisions, reject prompts, masters approvals, location / WBS / cost-head trees, imports, GRN verify
   '^((amd|amw)(Approve|Cancel|Edit|Reject|Review)|promptReject\\w+|promptAdminDelete|verifyGRN|mstDecide|mstResubmit|_mstEditFn|chRenameHead)$',
@@ -3989,7 +4031,8 @@ const DPR = (function () {
     hind: null, hSum: null, hParties: null, hOpen: new Set(), hF: 'all', hArea: '', hEd: {},
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
-    masters: null, _conMap: null, _cons: null
+    masters: null, _conMap: null, _cons: null,
+    holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
 
   const $ = id => document.getElementById(id);
@@ -4138,7 +4181,7 @@ const DPR = (function () {
   const subT = y => y.t || (y.t = { out: '', rc: '', note: '', s: '' });
   const finT = (g, l) => finL(l) || !!lineX(g, l).fin;   // finished as of today (register, done-before, or this sheet's own finish) → no status today, no labour
   const subDoneT = (s, y) => subBase(s) >= 99.9995 || (y.out === 'w' && !y.wip && num(y.pct) >= 99.9995);
-  const openT = (g, l) => (l.stages || []).filter(s => !subDoneT(s, lineX(g, l).subs[s.id]));
+  const openT = (g, l) => (l.stages || []).filter(s => !subDoneT(s, lineX(g, l).subs[s.id]) && !heldS(g, l, s));   // v5.3 · M49 held rows take no entry
   function outT(g, l) {   // today's W/H/N of a line (a staged line derives it from its open sub-activities, like outOf)
     if (finT(g, l)) return ''; const x = lineX(g, l); if (!staged(l)) return tOf(g, l).out;
     const op = openT(g, l), os = op.map(s => subT(x.subs[s.id]).out);
@@ -4206,10 +4249,11 @@ const DPR = (function () {
       if (!date) { S.today = S.today || ymd(new Date()); date = await defaultDate(); }
       const dataT = await rpc('rpc_dpr_open_day', { p_report_date: date, p_shift: 'D' });
       S.today = dataT.today || S.today || ymd(new Date());
+      await holdsLoad(date);   // v5.3 · M49 holds open as of this date (no-op without M49)
       const T = mkCtx(dataT);
       if (prevT) carryDrafts(prevT, T);   // v158.4
       S.R = { T, Y: T }; S.same = true; S.homeAreas = dataT.home_areas || S.homeAreas || []; S.returned = dataT.returned || [];
-      S.ck = null; ctxLoad('T');
+      S.ck = null; ctxLoad('T'); holdScrub();   // v5.3 · M49
       cdPrefetch(T.groups, true);   // v166.1 · Cards totals start loading now, not on the first Cards click · C2 · scoped to the engineer's areas
       S.yd = null;
       try { const pd = addDays(T.to, -1); if (!(S.cal && S.cal.loaded[monthOf(pd)])) await calLoad(monthOf(pd)); if (S.cal && S.cal.days[pd]) { const dy = await rpc('rpc_dpr_open_day', { p_report_date: pd, p_shift: 'D' }); S.yd = mkCtx(dy); } } catch (e) { S.yd = null; }   // memo only (never creates a report; never shown as one)
@@ -4312,7 +4356,7 @@ const DPR = (function () {
   function labUnits(g) {
     const lv = labLevel(g); if (lv === 'activity') return [{ key: 'A', label: '', sub: '', worked: cardHasW(g) }];
     const l = g.lines[0], x = lineX(g, l);
-    if (lv === 'sub') return (l.stages || []).filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).map(s => ({ key: 'S:' + s.id, label: s.name, sub: (s.group_name ? s.group_name + ' · ' : '') + 'Weight ' + fmt(s.tpl_weight || s.weight) + '%', worked: true }));   // v158.3 · back-dated finishes carry no labour
+    if (lv === 'sub') return subsLive(g, l).filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).map(s => ({ key: 'S:' + s.id, label: s.name, sub: (s.group_name ? s.group_name + ' · ' : '') + 'Weight ' + fmt(s.tpl_weight || s.weight) + '%', worked: true }));   // v158.3 · back-dated finishes carry no labour
     return subGroups(l).filter(G => G.id && G.subs.some(s => subWorkedOn(s, x.subs[s.id], subBase(s)))).map(G => ({ key: 'G:' + G.id, label: G.name, sub: G.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length + ' Sub-Activities Worked', worked: true }));
   }
   const unitHas = (g, k) => (k === 'A' ? dOf(g).cons : (dOf(g).rows || {})[k] || []).some(c => heads(c.heads) > 0);
@@ -4325,7 +4369,7 @@ const DPR = (function () {
   function outOf(g, l) {
     if (finL(l)) return '';
     const x = lineX(g, l); if (!staged(l)) return x.out;
-    const open = (l.stages || []).filter(s => subBase(s) < 99.9995), os = open.map(s => x.subs[s.id].out);
+    const open = (l.stages || []).filter(s => subBase(s) < 99.9995 && !heldS(g, l, s)), os = open.map(s => x.subs[s.id].out);   // v5.3 · M49
     if (os.some(o => o === 'w')) return 'w';
     if (open.length && os.every(o => o === 'h')) return 'h';
     return os.some(o => o) ? 'n' : '';
@@ -4347,9 +4391,9 @@ const DPR = (function () {
   // worked ON the report date (labour is asked only for these): a part finished before the report date is back-dated history
   // v165 · M42: labour is asked for the parts worked TODAY (Status D = W); a part done as of yesterday carries none
   const subWorkedOn = (s, y, base) => !subDoneT(s, y) && subT(y).out === 'w';
-  const lineWorkedOn = (g, l) => { if (finT(g, l)) return false; const x = lineX(g, l); return staged(l) ? (l.stages || []).some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) : tOf(g, l).out === 'w'; };
+  const lineWorkedOn = (g, l) => { if (finT(g, l)) return false; const x = lineX(g, l); return staged(l) ? subsLive(g, l).some(s => subWorkedOn(s, x.subs[s.id], subBase(s))) : tOf(g, l).out === 'w'; };   // v5.3 · M49
   const lineBackDated = () => false;   // v165 · the back-dated haze is gone: a finish is always yesterday's fact, today's cell says Finished
-  const startsN = (g, l) => finL(l) ? 0 : staged(l) ? (l.stages || []).filter(s => subStarts(s, lineX(g, l).subs[s.id], subBase(s))).length : (dirStarts(g, l) ? 1 : 0);
+  const startsN = (g, l) => (finL(l) || heldL(g, l)) ? 0 : staged(l) ? subsLive(g, l).filter(s => subStarts(s, lineX(g, l).subs[s.id], subBase(s))).length : (dirStarts(g, l) ? 1 : 0);
   const cardHasW = g => g.lines.some(l => lineWorkedOn(g, l));
   const cardBackDated = g => !cardHasW(g) && g.lines.some(l => lineBackDated(g, l));
   const cardActive = g => !g.lines.every(finL);
@@ -4359,7 +4403,7 @@ const DPR = (function () {
   const npHeads = () => npDraft().reduce((a, e) => a + heads(e.heads), 0);
   const allHeads = () => S.groups.reduce((a, g) => a + cardHeads(g), 0) + npHeads();
   const workedCards = () => S.groups.filter(g => g.lines.some(l => outOf(g, l) !== ''));
-  const hasH = (g, l) => !finL(l) && (outOf(g, l) === 'h' || (staged(l) && (l.stages || []).some(s => lineX(g, l).subs[s.id].out === 'h')));   // yesterday
+  const hasH = (g, l) => !finL(l) && (outOf(g, l) === 'h' || (staged(l) && subsLive(g, l).some(s => lineX(g, l).subs[s.id].out === 'h')));   // yesterday · v5.3 held rows out
   const hasHT = (g, l) => !finT(g, l) && (outT(g, l) === 'h' || (staged(l) && openT(g, l).some(s => subT(lineX(g, l).subs[s.id]).out === 'h')));   // v165 · today
   const tReasonMissing = (g, l) => !finT(g, l) && (staged(l) ? openT(g, l).some(s => { const t = subT(lineX(g, l).subs[s.id]); return t.out === 'h' && !t.rc; }) : (tOf(g, l).out === 'h' && !tOf(g, l).rc));
   const hindCards = () => S.groups.filter(g => g.lines.some(l => hasH(g, l)));
@@ -4367,19 +4411,208 @@ const DPR = (function () {
   function labStats() { let miss = 0, starts = 0; S.groups.forEach(g => { if (cardActive(g)) miss += labUnits(g).filter(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key)).length; g.lines.forEach(l => { starts += startsN(g, l); }); }); return { all: allHeads(), miss, starts }; }
   // "Needs Attention" per tab: work = W without heads / H without reason; prog = worked without a quantity / H without reason
   function attW(g, l) {
-    if (finL(l)) return false; const x = lineX(g, l);
+    if (finL(l) || heldL(g, l)) return false; const x = lineX(g, l);   // v5.3 · M49
     if (tReasonMissing(g, l)) return true;   // v165 · today's hindrance without a reason
     if (!staged(l)) return (x.out === 'h' && !x.rc) || (lineWorkedOn(g, l) && labLevel(g) === 'activity' && !unitHeads(g, { key: 'A' }) && !noLab(g, 'A'));   // v163.6 · a back-dated finish carries no labour (v158.3) — never ask heads for it
-    if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && y.out === 'h' && !y.rc; })) return true;
+    if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && !heldS(g, l, s) && y.out === 'h' && !y.rc; })) return true;
     return labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key));
   }
   function attP(g, l) {
-    if (finL(l)) return false; const x = lineX(g, l);
+    if (finL(l) || heldL(g, l)) return false; const x = lineX(g, l);   // v5.3 · M49
     if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && !x.wip && !(num(x.qty) > 0));
-    return (l.stages || []).some(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && ((y.out === 'h' && !y.rc) || (y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005)); });
+    return (l.stages || []).some(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && !heldS(g, l, s) && ((y.out === 'h' && !y.rc) || (y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005)); });
   }
   const attOf = (g, l) => attW(g, l) || attP(g, l);   // v159 · one sheet carries status, labour and progress
   const attCount = () => allLines().filter(({ g, l }) => attOf(g, l)).length;
+  /* ==================================================================
+     v5.3 · M49 · WAITING / ON HOLD — DPR_Hold_mock_v2 (approved 27 Oct 2026)
+     A hold follows the Reporting Plan: direct line / sub-activity / plan group / Report Together club (scope work | sub | group | club).
+     Held parts take no entry and leave every count, card and report; they live behind the closed Waiting shelf at the foot of the
+     card board (engineer sheet · manager review · combined DPR), opened on demand and laid out package › activity › location › rows.
+     Nudge only: a linked activity shows Ready, the engineer resumes by hand. Not a hindrance: no days lost, no EOT.
+     Holds are read per date (rpc_dpr_holds, M49) and merged here — the payload lines are untouched. Without M49 the app runs as before.
+     ================================================================== */
+  const HOLD_MISS = e => /rpc_dpr_hold|rpc_dpr_resume|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
+  async function holdsLoad(d) {   // the holds open AS OF date d (cached per date; refreshed after every hold / resume)
+    if (S.holdOff || !d) return null;
+    try { const r = await rpc('rpc_dpr_holds', { p_date: d }); S.holdsBy[d] = { holds: (r && r.holds) || [], days: num((r || {}).review_days) || 21, at: Date.now() }; S.holdDays = S.holdsBy[d].days; S.hx = null; return S.holdsBy[d]; }
+    catch (e) { if (HOLD_MISS(e)) { S.holdOff = true; console.warn('[DPR] holds: M49 not on the database — Waiting / On Hold is off'); } else console.warn('[DPR] holds', e); return null; }
+  }
+  function holdsEnsure(d) {   // manager: read in the background, paint when it lands
+    if (S.holdOff || !d || S.holdsBy[d] || S.holdReq[d]) return;
+    S.holdReq[d] = true; holdsLoad(d).then(() => { delete S.holdReq[d]; if (S.view === 'mgr') mPaint(); else redraw(); });
+  }
+  const holdsFor = d => (S.holdsBy[d] || {}).holds || [];
+  function HX() {   // index of the holds open on the sheet date S.to
+    const d = S.to; if (S.hx && S.hx.d === d && S.hx.n === holdsFor(d).length) return S.hx;
+    const x = { d, n: holdsFor(d).length, work: {}, sub: {}, grp: {}, club: {}, byId: {} };
+    holdsFor(d).forEach(h => { x.byId[h.id] = h; if (h.scope === 'work') x.work[h.work_id] = h; else if (h.scope === 'sub') x.sub[h.work_sub_id] = h; else if (h.scope === 'group') x.grp[h.plan_group_id] = h; else if (h.scope === 'club') x.club[h.wgroup_id] = h; });
+    return (S.hx = x);
+  }
+  const holdClub = g => (g && g.lines.length > 1 && HX().club[g.wgroup_id]) || null;
+  const holdLine = (g, l) => holdClub(g) || HX().work[l.work_id] || null;
+  const holdSub = (g, l, s) => holdLine(g, l) || HX().sub[s.id] || (s.group_id && HX().grp[s.group_id]) || null;
+  const heldS = (g, l, s) => !!holdSub(g, l, s);
+  const heldL = (g, l) => { if (holdLine(g, l)) return true; if (!staged(l)) return false; const op = (l.stages || []).filter(s => subBase(s) < 99.9995); return op.length > 0 && op.every(s => heldS(g, l, s)); };
+  const subsLive = (g, l) => (l.stages || []).filter(s => !heldS(g, l, s));
+  function holdScrub() {   // a held part carries no entry: clear whatever the drafts pre-set for it (yesterday's status row, today's row, a carried draft)
+    (S.groups || []).forEach(g => { const d = S.D[g.wgroup_id]; if (!d) return; g.lines.forEach(l => { const x = d.lines[l.work_id]; if (!x) return;
+      if (heldL(g, l)) { x.out = ''; x.wip = false; x.fin = false; x.qty = 0; if (x.t) { x.t.out = ''; x.t.rc = ''; } }
+      (l.stages || []).forEach(s => { if (!heldS(g, l, s)) return; const y = x.subs[s.id]; if (!y) return; y.out = ''; y.wip = false; y.pct = subBase(s); if (y.t) { y.t.out = ''; y.t.rc = ''; } }); }); });
+  }
+  const holdDaysOf = h => daysBetween(h.held_from, S.to) + 1;
+  const holdWaitTxt = h => !h.wait_wbs_node_id ? 'Arbitrary Hold' : `Waiting For ${h.wait_name || 'Activity'}${h.wait_loc_name ? ' · ' + h.wait_loc_name : ''}${h.wait_mode === 'sub' ? ' · ' + (h.wait_sub_name || 'Sub-Activity') : h.wait_mode === 'any' ? ' · Any Progress' : ''}${h.wait_pct != null ? ' · ' + Math.round(num(h.wait_pct)) + '%' : ''}`;
+  const holdStateTxt = h => h.wait_ready ? 'Ready' : h.due ? 'Review Due' : '';
+  /* ----- the held rows of the loaded context(s), in Reporting Plan fashion ----- */
+  function holdRowsCtx(eng, area) {
+    const out = [], X = HX(), push = o => out.push(Object.assign({ eng: eng || '', area: area || '', days: holdDaysOf(o.h), due: !!o.h.due, ready: !!o.h.wait_ready, wait: holdWaitTxt(o.h), frozen: o.h.frozen_pct }, o));
+    (S.groups || []).forEach(g => {
+      const ch = holdClub(g);
+      if (ch) { const l0 = g.lines[0]; push({ kind: 'club', h: ch, g, l: l0, key: 'club\u0001' + g.wgroup_id, pkg: linePkg(g, l0) || '—', act: 'Report Together · ' + (g.label || bookedTo(g)), loc: bookedTo(g), path: g.loc_path || '', name: g.lines.map(l => l.activity + ' · ' + lineLoc(g, l)).join(', '), cid: g.wgroup_id, wid: '', sid: '', gid: '' }); return; }
+      g.lines.forEach(l => { if (finL(l)) return; const base = { g, l, key: cdKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, loc: lineLoc(g, l), path: lineLocPath(g, l), wid: l.work_id, cid: '' };
+        const wh = X.work[l.work_id]; if (wh) { push(Object.assign({ kind: 'work', h: wh, name: staged(l) ? 'Whole Activity · ' + (l.stages || []).filter(s => subBase(s) < 99.9995).length + ' Open Rows' : 'Direct Line', sid: '', gid: '' }, base)); return; }
+        if (!staged(l)) return;
+        subGroups(l).forEach(G => { const gh = G.id && X.grp[G.id];
+          if (gh) { push(Object.assign({ kind: 'group', h: gh, name: G.name + ' · ' + G.subs.filter(s => subBase(s) < 99.9995).length + ' Rows', G, sid: '', gid: G.id }, base)); return; }
+          G.subs.forEach(s => { const sh = X.sub[s.id]; if (sh && subBase(s) < 99.9995) push(Object.assign({ kind: 'sub', h: sh, s, G, name: s.name, grp: G.id ? G.name : '', sid: s.id, gid: '' }, base)); }); }); }); });
+    return out;
+  }
+  function holdRowsP(list) {   // several engineers' contexts (manager combined)
+    let o = []; (list || []).forEach(P => { mUse(P); if (!S.holdsBy[S.to]) holdsEnsure(S.to); o = o.concat(holdRowsCtx(P.name, (P.areas || [])[0] || '')); }); S.to = S.mProg; return o;
+  }
+  const holdRows = M => S.holdOff ? [] : M.mode === 'mgr' ? holdRowsP(S.cdC) : holdRowsCtx(S.mEngName || '', (S.homeAreas || [])[0] || '');
+  const holdSum = W => ({ n: W.length, due: W.filter(r => r.due).length, ready: W.filter(r => r.ready).length, pk: new Set(W.map(r => r.pkg)).size });
+  function cdWaitKpi(k, C) { if (S.holdOff) return ''; const W = C ? holdRowsP(C.inc) : holdRowsCtx('', ''); if (!W.length) return ''; const s = holdSum(W); return k('hold', 'Waiting', s.n, `${s.due} Review Due · ${s.ready} Ready`); }
+  const holdBtn = (scope, wid, xid, txt) => `<button class="d2-btn sm hb" title="Put On Hold — Waiting, Not A Hindrance" onclick="event.stopPropagation();DPR.holdOpen('${scope}','${cdQ(wid)}','${cdQ(xid || '')}')">⏸${txt ? ' ' + txt : ''}</button>`;
+  const cdWaitNote = (n, key) => n ? `<div class="cd-wn" onclick="event.stopPropagation();DPR.wGo('${cdQ(key)}')">${n} Waiting · On Hold ↓</div>` : '';
+  /* ----- the Waiting shelf: closed by default; open = packages › activity cards; a card opens its location node cards with the held rows ----- */
+  function cdWaiting(M, o) {
+    if (S.holdOff) return '';
+    const live = M.live && !o.ro, all = holdRows(M); if (!all.length) return '';
+    const W = !live && S.wF === 'due' ? all.filter(r => r.due) : !live && S.wF === 'ready' ? all.filter(r => r.ready) : all, s = holdSum(all), open = !!S.wOpen;
+    const seg = live ? '' : `<span class="d2-seg sm" onclick="event.stopPropagation()"><button class="${S.wF === 'all' ? 'on' : ''}" onclick="DPR.wF('all')">All <span class="muted">${s.n}</span></button><button class="${S.wF === 'due' ? 'on' : ''}" onclick="DPR.wF('due')">Review Due <span class="muted">${s.due}</span></button><button class="${S.wF === 'ready' ? 'on' : ''}" onclick="DPR.wF('ready')">Ready <span class="muted">${s.ready}</span></button></span>`;
+    let body = '';
+    if (open) {
+      if (S.wA) { const rows = W.filter(r => r.key === S.wA); body = rows.length ? cdWaitDrill(rows, M, live) : (S.wA = null, cdWaitPkgs(W, M)); }
+      else body = cdWaitPkgs(W, M);
+    }
+    return `<section class="cd-pkg wait ${open ? '' : 'closed'}" id="cd_wait"><div class="hd" onclick="DPR.wTog()"><span class="car">${open ? '▾' : '▸'}</span><b class="nm">Waiting · On Hold</b><span class="meta"><b>${s.n}</b> Row${s.n === 1 ? '' : 's'} In ${s.pk} Package${s.pk === 1 ? '' : 's'} · <b>${s.ready}</b> Ready · <b>${s.due}</b> Review Due${M.mode === 'mgr' ? ' · All Areas' : ''}</span><span class="sp"></span>${seg}</div>${open ? `<div class="wbody">${body}</div>` : ''}</section>`;
+  }
+  function cdWaitPkgs(W, M) {
+    const pk = new Map(); W.forEach(r => { if (!pk.has(r.pkg)) pk.set(r.pkg, new Map()); const m = pk.get(r.pkg); if (!m.has(r.key)) m.set(r.key, []); m.get(r.key).push(r); });
+    if (!pk.size) return `<div class="d2-empty"><b>Nothing Here</b></div>`;
+    return [...pk.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([p, acts]) => { const rows = [].concat(...acts.values()), s = holdSum(rows);
+      return `<div class="cd-wpk"><div class="h"><b class="nm">${esc(p)}</b><span class="meta">${acts.size} Activit${acts.size === 1 ? 'y' : 'ies'} · ${s.n} Row${s.n === 1 ? '' : 's'} Waiting · ${s.ready} Ready · ${s.due} Review Due</span></div><div class="grid">${[...acts.values()].map(rs => cdWaitCard(rs, M)).join('')}</div></div>`; }).join('');
+  }
+  function cdWaitCard(rs, M) {
+    const r0 = rs[0], waits = [...new Set(rs.map(r => r.h.wait_wbs_node_id ? (r.h.wait_name || 'Activity') : 'Arbitrary'))], since = rs.map(r => r.h.held_from).sort()[0], longest = Math.max(...rs.map(r => r.days));
+    const rev = rs.map(r => r.h.review_by).filter(Boolean).sort()[0], due = rs.filter(r => r.due).length, ready = rs.filter(r => r.ready).length, fz = rs.map(r => num(r.frozen)).filter(v => v > 0);
+    const locs = [...new Set(rs.map(r => r.loc))], engs = M.mode === 'mgr' ? [...new Set(rs.map(r => r.eng).filter(Boolean))] : [];
+    return `<article class="cd-ac hold ${ready ? 'rdy' : ''}" onclick="DPR.wGo('${cdQ(r0.key)}')"><div class="cd-tt"><b>${esc(r0.kind === 'club' ? r0.act : r0.act)}${engs.length ? ` <span class="cd-eng">${esc(engs.join(', '))}</span>` : ''}</b>${r0.kind === 'club' ? pill('p-amb', 'Report Together') : pill('p-grey', 'Waiting')}</div>
+      <table><tr><td>Rows Waiting</td><td><b>${rs.length}</b>${ready ? ` · <span class="cd-rdy">${ready} Ready</span>` : ''}${due ? ` · <span class="cd-due">${due} Review Due</span>` : ''}</td></tr><tr><td>Waiting For</td><td>${esc(waits.join(', '))}</td></tr><tr><td>Since · Longest</td><td>${esc(dsh(since))} · ${longest} Day${longest === 1 ? '' : 's'}</td></tr><tr><td>Review By</td><td>${rev ? esc(dsh(rev)) : '<span class="muted">—</span>'}</td></tr><tr><td>Frozen At</td><td>${fz.length ? Math.round(fz.reduce((a, b) => a + b, 0) / fz.length) + '%' + (fz.length > 1 ? ' Avg' : '') : '<span class="muted">—</span>'}</td></tr></table>
+      <div class="locs">${locs.slice(0, 8).map(x => `<span>${esc(x)}</span>`).join('')}${locs.length > 8 ? `<span>+${locs.length - 8}</span>` : ''}</div></article>`;
+  }
+  function cdWaitDrill(rows, M, live) {
+    const r0 = rows[0], by = new Map(); rows.forEach(r => { const k = r.loc + '\u0001' + r.path; if (!by.has(k)) by.set(k, []); by.get(k).push(r); });
+    let h = `<div class="cd-band wait"><div><a onclick="DPR.wGo('')">← All Waiting</a> <b>${esc(r0.act)}</b> <span class="muted">· ${esc(r0.pkg)} · ${rows.length} Row${rows.length === 1 ? '' : 's'} Waiting</span></div></div>`;
+    by.forEach(list => { const n0 = list[0], ids = list.map(r => r.h.id), ready = list.filter(r => r.ready).length;
+      h += `<article class="cd-lc w"><div class="hd"><div><b>${esc(n0.loc)}</b> <span class="muted">· ${list.length} Waiting${ready ? ' · ' + ready + ' Ready' : ''}${M.mode === 'mgr' && n0.eng ? ' · ' + esc(n0.eng) : ''}</span><div class="path">${esc(n0.act)} · ${esc(n0.path)}</div></div><div class="r">${live && list.length > 1 ? `<button class="d2-btn sm ok" onclick="DPR.resumeAll('${ids.join(',')}')">▶ Resume All</button>` : ''}</div></div><div class="cd-gs">`;
+      const gm = new Map(); list.forEach(r => { const k = r.kind === 'sub' ? (r.grp || '') : ''; if (!gm.has(k)) gm.set(k, []); gm.get(k).push(r); });
+      gm.forEach((rs, gname) => { h += `<div class="cd-gc wait ${gname ? '' : 'plain'}">${gname ? `<div class="gh"><b>${esc(gname)}</b><span class="muted">· ${rs.length} Waiting</span></div>` : ''}<div class="gl">${rs.map(r => cdHeldRow(r, live)).join('')}</div></div>`; });
+      h += `</div></article>`; });
+    return h;
+  }
+  function cdHeldRow(r, live) {
+    const h = r.h, st = holdStateTxt(h), fz = r.kind === 'club' ? '' : `<b>${h.frozen_pct == null ? '—' : Math.round(num(h.frozen_pct)) + '%'}</b>`;
+    return `<div class="cd-sr hold ${h.wait_ready ? 'ready' : ''} ${h.due ? 'due' : ''}"><span class="nm" title="${esc(h.reason || '')}">${esc(r.name)}${r.kind !== 'sub' ? `<small>${r.kind === 'club' ? 'Club' : r.kind === 'group' ? 'Group' : 'Activity'}</small>` : ''}</span><span class="wt">${pill(h.wait_ready ? 'p-teal' : h.due ? 'p-amb' : 'p-grey', esc(r.wait))}<span class="muted">Since ${esc(dsh(h.held_from))} · ${r.days} Day${r.days === 1 ? '' : 's'}${h.review_by ? ' · Review ' + esc(dsh(h.review_by)) : ''}${h.held_by_name ? ' · ' + esc(h.held_by_name) : ''}</span><span class="muted rsn">${esc(h.reason || '')}</span></span>${fz}<span class="st">${st ? pill(h.wait_ready ? 'p-teal' : 'p-amb', st) : ''}</span><span class="acts">${live ? `<button class="d2-btn sm" title="Edit The Hold" onclick="DPR.holdEditOpen('${h.id}')">✎</button><button class="d2-btn sm ok" onclick="DPR.resumeAsk('${h.id}')">▶ Resume</button>` : ''}</span></div>`;
+  }
+  function wTog() { S.wOpen = !S.wOpen; if (!S.wOpen) S.wA = null; if (S.view === 'mgr') mPaint(); else redraw(); }
+  function wGo(key) { S.wOpen = true; S.wA = key || null; if (S.view === 'mgr') mPaint(); else redraw(); setTimeout(() => { const el = $('cd_wait'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start' }); }, 30); }
+  function wF(f) { S.wF = f; S.wA = null; if (S.view === 'mgr') mPaint(); else redraw(); }
+  function wPdf(on) { S.wPdf = !!on; }
+  /* ----- the hold sheet (new hold · edit) ----- */
+  function holdOpen(scope, wid, xid) {
+    if (isRo() || S.holdOff) return;
+    let g, l, s = null, G = null, title, sub, loc;
+    if (scope === 'club') { g = G(wid); if (!g) return; l = g.lines[0]; title = 'Hold · Report Together'; sub = (g.label || bookedTo(g)) + ' · ' + g.lines.length + ' Activities · Holds As One'; loc = g.loc_node_id || l.loc_node_id; }
+    else { const e = S.W[wid]; if (!e) return; g = e.g; l = e.l; loc = l.loc_node_id;
+      if (scope === 'sub') { s = (l.stages || []).find(z => z.id === xid); if (!s) return; title = 'Hold · ' + s.name; sub = l.activity + ' · ' + lineLoc(g, l) + (s.group_name ? ' · ' + s.group_name : '') + ' · This Sub-Activity Only'; }
+      else if (scope === 'group') { G = subGroups(l).find(z => z.id === xid); if (!G) return; title = 'Hold · ' + G.name; sub = l.activity + ' · ' + lineLoc(g, l) + ' · ' + G.subs.filter(z => subBase(z) < 99.9995).length + ' Open Rows Hold As One'; }
+      else { title = 'Hold · ' + l.activity; sub = lineLoc(g, l) + (staged(l) ? ' · Every Open Sub-Activity Holds As One' : ' · Direct Line'); } }
+    S.hEd = { id: null, scope, wid: scope === 'club' ? '' : wid, sid: s ? s.id : '', gid: G ? G.id : '', cid: scope === 'club' ? wid : '', from: S.to, reason: '', wait: '', mode: 'finished', wsub: '', review: '', title, sub, loc, targets: null, tErr: '' };
+    holdPaint(); holdTargets();
+  }
+  function holdEditOpen(id) {
+    const h = HX().byId[id]; if (!h || isRo()) return;
+    const loc = h.loc_node_id; let title = 'Edit Hold', sub = holdWaitTxt(h);
+    S.hEd = { id, scope: h.scope, wid: h.work_id || '', sid: h.work_sub_id || '', gid: h.plan_group_id || '', cid: h.wgroup_id || '', from: h.held_from, reason: h.reason || '', wait: h.wait_wbs_node_id ? h.wait_wbs_node_id + '|' + h.wait_loc_node_id : '', mode: h.wait_mode || 'finished', wsub: h.wait_sub_id || '', review: h.review_by || '', title: title + ' · ' + (h.sub_name || h.group_name || h.activity || 'Club'), sub, loc, targets: null, tErr: '' };
+    holdPaint(); holdTargets();
+  }
+  async function holdTargets() {
+    const E = S.hEd; if (!E || !E.loc) { if (E) { E.targets = []; holdPaint(); } return; }
+    try { const r = await rpc('rpc_dpr_hold_targets', { p_loc_node_id: E.loc, p_work_id: E.wid || null }); if (S.hEd !== E) return; E.targets = (r || []).filter(t => t.status !== 'finished' || t.pct < 100); }
+    catch (e) { if (S.hEd !== E) return; E.targets = []; E.tErr = HOLD_MISS(e) ? 'Needs M49 On The Database' : err(e, 'Could not list the activities here'); }
+    holdPaint();
+  }
+  function holdPaint() {
+    const E = S.hEd; if (!E) return; const today = todayYmd(), days = S.holdDays || 21;
+    const tg = E.targets, tSel = tg ? tg.find(t => t.wbs_node_id + '|' + t.loc_node_id === E.wait) : null;
+    const wOpts = `<option value="">No Link · Arbitrary Hold</option>` + (tg || []).map(t => `<option value="${t.wbs_node_id}|${esc(t.loc_node_id)}" ${t.wbs_node_id + '|' + t.loc_node_id === E.wait ? 'selected' : ''}>${esc(t.activity)} · ${esc(t.loc_name)} · ${Math.round(num(t.pct))}%${t.depth ? ' · Above' : ''}</option>`).join('');
+    const subOpts = tSel && (tSel.subs || []).length ? `<select class="hs-in" onchange="DPR.holdSet('wsub',this.value)"><option value="">Pick Sub-Activity…</option>${tSel.subs.map(z => `<option value="${esc(z.id)}" ${z.id === E.wsub ? 'selected' : ''}>${esc(z.name)}${z.group_name ? ' · ' + esc(z.group_name) : ''} · ${Math.round(num(z.pct))}%</option>`).join('')}</select>` : `<span class="muted">${tSel ? 'No Sub-Activities On It' : 'Pick An Activity First'}</span>`;
+    const body = `<div class="hs">
+      <div class="f"><label>Hold Scope</label><div class="v"><b>${esc(E.scope === 'club' ? 'Report Together Club' : E.scope === 'group' ? 'Plan Group' : E.scope === 'sub' ? 'This Sub-Activity' : 'Whole Activity')}</b><span class="muted">${esc(E.sub || '')}</span></div></div>
+      <div class="f"><label>Hold From</label><div class="v"><input type="date" class="hs-in" value="${esc(E.from || '')}" max="${today}" onchange="DPR.holdSet('from',this.value)"><span class="muted">Sheet Date By Default · Back-Date Allowed</span></div></div>
+      <div class="f"><label>Reason</label><div class="v"><textarea class="hs-in" rows="2" placeholder="Why It Waits — Required" oninput="DPR.holdSet('reason',this.value)">${esc(E.reason || '')}</textarea></div></div>
+      <div class="f"><label>Waiting For</label><div class="v">${tg ? `<select class="hs-in" onchange="DPR.holdSet('wait',this.value)">${wOpts}</select>` : `<span class="muted">${E.tErr || 'Loading The Activities At This Location…'}</span>`}<span class="muted">Optional · Same Location Node And Above</span></div></div>
+      <div class="f"><label>Wait Until</label><div class="v"><span class="d2-seg sm"><button class="${E.mode === 'finished' ? 'on' : ''}" ${E.wait ? '' : 'disabled'} onclick="DPR.holdSet('mode','finished')">Finished</button><button class="${E.mode === 'any' ? 'on' : ''}" ${E.wait ? '' : 'disabled'} onclick="DPR.holdSet('mode','any')">Any Progress</button><button class="${E.mode === 'sub' ? 'on' : ''}" ${E.wait ? '' : 'disabled'} onclick="DPR.holdSet('mode','sub')">Sub-Activity</button></span>${E.mode === 'sub' && E.wait ? subOpts : ''}</div></div>
+      <div class="f"><label>Review By</label><div class="v"><input type="date" class="hs-in" value="${esc(E.review || '')}" min="${esc(E.from || '')}" onchange="DPR.holdSet('review',this.value)"><span class="muted">Optional · Blank = ${days} Days (Labour Setup) · A Flag, Never A Block</span></div></div>
+      <div class="hs-ft">Hold · Not A Hindrance · No Days Lost · No EOT · Nudge Only — Resume By Hand</div></div>`;
+    const foot = `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.holdGo()">${E.id ? 'Save Hold' : '⏸ Hold'}</button>`;
+    const a = document.activeElement, keep = a && a.classList && a.classList.contains('hs-in') && a.tagName === 'TEXTAREA';
+    if (keep) return;   // typing the reason: never rebuild under the cursor
+    sheetOpen(E.title, E.sub, body, foot);
+  }
+  function holdSet(k, v) { const E = S.hEd; if (!E) return; E[k] = v; if (k === 'wait') { E.wsub = ''; if (!v) E.mode = 'finished'; } if (k === 'mode' || k === 'wait') holdPaint(); }
+  async function holdGo() {
+    const E = S.hEd; if (!E) return;
+    if (!String(E.reason || '').trim()) { toast('A Reason Is Required', 'warn'); return; }
+    if (E.mode === 'sub' && E.wait && !E.wsub) { toast('Pick The Sub-Activity To Wait For', 'warn'); return; }
+    const [wb, wl] = (E.wait || '').split('|');
+    const p = { scope: E.scope, work_id: E.wid || null, work_sub_id: E.sid || null, plan_group_id: E.gid || null, wgroup_id: E.cid || null, held_from: E.from || S.to, reason: E.reason.trim(), wait_wbs_node_id: wb ? Number(wb) : null, wait_loc_node_id: wl || null, wait_mode: wb ? E.mode : 'finished', wait_sub_id: wb && E.mode === 'sub' ? E.wsub : null, review_by: E.review || null };
+    try { if (E.id) await rpc('rpc_dpr_hold_edit', { p_id: E.id, p }); else await rpc('rpc_dpr_hold', { p }); sheetClose(); S.hEd = null; toast(E.id ? 'Hold Saved' : 'On Hold — Waiting', 'success'); await holdAfter(); }
+    catch (e) { toast(HOLD_MISS(e) ? 'Waiting / On Hold Needs M49 On The Database — Ask The Admin' : err(e, 'Could not hold'), 'error', 8000); }
+  }
+  function resumeAsk(id) {
+    const h = HX().byId[id]; if (!h || isRo()) return; const d = S.to <= todayYmd() ? S.to : todayYmd();
+    S.hEd = { resume: id, on: d < h.held_from ? h.held_from : d };
+    sheetOpen('Resume · ' + (h.sub_name || h.group_name || h.activity || 'Club'), holdWaitTxt(h) + ' · Since ' + dsh(h.held_from), `<div class="hs"><div class="f"><label>Resume On</label><div class="v"><input type="date" class="hs-in" value="${esc(S.hEd.on)}" min="${esc(h.held_from)}" max="${todayYmd()}" onchange="DPR.holdSet('on',this.value)"><span class="muted">The Row Reports Again From This Date · ${h.frozen_pct == null ? '' : 'Frozen At ' + Math.round(num(h.frozen_pct)) + '% · '}${holdDaysOf(h)} Day${holdDaysOf(h) === 1 ? '' : 's'} Waiting</span></div></div><div class="hs-ft">A Resume Is Not A Hindrance Close · No Days Lost</div></div>`,
+      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.resumeGo()">▶ Resume</button>`);
+  }
+  async function resumeGo() {
+    const E = S.hEd; if (!E || !E.resume) return;
+    try { await rpc('rpc_dpr_resume', { p_id: E.resume, p_on: E.on || S.to }); sheetClose(); S.hEd = null; toast('Resumed — Reporting Again', 'success'); await holdAfter(); }
+    catch (e) { toast(err(e, 'Could not resume'), 'error', 8000); }
+  }
+  function resumeAll(ids) {
+    const list = String(ids || '').split(',').filter(Boolean); if (!list.length || isRo()) return;
+    S.hEd = { resumeAll: list, on: S.to <= todayYmd() ? S.to : todayYmd() };
+    sheetOpen('Resume All · ' + list.length + ' Rows', 'Every Held Row On This Location Node', `<div class="hs"><div class="f"><label>Resume On</label><div class="v"><input type="date" class="hs-in" value="${esc(S.hEd.on)}" max="${todayYmd()}" onchange="DPR.holdSet('on',this.value)"></div></div></div>`,
+      `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.resumeAllGo()">▶ Resume ${list.length}</button>`);
+  }
+  async function resumeAllGo() {
+    const E = S.hEd; if (!E || !E.resumeAll) return; let n = 0;
+    try { for (const id of E.resumeAll) { await rpc('rpc_dpr_resume', { p_id: id, p_on: E.on || S.to }); n++; } sheetClose(); S.hEd = null; toast(n + ' Resumed', 'success'); }
+    catch (e) { toast(err(e, 'Could not resume') + (n ? ' · ' + n + ' Done' : ''), 'error', 8000); }
+    await holdAfter();
+  }
+  async function holdAfter() { S.hx = null; S.holdsBy = {}; S.holdReq = {}; if (S.view === 'mgr') { mPaint(); return; } await engLoad(S.to, true); }
+  /* ----- print: the Waiting appendix of the Combined DPR (package › activity › one line per held row) ----- */
+  function prWaitFoot(A) { const W = (S._prW || []).filter(r => r.area === A.name); if (!W.length) return ''; const d = W.filter(r => r.due).length; return `${W.length} waiting${d ? ' · ' + d + ' review due' : ''}`; }
+  function prWait(W) {
+    if (!W.length) return '';
+    const pk = new Map(); W.forEach(r => { if (!pk.has(r.pkg)) pk.set(r.pkg, new Map()); const m = pk.get(r.pkg); if (!m.has(r.act)) m.set(r.act, []); m.get(r.act).push(r); });
+    return `<div class="lvl np"><h2>Waiting · On Hold</h2></div><div class="pr-w">${[...pk.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([p, acts]) => `<div class="pk">${esc(p)}</div>` + [...acts.entries()].map(([a, rs]) => `<div class="act">${esc(a)} <small>${rs.length} row${rs.length === 1 ? '' : 's'}</small></div>` + rs.map(r => `<div class="row"><span><b>${esc(r.loc)}</b>${r.area ? ' · ' + esc(r.area) : ''}</span><span>${esc(r.name)} — ${esc(r.wait)}</span><span>since ${esc(dsh(r.h.held_from))} · ${r.days}d</span><span>${r.frozen == null ? '—' : Math.round(num(r.frozen)) + '%'}</span><span class="${r.ready ? 'rdy' : r.due ? 'due' : ''}">${r.ready ? 'ready' : r.due ? 'review due' : r.h.review_by ? 'review ' + esc(dsh(r.h.review_by)) : ''}</span></div>`).join('')).join('')).join('')}</div>`;
+  }
 
   /* ---------- redraw (keeps scroll + focus; every input carries data-k) ---------- */
   let _rp = 0;
@@ -4429,7 +4662,7 @@ const DPR = (function () {
   function sideHtml() {
     const today = todayYmd(), days = Object.values(S.cal.days || {});
     const T = S.R ? inCtx('T', () => ({ starts: labStats().starts, heads: allHeads(), w: allLines().filter(({ g, l }) => outT(g, l) === 'w').length, h: allLines().filter(({ g, l }) => hasHT(g, l)).length })) : { starts: 0, heads: 0, w: 0, h: 0 };   // v165 · today's status
-    const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ g, l }) => !finL(l) && (outOf(g, l) !== '' || startedB(l))).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
+    const Y = S.R ? inCtx('Y', () => ({ rep: allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) !== '').length, all: allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l) && (outOf(g, l) !== '' || startedB(l))).length, heads: allHeads() })) : { rep: 0, all: 0, heads: 0 };
     const last = days.filter(x => x.submitted_at).sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)))[0];
     const pend = days.filter(x => x.status === 'Draft' && x.report_date < addDays(today, -1)).map(x => dsh(x.report_date)).sort().join(', '), ret = days.filter(x => x.status === 'Returned').map(x => dsh(x.report_date)).sort().join(', ');
     const nextOff = S.cal.month >= monthOf(today);
@@ -4458,7 +4691,7 @@ const DPR = (function () {
     const ro = isRo(), st = stOf(stKey()), today = todayYmd(), y1 = addDays(today, -1);
     const areas = {}; allLines().forEach(({ g }) => { const a = g.area || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
     const aKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
-    const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().length - nFin, nOpen = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length, nAtt = attCount();
+    const nFin = allLines().filter(({ l }) => finL(l)).length, nAct = allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l)).length, nOpen = allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l) && outOf(g, l) === '').length, nAtt = attCount();   // v5.3 · M49
     const sub = S.sub;
     const chip = (d, t) => `<button class="${S.to === d ? 'on' : ''}" onclick="DPR.pickDate('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
     // v159 · header: ‹ date › · Today / Yesterday chips · status · due · delete
@@ -4613,8 +4846,8 @@ const DPR = (function () {
   const fsSet = l => S._cdF ? (S._cdF.get(l.work_id) || new Set()) : (fsPlan().m.get(l.work_id) || new Set());   // v165.1 · the card group drill narrows a line to one group's sub-activities
   const fsHit = ({ l }) => fsPlan().m.has(l.work_id);
   function visibleLines() {
-    if (S.fs) return allLines().filter(fsHit);   // v163 · item 1: Find searches active AND finished lines, ignoring the Show filter
-    return allLines().filter(({ g, l }) => (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (S.filt !== 'att' || attOf(g, l)) && (!S.area || (g.area || 'Unassigned') === S.area));
+    if (S.fs) return allLines().filter(it => !heldL(it.g, it.l) && fsHit(it));   // v163 · v5.3 held lines live on the Waiting shelf · item 1: Find searches active AND finished lines, ignoring the Show filter
+    return allLines().filter(({ g, l }) => !heldL(g, l) && (S.filt === 'fin' ? finL(l) : !finL(l)) && (S.filt !== 'open' || outOf(g, l) === '') && (S.filt !== 'att' || attOf(g, l)) && (!S.area || (g.area || 'Unassigned') === S.area));
   }
   const dash = '<span class="muted">—</span>';
   const lockI = '<span class="lock">🔒</span>';
@@ -4846,7 +5079,7 @@ const DPR = (function () {
     return h;
   }
   const subAttOf = (g, l, s) => { const x = lineX(g, l), y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), t = subT(y), oT = done || subDoneT(s, y) ? '' : t.out, lv = labLevel(g), sid = s.id;
-    return !done && (((o === 'h' && !y.rc) || (oT === 'h' && !t.rc) || (oT === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005)); };
+    return !done && !heldS(g, l, s) && (((o === 'h' && !y.rc) || (oT === 'h' && !t.rc) || (oT === 'w' && lv === 'sub' && subWorkedOn(s, y, base) && !unitHeads(g, { key: 'S:' + sid }) && !noLab(g, 'S:' + sid))) || (o === 'w' && !y.wip && pc <= base + 0.0005)); };
   function subRow3(g, l, s, r, Gp, lvl) {
     const x = lineX(g, l), y = x.subs[s.id], wid = l.work_id, sid = s.id, base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), rr = r || done, rk = 'r|' + wid + '|' + sid, lv = labLevel(g);
     const t = subT(y), pd = PD(), oT = done || subDoneT(s, y) ? '' : t.out;   // v165
@@ -4891,7 +5124,7 @@ const DPR = (function () {
     const cert = fin ? (l.site_cert_qty != null ? num(l.site_cert_qty) : est) : (x.fin && x.cert != null ? num(x.cert) : r2(est * pct / 100));
     return { g, l, key: cdKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, loc: lineLoc(g, l), path: lineLocPath(g, l), est, uom: l.uom || '', pct, b, cert, fin, finT: fin || !!x.fin,
       hz: !fin && (hasH(g, l) || hasHT(g, l)), o: fin ? '' : outOf(g, l), oT: fin ? '' : outT(g, l), heads: g.lines.length > 1 ? 0 : cardHeads(g), club: g.lines.length > 1, starts: !fin && startsN(g, l) > 0 && !startedB(l) /* C6.1 node-level */,
-      ds: fin ? l.started_on : (x.started || l.started_on || ''), de: fin ? l.finished_on : (x.fin ? (x.finOn || '') : ''), att: !fin && attOf(g, l), area: g.area || 'Unassigned', eng: '', r: null, P: null, rcT: cdRcT(g, l), trades: cdTrades(g) };
+      ds: fin ? l.started_on : (x.started || l.started_on || ''), de: fin ? l.finished_on : (x.fin ? (x.finOn || '') : ''), att: !fin && attOf(g, l), area: g.area || 'Unassigned', eng: '', r: null, P: null, rcT: cdRcT(g, l), trades: cdTrades(g), held: heldL(g, l) };
   }
   function cdNodesLive() { const vis = new Set(visibleLines().map(({ l }) => l.work_id)); return allLines().map(({ g, l }) => Object.assign(cdNodeLive(g, l), { vis: vis.has(l.work_id) })); }
   function cdNodesF(F, P) {   // read-only: the Day Report rows (active lines) + the finished lines of the loaded context
@@ -4930,7 +5163,7 @@ const DPR = (function () {
   }
   function cdModel(mode) {   // mode 'live' (entry) · 'rep' (engineer report / manager review, context loaded) · 'mgr' (combined: S.cdC)
     let nodes, live = mode === 'live';
-    if (live) nodes = cdNodesLive();
+    if (live) nodes = cdNodesLive().filter(n => !n.held);   // v5.3 · M49
     else if (mode === 'rep') nodes = cdNodesF(S.cdF, S.cdP || null);
     else { nodes = []; (S.cdC || []).forEach(P => { mUse(P); nodes = nodes.concat(cdNodesF(P.F, P)); }); S.to = S.mProg; nodes.forEach(n => { n.key += '\u0001' + n.eng; }); }   // combined: one card per activity per engineer
     const clubs = cdClubs(nodes, live);
@@ -5113,7 +5346,7 @@ const DPR = (function () {
   }
   function cdClubBand(c, M, o) {
     const g = c.g, u = { key: 'A', worked: M.live ? cardHasW(g) : c.oT === 'w' }, dd = esc(dsh(S.to));
-    const acts2 = !M.live || o.ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;
+    const acts2 = !M.live || o.ro ? '' : `<span class="acts2">${canDrop(g) ? `<button class="d2-btn sm" style="color:var(--drd)" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove Club</button> ` : ''}${S.holdOff ? '' : holdBtn('club', g.wgroup_id, '', 'Hold Club')}<button class="d2-btn sm" onclick="DPR.unclub('${g.wgroup_id}')">Un-Club</button></span>`;   // v5.3 · M49
     let h = `<div class="cd-band club"><div>${pill('p-amb', 'Report Together')} <b>${esc(c.pkg)}</b> <span class="muted">· ${esc(c.level)} · ${esc(c.units.join(', '))}</span><div class="muted" style="margin-top:3px">Progress Per Unit Below · Labour Once Here · Booked To <b>${esc(c.level)}</b></div></div>`;
     if (M.live) {   // v166.2 · the club band carries the status count, the contractor and the one manpower cell; the strip opens under the band
       const key = g.wgroup_id + '|A';
@@ -5207,7 +5440,7 @@ const DPR = (function () {
       ro = r;
     }
     const ptr = cdLabPtr(g, lv), rk = 'r|' + wid + (sid ? '|' + sid : '');
-    return `<div class="cd-ep"><div class="eh"><span class="y">Status ${pdd}<small>W / H / N · Hindrance</small></span><span class="y">Reported [B]<small>Last [A] + ${pdd}</small></span><span class="y">Cum. [C]</span><span class="t">Status ${dd}<small>W / H / N</small></span></div><div class="eb"><div class="stc y"><div class="cq">${stC}</div></div><div class="dn y">${bC}</div><div class="y">${cumC}</div><div class="stc t tc"><div class="cq">${tInner(g, l, s, ro)}</div></div></div>${lab}<div class="ef">${ptr && !fin ? `<span class="lab">Labour · <b>${ptr}</b></span>` : ''}<span class="muted">${esc(ph)}</span><input class="rem" data-k="n:${wid}:${sid}" value="${esc(note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)"><button class="d2-btn sm" onclick="DPR.cdRowTog('${cdQ(cdRoK(wid, sid))}')">Close ▴</button></div></div>`;
+    return `<div class="cd-ep"><div class="eh"><span class="y">Status ${pdd}<small>W / H / N · Hindrance</small></span><span class="y">Reported [B]<small>Last [A] + ${pdd}</small></span><span class="y">Cum. [C]</span><span class="t">Status ${dd}<small>W / H / N</small></span></div><div class="eb"><div class="stc y"><div class="cq">${stC}</div></div><div class="dn y">${bC}</div><div class="y">${cumC}</div><div class="stc t tc"><div class="cq">${tInner(g, l, s, ro)}</div></div></div>${lab}<div class="ef">${ptr && !fin ? `<span class="lab">Labour · <b>${ptr}</b></span>` : ''}<span class="muted">${esc(ph)}</span><input class="rem" data-k="n:${wid}:${sid}" value="${esc(note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${sid}',this.value)">${ro || S.holdOff ? '' : holdBtn(s ? 'sub' : 'work', wid, sid, 'Hold')}<button class="d2-btn sm" onclick="DPR.cdRowTog('${cdQ(cdRoK(wid, sid))}')">Close ▴</button></div></div>`;
   }
   function cdSubRow(g, l, s, Gp, ro, node) {   // one-line sub-activity row + its panel when open
     const x = lineX(g, l), y = x.subs[s.id], base = subBase(s), p = Math.min(100, subPct(g, l, s)), t = subT(y), lv = labLevel(g), k = cdRoK(l.work_id, s.id), open = cdRoOpen(k), att = subAttOf(g, l, s);
@@ -5228,20 +5461,22 @@ const DPR = (function () {
     const wsOn = Gp.subs.filter(s => subWorkedOn(s, x.subs[s.id], subBase(s))).length, nAtt = Gp.subs.filter(s => subAttOf(g, l, s)).length;
     const gu = lv === 'group' && Gp.id ? (labUnits(g).find(z => z.key === 'G:' + Gp.id) || { key: 'G:' + Gp.id, worked: wsOn > 0 }) : null;
     const dates = `<span class="muted dates">Start <b>${esc(gd.s ? dsh(gd.s) : '—')}</b> · ${gd.e ? `Finish <b>${esc(dsh(gd.e))}</b> · ${esc(durTxt(gd.s, gd.e))}` : `Elapsed <b>${esc(gd.s ? durTxt(gd.s, '') : '—')}</b>`}</span>`;
-    const head = Gp.id ? `<div class="gh"><b>${esc(Gp.name)}</b><span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${done ? pill('p-ok', '✓ Done') : nAtt ? `<span class="natt">${nAtt} Needs Attention</span>` : ''}<span class="sp"></span>${dates}${gu && !done ? (wsOn ? cdMpHead(g, gu, ro) : '<span class="muted">No Sub-Activity Working Today</span>') : lv !== 'sub' && !done ? `<span class="muted">${cdLabPtr(g, lv)}</span>` : ''}<b class="pct">${Math.round(gp)}%</b>${gp - gb > 0.0005 ? `<span class="muted">(+${Math.round(gp - gb)}%)</span>` : ''}</div>${cdBar(gp, 'p')}${gu && wsOn && !done ? cdMpUnder(g, gu, Gp.name, ro) : ''}` : '';
-    return `<div class="cd-gc ${done ? 'done' : ''} ${Gp.id ? '' : 'plain'}">${head}<div class="gl">${Gp.subs.map(s => cdSubRow(g, l, s, Gp, ro, n.loc)).join('')}</div></div>`;
+    const head = Gp.id ? `<div class="gh"><b>${esc(Gp.name)}</b><span class="muted">· ${fmt(Gp.weight)}% Of Activity · ${nDone}/${Gp.subs.length} Done</span>${done ? pill('p-ok', '✓ Done') : nAtt ? `<span class="natt">${nAtt} Needs Attention</span>` : ''}${ro || done || S.holdOff ? '' : holdBtn('group', l.work_id, Gp.id)}<span class="sp"></span>${dates}${gu && !done ? (wsOn ? cdMpHead(g, gu, ro) : '<span class="muted">No Sub-Activity Working Today</span>') : lv !== 'sub' && !done ? `<span class="muted">${cdLabPtr(g, lv)}</span>` : ''}<b class="pct">${Math.round(gp)}%</b>${gp - gb > 0.0005 ? `<span class="muted">(+${Math.round(gp - gb)}%)</span>` : ''}</div>${cdBar(gp, 'p')}${gu && wsOn && !done ? cdMpUnder(g, gu, Gp.name, ro) : ''}` : '';
+    const live = Gp.subs.filter(s => !heldS(g, l, s)), nW = Gp.subs.length - live.length;   // v5.3 · M49 held rows sit on the Waiting shelf
+    return `<div class="cd-gc ${done ? 'done' : ''} ${Gp.id ? '' : 'plain'}">${head}<div class="gl">${live.map(s => cdSubRow(g, l, s, Gp, ro, n.loc)).join('')}${cdWaitNote(nW, cdKey(g, l))}</div></div>`;
   }
   function cdLineBlock(n, M, A, o, inClub) {   // one line inside a node card: direct → row; staged → its group cards
     const g = n.g, l = n.l, ro = !!o.ro;
     if (!staged(l)) return cdDirRow(n, g, l, ro, inClub);
     const bands = inClub ? `<div class="cd-band grp"><div><b>${esc(l.activity)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)} · ${(l.stages || []).length} Sub-Activities</span></div><span class="muted">${cdLabPtr(g, labLevel(g))}</span></div>` : '';
-    return bands + subGroups(l).map(Gp => cdGrpEntry(n, Gp, ro)).join('');
+    const Gs = subGroups(l), shown = Gs.filter(Gp => !Gp.subs.every(s => subBase(s) >= 99.9995 || heldS(g, l, s)) || Gp.subs.every(s => subBase(s) >= 99.9995));   // v5.3 · M49 a wholly held group is on the Waiting shelf
+    return bands + shown.map(Gp => cdGrpEntry(n, Gp, ro)).join('') + cdWaitNote(Gs.filter(Gp => !shown.includes(Gp)).reduce((a, Gp) => a + Gp.subs.filter(s => subBase(s) < 99.9995).length, 0), cdKey(g, l));
   }
   function cdNodeCard(n, M, A, o) {   // the location node card (single activity): band with dates · cum · heads when Per Activity; then rows / group cards
     const g = n.g, l = n.l, x = lineX(g, l), ro = !!o.ro, lv = labLevel(g), u = { key: 'A', worked: cardHasW(g) };
     S.seen.add(l.work_id); S.fold.delete(l.work_id);
     const mp = lv === 'activity' && !finT(g, l) ? (cardHasW(g) ? cdMpHead(g, u, ro) : `<span class="muted">No Labour Today</span>`) : lv !== 'activity' ? `<span class="muted">Σ ${fmt(cardHeads(g))} Heads · ${lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓'}</span>` : '';
-    return `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span> ${staged(l) ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : lv === 'group' ? 'Manpower Per Group' : 'Manpower Per Activity') : ''}<div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span>${mp}${ro ? '' : dropBtn(g, l)}</div></div>${lv === 'activity' && cardHasW(g) ? cdMpUnder(g, u, l.activity, ro) : ''}<div class="cd-gs">${cdLineBlock(n, M, A, o, false)}</div></article>`;
+    return `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span> ${staged(l) ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : lv === 'group' ? 'Manpower Per Group' : 'Manpower Per Activity') : ''}<div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span>${mp}${ro ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div></div>${lv === 'activity' && cardHasW(g) ? cdMpUnder(g, u, l.activity, ro) : ''}<div class="cd-gs">${cdLineBlock(n, M, A, o, false)}</div></article>`;
   }
   /* ----- a club's locations: one card per location node, every clubbed activity at that node inside it ----- */
   function cdClubLocs(ns, A, M, o) {
@@ -5313,7 +5548,7 @@ const DPR = (function () {
     const cd = S.cd; let body;
     if (cd && cd.lvl === 'lab') body = cdLabDetail(M, o);
     else if (cd) { const A = cdFind(M, cd.a); if (!A) { S.cd = null; body = cdPkgs(M, o) + (o.tail || ''); } else body = cdLocs(M, o, A); }
-    else body = cdPkgs(M, o) + cdNp(M, o) + cdLabour(M, o) + (o.tail || '');   // C6 · Non-Estimated section on the live sheet
+    else body = cdPkgs(M, o) + cdNp(M, o) + cdLabour(M, o) + (o.tail || '') + cdWaiting(M, o);   // C6 · v5.3 Waiting shelf at the foot, closed by default · Non-Estimated section on the live sheet
     return `<div class="cd">${cdCrumb(M, o)}${body}</div>`;
   }
   function cdSheet(ro) { return cdView(cdModel('live'), { ro }); }                      // engineer day sheet (Rows · Cards)
@@ -5333,7 +5568,7 @@ const DPR = (function () {
   function rvFacts() {
     const rows = [];
     S.groups.forEach(g => g.lines.forEach(l => {
-      if (finL(l)) return;
+      if (finL(l) || heldL(g, l)) return;   // v5.3 · M49 held lines are on the Waiting shelf, not in the report
       const x = lineX(g, l), o = outOf(g, l), b = lineBasePct(l), a = o === 'w' ? linePct(g, l) : b, est = num(l.est_qty), uom = l.uom || '';
       const r = { g, l, o, b, a, est, uom, act: l.activity, pkg: linePkg(g, l), loc: lineLoc(g, l), path: lineLocPath(g, l), club: g.lines.length > 1, clubLabel: g.label || '',
         fin: o === 'w' && !!x.fin, cert: x.cert, starts: o === 'w' && !startedB(l), heads: cardHeads(g), /* C6.1 node started on PD */ cons: [...new Set(rvRows(dOf(g)).map(c => conName(c.con)))], subs: [], hs: [] };
@@ -5344,6 +5579,7 @@ const DPR = (function () {
         r.today = o === 'w' ? (a - b > 0.0005 ? '+' + Math.round(a - b) + '%' : 'WIP') : '';
         (l.stages || []).forEach(s => {
           const base = subBase(s), y = x.subs[s.id], p = num(y.pct), ds = y.s || s.started_on || '', de = y.e || s.finished_on || '';
+          if (heldS(g, l, s)) return;   // v5.3 · M49
           if (base >= 99.9995) { r.subs.push({ gid: s.group_id || null, n: s.name, k: 'prev', b: 100, a: 100, ds, de }); return; }   // v163 · item 5: done on an earlier date — shown at 100 % until the whole activity is finished
           if (y.out === 'w') { const kk = !y.wip && p >= 99.9995 ? 'done' : y.wip || p <= base + 0.0005 ? 'wip' : 'mv'; r.subs.push({ gid: s.group_id || null, n: s.name, b: Math.round(base), a: Math.round(y.wip ? base : p), k: kk, ds: ds || PD(), de: kk === 'done' ? (de || PD()) : '' }); }   // v165
           else if (y.out === 'n') r.subs.push({ gid: s.group_id || null, n: s.name, k: 'n', b: Math.round(base), ds });
@@ -5408,7 +5644,7 @@ const DPR = (function () {
     return `<div class="rv-kpis">${k('', 'Reported', `${F.reported}<small>/ ${F.active}</small>`, `${F.NR.length} Not Reported${F.NS && F.NS.length ? ' · ' + F.NS.length + ' Not Started' : ''}`, `<i style="width:${pc}%;background:var(--dn)"></i>`)}
       ${k('vio', 'Progress Moved', F.moved.length, `${F.starts.length} Started · ${F.wipOnly} WIP`, `<i style="width:${F.W.length ? F.moved.length / F.W.length * 100 : 0}%;background:var(--dv)"></i>`)}
       ${k('ok', 'Completed', F.fin.length + F.subFin.length, `${F.fin.length} Activit${F.fin.length === 1 ? 'y' : 'ies'} · ${F.subFin.length} Sub-Activit${F.subFin.length === 1 ? 'y' : 'ies'}`)}
-      ${k(F.H.length ? 'red' : '', 'Hindrance', F.H.length, `${F.newH.length} New · ${F.oldH.length} Carried Over`)}
+      ${k(F.H.length ? 'red' : '', 'Hindrance', F.H.length, `${F.newH.length} New · ${F.oldH.length} Carried Over`)}${cdWaitKpi(k)}
       ${k('', 'Manpower', `${fmt(F.heads)}<small>Heads</small>`, `${F.dH == null ? '' : `<span class="${F.dH >= 0 ? 'up' : 'dn'}">${F.dH >= 0 ? '▲ +' : '▼ '}${fmt(F.dH)}</span> `}${F.dH == null ? 'No Report On ' + F.prevSh : 'vs ' + F.prevSh} · NP ${fmt(F.np)}`, F.heads ? `<i style="width:${(F.heads - F.np) / F.heads * 100}%;background:var(--dn)"></i><i style="width:${F.np / F.heads * 100}%;background:#a9bfdd"></i>` : '')}</div>`;
   }
   function rvProgress(F) {
@@ -5666,6 +5902,7 @@ const DPR = (function () {
   }
   function setOc(wid, oc, sid) {
     const { g, l, x } = lx(wid);
+    if (sid ? heldS(g, l, (l.stages || []).find(z => z.id === sid) || {}) : heldL(g, l)) { toast('On Hold — Resume It First', 'warn'); return; }   // v5.3 · M49
     if (sid) {
       const s = l.stages.find(z => z.id === sid), y = x.subs[sid], base = subBase(s); y.out = y.out === oc ? '' : oc;
       if (y.out !== 'w') { y.pct = base; y.wip = false; if (!s.started_on && base <= 0.0005) y.s = ''; if (base < 99.9995) y.e = ''; } else if (base <= 0.0005 && !y.s) y.s = PD();
@@ -5691,11 +5928,12 @@ const DPR = (function () {
     startMark(g, l, x); finAuto(g, l); markDirty(g); lineRedraw(wid, o0);
   }
   const snapPct = (wid, sid, p) => setPct(wid, sid, p);
-  function wipAll(wid) { const { g, l, x } = lx(wid); (l.stages || []).forEach(s => { const y = x.subs[s.id], base = subBase(s); if (base < 99.9995 && y.out !== 'h' && num(y.pct) <= base + 0.0005) { y.out = 'w'; y.wip = true; y.pct = base; if (!y.s && base <= 0.0005) y.s = PD(); } }); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
+  function wipAll(wid) { const { g, l, x } = lx(wid); subsLive(g, l).forEach(s => { const y = x.subs[s.id], base = subBase(s); if (base < 99.9995 && y.out !== 'h' && num(y.pct) <= base + 0.0005) { y.out = 'w'; y.wip = true; y.pct = base; if (!y.s && base <= 0.0005) y.s = PD(); } }); startMark(g, l, x); finAuto(g, l); markDirty(g); redraw(); }
   function rcSet(wid, sid, v) { const { g, x } = lx(wid); if (sid) x.subs[sid].rc = v; else x.rc = v; markDirty(g); lineRedraw(wid); }
   // v165 · Work Status · Today D (drives contractor + manpower; a W on an open hindrance lifts it; a W on an unstarted part starts it today)
   function setOcT(wid, oc, sid) {
     const { g, l, x } = lx(wid);
+    if (sid ? heldS(g, l, (l.stages || []).find(z => z.id === sid) || {}) : heldL(g, l)) { toast('On Hold — Resume It First', 'warn'); return; }   // v5.3 · M49
     if (sid) { const s = l.stages.find(z => z.id === sid), y = x.subs[sid], t = subT(y); if (subDoneT(s, y)) return; t.out = t.out === oc ? '' : oc; t.s = t.out === 'w' && !subStartedAsOf(s, y) ? S.to : ''; if (t.out !== 'h') t.rc = ''; }
     else { if (finT(g, l)) return; const t = tOf(g, l); t.out = t.out === oc ? '' : oc; t.started = t.out === 'w' && !lineStartedAsOf(g, l) ? S.to : ''; if (t.out !== 'h') t.rc = ''; }
     markDirty(g); redraw();
@@ -5801,13 +6039,13 @@ const DPR = (function () {
   function payloadOf(g) {
     const d = dOf(g), lines = [], problems = [], hd = S.masters.hindrance_reasons;
     for (const l of g.lines) {
-      const x = d.lines[l.work_id]; if (finL(l)) continue;
+      const x = d.lines[l.work_id]; if (finL(l) || heldL(g, l)) continue;   // v5.3 · M49 a held line sends nothing
       let o = outOf(g, l); const nm = l.activity + ' · ' + lineLoc(g, l), oT = outT(g, l);
       if (o === '' && !x.fin && oT === '') continue;
       if (o === '' && !x.fin) { if (startedB(l)) { problems.push('Fill The ' + dsh(PD()) + ' Status (W / H / N) On ' + nm + ' — Its ' + dsh(S.to) + ' Status Is Marked'); } else o = 'n'; }   // v165 · today marked, yesterday blank: a part not yet started is No Work yesterday; a running one must be told
       const ln = { work_id: l.work_id, outcome: o === 'w' ? 'worked' : o === 'h' ? 'hindrance' : 'none' };
       if (staged(l)) {
-        ln.stages = l.stages.map(s => { const y = x.subs[s.id], b = subBase(s), so = b >= 99.9995 ? 'none' : y.out === 'w' ? 'worked' : y.out === 'h' ? 'hindrance' : 'none';
+        ln.stages = subsLive(g, l).map(s => { const y = x.subs[s.id], b = subBase(s), so = b >= 99.9995 ? 'none' : y.out === 'w' ? 'worked' : y.out === 'h' ? 'hindrance' : 'none';
           if (so === 'hindrance' && !y.rc) problems.push('Pick The Hindrance Reason On ' + s.name + ' (' + nm + ')');
           return { id: s.id, pct: so === 'worked' ? num(y.pct) : b, outcome: so, reason_code: so === 'hindrance' ? y.rc : null, remarks: y.note || null, started_on: y.s || null, finished_on: y.e || (so === 'worked' && num(y.pct) >= 99.9995 ? finDef(y.s || s.started_on) : null), no_labour: so === 'worked' && (noLab(g, 'S:' + s.id) || (s.group_id ? noLab(g, 'G:' + s.group_id) : false) || noLab(g, 'A')) }; });   // v161.3
         if (o === 'h') ln.reason_code = d.rc || null;
@@ -5866,10 +6104,10 @@ const DPR = (function () {
 
   /* ---------- Preview & Send ---------- */
   function previewWarn() {
-    const w = [], L = labStats(), un = allLines().filter(({ g, l }) => !finL(l) && outOf(g, l) === '').length;
+    const w = [], L = labStats(), un = allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l) && outOf(g, l) === '').length;
     if (L.miss) w.push(L.miss + ' Labour Card' + (L.miss > 1 ? 's' : '') + ' Without Heads');
     if (un) w.push(un + ' Activit' + (un > 1 ? 'ies' : 'y') + ' Without A ' + dsh(PD()) + ' Status — They Go As “Not Reported”');
-    const unT = allLines().filter(({ g, l }) => !finT(g, l) && outT(g, l) === '' && startedB(l)).length; if (unT) w.push(unT + ' Running Activit' + (unT > 1 ? 'ies' : 'y') + ' Without A ' + dsh(S.to) + ' Status');   // v165
+    const unT = allLines().filter(({ g, l }) => !finT(g, l) && !heldL(g, l) && outT(g, l) === '' && startedB(l)).length; if (unT) w.push(unT + ' Running Activit' + (unT > 1 ? 'ies' : 'y') + ' Without A ' + dsh(S.to) + ' Status');   // v165
     if (!L.all) w.push('No Labour At All — If Nobody Worked, Add A Non-Estimated Entry Saying Why');
     if (cutMins() <= 0) w.push('Past 1 PM Of ' + dsh(S.to) + ' — This Will Be Marked Late');
     const blk = S.cal ? Object.values(S.cal.days).filter(x => x.report_date < S.to && (x.status === 'Draft' || x.status === 'Returned')).sort((a, b) => a.report_date < b.report_date ? -1 : 1)[0] : null;   // v161.3
@@ -6511,6 +6749,7 @@ const DPR = (function () {
   const mPaintSoon = () => { if (mPaintQ) return; mPaintQ = requestAnimationFrame(() => { mPaintQ = 0; mPaint(); }); };
   function mPaint() {
     if (!$('d2_main')) return;
+    if (S.mProg) holdsEnsure(S.mProg);   // v5.3 · M49
     const a = document.activeElement, k = a && a.id && a.id.indexOf('mr_') === 0 ? a.id : null, sc = $('d2_sc'), top = sc ? sc.scrollTop : 0;
     $('d2_side').innerHTML = mSide(); $('d2_main').innerHTML = mMain();
     const s2 = $('d2_sc'); if (s2) s2.scrollTop = top; if (k && $(k)) { $(k).focus(); }
@@ -6682,12 +6921,12 @@ const DPR = (function () {
     S.to = S.mProg;
     let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl">${mPdfBtns()}</div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;   // v165.1 · Table | Cards
     h += `<div class="rvm-cov"><span class="t">In This DPR</span>${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—');
-      return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}</div>`;
+      return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}${S.holdOff ? '' : `<label class="rvm-chk"><input type="checkbox" ${S.wPdf ? 'checked' : ''} onchange="DPR.wPdf(this.checked)"> Include Waiting Appendix In PDF</label>`}</div>`;
     const nArea = (S.mQueue.areas || []).length || sent.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length;
     const moved = C.moved.length, fin = C.fin.length + C.subFin.length, Hn = C.H.length, dH = C.prevOk && C.inc.length ? C.heads - C.prev : null;
     h += `<div class="rv-one"><span><b>${dd} · Project Total</b> · <b>${C.W.length} Activit${C.W.length === 1 ? 'y' : 'ies'} Worked</b> Across ${inAreas} Area${inAreas === 1 ? '' : 's'} · <b>${fin} Completed</b> · ${Hn ? `<b style="color:var(--drd)">${Hn} Under Hindrance</b> · ` : ''}<b>${fmt(C.heads)} Heads</b> (${Object.keys(C.by).length} Contractor${Object.keys(C.by).length === 1 ? '' : 's'})${C.np && C.heads ? ` · ${Math.round(C.np / C.heads * 100)}% On Non-Estimated Work` : ''}${out ? ` · <b style="color:var(--drd)">${out} Area${out > 1 ? 's' : ''} Not In</b>` : ''}</span></div>`;
     const k = (cls, l, v, s, bar) => `<div class="rv-k ${cls}"><div class="l">${l}</div><div class="v">${v}</div><div class="s">${s}</div>${bar ? `<div class="mb">${bar}</div>` : ''}</div>`;
-    h += `<div class="rv-kpis">${k('', 'Areas Reported', `${inAreas}<small>/ ${nArea}</small>`, out ? `${out} Not In` : 'All Areas In', `<i style="width:${nArea ? inAreas / nArea * 100 : 0}%;background:var(--dn)"></i>`)}${k('vio', 'Progress Moved', moved, `Of ${C.W.length} Worked · ${C.NR.length} Not Reported`)}${k('ok', 'Completed', fin, 'Activities + Sub-Activities')}${k(Hn ? 'red' : '', 'Hindrance', Hn, `${C.H.filter(x => x.days <= 1).length} New · ${C.H.filter(x => x.days > 1).length} Carried Over`)}${k('', 'Manpower', `${fmt(C.heads)}<small>Heads</small>`, `${dH == null ? '' : `<span class="${dH >= 0 ? 'up' : 'dn'}">${dH >= 0 ? '▲ +' : '▼ '}${fmt(dH)}</span> vs Previous Reports · `}NP ${fmt(C.np)}`, C.heads ? `<i style="width:${(C.heads - C.np) / C.heads * 100}%;background:var(--dn)"></i><i style="width:${C.np / C.heads * 100}%;background:#a9bfdd"></i>` : '')}</div>`;
+    h += `<div class="rv-kpis">${k('', 'Areas Reported', `${inAreas}<small>/ ${nArea}</small>`, out ? `${out} Not In` : 'All Areas In', `<i style="width:${nArea ? inAreas / nArea * 100 : 0}%;background:var(--dn)"></i>`)}${k('vio', 'Progress Moved', moved, `Of ${C.W.length} Worked · ${C.NR.length} Not Reported`)}${k('ok', 'Completed', fin, 'Activities + Sub-Activities')}${k(Hn ? 'red' : '', 'Hindrance', Hn, `${C.H.filter(x => x.days <= 1).length} New · ${C.H.filter(x => x.days > 1).length} Carried Over`)}${cdWaitKpi(k, C)}${k('', 'Manpower', `${fmt(C.heads)}<small>Heads</small>`, `${dH == null ? '' : `<span class="${dH >= 0 ? 'up' : 'dn'}">${dH >= 0 ? '▲ +' : '▼ '}${fmt(dH)}</span> vs Previous Reports · `}NP ${fmt(C.np)}`, C.heads ? `<i style="width:${(C.heads - C.np) / C.heads * 100}%;background:var(--dn)"></i><i style="width:${C.np / C.heads * 100}%;background:#a9bfdd"></i>` : '')}</div>`;
     const byA = mSent().map(s => { const P = S.mPay[s.submission_id], F = P && P.F, inn = C.inc.some(x => x.id === s.submission_id); return `<tr class="${inn ? '' : 'off2'}"><td><b>${esc((s.areas || []).join(' · ') || '—')}</b></td><td>${esc(s.engineer || '')}</td><td class="n">${F && inn ? F.W.length : '—'}</td><td class="n">${F && inn ? F.H.length : '—'}</td><td class="n">${F && inn ? fmt(F.heads) : s.status === 'Submitted' ? 'To Review' : '—'}</td></tr>`; }).join('')
       + mNotSent().map(a => `<tr class="off2"><td><b>${esc(a.area_name)}</b></td><td>${esc(a.home_engineers || '—')}</td><td class="n">—</td><td class="n">—</td><td class="n">Not Reported</td></tr>`).join('');
     if (S.mCards) h += `<div class="cd-wrap">${cdCombined(C, cdHind(C.H))}</div>`;   // v165.1 · Cards: all engineers merged, engineer chip on every card
@@ -6739,7 +6978,7 @@ const DPR = (function () {
     const conL = A.con.map(([c, v], i) => `<span><i style="background:${PR_C['a' + (i % 6 + 1)]}"></i>${esc(prShortCon(conName(c)))} <b>${fmt(v)}</b></span>`).join('') + (A.np ? `<span class="ne"><i style="background:${PR_C.np}"></i>NE ${A.npE.length ? '· ' + esc([...new Set(A.npE.map(e => prShortCon(conName(e.con))))].join(', ')) : ''} <b>${fmt(A.np)}</b></span>` : '');
     const pkg = A.pk.map(p => `<div class="pk"><div class="pkn">${esc(p.n)}<small>${esc(prClub(p.rep)) || '—'}</small></div>${p.u.map(u => { const hasQ = u.est > 0, pc = hasQ ? u.a / u.est * 100 : (u.lines ? u.pa / u.lines : 0), pb = hasQ ? u.b / u.est * 100 : (u.lines ? u.pb / u.lines : 0), gain = u.a - u.b;
       return `<div class="ur"><div class="n"><b>${esc(prActNames(u.acts))}</b><small>${u.lines} work line${u.lines > 1 ? 's' : ''}${hasQ ? ' · ' + esc(u.uom) : ' · % only'}</small></div><div class="qq"><div class="bar"><i style="width:${Math.min(100, pb).toFixed(1)}%"></i><b style="left:${Math.min(100, pb).toFixed(1)}%;width:${Math.max(0, Math.min(100, pc) - Math.min(100, pb)).toFixed(1)}%"></b></div><div class="qt"><span class="g">${hasQ ? '+' + q(gain) + ' ' + esc(u.uom) : (pc - pb >= 0.05 ? '+' + (pc - pb).toFixed(1) + '%' : 'no movement')} today</span><span>${hasQ ? q(u.a) + ' / ' + q(u.est) + ' ' + esc(u.uom) + ' · ' : ''}${Math.round(pc)}%</span></div></div></div>`; }).join('')}</div>`).join('');
-    const foot = [`${A.rows.length} work line${A.rows.length === 1 ? '' : 's'} reported`, A.cnt.done ? `${A.cnt.done} completed` : '', A.cnt.hind ? `<span class="red">${A.cnt.hind} under hindrance</span>` : '', A.nr.length ? `${A.nr.length} started line${A.nr.length === 1 ? '' : 's'} not reported` : ''].filter(Boolean).join(' · ');
+    const foot = [`${A.rows.length} work line${A.rows.length === 1 ? '' : 's'} reported`, A.cnt.done ? `${A.cnt.done} completed` : '', A.cnt.hind ? `<span class="red">${A.cnt.hind} under hindrance</span>` : '', A.nr.length ? `${A.nr.length} started line${A.nr.length === 1 ? '' : 's'} not reported` : '', prWaitFoot(A)].filter(Boolean).join(' · ');
     return `<div class="card"><div class="ah"><div><div class="nm">${esc(A.name)}</div><div class="en">${esc(A.eng)}</div></div><div class="hp"><b>${fmt(A.est)}</b><span>Heads on estimated work</span></div></div>
       <div class="cs">${prBar(conH, 12)}<div class="cl">${conL}</div></div>
       <div class="prog">${pkg || '<div class="mu">Nothing Reported.</div>'}</div><div class="foot">${foot}</div></div>`;
@@ -6813,6 +7052,7 @@ const DPR = (function () {
   function mPrintHtml(mode) {
     const land = mode === 'land'; const C = mComb(), pub = mPub(), dd = esc(dsh(S.mProg)), org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null;
     S.to = S.mProg;
+    const WH = S.holdOff ? [] : holdRowsP(C.inc); S._prW = WH;   // v5.3 · M49
     const AR = prAreaFacts(C), fin = C.fin.length + C.subFin.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, nArea = ((S.mQueue || {}).areas || []).length || inAreas;
     const cons = Object.keys(C.by).filter(c => sum(C.by[c]) > 0).sort((a, b) => sum(C.by[b]) - sum(C.by[a])), used = (S.masters.trades || []).map(t => t.trade_code).filter(t => cons.some(c => num(C.by[c][t]) > 0));
     const trades = used.map(t => [tCode(t), cons.reduce((a, c) => a + num(C.by[c][t]), 0)]).sort((a, b) => b[1] - a[1]);
@@ -6848,6 +7088,7 @@ const DPR = (function () {
  table.t{width:100%;border-collapse:collapse;font-size:7pt}.t th{background:#17264b;color:#fff;text-align:left;padding:2px 4px;font-weight:700;border-right:1px solid #2e5794}.t td{padding:2px 4px;border:1px solid #d5dce6;vertical-align:top}.t .n{text-align:right}.t .tot td{font-weight:800;background:#f3f6fa}.t td.cur{background:#eef3fb;font-weight:800}.t th.cur{background:#0c2445}.t .off{color:#b0bac8}.t .up{color:#128a4a}.t .dn{color:#b42318}.t .lbl{font-weight:600}.t td:first-child{max-width:28mm;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .nel{display:flex;flex-wrap:wrap;gap:3px 6px;align-items:center;font-size:8.5pt;margin-bottom:4px}.nel b{font-size:9pt}.chip{border:1px solid #dfe3ea;border-radius:999px;padding:0 6px;background:#fff6e3;font-size:8pt}.chip small{color:#8d96ab}
  .nr1{font-size:8.5pt;padding:2px 0;color:#55607a}.mu{color:#8d96ab;font-size:8.5pt}.red{color:#b42318;font-weight:700}
+ .pr-w{font-size:8.5pt;line-height:1.35}.pr-w .pk{font-weight:800;color:#15213a;margin-top:5px}.pr-w .act{padding-left:10px;font-weight:600}.pr-w .act small{font-weight:400;color:#55607a}.pr-w .row{padding-left:20px;color:#55607a;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) 100px 44px 80px;gap:6px;page-break-inside:avoid}.pr-w .row b{color:#15213a}.pr-w .row .due{color:#b45309;font-weight:700}.pr-w .row .rdy{color:#0f766e;font-weight:700}
  .sig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:14px;font-size:8.5pt;color:#55607a}.sig div{border-top:1px solid #55607a;padding-top:3px}.sig div span{display:block;color:#15213a;font-weight:700}
  .ft{margin-top:8px;font-size:7.5pt;color:#8d96ab;border-top:1px solid #dfe3ea;padding-top:3px;display:flex;justify-content:space-between}.pb{page-break-before:always}
 
@@ -6861,6 +7102,7 @@ const DPR = (function () {
  ${C.H.length ? `<div class="lvl"><h2>Hindrances</h2></div><table class="t"><thead><tr><th>Area · Where</th><th>Activity</th><th>Reason</th><th>Since</th><th class="n">Days</th></tr></thead><tbody>${C.H.map(x => `<tr><td>${esc(x.area)} · ${esc(x.where)}</td><td>${esc(x.what)}</td><td class="red">${esc(x.rc || 'Reason Missing')}</td><td>${esc(dsh(x.since))}</td><td class="n">${x.days}</td></tr>`).join('')}</tbody></table>` : ''}
  <div class="lvl np"><h2>Progress · By Location</h2></div>${legend}<div class="grid3">${AR.map(prLocPanel).join('')}</div>
  ${stagePanels ? `<div class="lvl np"><h2>Stage Detail · Activities With Sub-Works</h2></div>${stLegend}<div class="grid3">${stagePanels}</div>` : ''}
+ ${S.wPdf ? prWait(WH) : ''}
  <div class="lvl np"><h2>Labour · ${dd}</h2></div>
  <div class="grid3"><div class="card"><h2>By Contractor <span class="t">${fmt(C.heads)} heads · ${cons.length} contractor${cons.length === 1 ? '' : 's'}</span></h2>${cons.length ? prHBars(cons.map(c => [conName(c), sum(C.by[c])]), PR_C.a1, 170) : '<div class="mu">No Labour.</div>'}</div>
  <div class="card"><h2>By Trade <span class="t">${trades.length} trades</span></h2>${trades.length ? prHBars(trades, PR_C.a4, 92) : '<div class="mu">No Labour.</div>'}</div>
@@ -7086,7 +7328,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog,   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
+    repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
@@ -8134,9 +8376,10 @@ const DPRM = (function () {
     let h = S.mode === 'lines' ? '<div id="lm_body"></div>' : `<div class="lm-tabs">
       <button class="${S.tab === 'trades' ? 'on' : ''}" onclick="DPRM.tab('trades')">Labour Trades<i>${t.filter(x => x.is_active).length} Active</i></button>
       <button class="${S.tab === 'np' ? 'on' : ''}" onclick="DPRM.tab('np')">Non-Estimated Work<i>${np.filter(x => x.is_active).length} Items</i></button>
-      <button class="${S.tab === 'rates' ? 'on' : ''}" onclick="DPRM.tab('rates')">Daywork Rates<i>${rt.filter(x => !x.effective_to).length} Live</i></button></div><div id="lm_body"></div>`;   // v154 · Hidden From Site is its own module tab; Stage templates → Reporting Plan
+      <button class="${S.tab === 'rates' ? 'on' : ''}" onclick="DPRM.tab('rates')">Daywork Rates<i>${rt.filter(x => !x.effective_to).length} Live</i></button>
+      <button class="${S.tab === 'hold' ? 'on' : ''}" onclick="DPRM.tab('hold')">Waiting<i>Review Days</i></button></div><div id="lm_body"></div>`;   // v5.3 · M49   // v154 · Hidden From Site is its own module tab; Stage templates → Reporting Plan
     $('lm_root').innerHTML = h;
-    ({ trades: trades, np: npList, rates: rates, lines: lines, stages: stages })[S.tab]();
+    ({ trades: trades, np: npList, rates: rates, lines: lines, stages: stages, hold: holdTab })[S.tab]();
   }
   function tab(t) { S.tab = t; render(); }
 
@@ -8175,6 +8418,22 @@ const DPRM = (function () {
     const name = isNew ? $('np_n_name').value : $('np_n_' + code).value; const so = isNew ? $('np_n_sort').value : $('np_s_' + code).value; const act = isNew ? true : $('np_a_' + code).checked;
     if (!c || !name.trim()) { toast('Code and description are required', 'warn'); return; }
     try { const { error } = await sb.rpc('rpc_dpr_np_reason_save', { p_reason_code: c, p_reason_text: name.trim(), p_sort_order: so === '' ? null : Number(so), p_is_active: act }); if (error) throw error; toast(isNew ? 'Added' : 'Saved', 'success'); await load(); }
+    catch (e) { fail(e, 'Could not save'); }
+  }
+
+  /* ---- v5.3 · M49 · Waiting / On Hold: the default Review By (days from the hold date) ---- */
+  async function holdTab() {
+    $('lm_body').innerHTML = '<div class="lm-note">Loading…</div>';
+    let days = 21, off = false;
+    try { const { data, error } = await sb.rpc('rpc_dpr_holds', { p_date: ymd(new Date()) }); if (error) throw error; days = num((data || {}).review_days) || 21; }
+    catch (e) { off = /rpc_dpr_holds|PGRST202|Could not find the function/i.test(String((e && e.message) || '')); if (!off) { fail(e, 'Could not load'); } }
+    if (S.tab !== 'hold') return;
+    $('lm_body').innerHTML = off ? '<div class="lm-note red">Waiting / On Hold Needs M49 On The Database.</div>'
+      : `<table class="lm-t"><tr><th>SETTING</th><th style="width:120px" class="n">DAYS</th><th style="width:70px"></th></tr><tr><td><b>Default Review By</b><div style="color:#51627a;font-size:11px">Days From The Hold Date When The Engineer Leaves Review By Blank · A Flag On The Manager's Review, Never A Block</div></td><td class="n"><input id="hd_days" type="number" min="1" max="365" value="${days}" style="width:80px;text-align:right"></td><td><button class="btn btn-primary btn-sm" onclick="DPRM.holdDaysSave()">Save</button></td></tr></table>`;
+  }
+  async function holdDaysSave() {
+    const v = Number(($('hd_days') || {}).value); if (!(v >= 1 && v <= 365)) { toast('Review Days Must Be Between 1 And 365', 'warn'); return; }
+    try { const { error } = await sb.rpc('rpc_dpr_hold_settings_save', { p_days: v }); if (error) throw error; toast('Saved', 'success'); const D = window.DPR; if (D && D._s) { D._s.holdsBy = {}; D._s.holdDays = v; } }
     catch (e) { fail(e, 'Could not save'); }
   }
 
@@ -8348,7 +8607,7 @@ const DPRM = (function () {
     catch (e) { fail(e, 'Could not save stages'); }
   }
   const vw = f => function () { if (state.isViewer) { toast('View Only — Labour Setup Cannot Be Changed By A Director', 'warn'); return; } return f.apply(this, arguments); };   // v155.1
-  return { load, tab, tradeSave: vw(tradeSave), npSave: vw(npSave), rateSave: vw(rateSave), lq, setRep: vw(setRep), sq, stEdit: vw(stEdit), stSave, stSet, stRedraw, stAdd, stDel, stClear, stSeed, stTick, stTickAll, stFold, stMove, stGroup, stUngroup };
+  return { load, tab, tradeSave: vw(tradeSave), npSave: vw(npSave), rateSave: vw(rateSave), holdDaysSave: vw(holdDaysSave), lq, setRep: vw(setRep), sq, stEdit: vw(stEdit), stSave, stSet, stRedraw, stAdd, stDel, stClear, stSeed, stTick, stTickAll, stFold, stMove, stGroup, stUngroup };
 })();
 </script>
 </body>

@@ -1976,11 +1976,11 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   table.ph-cards > thead > tr[data-ph="filters"] button { width: 100%; padding: 8px !important; font-size: 12px !important; }
   table.ph-cards > tbody > tr[data-ph="1"] { display: flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
   table.ph-cards > tbody > tr[data-ph="1"]:hover { background: #fff; }
-  table.ph-cards > tbody > tr[data-ph="1"] > td { display: block; border: 0; padding: 6px 10px; white-space: normal; text-align: left; vertical-align: top; font-size: 12.5px; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td { display: block; box-sizing: border-box; border: 0; padding: 6px 10px; white-space: normal; text-align: left; vertical-align: top; font-size: 12.5px; }
   table.ph-cards > tbody > tr[data-ph="1"] > td::before { content: attr(data-label); display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
-  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"] { order: -3; flex: 1 1 auto; min-width: 0; background: #dde6f0; font-weight: 600; font-size: 13px; padding: 8px 10px; overflow-wrap: anywhere; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"] { order: -3; flex: 1 1 51%; min-width: 0; background: #dde6f0; font-weight: 600; font-size: 13px; padding: 8px 10px; overflow-wrap: anywhere; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"]::before { display: none; }
-  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="status"] { order: -2; flex: 0 0 auto; max-width: 58%; background: #dde6f0; padding: 8px 10px; text-align: right; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="status"] { order: -2; flex: 0 1 auto; max-width: 49%; background: #dde6f0; padding: 8px 10px; text-align: right; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="status"]::before { display: none; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="f"], table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="fn"] { flex: 0 0 50%; box-sizing: border-box; box-shadow: inset -1px 0 0 #e6ebf1, inset 0 -1px 0 #e6ebf1; overflow-wrap: anywhere; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="fn"] { text-align: right; font-variant-numeric: tabular-nums; }
@@ -1989,6 +1989,33 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"] .btn { margin: 0 !important; flex: 1 1 auto; min-height: 38px; font-size: 12px; padding: 6px 10px; }
   table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"] .btn[title] { flex: 0 0 auto; min-width: 44px; }   /* icon buttons (🗑 etc.) keep their size */
   table.ph-cards > tbody > tr[data-ph="span"] > td { display: block; text-align: center; padding: 14px; white-space: normal; }
+
+  /* ══ R3 · view sheets, approvals within thumb reach ═══════════════════ */
+  #modalContent > h3:first-child { padding-right: 44px; margin-top: 0; }
+  .modal .grid-3, .modal .grid-4 { grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+  /* approval bar: fixed at the bottom of the sheet — Approve widest, Return beside, Reject compact at the edge */
+  .modal .ph-approve-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: #fff; border-top: 1px solid var(--border); box-shadow: 0 -4px 14px rgba(0,0,0,.08); padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px)); gap: 8px !important; }
+  .modal .ph-approve-bar .btn { margin: 0; min-height: 44px; font-weight: 600; font-size: 13px; padding: 8px 10px; white-space: nowrap; }
+  .modal .ph-approve-bar .btn:nth-child(1) { flex: 1 1 50%; }
+  .modal .ph-approve-bar .btn:nth-child(2) { flex: 1 1 26%; }
+  .modal .ph-approve-bar .btn:nth-child(3) { flex: 0 0 auto; }
+  .modal:has(.ph-approve-bar) { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important; }
+  /* every other sheet: its actions row pins to the bottom */
+  .modal .actions-row { position: sticky; bottom: calc(-14px - env(safe-area-inset-bottom, 0px)); background: #fff; border-top: 1px solid var(--border); margin: 12px -12px calc(-14px - env(safe-area-inset-bottom, 0px)); padding: 10px 12px calc(12px + env(safe-area-inset-bottom, 0px)); gap: 8px; z-index: 5; box-shadow: 0 -4px 14px rgba(0,0,0,.06); }
+  .modal .actions-row .btn { margin: 0; flex: 1 1 auto; min-height: 44px; font-size: 13px; }
+  .modal:has(.ph-approve-bar) .actions-row { position: static; box-shadow: none; }
+  /* item tables inside a sheet → cards (stamped by the observer); '#' column becomes a small serial in the title strip */
+  #modalContent .table-wrap:has(> table.ph-cards) { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  #modalContent table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="sn"] { order: -4; flex: 0 0 auto; background: #dde6f0; color: var(--muted); font-size: 11px; padding: 8px 0 8px 10px; }
+  #modalContent table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="sn"]::before { display: none; }
+  #modalContent table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="ctl"] { order: -5; flex: 0 0 auto; background: #dde6f0; padding: 8px 0 8px 8px; }
+  #modalContent table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="ctl"]::before { display: none; }
+  #modalContent table.ph-cards > tbody > tr[data-ph="span"] > td { text-align: right; padding: 6px 10px; }
+  #modalContent table.ph-cards > tfoot { display: block; } #modalContent table.ph-cards > tfoot > tr { display: block; } #modalContent table.ph-cards > tfoot td, #modalContent table.ph-cards > tfoot th { display: inline-block; border: 0; padding: 4px 6px; }
+  /* payables vendor drill-down */
+  #paytab-pyd .pyd-tabs { overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  #paytab-pyd .pyd-tabs span { flex: 0 0 auto; }
+  #paytab-pyd .rpt-hd .rpt-actions { width: 100%; }
 }
 </style>
 
@@ -13678,7 +13705,7 @@ async function viewHO(hoNum) {
         <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;margin-bottom:2px;">Pending Your Approval</div>
         <div style="font-size:12px;color:#1f2937;">Review the line items and totals before approving.</div>
       </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
+      <div class="ph-approve-bar" style="display:flex;gap:6px;flex-shrink:0;">
         <button class="btn btn-primary" onclick="closeModal();approveHO('${esc(hoNum)}')">✓ Approve HO</button>
         <button class="btn btn-warn" onclick="closeModal();promptRejectHO('${esc(hoNum)}','correction')">Return for Correction</button>
         <button class="btn btn-danger" onclick="closeModal();promptRejectHO('${esc(hoNum)}','outright')">✕ Reject</button>
@@ -17259,7 +17286,7 @@ async function viewWO(woNum) {
         <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;margin-bottom:2px;">Pending Your Approval</div>
         <div style="font-size:12px;color:#1f2937;">Review the line items and totals before approving.</div>
       </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
+      <div class="ph-approve-bar" style="display:flex;gap:6px;flex-shrink:0;">
         <button class="btn btn-primary" onclick="closeModal();approveWO('${esc(woNum)}')">✓ Approve WO</button>
         <button class="btn btn-warn" onclick="closeModal();promptRejectWO('${esc(woNum)}','correction')">Return for Correction</button>
         <button class="btn btn-danger" onclick="closeModal();promptRejectWO('${esc(woNum)}','outright')">✕ Reject</button>
@@ -28712,7 +28739,7 @@ async function viewPO(poNum) {
         <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;margin-bottom:2px;">Pending Your Approval</div>
         <div style="font-size:12px;color:#1f2937;">Review the line items and totals below before approving.</div>
       </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
+      <div class="ph-approve-bar" style="display:flex;gap:6px;flex-shrink:0;">
         <button class="btn btn-primary" onclick="closeModal();approvePO('${esc(h.po_number)}')">✓ Approve PO</button>
         <button class="btn btn-warn"    onclick="closeModal();promptRejectPO('${esc(h.po_number)}','correction')">↩ Return for Correction</button>
         <button class="btn btn-danger"  onclick="closeModal();rejectDoc('PO','${esc(h.po_number)}')">✕ Reject</button>
@@ -36269,7 +36296,7 @@ const _origInitAppForPU = window.initApp;
 (function(){
   const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$)/;
   const phone=()=>window.matchMedia&&window.matchMedia('(max-width:640px)').matches;
-  function stamp(tb){
+  function stamp(tb,inModal){
     const table=tb.closest('table'); const hdr=table&&table.tHead&&table.tHead.rows[0]; if(!hdr) return;
     const labels=Array.from(hdr.cells).map(th=>th.textContent.replace(/[⇅↑↓]/g,'').replace(/\s+/g,' ').trim());
     table.classList.add('ph-cards');
@@ -36281,14 +36308,18 @@ const _origInitAppForPU = window.initApp;
       const cells=Array.from(tr.cells);
       if(cells.length<2||cells[0].colSpan>1){ tr.dataset.ph='span'; return; }
       tr.dataset.ph='1';
+      const isSn=l=>/^(#|s\.?\s*no\.?|sno|sl\.?)$/i.test(l||'');   // v173: '#' column → small serial, next cell is the title; an empty column before it is an expander
+      const snIdx = inModal ? (isSn(labels[0]) ? 0 : (labels[0]===''&&isSn(labels[1])) ? 1 : -1) : -1;
+      const titleIdx = snIdx>=0 ? snIdx+1 : 0;
       cells.forEach((td,i)=>{
         td.dataset.label=labels[i]||'';
-        td.dataset.ph = i===0 ? 'num' : td.querySelector('button') ? 'acts' : td.querySelector('.status') ? 'status' : td.classList.contains('num') ? 'fn' : 'f';
+        td.dataset.ph = (snIdx>=0&&i<snIdx) ? 'ctl' : i===snIdx ? 'sn' : i===titleIdx ? 'num' : td.querySelector('button') ? 'acts' : td.querySelector('.status') ? 'status' : (td.classList.contains('num')||td.classList.contains('r')||/^\s*[-₹\d.,\s%—]+\s*$/.test(td.textContent)&&/\d/.test(td.textContent)) ? 'fn' : 'f';
       });
     });
   }
-  function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); }
-  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(t&&t.nodeType===1&&t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); } });
+  function stampModal(){ document.querySelectorAll('#modalContent table').forEach(t=>{ if(t.tHead&&t.tHead.rows[0]&&t.tBodies[0]&&!t.closest('.ph-keep')) stamp(t.tBodies[0],true); }); }   // v173: view sheets
+  function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); stampModal(); }
+  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); } });
   function start(){ scan(); mo.observe(document.body,{childList:true,subtree:true}); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
 })();

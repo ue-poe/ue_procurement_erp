@@ -5183,6 +5183,147 @@ tr { page-break-inside:avoid; }
 @media print {
   body { padding:0; }
 }
+</style>
+<style id="pgs-phone-css">
+/* ═══════════════════════════════════════════════════════════════════
+   v171 · PHONE LAYER · Round 0 — GRN Entry + Payables Dashboard
+   Pure CSS. Desktop (> 640 px) untouched. Tables become one card per
+   row via grid-areas on <tr>; column labels come from ::before.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .container { padding: 10px; }
+  .card { padding: 12px; margin-bottom: 12px; }
+
+  /* ── GRN entry ─────────────────────────────────────────────────── */
+  #grnForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #grnForm .grid-4 .field:has(#grn_poSelect),
+  #grnForm .grid-4 .field:has(#grn_vendor) { grid-column: 1 / -1; }
+  #grnForm .field input, #grnForm .field select { font-size: 14px; padding: 10px; }
+  #grnForm > div:first-child .btn-sm { padding: 8px 10px; font-size: 12px; }
+  /* scan split → stacked; document pane collapses to its bar until pages exist */
+  #grnForm .scan-split { display: block; height: auto; min-height: 0; }
+  #grnForm .scan-divider { display: none; }
+  #grnForm .scan-doc { height: auto; margin-top: 8px; }
+  #grnForm .scan-doc .pages:empty { display: none; }
+  #grnForm .scan-doc .pages { max-height: 60vh; }
+  #grnForm .scan-left { padding-right: 0; }
+  #grnForm .scan-bottom { margin-top: 12px; }
+  #grnForm .scan-bottom > div:first-child h3 { font-size: 14px; }
+  /* items table → cards */
+  #grnForm .table-wrap { border: 0; box-shadow: none; background: transparent; overflow: visible; }
+  #grnForm .table-wrap table, #grnForm .table-wrap tbody { display: block; }
+  #grnForm .table-wrap thead { display: none; }
+  #grnForm #grnItemsBody > tr { display: grid; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "hd hd hd" "poq prev bal" "qty qty rate" "qty qty amt" "loc loc loc" "rem rem rem"; }
+  #grnForm #grnItemsBody > tr > td { display: block; border: 0; padding: 6px 10px; text-align: left; white-space: normal; }
+  #grnForm #grnItemsBody > tr > td::before { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+  /* 1 # · 2 material · 3 uom → navy header strip */
+  #grnForm #grnItemsBody > tr > td:nth-child(1) { grid-area: hd; background: #dde6f0; padding: 8px 10px; color: var(--muted); font-size: 11px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(2) { grid-area: hd; background: transparent; padding: 7px 56px 7px 26px; font-weight: 600; font-size: 13px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(3) { grid-area: hd; justify-self: end; align-self: center; background: #fff; border: 1px solid #c3d0e0; border-radius: 10px; font-size: 11px; color: var(--navy-print, #1e3a5f); padding: 1px 7px; margin: 0 10px 0 0; }
+  /* 4 PO qty · 5 prev · 6 balance → three-figure strip */
+  #grnForm #grnItemsBody > tr > td:nth-child(4) { grid-area: poq; border-right: 1px solid #e6ebf1; border-bottom: 1px solid #e6ebf1; }
+  #grnForm #grnItemsBody > tr > td:nth-child(5) { grid-area: prev; border-right: 1px solid #e6ebf1; border-bottom: 1px solid #e6ebf1; }
+  #grnForm #grnItemsBody > tr > td:nth-child(6) { grid-area: bal; border-bottom: 1px solid #e6ebf1; }
+  #grnForm #grnItemsBody > tr > td:nth-child(4)::before { content: "PO Qty"; }
+  #grnForm #grnItemsBody > tr > td:nth-child(5)::before { content: "Prev. Received"; }
+  #grnForm #grnItemsBody > tr > td:nth-child(6)::before { content: "Balance"; }
+  /* 7 this GRN qty → the one big input */
+  #grnForm #grnItemsBody > tr > td:nth-child(7) { grid-area: qty; padding: 8px 10px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(7)::before { content: "This GRN Qty"; margin-bottom: 3px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(7) input { width: 100% !important; padding: 9px 10px; font-size: 16px; font-weight: 600; text-align: right; background: #fffdf3; border-radius: 6px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(7) div { white-space: normal !important; }
+  /* 9 rate · 10 amount → right of the input, stacked */
+  #grnForm #grnItemsBody > tr > td:nth-child(9) { grid-area: rate; align-self: end; text-align: right; padding: 8px 10px 0; font-size: 10.5px; color: var(--muted); }
+  #grnForm #grnItemsBody > tr > td:nth-child(9)::before { content: "Rate ₹"; display: inline; margin-right: 3px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(10) { grid-area: amt; align-self: start; text-align: right; padding: 2px 10px 10px; font-size: 15px; font-weight: 700; }
+  #grnForm #grnItemsBody > tr > td:nth-child(10)::before { content: "₹"; display: inline; margin-right: 2px; font-size: 12px; font-weight: 400; color: var(--muted); }
+  /* 8 locations */
+  #grnForm #grnItemsBody > tr > td:nth-child(8) { grid-area: loc; border-top: 1px solid #e6ebf1; padding: 7px 10px; }
+  #grnForm #grnItemsBody > tr > td:nth-child(8) .g-locpanel { max-width: none; }
+  /* 11 remarks */
+  #grnForm #grnItemsBody > tr > td:nth-child(11) { grid-area: rem; border-top: 1px solid #e6ebf1; padding: 0; }
+  #grnForm #grnItemsBody > tr > td:nth-child(11) input { width: 100% !important; border: 0; border-radius: 0; padding: 9px 10px; font-size: 12.5px; background: #fff; }
+  /* placeholder / banner rows (colspan) stay single-cell */
+  #grnForm #grnItemsBody > tr > td[colspan] { grid-column: 1 / -1; grid-area: auto; background: #fff; text-align: center; padding: 14px; }
+  #grnForm #grnItemsBody > tr > td[colspan]::before { content: none; }
+  #grnForm .field[style*="max-width:600px"] { max-width: none !important; }
+  /* sticky save bar */
+  #grnForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; }
+  #grnForm .actions-row .btn-primary { flex: 1; text-align: center; }
+  #grnForm .actions-row .btn { margin-right: 0; }
+
+  /* ── Payables dashboard ────────────────────────────────────────── */
+  #paytab-pyd .rpt-hd { gap: 4px; }
+  #paytab-pyd .pyd-asof { margin-left: 0; width: 100%; }
+  #paytab-pyd .pyd-tb { gap: 6px; }
+  #paytab-pyd .pyd-tb input#pyd_q { width: 100% !important; flex: 1 1 100%; padding: 9px 10px; font-size: 13px; }
+  #paytab-pyd .pyd-tb .lbl { display: none; }
+  #paytab-pyd .pyd-tb .seg span { padding: 7px 10px; }
+  #paytab-pyd .pyd-tb .pyd-acts { margin-left: 0; }
+  #paytab-pyd .pyd-kpis { grid-template-columns: 1fr 1fr !important; gap: 7px; }
+  #paytab-pyd .pyd-kpi { padding: 8px 10px; }
+  #paytab-pyd .pyd-kpi .v { font-size: 16px; }
+  #paytab-pyd .pyd-kpi.due { order: -2; } #paytab-pyd .pyd-kpi.over { order: -1; }
+  /* horizon → six rows with a bar */
+  #paytab-pyd .pyd-hz { padding: 10px 12px; }
+  #paytab-pyd .pyd-hzaxis { display: block; margin-top: 4px; }
+  #paytab-pyd .pyd-hztoday { display: none; }
+  #paytab-pyd .pyd-hzb { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "ct amt" "bar bar"; align-items: center; column-gap: 10px; min-height: 0; padding: 6px 0 7px; border-radius: 0; border: 0 !important; border-top: 1px solid #eef1f6 !important; background: transparent !important; }
+  #paytab-pyd .pyd-hzb:first-of-type { border-top: 0 !important; }
+  #paytab-pyd .pyd-hzb .ct { grid-area: ct; font-size: 11px; }
+  #paytab-pyd .pyd-hzb .ct::before { display: block; font-size: 12.5px; font-weight: 600; color: var(--r-navy, #1e3a5f); }
+  #paytab-pyd .pyd-hzb.over .ct::before { content: "Overdue"; color: var(--r-bad, #b91c1c); }
+  #paytab-pyd .pyd-hzb.wk .ct::before { content: "Due In 7 Days"; }
+  #paytab-pyd .pyd-hzb.m1 .ct::before { content: "8 – 30 Days"; }
+  #paytab-pyd .pyd-hzb.m2 .ct::before { content: "31 – 60 Days"; }
+  #paytab-pyd .pyd-hzb.m3 .ct::before { content: "60+ Days"; }
+  #paytab-pyd .pyd-hzb.hold .ct::before { content: "Not Yet Payable"; }
+  #paytab-pyd .pyd-hzb .amt { grid-area: amt; font-size: 14px; }
+  #paytab-pyd .pyd-hzb .bar { grid-area: bar; position: static; height: 6px; border-radius: 3px; margin-top: 4px; opacity: .85; width: var(--hzw, 100%); min-width: 4px; }
+  #paytab-pyd .pyd-hzlab { display: none; }
+  /* vendor table → cards */
+  #paytab-pyd .pyd-wrap { background: transparent; border: 0; overflow: visible; }
+  #paytab-pyd .pyd-scroll { max-height: none; overflow: visible; }
+  #paytab-pyd table.pyd-rt, #paytab-pyd table.pyd-rt thead, #paytab-pyd table.pyd-rt tbody { display: block; }
+  #paytab-pyd table.pyd-rt colgroup, #paytab-pyd table.pyd-rt thead > tr:first-child { display: none; }
+  #paytab-pyd table.pyd-rt tr.vrow, #paytab-pyd table.pyd-rt thead tr.grand { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border: 1px solid var(--r-border, #cbd5e1); border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+    grid-template-areas: "vend ord" "due due" "net paid" "cn held"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td, #paytab-pyd table.pyd-rt thead tr.grand > th { display: block; position: static; border: 0; text-align: left; white-space: normal; padding: 6px 10px; font-size: 12px; }
+  #paytab-pyd table.pyd-rt tr.vrow > td::before, #paytab-pyd table.pyd-rt thead tr.grand > th::before { display: block; font-size: 9px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--r-muted, #64748b); }
+  /* 1 vendor · 2 orders → header strip */
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(1), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(1) { grid-area: vend; background: #dde6f0; padding: 8px 10px; overflow: hidden; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(2), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(2) { grid-area: ord; background: #dde6f0; padding: 8px 10px; text-align: right; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(2) .pyd-stk { display: inline; margin-left: 4px; }
+  /* 3 order value · 9 O/S advance → hidden on phone (still in KPI tiles) */
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(3), #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(9),
+  #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(3), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(9) { display: none; }
+  /* 8 due → hero */
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(8), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(8) { grid-area: due; font-size: 18px; padding: 8px 10px; border-bottom: 1px solid #e6ebf1; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(8)::before, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(8)::before { content: "Due"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(8) .pyd-stk, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(8) .pyd-stk { display: inline-block; margin-left: 10px; font-size: 11.5px; }
+  /* 4 billed → net strip top-left?  No: 5 net · 6 paid · 7 cn · 10 held form the 2×2 strip; 4 billed hidden */
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(4), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(4) { display: none; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(5), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(5) { grid-area: net; border-right: 1px solid #e6ebf1; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(6), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(6) { grid-area: paid; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(7), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(7) { grid-area: cn; border-right: 1px solid #e6ebf1; border-top: 1px solid #e6ebf1; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(10), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(10) { grid-area: held; border-top: 1px solid #e6ebf1; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(5)::before, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(5)::before { content: "Net Payable"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(6)::before, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(6)::before { content: "Paid"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(7)::before, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(7)::before { content: "Credit Notes"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td:nth-child(10)::before, #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(10)::before { content: "Held"; }
+  #paytab-pyd table.pyd-rt tr.vrow > td .pyd-stk { white-space: normal; }
+  /* total card: navy header, gold figures */
+  #paytab-pyd table.pyd-rt thead tr.grand { border-color: var(--r-navy, #1e3a5f); }
+  #paytab-pyd table.pyd-rt thead tr.grand > th { background: #fff; color: var(--r-navy, #1e3a5f); border-top: 0; font-size: 12px; }
+  #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(1), #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(2) { background: var(--r-navy, #1e3a5f); color: #fff; }
+  #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(8) { color: var(--r-warn, #b45309); }
+  #paytab-pyd table.pyd-rt thead tr.grand > th:nth-child(8) .pyd-stk { color: var(--r-bad, #b91c1c); }
+  #paytab-pyd table.pyd-rt thead tr.grand > th[colspan] { grid-column: 1 / -1; grid-area: auto; background: #fff; color: var(--r-muted); }
+  #paytab-pyd table.pyd-rt tbody td.pyd-empty { display: block; grid-column: 1 / -1; text-align: center; padding: 16px; }
+  #paytab-pyd table.pyd-rt tbody td.pyd-empty::before { content: none; }
+}
 </style></head><body>
 
 <div class="title-row">
@@ -8969,9 +9110,10 @@ function render(){
   const blk=hb('blocked');
   $('pyd_hztot').innerHTML=(filtered?'<span style="color:var(--r-warn)">filtered · </span>':'')+'Unpaid total <b>'+SHORT(due)+'</b> + in approval <b>'+SHORT(hb('hold').amount)+'</b>'+
     (blk.count?' · <span style="color:var(--r-bad)">on hold <b>'+SHORT(blk.amount)+'</b> ('+blk.count+' bills)</span>':'');
+  const _hzMax=Math.max(1,...['over','wk','m1','m2','m3','hold'].map(k=>N(hb(k).amount)));   // v171: phone bars proportional (--hzw read only by the ≤640px CSS)
   $('pyd_hzaxis').innerHTML='<div class="pyd-hztoday"></div>'+['over','wk','m1','m2','m3','hold'].map(k=>{const h=hb(k);
     const ct=k==='hold'?h.count+' bills awaiting approval':k==='over'?h.count+' bills'+(h.oldest_days?' · oldest '+h.oldest_days+' d':''):h.count+' bills';
-    return '<div class="pyd-hzb '+k+'" onclick="RPT.payablesHz(\''+k+'\')"><div class="amt">'+SHORT(h.amount)+'</div><div class="ct">'+ct+'</div><div class="bar"></div></div>';}).join('');
+    return '<div class="pyd-hzb '+k+'" style="--hzw:'+Math.round(N(h.amount)/_hzMax*100)+'%" onclick="RPT.payablesHz(\''+k+'\')"><div class="amt">'+SHORT(h.amount)+'</div><div class="ct">'+ct+'</div><div class="bar"></div></div>';}).join('');
   renderTable();
 }
 function renderTable(){

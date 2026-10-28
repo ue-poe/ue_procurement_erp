@@ -333,6 +333,7 @@ tr.pay-del td { opacity: .62; }
 /* Modal */
 .modal-bg { position: fixed; inset: 0; background: rgba(15,23,42,0.45); display: none; align-items: center; justify-content: center; z-index: 1200; } /* v63: above #pgsSelect(998) so New-project opens on the selector screen */
 .modal-bg.show { display: flex; }
+.ph-modal-x { display: none; }   /* v172: phone-only sheet close, shown by the phone CSS */
 .modal { background: #fff; padding: 24px; border-radius: 10px; max-width: 920px; width: 95%; max-height: 88vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(30,58,95,0.18); }
 .modal h3 { color: var(--accent); margin-bottom: 14px; font-size: 16px; }
 
@@ -1949,6 +1950,45 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   #paytab-pyd .pyd-hzaxis { display: block !important; }
   #paytab-pyd .pyd-hzlab { display: none !important; }
   #paytab-pyd .pyd-hzb { display: grid !important; }
+
+  /* ══ R1 · global shell ══════════════════════════════════════════════ */
+  .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .section-title { font-size: 17px; margin-bottom: 10px; }
+  .btn:not(.btn-sm) { min-height: 38px; }
+  .card h3 { font-size: 14px; }
+  /* modals → full-screen sheets */
+  .modal-bg.show { align-items: stretch; justify-content: stretch; }
+  .modal { width: 100% !important; max-width: none !important; max-height: none !important; height: 100dvh; border-radius: 0; padding: 14px 12px calc(14px + env(safe-area-inset-bottom, 0px)); border: 0; position: relative; }
+  .ph-modal-x { display: flex; position: sticky; top: 0; margin-left: auto; z-index: 5; width: 36px; height: 36px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 50%; background: #fff; color: var(--text); font-size: 16px; cursor: pointer; margin-bottom: -36px; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+  /* desktop-only modules */
+  #mod-plan > * { display: none !important; }
+  #mod-plan::before { content: "Estimation, WBS & Take-Off — Open On Desktop"; display: block; margin: 24px 12px; padding: 18px 16px; background: #fff; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--navy-print, #1e3a5f); text-align: center; }
+
+  /* ══ R1 · list tables → cards (cells stamped by the phone-cards observer) ══ */
+  .table-wrap:has(> table.ph-cards) { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  table.ph-cards, table.ph-cards > thead, table.ph-cards > tbody { display: block; }
+  table.ph-cards > thead > tr:first-child { display: none; }
+  table.ph-cards > thead > tr[data-ph="filters"] { display: flex; flex-wrap: wrap; gap: 6px; background: transparent !important; padding: 0 0 8px; }
+  table.ph-cards > thead > tr[data-ph="filters"] > td { display: block; flex: 1 1 46%; padding: 0 !important; border: 0; }
+  table.ph-cards > thead > tr[data-ph="filters"] > td:empty { display: none; }
+  table.ph-cards > thead > tr[data-ph="filters"] > td > div { display: flex; gap: 4px; align-items: center; }
+  table.ph-cards > thead > tr[data-ph="filters"] input, table.ph-cards > thead > tr[data-ph="filters"] select { width: 100% !important; padding: 8px !important; font-size: 13px !important; min-width: 0; }
+  table.ph-cards > thead > tr[data-ph="filters"] button { width: 100%; padding: 8px !important; font-size: 12px !important; }
+  table.ph-cards > tbody > tr[data-ph="1"] { display: flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  table.ph-cards > tbody > tr[data-ph="1"]:hover { background: #fff; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td { display: block; border: 0; padding: 6px 10px; white-space: normal; text-align: left; vertical-align: top; font-size: 12.5px; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td::before { content: attr(data-label); display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"] { order: -3; flex: 1 1 auto; min-width: 0; background: #dde6f0; font-weight: 600; font-size: 13px; padding: 8px 10px; overflow-wrap: anywhere; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"]::before { display: none; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="status"] { order: -2; flex: 0 0 auto; max-width: 58%; background: #dde6f0; padding: 8px 10px; text-align: right; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="status"]::before { display: none; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="f"], table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="fn"] { flex: 0 0 50%; box-sizing: border-box; box-shadow: inset -1px 0 0 #e6ebf1, inset 0 -1px 0 #e6ebf1; overflow-wrap: anywhere; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="fn"] { text-align: right; font-variant-numeric: tabular-nums; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"] { order: 99; flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 10px; border-top: 1px solid #e6ebf1; white-space: normal !important; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"]::before { display: none; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"] .btn { margin: 0 !important; flex: 1 1 auto; min-height: 38px; font-size: 12px; padding: 6px 10px; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="acts"] .btn[title] { flex: 0 0 auto; min-width: 44px; }   /* icon buttons (🗑 etc.) keep their size */
+  table.ph-cards > tbody > tr[data-ph="span"] > td { display: block; text-align: center; padding: 14px; white-space: normal; }
 }
 </style>
 
@@ -5007,6 +5047,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox">
+    <button class="ph-modal-x" type="button" aria-label="Close" onclick="if(!window._modalNoBackdropClose)closeModal()">✕</button>
     <div id="modalContent"></div>
   </div>
 </div>
@@ -36219,6 +36260,38 @@ async function reviseMIS(misNum) {
 // Also load materials on initApp
 const _origInitAppForPU = window.initApp;
 
+
+// ============================================================
+// v172 · PHONE CARDS — at ≤640px the phone CSS turns list tables into one
+// card per row. This stamps what the CSS keys on: each cell's column label
+// and role (num / status / fields / actions). Desktop layout reads none of it.
+// ============================================================
+(function(){
+  const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$)/;
+  const phone=()=>window.matchMedia&&window.matchMedia('(max-width:640px)').matches;
+  function stamp(tb){
+    const table=tb.closest('table'); const hdr=table&&table.tHead&&table.tHead.rows[0]; if(!hdr) return;
+    const labels=Array.from(hdr.cells).map(th=>th.textContent.replace(/[⇅↑↓]/g,'').replace(/\s+/g,' ').trim());
+    table.classList.add('ph-cards');
+    const fr=table.tHead.rows[1];
+    if(fr&&!fr.dataset.ph){ fr.dataset.ph='filters';
+      if(phone()) Array.from(fr.cells).forEach((td,i)=>td.querySelectorAll('input:not([type="date"])').forEach(inp=>{ if(labels[i]&&/^Filter/.test(inp.placeholder||'')) inp.placeholder=labels[i]; })); }
+    Array.from(tb.rows).forEach(tr=>{
+      if(tr.dataset.ph) return;
+      const cells=Array.from(tr.cells);
+      if(cells.length<2||cells[0].colSpan>1){ tr.dataset.ph='span'; return; }
+      tr.dataset.ph='1';
+      cells.forEach((td,i)=>{
+        td.dataset.label=labels[i]||'';
+        td.dataset.ph = i===0 ? 'num' : td.querySelector('button') ? 'acts' : td.querySelector('.status') ? 'status' : td.classList.contains('num') ? 'fn' : 'f';
+      });
+    });
+  }
+  function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); }
+  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(t&&t.nodeType===1&&t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); } });
+  function start(){ scan(); mo.observe(document.body,{childList:true,subtree:true}); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+})();
 
 // ============================================================
 // SORTABLE TABLES

@@ -492,6 +492,7 @@ tr.pay-del td { opacity: .62; }
 .dash-group.grp-wo  { --grp-color: #2563eb; --grp-bg: rgba(37,99,235,0.035); }
 .dash-group.grp-po  { --grp-color: #7c3aed; --grp-bg: rgba(124,58,237,0.035); }
 .dash-group.grp-pay { --grp-color: #16a34a; --grp-bg: rgba(22,163,74,0.035); }
+.dash-group.grp-est { --grp-color: #b45309; --grp-bg: rgba(180,83,9,0.035); }   /* v174 */
 .dash-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 16px; cursor: pointer; transition: all 0.15s; position: relative; overflow: hidden; }
 .dash-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(13,148,136,0.12); transform: translateY(-1px); }
 .dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--card-color, var(--accent)); }
@@ -2016,6 +2017,16 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   #paytab-pyd .pyd-tabs { overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   #paytab-pyd .pyd-tabs span { flex: 0 0 auto; }
   #paytab-pyd .rpt-hd .rpt-actions { width: 100%; }
+
+  /* ══ v174 · Action Dashboard — two compact columns ═══════════════════ */
+  #mod-dashboard .dash-cards { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+  #mod-dashboard .dash-group { padding: 10px 10px 10px 12px; margin-bottom: 10px; border-left-width: 4px; }
+  #mod-dashboard .dash-group-title { font-size: 11px; margin-bottom: 8px; }
+  #mod-dashboard .dash-card { padding: 10px 10px 9px; border-radius: 7px; min-height: 86px; }
+  #mod-dashboard .dash-card .dc-count { font-size: 24px; margin-bottom: 3px; }
+  #mod-dashboard .dash-card .dc-count.loading { font-size: 14px; }
+  #mod-dashboard .dash-card .dc-label { font-size: 11.5px; line-height: 1.25; }
+  #mod-dashboard .dash-card .dc-sub { font-size: 10px; line-height: 1.3; margin-top: 2px; }
 }
 </style>
 
@@ -37754,6 +37765,39 @@ const DASH_CARDS_NEW = [
       ]);
       return {count:rs.reduce(function(s,r){return s+(r.count||0);},0), error:null};
     } },
+  // v174 · cards for functions added after v75 (amendments, estimates, parked receipts)
+  { id:'nx_amd_appr', req:['po_amend','A'], alt:[['wo_amend','A'],['ho_amend','A']], label:'Amendments to Approve', sub:'PO / WO / HO amendments awaiting decision', cls:'warn',
+    nav:function(){navDash('purchase','po','');},
+    query:async function(){
+      const rs=await Promise.all([
+        sb.from('pu_po_orders').select('po_number',{count:'exact',head:true}).eq('amendment_state','Amendment Pending Approval'),
+        sb.from('wo_orders').select('wo_number',{count:'exact',head:true}).eq('amendment_state','Amendment Pending Approval'),
+        sb.from('ho_orders').select('ho_number',{count:'exact',head:true}).eq('amendment_state','Amendment Pending Approval'),
+      ]);
+      return {count:rs.reduce(function(n,r){return n+(r.count||0);},0), error:rs.find(function(r){return r.error;})?.error||null};
+    } },
+  { id:'nx_amd_corr', req:['po_amend','C'], alt:[['wo_amend','C'],['ho_amend','C']], label:'Amendments for Correction', sub:'Returned by approver — revise & resubmit', cls:'urgent',
+    nav:function(){navDash('purchase','po','');},
+    query:async function(){
+      const rs=await Promise.all([
+        sb.from('pu_po_orders').select('po_number',{count:'exact',head:true}).eq('amendment_state','Amendment - Correction'),
+        sb.from('wo_orders').select('wo_number',{count:'exact',head:true}).eq('amendment_state','Amendment - Correction'),
+        sb.from('ho_orders').select('ho_number',{count:'exact',head:true}).eq('amendment_state','Amendment - Correction'),
+      ]);
+      return {count:rs.reduce(function(n,r){return n+(r.count||0);},0), error:rs.find(function(r){return r.error;})?.error||null};
+    } },
+  { id:'nx_amd_req', req:['po_amend','C'], label:'Amendments Requested From Site', sub:'GRN found a change — draft the PO amendment', cls:'warn',
+    nav:function(){navDash('purchase','po','');},
+    query:function(){return sb.from('pu_po_orders').select('po_number',{count:'exact',head:true}).eq('amendment_state','Amendment Requested');} },
+  { id:'nx_est_appr', req:['estimate','A'], label:'Estimates to Approve', sub:'Scope submissions awaiting approval', cls:'warn',
+    nav:function(){navDash('plan','','');},
+    query:function(){return sb.from('wbs_scope_submissions').select('id',{count:'exact',head:true}).eq('status','pending');} },
+  { id:'nx_est_rej', req:['estimate','C'], label:'My Estimates Rejected', sub:'Submissions sent back — revise & resubmit', cls:'urgent',
+    nav:function(){navDash('plan','','');},
+    query:function(){return sb.from('wbs_scope_submissions').select('id',{count:'exact',head:true}).eq('status','rejected').eq('submitted_by',state.userName);} },
+  { id:'nx_grn_held', req:['grn','C'], label:'Parked Receipts', sub:'Received beyond PO balance — waiting on amendment', cls:'info',
+    nav:function(){navDash('purchase','grn','');},
+    query:function(){return sb.from('pu_grn_held_receipts').select('id',{count:'exact',head:true}).eq('status','Held');} },
 ];
 // Flat, deduplicated library: every legacy card once, requirement attached.
 const DASH_CARDS_ALL = (function(){
@@ -37790,6 +37834,8 @@ const DASH_CARD_GROUP = {
   pm_wo:'wo', pm_woc:'wo', pm_wob:'wo',
   // Payments
   qs_pay:'pay', nx_pay_appr:'pay', pm_bills_pay:'pay', nx_hold_appr:'pay', nx_hold_open:'pay', nx_mst_appr:'mst',
+  // v174
+  nx_amd_appr:'po', nx_amd_corr:'po', nx_amd_req:'po', nx_grn_held:'po', nx_est_appr:'est', nx_est_rej:'est',
   // Everything else (MIR/RFQ/QC/PO/GRN/POB/MIS) defaults to 'po'
 };
 const DASH_GROUP_META = {
@@ -37798,6 +37844,7 @@ const DASH_GROUP_META = {
   po:  { title: '📦 Purchase',     cls: 'grp-po'  },
   pay: { title: '💰 Payments',     cls: 'grp-pay' },
   mst: { title: '🗂 Masters',      cls: 'grp-po'  },
+  est: { title: '📐 Estimation',   cls: 'grp-est' },   // v174
 };
 
 async function loadDashPendingCards() {
@@ -37816,7 +37863,7 @@ async function loadDashPendingCards() {
   }
 
   // Group cards by document family, preserving role-merge order within each group
-  const groupOrder = ['ho','wo','po','pay','mst'];   // v75
+  const groupOrder = ['ho','wo','po','pay','est','mst'];   // v75 · v174 est
   const grouped = {};
   defs.forEach(function(d){
     const g = DASH_CARD_GROUP[d.id] || 'po';

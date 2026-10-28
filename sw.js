@@ -1,4 +1,5 @@
-/* Penguin Suite service worker · v14 (C7 deploy: construction.html v5.3 — Waiting / On Hold, M49)
+/* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later)
+   v14 (C7 deploy: construction.html v5.3 — Waiting / On Hold, M49)
    v13 (C6 deploy: construction.html — Non-Estimated cards, Work-Wise toggle removed)
    v10 (C5 deploy: construction.html v5 — Cards only)
    v9 (C4.1 deploy: construction.html v4.1)
@@ -13,7 +14,7 @@
    of work and is NOT what this does.
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
-const VERSION = 'pgs-shell-v14';
+const VERSION = 'pgs-shell-v15';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];
@@ -32,7 +33,7 @@ self.addEventListener('fetch', e => {
   // app shell: network first, cache fallback — so a new deploy wins
   if (u.origin === location.origin) {
     const fallback = /construction\.html$/.test(u.pathname) ? './construction.html' : './index.html';
-    e.respondWith(fetch(e.request).then(r => {
+    e.respondWith(fetch(e.request, { cache: 'no-cache' }).then(r => {   // v15: revalidate with the server every time; offline still falls back to the cached shell
       const copy = r.clone(); caches.open(VERSION).then(c => c.put(e.request, copy)); return r;
     }).catch(() => caches.match(e.request).then(m => m || caches.match(fallback))));
   }

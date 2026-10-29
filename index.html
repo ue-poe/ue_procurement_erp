@@ -2027,6 +2027,80 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   #mod-dashboard .dash-card .dc-count.loading { font-size: 14px; }
   #mod-dashboard .dash-card .dc-label { font-size: 11.5px; line-height: 1.25; }
   #mod-dashboard .dash-card .dc-sub { font-size: 10px; line-height: 1.3; margin-top: 2px; }
+
+  /* ══ R2a · PO entry ═══════════════════════════════════════════════════ */
+  #poForm .grid-3, #poForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #poForm .field:has(#po_project), #poForm .field:has(#po_vendor), #poForm .field:has(#po_vendorAddress), #poForm .field:has(#po_deliveryAddr) { grid-column: 1 / -1; }
+  #poForm #po_overallGSTPanel.grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
+  #poForm h3:not(#po_formTitle) { cursor: pointer; display: flex; align-items: center; gap: 8px; margin: 12px 0 8px; padding-top: 10px; border-top: 1px solid var(--border); border-bottom: 0; font-size: 12.5px; color: var(--text); }
+  #poForm h3:not(#po_formTitle)::before { content: "▼"; font-size: 10px; color: var(--muted); }
+  #poForm h3.ph-collapsed::before { content: "▶"; }
+  #poForm .ph-hidden { display: none !important; }
+  /* line items → cards */
+  #poForm .table-wrap:has(#poItemsBody) { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  #poForm .table-wrap:has(#poItemsBody) table, #poItemsBody { display: block; }
+  #poForm .table-wrap:has(#poItemsBody) thead { display: none; }
+  #poItemsBody > tr[id^="poItem_"] { display: grid; grid-template-columns: 1fr 1fr 1fr 44px; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: visible;
+    grid-template-areas: "mat mat mat x" "wbs wbs wbs wbs" "uom qty rate rate" "base base tot tot" "rem rem rem rem"; }
+  #poItemsBody > tr[id^="poItem_"] > td { display: block; border: 0; padding: 6px 10px; white-space: normal; min-width: 0 !important; }
+  #poItemsBody > tr[id^="poItem_"] > td::before { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  #poItemsBody > tr[id^="poItem_"] > td input { width: 100% !important; padding: 8px; font-size: 14px; border-radius: 6px; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(1) { grid-area: mat; justify-self: start; align-self: center; z-index: 1; pointer-events: none; background: transparent; color: var(--muted); font-size: 11px; padding: 0 0 0 14px; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(2) { grid-area: mat; background: #dde6f0; border-radius: 8px 0 0 0; padding: 6px 4px 6px 6px; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(2) input { font-weight: 600; background: #fff; padding-left: 28px !important; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(2) .typeahead-results { min-width: 0 !important; width: 100%; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(16) { grid-area: x; background: #dde6f0; border-radius: 0 8px 0 0; padding: 6px 8px 6px 2px; display: flex; align-items: center; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(16) .btn { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid #fca5a5; color: #b91c1c; margin: 0; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(3) { grid-area: wbs; border-bottom: 1px solid #e6ebf1; padding: 7px 10px; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(3)::before { content: "WBS / Location"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(4) { grid-area: uom; }  #poItemsBody > tr[id^="poItem_"] > td:nth-child(4)::before { content: "UOM"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(5) { grid-area: qty; }  #poItemsBody > tr[id^="poItem_"] > td:nth-child(5)::before { content: "Qty"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(6) { grid-area: rate; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(6)::before { content: "Unit Rate ₹"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(5) input, #poItemsBody > tr[id^="poItem_"] > td:nth-child(6) input { text-align: right; font-variant-numeric: tabular-nums; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(7) { grid-area: base; text-align: right; font-variant-numeric: tabular-nums; font-size: 14px; border-top: 1px solid #e6ebf1; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(7)::before { content: "Basic Amt"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(14) { grid-area: tot; text-align: right; font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 700; border-top: 1px solid #e6ebf1; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(14)::before { content: "Total Amt"; }
+  /* per-line GST cells (only visible in Per Line mode) flow after the fixed areas, 2 per row */
+  #poItemsBody > tr[id^="poItem_"] > td.po_perlineGST { grid-column: span 2; border-top: 1px solid #e6ebf1; font-size: 13px; text-align: right; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(8)::before  { content: "CGST %"; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(9)::before  { content: "CGST ₹"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(10)::before { content: "SGST %"; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(11)::before { content: "SGST ₹"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(12)::before { content: "IGST %"; } #poItemsBody > tr[id^="poItem_"] > td:nth-child(13)::before { content: "IGST ₹"; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(15) { grid-area: rem; border-top: 1px solid #e6ebf1; padding: 0; }
+  #poItemsBody > tr[id^="poItem_"] > td:nth-child(15) input { border: 0; border-radius: 0 0 8px 8px; font-size: 12.5px; padding: 9px 10px; background: #fff; }
+  #poItemsBody > tr.po-alloc-detail, #poItemsBody > tr.po-grp-band { display: block; margin: -6px 0 8px; }
+  #poItemsBody > tr.po-alloc-detail > td, #poItemsBody > tr.po-grp-band > td { display: block; border: 0; padding: 4px 6px; white-space: normal; }
+  #poItemsBody > tr > td[colspan]:only-child { display: block; text-align: center; padding: 14px; }
+  #poForm button[onclick="addPOItem()"], #poForm button[onclick="openPoEstimatePicker()"] { width: 100%; margin: 4px 0 6px; min-height: 42px; }
+  #poForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; gap: 8px; }
+  #poForm .actions-row .btn { margin: 0; min-height: 44px; } #poForm .actions-row .btn-primary { flex: 1 1 55%; }
+
+  /* ══ R2a · Direct Purchase GRN ═══════════════════════════════════════ */
+  #cashGrnForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #cashGrnForm .field:has(#cgrn_vendorSearch), #cashGrnForm .field:has(#cgrn_cashRef) { grid-column: 1 / -1; }
+  #cashGrnForm .table-wrap:has(#cgrnItemsBody) { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  #cashGrnForm .table-wrap:has(#cgrnItemsBody) table, #cgrnItemsBody { display: block; }
+  #cashGrnForm .table-wrap:has(#cgrnItemsBody) thead { display: none; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] { display: grid; grid-template-columns: 1fr 1fr 1fr 44px; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: visible;
+    grid-template-areas: "mat mat mat x" "uom qty rate rate" "loc loc amt amt" "rem rem rem rem"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td { display: block; border: 0; padding: 6px 10px; white-space: normal; min-width: 0 !important; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td::before { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td input { width: 100% !important; padding: 8px; font-size: 14px; border-radius: 6px; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(1) { grid-area: mat; justify-self: start; align-self: center; z-index: 1; pointer-events: none; background: transparent; color: var(--muted); font-size: 11px; padding: 0 0 0 14px; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(2) { grid-area: mat; background: #dde6f0; border-radius: 8px 0 0 0; padding: 6px 4px 6px 6px; position: relative; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(2) input { font-weight: 600; background: #fff; padding-left: 28px !important; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(9) { grid-area: x; background: #dde6f0; border-radius: 0 8px 0 0; padding: 6px 8px 6px 2px; display: flex; align-items: center; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(9) .btn { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid #fca5a5; color: #b91c1c; margin: 0; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(3) { grid-area: uom; } #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(3)::before { content: "UOM"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(4) { grid-area: qty; } #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(4)::before { content: "Qty"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(5) { grid-area: rate; } #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(5)::before { content: "Unit Rate ₹"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(4) input, #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(5) input { text-align: right; font-variant-numeric: tabular-nums; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(6) { grid-area: amt; text-align: right; font-size: 15px; font-variant-numeric: tabular-nums; border-top: 1px solid #e6ebf1; align-self: end; } #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(6)::before { content: "Amount"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(7) { grid-area: loc; border-top: 1px solid #e6ebf1; } #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(7)::before { content: "Location / WBS"; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(8) { grid-area: rem; border-top: 1px solid #e6ebf1; padding: 0; }
+  #cgrnItemsBody > tr[id^="cgrnItem_"] > td:nth-child(8) input { border: 0; border-radius: 0 0 8px 8px; font-size: 12.5px; padding: 9px 10px; background: #fff; }
+  #cgrnItemsBody > tr > td[colspan]:only-child { display: block; text-align: center; padding: 14px; }
+  #cashGrnForm button[onclick="addCashGRNItem()"] { width: 100%; margin: 4px 0 6px; min-height: 42px; }
+  #cashGrnForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; gap: 8px; }
+  #cashGrnForm .actions-row .btn { margin: 0; min-height: 44px; } #cashGrnForm .actions-row .btn-primary { flex: 1 1 60%; }
 }
 </style>
 
@@ -36331,6 +36405,15 @@ const _origInitAppForPU = window.initApp;
   function stampModal(){ document.querySelectorAll('#modalContent table').forEach(t=>{ if(t.tHead&&t.tHead.rows[0]&&t.tBodies[0]&&!t.closest('.ph-keep')) stamp(t.tBodies[0],true); }); }   // v173: view sheets
   function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); stampModal(); }
   const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); } });
+
+  // v175 · PO entry: section headings collapse on phone (siblings up to the next h3)
+  document.addEventListener('click', function(e){
+    if(!phone()) return;
+    const h=e.target.closest('#poForm h3'); if(!h||h.id==='po_formTitle') return;
+    const off=h.classList.toggle('ph-collapsed');
+    let n=h.nextElementSibling;
+    while(n && n.tagName!=='H3'){ n.classList.toggle('ph-hidden', off); n=n.nextElementSibling; }
+  });
   function start(){ scan(); mo.observe(document.body,{childList:true,subtree:true}); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
 })();

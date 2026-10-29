@@ -335,6 +335,15 @@ tr.pay-del td { opacity: .62; }
 .modal-bg.show { display: flex; }
 .ph-modal-x { display: none; }   /* v172: phone-only sheet close, shown by the phone CSS */
 .ph-only { display: none; }   /* v177: phone-only controls */
+/* v178 · scan-to-payment review strip */
+.ps-strip .table-wrap { background:#fff; margin-top:4px; }
+.ps-tbl { font-size:12px; } .ps-tbl th { background:var(--navy-print,#1e3a5f); color:#dbe7f8; font-size:10.5px; letter-spacing:.4px; border-bottom:0; } .ps-tbl td { padding:6px 9px; vertical-align:top; }
+.ps-tbl .ps-utr, .ps-tbl .ps-raw { display:block; font-family:'SF Mono',Menlo,monospace; font-size:11px; color:var(--muted); }
+.ps-tbl select { min-width:200px; padding:5px 7px; font-size:12px; }
+.ps-pill { font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:10px; white-space:nowrap; } .ps-pill.ok{background:#d1fae5;color:#065f46;} .ps-pill.fz{background:#fef3c7;color:#92400e;} .ps-pill.no{background:#fee2e2;color:#991b1b;} .ps-pill.sk{background:#e2e8f0;color:#475569;}
+.ps-alloc { font-size:11.5px; line-height:1.5; } .ps-alloc .mono { font-family:'SF Mono',Menlo,monospace; font-size:11px; } .ps-part { color:var(--warn); } .ps-oa { color:#5b21b6; font-weight:600; } .ps-bad { color:var(--danger); }
+.ps-tbl tr.ps-skip td { background:#f8fafc; color:var(--muted); }
+.ps-sum { display:flex; gap:18px; flex-wrap:wrap; font-size:12px; color:#78350f; margin-top:8px; } .ps-sum b { font-variant-numeric:tabular-nums; }
 .modal { background: #fff; padding: 24px; border-radius: 10px; max-width: 920px; width: 95%; max-height: 88vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(30,58,95,0.18); }
 .modal h3 { color: var(--accent); margin-bottom: 14px; font-size: 16px; }
 
@@ -2213,6 +2222,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   .pay-foot .err { max-width: none; }
   #paytab-pay:has(.pay-foot[style*="display: flex"]), #paytab-pay:has(.pay-foot[style*="display:flex"]) { padding-bottom: 140px; }
   #paytab-pay { padding-bottom: 140px; }
+  #pay_scanStrip .scan-strip { padding: 10px; } #pay_scanStrip .top { gap: 6px; } #pay_scanStrip .top .btn { flex: 1 1 45%; min-height: 40px; }
+  #pay_scanStrip .ps-tbl select { min-width: 0; width: 100%; }
+  #pay_scanStrip table.ph-cards > tbody > tr[data-ph="1"] > td[data-ph="num"] { flex: 0 0 100%; font-weight: 500; font-size: 12px; }
 
   /* ══ R2c · MIR entry ══════════════════════════════════════════════════ */
   #mirForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -3548,8 +3560,9 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
       <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;min-width:0">
         <h2>💳 Record Payment</h2>
       </div>
-      <div class="sp"><button class="btn btn-ghost btn-sm" onclick="PAY.reset()">↺ Clear</button><button class="btn btn-ghost btn-sm" onclick="PAY.reload()">↻ Reload bills</button></div>
+      <div class="sp"><button class="btn btn-secondary btn-sm" onclick="PAYSCAN.pick()" title="Read a bank statement PDF or a payment confirmation screenshot and prefill the voucher for review">⇪ Scan Statement / Confirmation</button><button class="btn btn-ghost btn-sm" onclick="PAY.reset()">↺ Clear</button><button class="btn btn-ghost btn-sm" onclick="PAY.reload()">↻ Reload bills</button></div>
     </div>
+    <div id="pay_scanStrip" style="display:none;"></div>
 
     <div class="pay-steps">
       <div class="pay-step on" id="pay_step1" onclick="PAY.step(1)">
@@ -10445,6 +10458,7 @@ async function submit(){
     const d=r.data||{};
     close('pay_rvOvl');
     TOAST((d.count||G.length)+' transfer(s) recorded — awaiting approval. Balances apply only once approved.','success');
+    if(window.PAYSCAN){ try{ PAYSCAN.learn(); PAYSCAN.discard(); }catch(e){} }   // v178
     try{_cacheBust('hobList','wobList','unpaidBills')}catch(e){}
     reset(); await reload(); loadHistory();
   }catch(e){
@@ -11142,6 +11156,7 @@ async function tdsSubmit(){
 
 window.PAY={
   reload:reload, render:render, reset:reset, review:review, submit:submit,
+  _x:function(){ return {P:P,os:os,render:render,renderXfers:renderXfers,totals:totals,step:step,groupsForSplit:groupsForSplit,lines:lines}; },   // v178 · scan-to-payment
   setShow:function(v,el){P.show=v;seg(el);render()},
   setType:function(v,el){P.type=v;seg(el);render()},
   setSplit:function(v,el){P.split=v;seg(el);P.xf={};P.xopen={};renderXfers();totals()},
@@ -36524,7 +36539,7 @@ const _origInitAppForPU = window.initApp;
 // and role (num / status / fields / actions). Desktop layout reads none of it.
 // ============================================================
 (function(){
-  const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$)/;
+  const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$|^payscan_body$)/;
   const phone=()=>window.matchMedia&&window.matchMedia('(max-width:640px)').matches;
   function stamp(tb,inModal){
     const table=tb.closest('table'); const hdr=table&&table.tHead&&table.tHead.rows[0]; if(!hdr) return;
@@ -36573,6 +36588,173 @@ const _origInitAppForPU = window.initApp;
   });
   function start(){ scan(); mo.observe(document.body,{childList:true,subtree:true}); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+})();
+
+// ============================================================
+// v178 · SCAN-TO-PAYMENT — a bank statement (PDF text layer, in-system,
+// no model cost) or a payment confirmation screenshot (parse-doc model
+// route) → transfers → vendor match (learned → fuzzy → manual) → FIFO
+// allocation across the vendor's payable bills, remainder on-account →
+// review strip → Apply fills Record Payment steps 1 + 2. Nothing is saved
+// until the normal Submit; vendor choices are learned on submit.
+// ============================================================
+window.PAYSCAN=(function(){
+  const S={file:null,route:null,model:null,pages:1,rows:[],prof:{},bank:null,acct:null,logId:null,busy:false,usage:null};
+  const $=id=>document.getElementById(id); const N=v=>Number(v||0);
+  const INR=v=>Number(N(v).toFixed(2)).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const E=s=>esc(String(s==null?'':s));
+  const STOP=/\b(PVT|PRIVATE|LTD|LIMITED|LLP|CO|COMPANY|CORPORATION|CORPO|CORP|ENTERPRISES?|ENTERPR|INDUSTRIES|INDIA|THE|M\/S|MS|AND|&)\b/g;
+  const norm=s=>String(s||'').toUpperCase().replace(/&/g,' AND ').replace(/[^A-Z0-9]+/g,' ').replace(STOP,' ').replace(/\s+/g,' ').trim();
+  const PAYX=()=>window.PAY&&PAY._x?PAY._x():null;
+  const iso=d=>{ const m=String(d||'').match(/^(\d{2})\/(\d{2})\/(\d{4})$/); return m?m[3]+'-'+m[2]+'-'+m[1]:null; };
+
+  // ── vendor universe: ledger vendors + bill vendors + order vendors ──
+  function vendors(){ const X=PAYX(); if(!X) return []; const m={};
+    Object.keys(X.P.vendors||{}).forEach(k=>{ const v=X.P.vendors[k]; if(v&&v.vendor) m[v.vendor]=1; });
+    (X.P.bills||[]).forEach(b=>{ if(b.v) m[b.v]=1; }); (X.P.orders||[]).forEach(o=>{ if(o.v) m[o.v]=1; });
+    return Object.keys(m).sort((a,b)=>a.localeCompare(b,'en-IN')); }
+
+  // ── similarity: token containment + char-bigram Dice on normalised names ──
+  function bigrams(s){ const r=new Set(); const t=s.replace(/\s+/g,''); for(let i=0;i<t.length-1;i++) r.add(t.slice(i,i+2)); return r; }
+  function sim(a,b){ const A=norm(a), B=norm(b); if(!A||!B) return 0; if(A===B) return 1;
+    const ta=A.split(' ').filter(x=>x.length>1), tb=B.split(' ').filter(x=>x.length>1);
+    const tok=ta.length&&tb.length ? ta.filter(x=>tb.some(y=>y===x||(x.length>3&&(y.startsWith(x)||x.startsWith(y))))).length/Math.max(ta.length,tb.length) : 0;
+    const ga=bigrams(A), gb=bigrams(B); let inter=0; ga.forEach(g=>{ if(gb.has(g)) inter++; }); const dice=(2*inter)/((ga.size+gb.size)||1);
+    const JA=A.replace(/\s+/g,''), JB=B.replace(/\s+/g,''); if(JA===JB) return 1;   // "SRITHIRUMALABLOCKS" vs "SRI THIRUMALA BLOCKS"
+    const ja=bigrams(JA), jb=bigrams(JB); let ji=0; ja.forEach(g=>{ if(jb.has(g)) ji++; }); const jdice=(2*ji)/((ja.size+jb.size)||1);   // bank line-wraps split words ("D ALMIA", "SCHWI NG")
+    return Math.max(0.55*tok+0.45*dice, 0.95*jdice); }
+  function matchVendor(payee){ const key=norm(payee); const learned=S.prof[key];
+    if(learned) return {vendor:learned,how:'learned',score:1};
+    let best=null; vendors().forEach(v=>{ const s=sim(payee,v); if(!best||s>best.score) best={vendor:v,score:s}; });
+    if(best&&best.score>=0.995) return {vendor:best.vendor,how:'exact',score:1};
+    if(best&&best.score>=0.6) return {vendor:best.vendor,how:'fuzzy',score:best.score};
+    return {vendor:null,how:'none',score:best?best.score:0}; }
+
+  // ── FIFO allocation across the vendor's payable bills (oldest due first), remainder on-account ──
+  function allocate(r){ r.alloc=[]; r.oa=0; r.oaOrder=null; r.warn=null; if(!r.vendor||r.skip) return;
+    const X=PAYX(); let left=N(r.amount);
+    const bills=(X.P.bills||[]).filter(b=>b.v===r.vendor&&!b.blocked&&X.os(b)>0.005)
+      .sort((a,b)=>String(a.due_date||a.date||'').localeCompare(String(b.due_date||b.date||''))||String(a.no).localeCompare(String(b.no)));
+    // bills already taken by an earlier row of this scan are reduced by that amount
+    const taken={}; S.rows.forEach(q=>{ if(q!==r&&q.vendor===r.vendor&&!q.skip) (q.alloc||[]).forEach(a=>{ taken[a.no]=(taken[a.no]||0)+a.amount; }); });
+    for(const b of bills){ if(left<=0.005) break; const avail=Math.max(0,X.os(b)-(taken[b.no]||0)); if(avail<=0.005) continue;
+      const amt=Math.min(avail,left); r.alloc.push({no:b.no,t:b.t,amount:Number(amt.toFixed(2)),full:amt>=avail-0.005,os:avail}); left-=amt; }
+    if(left>0.005){ r.oa=Number(left.toFixed(2));
+      const ords=(X.P.orders||[]).filter(o=>o.v===r.vendor).sort((a,b)=>String(b.no).localeCompare(String(a.no)));
+      const live=ords.find(o=>/^(Open|Active|Partial Receipt|Pending)/i.test(String(o.status||'')))||ords[0];
+      if(live) r.oaOrder=live; else r.warn='No order for this vendor — remainder of ₹'+INR(left)+' cannot be put on-account; it will be left unallocated'; } }
+
+  // ── parse: statement PDF via pdf.js positioned text (column x from the header row) ──
+  async function parsePdf(file){ await _scanLoadPdfJs(); const buf=await file.arrayBuffer(); const pdf=await window.pdfjsLib.getDocument({data:buf}).promise; S.pages=pdf.numPages;
+    const pages=[]; for(let p=1;p<=Math.min(pdf.numPages,12);p++){ const page=await pdf.getPage(p); const tc=await page.getTextContent(); pages.push(tc.items.map(it=>({x:it.transform[4],y:it.transform[5],t:(it.str||'').trim()})).filter(i=>i.t)); }
+    const res=parseItems(pages); S.route='pdf_text'; S.bank=res.bank; S.acct=res.acct; return res; }
+  // pure: positioned text items per page → transfers. Columns come from the header row ("Debit" / "Credit" / "Balance" x positions);
+  // a row starting "sno dd/mm/yyyy dd/mm/yyyy" opens a transaction, rows without a date continue its narration.
+  function parseItems(pages){ const rows=[]; let chars=0, hdr=null, bank=null, acct=null;
+    pages.forEach((items,pi)=>{ const byY={}; items.forEach(it=>{ chars+=it.t.length; const y=Math.round(it.y/2)*2; (byY[y]=byY[y]||[]).push({x:it.x,t:it.t}); });
+      Object.keys(byY).map(Number).sort((a,b)=>b-a).forEach(y=>{ const its=byY[y].sort((a,b)=>a.x-b.x); const line=its.map(i=>i.t).join(' ');
+        if(!bank){ const bm=line.match(/\b(AXIS|HDFC|ICICI|SBI|STATE BANK|KOTAK|CANARA|UNION|BANK OF BARODA|YES|INDUSIND|FEDERAL|IDFC)\b/i); if(bm&&/statement|account/i.test(line)) bank=bm[1].toUpperCase(); }
+        if(!acct){ const am=line.match(/Account\s*No\s*:?\s*(\d{9,18})/i); if(am) acct=am[1]; }
+        const dI=its.findIndex(i=>/^Debit/i.test(i.t)), cI=its.findIndex(i=>/^Credit/i.test(i.t)), bI=its.findIndex(i=>/^Balance/i.test(i.t)), pI=its.findIndex(i=>/^Particulars|^Narration|^Description/i.test(i.t)), qI=its.findIndex(i=>/^Cheque/i.test(i.t));
+        if(dI>=0&&cI>=0&&!hdr) hdr={debit:its[dI].x,credit:its[cI].x,balance:bI>=0?its[bI].x:null,particulars:pI>=0?its[pI].x:0,cheque:qI>=0?its[qI].x:null};
+        rows.push({y,items:its,line,page:pi+1}); }); });
+    if(chars<200) return {ok:false,reason:'no_text',bank,acct};
+    if(!hdr) return {ok:false,reason:'no_columns',bank,acct};
+    const isNum=t=>/^[\d,]+\.\d{2}$/.test(t);
+    // Axis layout: the amount row carries narration line 1 + debit/credit/balance; the "sno date date" row sits just BELOW it,
+    // then any further narration lines. So an amount row opens a transaction and everything until the next amount row belongs to it.
+    const right=hdr.cheque!=null?hdr.cheque-4:(hdr.balance!=null?hdr.balance+70:1e9);
+    const tx=[]; let cur=null;
+    rows.forEach(r=>{ const nums=r.items.filter(i=>isNum(i.t)&&i.x<right); const text=r.items.filter(i=>!isNum(i.t)&&i.x<right);
+      const m=r.line.match(/^(\d{1,4})\s+(\d{2}\/\d{2}\/\d{4})\s+(\d{2}\/\d{2}\/\d{4})\s*(.*)$/);
+      if(nums.length){ cur={sno:null,date:null,valueDate:null,narr:text.map(i=>i.t).join(' '),debit:0,credit:0,skip:/OPENING BALANCE|TRANSACTION TOTAL|Closing Balance/i.test(r.line)}; tx.push(cur);
+        nums.forEach(n=>{ const v=Number(n.t.replace(/,/g,'')); const dd=Math.abs(n.x-hdr.debit), dc=Math.abs(n.x-hdr.credit), db=hdr.balance!=null?Math.abs(n.x-hdr.balance):1e9;
+          if(dd<=dc&&dd<=db){ if(!cur.debit) cur.debit=v; } else if(dc<dd&&dc<=db){ if(!cur.credit) cur.credit=v; } }); return; }
+      if(!cur) return;
+      if(m){ cur.sno=+m[1]; cur.date=m[2]; cur.valueDate=m[3]; const rest=text.filter(i=>i.x>=hdr.particulars-2).map(i=>i.t).join(' ').trim(); if(rest) cur.narr=(cur.narr+' '+rest).trim(); return; }
+      if(/^(Closing Balance|Transaction Type|Unless|The closing)/i.test(r.line)){ cur=null; return; }
+      const t=text.filter(i=>i.x>=hdr.particulars-2).map(i=>i.t).join(' ').trim(); if(t) cur.narr=(cur.narr+' '+t).trim(); });
+    const out=tx.filter(t=>!t.skip&&t.debit>0.005&&!/OPENING BALANCE|TRANSACTION TOTAL|Closing Balance|^FT from/i.test(t.narr)).map(t=>{ const narr=t.narr.replace(/\s+/g,' ').replace(/\s*\/+\s*$/,'').trim(); return Object.assign({},t,{narr,amount:t.debit},parseNarr(narr)); });
+    return {ok:true,transfers:out,skippedCredits:tx.filter(t=>!t.skip&&t.credit>0.005).length,bank,acct}; }
+  // narration → mode / utr / payee / bank  (Axis iConnect shapes; generic fallback)
+  function parseNarr(n){ let m;
+    if((m=n.match(/^INB\/(RTGS|NEFT|IMPS)\/([A-Z0-9]{10,24})\/(.+?)\/([^\/]*?)\s*\/*$/i))) return {mode:m[1].toUpperCase(),utr:m[2],payee:clean(m[3]),bank:clean(m[4])};
+    if((m=n.match(/^INB\/IFT\/(.+?)\/TPART\s?Y/i))) return {mode:'IFT',utr:null,payee:clean(m[1]),bank:'AXIS BANK'};
+    if((m=n.match(/^UPI\/([A-Z0-9]{8,})\/(.+?)\//i))) return {mode:'UPI',utr:m[1],payee:clean(m[2]),bank:null};
+    if((m=n.match(/\b(RTGS|NEFT|IMPS|UPI|IFT)\b/i))){ const utr=(n.match(/\b([A-Z]{4,6}[A-Z0-9]{8,20})\b/)||[])[1]||null; const segs=n.split('/').map(s=>s.trim()).filter(s=>s&&!/^(INB|RTGS|NEFT|IMPS|UPI|IFT)$/i.test(s)&&s!==utr); const payee=segs.sort((a,b)=>b.replace(/[^A-Za-z ]/g,'').length-a.replace(/[^A-Za-z ]/g,'').length)[0]||n; return {mode:m[1].toUpperCase(),utr,payee:clean(payee),bank:null}; }
+    return {mode:'OTHER',utr:null,payee:clean(n),bank:null}; }
+  const clean=s=>String(s||'').replace(/\s*[\(\/]+\s*$/,'').replace(/\s+/g,' ').trim();
+
+  // ── model route (screenshot / scanned PDF) via parse-doc ──
+  async function parseModel(file){ S.route='model';
+    const b64=await new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(String(fr.result).split(',')[1]); fr.onerror=()=>rej(new Error('Could not read file')); fr.readAsDataURL(file); });
+    const {data,error}=await sb.functions.invoke('parse-doc',{body:{doc_type:'payment',project_id:pgsS.project.id,filename:file.name,mime:file.type,file_base64:b64}});
+    if(error){ let msg=error.message||'parse-doc failed'; try{ const j=await error.context.json(); if(j&&j.error) msg=j.message||j.error; }catch(e){} throw new Error(msg); }
+    if(!data||!data.ok) throw new Error((data&&data.error)||'parse-doc returned no data');
+    S.usage=data.usage||null; S.model=data.model||null;
+    const tr=(data.transfers||data.result&&data.result.transfers||[]).map((t,i)=>({sno:i+1,date:t.date_ddmmyyyy||(t.date?String(t.date).split('-').reverse().join('/'):null),narr:t.narration||'',amount:N(t.amount),mode:(t.mode||'OTHER').toUpperCase(),utr:t.utr||null,payee:clean(t.beneficiary_name||t.payee||''),bank:t.beneficiary_bank||null}));
+    return {ok:true,transfers:tr}; }
+
+  // ── entry: pick a file, parse, match, allocate, render ──
+  function pick(){ const inp=document.createElement('input'); inp.type='file'; inp.accept='application/pdf,image/*'; inp.onchange=()=>{ if(inp.files&&inp.files[0]) run(inp.files[0]); }; inp.click(); }
+  async function run(file){ if(S.busy) return; S.busy=true; S.file=file; S.rows=[]; S.usage=null; S.model=null; S.route=null;
+    const host=$('pay_scanStrip'); if(host){ host.style.display=''; host.innerHTML='<div class="scan-strip"><div class="top"><b>Reading '+E(file.name)+'…</b></div></div>'; }
+    try{
+      await loadProfiles();
+      let res=null; const isPdf=/pdf$/i.test(file.type)||/\.pdf$/i.test(file.name); const mode=_scanMode();
+      if(isPdf&&mode!=='model_only'){ res=await parsePdf(file); if(!res.ok&&mode==='in_system_only') throw new Error(res.reason==='no_text'?'This PDF has no text layer — in-system parsing only is set for this project':'Could not find the Debit / Credit columns in this statement'); }
+      if(!res||!res.ok){ res=await parseModel(file); }
+      S.rows=(res.transfers||[]).map(t=>{ const m=matchVendor(t.payee); return Object.assign({},t,{vendor:m.vendor,how:m.how,score:m.score,skip:m.how==='none'&&looksPerson(t.payee)}); });
+      S.rows.forEach(allocate);
+      logScan(res);
+      render();
+      toast(S.rows.length+' debit'+(S.rows.length===1?'':'s')+' read · '+S.rows.filter(r=>r.vendor&&!r.skip).length+' matched','success');
+    }catch(e){ console.error('payscan',e); if(host) host.innerHTML='<div class="scan-strip"><div class="top"><b>Scan failed</b><span class="src">'+E(e.message||e)+'</span><span class="sp"></span><button class="btn btn-sm" onclick="PAYSCAN.discard()">Close</button></div></div>'; toast('Scan failed — '+(e.message||e),'error'); }
+    finally{ S.busy=false; } }
+  const looksPerson=p=>{ const t=norm(p).split(' ').filter(Boolean); return t.length<=2&&!/\d/.test(p)&&!vendors().some(v=>sim(p,v)>=0.6); };
+  async function logScan(res){ try{ const {data}=await sb.rpc('rpc_doc_scan_log',{p_project_id:pgsS.project.id,p_screen:'payment',p_doc_type:S.route==='pdf_text'?'statement':'payment_confirmation',p_route:S.route||'none',p_model:S.model||null,p_pages:S.pages||1,p_filename:S.file?S.file.name:null,p_usage:S.usage||null,p_confidence:S.route==='pdf_text'?0.9:null}); S.logId=data&&data.id||null; }catch(e){ console.warn('scan log',e); } }
+
+  // ── learned payee → vendor map ──
+  async function loadProfiles(){ S.prof={}; try{ const {data,error}=await sb.rpc('rpc_pay_payee_list'); if(!error&&Array.isArray(data)) data.forEach(r=>{ S.prof[r.payee_norm]=r.vendor_name; }); }catch(e){ console.warn('payee profiles',e); } }
+  async function learn(){ try{ const pairs=S.rows.filter(r=>r.vendor&&!r.skip&&r.applied).map(r=>({payee_norm:norm(r.payee),payee_raw:r.payee,vendor_name:r.vendor})); if(!pairs.length) return;
+    const {error}=await sb.rpc('rpc_pay_payee_learn',{p_pairs:pairs}); if(error) console.warn('payee learn',error.message); }catch(e){ console.warn('payee learn',e); } }
+
+  // ── review strip ──
+  function pill(r){ if(r.skip) return '<span class="ps-pill sk">Skipped</span>'; if(!r.vendor) return '<span class="ps-pill no">No Match</span>'; if(r.how==='learned') return '<span class="ps-pill ok">Learned</span>'; if(r.how==='exact') return '<span class="ps-pill ok">Exact</span>'; return '<span class="ps-pill fz">Fuzzy '+r.score.toFixed(2)+'</span>'; }
+  function allocHTML(r){ if(r.skip) return '<span class="muted">—</span>'; if(!r.vendor) return '<span class="muted">Pick a vendor to allocate · learned on submit</span>';
+    const parts=r.alloc.map(a=>'<span class="mono">'+E(a.no)+'</span> <b>'+INR(a.amount)+'</b>'+(a.full?' full':' <span class="ps-part">part of '+INR(a.os)+'</span>'));
+    if(r.oa>0.005) parts.push(r.oaOrder?'<span class="ps-oa">On-account '+INR(r.oa)+'</span> on '+E(r.oaOrder.no)+(r.alloc.length?' — no other payable bill':' — no payable bill'):'<span class="ps-bad">'+E(r.warn)+'</span>');
+    if(!parts.length) return '<span class="ps-bad">No payable bill and no order — nothing to allocate</span>'; return parts.join(' · '); }
+  function render(){ const host=$('pay_scanStrip'); if(!host) return; const V=vendors();
+    const matched=S.rows.filter(r=>r.vendor&&!r.skip), need=S.rows.filter(r=>!r.vendor&&!r.skip), skipped=S.rows.filter(r=>r.skip);
+    const sumM=matched.reduce((s,r)=>s+N(r.amount),0), oa=matched.reduce((s,r)=>s+(r.oaOrder?N(r.oa):0),0);
+    const src=(S.bank?S.bank+(S.acct?' ···'+S.acct.slice(-4):''):'')+(S.rows[0]&&S.rows[0].date?' · '+S.rows[0].date:'')+(S.route==='pdf_text'?' · read from the PDF text layer (no model cost)':' · read by the vision model'+(S.model?' ('+E(S.model)+')':''));
+    const opts=r=>'<option value="">— pick vendor —</option><option value="__skip"'+(r.skip?' selected':'')+'>Not a vendor (skip)</option>'+V.map(v=>'<option value="'+E(v)+'"'+(r.vendor===v&&!r.skip?' selected':'')+'>'+E(v)+'</option>').join('');
+    host.style.display=''; host.innerHTML='<div class="scan-strip ps-strip"><div class="top"><b>Scan Result — Review Before It Fills The Form</b><span class="src">'+E(S.file?S.file.name:'')+src+'</span><span class="sp"></span>'+
+      '<button class="btn btn-primary btn-sm" onclick="PAYSCAN.apply()"'+(matched.length?'':' disabled')+'>✓ Apply '+matched.length+' Transfer'+(matched.length===1?'':'s')+' → Form</button><button class="btn btn-ghost btn-sm" onclick="PAYSCAN.discard()">Discard</button></div>'+
+      '<div class="table-wrap"><table class="ps-tbl"><thead><tr><th>#</th><th>Date · Mode · UTR</th><th>Payee (As Printed)</th><th class="num">Amount ₹</th><th>Vendor</th><th>Allocation (FIFO, Oldest Due First)</th></tr></thead><tbody id="payscan_body">'+
+      S.rows.map((r,i)=>'<tr class="'+(r.skip?'ps-skip':'')+'"><td>'+(i+1)+'</td><td>'+E(r.date||'—')+' · '+E(r.mode)+'<span class="ps-utr">'+E(r.utr||'—')+'</span></td><td>'+E(r.payee)+'<span class="ps-raw">'+E(r.narr)+'</span></td><td class="num">'+INR(r.amount)+'</td>'+
+        '<td>'+pill(r)+' <select onchange="PAYSCAN.setVendor('+i+',this.value)">'+opts(r)+'</select></td><td class="ps-alloc">'+allocHTML(r)+'</td></tr>').join('')+
+      '</tbody></table></div>'+
+      '<div class="ps-sum"><span>Debits read <b>'+S.rows.length+'</b></span><span>Matched <b>'+matched.length+'</b> · <b>₹'+INR(sumM)+'</b></span><span>Needs vendor <b>'+need.length+'</b></span><span>Skipped <b>'+skipped.length+'</b></span><span>On-account <b>₹'+INR(oa)+'</b></span></div></div>'; }
+  function setVendor(i,v){ const r=S.rows[i]; if(!r) return; if(v==='__skip'){ r.skip=true; r.vendor=null; r.how='none'; } else { r.skip=false; r.vendor=v||null; r.how=v?'manual':'none'; r.score=v?1:0; } S.rows.forEach(allocate); render(); }
+  function discard(){ S.rows=[]; S.file=null; const host=$('pay_scanStrip'); if(host){ host.innerHTML=''; host.style.display='none'; } }
+
+  // ── apply: fill steps 1 + 2 ──
+  function apply(){ const X=PAYX(); if(!X) return; const rows=S.rows.filter(r=>r.vendor&&!r.skip); if(!rows.length) return;
+    X.P.sel={}; X.P.extra=X.P.extra.filter(e=>!e._scan); X.P.xf={}; X.P.xopen={}; X.P.split='vendor';
+    const seg=$('pay_segSplit'); if(seg) seg.querySelectorAll('span').forEach(s=>s.classList.toggle('on',s.dataset.v==='vendor'));
+    rows.forEach(r=>{ r.applied=true; r.alloc.forEach(a=>{ X.P.sel[a.no]=Number((N(X.P.sel[a.no])+a.amount).toFixed(2)); });
+      if(r.oa>0.005&&r.oaOrder) X.P.extra.push({kind:'on_account',purpose:'adhoc',order:r.oaOrder.no,orderType:r.oaOrder.t,vendor:r.vendor,amount:r.oa,label:r.oaOrder.no+' · ad-hoc advance',_scan:true}); });
+    const d=iso(rows[0].date); if(d&&$('pay_date')) $('pay_date').value=d;
+    X.render();   // rebuilds the bill table + transfers; P.xf['x'+i] follows groupsForSplit() order (vendors sorted)
+    const G=X.groupsForSplit(); G.forEach((g,i)=>{ const r=rows.find(q=>q.vendor===g.vendor); if(!r) return; X.P.xf['x'+i]=Object.assign(X.P.xf['x'+i]||{},{mode:r.mode==='IFT'?'NEFT':(['NEFT','RTGS','IMPS','UPI'].includes(r.mode)?r.mode:'NEFT'),utr:r.utr||'',ref:(r.mode==='IFT'?'Axis internal transfer · ':'')+'from scan '+(S.file?S.file.name:'')}); });
+    if(S.file){ G.forEach((g,i)=>{ try{ PAY.xfile('x'+i, S.file); }catch(e){} }); }   // the scanned document is the proof on every transfer it filled
+    X.renderXfers(); X.totals(); X.step(2);
+    const host=$('pay_scanStrip'); if(host) host.querySelector('.top b').textContent='Applied — review the transfers below, then Review & Submit';
+    toast(rows.length+' transfer'+(rows.length===1?'':'s')+' filled in — check UTRs and amounts, then Review & Submit','success'); }
+
+  return {pick,run,apply,discard,setVendor,learn,parseItems,parseNarr,sim,norm,_S:S};
 })();
 
 // ============================================================

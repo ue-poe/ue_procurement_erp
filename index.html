@@ -2101,6 +2101,59 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   #cashGrnForm button[onclick="addCashGRNItem()"] { width: 100%; margin: 4px 0 6px; min-height: 42px; }
   #cashGrnForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; gap: 8px; }
   #cashGrnForm .actions-row .btn { margin: 0; min-height: 44px; } #cashGrnForm .actions-row .btn-primary { flex: 1 1 60%; }
+
+  /* ══ R2b · certification / bill entry trees (WOC, HOC, WOB, HOB) ═══════ */
+  #wocForm .grid-3, #hocForm .grid-3, #wobForm .grid-3, #wobForm .grid-4, #hobForm .grid-3, #hobForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #wocForm .field:has(#woc_woSelect), #wocForm .field:has(#woc_wo), #hocForm .field:has(#hoc_hoSelect), #hocForm .field:has(#hoc_ho),
+  #wobForm .field:has(#wob_wocSelect), #wobForm .field:has(#wob_woc), #hobForm .field:has(#hob_hocSelect), #hobForm .field:has(#hob_hoc) { grid-column: 1 / -1; }
+  .hoi-racolh { display: none !important; }
+  .hoi-subtotal { display: grid !important; grid-template-columns: 1fr 1fr 1fr; gap: 4px 8px; padding: 7px 10px; }
+  .hoi-subtotal > span { display: block; font-size: 12px; }
+  .hoi-subtotal .lbl { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .3px; font-weight: 600; }
+  .hoi-head { padding: 9px 10px; gap: 8px; flex-wrap: wrap; }
+  .hoi-head .hoi-meta { font-size: 11px; }
+  .hoi-grp-head { padding: 7px 8px; gap: 6px; }
+  .hoi-grp-head input[type="checkbox"] { width: 18px; height: 18px; }
+  .hoi-grp > .hoi-grp-head + .hoi-grp-children > .hoi-grp[style*="margin-left"] { margin-left: 8px !important; }
+  /* a location row → card: name line, then figures three-up; the input cell is wider and large */
+  .hoi-raleaf, .woc-stage-row { display: flex !important; flex-wrap: wrap; gap: 0 !important; padding: 0 !important; border-radius: 0; border: 0 !important; border-top: 1px solid #e6ebf1 !important; align-items: stretch; }
+  .hoi-raleaf > *, .woc-stage-row > * { box-sizing: border-box; }
+  .hoi-raleaf > :first-child, .woc-stage-row > :first-child { flex: 0 0 100%; padding: 7px 10px 4px; font-size: 12.5px; }
+  .hoi-raleaf > :not(:first-child), .woc-stage-row > :not(:first-child) { flex: 0 0 33.333%; padding: 4px 10px 6px; text-align: right; font-size: 12.5px !important; }
+  .hoi-raleaf > :not(:first-child)::before, .woc-stage-row > :not(:first-child)::before { content: attr(data-label); display: block; font-size: 9px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); text-align: left; }
+  .hoi-raleaf > :has(> input[type="number"]) { flex: 0 0 39%; }
+  .hoi-raleaf input[type="number"] { padding: 9px 10px !important; font-size: 16px !important; font-weight: 600; border-radius: 6px !important; background: #fffdf3; }
+  .hoi-raleaf .rem-hint { font-size: 10px; margin-top: 2px; }
+  .hoi-raleaf .ro.this, .woc-stage-row .ro.this { font-size: 14px !important; font-weight: 700; }
+  /* WOC location card order: WO · Prev · Cum / This (wide) · Rate · This Amt / Prev Amt · Cum Amt */
+  #wocItemTree .hoi-raleaf > :nth-child(2), #wocItemTree .hoi-raleaf > :nth-child(3), #wocItemTree .hoi-raleaf > :nth-child(5) { order: 1; }
+  #wocItemTree .hoi-raleaf > :nth-child(4) { order: 2; flex: 0 0 39%; } #wocItemTree .hoi-raleaf > :nth-child(6), #wocItemTree .hoi-raleaf > :nth-child(8) { order: 2; flex: 0 0 30%; }
+  #wocItemTree .hoi-raleaf > :nth-child(7), #wocItemTree .hoi-raleaf > :nth-child(9) { order: 3; flex: 0 0 50%; font-size: 11px !important; color: var(--muted); }
+  #wobForm h3 + .grid-2[style*="margin-top:10px"], #hobForm h3 + .grid-2[style*="margin-top:10px"] { grid-template-columns: 1fr; }
+  .woc-stage-row .woc-stage-name { padding-left: 18px; }
+  .woc-stages-host { border-left: 3px solid #e2e8f0; margin-left: 10px; }
+  #wocForm .actions-row, #hocForm .actions-row, #wobForm .actions-row, #hobForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; gap: 8px; }
+  #wocForm .actions-row .btn, #hocForm .actions-row .btn, #wobForm .actions-row .btn, #hobForm .actions-row .btn { margin: 0; min-height: 44px; font-size: 13px; padding: 8px 10px !important; }
+  #wocForm .actions-row .btn-primary, #hocForm .actions-row .btn-primary, #wobForm .actions-row .btn-primary, #hobForm .actions-row .btn-primary { flex: 1 1 50%; }
+  /* additional / deduction lines → cards */
+  .table-wrap:has(> table > #wob_extraBody), .table-wrap:has(> table > #hob_extraBody) { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  .table-wrap:has(> table > #wob_extraBody) table, .table-wrap:has(> table > #hob_extraBody) table, #wob_extraBody, #hob_extraBody { display: block; }
+  .table-wrap:has(> table > #wob_extraBody) thead, .table-wrap:has(> table > #hob_extraBody) thead { display: none; }
+  #wob_extraBody > tr, #hob_extraBody > tr { display: grid; grid-template-columns: 1fr 1fr 1fr 44px; grid-template-areas: "desc desc desc x" "type timing amt amt"; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  #wob_extraBody > tr > td, #hob_extraBody > tr > td { display: block; border: 0; padding: 6px 10px; white-space: normal; min-width: 0; }
+  #wob_extraBody > tr > td::before, #hob_extraBody > tr > td::before { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  #wob_extraBody > tr > td input, #wob_extraBody > tr > td select, #hob_extraBody > tr > td input, #hob_extraBody > tr > td select { width: 100% !important; padding: 8px; font-size: 13px; border-radius: 6px; }
+  #wob_extraBody > tr > td:nth-child(1), #hob_extraBody > tr > td:nth-child(1) { grid-area: desc; justify-self: start; align-self: center; z-index: 1; pointer-events: none; color: var(--muted); font-size: 11px; padding: 0 0 0 14px; }
+  #wob_extraBody > tr > td:nth-child(2), #hob_extraBody > tr > td:nth-child(2) { grid-area: desc; background: #dde6f0; padding: 6px 4px 6px 6px; }
+  #wob_extraBody > tr > td:nth-child(2) input, #hob_extraBody > tr > td:nth-child(2) input { font-weight: 600; background: #fff; padding-left: 26px !important; }
+  #wob_extraBody > tr > td:nth-child(6), #hob_extraBody > tr > td:nth-child(6) { grid-area: x; background: #dde6f0; padding: 6px 8px 6px 2px; display: flex; align-items: center; }
+  #wob_extraBody > tr > td:nth-child(6) .btn, #hob_extraBody > tr > td:nth-child(6) .btn { width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid #fca5a5; color: #b91c1c; margin: 0; }
+  #wob_extraBody > tr > td:nth-child(3), #hob_extraBody > tr > td:nth-child(3) { grid-area: type; }   #wob_extraBody > tr > td:nth-child(3)::before, #hob_extraBody > tr > td:nth-child(3)::before { content: "Type"; }
+  #wob_extraBody > tr > td:nth-child(4), #hob_extraBody > tr > td:nth-child(4) { grid-area: timing; } #wob_extraBody > tr > td:nth-child(4)::before, #hob_extraBody > tr > td:nth-child(4)::before { content: "Timing"; }
+  #wob_extraBody > tr > td:nth-child(5), #hob_extraBody > tr > td:nth-child(5) { grid-area: amt; }  #wob_extraBody > tr > td:nth-child(5)::before, #hob_extraBody > tr > td:nth-child(5)::before { content: "Amount ₹"; }
+  #wob_extraBody > tr > td:nth-child(5) input, #hob_extraBody > tr > td:nth-child(5) input { text-align: right; font-variant-numeric: tabular-nums; }
+  #wob_extraBody > tr > td[colspan]:only-child, #hob_extraBody > tr > td[colspan]:only-child { grid-column: 1 / -1; grid-area: auto; text-align: center; padding: 12px; }
+  button[onclick="addWOBExtraLine()"], button[onclick="addHOBExtraLine()"] { width: 100%; margin: 4px 0 6px; min-height: 42px; }
 }
 </style>
 
@@ -36403,8 +36456,20 @@ const _origInitAppForPU = window.initApp;
     });
   }
   function stampModal(){ document.querySelectorAll('#modalContent table').forEach(t=>{ if(t.tHead&&t.tHead.rows[0]&&t.tBodies[0]&&!t.closest('.ph-keep')) stamp(t.tBodies[0],true); }); }   // v173: view sheets
-  function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); stampModal(); }
-  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); } });
+
+  // v176 · certification / bill trees: copy the column-header labels onto each row's cells (the phone CSS prints them)
+  function stampHoi(root){
+    (root.querySelectorAll ? root.querySelectorAll('.hoi-racolh') : []).forEach(function(colh){
+      const labels=Array.from(colh.children).map(function(x){ return x.textContent.replace(/\s+/g,' ').trim(); });
+      const host=colh.parentElement; if(!host) return;
+      host.querySelectorAll('.hoi-raleaf, .woc-stage-row').forEach(function(row){
+        if(row.dataset.ph) return; row.dataset.ph='1';
+        Array.from(row.children).forEach(function(c,i){ if(i>0) c.dataset.label=labels[i]||''; });
+      });
+    });
+  }
+  function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); stampModal(); stampHoi(document); }
+  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); if(t.querySelector&&t.querySelector('.hoi-racolh')) stampHoi(t); } });
 
   // v175 · PO entry: section headings collapse on phone (siblings up to the next h3)
   document.addEventListener('click', function(e){

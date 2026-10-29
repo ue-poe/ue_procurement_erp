@@ -334,6 +334,7 @@ tr.pay-del td { opacity: .62; }
 .modal-bg { position: fixed; inset: 0; background: rgba(15,23,42,0.45); display: none; align-items: center; justify-content: center; z-index: 1200; } /* v63: above #pgsSelect(998) so New-project opens on the selector screen */
 .modal-bg.show { display: flex; }
 .ph-modal-x { display: none; }   /* v172: phone-only sheet close, shown by the phone CSS */
+.ph-only { display: none; }   /* v177: phone-only controls */
 .modal { background: #fff; padding: 24px; border-radius: 10px; max-width: 920px; width: 95%; max-height: 88vh; overflow-y: auto; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(30,58,95,0.18); }
 .modal h3 { color: var(--accent); margin-bottom: 14px; font-size: 16px; }
 
@@ -2154,6 +2155,95 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   #wob_extraBody > tr > td:nth-child(5) input, #hob_extraBody > tr > td:nth-child(5) input { text-align: right; font-variant-numeric: tabular-nums; }
   #wob_extraBody > tr > td[colspan]:only-child, #hob_extraBody > tr > td[colspan]:only-child { grid-column: 1 / -1; grid-area: auto; text-align: center; padding: 12px; }
   button[onclick="addWOBExtraLine()"], button[onclick="addHOBExtraLine()"] { width: 100%; margin: 4px 0 6px; min-height: 42px; }
+
+  /* ══ R2c · Record Payment ═════════════════════════════════════════════ */
+  #paytab-pay .pay-hd h2 { font-size: 17px; }
+  #paytab-pay .pay-steps { gap: 6px; }
+  #paytab-pay .pay-step { padding: 8px 10px; gap: 6px; font-size: 11.5px; }
+  #paytab-pay .pay-tb { gap: 6px; }
+  #paytab-pay .pay-tb input#pay_q { width: 100% !important; flex: 1 1 100%; padding: 9px 10px; font-size: 13px; }
+  #paytab-pay .pay-tb .lbl, #paytab-pay .pay-tb > span[style*="margin-left:auto"] { display: none; }
+  #paytab-pay .bwrap { border: 0; overflow: visible; }
+  #paytab-pay .bscroll { max-height: none; overflow: visible; }
+  #paytab-pay table.pay-rt, #paytab-pay table.pay-rt > tbody { display: block; }
+  #paytab-pay table.pay-rt > colgroup, #paytab-pay table.pay-rt > thead > tr:first-child { display: none; }
+  #paytab-pay table.pay-rt > thead { display: block; }
+  #paytab-pay table.pay-rt > thead > tr.pay-tot { display: flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; padding: 4px 0; }
+  #paytab-pay table.pay-rt > thead > tr.pay-tot > td { display: block; border: 0; flex: 1 1 33%; text-align: right; font-size: 12px; padding: 3px 10px; white-space: normal; }
+  #paytab-pay table.pay-rt > thead > tr.pay-tot > td[colspan] { flex: 1 1 100%; text-align: left; font-weight: 700; }
+  #paytab-pay table.pay-rt > thead > tr.pay-tot > td:empty { display: none; }
+  #paytab-pay table.pay-rt > tbody > tr { display: flex; flex-wrap: wrap; background: #fff; border: 1px solid var(--border); border-top: 0; overflow: hidden; }
+  #paytab-pay table.pay-rt > tbody > tr.vend { border-top: 1px solid var(--border); border-radius: 8px 8px 0 0; margin-top: 10px; }
+  #paytab-pay table.pay-rt > tbody > tr.on { background: #f0fdfa; }
+  #paytab-pay table.pay-rt > tbody > tr.blk { background: #fff7f7; }
+  #paytab-pay table.pay-rt > tbody > tr > td { display: block; box-sizing: border-box; border: 0 !important; padding: 5px 10px; white-space: normal !important; text-align: left; font-size: 12.5px; line-height: 1.3; }
+  #paytab-pay table.pay-rt > tbody > tr > td::before { display: block; font-size: 9px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); }
+  /* vendor band (first row of each vendor carries the rowspan cell) */
+  #paytab-pay table.pay-rt > tbody > tr > td.vc { flex: 0 0 100%; background: var(--navy-print, #1e3a5f) !important; color: #fff; padding: 7px 10px; }
+  #paytab-pay table.pay-rt > tbody > tr > td.vc .vnm { color: #fff; font-weight: 600; font-size: 12.5px; }
+  #paytab-pay table.pay-rt > tbody > tr > td.vc .vmeta { color: #cbd5e1; } #paytab-pay table.pay-rt > tbody > tr > td.vc .vmeta b { color: #fde68a; }
+  #paytab-pay table.pay-rt > tbody > tr > td.vc .vsel { color: #5eead4; }
+  #paytab-pay table.pay-rt > tbody > tr > td.vc input[type="checkbox"] { width: 18px; height: 18px; }
+  /* cells counted from the end so the vendor cell does not shift them: 9 tick · 8 bill · 7 due · 6 billed · 5 deductions · 4 net · 3 paid · 2 outstanding · 1 paying now */
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(9) { flex: 0 0 auto; padding: 8px 4px 8px 10px; display: flex; align-items: center; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(9) input[type="checkbox"] { width: 20px; height: 20px; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(8) { flex: 1 1 55%; min-width: 0; padding: 7px 6px; word-break: normal !important; overflow-wrap: anywhere; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(8) b { font-size: 12.5px; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(7) { flex: 0 0 auto; text-align: right; padding: 7px 10px; font-size: 11px; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(7) > span { font-weight: 600; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(4), #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(3), #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(2) { flex: 0 0 33.333%; order: 1; border-top: 1px solid #e6ebf1 !important; text-align: right; font-variant-numeric: tabular-nums; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(4)::before { content: "Net Payable"; } #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(3)::before { content: "Paid"; } #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(2)::before { content: "Outstanding"; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(6), #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(5) { flex: 0 0 50%; order: 2; border-top: 1px solid #e6ebf1 !important; font-size: 11px; color: var(--muted); padding: 4px 10px 6px; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(6)::before { content: "Billed · Basic · GST"; } #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(5)::before { content: "Deductions"; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(6) .pay-sub, #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(5) .pay-sub { display: inline; margin-left: 4px; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(1) { flex: 0 0 100%; order: 3; border-top: 1px solid #e6ebf1 !important; padding: 6px 10px 9px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 8px; align-items: end; }
+  #paytab-pay table.pay-rt > tbody > tr:not(.blk) > td:nth-last-child(1)::before { content: "Paying Now ₹"; grid-column: 1 / -1; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(1) .pay-amt { width: 100% !important; padding: 9px 10px !important; font-size: 16px; font-weight: 600; border-radius: 6px; background: #fffdf3; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(1) .pay-amt:disabled { background: #f1f5f9; opacity: .6; }
+  #paytab-pay table.pay-rt > tbody > tr > td:nth-last-child(1) .pay-warn { grid-column: 1 / -1; }
+  #paytab-pay .ph-q { display: flex; gap: 4px; }
+  #paytab-pay .ph-q span { flex: 1; text-align: center; border: 1px solid var(--border); border-radius: 5px; padding: 8px 4px; font-size: 11px; color: var(--accent); font-weight: 600; background: #fff; cursor: pointer; }
+  #paytab-pay table.pay-rt > tbody > tr.blk > td:nth-last-child(1) { display: block; color: #b91c1c; font-size: 11px; }
+  /* footer: compact navy bar */
+  .pay-foot { position: fixed; left: 0; right: 0; bottom: 0; border-radius: 0; margin: 0; padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px)); gap: 6px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+  .pay-foot > div:nth-child(1), .pay-foot > div:nth-child(3) { display: none; }
+  .pay-foot .k { font-size: 9px; } .pay-foot .v { font-size: 13.5px; }
+  .pay-foot .sp { grid-column: 1 / -1; margin: 0; flex-direction: column; gap: 6px; }
+  .pay-foot .sp .btn { width: 100%; min-height: 42px; margin: 0; }
+  .pay-foot .err { max-width: none; }
+  #paytab-pay:has(.pay-foot[style*="display: flex"]), #paytab-pay:has(.pay-foot[style*="display:flex"]) { padding-bottom: 140px; }
+  #paytab-pay { padding-bottom: 140px; }
+
+  /* ══ R2c · MIR entry ══════════════════════════════════════════════════ */
+  #mirForm .grid-4 { grid-template-columns: 1fr 1fr; gap: 8px; }
+  #mirForm .field:has(#mir_purpose) { grid-column: 1 / -1; }
+  #mirForm .mi-bar { flex-wrap: wrap; gap: 6px; }
+  #mirForm .mi-bar h3 { flex: 1 1 100%; }
+  #mirForm .mi-bar .btn-ghost { flex: 1 1 45%; } #mirForm .mi-bar .btn-primary { flex: 1 1 100%; min-height: 42px; }
+  #mirItemsHost .table-wrap { border: 0; background: transparent; box-shadow: none; overflow: visible; }
+  #mirItemsHost table, #mirItemsHost tbody { display: block; } #mirItemsHost thead { display: none; }
+  #mirItemsHost tbody > tr { display: grid; grid-template-columns: 1fr 1fr 1fr 44px; grid-template-areas: "mat mat mat rm" "wbs wbs wbs wbs" "uom qty qty qty" "spec spec rem rem"; background: #fff; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  #mirItemsHost tbody > tr[data-open] { cursor: default; background: #fff; }
+  #mirItemsHost tbody > tr > td { display: block; border: 0; padding: 6px 10px; white-space: normal; min-width: 0 !important; background: transparent !important; }
+  #mirItemsHost tbody > tr > td::before { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  #mirItemsHost tbody > tr > td input { width: 100% !important; padding: 8px; font-size: 14px; border-radius: 6px; }
+  #mirItemsHost tbody > tr > td:nth-child(1) { grid-area: mat; justify-self: start; align-self: center; z-index: 1; padding: 0 0 0 8px; font-size: 13px; }
+  #mirItemsHost tbody > tr > td:nth-child(2) { grid-area: mat; justify-self: start; align-self: center; z-index: 1; pointer-events: none; color: var(--muted); font-size: 11px; padding: 0 0 0 24px; }
+  #mirItemsHost tbody > tr > td:nth-child(3) { grid-area: mat; background: #dde6f0 !important; padding: 8px 4px 8px 44px; }
+  #mirItemsHost tbody > tr > td:nth-child(9) { grid-area: rm; background: #dde6f0 !important; display: flex; align-items: center; justify-content: center; }
+  #mirItemsHost tbody > tr > td:nth-child(9) .mi-lx { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #fca5a5; color: #b91c1c; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  #mirItemsHost tbody > tr > td:nth-child(4) { grid-area: wbs; border-bottom: 1px solid #e6ebf1; } #mirItemsHost tbody > tr > td:nth-child(4)::before { content: "WBS / Location"; }
+  #mirItemsHost tbody > tr > td:nth-child(5) { grid-area: uom; } #mirItemsHost tbody > tr > td:nth-child(5)::before { content: "UOM"; }
+  #mirItemsHost tbody > tr > td:nth-child(6) { grid-area: qty; } #mirItemsHost tbody > tr > td:nth-child(6)::before { content: "Qty Required"; }
+  #mirItemsHost tbody > tr > td:nth-child(6) input { text-align: right; font-weight: 600; background: #fffdf3; font-size: 16px; }
+  #mirItemsHost tbody > tr > td:nth-child(7) { grid-area: spec; border-top: 1px solid #e6ebf1; } #mirItemsHost tbody > tr > td:nth-child(7)::before { content: "Specification"; }
+  #mirItemsHost tbody > tr > td:nth-child(8) { grid-area: rem; border-top: 1px solid #e6ebf1; } #mirItemsHost tbody > tr > td:nth-child(8)::before { content: "Remarks"; }
+  #mirItemsHost tbody > tr > td:nth-child(7):empty, #mirItemsHost tbody > tr > td:nth-child(7):empty::before { display: none; }
+  #mirItemsHost tbody > tr > td[colspan] { grid-column: 1 / -1; grid-area: auto; padding: 6px 10px; }
+  #mirItemsHost tbody > tr > td[colspan]::before { display: none; }
+  #mirForm .field[style*="max-width:600px"] { max-width: none !important; }
+  #mirForm .actions-row { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--border); margin: 12px -12px -12px; padding: 10px 12px; z-index: 2; gap: 8px; }
+  #mirForm .actions-row .btn { margin: 0; min-height: 44px; } #mirForm .actions-row .btn-primary { flex: 1 1 50%; }
 }
 </style>
 
@@ -9898,7 +9988,8 @@ function row(b,vc,first){
     '<td style="color:var(--warn);font-weight:700">'+INR2(o)+'</td>'+
     '<td><input type="number" class="pay-amt" id="pamt_'+E(k)+'" value="'+(on?P.sel[k]:'')+'" placeholder="0.00" step="0.01" '+
     'oninput="PAY.setAmt(\''+Q(k)+'\',this.value)" onwheel="this.blur()" '+(on?'':'disabled')+'>'+
-    '<div class="pay-warn" id="pwarn_'+E(k)+'">over o/s</div></td></tr>';
+    '<div class="pay-warn" id="pwarn_'+E(k)+'">over o/s</div>'+
+    '<div class="ph-q ph-only"><span onclick="PAY.quick(\''+Q(k)+'\',\'full\')">Full</span><span onclick="PAY.quick(\''+Q(k)+'\',\'half\')">Half</span><span onclick="PAY.quick(\''+Q(k)+'\',\'clear\')">Clear</span></div></td></tr>';   // v177 phone shortcuts
 }
 function pick(k,on){
   const b=P.bills.find(x=>x.no===k); if(!b)return;
@@ -11055,6 +11146,7 @@ window.PAY={
   setType:function(v,el){P.type=v;seg(el);render()},
   setSplit:function(v,el){P.split=v;seg(el);P.xf={};P.xopen={};renderXfers();totals()},
   pick:pick, pickV:pickV, setAmt:setAmt, xtog:xtog, xset:xset, xmode:xmode, xfile:xfile, rmExtra:rmExtra, step:step,
+  quick:function(k,m){ const b=P.bills.find(x=>x.no===k); if(!b)return; if(m==='clear'){pick(k,false);return;} pick(k,true); if(m==='half'){ const v=Math.round(os(b)/2*100)/100; const el=$('pamt_'+k); if(el)el.value=v; setAmt(k,v); } },   // v177
   proof:async function(bucket,path){
     try{
       const r=await sb.storage.from(bucket).createSignedUrl(path,120);

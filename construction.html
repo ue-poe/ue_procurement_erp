@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.3</title>
+<title>Penguin Construction v5.3.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -1178,6 +1178,8 @@ input[type="number"] {
 #mod-dpr .dp2 .cd-mp .d2-strip .crow{border:1px solid var(--ln,#c3ccd9);border-radius:7px;padding:5px 8px;background:#f8fafc}#mod-dpr .dp2 .cd-mp .d2-strip .crow.acts{border:0;background:none;padding:0 2px}
 #mod-dpr .dp2 .cd-mph .d2-mp{cursor:pointer}
 #mod-dpr .dp2 .cd-gs{display:flex;flex-direction:column;gap:8px;padding:8px 10px}
+/* v5.3.1 · finish strip on a staged line (every sub-activity done): finish date + Site Cert. Qty */
+#mod-dpr .dp2 .cd-fin{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin:8px 10px 0;padding:6px 10px;border:1px solid var(--dokb);background:var(--dokl);border-radius:6px;font-size:11.5px}#mod-dpr .dp2 .cd-fin.bad{border-color:var(--drdb);background:#fff7f7}#mod-dpr .dp2 .cd-fin .t{display:inline-flex;gap:6px;align-items:center;color:var(--ink2,#51627a)}#mod-dpr .dp2 .cd-fin .kv{display:inline-flex;gap:6px;align-items:center}#mod-dpr .dp2 .cd-fin .kv>span:first-child{color:var(--ink2,#51627a);font-size:10.5px}#mod-dpr .dp2 .cd-fin input.qty{width:92px}#mod-dpr .dp2 .cd-fin .need{color:var(--drd);font-weight:700;margin-left:auto}#mod-dpr .dp2 .cd-gs .cd-fin{margin:0}
 #mod-dpr .dp2 .cd-band .r .kv b .con-nm{font-weight:800}
 @media (max-width:900px){#mod-dpr .dp2 .cd-ep .eh,#mod-dpr .dp2 .cd-ep .eb{grid-template-columns:1fr 1fr}#mod-dpr .dp2 .cd-ep .eb>div:nth-child(2){border-right:0}#mod-dpr .dp2 .cd-ep .eb>div:nth-child(-n+2){border-bottom:1px solid var(--ln,#c3ccd9)}}
 #mod-dpr .dp2 .cd-sr .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#mod-dpr .dp2 .cd-sr .nm small{color:var(--ink2,#51627a);margin-left:5px}#mod-dpr .dp2 .cd-sr>b{text-align:right;font-variant-numeric:tabular-nums}#mod-dpr .dp2 .cd-sr .st{min-width:28px;text-align:right}
@@ -4420,6 +4422,7 @@ const DPR = (function () {
   function attP(g, l) {
     if (finL(l) || heldL(g, l)) return false; const x = lineX(g, l);   // v5.3 · M49
     if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && !x.wip && !(num(x.qty) > 0));
+    if (x.fin && !(x.cert > 0)) return true;   // v5.3.1 · a finishing staged line without its Site Cert. Qty
     return (l.stages || []).some(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && !heldS(g, l, s) && ((y.out === 'h' && !y.rc) || (y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005)); });
   }
   const attOf = (g, l) => attW(g, l) || attP(g, l);   // v159 · one sheet carries status, labour and progress
@@ -5472,13 +5475,20 @@ const DPR = (function () {
     if (!staged(l)) return cdDirRow(n, g, l, ro, inClub);
     const bands = inClub ? `<div class="cd-band grp"><div><b>${esc(l.activity)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)} · ${(l.stages || []).length} Sub-Activities</span></div><span class="muted">${cdLabPtr(g, labLevel(g))}</span></div>` : '';
     const Gs = subGroups(l), shown = Gs.filter(Gp => !Gp.subs.every(s => subBase(s) >= 99.9995 || heldS(g, l, s)) || Gp.subs.every(s => subBase(s) >= 99.9995));   // v5.3 · M49 a wholly held group is on the Waiting shelf
-    return bands + shown.map(Gp => cdGrpEntry(n, Gp, ro)).join('') + cdWaitNote(Gs.filter(Gp => !shown.includes(Gp)).reduce((a, Gp) => a + Gp.subs.filter(s => subBase(s) < 99.9995).length, 0), cdKey(g, l));
+    return bands + (inClub ? cdFinStrip(g, l, ro) : '') + shown.map(Gp => cdGrpEntry(n, Gp, ro)).join('') + cdWaitNote(Gs.filter(Gp => !shown.includes(Gp)).reduce((a, Gp) => a + Gp.subs.filter(s => subBase(s) < 99.9995).length, 0), cdKey(g, l));
+  }
+  function cdFinStrip(g, l, ro) {   // v5.3.1 · a staged line that finishes on this sheet (every sub-activity done): the finish date + Site Cert. Qty the activity row carried on the table sheet
+    const x = lineX(g, l); if (!staged(l) || finL(l) || !x.fin) return '';
+    const pd = PD(), uom = esc(l.uom || ''), wid = l.work_id, d0 = x.finOn || finDef(x.started || l.started_on), ok = x.cert > 0;
+    const dateC = ro || l.end_locked ? `<b>${esc(dsh(d0))}</b>${l.end_locked ? lockI : ''}` : `<span class="dtw"><b class="dtv">${dsh(d0)}</b><input type="date" class="dt" data-k="le:${wid}" value="${d0}" min="${lineMinEnd(g, l)}" max="${pd}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`;
+    const certC = ro ? `<b>${x.cert == null ? '—' : fmt(x.cert)} ${uom}</b>` : `<input class="qty ${ok ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>`;
+    return `<div class="cd-fin ${ok ? '' : 'bad'}"><span class="t">${pill('p-ok', 'Activity Finished')}Every Sub-Activity Done</span><span class="kv"><span>Finish</span>${dateC}</span><span class="kv"><span>Site Cert. Qty</span>${certC}${certOver(l, x)}</span>${ok || ro ? '' : '<span class="need">Required To Send</span>'}</div>`;
   }
   function cdNodeCard(n, M, A, o) {   // the location node card (single activity): band with dates · cum · heads when Per Activity; then rows / group cards
     const g = n.g, l = n.l, x = lineX(g, l), ro = !!o.ro, lv = labLevel(g), u = { key: 'A', worked: cardHasW(g) };
     S.seen.add(l.work_id); S.fold.delete(l.work_id);
     const mp = lv === 'activity' && !finT(g, l) ? (cardHasW(g) ? cdMpHead(g, u, ro) : `<span class="muted">No Labour Today</span>`) : lv !== 'activity' ? `<span class="muted">Σ ${fmt(cardHeads(g))} Heads · ${lv === 'sub' ? 'Per Sub-Activity ↓' : 'Per Group ↓'}</span>` : '';
-    return `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span> ${staged(l) ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : lv === 'group' ? 'Manpower Per Group' : 'Manpower Per Activity') : ''}<div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span>${mp}${ro ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div></div>${lv === 'activity' && cardHasW(g) ? cdMpUnder(g, u, l.activity, ro) : ''}<div class="cd-gs">${cdLineBlock(n, M, A, o, false)}</div></article>`;
+    return `<article class="cd-lc ${n.att ? 'att' : ''}"><div class="hd"><div><b>${esc(n.loc)}</b> <span class="muted">· Est ${fmt(n.est)} ${esc(n.uom)}</span> ${staged(l) ? pill('p-navy', lv === 'sub' ? 'Manpower Per Sub' : lv === 'group' ? 'Manpower Per Group' : 'Manpower Per Activity') : ''}<div class="path">${esc(n.act)} · ${esc(n.path)}</div></div><div class="r">${cdDates(n)}<span class="cum">Cum. <b>${Math.round(n.pct)}%</b> · ${fmt(n.cert)} ${esc(n.uom)}</span>${mp}${ro ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div></div>${lv === 'activity' && cardHasW(g) ? cdMpUnder(g, u, l.activity, ro) : ''}${cdFinStrip(g, l, ro)}<div class="cd-gs">${cdLineBlock(n, M, A, o, false)}</div></article>`;
   }
   /* ----- a club's locations: one card per location node, every clubbed activity at that node inside it ----- */
   function cdClubLocs(ns, A, M, o) {

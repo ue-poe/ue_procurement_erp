@@ -339,7 +339,7 @@ tr.pay-del td { opacity: .62; }
 .scq-cell { display:flex; flex-direction:column; gap:2px; align-items:stretch; }
 .scq-cell input[type=number] { width:100%; }
 .scq-cell input[type=number]:disabled { background:#f1f5f9; color:#64748b; }
-.scq-fin { display:inline-flex; align-items:center; gap:3px; font-size:9.5px; color:var(--muted); cursor:pointer; white-space:nowrap; justify-content:flex-end; }
+.scq-fin { display:inline-flex; align-items:center; gap:3px; font-size:9.5px; color:var(--muted); cursor:pointer; white-space:nowrap; justify-content:flex-start; }
 .scq-fin input { width:12px; height:12px; margin:0; accent-color:var(--accent); }
 .scq-chip { display:inline-block; font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:8px; white-space:nowrap; align-self:flex-end; }
 .scq-chip.ok { background:#d1fae5; color:#065f46; } .scq-chip.pm { background:#fef3c7; color:#92400e; } .scq-chip.adm { background:#fee2e2; color:#991b1b; } .scq-chip.rs { background:#e0f2fe; color:#075985; font-weight:600; }
@@ -18274,7 +18274,7 @@ function _wocLeafHTML(item, l, armed) {
   const cumQty = l.prevQty + tqn;
   const grid = _wocGrid();   // v179
   if (!staged) {
-    const remaining = Math.max(0, _scqCeil(l) - l.prevQty);   // v179: ceiling = approved SCQ, else WO qty
+    const remaining = Math.max(0, _scqEff(l) - l.prevQty);   // v179: working ceiling (approved SCQ / WO qty, or a lower site qty entered)
     const tq = _wocThis[_wocCellKey(l.oiid,null)];
     return `
     <div class="hoi-raleaf ${active?'active':''} ${_scqRowCls(l)}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
@@ -18422,7 +18422,7 @@ function _wocAutoArmFilledFloors(){
 // Non-staged qty entry (focus-preserving + cap at remaining)
 function wocSetThis(oiid, v) {
   const f = _wocFindLeaf(oiid); if (!f) return;
-  const remaining = Math.max(0, _scqCeil(f.leaf) - f.leaf.prevQty);   // v179
+  const remaining = Math.max(0, _scqEff(f.leaf) - f.leaf.prevQty);   // v179: working ceiling
   let nv = v, capped = false;
   if (v !== '' && Number(v) > remaining) { nv = String(remaining); capped = true; }
   if (capped && _scq.avail && !_scqIsLS(f.item)) { try { _scqFromOver(oiid, f, v); } catch(_) {} }   // v179
@@ -23608,6 +23608,7 @@ async function _draftRestoreWOC(pl) {
     // Replay staged selections.
     Object.entries(pl.stageSel || {}).forEach(([k,v]) => { if (v) _wocStageSel[k] = true; });
     Object.entries(pl.scq || {}).forEach(([k,v]) => { if (v && !(_scq.byOi[k]&&_scq.byOi[k].P)) _scq.entry[k] = v; });   // v179
+    if (_wocTree) _wocTree.items.forEach(it => _wocLeafAllLeaves(it).forEach(_scqRecap));   // v179.1
     // Open the items that carry any prefilled entry (find by oiid via _wocFindLeaf).
     const touchedOiids = new Set();
     Object.keys(pl.wocThis || {}).forEach(k => touchedOiids.add(k.split('#')[0]));
@@ -36904,17 +36905,27 @@ async function _scqAttach(woNum, items){
 function _scqApplyLeaf(leaf){
   const b = _scq.byOi[String(leaf.oiid)] || {};
   leaf.scqA = b.A || null; leaf.scqP = b.P || null;
+  _scqRestage(leaf);
+}
+// working ceiling for this-period maths: a lower Site Cert. qty (entered or awaiting approval) applies at once —
+// certifying less is always safe; a higher one only once approved
+function _scqEff(leaf){
   const ceil = _scqCeil(leaf);
-  if (leaf.stages && leaf.stages.length && Math.abs(ceil - num(leaf.woQty)) > 0.0005) {
-    // already-certified stages keep their stored qty; the remaining stages share the ceiling balance by pct
-    let done = 0, remPct = 0;
-    leaf.stages.forEach(st => { if (st.certified) done += num(st.qty); else remPct += num(st.pct); });
-    const bal = Math.max(0, ceil - done);
-    leaf.stages.forEach(st => { if (!st.certified) st.qty = remPct > 0 ? _scqR3(bal * num(st.pct) / remPct) : 0; });
-  }
+  if (leaf.scqP) return Math.min(ceil, num(leaf.scqP.site_qty));
+  const e = _scq.entry[String(leaf.oiid)];
+  if (e && e.on && e.q !== '' && e.q != null) return Math.min(ceil, num(e.q));
+  return ceil;
+}
+// stage quantities follow the working ceiling: already-certified stages keep their WO-based qty, the rest share the balance by pct
+function _scqRestage(leaf){
+  if (!(leaf.stages && leaf.stages.length)) return;
+  const eff = _scqEff(leaf); let done = 0, remPct = 0;
+  leaf.stages.forEach(st => { if (st.certified) { if (st.qty0 == null) st.qty0 = num(st.qty); done += st.qty0; } else remPct += num(st.pct); });
+  const bal = Math.max(0, eff - done);
+  leaf.stages.forEach(st => { if (!st.certified) st.qty = remPct > 0 ? _scqR3(bal * num(st.pct) / remPct) : 0; });
 }
 function _wocGrid(){ return 'grid-template-columns:1.3fr 56px 96px 64px 56px 60px 56px 54px 74px 78px 82px;'; }
-function _scqHeadHTML(){ return '<span title="Site Certified Qty — what was actually built, proposed from site">Site Cert.</span><span title="Certifiable ceiling: approved Site Certified Qty, else the WO quantity">Ceiling</span>'; }
+function _scqHeadHTML(){ return '<span title="Site Certified Qty — tick a row to enter what the site actually built; otherwise the WO quantity applies">Site Cert.</span><span title="Certifiable ceiling: approved Site Certified Qty, else the WO quantity">Ceiling</span>'; }
 function _scqRowCls(leaf){
   const e = _scq.entry[String(leaf.oiid)];
   if (leaf.scqP) return leaf.scqP.tier === 'ADMIN' ? 'scq-adm' : 'scq-pm';
@@ -36922,12 +36933,9 @@ function _scqRowCls(leaf){
   if (leaf.scqA) return 'scq-appr';
   return '';
 }
-function _scqEntryPending(leaf, e){
-  if (!e) return false;
-  if (e.fin) return true;
-  return e.q !== '' && e.q != null && Math.abs(num(e.q) - _scqCeil(leaf)) > 0.0005;
-}
-function _scqEntryQty(leaf, e){ return (e.q !== '' && e.q != null) ? num(e.q) : num(leaf.woQty); }
+// an unlocked row with a quantity entered is a proposal (equal to the WO qty → closes the leaf; different → needs approval)
+function _scqEntryPending(leaf, e){ return !!(e && e.on && e.q !== '' && e.q != null); }
+function _scqEntryQty(leaf, e){ return num(e.q); }
 function _scqChip(leaf){
   if (leaf.scqP) return '<span class="scq-chip '+(leaf.scqP.tier==='ADMIN'?'adm':'pm')+'" title="Proposed '+esc(leaf.scqP.proposed_by||'')+' · awaiting '+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+'">'+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+' pending</span>';
   if (leaf.scqA) return '<span class="scq-chip ok" title="Approved by '+esc(leaf.scqA.decided_by||'')+(leaf.scqA.decided_at?' on '+fmtDateShort(leaf.scqA.decided_at):'')+'">Approved ✓</span>';
@@ -36944,14 +36952,15 @@ function _scqCellsHTML(item, leaf, armed){
     return '<div class="scq-cell"><input type="number" value="'+p+'" readonly disabled title="Awaiting approval">'+_scqChip(leaf)+'</div>'
          + '<div class="ro dim scq-ceil" title="Ceiling stays at '+ceil.toLocaleString('en-IN')+' until the proposal is approved">'+ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+p.toLocaleString('en-IN')+'</span></div>';
   }
-  const e = _scq.entry[String(leaf.oiid)] || { q:'', fin:false };
+  const e = _scq.entry[String(leaf.oiid)] || { q:'', on:false };
   const pend = _scqEntryPending(leaf, e);
   const shown = pend ? _scqEntryQty(leaf, e) : ceil;
   if (!canP) return '<div class="scq-cell">'+_scqChip(leaf)+(leaf.scqA?'':'<span class="ro dim">—</span>')+'</div><div class="ro dim scq-ceil">'+ceil.toLocaleString('en-IN')+'</div>';
+  // locked by default: the row follows the WO quantity (or the approved Site Cert. qty) until the box is ticked
   return '<div class="scq-cell">'
-    + '<input type="number" min="0" step="0.001" placeholder="'+ceil+'" value="'+(e.q!==''&&e.q!=null?e.q:'')+'" '+(armed?'':'disabled title="Arm this floor to enter"')
-    + ' oninput="wocSetSCQ(\''+k+'\',this.value)" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()">'
-    + '<label class="scq-fin" title="Site measurement is final for this location — closes the leaf at this quantity"><input type="checkbox" '+(e.fin?'checked':'')+' '+(armed?'':'disabled')+' onchange="wocSetSCQFinal(\''+k+'\',this.checked)"> Final</label>'
+    + '<label class="scq-fin" title="Tick to enter what the site actually built for this location. Left unticked, certification follows the WO quantity."><input type="checkbox" '+(e.on?'checked':'')+' '+(armed?'':'disabled')+' onchange="wocSetSCQOn(\''+k+'\',this.checked)"> Site qty</label>'
+    + '<input type="number" min="0" step="0.001" placeholder="'+ceil+'" value="'+(e.on&&e.q!==''&&e.q!=null?e.q:'')+'" '+((armed&&e.on)?'':'disabled'+(armed?'':' title="Arm this floor to enter"'))
+    + ' oninput="wocSetSCQ(\''+k+'\',this.value)" onchange="wocSetSCQ(\''+k+'\',this.value,true)" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()">'
     + _scqChip(leaf) + '</div>'
     + '<div class="ro '+(pend?'':'dim')+' scq-ceil" data-cell="scqceil">'+(pend && Math.abs(shown-ceil)>0.0005 ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN'))+'</div>';
 }
@@ -36962,20 +36971,32 @@ function _scqPatchRow(oiid){
   row.classList.remove('scq-edit','scq-appr','scq-pm','scq-adm'); const c=_scqRowCls(f.leaf); if (c) row.classList.add(c);
   const cell = row.querySelector('[data-cell="scqceil"]');
   if (cell) {
-    const e=_scq.entry[String(oiid)]||{q:'',fin:false}, ceil=_scqCeil(f.leaf), pend=_scqEntryPending(f.leaf,e), shown=pend?_scqEntryQty(f.leaf,e):ceil;
+    const e=_scq.entry[String(oiid)]||{q:'',on:false}, ceil=_scqCeil(f.leaf), pend=_scqEntryPending(f.leaf,e), shown=pend?_scqEntryQty(f.leaf,e):ceil;
     cell.className = 'ro '+(pend?'':'dim')+' scq-ceil';
     cell.innerHTML = (pend && Math.abs(shown-ceil)>0.0005) ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN');
   }
 }
-function wocSetSCQ(oiid, v){
-  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
+function wocSetSCQ(oiid, v, commit){
+  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',on:true,reason:'',note:''});
   e.q = (v===''||v==null) ? '' : num(v);
   if (e.q !== '' && e.q < 0) e.q = 0;
+  const f=_wocFindLeaf(oiid);
+  if (commit && f) { _scqRecap(f.leaf); wocRenderTree(); return; }   // stages and the This Qty cap follow the new working ceiling
   _scqPatchRow(oiid); _scqStripRender();
 }
-function wocSetSCQFinal(oiid, on){
-  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
-  e.fin = !!on; _scqPatchRow(oiid); _scqStripRender();
+function wocSetSCQOn(oiid, on){
+  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',on:false,reason:'',note:''});
+  e.on = !!on; if (!e.on) { e.q=''; e.reason=''; e.note=''; }
+  const f=_wocFindLeaf(oiid); if (f) _scqRecap(f.leaf);
+  wocRenderTree();
+}
+// after the working ceiling changed: re-spread stages, trim a This Qty that no longer fits
+function _scqRecap(leaf){
+  _scqRestage(leaf);
+  if (!(leaf.stages && leaf.stages.length)) {
+    const ck=_wocCellKey(leaf.oiid,null); const rem=Math.max(0,_scqEff(leaf)-num(leaf.prevQty));
+    if (num(_wocThis[ck]) > rem) _wocThis[ck]=rem;
+  }
 }
 // called from wocSetThis when the typed This Qty exceeds the ceiling balance:
 // the overrun becomes a Site Certified Qty proposal instead of an amendment ask
@@ -36983,10 +37004,11 @@ function _scqFromOver(oiid, f, asked){
   const leaf=f.leaf; const k=String(oiid);
   if (leaf.scqP) { toast('A Site Certified Qty of '+num(leaf.scqP.site_qty).toLocaleString('en-IN')+' is already awaiting approval on this location','warn',5000); return; }
   const want=_scqR3(num(leaf.prevQty)+num(asked));
-  const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
-  e.q=want; e.fin=true;
+  const e=_scq.entry[k]||(_scq.entry[k]={q:'',on:false,reason:'',note:''});
+  if (e.on && e.q !== '' && num(e.q) < want) { toast('This location is set to '+num(e.q).toLocaleString('en-IN')+' Site Certified Qty — raise it first','warn',5000); return; }
+  e.q=want; e.on=true;
   const row=document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(k)+'"]');
-  if(row){ const inp=row.querySelector('.scq-cell input[type=number]'); if(inp) inp.value=want; const cb=row.querySelector('.scq-cell input[type=checkbox]'); if(cb) cb.checked=true; }
+  if(row){ const inp=row.querySelector('.scq-cell input[type=number]'); if(inp){ inp.value=want; inp.disabled=false; } const cb=row.querySelector('.scq-cell input[type=checkbox]'); if(cb) cb.checked=true; }
   _scqPatchRow(oiid); _scqStripRender();
   toast('Beyond the certifiable ceiling — '+want.toLocaleString('en-IN')+' proposed as the Site Certified Qty. Send it for approval below; this certification is capped meanwhile.','warn',7000);
 }
@@ -37060,8 +37082,8 @@ function _scqStripRender(){
   }
   el.innerHTML=html;
 }
-function _scqRemove(k){ delete _scq.entry[k]; const f=_wocFindLeaf(k); if(f){ const row=document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(k)+'"]'); if(row){ const i=row.querySelector('.scq-cell input[type=number]'); if(i) i.value=''; const c=row.querySelector('.scq-cell input[type=checkbox]'); if(c) c.checked=false; } _scqPatchRow(k); } _scqStripRender(); }
-function _scqClearAll(){ Object.keys(_scq.entry).forEach(k=>delete _scq.entry[k]); wocRenderTree(); _scqStripRender(); }
+function _scqRemove(k){ delete _scq.entry[k]; const f=_wocFindLeaf(k); if(f) _scqRecap(f.leaf); wocRenderTree(); }
+function _scqClearAll(){ Object.keys(_scq.entry).forEach(k=>delete _scq.entry[k]); if(_wocTree) _wocTree.items.forEach(it=>_wocLeafAllLeaves(it).forEach(_scqRecap)); wocRenderTree(); }
 async function _scqSend(){
   const pend=_scqPendingList(); if(!pend.length){ toast('Nothing to send','warn'); return; }
   const missing=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005 && !(x.e.reason||'').trim());
@@ -37078,7 +37100,7 @@ async function _scqSend(){
     pend.forEach(x=>delete _scq.entry[String(x.leaf.oiid)]);
     await _scqAttach(_scq.wo,_wocTree.items);
     // re-cap this-period entries against the (possibly lowered) ceilings
-    _wocTree.items.forEach(item=>_wocLeafAllLeaves(item).forEach(l=>{ if(!(l.stages&&l.stages.length)){ const k=_wocCellKey(l.oiid,null); const rem=Math.max(0,_scqCeil(l)-num(l.prevQty)); if(num(_wocThis[k])>rem) _wocThis[k]=rem; } }));
+    _wocTree.items.forEach(item=>_wocLeafAllLeaves(item).forEach(_scqRecap));
     wocRenderTree(); _scqStripRender();
     const p=num(data&&data.proposed), a=num(data&&data.auto_approved);
     toast((p?p+' sent for approval':'')+(p&&a?' · ':'')+(a?a+' closed at the WO quantity':''),'success',7000);

@@ -335,6 +335,21 @@ tr.pay-del td { opacity: .62; }
 .modal-bg.show { display: flex; }
 .ph-modal-x { display: none; }   /* v172: phone-only sheet close, shown by the phone CSS */
 .ph-only { display: none; }   /* v177: phone-only controls */
+/* v179 · Site Certified Qty */
+.scq-cell { display:flex; flex-direction:column; gap:2px; align-items:stretch; }
+.scq-cell input[type=number] { width:100%; }
+.scq-cell input[type=number]:disabled { background:#f1f5f9; color:#64748b; }
+.scq-fin { display:inline-flex; align-items:center; gap:3px; font-size:9.5px; color:var(--muted); cursor:pointer; white-space:nowrap; justify-content:flex-end; }
+.scq-fin input { width:12px; height:12px; margin:0; accent-color:var(--accent); }
+.scq-chip { display:inline-block; font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:8px; white-space:nowrap; align-self:flex-end; }
+.scq-chip.ok { background:#d1fae5; color:#065f46; } .scq-chip.pm { background:#fef3c7; color:#92400e; } .scq-chip.adm { background:#fee2e2; color:#991b1b; } .scq-chip.rs { background:#e0f2fe; color:#075985; font-weight:600; }
+.scq-ceil { white-space:nowrap; } .scq-pend { color:#b45309; font-weight:600; }
+.hoi-raleaf.scq-edit { box-shadow:inset 3px 0 0 #f59e0b; } .hoi-raleaf.scq-pm { box-shadow:inset 3px 0 0 #f59e0b; background:#fffbeb; } .hoi-raleaf.scq-adm { box-shadow:inset 3px 0 0 #dc2626; background:#fef2f2; } .hoi-raleaf.scq-appr { box-shadow:inset 3px 0 0 #059669; }
+.scq-up { color:#1d4ed8; } .scq-dn { color:#b45309; }
+.scq-req { border-color:#fcd34d; margin-top:12px; } .scq-req .hd { background:#fffbeb; color:#78350f; } .scq-req .hd b { color:#78350f; }
+.scq-req th { background:#fffdf3; color:#78350f; border-bottom:1px solid #fcd34d; } .scq-req td { vertical-align:top; }
+.scq-req select { min-width:160px; padding:4px 6px; font-size:11.5px; } .scq-req select.scq-bad { border-color:var(--danger); background:#fef2f2; }
+tr.scq-q-adm td:first-child { box-shadow:inset 3px 0 0 #dc2626; } tr.scq-q-pm td:first-child { box-shadow:inset 3px 0 0 #f59e0b; }
 /* v178 · scan-to-payment review strip */
 .ps-strip .table-wrap { background:#fff; margin-top:4px; }
 .ps-tbl { font-size:12px; } .ps-tbl th { background:var(--navy-print,#1e3a5f); color:#dbe7f8; font-size:10.5px; letter-spacing:.4px; border-bottom:0; } .ps-tbl td { padding:6px 9px; vertical-align:top; }
@@ -2144,9 +2159,20 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   .hoi-raleaf .rem-hint { font-size: 10px; margin-top: 2px; }
   .hoi-raleaf .ro.this, .woc-stage-row .ro.this { font-size: 14px !important; font-weight: 700; }
   /* WOC location card order: WO · Prev · Cum / This (wide) · Rate · This Amt / Prev Amt · Cum Amt */
-  #wocItemTree .hoi-raleaf > :nth-child(2), #wocItemTree .hoi-raleaf > :nth-child(3), #wocItemTree .hoi-raleaf > :nth-child(5) { order: 1; }
-  #wocItemTree .hoi-raleaf > :nth-child(4) { order: 2; flex: 0 0 39%; } #wocItemTree .hoi-raleaf > :nth-child(6), #wocItemTree .hoi-raleaf > :nth-child(8) { order: 2; flex: 0 0 30%; }
-  #wocItemTree .hoi-raleaf > :nth-child(7), #wocItemTree .hoi-raleaf > :nth-child(9) { order: 3; flex: 0 0 50%; font-size: 11px !important; color: var(--muted); }
+  /* v179: cols are Location · WO · Site Cert · Ceiling · Prev · This · Cum · Rate · Prev Amt · This Amt · Cum Amt */
+  #wocItemTree .hoi-raleaf > :nth-child(2), #wocItemTree .hoi-raleaf > :nth-child(5), #wocItemTree .hoi-raleaf > :nth-child(7) { order: 1; }
+  #wocItemTree .hoi-raleaf > :nth-child(6) { order: 2; flex: 0 0 39%; } #wocItemTree .hoi-raleaf > :nth-child(8), #wocItemTree .hoi-raleaf > :nth-child(10) { order: 2; flex: 0 0 30%; }
+  #wocItemTree .hoi-raleaf > :nth-child(3) { order: 3; flex: 0 0 60%; } #wocItemTree .hoi-raleaf > :nth-child(4) { order: 3; flex: 0 0 40%; }
+  #wocItemTree .hoi-raleaf > :nth-child(9), #wocItemTree .hoi-raleaf > :nth-child(11) { order: 4; flex: 0 0 50%; font-size: 11px !important; color: var(--muted); }
+  #wocItemTree .scq-cell { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; }
+  #wocItemTree .scq-cell::before { flex: 0 0 100%; }
+  #wocItemTree .scq-cell { min-width: 0; }
+  #wocItemTree .scq-cell input[type=number] { flex: 1 1 55%; width: 0; min-width: 0; }
+  #wocItemTree .scq-fin { font-size: 12px; } #wocItemTree .scq-fin input { width: 18px; height: 18px; }
+  #wocItemTree .scq-chip { font-size: 10.5px; }
+  #wocItemTree .woc-stage-row > :nth-child(3), #wocItemTree .woc-stage-row > :nth-child(4) { display: none; }
+  #wocScqStrip .scq-req select { min-width: 0; width: 100%; }
+  #wocForm #wocScqStrip .actions-row { position: static; margin: 0; }
   #wobForm h3 + .grid-2[style*="margin-top:10px"], #hobForm h3 + .grid-2[style*="margin-top:10px"] { grid-template-columns: 1fr; }
   .woc-stage-row .woc-stage-name { padding-left: 18px; }
   .woc-stages-host { border-left: 3px solid #e2e8f0; margin-left: 10px; }
@@ -3008,6 +3034,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
     <div class="sub-tab active" data-wotab="orders" onclick="switchWOTab('orders')">Orders</div>
     <div class="sub-tab" data-wotab="cert" onclick="switchWOTab('cert')">Certification</div>
     <div class="sub-tab" data-wotab="billing" onclick="switchWOTab('billing')">Billing</div>
+    <div class="sub-tab" data-wotab="scq" onclick="switchWOTab('scq')">Site Cert. Qty</div>
   </div>
 
 <!-- ── WO ORDERS ── -->
@@ -3193,6 +3220,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
       </div>
     </div>
     <div id="wocItemTree" style="margin-top:12px;"><div class="hoi-empty">Select a Work Order above to load its certifiable lines.</div></div>
+    <div id="wocScqStrip"></div>
     <div id="wocAmwStrip"></div>
     <div id="wocItemFoot" style="margin-top:12px;display:none;">
       <div style="display:flex;justify-content:flex-end;gap:24px;align-items:center;border-top:1px solid var(--border);padding-top:12px;">
@@ -3465,6 +3493,41 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
     </div>
   </div>
 </div><!-- /woTab-billing -->
+
+<!-- ── WO SITE CERTIFIED QTY (v179 · M47) ── -->
+<div id="woTab-scq" style="display:none;">
+  <div class="row" style="justify-content:space-between;margin:16px 0;">
+    <div>
+      <div class="section-title">Site Certified Qty</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px;">What the site actually built, per location. Approved quantities become the certifiable ceiling; the WO value does not change. PM decides up to 10 % of the WO quantity, Admin beyond.</div>
+    </div>
+    <div>
+      <button class="btn btn-primary" id="scq_bulkBtn" style="display:none;" onclick="scqBulkApprove()">✓ Approve Selected</button>
+      <button class="btn btn-ghost" onclick="loadSCQList()">↻ Refresh</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Proposals <span class="badge-count" id="scq_listBadge">0</span></h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:28px;"><input type="checkbox" onchange="_scqSelAll(this.checked)" title="Select all you can approve" style="width:15px;height:15px;"></th>
+            <th>WO · Vendor</th><th>Activity · Location</th><th class="num">WO Qty</th><th class="num">Site Cert. Qty</th><th class="num">Δ Qty</th><th>Reason</th><th>Proposed By</th><th>Status · Tier</th><th>Actions</th>
+          </tr>
+          <tr style="background:var(--input-bg);">
+            <td style="padding:4px 6px;"></td>
+            <td colspan="2" style="padding:4px 6px;"><input id="scqF_q" placeholder="Filter WO, vendor, activity, location, reason…" oninput="renderSCQList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
+            <td colspan="5" style="padding:4px 6px;"></td>
+            <td style="padding:4px 6px;"><select id="scqF_status" onchange="loadSCQList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option>Proposed</option><option>Approved</option><option>Rejected</option><option>Superseded</option><option>All</option></select></td>
+            <td style="padding:4px 6px;text-align:center;"><button onclick="document.getElementById('scqF_q').value='';document.getElementById('scqF_status').value='Proposed';loadSCQList()" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
+          </tr>
+        </thead>
+        <tbody id="scq_listBody"><tr><td colspan="10" class="center muted">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /woTab-scq -->
 </div><!-- /mod-wo -->
 <div class="module" id="mod-payments">
   <div class="sub-tabs">
@@ -6038,6 +6101,7 @@ const PGS_PERM_MAP = {
   canCreateHO:[['ho','C']],     canApproveHO:[['ho','A']],
   canShortCloseHO:[['sc_ho','C']],    canTerminateHO:[['ho_terminate','C']],
   canCreateWOC:[['woc','C']],   canApproveWOC:[['woc','A']],
+  canProposeSCQ:[['wo_scq','C']], canApproveSCQ:[['wo_scq','A']],   // v179 · Site Certified Qty (M47)
   canCreateHOC:[['hoc','C']],   canApproveHOC:[['hoc','A']],
   canCreateWOB:[['wob','C']],
   canCreateHOB:[['hob','C']],
@@ -11258,7 +11322,8 @@ function switchHOTab(tab) {
 }
 
 function switchWOTab(tab) {
-  ['orders','cert','billing'].forEach(t => {
+  (function(){ const t=document.querySelector('.sub-tab[data-wotab="scq"]'); if(t) t.style.display=_scqCanSee()?'':'none'; })();   // v179
+  ['orders','cert','billing','scq'].forEach(t => {
     const el = document.getElementById('woTab-' + t);
     if (el) el.style.display = t === tab ? '' : 'none';
     const stab = document.querySelector(`.sub-tab[data-wotab="${t}"]`);
@@ -11267,6 +11332,7 @@ function switchWOTab(tab) {
   if (tab === 'orders')  loadWOList();
   if (tab === 'cert')    { loadWOCList(); }
   if (tab === 'billing') loadWOBList();
+  if (tab === 'scq')     loadSCQList();   // v179
 }
 
 
@@ -17957,6 +18023,7 @@ let _wocCarry = {};         // oiid → { wbs_code, wbs_activity, cost_subhead }
 
 function _wocResetTree() {
   _wocTree=null; _wocThis={}; _wocStageSel={}; _wocOpenItem={}; _wocOpenGrp={}; _wocCarry={}; _wocFloorArm={};
+  _scqReset();   // v179
   const t=document.getElementById('wocItemTree'); if(t) t.innerHTML='<div class="hoi-empty">Select a Work Order above to load its certifiable lines.</div>';
   const f=document.getElementById('wocItemFoot'); if(f) f.style.display='none';
   ['woc_expandAllBtn','woc_collapseAllBtn','woc_expandLinesBtn','woc_expandTowersBtn'].forEach(id=>{const e=document.getElementById(id); if(e) e.style.display='none';});
@@ -18092,6 +18159,7 @@ async function _wocBuildTree(woNum, preFill) {
       .sort((a,b)=>_siteOrder(a.grp,b.grp));
     return { ...act, groups };
   });
+  await _scqAttach(woNum, items);   // v179
   return { items };
 }
 
@@ -18145,15 +18213,16 @@ function wocRenderTree() {
         <span><span class="lbl">Cumulative Amount:</span> <span id="wocSubCum_${esc(item.id)}" class="muted-val">\u20b9${subCum.toLocaleString('en-IN')}</span></span>
       </div>
       <div class="hoi-body">
-        <div class="hoi-racolh" style="grid-template-columns:1.3fr 56px 56px 60px 56px 54px 74px 78px 82px;">
+        <div class="hoi-racolh" style="${_wocGrid()}">
           <span style="text-align:left;">Location</span>
-          <span>WO Qty</span><span>Prev Qty</span><span>This Qty</span><span>Cum Qty</span><span>Rate \u20b9</span><span>Prev Amt \u20b9</span><span>This Amt \u20b9</span><span>Cum Amt \u20b9</span>
+          <span>WO Qty</span>${_scqHeadHTML()}<span>Prev Qty</span><span>This Qty</span><span>Cum Qty</span><span>Rate \u20b9</span><span>Prev Amt \u20b9</span><span>This Amt \u20b9</span><span>Cum Amt \u20b9</span>
         </div>
         <div class="hoi-loctree">${item.groups.map(g => _wocGrpHTML(item,g)).join('')}</div>
       </div>
     </div>`;
   }).join('');
   wocRecalcTotals();
+  _scqStripRender();   // v179
 }
 
 function _wocGrpHTML(item, g) {
@@ -18203,14 +18272,15 @@ function _wocLeafHTML(item, l, armed) {
   const tqn = _wocLeafThisQty(l);
   const active = tqn>0;
   const cumQty = l.prevQty + tqn;
-  const grid = 'grid-template-columns:1.3fr 56px 56px 60px 56px 54px 74px 78px 82px;';
+  const grid = _wocGrid();   // v179
   if (!staged) {
-    const remaining = Math.max(0, l.woQty - l.prevQty);
+    const remaining = Math.max(0, _scqCeil(l) - l.prevQty);   // v179: ceiling = approved SCQ, else WO qty
     const tq = _wocThis[_wocCellKey(l.oiid,null)];
     return `
-    <div class="hoi-raleaf ${active?'active':''}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
+    <div class="hoi-raleaf ${active?'active':''} ${_scqRowCls(l)}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
       <div><div class="hoi-leaf-name">${esc(l.name)}</div><div class="hoi-leaf-path">${esc(l.path)}</div></div>
       <div class="ro">${l.woQty.toLocaleString('en-IN')}</div>
+      ${_scqCellsHTML(item,l,armed)}
       <div class="ro dim">${l.prevQty.toLocaleString('en-IN')}</div>
       <div>
         ${armed ? `<input type="number" data-oiid="${esc(String(l.oiid))}" min="0" max="${remaining}" step="0.001"
@@ -18230,9 +18300,10 @@ function _wocLeafHTML(item, l, armed) {
   // staged leaf: header row (location) + one row per stage (all stages shown)
   const stageRows = l.stages.map((st,si) => _wocStageRowHTML(item, l, st, si, armed)).join('');
   return `
-  <div class="hoi-raleaf ${active?'active':''}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
+  <div class="hoi-raleaf ${active?'active':''} ${_scqRowCls(l)}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
     <div><div class="hoi-leaf-name">${esc(l.name)}</div><div class="hoi-leaf-path">${esc(l.path)} \u00b7 <em style="color:var(--muted);">${l.stages.length} stages</em></div></div>
     <div class="ro">${l.woQty.toLocaleString('en-IN')}</div>
+    ${_scqCellsHTML(item,l,armed)}
     <div class="ro dim">${l.prevQty.toLocaleString('en-IN')}</div>
     <div class="ro dim">\u2014</div>
     <div class="ro ${active?'':'dim'}" data-cell="cum">${cumQty.toLocaleString('en-IN')}</div>
@@ -18266,7 +18337,7 @@ function _wocStageRowHTML(item, l, st, si, armed) {
   let stagePrev = 0;
   for (let i=0;i<si;i++){ if (l.stages[i].certified) stagePrev += l.stages[i].qty; }
   const cum = stagePrev + (done? st.qty : thisQ);
-  const grid = 'grid-template-columns:1.3fr 56px 56px 60px 56px 54px 74px 78px 82px;';
+  const grid = _wocGrid();   // v179
   let icon, tag, rowCls, cb;
   if (done) {
     icon='\u2705'; tag='<span class="woc-stage-tag done">certified</span>'; rowCls='done';
@@ -18286,6 +18357,7 @@ function _wocStageRowHTML(item, l, st, si, armed) {
   <div class="woc-stage-row ${rowCls}" style="${grid}" data-stagekey="${esc(cellKey)}">
     <div class="woc-stage-name">${cb} <span>${esc(st.name)}</span> <span style="color:var(--muted);">(${st.pct}%)</span> ${tag}</div>
     <div class="ro dim">${st.qty.toLocaleString('en-IN')}</div>
+    <div class="ro dim">\u2014</div><div class="ro dim">\u2014</div>
     <div class="ro dim">${stagePrev.toLocaleString('en-IN')}</div>
     <div class="ro ${thisQ?'this':'dim'}">${thisQ?thisQ.toLocaleString('en-IN'):'\u2014'}</div>
     <div class="ro ${(done||thisQ)?'':'dim'}">${cum.toLocaleString('en-IN')}</div>
@@ -18350,10 +18422,11 @@ function _wocAutoArmFilledFloors(){
 // Non-staged qty entry (focus-preserving + cap at remaining)
 function wocSetThis(oiid, v) {
   const f = _wocFindLeaf(oiid); if (!f) return;
-  const remaining = Math.max(0, f.leaf.woQty - f.leaf.prevQty);
+  const remaining = Math.max(0, _scqCeil(f.leaf) - f.leaf.prevQty);   // v179
   let nv = v, capped = false;
   if (v !== '' && Number(v) > remaining) { nv = String(remaining); capped = true; }
-  try { _amwOverAsk('WO', oiid, f, v, remaining, capped); } catch(_) {}   // v148
+  if (capped && _scq.avail && !_scqIsLS(f.item)) { try { _scqFromOver(oiid, f, v); } catch(_) {} }   // v179
+  else { try { _amwOverAsk('WO', oiid, f, v, remaining, capped); } catch(_) {} }   // v148
   _wocThis[_wocCellKey(oiid,null)] = nv === '' ? '' : Number(nv);
   const tqn = Number(nv)||0;
   const item=f.item, leaf=f.leaf;
@@ -18365,7 +18438,7 @@ function wocSetThis(oiid, v) {
     if (thisAmt){ thisAmt.textContent=(tqn*leaf.rate).toLocaleString('en-IN'); thisAmt.className='ro '+(tqn>0?'this':'dim'); }
     if (cumAmt) cumAmt.textContent=(cum*leaf.rate).toLocaleString('en-IN');
     row.classList.toggle('active', tqn>0);
-    if (capped){ const inp=row.querySelector('input'); if(inp){ inp.value=nv; inp.classList.add('err'); setTimeout(()=>inp.classList.remove('err'),600); } }
+    if (capped){ const inp=row.querySelector('input[data-oiid]'); if(inp){ inp.value=nv; inp.classList.add('err'); setTimeout(()=>inp.classList.remove('err'),600); } }   // v179: the This Qty input, not the Site Cert one
   }
   _wocPatchSubtotal(item);
   wocRecalcTotals();
@@ -18477,6 +18550,7 @@ async function saveWOC_direct() {
   if (!date) { toast('Certification date required','error'); return; }
   if (Object.keys((_amw.over.WO)||{}).length || (_amw.req.WO&&_amw.req.WO.adds&&_amw.req.WO.adds.length)) { toast('Lines are certified beyond the WO quantity \u2014 send the amendment proposal (or remove the extra) before saving','error',7000); return; }   // v148
   if (await _amwCertLocked('WO', woNum)) return;   // v148
+  if (_scqSaveLocked()) return;   // v179
   const fd = getWOCFormData();
   if (!fd.items.length) { toast('Enter quantity or select a stage for at least one item','error'); return; }
   const isRevision = document.getElementById('wocForm').dataset.revising;
@@ -23500,7 +23574,8 @@ function _draftCaptureWOC() {
   // Both maps are captured verbatim — restore replays them after the tree builds.
   const wocThis = { ..._wocThis };
   const stageSel = { ..._wocStageSel };
-  return { header, wocThis, stageSel };
+  const scq = JSON.parse(JSON.stringify(_scq.entry || {}));   // v179
+  return { header, wocThis, stageSel, scq };
 }
 
 async function _draftRestoreWOC(pl) {
@@ -23532,6 +23607,7 @@ async function _draftRestoreWOC(pl) {
     Object.entries(pl.wocThis || {}).forEach(([k,v]) => { _wocThis[k] = v; });
     // Replay staged selections.
     Object.entries(pl.stageSel || {}).forEach(([k,v]) => { if (v) _wocStageSel[k] = true; });
+    Object.entries(pl.scq || {}).forEach(([k,v]) => { if (v && !(_scq.byOi[k]&&_scq.byOi[k].P)) _scq.entry[k] = v; });   // v179
     // Open the items that carry any prefilled entry (find by oiid via _wocFindLeaf).
     const touchedOiids = new Set();
     Object.keys(pl.wocThis || {}).forEach(k => touchedOiids.add(k.split('#')[0]));
@@ -36548,7 +36624,7 @@ const _origInitAppForPU = window.initApp;
 // and role (num / status / fields / actions). Desktop layout reads none of it.
 // ============================================================
 (function(){
-  const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$|^payscan_body$)/;
+  const LIST_RE=/(_listBody$|_unbilledBody$|^stock_body$|^payAppr_body$|^hold_body$|^payHist_body$|^adv_body$|^users_list$|^pyd_(bills|pays|adv|orders)$|^payscan_body$|^scqStrip_body$)/;
   const phone=()=>window.matchMedia&&window.matchMedia('(max-width:640px)').matches;
   function stamp(tb,inModal){
     const table=tb.closest('table'); const hdr=table&&table.tHead&&table.tHead.rows[0]; if(!hdr) return;
@@ -36585,7 +36661,7 @@ const _origInitAppForPU = window.initApp;
     });
   }
   function scan(){ document.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); stampModal(); stampHoi(document); }
-  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); if(t.querySelector&&t.querySelector('.hoi-racolh')) stampHoi(t); } });
+  const mo=new MutationObserver(ms=>{ for(const m of ms){ const t=m.target; if(!t||t.nodeType!==1) continue; if(t.tagName==='TBODY'&&t.id&&LIST_RE.test(t.id)) stamp(t); else if(t.id==='modalContent'||t.closest&&t.closest('#modalContent')) stampModal(); if(t.querySelector&&t.querySelector('.hoi-racolh')) stampHoi(t); if(t.querySelectorAll&&t.tagName!=='TBODY') t.querySelectorAll('tbody[id]').forEach(tb=>{ if(LIST_RE.test(tb.id)) stamp(tb); }); } });   // v179: nested tables
 
   // v175 · PO entry: section headings collapse on phone (siblings up to the next h3)
   document.addEventListener('click', function(e){
@@ -36787,6 +36863,305 @@ window.PAYSCAN=(function(){
   return {pick,run,apply,discard,setVendor,learn,focusDoc,openDoc,parseItems,parseNarr,sim,norm,_S:S};
 })();
 
+// ============================================================
+// v179 · SITE CERTIFIED QTY (M47) — a third quantity per WO line.
+// Estimate stays frozen, WO qty stays as ordered; the site enters what
+// was actually built. Approved SCQ becomes the certifiable ceiling
+// (fn_scq_ceiling inside fn_cert_ceiling). PM decides |Δ| ≤ 10 %, Admin
+// above (server-enforced in rpc_scq_decide). Site qty = WO qty with
+// Final ☑ closes the leaf without approval. All writes via rpc_scq_*.
+// ============================================================
+const _scq = { avail:true, warned:false, reasons:null, byOi:{}, entry:{}, wo:null, queue:[], qStatus:'Proposed', sel:{} };
+function _scqReset(){ _scq.byOi={}; _scq.entry={}; _scq.wo=null; const el=document.getElementById('wocScqStrip'); if(el) el.innerHTML=''; }
+function _scqRpcMissing(err){ const m=String((err&&err.message)||''); return /rpc_scq_|42883|PGRST202|schema cache/i.test(m); }
+function _scqIsLS(item){ return /^LS/i.test(String((item&&item.uom)||'')); }
+function _scqR3(v){ return Math.round(num(v)*1000)/1000; }
+function _scqCeil(leaf){ return (leaf&&leaf.scqA) ? num(leaf.scqA.site_qty) : num(leaf?leaf.woQty:0); }
+function _scqTier(woQty, siteQty){ const w=num(woQty); if(!(w>0)) return 'ADMIN'; return Math.abs(num(siteQty)-w)/w*100 <= 10 ? 'PM' : 'ADMIN'; }
+function _scqPct(woQty, siteQty){ const w=num(woQty); return w>0 ? (num(siteQty)-w)/w*100 : 0; }
+function _scqFmtPct(p){ const s=(p>0?'+':'')+p.toFixed(1)+'%'; return s; }
+function _scqCanSee(){ return state.isViewer || state.isOwner || state.isSuper || hasPerm('canProposeSCQ') || hasPerm('canApproveSCQ') || hasPerm('canCreateWOC') || hasPerm('canApproveWOC') || hasPerm('canApproveWOB'); }
+function _scqIsAdminTier(){ return !!(state.isOwner || state.isSuper); }
+
+// ── load live rows for a WO and attach to the certification tree ──
+async function _scqAttach(woNum, items){
+  _scq.wo = woNum; _scq.byOi = {};
+  if (_scq.avail) {
+    try {
+      const { data, error } = await sb.rpc('rpc_scq_for_wo', { p_wo: woNum });
+      if (error) throw error;
+      (data||[]).forEach(r => {
+        const k = String(r.wo_order_item_id); const b = _scq.byOi[k] || (_scq.byOi[k] = {});
+        if (r.status === 'Approved') b.A = r; else if (r.status === 'Proposed') b.P = r;
+      });
+    } catch(e) {
+      if (_scqRpcMissing(e)) { _scq.avail = false; if (!_scq.warned) { _scq.warned = true; console.warn('SCQ: rpc_scq_for_wo unavailable — run migration M47', e.message); } }
+      else console.warn('rpc_scq_for_wo', e.message);
+    }
+  }
+  (items||[]).forEach(item => _wocLeafAllLeaves(item).forEach(l => _scqApplyLeaf(l)));
+}
+function _scqApplyLeaf(leaf){
+  const b = _scq.byOi[String(leaf.oiid)] || {};
+  leaf.scqA = b.A || null; leaf.scqP = b.P || null;
+  const ceil = _scqCeil(leaf);
+  if (leaf.stages && leaf.stages.length && Math.abs(ceil - num(leaf.woQty)) > 0.0005) {
+    // already-certified stages keep their stored qty; the remaining stages share the ceiling balance by pct
+    let done = 0, remPct = 0;
+    leaf.stages.forEach(st => { if (st.certified) done += num(st.qty); else remPct += num(st.pct); });
+    const bal = Math.max(0, ceil - done);
+    leaf.stages.forEach(st => { if (!st.certified) st.qty = remPct > 0 ? _scqR3(bal * num(st.pct) / remPct) : 0; });
+  }
+}
+function _wocGrid(){ return 'grid-template-columns:1.3fr 56px 96px 64px 56px 60px 56px 54px 74px 78px 82px;'; }
+function _scqHeadHTML(){ return '<span title="Site Certified Qty — what was actually built, proposed from site">Site Cert.</span><span title="Certifiable ceiling: approved Site Certified Qty, else the WO quantity">Ceiling</span>'; }
+function _scqRowCls(leaf){
+  const e = _scq.entry[String(leaf.oiid)];
+  if (leaf.scqP) return leaf.scqP.tier === 'ADMIN' ? 'scq-adm' : 'scq-pm';
+  if (e && _scqEntryPending(leaf, e)) return 'scq-edit';
+  if (leaf.scqA) return 'scq-appr';
+  return '';
+}
+function _scqEntryPending(leaf, e){
+  if (!e) return false;
+  if (e.fin) return true;
+  return e.q !== '' && e.q != null && Math.abs(num(e.q) - _scqCeil(leaf)) > 0.0005;
+}
+function _scqEntryQty(leaf, e){ return (e.q !== '' && e.q != null) ? num(e.q) : num(leaf.woQty); }
+function _scqChip(leaf){
+  if (leaf.scqP) return '<span class="scq-chip '+(leaf.scqP.tier==='ADMIN'?'adm':'pm')+'" title="Proposed '+esc(leaf.scqP.proposed_by||'')+' · awaiting '+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+'">'+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+' pending</span>';
+  if (leaf.scqA) return '<span class="scq-chip ok" title="Approved by '+esc(leaf.scqA.decided_by||'')+(leaf.scqA.decided_at?' on '+fmtDateShort(leaf.scqA.decided_at):'')+'">Approved ✓</span>';
+  return '';
+}
+// two cells: Site Cert. (input + Final ☑ + chip) · Ceiling
+function _scqCellsHTML(item, leaf, armed){
+  const k = esc(String(leaf.oiid));
+  const ceil = _scqCeil(leaf);
+  if (_scqIsLS(item)) return '<div class="ro dim" title="Lump-sum line — use an amendment">LS</div><div class="ro dim">'+ceil.toLocaleString('en-IN')+'</div>';
+  const canP = hasPerm('canProposeSCQ') || hasPerm('canApproveSCQ');
+  if (leaf.scqP) {
+    const p = num(leaf.scqP.site_qty);
+    return '<div class="scq-cell"><input type="number" value="'+p+'" readonly disabled title="Awaiting approval">'+_scqChip(leaf)+'</div>'
+         + '<div class="ro dim scq-ceil" title="Ceiling stays at '+ceil.toLocaleString('en-IN')+' until the proposal is approved">'+ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+p.toLocaleString('en-IN')+'</span></div>';
+  }
+  const e = _scq.entry[String(leaf.oiid)] || { q:'', fin:false };
+  const pend = _scqEntryPending(leaf, e);
+  const shown = pend ? _scqEntryQty(leaf, e) : ceil;
+  if (!canP) return '<div class="scq-cell">'+_scqChip(leaf)+(leaf.scqA?'':'<span class="ro dim">—</span>')+'</div><div class="ro dim scq-ceil">'+ceil.toLocaleString('en-IN')+'</div>';
+  return '<div class="scq-cell">'
+    + '<input type="number" min="0" step="0.001" placeholder="'+ceil+'" value="'+(e.q!==''&&e.q!=null?e.q:'')+'" '+(armed?'':'disabled title="Arm this floor to enter"')
+    + ' oninput="wocSetSCQ(\''+k+'\',this.value)" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()">'
+    + '<label class="scq-fin" title="Site measurement is final for this location — closes the leaf at this quantity"><input type="checkbox" '+(e.fin?'checked':'')+' '+(armed?'':'disabled')+' onchange="wocSetSCQFinal(\''+k+'\',this.checked)"> Final</label>'
+    + _scqChip(leaf) + '</div>'
+    + '<div class="ro '+(pend?'':'dim')+' scq-ceil" data-cell="scqceil">'+(pend && Math.abs(shown-ceil)>0.0005 ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN'))+'</div>';
+}
+function _scqPatchRow(oiid){
+  const f = _wocFindLeaf(oiid); if (!f) return;
+  const row = document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(String(oiid))+'"]');
+  if (!row) return;
+  row.classList.remove('scq-edit','scq-appr','scq-pm','scq-adm'); const c=_scqRowCls(f.leaf); if (c) row.classList.add(c);
+  const cell = row.querySelector('[data-cell="scqceil"]');
+  if (cell) {
+    const e=_scq.entry[String(oiid)]||{q:'',fin:false}, ceil=_scqCeil(f.leaf), pend=_scqEntryPending(f.leaf,e), shown=pend?_scqEntryQty(f.leaf,e):ceil;
+    cell.className = 'ro '+(pend?'':'dim')+' scq-ceil';
+    cell.innerHTML = (pend && Math.abs(shown-ceil)>0.0005) ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN');
+  }
+}
+function wocSetSCQ(oiid, v){
+  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
+  e.q = (v===''||v==null) ? '' : num(v);
+  if (e.q !== '' && e.q < 0) e.q = 0;
+  _scqPatchRow(oiid); _scqStripRender();
+}
+function wocSetSCQFinal(oiid, on){
+  const k=String(oiid); const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
+  e.fin = !!on; _scqPatchRow(oiid); _scqStripRender();
+}
+// called from wocSetThis when the typed This Qty exceeds the ceiling balance:
+// the overrun becomes a Site Certified Qty proposal instead of an amendment ask
+function _scqFromOver(oiid, f, asked){
+  const leaf=f.leaf; const k=String(oiid);
+  if (leaf.scqP) { toast('A Site Certified Qty of '+num(leaf.scqP.site_qty).toLocaleString('en-IN')+' is already awaiting approval on this location','warn',5000); return; }
+  const want=_scqR3(num(leaf.prevQty)+num(asked));
+  const e=_scq.entry[k]||(_scq.entry[k]={q:'',fin:false,reason:'',note:''});
+  e.q=want; e.fin=true;
+  const row=document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(k)+'"]');
+  if(row){ const inp=row.querySelector('.scq-cell input[type=number]'); if(inp) inp.value=want; const cb=row.querySelector('.scq-cell input[type=checkbox]'); if(cb) cb.checked=true; }
+  _scqPatchRow(oiid); _scqStripRender();
+  toast('Beyond the certifiable ceiling — '+want.toLocaleString('en-IN')+' proposed as the Site Certified Qty. Send it for approval below; this certification is capped meanwhile.','warn',7000);
+}
+function _scqPendingList(){
+  const out=[]; if(!_wocTree) return out;
+  _wocTree.items.forEach(item => _wocLeafAllLeaves(item).forEach(l => {
+    const e=_scq.entry[String(l.oiid)]; if(!e || l.scqP || _scqIsLS(item)) return;
+    if(_scqEntryPending(l,e)) out.push({ item, leaf:l, e, q:_scqEntryQty(l,e) });
+  }));
+  return out;
+}
+function _scqAwaiting(){
+  const out=[]; if(!_wocTree) return out;
+  _wocTree.items.forEach(item => _wocLeafAllLeaves(item).forEach(l => { if(l.scqP) out.push({item,leaf:l}); }));
+  return out;
+}
+// Save is locked while a proposal is unsent, or while a line being certified now awaits a decision
+function _scqSaveLocked(){
+  const pend=_scqPendingList();
+  if(pend.length){ toast(pend.length+' Site Certified Qty proposal'+(pend.length>1?'s are':' is')+' not sent yet — send for approval or clear the entry before saving','error',7000); return true; }
+  const wait=_scqAwaiting().filter(x => _wocLeafThisQty(x.leaf) > 0);
+  if(wait.length){ toast(wait.length+' line'+(wait.length>1?'s':'')+' on this certification await'+(wait.length>1?'':'s')+' a Site Certified Qty decision — save the certification as a draft until it is approved','error',8000); return true; }
+  return false;
+}
+async function _scqReasons(force){
+  if(_scq.reasons && !force) return _scq.reasons;
+  try{ const {data,error}=await sb.from('scq_reasons').select('reason_code,reason_text,sort_order').eq('is_active',true).order('sort_order').order('reason_text'); if(error) throw error; _scq.reasons=data||[]; }
+  catch(e){ console.warn('scq_reasons',e.message); _scq.reasons=_scq.reasons||[]; }
+  return _scq.reasons;
+}
+function _scqReasonSel(k, cur){
+  const opts=(_scq.reasons||[]).map(r=>'<option value="'+esc(r.reason_code)+'" '+(r.reason_code===cur?'selected':'')+'>'+esc(r.reason_text)+'</option>').join('');
+  return '<select onchange="_scqSetReason(\''+esc(k)+'\',this)"><option value="">— reason —</option>'+opts+'<option value="__new">＋ Add New Reason…</option></select>';
+}
+async function _scqSetReason(k, sel){
+  const e=_scq.entry[k]; if(!e) return;
+  if(sel.value==='__new'){
+    const label=prompt('New reason for a Site Certified Qty change (goes to Masters › Reason Codes):');
+    if(!label||!label.trim()){ sel.value=e.reason||''; return; }
+    try{ const {data,error}=await sb.rpc('rpc_scq_reason_add',{p_label:label.trim(),p_user:state.userName}); if(error) throw error;
+      await _scqReasons(true); e.reason=data.reason_code; toast('Reason “'+data.reason_text+'” added','success'); _scqStripRender(); }
+    catch(err){ toast(err.message.replace(/^.*PERM_DENIED:\s*/,''),'error',6000); sel.value=e.reason||''; }
+    return;
+  }
+  e.reason=sel.value; sel.classList.remove('scq-bad');
+}
+function _scqStripRender(){
+  const el=document.getElementById('wocScqStrip'); if(!el) return;
+  if(!_wocTree||!_scq.avail){ el.innerHTML=''; return; }
+  const pend=_scqPendingList(), wait=_scqAwaiting();
+  let html='';
+  if(wait.length){
+    html+='<div class="amd-banner freeze" style="margin-top:12px;"><span class="i"></span><div><b>'+wait.length+' location'+(wait.length>1?'s':'')+' on '+esc(_scq.wo||'')+' await'+(wait.length>1?'':'s')+' a Site Certified Qty decision</b> — '
+      +wait.slice(0,4).map(x=>esc(x.item.name)+' · '+esc(x.leaf.name)+' ('+num(x.leaf.scqP.site_qty).toLocaleString('en-IN')+', '+(x.leaf.scqP.tier==='ADMIN'?'Admin':'PM')+')').join('; ')+(wait.length>4?' …':'')
+      +'. Those lines certify up to the current ceiling only; save this certification as a draft if it includes them.</div></div>';
+  }
+  if(pend.length){
+    if(!_scq.reasons) { _scqReasons().then(()=>_scqStripRender()); }
+    const rows=pend.map(x=>{ const k=String(x.leaf.oiid), wo=num(x.leaf.woQty), q=x.q, d=q-wo, pct=_scqPct(wo,q), same=Math.abs(d)<=0.0005, tier=_scqTier(wo,q);
+      return '<tr><td>'+esc(x.item.name)+'<span class="amd-hint" style="text-align:left;">'+esc(x.leaf.name)+'</span></td><td>'+esc(_wocUnit(x.item.uom))+'</td>'
+        +'<td class="num mono">'+wo.toLocaleString('en-IN')+'</td><td class="num mono">'+num(x.leaf.prevQty).toLocaleString('en-IN')+'</td>'
+        +'<td class="num mono"><b>'+q.toLocaleString('en-IN')+'</b></td>'
+        +'<td class="num mono '+(same?'':(d>0?'scq-up':'scq-dn'))+'">'+(same?'—':(d>0?'+':'')+_scqR3(d).toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(pct)+' · '+(d>0?'+':'−')+fmtINR(Math.abs(d)*num(x.leaf.rate))+'</span>')+'</td>'
+        +'<td>'+(same?'<span class="scq-chip ok">closes leaf</span>':'<span class="scq-chip '+(tier==='ADMIN'?'adm':'pm')+'">'+(tier==='ADMIN'?'Admin':'PM')+' approval</span>')+'</td>'
+        +'<td>'+(same?'<span class="muted" style="font-size:11px;">not needed</span>':_scqReasonSel(k,x.e.reason)+'<input placeholder="Note (optional)" value="'+esc(x.e.note||'')+'" oninput="_scq.entry[\''+esc(k)+'\'].note=this.value" style="margin-top:4px;width:100%;padding:4px 6px;font-size:11.5px;">')+'</td>'
+        +'<td><button class="btn btn-ghost btn-sm" onclick="_scqRemove(\''+esc(k)+'\')">Remove</button></td></tr>'; }).join('');
+    const nAppr=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005).length, nClose=pend.length-nAppr;
+    html+='<div class="amd-req scq-req"><div class="hd"><b>Site Certified Qty — '+pend.length+' location'+(pend.length>1?'s':'')+'</b><span>'+(nAppr?nAppr+' need'+(nAppr>1?'':'s')+' approval (PM up to 10 %, Admin beyond)':'')+(nAppr&&nClose?' · ':'')+(nClose?nClose+' close'+(nClose>1?'':'s')+' at the WO quantity, no approval':'')+'. The WO value does not change.</span></div>'
+      +'<div class="table-wrap" style="margin:0;border:0;box-shadow:none;"><table><thead><tr><th>Activity · Location</th><th>UOM</th><th class="num">WO Qty</th><th class="num">Certified</th><th class="num">Site Cert. Qty</th><th class="num">Δ Qty</th><th>Tier</th><th>Reason</th><th></th></tr></thead><tbody id="scqStrip_body">'+rows+'</tbody></table></div>'
+      +'<div class="actions-row" style="margin:0;padding:8px 12px;border:0;"><button class="btn btn-secondary" onclick="_scqSend()">↑ Send For Approval</button><button class="btn btn-ghost" onclick="_scqClearAll()">Clear Entries</button></div></div>';
+  }
+  el.innerHTML=html;
+}
+function _scqRemove(k){ delete _scq.entry[k]; const f=_wocFindLeaf(k); if(f){ const row=document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(k)+'"]'); if(row){ const i=row.querySelector('.scq-cell input[type=number]'); if(i) i.value=''; const c=row.querySelector('.scq-cell input[type=checkbox]'); if(c) c.checked=false; } _scqPatchRow(k); } _scqStripRender(); }
+function _scqClearAll(){ Object.keys(_scq.entry).forEach(k=>delete _scq.entry[k]); wocRenderTree(); _scqStripRender(); }
+async function _scqSend(){
+  const pend=_scqPendingList(); if(!pend.length){ toast('Nothing to send','warn'); return; }
+  const missing=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005 && !(x.e.reason||'').trim());
+  if(missing.length){ document.querySelectorAll('#scqStrip_body select').forEach(s=>{ if(!s.value) s.classList.add('scq-bad'); }); toast('Pick a reason for every location that differs from the WO quantity','error',5000); return; }
+  const below=pend.filter(x=>x.q < num(x.leaf.prevQty)-0.001);
+  if(below.length){ toast(below[0].item.name+' · '+below[0].leaf.name+': '+num(below[0].leaf.prevQty).toLocaleString('en-IN')+' is already certified — the Site Certified Qty cannot be lower','error',7000); return; }
+  const nAppr=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005).length;
+  if(!confirm('Send '+pend.length+' Site Certified Qty entr'+(pend.length>1?'ies':'y')+' on '+_scq.wo+'?'+(nAppr?'\n\n'+nAppr+' need approval. Lines awaiting a decision certify only up to the current ceiling until approved — save this certification as a draft if it includes them.':'\n\nAll equal the WO quantity — the leaves close without approval.'))) return;
+  pbShow('Sending…');
+  try{
+    const items=pend.map(x=>{ const r=(_scq.reasons||[]).find(r=>r.reason_code===x.e.reason); return { wo_order_item_id:x.leaf.oiid, site_qty:x.q, reason_code:x.e.reason||null, reason_text:(x.e.note||'').trim()||null, reason_label:r?r.reason_text:null }; });
+    const {data,error}=await sb.rpc('rpc_scq_propose',{p:{wo_number:_scq.wo,source:'WOC Entry',items},p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*?PERM_DENIED:\s*/,''));
+    pend.forEach(x=>delete _scq.entry[String(x.leaf.oiid)]);
+    await _scqAttach(_scq.wo,_wocTree.items);
+    // re-cap this-period entries against the (possibly lowered) ceilings
+    _wocTree.items.forEach(item=>_wocLeafAllLeaves(item).forEach(l=>{ if(!(l.stages&&l.stages.length)){ const k=_wocCellKey(l.oiid,null); const rem=Math.max(0,_scqCeil(l)-num(l.prevQty)); if(num(_wocThis[k])>rem) _wocThis[k]=rem; } }));
+    wocRenderTree(); _scqStripRender();
+    const p=num(data&&data.proposed), a=num(data&&data.auto_approved);
+    toast((p?p+' sent for approval':'')+(p&&a?' · ':'')+(a?a+' closed at the WO quantity':''),'success',7000);
+    if(p && typeof _draftHasLines==='function' && _draftHasLines('WOC',_draftCaptureWOC())){ try{ await saveDraft('WOC'); }catch(e){} }
+  }catch(e){ toast(e.message,'error',8000); }
+  finally{ pbDone(); }
+}
+
+// ── approval queue (WO › Site Cert. Qty) ─────────────────────────────
+async function loadSCQList(){
+  const tb=document.getElementById('scq_listBody'); if(!tb) return;
+  if(!_scqCanSee()){ tb.innerHTML='<tr><td colspan="10" class="center muted">You do not hold a Work Order right.</td></tr>'; return; }
+  tb.innerHTML='<tr><td colspan="10" class="center muted">Loading…</td></tr>';
+  const st=(document.getElementById('scqF_status')||{}).value||'Proposed'; _scq.qStatus=st;
+  try{ const {data,error}=await sb.rpc('rpc_scq_queue',{p_status:st}); if(error) throw error; _scq.queue=data||[]; _scq.sel={}; renderSCQList(); }
+  catch(e){ tb.innerHTML='<tr><td colspan="10" class="center muted">'+(_scqRpcMissing(e)?'Site Certified Qty needs migration M47 on the database.':esc(e.message))+'</td></tr>'; }
+}
+function _scqCanDecide(r){ if(!hasPerm('canApproveSCQ')) return false; if(r.status!=='Proposed') return false; return r.tier==='PM' || _scqIsAdminTier(); }
+function renderSCQList(){
+  const tb=document.getElementById('scq_listBody'); if(!tb) return;
+  const q=((document.getElementById('scqF_q')||{}).value||'').toLowerCase().trim();
+  const rows=(_scq.queue||[]).filter(r=>!q||[r.wo_number,r.vendor_name,r.description,r.loc_name,r.reason_label,r.proposed_by].some(v=>String(v||'').toLowerCase().includes(q)));
+  const badge=document.getElementById('scq_listBadge'); if(badge) badge.textContent=rows.length;
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="10" class="center muted">'+(_scq.qStatus==='Proposed'?'Nothing awaiting a Site Certified Qty decision.':'No rows.')+'</td></tr>'; return; }
+  const canA=hasPerm('canApproveSCQ');
+  tb.innerHTML=rows.map(r=>{
+    const d=num(r.delta_qty), pct=num(r.delta_pct), pend=r.status==='Proposed', dec=_scqCanDecide(r);
+    const stCls={Proposed:'pending-approval',Approved:'approved',Rejected:'rejected',Superseded:'short-closed'}[r.status]||'';
+    let acts='';
+    if(dec) acts='<button class="btn btn-primary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Approve\')">✓ Approve</button> <button class="btn btn-secondary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Edit\')" title="Approve at a different quantity">✎ Edit &amp; Approve</button> <button class="btn btn-danger btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Reject\')">✕ Reject</button>';
+    else if(pend && canA && r.tier==='ADMIN') acts='<button class="btn btn-secondary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Recommend\')" title="Beyond 10 % — only Admin can decide; add your recommendation">→ Recommend</button>'+(r.recommended_by?'<span class="amd-hint" style="text-align:left;">Recommended by '+esc(r.recommended_by)+'</span>':'');
+    else if(!pend) acts='<span style="font-size:11px;color:var(--muted);">'+esc(r.decided_by||'')+(r.decided_at?' · '+fmtDateShort(r.decided_at):'')+(r.decision_note?'<br>'+esc(r.decision_note):'')+'</span>';
+    return '<tr class="'+(pend?(r.tier==='ADMIN'?'scq-q-adm':'scq-q-pm'):'')+'">'
+      +'<td>'+(dec?'<input type="checkbox" '+(_scq.sel[r.id]?'checked':'')+' onchange="_scq.sel[\''+esc(r.id)+'\']=this.checked;_scqBulkBtn()" style="width:15px;height:15px;">':'')+'</td>'
+      +'<td><b>'+esc(r.wo_number)+'</b><span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.vendor_name||'')+'</span></td>'
+      +'<td>'+esc(r.description||'')+'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.loc_name||'')+(r.uom?' · '+esc(_wocUnit(r.uom)):'')+'</span></td>'
+      +'<td class="num mono">'+num(r.wo_qty).toLocaleString('en-IN')+'<span class="amd-hint">cert. '+num(r.certified).toLocaleString('en-IN')+'</span></td>'
+      +'<td class="num mono"><b>'+num(r.site_qty).toLocaleString('en-IN')+'</b>'+(r.est_qty!=null?'<span class="amd-hint">est. '+num(r.est_qty).toLocaleString('en-IN')+'</span>':'')+'</td>'
+      +'<td class="num mono '+(d>0?'scq-up':d<0?'scq-dn':'')+'">'+(d>0?'+':'')+d.toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(pct)+' · '+(d>=0?'+':'−')+fmtINR(Math.abs(num(r.delta_amt)))+'</span></td>'
+      +'<td>'+(r.reason_label?'<span class="scq-chip rs">'+esc(r.reason_label)+'</span>':'')+(r.reason_text?'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.reason_text)+'</span>':'')+'</td>'
+      +'<td>'+esc(r.proposed_by||'')+'<span class="amd-hint" style="text-align:left;">'+fmtDateShort(r.proposed_at)+' · '+esc(r.source||'')+'</span></td>'
+      +'<td><span class="status '+stCls+'">'+esc(r.status)+'</span><span class="scq-chip '+(r.tier==='ADMIN'?'adm':'pm')+'" style="margin-left:4px;">'+(r.tier==='ADMIN'?'Admin':'PM')+'</span></td>'
+      +'<td style="white-space:nowrap;">'+acts+'</td></tr>';
+  }).join('');
+  _scqBulkBtn();
+}
+function _scqBulkBtn(){ const b=document.getElementById('scq_bulkBtn'); if(!b) return; const n=Object.values(_scq.sel).filter(Boolean).length; b.style.display=n?'':'none'; b.textContent='✓ Approve Selected ('+n+')'; }
+function _scqSelAll(on){ (_scq.queue||[]).forEach(r=>{ if(_scqCanDecide(r)) _scq.sel[r.id]=!!on; }); renderSCQList(); }
+async function scqDecide(id, action){
+  const r=(_scq.queue||[]).find(x=>x.id===id); if(!r) return;
+  if(!hasPerm('canApproveSCQ')){ toast('Not permitted','error'); return; }
+  const lbl=r.description+' · '+(r.loc_name||'')+' on '+r.wo_number;
+  let p_action=action, p_site_qty=null, p_note=null;
+  if(action==='Edit'){
+    const v=prompt('Approve '+lbl+' at a different Site Certified Qty (WO '+num(r.wo_qty).toLocaleString('en-IN')+', proposed '+num(r.site_qty).toLocaleString('en-IN')+'):', String(r.site_qty));
+    if(v==null) return; if(!(num(v)>=0)||v.trim()===''){ toast('Enter a quantity','error'); return; }
+    p_site_qty=num(v); p_action='Approve';
+    if(_scqTier(r.wo_qty,p_site_qty)==='ADMIN' && !_scqIsAdminTier()){ toast('That quantity is beyond 10 % of the WO quantity — only Admin can approve it','error',6000); return; }
+    p_note=prompt('Note (optional):')||null;
+  } else if(action==='Approve'){
+    if(!confirm('Approve Site Certified Qty '+num(r.site_qty).toLocaleString('en-IN')+' for '+lbl+'?\n\nThe certifiable ceiling moves to this quantity. The WO value does not change.')) return;
+  } else if(action==='Reject'){
+    const n=prompt('Reject '+lbl+'. Note to the proposer:'); if(n==null) return; if(!n.trim()){ toast('A note is required to reject','error'); return; } p_note=n.trim();
+  } else if(action==='Recommend'){
+    const n=prompt('Your recommendation to Admin for '+lbl+':'); if(n==null) return; p_note=n.trim()||null;
+  }
+  pbShow('Saving…');
+  try{
+    const {data,error}=await sb.rpc('rpc_scq_decide',{p_id:id,p_action:p_action,p_site_qty:p_site_qty,p_note:p_note,p_user:state.userName});
+    if(error) throw new Error(error.message.replace(/^.*?PERM_DENIED:\s*/,''));
+    toast(action==='Recommend'?'Recommendation noted':'Site Certified Qty '+(data.status||'').toLowerCase()+(data.edited?' at '+num(data.site_qty).toLocaleString('en-IN'):''),'success',5000);
+    await loadSCQList(); if(typeof loadDashPendingCards==='function' && document.getElementById('dash-cards-container')) { try{ loadDashPendingCards(); }catch(e){} }
+  }catch(e){ toast(e.message,'error',8000); }
+  finally{ pbDone(); }
+}
+async function scqBulkApprove(){
+  const ids=Object.keys(_scq.sel).filter(k=>_scq.sel[k]); if(!ids.length) return;
+  if(!confirm('Approve '+ids.length+' Site Certified Qty proposal'+(ids.length>1?'s':'')+' as proposed?')) return;
+  pbShow('Approving…'); let ok=0, bad=[];
+  for(const id of ids){ try{ const {error}=await sb.rpc('rpc_scq_decide',{p_id:id,p_action:'Approve',p_site_qty:null,p_note:null,p_user:state.userName}); if(error) throw error; ok++; }catch(e){ bad.push(e.message.replace(/^.*?PERM_DENIED:\s*/,'')); } }
+  pbDone(); toast(ok+' approved'+(bad.length?' · '+bad.length+' failed: '+bad[0]:''),bad.length?'warn':'success',7000);
+  await loadSCQList();
+}
 // ============================================================
 // SORTABLE TABLES
 // ============================================================
@@ -38247,6 +38622,9 @@ const DASH_CARDS_NEW = [
   { id:'nx_est_rej', req:['estimate','C'], label:'My Estimates Rejected', sub:'Submissions sent back — revise & resubmit', cls:'urgent',
     nav:function(){navDash('plan','','');},
     query:function(){return sb.from('wbs_scope_submissions').select('id',{count:'exact',head:true}).eq('status','rejected').eq('submitted_by',state.userName);} },
+  { id:'nx_scq_appr', req:['wo_scq','A'], label:'Site Certified Qty to Approve', sub:'Site measurements awaiting a decision', cls:'warn',
+    nav:function(){navDash('wo','scq','');},
+    query:function(){return sb.from('wo_item_site_qty').select('id',{count:'exact',head:true}).eq('status','Proposed');} },   // v179
   { id:'nx_grn_held', req:['grn','C'], label:'Parked Receipts', sub:'Received beyond PO balance — waiting on amendment', cls:'info',
     nav:function(){navDash('purchase','grn','');},
     query:function(){return sb.from('pu_grn_held_receipts').select('id',{count:'exact',head:true}).eq('status','Held');} },
@@ -38288,6 +38666,7 @@ const DASH_CARD_GROUP = {
   qs_pay:'pay', nx_pay_appr:'pay', pm_bills_pay:'pay', nx_hold_appr:'pay', nx_hold_open:'pay', nx_mst_appr:'mst',
   // v174
   nx_amd_appr:'po', nx_amd_corr:'po', nx_amd_req:'po', nx_grn_held:'po', nx_est_appr:'est', nx_est_rej:'est',
+  nx_scq_appr:'wo',   // v179
   // Everything else (MIR/RFQ/QC/PO/GRN/POB/MIS) defaults to 'po'
 };
 const DASH_GROUP_META = {

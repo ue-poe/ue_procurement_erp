@@ -350,6 +350,14 @@ tr.pay-del td { opacity: .62; }
 .scq-req th { background:#fffdf3; color:#78350f; border-bottom:1px solid #fcd34d; } .scq-req td { vertical-align:top; }
 .scq-req select { min-width:160px; padding:4px 6px; font-size:11.5px; } .scq-req select.scq-bad { border-color:var(--danger); background:#fef2f2; }
 tr.scq-q-adm td:first-child { box-shadow:inset 3px 0 0 #dc2626; } tr.scq-q-pm td:first-child { box-shadow:inset 3px 0 0 #f59e0b; }
+/* v180 · recovery */
+.hoi-raleaf.scq-rec { box-shadow:inset 3px 0 0 #dc2626; background:#fef2f2; }
+.scq-chip.rec { background:#fee2e2; color:#991b1b; }
+tr.scq-q-rec td { background:#fef2f2; } tr.scq-q-rec td:first-child { box-shadow:inset 3px 0 0 #dc2626; }
+.hoi-raleaf input.scq-recin:disabled { color:#b91c1c; font-weight:700; background:#fff; border-color:#fca5a5; }
+.status.recoverable { background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; }
+.status.recovered { background:#e2e8f0; color:#475569; border:1px solid #cbd5e1; }
+.pay-credit { display:block; margin-top:3px; font-size:10.5px; color:#991b1b; font-weight:600; } .pay-credit a { color:#1d4ed8; cursor:pointer; text-decoration:underline; margin-left:4px; }
 /* v178 · scan-to-payment review strip */
 .ps-strip .table-wrap { background:#fff; margin-top:4px; }
 .ps-tbl { font-size:12px; } .ps-tbl th { background:var(--navy-print,#1e3a5f); color:#dbe7f8; font-size:10.5px; letter-spacing:.4px; border-bottom:0; } .ps-tbl td { padding:6px 9px; vertical-align:top; }
@@ -3484,7 +3492,7 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
             <td style="padding:4px 6px;"><input id="wobF_certnum" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="wobF_vendor" placeholder="Filter&#8230;" oninput="renderWOBList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
-            <td style="padding:4px 6px;"><select id="wobF_status" onchange="renderWOBList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Unpaid</option><option>Partial</option><option>Paid</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option></select></td>
+            <td style="padding:4px 6px;"><select id="wobF_status" onchange="renderWOBList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Unpaid</option><option>Partial</option><option>Paid</option><option>Recoverable</option><option>Recovered</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('wobF_number','wobF_vendor','wobF_wonum','wobF_certnum','wobF_dateFrom','wobF_dateTo','wobF_status','renderWOBList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
         </thead>
@@ -3494,33 +3502,30 @@ table.pgp-roles, table.pgp-mx{ border-collapse:collapse; width:100%; }
   </div>
 </div><!-- /woTab-billing -->
 
-<!-- ── WO SITE CERTIFIED QTY (v179 · M47) ── -->
+<!-- ── WO SITE CERTIFIED QTY (v180 · M47 + M51) — history ── -->
 <div id="woTab-scq" style="display:none;">
   <div class="row" style="justify-content:space-between;margin:16px 0;">
     <div>
       <div class="section-title">Site Certified Qty</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:2px;">What the site actually built, per location. Approved quantities become the certifiable ceiling; the WO value does not change. PM decides up to 10 % of the WO quantity, Admin beyond.</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px;">What the site actually built, per location — entered on the certification and approved with it. Approved quantities are the certifiable ceiling; a site qty below what was certified is recovered on the same certification. The WO value does not change.</div>
     </div>
     <div>
-      <button class="btn btn-primary" id="scq_bulkBtn" style="display:none;" onclick="scqBulkApprove()">✓ Approve Selected</button>
       <button class="btn btn-ghost" onclick="loadSCQList()">↻ Refresh</button>
     </div>
   </div>
   <div class="card">
-    <h3>Proposals <span class="badge-count" id="scq_listBadge">0</span></h3>
+    <h3>Site Certified Quantities <span class="badge-count" id="scq_listBadge">0</span></h3>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th style="width:28px;"><input type="checkbox" onchange="_scqSelAll(this.checked)" title="Select all you can approve" style="width:15px;height:15px;"></th>
-            <th>WO · Vendor</th><th>Activity · Location</th><th class="num">WO Qty</th><th class="num">Site Cert. Qty</th><th class="num">Δ Qty</th><th>Reason</th><th>Proposed By</th><th>Status · Tier</th><th>Actions</th>
+            <th>WO · Vendor</th><th>Activity · Location</th><th class="num">Est. Qty</th><th class="num">WO Qty</th><th class="num">Site Cert. Qty</th><th class="num">Δ vs WO</th><th class="num">Recovery</th><th>Reason</th><th>Via</th><th>Status</th>
           </tr>
           <tr style="background:var(--input-bg);">
-            <td style="padding:4px 6px;"></td>
-            <td colspan="2" style="padding:4px 6px;"><input id="scqF_q" placeholder="Filter WO, vendor, activity, location, reason…" oninput="renderSCQList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
-            <td colspan="5" style="padding:4px 6px;"></td>
-            <td style="padding:4px 6px;"><select id="scqF_status" onchange="loadSCQList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option>Proposed</option><option>Approved</option><option>Rejected</option><option>Superseded</option><option>All</option></select></td>
-            <td style="padding:4px 6px;text-align:center;"><button onclick="document.getElementById('scqF_q').value='';document.getElementById('scqF_status').value='Proposed';loadSCQList()" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
+            <td colspan="2" style="padding:4px 6px;"><input id="scqF_q" placeholder="Filter WO, WOC, vendor, activity, location, reason…" oninput="renderSCQList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
+            <td colspan="6" style="padding:4px 6px;"></td>
+            <td style="padding:4px 6px;"><select id="scqF_status" onchange="loadSCQList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option>Approved</option><option value="Proposed">With WOC · pending</option><option>Rejected</option><option>Superseded</option><option>All</option></select></td>
+            <td style="padding:4px 6px;text-align:center;"><button onclick="document.getElementById('scqF_q').value='';document.getElementById('scqF_status').value='Approved';loadSCQList()" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
         </thead>
         <tbody id="scq_listBody"><tr><td colspan="10" class="center muted">Loading…</td></tr></tbody>
@@ -7608,7 +7613,7 @@ async function apiSaveWOC(data) {
   _cacheBust('wocList','unbilledWOCs');
   pbShow('Saving WO certification\u2026');
   try {
-    const items = (data.items||[]).filter(it => it.certValue > 0).map(it => ({
+    const items = (data.items||[]).filter(it => Math.abs(num(it.certValue)) > 0.0005).map(it => ({   // v180: a recovery line is negative
       sno: it.sno, description: it.description, uom: it.uom||null,
       wo_qty: it.woQty, prev_cumulative_qty: it.prevCumulativeQty||0,
       this_period_qty: it.thisPeriodQty||0, cumulative_qty: it.cumulativeQty||0,
@@ -7627,7 +7632,7 @@ async function apiSaveWOC(data) {
             period_to: data.periodTo||null, gross_value: data.grossValue,
             remarks: data.remarks||null, status: 'Pending Approval', rejection_reason: null,
             certified_by: data.certifiedBy, certified_by_id: state.userId
-          }, items }
+          }, items, scq: data.scq||[] }
       : { parent:data.woNumber,
           header:{
             woc_date: data.wocDate,
@@ -7635,7 +7640,7 @@ async function apiSaveWOC(data) {
             period_to: data.periodTo||null, certified_by: data.certifiedBy,
             certified_by_id: state.userId, gross_value: data.grossValue,
             remarks: data.remarks||null, status: 'Pending Approval', rejection_reason: null
-          }, items };
+          }, items, scq: data.scq||[] };
     const res = await puRPC('rpc_save_woc', payload);
     data.wocNumber = res.doc_number;
     const numEl = document.getElementById('woc_number');
@@ -9379,7 +9384,7 @@ function stick(totId){
 }
 function setTot(totId,html){const tr=$(totId);if(tr)tr.innerHTML=html;stick(totId);}
 const th=(v,cls)=>'<th'+(cls?' class="'+cls+'"':'')+'>'+v+'</th>';
-const BUCKET={over:'Overdue',wk:'Due in 7 days',m1:'Due in 8 – 30 days',m2:'Due in 31 – 60 days',m3:'Due after 60 days',hold:'Not yet payable',blocked:'On payment hold'};
+const BUCKET={over:'Overdue',wk:'Due in 7 days',m1:'Due in 8 – 30 days',m2:'Due in 31 – 60 days',m3:'Due after 60 days',hold:'Not yet payable',blocked:'On payment hold',credit:'Recovery credit'};   // v180
 /* shell shims — IIFE-local; RPB/RTOAST in the Material IIFE are not visible here */
 function RTOAST(m,t){ try{ toast(m,t||'info',6000); }catch(e){ console.warn(m); } }
 function RPB(l){ try{ pbShow(l); }catch(e){} }
@@ -9959,6 +9964,7 @@ async function reload(){
     if(led.error)throw led.error;
     const d=led.data||{};
     P.allBills=d.bills||[];
+    P.credits=(d.bills||[]).filter(b=>b.status==='Recoverable').map(b=>({no:b.bill_number,v:b.vendor_name,date:b.bill_date,ord:b.order_no,amt:-N(b.due),net:-N(b.net_payable)}));   // v180: unapplied recovery credits
     P.bills=(d.bills||[]).filter(b=>['Unpaid','Partial','Paid'].indexOf(b.status)>=0)
       .map(b=>({no:b.bill_number,t:b.bill_type,v:b.vendor_name,ord:b.order_no,date:b.bill_date,due_date:b.due_date,
                 net_payable:N(b.net_payable),paid:N(b.paid),ret:N(b.retention),hold:N(b.hold),
@@ -10020,12 +10026,15 @@ function render(){
     const selAmt=selRows.reduce((s,b)=>s+N(P.sel[b.no]),0);
     const tot=bs.reduce((s,b)=>s+os(b),0);
     const allOn=live.length>0&&live.every(b=>P.sel[b.no]!=null);
+    const cr=(P.credits||[]).filter(c=>c.v===v&&c.amt>0.005), crAmt=cr.reduce((s,c)=>s+c.amt,0);   // v180
     const vc='<td class="l vc '+(selRows.length?'has':'')+'" rowspan="'+bs.length+'">'+
       '<label class="vwrap">'+
       '<input type="checkbox" '+(allOn?'checked':'')+' '+(live.length?'':'disabled')+' onclick="PAY.pickV(\''+Q(v)+'\',this.checked)" style="margin-top:3px">'+
       '<span><span class="vnm">'+E(v)+'</span>'+
       '<span class="vmeta">'+bs.length+' bill'+(bs.length>1?'s':'')+' · <b>'+INR(tot)+'</b> o/s</span>'+
-      (selRows.length?'<span class="vsel">'+selRows.length+' sel · '+INR(selAmt)+'</span>':'')+'</span></label></td>';
+      (selRows.length?'<span class="vsel">'+selRows.length+' sel · '+INR(selAmt)+'</span>':'')+
+      (cr.length?'<span class="pay-credit" title="'+E(cr.map(c=>c.no+' · '+INR(c.amt)).join(', '))+'">↩ Credit '+INR(crAmt)+' <span class="pay-dm">recovery · '+E(cr[0].no.split('/').slice(-2).join('/'))+(cr.length>1?' +'+(cr.length-1):'')+'</span> <a onclick="event.preventDefault();event.stopPropagation();PAY.applyCredit(\''+Q(v)+'\')">Apply</a></span>':'')+   // v180
+      '</span></label></td>';
     bs.forEach((b,i)=>{body+=row(b,i===0?vc:'',i===0);T.inv+=b.inv;T.ded+=dedOf(b);T.net+=b.inv-dedOf(b);T.paid+=b.paid;T.os+=b.blocked?0:os(b);});
   });
   $('pay_groups').innerHTML=names.length?
@@ -10076,6 +10085,19 @@ function row(b,vc,first){
     'oninput="PAY.setAmt(\''+Q(k)+'\',this.value)" onwheel="this.blur()" '+(on?'':'disabled')+'>'+
     '<div class="pay-warn" id="pwarn_'+E(k)+'">over o/s</div>'+
     '<div class="ph-q ph-only"><span onclick="PAY.quick(\''+Q(k)+'\',\'full\')">Full</span><span onclick="PAY.quick(\''+Q(k)+'\',\'half\')">Half</span><span onclick="PAY.quick(\''+Q(k)+'\',\'clear\')">Clear</span></div></td></tr>';   // v177 phone shortcuts
+}
+// v180: apply a vendor's recovery credit (a Recoverable WOB) — FIFO across the vendor's open bills as a Credit Note voucher
+function applyCredit(v){
+  const cr=(P.credits||[]).filter(c=>c.v===v&&c.amt>0.005); if(!cr.length)return;
+  const c=cr[0]; let left=Number(c.amt.toFixed(2));
+  const open=P.bills.filter(b=>b.v===v&&!b.blocked&&os(b)>0.005).sort((a,b)=>String(a.due_date).localeCompare(String(b.due_date)));
+  if(!open.length){ TOAST('No open bill of '+v+' to set the credit against — it stays as a credit until the next bill','warn',6000); return; }
+  P.bills.filter(b=>b.v===v).forEach(b=>{ delete P.sel[b.no]; });
+  open.forEach(b=>{ if(left<=0.005)return; const a=Math.min(left,Number(os(b).toFixed(2))); P.sel[b.no]=a; left=Number((left-a).toFixed(2)); });
+  P.split='vendor'; render();
+  const G=groupsForSplit(); const i=G.findIndex(g=>g.vendor===v);
+  if(i>=0){ P.xf['x'+i]=Object.assign(P.xf['x'+i]||{mode:'NEFT',utr:'',ref:''},{mode:'Credit Note',utr:c.no,cndate:c.date}); renderXfers(); totals(); }
+  TOAST('Credit '+INR(c.amt-left)+' from '+c.no+' set against '+Object.keys(P.sel).filter(k=>open.some(b=>b.no===k)).length+' bill(s) as a Credit Note'+(left>0.005?' · '+INR(left)+' stays as credit':'')+' — review step 2 and submit','success',8000);
 }
 function pick(k,on){
   const b=P.bills.find(x=>x.no===k); if(!b)return;
@@ -11228,7 +11250,7 @@ async function tdsSubmit(){
 }
 
 window.PAY={
-  reload:reload, render:render, reset:reset, review:review, submit:submit,
+  reload:reload, render:render, reset:reset, review:review, submit:submit, applyCredit:applyCredit,   // v180
   _x:function(){ return {P:P,os:os,render:render,renderXfers:renderXfers,totals:totals,step:step,groupsForSplit:groupsForSplit,lines:lines}; },   // v178 · scan-to-payment
   setShow:function(v,el){P.show=v;seg(el);render()},
   setType:function(v,el){P.type=v;seg(el);render()},
@@ -18177,6 +18199,7 @@ function _wocLeafAllLeaves(item){
 
 // "active" = has any this-period qty (non-staged entered, or any stage selected)
 function _wocLeafThisQty(leaf){
+  const _r=_scqRecov(leaf); if (_r>0) return -_r;   // v180: recovery line
   if (leaf.stages && leaf.stages.length) {
     let q=0;
     leaf.stages.forEach(st => { if (_wocStageSel[_wocCellKey(leaf.oiid, st.id)]) q += st.qty; });
@@ -18274,7 +18297,7 @@ function _wocLeafHTML(item, l, armed) {
   const cumQty = l.prevQty + tqn;
   const grid = _wocGrid();   // v179
   if (!staged) {
-    const remaining = Math.max(0, _scqEff(l) - l.prevQty);   // v179: working ceiling (approved SCQ / WO qty, or a lower site qty entered)
+    const remaining = _scqR3(Math.max(0, _scqEff(l) - l.prevQty));   // v179/v180: working ceiling, 3 dp
     const tq = _wocThis[_wocCellKey(l.oiid,null)];
     return `
     <div class="hoi-raleaf ${active?'active':''} ${_scqRowCls(l)}" data-oiid="${esc(String(l.oiid))}" style="${grid}">
@@ -18283,7 +18306,7 @@ function _wocLeafHTML(item, l, armed) {
       ${_scqCellsHTML(item,l,armed)}
       <div class="ro dim">${l.prevQty.toLocaleString('en-IN')}</div>
       <div>
-        ${armed ? `<input type="number" data-oiid="${esc(String(l.oiid))}" min="0" max="${remaining}" step="0.001"
+        ${_scqRecov(l)>0 ? _scqRecovCell(l) : armed ? `<input type="number" data-oiid="${esc(String(l.oiid))}" min="0" max="${remaining}" step="0.001"
           value="${tq!==undefined&&tq!==''?tq:''}" placeholder="0"
           oninput="wocSetThis('${esc(String(l.oiid))}',this.value)" onwheel="this.blur()"
           onkeydown="if(event.key==='ArrowUp'||event.key==='ArrowDown')event.preventDefault()">
@@ -18305,7 +18328,7 @@ function _wocLeafHTML(item, l, armed) {
     <div class="ro">${l.woQty.toLocaleString('en-IN')}</div>
     ${_scqCellsHTML(item,l,armed)}
     <div class="ro dim">${l.prevQty.toLocaleString('en-IN')}</div>
-    <div class="ro dim">\u2014</div>
+    <div>${_scqRecov(l)>0 ? _scqRecovCell(l) : '<span class="ro dim">\u2014</span>'}</div>
     <div class="ro ${active?'':'dim'}" data-cell="cum">${cumQty.toLocaleString('en-IN')}</div>
     <div class="ro dim">${l.rate.toLocaleString('en-IN')}</div>
     <div class="ro dim">${(l.prevQty*l.rate).toLocaleString('en-IN')}</div>
@@ -18342,8 +18365,8 @@ function _wocStageRowHTML(item, l, st, si, armed) {
   if (done) {
     icon='\u2705'; tag='<span class="woc-stage-tag done">certified</span>'; rowCls='done';
     cb=`<span class="woc-stage-cb disabled" title="Already certified">\u2705</span>`;
-  } else if (!armed) {
-    icon='\ud83d\udd12'; tag='<span class="woc-stage-tag locked">floor locked</span>'; rowCls='locked';
+  } else if (!armed || _scqRecov(l)>0) {
+    icon='\ud83d\udd12'; tag='<span class="woc-stage-tag locked">'+(_scqRecov(l)>0?'recovery':'floor locked')+'</span>'; rowCls='locked';
     cb=`<span class="woc-stage-cb disabled" title="Arm this floor to certify">\u2610</span>`;
   } else if (!unlocked) {
     icon='\ud83d\udd12'; tag='<span class="woc-stage-tag locked">locked</span>'; rowCls='locked';
@@ -18422,7 +18445,7 @@ function _wocAutoArmFilledFloors(){
 // Non-staged qty entry (focus-preserving + cap at remaining)
 function wocSetThis(oiid, v) {
   const f = _wocFindLeaf(oiid); if (!f) return;
-  const remaining = Math.max(0, _scqEff(f.leaf) - f.leaf.prevQty);   // v179: working ceiling
+  const remaining = _scqR3(Math.max(0, _scqEff(f.leaf) - f.leaf.prevQty));   // v179: working ceiling · v180: 3 dp
   let nv = v, capped = false;
   if (v !== '' && Number(v) > remaining) { nv = String(remaining); capped = true; }
   if (capped && _scq.avail && !_scqIsLS(f.item)) { try { _scqFromOver(oiid, f, v); } catch(_) {} }   // v179
@@ -18485,7 +18508,7 @@ function _wocPatchSubtotal(item) {
 function wocRecalcTotals() {
   let total=0, lines=0;
   if (_wocTree) _wocTree.items.forEach(it => _wocLeafAllLeaves(it).forEach(l => {
-    const tq=_wocLeafThisQty(l); if (tq>0){ lines++; total+=tq*l.rate; }
+    const tq=_wocLeafThisQty(l); if (tq){ lines++; total+=tq*l.rate; }   // v180: recoveries count
   }));
   const lc=document.getElementById('woc_lineCount'); if(lc) lc.textContent=lines;
   const tc=document.getElementById('woc_totalCertified'); if(tc) tc.textContent=fmtINR(total);
@@ -18499,6 +18522,17 @@ function getWOCFormData() {
   let sno = 0;
   if (_wocTree) _wocTree.items.forEach(item => _wocLeafAllLeaves(item).forEach(l => {
     const carry = _wocCarry[l.oiid] || {};
+    const _rec = _scqRecov(l);   // v180: recovery — one negative line, pinned to the last certified stage
+    if (_rec > 0) {
+      const _last = [...(l.stages||[])].reverse().find(s => s.certified);
+      items.push({ sno: ++sno, description: item.name, uom: item.uom||null,
+        woQty: l.woQty, prevCumulativeQty: l.prevQty, thisPeriodQty: -_rec, cumulativeQty: l.prevQty - _rec,
+        prevCumulativePct: 0, thisPeriodPct: 0, cumulativePct: 0,
+        unitRate: l.rate, certValue: -_rec * l.rate, wo_order_item_id: l.oiid,
+        wbs_node_id: l.wbsNodeId||null, loc_node_id: l.locNodeId||null, stage_id: _last ? _last.id : null,
+        wbs_code: carry.wbs_code, wbs_activity: carry.wbs_activity, cost_subhead: carry.cost_subhead });
+      return;
+    }
     if (l.stages && l.stages.length) {
       // one cert item per stage selected this WOC
       let stagePrevRun = 0;
@@ -18525,7 +18559,7 @@ function getWOCFormData() {
       });
     } else {
       const thisQ = Number(_wocThis[_wocCellKey(l.oiid,null)])||0;
-      if (!(thisQ > 0)) return;
+      if (!thisQ) return;   // v180: negative = recovery
       items.push({
         sno: ++sno, description: item.name, uom: item.uom||null,
         woQty: l.woQty, prevCumulativeQty: l.prevQty, thisPeriodQty: thisQ,
@@ -18550,9 +18584,9 @@ async function saveWOC_direct() {
   if (!date) { toast('Certification date required','error'); return; }
   if (Object.keys((_amw.over.WO)||{}).length || (_amw.req.WO&&_amw.req.WO.adds&&_amw.req.WO.adds.length)) { toast('Lines are certified beyond the WO quantity \u2014 send the amendment proposal (or remove the extra) before saving','error',7000); return; }   // v148
   if (await _amwCertLocked('WO', woNum)) return;   // v148
-  if (_scqSaveLocked()) return;   // v179
+  const _scqItems = _scqPayload(); if (_scqItems === null) return;   // v180: reasons required; approved with the WOC
   const fd = getWOCFormData();
-  if (!fd.items.length) { toast('Enter quantity or select a stage for at least one item','error'); return; }
+  if (!fd.items.length && !(_scqItems||[]).length) { toast('Enter quantity or select a stage for at least one item','error'); return; }
   const isRevision = document.getElementById('wocForm').dataset.revising;
   const data = {
     wocNumber: document.getElementById('woc_number').value,
@@ -18561,7 +18595,7 @@ async function saveWOC_direct() {
     periodTo: document.getElementById('woc_periodTo').value,
     certifiedBy: document.getElementById('woc_certifiedBy').value,
     remarks: document.getElementById('woc_remarks').value,
-    grossValue: fd.grossValue, items: fd.items, isRevision: !!isRevision
+    grossValue: fd.grossValue, items: fd.items, isRevision: !!isRevision, scq: _scqItems
   };
   const r = await apiSaveWOC(data);
   if (r.ok) {
@@ -18739,12 +18773,14 @@ async function viewWOC(wocNum) {
       <button class="btn btn-ghost btn-sm" onclick="_wocViewExpandAll(false)">⊟ Collapse all</button>
     </div>
     <div id="wocViewTree">${treeHTML}</div>
+    <div id="wocViewScq"></div>
     ${h['Remarks']?`<div style="margin-top:10px;padding:8px 12px;background:var(--panel-2);border-radius:4px;font-size:12px;"><strong>Remarks:</strong> ${esc(h['Remarks'])}</div>`:''}
     <div class="actions-row">
       <button class="btn btn-secondary" onclick="closeModal();printWOCById('${esc(wocNum)}')">🖨 Print</button>
       ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('WOC','${esc(wocNum)}')">🗑 Delete certification</button>` : ''}
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`, 'large');
+  _scqViewBlock(wocNum, h['WO Number'], h['Status']);   // v180
 }
 
 async function printWOCById(wocNum) {
@@ -19049,7 +19085,7 @@ function recalcWOBTotals() {
   const invoice=taxable+gst+extraAfter;
   const mobAdv=num(document.getElementById('wob_mobAdvRecovery').value);
   const adv=num(document.getElementById('wob_advRecovery').value);
-  const tds=gross*num(document.getElementById('wob_tdsPct').value)/100;
+  const tds=gross>0?gross*num(document.getElementById('wob_tdsPct').value)/100:0;   // v180: a recovery bill (negative gross) carries no TDS
   const retention=gross*retentionPct/100;
   const hold=num(document.getElementById('wob_holdAmt').value);
   const net=invoice-mobAdv-adv-tds-retention-hold;
@@ -19103,7 +19139,7 @@ async function saveWOB_direct() {
   const invoice=taxable+gstAmt+extraAfter;
   const mobAdv=num(document.getElementById('wob_mobAdvRecovery').value);
   const adv=num(document.getElementById('wob_advRecovery').value);
-  const tds=gross*num(document.getElementById('wob_tdsPct').value)/100;
+  const tds=gross>0?gross*num(document.getElementById('wob_tdsPct').value)/100:0;   // v180: a recovery bill (negative gross) carries no TDS
   const retention=gross*retPct/100;
   const hold=num(document.getElementById('wob_holdAmt').value);
   const net=invoice-mobAdv-adv-tds-retention-hold;
@@ -36865,56 +36901,67 @@ window.PAYSCAN=(function(){
 })();
 
 // ============================================================
-// v179 · SITE CERTIFIED QTY (M47) — a third quantity per WO line.
+// v180 · SITE CERTIFIED QTY (M47 + M51) — a third quantity per WO line.
 // Estimate stays frozen, WO qty stays as ordered; the site enters what
-// was actually built. Approved SCQ becomes the certifiable ceiling
-// (fn_scq_ceiling inside fn_cert_ceiling). PM decides |Δ| ≤ 10 %, Admin
-// above (server-enforced in rpc_scq_decide). Site qty = WO qty with
-// Final ☑ closes the leaf without approval. All writes via rpc_scq_*.
+// was actually built. The Site Certified Qty rides on the certification:
+// rpc_save_woc binds it (scq[]), the PM who approves the WOC approves it
+// (trg_scq_follow_woc), and it becomes the certifiable ceiling. A site qty
+// below what is already certified puts a locked negative "recovery" line
+// in the same WOC; the bill nets it, or becomes a Recoverable credit.
 // ============================================================
-const _scq = { avail:true, warned:false, reasons:null, byOi:{}, entry:{}, wo:null, queue:[], qStatus:'Proposed', sel:{} };
-function _scqReset(){ _scq.byOi={}; _scq.entry={}; _scq.wo=null; const el=document.getElementById('wocScqStrip'); if(el) el.innerHTML=''; }
+const _scq = { avail:true, warned:false, reasons:null, byOi:{}, entry:{}, wo:null, cur:null, queue:[], qStatus:'Proposed' };
+function _scqReset(){ _scq.byOi={}; _scq.entry={}; _scq.wo=null; _scq.cur=null; const el=document.getElementById('wocScqStrip'); if(el) el.innerHTML=''; }
 function _scqRpcMissing(err){ const m=String((err&&err.message)||''); return /rpc_scq_|42883|PGRST202|schema cache/i.test(m); }
 function _scqIsLS(item){ return /^LS/i.test(String((item&&item.uom)||'')); }
 function _scqR3(v){ return Math.round(num(v)*1000)/1000; }
 function _scqCeil(leaf){ return (leaf&&leaf.scqA) ? num(leaf.scqA.site_qty) : num(leaf?leaf.woQty:0); }
-function _scqTier(woQty, siteQty){ const w=num(woQty); if(!(w>0)) return 'ADMIN'; return Math.abs(num(siteQty)-w)/w*100 <= 10 ? 'PM' : 'ADMIN'; }
 function _scqPct(woQty, siteQty){ const w=num(woQty); return w>0 ? (num(siteQty)-w)/w*100 : 0; }
-function _scqFmtPct(p){ const s=(p>0?'+':'')+p.toFixed(1)+'%'; return s; }
+function _scqFmtPct(p){ return (p>0?'+':'')+p.toFixed(1)+'%'; }
 function _scqCanSee(){ return state.isViewer || state.isOwner || state.isSuper || hasPerm('canProposeSCQ') || hasPerm('canApproveSCQ') || hasPerm('canCreateWOC') || hasPerm('canApproveWOC') || hasPerm('canApproveWOB'); }
-function _scqIsAdminTier(){ return !!(state.isOwner || state.isSuper); }
+function _scqCurWoc(){ const v=((document.getElementById('woc_number')||{}).value||'').trim(); return (/^WOC\//.test(v) && !/auto/i.test(v)) ? v : null; }
 
 // ── load live rows for a WO and attach to the certification tree ──
 async function _scqAttach(woNum, items){
-  _scq.wo = woNum; _scq.byOi = {};
+  _scq.wo = woNum; _scq.byOi = {}; _scq.cur = _scqCurWoc();
   if (_scq.avail) {
     try {
       const { data, error } = await sb.rpc('rpc_scq_for_wo', { p_wo: woNum });
       if (error) throw error;
       (data||[]).forEach(r => {
         const k = String(r.wo_order_item_id); const b = _scq.byOi[k] || (_scq.byOi[k] = {});
-        if (r.status === 'Approved') b.A = r; else if (r.status === 'Proposed') b.P = r;
+        if (r.status === 'Approved') b.A = r;
+        else if (r.status === 'Proposed') {
+          // raised on the certification being revised → back into the entry; raised on another WOC → blocks the row
+          if (_scq.cur && r.woc_number === _scq.cur) { if (!_scq.entry[k]) _scq.entry[k] = { on:true, q:num(r.site_qty), reason:r.reason_code||'', note:r.reason_text||'' }; }
+          else b.P = r;
+        }
       });
     } catch(e) {
-      if (_scqRpcMissing(e)) { _scq.avail = false; if (!_scq.warned) { _scq.warned = true; console.warn('SCQ: rpc_scq_for_wo unavailable — run migration M47', e.message); } }
+      if (_scqRpcMissing(e)) { _scq.avail = false; if (!_scq.warned) { _scq.warned = true; console.warn('SCQ: rpc_scq_for_wo unavailable — run migration M47/M51', e.message); } }
       else console.warn('rpc_scq_for_wo', e.message);
     }
   }
-  (items||[]).forEach(item => _wocLeafAllLeaves(item).forEach(l => _scqApplyLeaf(l)));
+  (items||[]).forEach(item => _wocLeafAllLeaves(item).forEach(l => { _scqApplyLeaf(l); _scqRecap(l); }));
 }
 function _scqApplyLeaf(leaf){
   const b = _scq.byOi[String(leaf.oiid)] || {};
   leaf.scqA = b.A || null; leaf.scqP = b.P || null;
   _scqRestage(leaf);
 }
-// working ceiling for this-period maths: a lower Site Cert. qty (entered or awaiting approval) applies at once —
-// certifying less is always safe; a higher one only once approved
+// working ceiling for this-period maths: the site qty entered on this certification (either direction —
+// it is approved together with the WOC), else a proposal awaiting another WOC (lower only), else approved / WO qty
 function _scqEff(leaf){
   const ceil = _scqCeil(leaf);
-  if (leaf.scqP) return Math.min(ceil, num(leaf.scqP.site_qty));
   const e = _scq.entry[String(leaf.oiid)];
-  if (e && e.on && e.q !== '' && e.q != null) return Math.min(ceil, num(e.q));
+  if (e && e.on && e.q !== '' && e.q != null) return num(e.q);
+  if (leaf.scqP) return Math.min(ceil, num(leaf.scqP.site_qty));
   return ceil;
+}
+// recovery on a leaf: site qty entered below what is already certified (positive amount)
+function _scqRecov(leaf){
+  const e = _scq.entry[String(leaf.oiid)]; if (!e || !e.on || e.q === '' || e.q == null) return 0;
+  const d = num(leaf.prevQty) - num(e.q);
+  return d > 0.0005 ? _scqR3(d) : 0;
 }
 // stage quantities follow the working ceiling: already-certified stages keep their WO-based qty, the rest share the balance by pct
 function _scqRestage(leaf){
@@ -36924,56 +36971,76 @@ function _scqRestage(leaf){
   const bal = Math.max(0, eff - done);
   leaf.stages.forEach(st => { if (!st.certified) st.qty = remPct > 0 ? _scqR3(bal * num(st.pct) / remPct) : 0; });
 }
+// after the working ceiling changed: re-spread stages; a recovery pins This Qty to the (negative) difference; trim an entry that no longer fits
+function _scqRecap(leaf){
+  _scqRestage(leaf);
+  const ck=_wocCellKey(leaf.oiid,null); const rec=_scqRecov(leaf);
+  if (rec > 0) {
+    _wocThis[ck] = -rec;
+    if (leaf.stages && leaf.stages.length) leaf.stages.forEach(st => { delete _wocStageSel[_wocCellKey(leaf.oiid, st.id)]; });
+    return;
+  }
+  if (num(_wocThis[ck]) < 0) delete _wocThis[ck];
+  if (!(leaf.stages && leaf.stages.length)) {
+    const rem=Math.max(0,_scqEff(leaf)-num(leaf.prevQty));
+    if (num(_wocThis[ck]) > rem) _wocThis[ck]=rem;
+  }
+}
 function _wocGrid(){ return 'grid-template-columns:1.3fr 56px 96px 64px 56px 60px 56px 54px 74px 78px 82px;'; }
-function _scqHeadHTML(){ return '<span title="Site Certified Qty — tick a row to enter what the site actually built; otherwise the WO quantity applies">Site Cert.</span><span title="Certifiable ceiling: approved Site Certified Qty, else the WO quantity">Ceiling</span>'; }
+function _scqHeadHTML(){ return '<span title="Site Certified Qty — tick a row to enter what the site actually built; otherwise the WO quantity applies. Approved together with this certification.">Site Cert.</span><span title="Certifiable ceiling: the site qty entered here, else the approved Site Certified Qty, else the WO quantity">Ceiling</span>'; }
 function _scqRowCls(leaf){
   const e = _scq.entry[String(leaf.oiid)];
-  if (leaf.scqP) return leaf.scqP.tier === 'ADMIN' ? 'scq-adm' : 'scq-pm';
+  if (leaf.scqP) return 'scq-pm';
+  if (_scqRecov(leaf) > 0) return 'scq-rec';
   if (e && _scqEntryPending(leaf, e)) return 'scq-edit';
   if (leaf.scqA) return 'scq-appr';
   return '';
 }
-// an unlocked row with a quantity entered is a proposal (equal to the WO qty → closes the leaf; different → needs approval)
 function _scqEntryPending(leaf, e){ return !!(e && e.on && e.q !== '' && e.q != null); }
 function _scqEntryQty(leaf, e){ return num(e.q); }
 function _scqChip(leaf){
-  if (leaf.scqP) return '<span class="scq-chip '+(leaf.scqP.tier==='ADMIN'?'adm':'pm')+'" title="Proposed '+esc(leaf.scqP.proposed_by||'')+' · awaiting '+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+'">'+(leaf.scqP.tier==='ADMIN'?'Admin':'PM')+' pending</span>';
-  if (leaf.scqA) return '<span class="scq-chip ok" title="Approved by '+esc(leaf.scqA.decided_by||'')+(leaf.scqA.decided_at?' on '+fmtDateShort(leaf.scqA.decided_at):'')+'">Approved ✓</span>';
+  if (leaf.scqP) return '<span class="scq-chip pm" title="Raised on '+esc(leaf.scqP.woc_number||'another certification')+' by '+esc(leaf.scqP.proposed_by||'')+' — decided with that WOC">with '+esc((leaf.scqP.woc_number||'WOC').split('/').slice(-2).join('/'))+'</span>';
+  if (_scqRecov(leaf) > 0) return '<span class="scq-chip rec">Recovery</span>';
+  if (leaf.scqA) return '<span class="scq-chip ok" title="Approved by '+esc(leaf.scqA.decided_by||'')+(leaf.scqA.decided_at?' on '+fmtDateShort(leaf.scqA.decided_at):'')+(leaf.scqA.woc_number?' with '+esc(leaf.scqA.woc_number):'')+'">Approved ✓</span>';
   return '';
 }
-// two cells: Site Cert. (input + Final ☑ + chip) · Ceiling
+// two cells: Site Cert. (Site qty ☑ + input + chip) · Ceiling
 function _scqCellsHTML(item, leaf, armed){
   const k = esc(String(leaf.oiid));
   const ceil = _scqCeil(leaf);
   if (_scqIsLS(item)) return '<div class="ro dim" title="Lump-sum line — use an amendment">LS</div><div class="ro dim">'+ceil.toLocaleString('en-IN')+'</div>';
-  const canP = hasPerm('canProposeSCQ') || hasPerm('canApproveSCQ');
+  const canP = hasPerm('canProposeSCQ') || hasPerm('canCreateWOC');
   if (leaf.scqP) {
     const p = num(leaf.scqP.site_qty);
-    return '<div class="scq-cell"><input type="number" value="'+p+'" readonly disabled title="Awaiting approval">'+_scqChip(leaf)+'</div>'
-         + '<div class="ro dim scq-ceil" title="Ceiling stays at '+ceil.toLocaleString('en-IN')+' until the proposal is approved">'+ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+p.toLocaleString('en-IN')+'</span></div>';
+    return '<div class="scq-cell"><input type="number" value="'+p+'" readonly disabled title="Awaiting the decision on '+esc(leaf.scqP.woc_number||'')+'">'+_scqChip(leaf)+'</div>'
+         + '<div class="ro dim scq-ceil">'+ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+p.toLocaleString('en-IN')+'</span></div>';
   }
   const e = _scq.entry[String(leaf.oiid)] || { q:'', on:false };
   const pend = _scqEntryPending(leaf, e);
   const shown = pend ? _scqEntryQty(leaf, e) : ceil;
   if (!canP) return '<div class="scq-cell">'+_scqChip(leaf)+(leaf.scqA?'':'<span class="ro dim">—</span>')+'</div><div class="ro dim scq-ceil">'+ceil.toLocaleString('en-IN')+'</div>';
-  // locked by default: the row follows the WO quantity (or the approved Site Cert. qty) until the box is ticked
   return '<div class="scq-cell">'
-    + '<label class="scq-fin" title="Tick to enter what the site actually built for this location. Left unticked, certification follows the WO quantity."><input type="checkbox" '+(e.on?'checked':'')+' '+(armed?'':'disabled')+' onchange="wocSetSCQOn(\''+k+'\',this.checked)"> Site qty</label>'
+    + '<label class="scq-fin" title="Tick to enter what the site actually built for this location. Left unticked, certification follows the WO quantity. Approved together with this certification."><input type="checkbox" '+(e.on?'checked':'')+' '+(armed?'':'disabled')+' onchange="wocSetSCQOn(\''+k+'\',this.checked)"> Site qty</label>'
     + '<input type="number" min="0" step="0.001" placeholder="'+ceil+'" value="'+(e.on&&e.q!==''&&e.q!=null?e.q:'')+'" '+((armed&&e.on)?'':'disabled'+(armed?'':' title="Arm this floor to enter"'))
     + ' oninput="wocSetSCQ(\''+k+'\',this.value)" onchange="wocSetSCQ(\''+k+'\',this.value,true)" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()">'
     + _scqChip(leaf) + '</div>'
-    + '<div class="ro '+(pend?'':'dim')+' scq-ceil" data-cell="scqceil">'+(pend && Math.abs(shown-ceil)>0.0005 ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN'))+'</div>';
+    + '<div class="ro '+(pend?'':'dim')+' scq-ceil" data-cell="scqceil">'+(pend && Math.abs(shown-ceil)>0.0005 ? '<span class="'+(shown<ceil?'scq-dn':'scq-up')+'">'+shown.toLocaleString('en-IN')+'</span><span class="rem-hint">was '+ceil.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN'))+'</div>';
+}
+// the This Qty cell of a leaf in recovery: locked to the negative difference
+function _scqRecovCell(leaf){
+  const r=_scqRecov(leaf);
+  return '<input type="number" value="'+(-r)+'" disabled class="scq-recin" title="Recovery — '+num(leaf.prevQty).toLocaleString('en-IN')+' certified, site qty '+_scqEff(leaf).toLocaleString('en-IN')+'"><span class="rem-hint">locked · recovery</span>';
 }
 function _scqPatchRow(oiid){
   const f = _wocFindLeaf(oiid); if (!f) return;
   const row = document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(String(oiid))+'"]');
   if (!row) return;
-  row.classList.remove('scq-edit','scq-appr','scq-pm','scq-adm'); const c=_scqRowCls(f.leaf); if (c) row.classList.add(c);
+  row.classList.remove('scq-edit','scq-appr','scq-pm','scq-rec'); const c=_scqRowCls(f.leaf); if (c) row.classList.add(c);
   const cell = row.querySelector('[data-cell="scqceil"]');
   if (cell) {
     const e=_scq.entry[String(oiid)]||{q:'',on:false}, ceil=_scqCeil(f.leaf), pend=_scqEntryPending(f.leaf,e), shown=pend?_scqEntryQty(f.leaf,e):ceil;
     cell.className = 'ro '+(pend?'':'dim')+' scq-ceil';
-    cell.innerHTML = (pend && Math.abs(shown-ceil)>0.0005) ? ceil.toLocaleString('en-IN')+' → <span class="scq-pend">'+shown.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN');
+    cell.innerHTML = (pend && Math.abs(shown-ceil)>0.0005) ? '<span class="'+(shown<ceil?'scq-dn':'scq-up')+'">'+shown.toLocaleString('en-IN')+'</span><span class="rem-hint">was '+ceil.toLocaleString('en-IN')+'</span>' : ceil.toLocaleString('en-IN');
   }
 }
 function wocSetSCQ(oiid, v, commit){
@@ -36981,7 +37048,7 @@ function wocSetSCQ(oiid, v, commit){
   e.q = (v===''||v==null) ? '' : num(v);
   if (e.q !== '' && e.q < 0) e.q = 0;
   const f=_wocFindLeaf(oiid);
-  if (commit && f) { _scqRecap(f.leaf); wocRenderTree(); return; }   // stages and the This Qty cap follow the new working ceiling
+  if (commit && f) { _scqRecap(f.leaf); wocRenderTree(); return; }   // stages, the recovery line and the This Qty cap follow the new working ceiling
   _scqPatchRow(oiid); _scqStripRender();
 }
 function wocSetSCQOn(oiid, on){
@@ -36990,27 +37057,16 @@ function wocSetSCQOn(oiid, on){
   const f=_wocFindLeaf(oiid); if (f) _scqRecap(f.leaf);
   wocRenderTree();
 }
-// after the working ceiling changed: re-spread stages, trim a This Qty that no longer fits
-function _scqRecap(leaf){
-  _scqRestage(leaf);
-  if (!(leaf.stages && leaf.stages.length)) {
-    const ck=_wocCellKey(leaf.oiid,null); const rem=Math.max(0,_scqEff(leaf)-num(leaf.prevQty));
-    if (num(_wocThis[ck]) > rem) _wocThis[ck]=rem;
-  }
-}
-// called from wocSetThis when the typed This Qty exceeds the ceiling balance:
-// the overrun becomes a Site Certified Qty proposal instead of an amendment ask
+// called from wocSetThis when the typed This Qty exceeds the ceiling balance: the overrun becomes the Site Certified Qty of this certification
 function _scqFromOver(oiid, f, asked){
   const leaf=f.leaf; const k=String(oiid);
-  if (leaf.scqP) { toast('A Site Certified Qty of '+num(leaf.scqP.site_qty).toLocaleString('en-IN')+' is already awaiting approval on this location','warn',5000); return; }
+  if (leaf.scqP) { toast('A Site Certified Qty of '+num(leaf.scqP.site_qty).toLocaleString('en-IN')+' is awaiting the decision on '+(leaf.scqP.woc_number||'another certification'),'warn',5000); return; }
   const want=_scqR3(num(leaf.prevQty)+num(asked));
   const e=_scq.entry[k]||(_scq.entry[k]={q:'',on:false,reason:'',note:''});
-  if (e.on && e.q !== '' && num(e.q) < want) { toast('This location is set to '+num(e.q).toLocaleString('en-IN')+' Site Certified Qty — raise it first','warn',5000); return; }
   e.q=want; e.on=true;
-  const row=document.querySelector('#wociItem_'+CSS.escape(f.item.id)+' .hoi-raleaf[data-oiid="'+CSS.escape(k)+'"]');
-  if(row){ const inp=row.querySelector('.scq-cell input[type=number]'); if(inp){ inp.value=want; inp.disabled=false; } const cb=row.querySelector('.scq-cell input[type=checkbox]'); if(cb) cb.checked=true; }
-  _scqPatchRow(oiid); _scqStripRender();
-  toast('Beyond the certifiable ceiling — '+want.toLocaleString('en-IN')+' proposed as the Site Certified Qty. Send it for approval below; this certification is capped meanwhile.','warn',7000);
+  _wocThis[_wocCellKey(oiid,null)] = _scqR3(num(asked));
+  _scqRecap(leaf); wocRenderTree();
+  toast('Beyond the WO quantity — '+want.toLocaleString('en-IN')+' set as the Site Certified Qty of this location; pick a reason below. It is approved together with this certification.','warn',7000);
 }
 function _scqPendingList(){
   const out=[]; if(!_wocTree) return out;
@@ -37025,13 +37081,13 @@ function _scqAwaiting(){
   _wocTree.items.forEach(item => _wocLeafAllLeaves(item).forEach(l => { if(l.scqP) out.push({item,leaf:l}); }));
   return out;
 }
-// Save is locked while a proposal is unsent, or while a line being certified now awaits a decision
-function _scqSaveLocked(){
+// before save: every changed location needs a reason; returns the scq[] block for rpc_save_woc (or null when invalid)
+function _scqPayload(){
   const pend=_scqPendingList();
-  if(pend.length){ toast(pend.length+' Site Certified Qty proposal'+(pend.length>1?'s are':' is')+' not sent yet — send for approval or clear the entry before saving','error',7000); return true; }
-  const wait=_scqAwaiting().filter(x => _wocLeafThisQty(x.leaf) > 0);
-  if(wait.length){ toast(wait.length+' line'+(wait.length>1?'s':'')+' on this certification await'+(wait.length>1?'':'s')+' a Site Certified Qty decision — save the certification as a draft until it is approved','error',8000); return true; }
-  return false;
+  const missing=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005 && !(x.e.reason||'').trim());
+  if(missing.length){ document.querySelectorAll('#scqStrip_body select').forEach(s=>{ if(!s.value) s.classList.add('scq-bad'); }); toast('Pick a reason for every location whose Site Certified Qty differs from the WO quantity','error',6000); return null; }
+  return pend.filter(x=>!(x.leaf.scqA && Math.abs(num(x.leaf.scqA.site_qty)-x.q)<=0.0005)).map(x=>{ const r=(_scq.reasons||[]).find(r=>r.reason_code===x.e.reason);
+    return { wo_order_item_id:x.leaf.oiid, site_qty:x.q, reason_code:x.e.reason||null, reason_text:(x.e.note||'').trim()||null, reason_label:r?r.reason_text:null }; });
 }
 async function _scqReasons(force){
   if(_scq.reasons && !force) return _scq.reasons;
@@ -37055,134 +37111,91 @@ async function _scqSetReason(k, sel){
   }
   e.reason=sel.value; sel.classList.remove('scq-bad');
 }
+// summary of the Site Certified Qty changes riding on this certification (approved with it — nothing to send)
 function _scqStripRender(){
   const el=document.getElementById('wocScqStrip'); if(!el) return;
   if(!_wocTree||!_scq.avail){ el.innerHTML=''; return; }
   const pend=_scqPendingList(), wait=_scqAwaiting();
   let html='';
   if(wait.length){
-    html+='<div class="amd-banner freeze" style="margin-top:12px;"><span class="i"></span><div><b>'+wait.length+' location'+(wait.length>1?'s':'')+' on '+esc(_scq.wo||'')+' await'+(wait.length>1?'':'s')+' a Site Certified Qty decision</b> — '
-      +wait.slice(0,4).map(x=>esc(x.item.name)+' · '+esc(x.leaf.name)+' ('+num(x.leaf.scqP.site_qty).toLocaleString('en-IN')+', '+(x.leaf.scqP.tier==='ADMIN'?'Admin':'PM')+')').join('; ')+(wait.length>4?' …':'')
-      +'. Those lines certify up to the current ceiling only; save this certification as a draft if it includes them.</div></div>';
+    html+='<div class="amd-banner freeze" style="margin-top:12px;"><span class="i"></span><div><b>'+wait.length+' location'+(wait.length>1?'s':'')+' on '+esc(_scq.wo||'')+' carr'+(wait.length>1?'y':'ies')+' a Site Certified Qty raised on another certification</b> — '
+      +wait.slice(0,4).map(x=>esc(x.item.name)+' · '+esc(x.leaf.name)+' ('+num(x.leaf.scqP.site_qty).toLocaleString('en-IN')+', '+esc(x.leaf.scqP.woc_number||'')+')').join('; ')+(wait.length>4?' …':'')
+      +'. They certify up to the lower of the two figures until that WOC is decided.</div></div>';
   }
   if(pend.length){
     if(!_scq.reasons) { _scqReasons().then(()=>_scqStripRender()); }
-    const rows=pend.map(x=>{ const k=String(x.leaf.oiid), wo=num(x.leaf.woQty), q=x.q, d=q-wo, pct=_scqPct(wo,q), same=Math.abs(d)<=0.0005, tier=_scqTier(wo,q);
-      return '<tr><td>'+esc(x.item.name)+'<span class="amd-hint" style="text-align:left;">'+esc(x.leaf.name)+'</span></td><td>'+esc(_wocUnit(x.item.uom))+'</td>'
-        +'<td class="num mono">'+wo.toLocaleString('en-IN')+'</td><td class="num mono">'+num(x.leaf.prevQty).toLocaleString('en-IN')+'</td>'
+    const rows=pend.map(x=>{ const k=String(x.leaf.oiid), wo=num(x.leaf.woQty), q=x.q, d=q-wo, pct=_scqPct(wo,q), same=Math.abs(d)<=0.0005, rec=_scqRecov(x.leaf), prev=num(x.leaf.prevQty), rate=num(x.leaf.rate);
+      const eff = rec>0 ? '<span class="scq-dn"><b>Recovery −'+rec.toLocaleString('en-IN')+' '+esc(_wocUnit(x.item.uom))+'</b></span><span class="amd-hint">−'+fmtINR(rec*rate)+' · certified '+prev.toLocaleString('en-IN')+' → '+q.toLocaleString('en-IN')+'</span>'
+                       : 'Ceiling '+q.toLocaleString('en-IN')+'<span class="amd-hint">'+_scqR3(Math.max(0,q-prev)).toLocaleString('en-IN')+' certifiable now</span>';
+      return '<tr'+(rec>0?' class="scq-q-rec"':'')+'><td>'+esc(x.item.name)+'<span class="amd-hint" style="text-align:left;">'+esc(x.leaf.name)+'</span></td><td>'+esc(_wocUnit(x.item.uom))+'</td>'
+        +'<td class="num mono">'+wo.toLocaleString('en-IN')+'</td><td class="num mono">'+prev.toLocaleString('en-IN')+'</td>'
         +'<td class="num mono"><b>'+q.toLocaleString('en-IN')+'</b></td>'
-        +'<td class="num mono '+(same?'':(d>0?'scq-up':'scq-dn'))+'">'+(same?'—':(d>0?'+':'')+_scqR3(d).toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(pct)+' · '+(d>0?'+':'−')+fmtINR(Math.abs(d)*num(x.leaf.rate))+'</span>')+'</td>'
-        +'<td>'+(same?'<span class="scq-chip ok">closes leaf</span>':'<span class="scq-chip '+(tier==='ADMIN'?'adm':'pm')+'">'+(tier==='ADMIN'?'Admin':'PM')+' approval</span>')+'</td>'
-        +'<td>'+(same?'<span class="muted" style="font-size:11px;">not needed</span>':_scqReasonSel(k,x.e.reason)+'<input placeholder="Note (optional)" value="'+esc(x.e.note||'')+'" oninput="_scq.entry[\''+esc(k)+'\'].note=this.value" style="margin-top:4px;width:100%;padding:4px 6px;font-size:11.5px;">')+'</td>'
+        +'<td class="num mono '+(same?'':(d>0?'scq-up':'scq-dn'))+'">'+(same?'—':(d>0?'+':'')+_scqR3(d).toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(pct)+' · '+(d>0?'+':'−')+fmtINR(Math.abs(d)*rate)+'</span>')+'</td>'
+        +'<td class="num">'+eff+'</td>'
+        +'<td>'+(same?'<span class="muted" style="font-size:11px;">equals WO qty — no reason needed</span>':_scqReasonSel(k,x.e.reason)+'<input placeholder="Note (optional)" value="'+esc(x.e.note||'')+'" oninput="_scq.entry[\''+esc(k)+'\'].note=this.value" style="margin-top:4px;width:100%;padding:4px 6px;font-size:11.5px;">')+'</td>'
         +'<td><button class="btn btn-ghost btn-sm" onclick="_scqRemove(\''+esc(k)+'\')">Remove</button></td></tr>'; }).join('');
-    const nAppr=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005).length, nClose=pend.length-nAppr;
-    html+='<div class="amd-req scq-req"><div class="hd"><b>Site Certified Qty — '+pend.length+' location'+(pend.length>1?'s':'')+'</b><span>'+(nAppr?nAppr+' need'+(nAppr>1?'':'s')+' approval (PM up to 10 %, Admin beyond)':'')+(nAppr&&nClose?' · ':'')+(nClose?nClose+' close'+(nClose>1?'':'s')+' at the WO quantity, no approval':'')+'. The WO value does not change.</span></div>'
-      +'<div class="table-wrap" style="margin:0;border:0;box-shadow:none;"><table><thead><tr><th>Activity · Location</th><th>UOM</th><th class="num">WO Qty</th><th class="num">Certified</th><th class="num">Site Cert. Qty</th><th class="num">Δ Qty</th><th>Tier</th><th>Reason</th><th></th></tr></thead><tbody id="scqStrip_body">'+rows+'</tbody></table></div>'
-      +'<div class="actions-row" style="margin:0;padding:8px 12px;border:0;"><button class="btn btn-secondary" onclick="_scqSend()">↑ Send For Approval</button><button class="btn btn-ghost" onclick="_scqClearAll()">Clear Entries</button></div></div>';
+    const nRec=pend.filter(x=>_scqRecov(x.leaf)>0).length;
+    html+='<div class="amd-req scq-req"><div class="hd"><b>Site Certified Qty changes on this certification — '+pend.length+' location'+(pend.length>1?'s':'')+'</b><span>Approved together with the WOC by its approver. '+(nRec?'<b style="color:var(--danger);">'+nRec+' '+(nRec>1?'are recoveries':'is a recovery')+'</b> — the site built less than has been certified. ':'')+'The WO value does not change.</span></div>'
+      +'<div class="table-wrap" style="margin:0;border:0;box-shadow:none;"><table><thead><tr><th>Activity · Location</th><th>UOM</th><th class="num">WO Qty</th><th class="num">Certified</th><th class="num">Site Cert. Qty</th><th class="num">Δ vs WO</th><th class="num">Effect In This WOC</th><th>Reason</th><th></th></tr></thead><tbody id="scqStrip_body">'+rows+'</tbody></table></div>'
+      +'<div style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"><span style="font-size:12px;color:var(--muted);">Nothing to send separately — <b>Save Certification</b> sends the WOC and these quantities to the approver as one item.</span><button class="btn btn-ghost btn-sm" onclick="_scqClearAll()">Clear Entries</button></div></div>';
   }
   el.innerHTML=html;
 }
 function _scqRemove(k){ delete _scq.entry[k]; const f=_wocFindLeaf(k); if(f) _scqRecap(f.leaf); wocRenderTree(); }
 function _scqClearAll(){ Object.keys(_scq.entry).forEach(k=>delete _scq.entry[k]); if(_wocTree) _wocTree.items.forEach(it=>_wocLeafAllLeaves(it).forEach(_scqRecap)); wocRenderTree(); }
-async function _scqSend(){
-  const pend=_scqPendingList(); if(!pend.length){ toast('Nothing to send','warn'); return; }
-  const missing=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005 && !(x.e.reason||'').trim());
-  if(missing.length){ document.querySelectorAll('#scqStrip_body select').forEach(s=>{ if(!s.value) s.classList.add('scq-bad'); }); toast('Pick a reason for every location that differs from the WO quantity','error',5000); return; }
-  const below=pend.filter(x=>x.q < num(x.leaf.prevQty)-0.001);
-  if(below.length){ toast(below[0].item.name+' · '+below[0].leaf.name+': '+num(below[0].leaf.prevQty).toLocaleString('en-IN')+' is already certified — the Site Certified Qty cannot be lower','error',7000); return; }
-  const nAppr=pend.filter(x=>Math.abs(x.q-num(x.leaf.woQty))>0.0005).length;
-  if(!confirm('Send '+pend.length+' Site Certified Qty entr'+(pend.length>1?'ies':'y')+' on '+_scq.wo+'?'+(nAppr?'\n\n'+nAppr+' need approval. Lines awaiting a decision certify only up to the current ceiling until approved — save this certification as a draft if it includes them.':'\n\nAll equal the WO quantity — the leaves close without approval.'))) return;
-  pbShow('Sending…');
+
+// ── WOC view: the changes approved with / riding on this certification ──
+async function _scqViewBlock(wocNum, woNum, status){
+  const host=document.getElementById('wocViewScq'); if(!host||!_scq.avail) return;
   try{
-    const items=pend.map(x=>{ const r=(_scq.reasons||[]).find(r=>r.reason_code===x.e.reason); return { wo_order_item_id:x.leaf.oiid, site_qty:x.q, reason_code:x.e.reason||null, reason_text:(x.e.note||'').trim()||null, reason_label:r?r.reason_text:null }; });
-    const {data,error}=await sb.rpc('rpc_scq_propose',{p:{wo_number:_scq.wo,source:'WOC Entry',items},p_user:state.userName});
-    if(error) throw new Error(error.message.replace(/^.*?PERM_DENIED:\s*/,''));
-    pend.forEach(x=>delete _scq.entry[String(x.leaf.oiid)]);
-    await _scqAttach(_scq.wo,_wocTree.items);
-    // re-cap this-period entries against the (possibly lowered) ceilings
-    _wocTree.items.forEach(item=>_wocLeafAllLeaves(item).forEach(_scqRecap));
-    wocRenderTree(); _scqStripRender();
-    const p=num(data&&data.proposed), a=num(data&&data.auto_approved);
-    toast((p?p+' sent for approval':'')+(p&&a?' · ':'')+(a?a+' closed at the WO quantity':''),'success',7000);
-    if(p && typeof _draftHasLines==='function' && _draftHasLines('WOC',_draftCaptureWOC())){ try{ await saveDraft('WOC'); }catch(e){} }
-  }catch(e){ toast(e.message,'error',8000); }
-  finally{ pbDone(); }
+    const {data,error}=await sb.rpc('rpc_scq_queue',{p_status:'All'}); if(error) throw error;
+    const rows=(data||[]).filter(r=>r.woc_number===wocNum && r.status!=='Superseded');
+    if(!rows.length){ host.innerHTML=''; return; }
+    const pend=status==='Pending Approval';
+    const nRec=rows.filter(r=>num(r.recovery)<0).length;
+    host.innerHTML='<div class="amd-banner '+(pend?'freeze':'info')+'" style="margin-top:12px;"><span class="i"></span><div><b>'+(pend?'Approving this certification also approves ':'This certification carried ')+rows.length+' Site Certified Qty change'+(rows.length>1?'s':'')+'</b>'
+      +(nRec?' · '+nRec+' recover'+(nRec>1?'ies':'y'):'')+'. '+(pend?'They become the certifiable ceiling for '+esc(woNum)+'; returning for correction sends them back with the WOC.':'')+'</div></div>'
+      +'<div class="table-wrap"><table><thead><tr><th>Activity · Location</th><th class="num">WO Qty</th><th class="num">Site Cert. Qty</th><th class="num">Δ vs WO</th><th class="num">Recovery</th><th>Reason</th><th>Status</th></tr></thead><tbody id="wocViewScq_body">'
+      +rows.map(r=>{ const d=num(r.delta_qty), rec=num(r.recovery); return '<tr'+(rec<0?' class="scq-q-rec"':'')+'><td>'+esc(r.description||'')+'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.loc_name||'')+(r.uom?' · '+esc(_wocUnit(r.uom)):'')+'</span></td>'
+        +'<td class="num mono">'+num(r.wo_qty).toLocaleString('en-IN')+'</td><td class="num mono"><b>'+num(r.site_qty).toLocaleString('en-IN')+'</b></td>'
+        +'<td class="num mono '+(d>0?'scq-up':d<0?'scq-dn':'')+'">'+(d>0?'+':'')+d.toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(num(r.delta_pct))+' · '+(d>=0?'+':'−')+fmtINR(Math.abs(num(r.delta_amt)))+'</span></td>'
+        +'<td class="num mono '+(rec<0?'scq-dn':'')+'">'+(rec<0?rec.toLocaleString('en-IN')+'<span class="amd-hint">−'+fmtINR(Math.abs(rec)*num(r.unit_rate))+'</span>':'—')+'</td>'
+        +'<td>'+(r.reason_label?'<span class="scq-chip rs">'+esc(r.reason_label)+'</span>':'')+(r.reason_text?'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.reason_text)+'</span>':'')+'</td>'
+        +'<td><span class="status '+({Proposed:'pending-approval',Approved:'approved',Rejected:'rejected'}[r.status]||'')+'">'+esc(r.status==='Proposed'?'With WOC':r.status)+'</span></td></tr>'; }).join('')
+      +'</tbody></table></div>';
+  }catch(e){ console.warn('scq view',e.message); host.innerHTML=''; }
 }
 
-// ── approval queue (WO › Site Cert. Qty) ─────────────────────────────
+// ── WO › Site Cert. Qty: read-only history ──────────────────────────
 async function loadSCQList(){
   const tb=document.getElementById('scq_listBody'); if(!tb) return;
   if(!_scqCanSee()){ tb.innerHTML='<tr><td colspan="10" class="center muted">You do not hold a Work Order right.</td></tr>'; return; }
   tb.innerHTML='<tr><td colspan="10" class="center muted">Loading…</td></tr>';
-  const st=(document.getElementById('scqF_status')||{}).value||'Proposed'; _scq.qStatus=st;
-  try{ const {data,error}=await sb.rpc('rpc_scq_queue',{p_status:st}); if(error) throw error; _scq.queue=data||[]; _scq.sel={}; renderSCQList(); }
-  catch(e){ tb.innerHTML='<tr><td colspan="10" class="center muted">'+(_scqRpcMissing(e)?'Site Certified Qty needs migration M47 on the database.':esc(e.message))+'</td></tr>'; }
+  const st=(document.getElementById('scqF_status')||{}).value||'Approved'; _scq.qStatus=st;
+  try{ const {data,error}=await sb.rpc('rpc_scq_queue',{p_status:st}); if(error) throw error; _scq.queue=data||[]; renderSCQList(); }
+  catch(e){ tb.innerHTML='<tr><td colspan="10" class="center muted">'+(_scqRpcMissing(e)?'Site Certified Qty needs migrations M47 + M51 on the database.':esc(e.message))+'</td></tr>'; }
 }
-function _scqCanDecide(r){ if(!hasPerm('canApproveSCQ')) return false; if(r.status!=='Proposed') return false; return r.tier==='PM' || _scqIsAdminTier(); }
 function renderSCQList(){
   const tb=document.getElementById('scq_listBody'); if(!tb) return;
   const q=((document.getElementById('scqF_q')||{}).value||'').toLowerCase().trim();
-  const rows=(_scq.queue||[]).filter(r=>!q||[r.wo_number,r.vendor_name,r.description,r.loc_name,r.reason_label,r.proposed_by].some(v=>String(v||'').toLowerCase().includes(q)));
+  const rows=(_scq.queue||[]).filter(r=>!q||[r.wo_number,r.woc_number,r.vendor_name,r.description,r.loc_name,r.reason_label,r.proposed_by].some(v=>String(v||'').toLowerCase().includes(q)));
   const badge=document.getElementById('scq_listBadge'); if(badge) badge.textContent=rows.length;
-  if(!rows.length){ tb.innerHTML='<tr><td colspan="10" class="center muted">'+(_scq.qStatus==='Proposed'?'Nothing awaiting a Site Certified Qty decision.':'No rows.')+'</td></tr>'; return; }
-  const canA=hasPerm('canApproveSCQ');
+  if(!rows.length){ tb.innerHTML='<tr><td colspan="10" class="center muted">No Site Certified Qty rows.</td></tr>'; return; }
   tb.innerHTML=rows.map(r=>{
-    const d=num(r.delta_qty), pct=num(r.delta_pct), pend=r.status==='Proposed', dec=_scqCanDecide(r);
+    const d=num(r.delta_qty), pct=num(r.delta_pct), rec=num(r.recovery), pend=r.status==='Proposed';
     const stCls={Proposed:'pending-approval',Approved:'approved',Rejected:'rejected',Superseded:'short-closed'}[r.status]||'';
-    let acts='';
-    if(dec) acts='<button class="btn btn-primary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Approve\')">✓ Approve</button> <button class="btn btn-secondary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Edit\')" title="Approve at a different quantity">✎ Edit &amp; Approve</button> <button class="btn btn-danger btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Reject\')">✕ Reject</button>';
-    else if(pend && canA && r.tier==='ADMIN') acts='<button class="btn btn-secondary btn-sm" onclick="scqDecide(\''+esc(r.id)+'\',\'Recommend\')" title="Beyond 10 % — only Admin can decide; add your recommendation">→ Recommend</button>'+(r.recommended_by?'<span class="amd-hint" style="text-align:left;">Recommended by '+esc(r.recommended_by)+'</span>':'');
-    else if(!pend) acts='<span style="font-size:11px;color:var(--muted);">'+esc(r.decided_by||'')+(r.decided_at?' · '+fmtDateShort(r.decided_at):'')+(r.decision_note?'<br>'+esc(r.decision_note):'')+'</span>';
-    return '<tr class="'+(pend?(r.tier==='ADMIN'?'scq-q-adm':'scq-q-pm'):'')+'">'
-      +'<td>'+(dec?'<input type="checkbox" '+(_scq.sel[r.id]?'checked':'')+' onchange="_scq.sel[\''+esc(r.id)+'\']=this.checked;_scqBulkBtn()" style="width:15px;height:15px;">':'')+'</td>'
+    return '<tr class="'+(rec<0?'scq-q-rec':'')+'">'
       +'<td><b>'+esc(r.wo_number)+'</b><span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.vendor_name||'')+'</span></td>'
       +'<td>'+esc(r.description||'')+'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.loc_name||'')+(r.uom?' · '+esc(_wocUnit(r.uom)):'')+'</span></td>'
+      +'<td class="num mono">'+(r.est_qty!=null?num(r.est_qty).toLocaleString('en-IN'):'—')+'</td>'
       +'<td class="num mono">'+num(r.wo_qty).toLocaleString('en-IN')+'<span class="amd-hint">cert. '+num(r.certified).toLocaleString('en-IN')+'</span></td>'
-      +'<td class="num mono"><b>'+num(r.site_qty).toLocaleString('en-IN')+'</b>'+(r.est_qty!=null?'<span class="amd-hint">est. '+num(r.est_qty).toLocaleString('en-IN')+'</span>':'')+'</td>'
+      +'<td class="num mono"><b>'+num(r.site_qty).toLocaleString('en-IN')+'</b></td>'
       +'<td class="num mono '+(d>0?'scq-up':d<0?'scq-dn':'')+'">'+(d>0?'+':'')+d.toLocaleString('en-IN')+'<span class="amd-hint">'+_scqFmtPct(pct)+' · '+(d>=0?'+':'−')+fmtINR(Math.abs(num(r.delta_amt)))+'</span></td>'
+      +'<td class="num mono '+(rec<0?'scq-dn':'')+'">'+(rec<0?rec.toLocaleString('en-IN')+'<span class="amd-hint">−'+fmtINR(Math.abs(rec)*num(r.unit_rate))+'</span>':'—')+'</td>'
       +'<td>'+(r.reason_label?'<span class="scq-chip rs">'+esc(r.reason_label)+'</span>':'')+(r.reason_text?'<span class="amd-hint" style="text-align:left;white-space:normal;">'+esc(r.reason_text)+'</span>':'')+'</td>'
-      +'<td>'+esc(r.proposed_by||'')+'<span class="amd-hint" style="text-align:left;">'+fmtDateShort(r.proposed_at)+' · '+esc(r.source||'')+'</span></td>'
-      +'<td><span class="status '+stCls+'">'+esc(r.status)+'</span><span class="scq-chip '+(r.tier==='ADMIN'?'adm':'pm')+'" style="margin-left:4px;">'+(r.tier==='ADMIN'?'Admin':'PM')+'</span></td>'
-      +'<td style="white-space:nowrap;">'+acts+'</td></tr>';
+      +'<td>'+(r.woc_number?'<a href="#" onclick="event.preventDefault();viewWOC(\''+esc(r.woc_number)+'\')" style="font-weight:600;">'+esc(r.woc_number)+'</a>':'<span class="muted">'+esc(r.source||'')+'</span>')+'<span class="amd-hint" style="text-align:left;">'+esc(r.proposed_by||'')+' · '+fmtDateShort(r.proposed_at)+'</span></td>'
+      +'<td><span class="status '+stCls+'">'+esc(pend?'With WOC · pending':r.status)+'</span>'+(!pend&&r.decided_by?'<span class="amd-hint" style="text-align:left;">'+esc(r.decided_by)+(r.decided_at?' · '+fmtDateShort(r.decided_at):'')+'</span>':'')+'</td></tr>';
   }).join('');
-  _scqBulkBtn();
-}
-function _scqBulkBtn(){ const b=document.getElementById('scq_bulkBtn'); if(!b) return; const n=Object.values(_scq.sel).filter(Boolean).length; b.style.display=n?'':'none'; b.textContent='✓ Approve Selected ('+n+')'; }
-function _scqSelAll(on){ (_scq.queue||[]).forEach(r=>{ if(_scqCanDecide(r)) _scq.sel[r.id]=!!on; }); renderSCQList(); }
-async function scqDecide(id, action){
-  const r=(_scq.queue||[]).find(x=>x.id===id); if(!r) return;
-  if(!hasPerm('canApproveSCQ')){ toast('Not permitted','error'); return; }
-  const lbl=r.description+' · '+(r.loc_name||'')+' on '+r.wo_number;
-  let p_action=action, p_site_qty=null, p_note=null;
-  if(action==='Edit'){
-    const v=prompt('Approve '+lbl+' at a different Site Certified Qty (WO '+num(r.wo_qty).toLocaleString('en-IN')+', proposed '+num(r.site_qty).toLocaleString('en-IN')+'):', String(r.site_qty));
-    if(v==null) return; if(!(num(v)>=0)||v.trim()===''){ toast('Enter a quantity','error'); return; }
-    p_site_qty=num(v); p_action='Approve';
-    if(_scqTier(r.wo_qty,p_site_qty)==='ADMIN' && !_scqIsAdminTier()){ toast('That quantity is beyond 10 % of the WO quantity — only Admin can approve it','error',6000); return; }
-    p_note=prompt('Note (optional):')||null;
-  } else if(action==='Approve'){
-    if(!confirm('Approve Site Certified Qty '+num(r.site_qty).toLocaleString('en-IN')+' for '+lbl+'?\n\nThe certifiable ceiling moves to this quantity. The WO value does not change.')) return;
-  } else if(action==='Reject'){
-    const n=prompt('Reject '+lbl+'. Note to the proposer:'); if(n==null) return; if(!n.trim()){ toast('A note is required to reject','error'); return; } p_note=n.trim();
-  } else if(action==='Recommend'){
-    const n=prompt('Your recommendation to Admin for '+lbl+':'); if(n==null) return; p_note=n.trim()||null;
-  }
-  pbShow('Saving…');
-  try{
-    const {data,error}=await sb.rpc('rpc_scq_decide',{p_id:id,p_action:p_action,p_site_qty:p_site_qty,p_note:p_note,p_user:state.userName});
-    if(error) throw new Error(error.message.replace(/^.*?PERM_DENIED:\s*/,''));
-    toast(action==='Recommend'?'Recommendation noted':'Site Certified Qty '+(data.status||'').toLowerCase()+(data.edited?' at '+num(data.site_qty).toLocaleString('en-IN'):''),'success',5000);
-    await loadSCQList(); if(typeof loadDashPendingCards==='function' && document.getElementById('dash-cards-container')) { try{ loadDashPendingCards(); }catch(e){} }
-  }catch(e){ toast(e.message,'error',8000); }
-  finally{ pbDone(); }
-}
-async function scqBulkApprove(){
-  const ids=Object.keys(_scq.sel).filter(k=>_scq.sel[k]); if(!ids.length) return;
-  if(!confirm('Approve '+ids.length+' Site Certified Qty proposal'+(ids.length>1?'s':'')+' as proposed?')) return;
-  pbShow('Approving…'); let ok=0, bad=[];
-  for(const id of ids){ try{ const {error}=await sb.rpc('rpc_scq_decide',{p_id:id,p_action:'Approve',p_site_qty:null,p_note:null,p_user:state.userName}); if(error) throw error; ok++; }catch(e){ bad.push(e.message.replace(/^.*?PERM_DENIED:\s*/,'')); } }
-  pbDone(); toast(ok+' approved'+(bad.length?' · '+bad.length+' failed: '+bad[0]:''),bad.length?'warn':'success',7000);
-  await loadSCQList();
 }
 // ============================================================
 // SORTABLE TABLES
@@ -38644,9 +38657,6 @@ const DASH_CARDS_NEW = [
   { id:'nx_est_rej', req:['estimate','C'], label:'My Estimates Rejected', sub:'Submissions sent back — revise & resubmit', cls:'urgent',
     nav:function(){navDash('plan','','');},
     query:function(){return sb.from('wbs_scope_submissions').select('id',{count:'exact',head:true}).eq('status','rejected').eq('submitted_by',state.userName);} },
-  { id:'nx_scq_appr', req:['wo_scq','A'], label:'Site Certified Qty to Approve', sub:'Site measurements awaiting a decision', cls:'warn',
-    nav:function(){navDash('wo','scq','');},
-    query:function(){return sb.from('wo_item_site_qty').select('id',{count:'exact',head:true}).eq('status','Proposed');} },   // v179
   { id:'nx_grn_held', req:['grn','C'], label:'Parked Receipts', sub:'Received beyond PO balance — waiting on amendment', cls:'info',
     nav:function(){navDash('purchase','grn','');},
     query:function(){return sb.from('pu_grn_held_receipts').select('id',{count:'exact',head:true}).eq('status','Held');} },
@@ -38688,7 +38698,6 @@ const DASH_CARD_GROUP = {
   qs_pay:'pay', nx_pay_appr:'pay', pm_bills_pay:'pay', nx_hold_appr:'pay', nx_hold_open:'pay', nx_mst_appr:'mst',
   // v174
   nx_amd_appr:'po', nx_amd_corr:'po', nx_amd_req:'po', nx_grn_held:'po', nx_est_appr:'est', nx_est_rej:'est',
-  nx_scq_appr:'wo',   // v179
   // Everything else (MIR/RFQ/QC/PO/GRN/POB/MIS) defaults to 'po'
 };
 const DASH_GROUP_META = {

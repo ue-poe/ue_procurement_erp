@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v189</title>
+<title>Penguin Suite v190</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -1230,6 +1230,72 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
   .dash-chooser .t{font-size:14px;text-transform:none;color:#1e3a5f;padding:6px 4px 8px}
   .dash-chooser button{min-height:48px;border-bottom:1px solid #eef2f7;border-radius:0;font-size:14px}
   .grn-seg{display:flex}.grn-seg button{flex:1;min-height:40px}
+}
+
+/* v190 · master approvals */
+.mst-ap-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}
+.mst-seg{display:inline-flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fff}
+.mst-seg button{border:0;border-right:1px solid var(--border);background:#fff;padding:6px 14px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;color:var(--text)}
+.mst-seg button:last-child{border-right:0}
+.mst-seg button.on{background:#1e3a5f;color:#fff}
+.mst-seg button b{font-weight:700;margin-left:4px}
+.mst-chips{display:flex;gap:6px;flex-wrap:wrap}
+.mst-chips button{border:1px solid var(--border);border-radius:14px;padding:4px 11px;font:inherit;font-size:12px;font-weight:600;background:#fff;color:#334155;cursor:pointer}
+.mst-chips button.on{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.mst-chips button i{font-style:normal;opacity:.7;margin-left:5px}
+.mst-ap-q{flex:1 1 220px;max-width:340px;padding:6px 10px;font-size:12px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)}
+.mst-kind{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;border-radius:4px;padding:2px 6px;background:#1e3a5f;color:#fff}
+.mst-kind.material{background:#7c3aed}.mst-kind.vendor{background:#0369a1}.mst-kind.contractor{background:#b45309}
+.mst-pill{font-size:10.5px;font-weight:800;border-radius:99px;padding:2px 9px;white-space:nowrap}
+.mst-pill.p{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.mst-pill.r{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.mst-ap-acts{display:flex;gap:4px;flex-wrap:wrap}
+.mst-ap-rej{font-size:11px;color:#b91c1c;margin-top:2px}
+.mst-ap-empty{padding:28px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--border);border-radius:8px}
+.mst-card{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.mst-card .h{display:flex;align-items:center;gap:8px;background:#dde6f0;padding:8px 10px;cursor:pointer}
+.mst-card .h .code{font-family:monospace;font-weight:700;color:var(--accent);font-size:13px}
+.mst-card .h .mst-pill{margin-left:auto}
+.mst-card .t{padding:8px 10px 2px;font-weight:600;font-size:13.5px;line-height:1.35;overflow-wrap:anywhere}
+.mst-card .path{padding:0 10px 6px;font-size:11.5px;color:var(--muted)}
+.mst-card .rej{margin:6px 10px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:6px 8px;font-size:12px;color:#b91c1c}
+.mst-card .g{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e6ebf1;margin-top:4px}
+.mst-card .g>div{padding:6px 10px;font-size:12.5px;border-right:1px solid #e6ebf1;border-bottom:1px solid #e6ebf1;overflow-wrap:anywhere;min-width:0}
+.mst-card .g>div:nth-child(2n){border-right:0}
+.mst-card .g>div.full{grid-column:1/3;border-right:0}
+.mst-card .g i{display:block;font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
+.mst-card .g .spec{color:#475569;font-size:12px}
+.mst-card .a{display:flex;gap:8px;padding:10px}
+.mst-card .a .btn{min-height:44px;font-weight:700;margin:0}
+.mst-card .a .mst-ok{flex:1}
+.mst-card .a .mst-no{flex:0 0 100px}
+.mst-rj{position:fixed;inset:0;z-index:1400}
+.mst-rj-shade{position:absolute;inset:0;background:rgba(15,23,42,.45)}
+.mst-rj-box{position:absolute;left:50%;top:22vh;transform:translateX(-50%);width:min(440px,94vw);background:#fff;border-radius:10px;padding:14px;box-shadow:0 12px 40px rgba(2,20,40,.35)}
+.mst-rj-box .grab{display:none}
+.mst-rj-box h4{margin:0 0 2px;color:#1e3a5f;font-size:15px}
+.mst-rj-box .sub{font-size:12px;color:var(--muted);margin-bottom:8px}
+.mst-rj-box textarea{width:100%;height:90px;border:1px solid var(--border);border-radius:8px;padding:8px;font:inherit;font-size:13px;box-sizing:border-box}
+.mst-rj-box .row{display:flex;gap:8px;margin-top:10px;justify-content:flex-end}
+@media (max-width: 640px){
+  .mst-ap-bar{gap:8px}
+  .mst-seg{display:flex;width:100%}.mst-seg button{flex:1;min-height:38px}
+  .mst-ap-q{max-width:none;flex-basis:100%;padding:9px 10px;font-size:13px}
+  .mst-rj-box{left:0;right:0;top:auto;bottom:0;transform:none;width:auto;border-radius:14px 14px 0 0;padding:10px 12px calc(16px + env(safe-area-inset-bottom,0px))}
+  .mst-rj-box .grab{display:block;width:38px;height:4px;background:#cbd5e1;border-radius:2px;margin:0 auto 10px}
+  .mst-rj-box .row .btn{flex:1;min-height:44px}
+  /* trees: wrap long text, approve / reject on their own line, compact + buttons */
+  #master-activities [id^="amact_"]:not([id^="amact_lbl"]), #master-materials [id^="mmmat_"]{flex-wrap:wrap !important;align-items:flex-start !important}
+  #master-activities [id^="amact_lbl_"]{flex:1 1 calc(100% - 76px);min-width:0;overflow-wrap:anywhere}
+  #master-activities [id^="amact_lbl_"] > span[style*="nowrap"]{white-space:normal !important;max-width:none !important;display:-webkit-box !important;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  #master-materials [id^="mmmat_"] > span:nth-child(2){flex:1 1 calc(100% - 76px) !important;min-width:0;overflow-wrap:anywhere}
+  #master-materials [id^="mmmat_"] > span[style*="nowrap"]{white-space:normal !important;max-width:none !important}
+  .mst-inl{display:flex;flex:1 1 100%;gap:8px;order:99}
+  .mst-inl .btn{min-height:40px;font-size:13px;font-weight:700;margin:0}
+  .mst-inl .ph-only{display:inline}
+  .mst-inl .btn-primary{flex:1}.mst-inl .btn-danger{flex:0 0 96px}
+  #mod-masters button[onclick*="amAddSub("], #mod-masters button[onclick*="amAddActivity("], #mod-masters button[onclick*="mmAddSub("], #mod-masters button[onclick*="mmAddMaterial("]{font-size:0 !important;width:34px;height:30px;padding:0 !important;flex:0 0 34px}
+  #mod-masters button[onclick*="amAddSub("]::before, #mod-masters button[onclick*="amAddActivity("]::before, #mod-masters button[onclick*="mmAddSub("]::before, #mod-masters button[onclick*="mmAddMaterial("]::before{content:"+";font-size:18px;font-weight:700}
 }
 </style>
 </head>
@@ -3938,6 +4004,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
 <!-- ==================== MASTERS ==================== -->
 <div class="module" id="mod-masters">
   <div class="sub-tabs">
+    <div class="sub-tab" data-mastertab="approvals" onclick="switchMasterTab('approvals')" style="display:none;">Approvals<span id="mstApTabN" class="mst-badge-ap" style="display:none;background:#d97706;color:#fff;border-radius:99px;font-size:9px;font-weight:800;padding:1px 6px;margin-left:6px;"></span></div>
     <div class="sub-tab active" data-mastertab="vendors" onclick="switchMasterTab('vendors')">Vendors</div>
     <div class="sub-tab" data-mastertab="activities" onclick="switchMasterTab('activities')">Activity Master</div>
     <div class="sub-tab" data-mastertab="materials" onclick="switchMasterTab('materials')">Material Master</div>
@@ -4022,6 +4089,14 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
 
 
   <!-- VENDORS -->
+  <div id="master-approvals" class="hidden">
+    <div class="mst-ap-bar">
+      <div class="mst-seg"><button type="button" data-s="pend" class="on" onclick="mstApprSet('s','pend')">Pending<b id="mstApN_p">0</b></button><button type="button" data-s="rej" onclick="mstApprSet('s','rej')">Rejected<b id="mstApN_r">0</b></button></div>
+      <div class="mst-chips" id="mstApChips"></div>
+      <input id="mstApQ" class="mst-ap-q" placeholder="Search Code, Name, Head" oninput="mstApprRender()">
+    </div>
+    <div id="mstAp_body"><div class="mst-ap-empty">Loading…</div></div>
+  </div>
   <div id="master-vendors">
     <div class="card" id="masterAddVendorCard" style="display:none;">
       <h3 style="display:flex;align-items:center;">Add Vendor<span style="flex:1;"></span>
@@ -11399,7 +11474,8 @@ function switchMasterTab(tab) {
     contractors: hasPerm('canAddContractorMaster') || hasPerm('canApproveContractorMaster'),
     locations:   hasRole('Admin') || hasPerm('canManageMasters'),
     costheads:   hasRole('Admin') || hasPerm('canManageMasters'),
-    docai:       _pcOwner(),                                       // v164 · M37 owner only (DB-enforced)
+    docai:       _pcOwner(),
+    approvals:   _mstApVisible(),   // v190                                       // v164 · M37 owner only (DB-enforced)
   };
   Object.entries(_mtVis).forEach(([t, vis]) => {
     const stab = document.querySelector(`.sub-tab[data-mastertab="${t}"]`);
@@ -11410,7 +11486,7 @@ function switchMasterTab(tab) {
     if (first && first !== tab) return switchMasterTab(first);
   }
   renderMasterQueues();
-  ['vendors','activities','materials','contractors','locations','costheads','projcompany','docai'].forEach(t => {
+  ['approvals','vendors','activities','materials','contractors','locations','costheads','projcompany','docai'].forEach(t => {
     const el = document.getElementById('master-' + t);
     if (el) el.classList.toggle('hidden', t !== tab);
     const stab = document.querySelector(`.sub-tab[data-mastertab="${t}"]`);
@@ -11425,6 +11501,7 @@ function switchMasterTab(tab) {
   if (tab === 'contractors') { renderContractorMaster(); }
   if (tab === 'projcompany') { pgsPCLoad(); }   // v66
   if (tab === 'docai') { pgsDocAILoad(); }      // v164
+  if (tab === 'approvals') { mstApprLoad(); }   // v190
   // v154 · Site Areas and Labour Setup live in the Daily Report module (manager mock v3)
   _mcEnsureBtn(tab);   // v67: copy-from-project tool on the four master tabs
 }
@@ -11778,9 +11855,7 @@ function mstViewContractor(code) {
       ${field('Account No.', c['Bank Account'])}
       ${field('IFSC', c['IFSC'])}
     </div>
-    <div class="actions-row" style="margin-top:10px;">
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>
+    ${_mstViewBar('contractor', code, appr)}
   `);
 }
 // ── v75.14 · View popups for the remaining three kinds — same pattern, ungated ──
@@ -11811,9 +11886,7 @@ function mstViewVendor(code) {
       ${field('Account No.', v['Bank Account'])}
       ${field('IFSC', v['IFSC'])}
     </div>
-    <div class="actions-row" style="margin-top:10px;">
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>
+    ${_mstViewBar('vendor', code, appr)}
   `);
 }
 function mstViewActivity(code) {
@@ -11834,9 +11907,7 @@ function mstViewActivity(code) {
       ${field('Cost Subhead', a['Cost Subhead'])}
     </div>
     ${field('Specification', a['Specification'])}
-    <div class="actions-row" style="margin-top:10px;">
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>
+    ${_mstViewBar('activity', code, appr)}
   `);
 }
 function mstViewMaterial(code) {
@@ -11858,9 +11929,7 @@ function mstViewMaterial(code) {
       ${field('Sub-head', m.sub_head)}
     </div>
     ${field('Specification', m.specification)}
-    <div class="actions-row" style="margin-top:10px;">
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>
+    ${_mstViewBar('material', code, appr)}
   `);
 }
 // ── v69 · Add-master cards as modal overlays (same DOM, same save flow) ────
@@ -11908,8 +11977,8 @@ function _mstEditFn(kind, code) {
 }
 function _mstInline(kind, code, appr, rej) {
   if (appr === 'Pending Approval' && _mstCanApprove(kind))
-    return `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();mstDecide('${kind}','${esc(code)}','approve')">\u2713</button>
-            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();mstDecide('${kind}','${esc(code)}','reject')">\u2715</button>`;
+    return `<span class="mst-inl"><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();mstDecide('${kind}','${esc(code)}','approve')">\u2713<span class="ph-only"> Approve</span></button>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();mstDecide('${kind}','${esc(code)}','reject')">\u2715<span class="ph-only"> Reject</span></button></span>`;
   if (appr === 'Rejected' && _mstCanCreate(kind)) {
     const editBtn = _MST_EDIT_ENABLED.includes(kind)
       ? `<button class="btn btn-warn btn-sm" title="${esc(rej||'')}" onclick="event.stopPropagation();_mstEditFn('${kind}','${esc(code)}')">\u270f Edit &amp; Resubmit</button> `
@@ -12059,13 +12128,14 @@ async function renderMasterQueues() {
     }
   });
   box.innerHTML = '';   // v68: pending items live inside each master's tree
+  { let p=0,j=0; mine.forEach((k,idx)=>{ (res[idx].data||[]).forEach(r=>{ if(r.approval_status==='Rejected'){ if(_mstCanCreate(k[0])) j++; } else p++; }); });   // v190 · Approvals tab count
+    const t=document.getElementById('mstApTabN'); if(t){ t.textContent=(p+j)?String(p+j):''; t.style.display=(p+j)?'':'none'; t.style.background=(j&&!p)?'#dc2626':'#d97706'; } }
 }
 async function mstDecide(kind, code, action) {
   let reason = null;
   if (action === 'reject') {
-    reason = prompt('Reason for rejecting ' + code + ' (shown to the creator):');
+    reason = await _mstRejectAsk(code);   // v190: sheet instead of the browser prompt
     if (reason === null) return;
-    if (!reason.trim()) { toast('A reason is mandatory to reject','error'); return; }
   }
   pbShow('Updating master\u2026');
   const { data, error } = await sb.rpc('rpc_master_decide',
@@ -12080,6 +12150,7 @@ async function mstDecide(kind, code, action) {
   if (kind === 'activity' && typeof renderActivityTree === 'function') renderActivityTree();
   if (kind === 'material') { try { await apiLoadMaterials(); renderMaterialTree(); } catch(_){} }
   renderMasterQueues();
+  if (!document.getElementById('master-approvals')?.classList.contains('hidden')) mstApprLoad();   // v190
 }
 async function mstResubmit(kind, code) {
   const K = _MST_KINDS.find(k => k[0] === kind);
@@ -12102,7 +12173,143 @@ async function mstResubmit(kind, code) {
   _cacheBust('masters');
   await apiLoadMasters();
   renderAllMasters(); renderContractorMaster(); renderMasterQueues();
+  if (!document.getElementById('master-approvals')?.classList.contains('hidden')) mstApprLoad();   // v190
 }
+
+// ============================================================
+// v190 · MASTER APPROVALS TAB — one list across Activity / Material /
+// Vendor / Contractor: Pending (approve / reject in place) and Rejected
+// (edit & resubmit). Reads the four tables directly; decisions go through
+// rpc_master_decide (rights + maker ≠ checker enforced in the database).
+// ============================================================
+const _MSTAP = { s:'pend', k:'', rows:[] };
+const _MSTAP_KL = { activity:'Activity', material:'Material', vendor:'Vendor', contractor:'Contractor' };
+const _MSTAP_SRC = [
+  ['activity','ho_activities','activity_code'],
+  ['material','pu_material_master','material_code'],
+  ['vendor','ho_vendors','vendor_code'],
+  ['contractor','wo_contractors','contractor_code'],
+];
+function _mstApVisible(){ return Object.keys(_MSTAP_KL).some(k => _mstCanApprove(k) || _mstCanCreate(k)); }
+async function mstApprLoad(){
+  const kinds=_MSTAP_SRC.filter(s => _mstCanApprove(s[0]) || _mstCanCreate(s[0]));
+  const res=await Promise.all(kinds.map(s => sb.from(s[1]).select('*').in('approval_status',['Pending Approval','Rejected']).order('created_at',{ascending:false})));
+  const rows=[];
+  kinds.forEach((s,i) => {
+    if (res[i].error) { console.warn('mstAppr', s[1], res[i].error); return; }
+    (res[i].data||[]).forEach(r => rows.push(_mstApRow(s[0], r)));
+  });
+  _MSTAP.rows=rows;
+  _mstApCount();
+  mstApprRender();
+  // edit & resubmit and the view popups read the cached masters
+  try { if (!(state.masters.activities||[]).length) apiLoadMasters(); if (typeof apiLoadMaterials==='function' && !(puState.materials||[]).length) apiLoadMaterials(); } catch(_){}
+}
+function _mstApRow(kind, r){
+  const bank = [r.bank_name, r.branch, r.bank_account ? '••••'+String(r.bank_account).slice(-4) : ''].filter(Boolean).join(' · ');
+  const o = { kind, appr:r.approval_status, rej:r.reject_reason||'', at:r.created_at||null, by:r.created_by_name||'' };
+  if (kind==='activity') Object.assign(o, { code:r.activity_code, name:r.activity_description, path:[r.activity_group, r.activity_sub_group].filter(Boolean).join(' › '),
+      f:[['UOM', r.uom], ['Default Rate', r.default_rate ? fmtINRSym(r.default_rate) : '—']], spec:r.specification||'' , ur:[r.uom, r.default_rate ? fmtINRSym(r.default_rate) : ''].filter(Boolean).join(' · ') });
+  if (kind==='material') Object.assign(o, { code:r.material_code, name:r.material_name, path:[r.material_group, r.sub_head].filter(Boolean).join(' › '),
+      f:[['UOM', r.uom], ['Est. Rate', r.estimated_rate ? fmtINRSym(r.estimated_rate) : '—'], ['HSN', r.hsn_code||'—']], spec:r.specification||'', ur:[r.uom, r.estimated_rate ? fmtINRSym(r.estimated_rate) : ''].filter(Boolean).join(' · ') });
+  if (kind==='vendor') Object.assign(o, { code:r.vendor_code, name:r.vendor_name, path:r.trade||'',
+      f:[['Trade', r.trade||'—'], ['GSTIN', r.gstin||'—'], ['PAN', r.pan||'—'], ['Contact', [r.contact_person, r.phone].filter(Boolean).join(' · ')||'—'], ['Bank', bank||'—', 1]], spec:'', ur:'' });
+  if (kind==='contractor') Object.assign(o, { code:r.contractor_code, name:r.contractor_name, path:r.trade||'',
+      f:[['Trade', r.trade||'—'], ['GSTIN', r.gstin||'—'], ['Contact', [r.contact_person, r.phone].filter(Boolean).join(' · ')||'—', 1], ['Bank', bank||'—', 1]], spec:'', ur:'' });
+  return o;
+}
+function _mstApCount(){
+  const vis = r => r.appr==='Rejected' ? _mstCanCreate(r.kind) : true;
+  const p=_MSTAP.rows.filter(r => r.appr==='Pending Approval').length, j=_MSTAP.rows.filter(r => r.appr==='Rejected' && vis(r)).length;
+  const t=document.getElementById('mstApTabN');
+  if (t) { t.textContent = (p+j) ? String(p+j) : ''; t.style.display=(p+j)?'':'none'; t.style.background = j && !p ? '#dc2626' : '#d97706'; }
+  const a=document.getElementById('mstApN_p'), b=document.getElementById('mstApN_r'); if (a) a.textContent=p; if (b) b.textContent=j;
+}
+function mstApprSet(key, v){ _MSTAP[key]=v; mstApprRender(); }
+function _mstApPhone(){ return window.matchMedia && window.matchMedia('(max-width:640px)').matches; }
+function mstApprRender(){
+  const box=document.getElementById('mstAp_body'); if (!box) return;
+  document.querySelectorAll('#master-approvals .mst-seg button').forEach(b => b.classList.toggle('on', b.dataset.s===_MSTAP.s));
+  const st=_MSTAP.s==='rej' ? 'Rejected' : 'Pending Approval';
+  const base=_MSTAP.rows.filter(r => r.appr===st && (st!=='Rejected' || _mstCanCreate(r.kind)));
+  const ch=document.getElementById('mstApChips');
+  if (ch) ch.innerHTML = [['','All']].concat(Object.entries(_MSTAP_KL)).map(([k,l]) => {
+    const n = k ? base.filter(r => r.kind===k).length : base.length;
+    return '<button type="button" class="'+(_MSTAP.k===k?'on':'')+'" onclick="mstApprSet(\'k\',\''+k+'\')">'+l+'<i>'+n+'</i></button>';
+  }).join('');
+  const q=gvl('mstApQ');
+  const rows=base.filter(r => (!_MSTAP.k || r.kind===_MSTAP.k) && (!q || (r.code+' '+r.name+' '+r.path).toLowerCase().includes(q)));
+  const empty='<div class="mst-ap-empty">'+(st==='Rejected' ? 'Nothing Rejected' : 'Nothing Pending Approval')+'</div>';
+  if (!rows.length) { box.innerHTML=empty; return; }
+  box.innerHTML = _mstApPhone() ? rows.map(_mstApCard).join('') : _mstApTable(rows);
+}
+function _mstApActs(r, phone){
+  const c=esc(r.code), k=r.kind, sm=phone?'':' btn-sm';
+  if (r.appr==='Pending Approval') {
+    if (!_mstCanApprove(k)) return phone ? '' : '<span class="muted" style="font-size:11.5px;">Awaiting Approver</span>';
+    return '<button class="btn btn-primary mst-ok'+sm+'" onclick="event.stopPropagation();mstDecide(\''+k+'\',\''+c+'\',\'approve\')">✓ Approve</button>'
+         + '<button class="btn btn-danger mst-no'+sm+'" onclick="event.stopPropagation();mstDecide(\''+k+'\',\''+c+'\',\'reject\')">✕ Reject</button>';
+  }
+  if (!_mstCanCreate(k)) return '';
+  return (_MST_EDIT_ENABLED.includes(k) ? '<button class="btn btn-warn mst-ok'+sm+'" onclick="event.stopPropagation();_mstEditFn(\''+k+'\',\''+c+'\')">✏ Edit &amp; Resubmit</button>' : '')
+       + '<button class="btn btn-ghost'+sm+'" onclick="event.stopPropagation();mstResubmit(\''+k+'\',\''+c+'\')">↻ Resubmit</button>';
+}
+function _mstApView(r){ return {activity:'mstViewActivity', material:'mstViewMaterial', vendor:'mstViewVendor', contractor:'mstViewContractor'}[r.kind]+'(\''+esc(r.code)+'\')'; }
+function _mstApPill(r){ return r.appr==='Rejected' ? '<span class="mst-pill r">✏ Rejected</span>' : '<span class="mst-pill p">⏳ Pending</span>'; }
+function _mstApCard(r){
+  const added = r.at ? fmtDate(String(r.at).slice(0,10)) + (r.by ? ' · '+esc(r.by) : '') : '';
+  const cells = r.f.map(x => '<div'+(x[2]?' class="full"':'')+'><i>'+esc(x[0])+'</i>'+esc(x[1]||'—')+'</div>').join('')
+    + (r.spec ? '<div class="full spec"><i>Specification</i>'+esc(r.spec)+'</div>' : '')
+    + (added ? '<div class="full"><i>Added</i>'+added+'</div>' : '');
+  const acts=_mstApActs(r, true);
+  return '<div class="mst-card">'
+    + '<div class="h" onclick="'+_mstApView(r)+'"><span class="code">'+esc(r.code)+'</span><span class="mst-kind '+r.kind+'">'+_MSTAP_KL[r.kind]+'</span>'+_mstApPill(r)+'</div>'
+    + '<div class="t">'+esc(r.name||'—')+'</div>'
+    + (r.path && (r.kind==='activity'||r.kind==='material') ? '<div class="path">'+esc(r.path)+'</div>' : '')
+    + (r.appr==='Rejected' && r.rej ? '<div class="rej">Rejected: '+esc(r.rej)+'</div>' : '')
+    + '<div class="g">'+cells+'</div>'
+    + (acts ? '<div class="a">'+acts+'</div>' : '')
+    + '</div>';
+}
+function _mstApTable(rows){
+  return '<div class="table-wrap"><table class="mst-ap-t"><thead><tr><th style="width:84px">Kind</th><th style="width:84px">Code</th><th style="min-width:260px">Name / Description</th><th style="width:190px">Head › Sub-head / Trade</th><th style="width:104px">UOM · Rate</th><th style="width:92px">Added</th><th style="width:92px">Status</th><th style="width:226px">Actions</th></tr></thead><tbody>'
+    + rows.map(r => '<tr><td><span class="mst-kind '+r.kind+'">'+_MSTAP_KL[r.kind]+'</span></td><td class="mono">'+esc(r.code)+'</td>'
+      + '<td>'+esc(r.name||'—')+(r.appr==='Rejected'&&r.rej?'<div class="mst-ap-rej">'+esc(r.rej)+'</div>':'')+'</td>'
+      + '<td>'+esc(r.path||'—')+'</td><td>'+esc(r.ur||'—')+'</td><td>'+(r.at?fmtDate(String(r.at).slice(0,10)):'—')+'</td><td>'+_mstApPill(r)+'</td>'
+      + '<td><div class="mst-ap-acts"><button class="btn btn-ghost btn-sm" onclick="'+_mstApView(r)+'">View</button>'+_mstApActs(r, false)+'</div></td></tr>').join('')
+    + '</tbody></table></div>';
+}
+if (window.matchMedia) { try { window.matchMedia('(max-width:640px)').addEventListener('change', function(){ if (document.getElementById('master-approvals') && !document.getElementById('master-approvals').classList.contains('hidden')) mstApprRender(); }); } catch(_){} }
+
+// ── reject reason: sheet instead of the browser prompt ──
+function _mstRejectAsk(code){
+  return new Promise(function(resolve){
+    const old=document.getElementById('mstRj'); if (old) old.remove();
+    const w=document.createElement('div'); w.id='mstRj'; w.className='mst-rj';
+    w.innerHTML='<div class="mst-rj-shade"></div><div class="mst-rj-box"><div class="grab"></div><h4>Reject '+esc(code)+'</h4><div class="sub">Reason Goes Back To The Creator</div>'
+      +'<textarea id="mstRjTxt" placeholder="Reason (Mandatory)"></textarea><div class="row"><button type="button" class="btn btn-ghost" data-a="c">Cancel</button><button type="button" class="btn btn-danger" data-a="r">✕ Reject</button></div></div>';
+    document.body.appendChild(w);
+    const done=v => { w.remove(); resolve(v); };
+    w.querySelector('.mst-rj-shade').onclick=() => done(null);
+    w.querySelector('[data-a="c"]').onclick=() => done(null);
+    w.querySelector('[data-a="r"]').onclick=() => { const t=(document.getElementById('mstRjTxt').value||'').trim(); if (!t) { toast('A reason is mandatory to reject','error'); return; } done(t); };
+    setTimeout(() => { const t=document.getElementById('mstRjTxt'); if (t) t.focus(); }, 30);
+  });
+}
+// ── view popups: approval bar (phone: fixed at the bottom of the sheet) ──
+function _mstViewBar(kind, code, appr){
+  const c=esc(code);
+  let b='';
+  if (appr==='Pending Approval' && _mstCanApprove(kind))
+    b='<button class="btn btn-primary" onclick="closeModal();mstDecide(\''+kind+'\',\''+c+'\',\'approve\')">✓ Approve</button>'
+     +'<button class="btn btn-danger" onclick="closeModal();mstDecide(\''+kind+'\',\''+c+'\',\'reject\')">✕ Reject</button>';
+  else if (appr==='Rejected' && _mstCanCreate(kind))
+    b=(_MST_EDIT_ENABLED.includes(kind) ? '<button class="btn btn-warn" onclick="closeModal();_mstEditFn(\''+kind+'\',\''+c+'\')">✏ Edit &amp; Resubmit</button>' : '')
+     +'<button class="btn btn-ghost" onclick="closeModal();mstResubmit(\''+kind+'\',\''+c+'\')">↻ Resubmit</button>';
+  return b ? '<div class="actions-row ph-approve-bar" style="margin-top:10px;">'+b+'<button class="btn btn-ghost" onclick="closeModal()">Close</button></div>'
+           : '<div class="actions-row" style="margin-top:10px;"><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>';
+}
+
 function _mstPendNote(kind) {
   if (!_mstCanApprove(kind))
     toast(kind.charAt(0).toUpperCase()+kind.slice(1) +
@@ -38669,7 +38876,7 @@ const DASH_CARDS_NEW = [
   { id:'nx_mst_appr', req:['masters_activity','A'],
     alt:[['masters_contractor','A'],['masters_material','A'],['masters_vendor','A']],
     label:'Masters Pending Approval', sub:'New master entries to review', cls:'info',
-    nav:function(){navDash('masters','','');},
+    nav:function(){navDash('masters','approvals','');},
     query:async function(){
       const P=['Pending Approval','Pending'];
       const rs=await Promise.all([
@@ -38862,6 +39069,7 @@ function navDash(mainTab, subTab, statusFilter) {
     else if (mainTab === 'wo' && subTab) switchWOTab(subTab);
     else if (mainTab === 'purchase' && subTab) switchPUTab(tabArg);
     else if (mainTab === 'payments' && subTab) { switchPayTab(subTab); return; }
+    else if (mainTab === 'masters' && subTab) { switchMasterTab(subTab); return; }   // v190
     const key = mainTab+':'+subTab;
     if (key === 'purchase:grn') {
       const src=document.getElementById('grnSourceFilter'); if(src) src.value='';

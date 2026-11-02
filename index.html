@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v190</title>
+<title>Penguin Suite v191</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -1296,6 +1296,24 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
   .mst-inl .btn-primary{flex:1}.mst-inl .btn-danger{flex:0 0 96px}
   #mod-masters button[onclick*="amAddSub("], #mod-masters button[onclick*="amAddActivity("], #mod-masters button[onclick*="mmAddSub("], #mod-masters button[onclick*="mmAddMaterial("]{font-size:0 !important;width:34px;height:30px;padding:0 !important;flex:0 0 34px}
   #mod-masters button[onclick*="amAddSub("]::before, #mod-masters button[onclick*="amAddActivity("]::before, #mod-masters button[onclick*="mmAddSub("]::before, #mod-masters button[onclick*="mmAddMaterial("]::before{content:"+";font-size:18px;font-weight:700}
+}
+
+/* v191 · phone bottom bar: Back · Home · Forward · Menu */
+.pgs-bnav{display:none}
+@media (max-width: 860px){
+  body.pgs-bnav-on .pgs-bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;background:#0f2440;border-top:1px solid #1c3557;
+    padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 14px rgba(0,0,0,.18)}
+  .pgs-bnav button{flex:1;min-height:58px;border:0;background:transparent;color:#e2e8f0;font:inherit;font-size:10.5px;font-weight:600;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .pgs-bnav button b{font-size:22px;line-height:1;font-weight:700}
+  .pgs-bnav button.off{opacity:.35;cursor:default}
+  .pgs-bnav button.on{color:#2dd4bf}
+  .pgs-bnav button:active:not(.off){background:#1c3557}
+  body.pgs-bnav-on .pgs-menu{display:none !important}
+  body.pgs-bnav-on .pgs-main > .container{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px)) !important}
+  body.pgs-bnav-on.pgs-nav-open .pgs-sidebar{padding-bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+  body.pgs-bnav-on .toast{bottom:calc(74px + env(safe-area-inset-bottom,0px)) !important;left:12px;right:12px;text-align:center}
+  body.pgs-bnav-on.pgs-kbd .pgs-bnav{display:none}
 }
 </style>
 </head>
@@ -39507,6 +39525,183 @@ onSignedIn = async function(user) {
     document.getElementById('mod-dashboard').classList.add('active');
     loadDashboard();
   }
+};
+
+
+// ============================================================
+// v191 · BACK / FORWARD — the app keeps its own screen history so the
+// phone's back gesture (and the browser's back / forward) step through
+// screens instead of leaving the app. Back closes what is on top first
+// (popup → sheet → menu → entry form), then returns to the previous
+// screen (module + sub-tab, filters untouched). At the first screen:
+// "Press Back Again To Exit". Phone: Back · Home · Forward · Menu bar.
+// No URL / hash change — auth links use the hash.
+// ============================================================
+(function(){
+  const NAV = { on:false, stack:[], p:0, restoring:0, ignore:0, lastBase:0, proj:null, dirty:{}, t:null };
+  window._pgsNav = NAV;
+  const FORM_CLOSE = { grnForm:'closeGRNForm', cashGrnForm:'closeCashGRNForm', cashPobForm:'closeCashPOBForm', mirForm:'closeMIRForm',
+    misForm:'closeMISForm', poForm:'closePOForm', pobForm:'closePOBForm', rfqForm:'closeRFQForm', hoForm:'closeHOForm', hocForm:'closeHOCForm',
+    hobForm:'closeHOBForm', woForm:'closeWOForm', wocForm:'closeWOCForm', wobForm:'closeWOBForm' };
+  const vis = el => { if (!el) return false; const cs=getComputedStyle(el); return cs.display!=='none' && cs.visibility!=='hidden' && el.getClientRects().length>0; };
+  const projId = () => (window.pgsS && pgsS.project && pgsS.project.id) || null;
+
+  // ── screen snapshot / restore ──
+  function snap(){
+    const t=document.querySelector('.tabs .tab.active'); const m=t ? t.dataset.tab : 'dashboard';
+    const mod=document.getElementById('mod-'+m);
+    const subs=mod ? [...mod.querySelectorAll('.sub-tab.active')].filter(vis).map(x => x.getAttribute('onclick')).filter(Boolean) : [];
+    const pk=!!(document.getElementById('grnListCard') && document.getElementById('grnListCard').classList.contains('grn-pk-on') && m==='purchase');
+    return { m, subs, pk };
+  }
+  const same = (a,b) => a && b && a.m===b.m && a.pk===b.pk && a.subs.join('|')===b.subs.join('|');
+  function restore(s){
+    NAV.restoring=Date.now();
+    const cur=snap();
+    const tab=document.querySelector('.tabs .tab[data-tab="'+s.m+'"]');
+    if (cur.m!==s.m && tab) tab.click();
+    setTimeout(function(){
+      const mod=document.getElementById('mod-'+s.m);
+      (s.subs||[]).forEach(function(oc){
+        const el=mod && [...mod.querySelectorAll('.sub-tab')].find(x => x.getAttribute('onclick')===oc);
+        if (el && !el.classList.contains('active')) el.click();
+      });
+      if (s.m==='purchase' && typeof grnShowParked==='function') { const c=document.getElementById('grnListCard'); if (c && c.classList.contains('grn-pk-on')!==!!s.pk) grnShowParked(!!s.pk); }
+      setTimeout(function(){ NAV.restoring=0; bar(); }, 250);
+    }, cur.m!==s.m ? 220 : 0);
+  }
+  function record(){
+    if (!NAV.on || NAV.restoring) return;
+    if (projId()!==NAV.proj) { reset(); return; }
+    const s=snap();
+    if (same(s, NAV.stack[NAV.p])) { bar(); return; }
+    NAV.stack=NAV.stack.slice(0, NAV.p+1); NAV.stack.push(s); NAV.p++;
+    history.pushState({ pgsNav:1, i:NAV.p }, '');
+    bar();
+  }
+  function reset(){
+    NAV.on=true; NAV.proj=projId(); NAV.stack=[snap()]; NAV.p=0;
+    history.replaceState({ pgsNav:'base' }, ''); history.pushState({ pgsNav:1, i:0 }, '');
+    bar();
+  }
+  window._pgsNavReset = reset;
+
+  // ── what is on top ──
+  function topLayer(){
+    if (document.getElementById('mstRj')) return () => document.querySelector('#mstRj [data-a="c"]').click();
+    if (document.getElementById('dashChooser')) return () => _dashChooserClose();
+    if (document.getElementById('navDiscard')) return () => document.getElementById('navDiscard').remove();
+    const mc=document.querySelector('.mst-card-open'); if (mc) return () => mstCardClose(mc.id);
+    const ovs=[...document.querySelectorAll('.pay-ovl, .pyd-ovl, [id$="_ovl"], #postPrintModal, .print-overlay.show, #printOverlay.show')].filter(vis);
+    if (ovs.length) { const o=ovs[ovs.length-1]; return () => {
+      if (o.id==='printOverlay' && typeof closePrintOverlay==='function') return closePrintOverlay();
+      const b=[...o.querySelectorAll('button')].find(x => /^\s*(✕|×|&#x2715;)?\s*(Close|Cancel)\b|^\s*(✕|×)\s*$/i.test(x.textContent) || /close/i.test(x.className));
+      if (b) b.click(); else o.style.display='none'; }; }
+    const mb=document.getElementById('modalBg'); if (mb && mb.classList.contains('show')) return () => closeModal();
+    if (document.body.classList.contains('pgs-nav-open')) return () => pgsMobileNav(false);
+    return null;
+  }
+  function openForm(){
+    const t=document.querySelector('.tabs .tab.active'); const mod=t && document.getElementById('mod-'+t.dataset.tab); if (!mod) return null;
+    for (const id in FORM_CLOSE) { const f=document.getElementById(id); if (f && mod.contains(f) && vis(f)) return f; }
+    return null;
+  }
+  function cleanDirty(){ for (const id in NAV.dirty) { if (!vis(document.getElementById(id))) delete NAV.dirty[id]; } }
+  function closeForm(f){ delete NAV.dirty[f.id]; const fn=window[FORM_CLOSE[f.id]]; if (typeof fn==='function') fn(); else f.style.display='none'; bar(); }
+  function askDiscard(f){
+    const old=document.getElementById('navDiscard'); if (old) old.remove();
+    const h=f.querySelector('h3'); const sub=h ? h.textContent.trim() : '';
+    const w=document.createElement('div'); w.id='navDiscard'; w.className='mst-rj';
+    w.innerHTML='<div class="mst-rj-shade"></div><div class="mst-rj-box"><div class="grab"></div><h4>Discard Unsaved Entries?</h4><div class="sub">'+esc(sub)+'</div>'
+      +'<div class="row"><button type="button" class="btn btn-ghost" data-a="s">Stay</button><button type="button" class="btn btn-danger" data-a="d">Discard</button></div></div>';
+    document.body.appendChild(w);
+    w.querySelector('.mst-rj-shade').onclick=() => w.remove();
+    w.querySelector('[data-a="s"]').onclick=() => w.remove();
+    w.querySelector('[data-a="d"]').onclick=() => { w.remove(); closeForm(f); };
+  }
+  // closes the top-most thing; true when something was handled
+  function closeTop(){
+    const l=topLayer(); if (l) { l(); return true; }
+    cleanDirty();
+    const f=openForm(); if (f) { if (NAV.dirty[f.id]) askDiscard(f); else closeForm(f); return true; }
+    return false;
+  }
+
+  // ── history events ──
+  window.addEventListener('popstate', function(e){
+    if (!NAV.on) return;
+    const st=e.state;
+    if (NAV.ignore) { NAV.ignore=0; return; }
+    if (!st || !st.pgsNav) return;
+    if (st.pgsNav==='base') {
+      if (closeTop()) { NAV.ignore=1; history.go(1); return; }
+      if (Date.now()-NAV.lastBase < 2000) { NAV.on=false; history.back(); return; }
+      NAV.lastBase=Date.now(); toast('Press Back Again To Exit','info',2000);
+      NAV.ignore=1; history.go(1); return;
+    }
+    if (st.i < NAV.p) {
+      if (closeTop()) { NAV.ignore=1; history.go(1); return; }
+      NAV.p=st.i; restore(NAV.stack[NAV.p]);
+    } else if (st.i > NAV.p && NAV.stack[st.i]) {
+      const l=topLayer(); if (l) l();
+      NAV.p=st.i; restore(NAV.stack[NAV.p]);
+    }
+    bar();
+  });
+  document.addEventListener('click', function(e){
+    if (!NAV.on) return;
+    cleanDirty();
+    const t=e.target.closest && e.target.closest('.tabs .tab, .sub-tab, .grn-seg button, .dash-card, .dash-chooser button');
+    if (!t || NAV.restoring) { setTimeout(bar, 60); return; }
+    clearTimeout(NAV.t); NAV.t=setTimeout(record, 450);
+  }, true);
+  document.addEventListener('input', function(e){
+    const f=e.target.closest && e.target.closest(Object.keys(FORM_CLOSE).map(x => '#'+x).join(','));
+    if (f && e.isTrusted) NAV.dirty[f.id]=1;
+  }, true);
+
+  // ── phone bar ──
+  function goHome(){
+    const pay=document.querySelector('.tabs .tab[data-tab="payments"]'), dash=document.querySelector('.tabs .tab[data-tab="dashboard"]');
+    const l=topLayer(); if (l) l();
+    if (window.state && state.isViewer && pay) pay.click(); else if (dash) dash.click();
+  }
+  function bar(){
+    const b=document.getElementById('pgsBnav'); if (!b) return;
+    const canBack = NAV.p>0 || !!topLayer() || !!openForm();
+    b.querySelector('[data-k="b"]').classList.toggle('off', !canBack);
+    b.querySelector('[data-k="f"]').classList.toggle('off', !(NAV.p < NAV.stack.length-1));
+    const t=document.querySelector('.tabs .tab.active'); const home=(window.state&&state.isViewer)?'payments':'dashboard';
+    b.querySelector('[data-k="h"]').classList.toggle('on', !!t && t.dataset.tab===home);
+    b.querySelector('[data-k="m"]').classList.toggle('on', document.body.classList.contains('pgs-nav-open'));
+  }
+  window._pgsNavBar = bar;
+  function mount(){
+    if (document.getElementById('pgsBnav')) return;
+    const b=document.createElement('nav'); b.id='pgsBnav'; b.className='pgs-bnav';
+    b.innerHTML='<button type="button" data-k="b"><b>‹</b>Back</button><button type="button" data-k="h"><b>⌂</b>Home</button>'
+      +'<button type="button" data-k="f"><b>›</b>Forward</button><button type="button" data-k="m"><b>☰</b>Menu</button>';
+    b.addEventListener('click', function(e){
+      const k=e.target.closest('button'); if (!k || k.classList.contains('off')) return;
+      e.stopPropagation();
+      if (k.dataset.k==='b') history.back();
+      else if (k.dataset.k==='f') history.forward();
+      else if (k.dataset.k==='h') { goHome(); clearTimeout(NAV.t); NAV.t=setTimeout(record, 450); }
+      else if (k.dataset.k==='m') { pgsMobileNav(); bar(); }
+    });
+    document.body.appendChild(b);
+    document.body.classList.add('pgs-bnav-on');
+    // keyboard up → hide the bar
+    document.addEventListener('focusin', function(e){ const t=e.target; if (t && t.matches && t.matches('input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=file]), textarea, select')) document.body.classList.add('pgs-kbd'); });
+    document.addEventListener('focusout', function(){ setTimeout(function(){ const a=document.activeElement; if (!a || !a.matches || !a.matches('input, textarea, select')) document.body.classList.remove('pgs-kbd'); }, 80); });
+    setInterval(function(){ if (NAV.on && document.visibilityState==='visible') bar(); }, 900);
+  }
+  window._pgsNavMount = mount;
+})();
+const _origOnSignedIn_nav = onSignedIn;
+onSignedIn = async function(user) {   // v191: start the screen history once the landing screen is up
+  await _origOnSignedIn_nav(user);
+  try { window._pgsNavMount(); setTimeout(window._pgsNavReset, 400); } catch(e) { console.warn('nav', e); }
 };
 
 // Auto-refresh every 60 seconds

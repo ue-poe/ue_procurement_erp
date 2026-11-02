@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v191</title>
+<title>Penguin Suite v192</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -18232,19 +18232,10 @@ function renderWOCList() {
   ]);
   setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
   if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="center muted">No certifications found.</td></tr>'; return; }
-  const perms = mergedPerms();
   tbody.innerHTML = rows.map(c => {
     const st = c['Status']||'Unbilled';
+    // v192: View + Print only — Approve / Return / Reject / Revise / Delete live inside the certification
     let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOC('${esc(c['WOC Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOCById('${esc(c['WOC Number'])}')">Print</button>`;
-    if (perms.canApproveWOC && st === 'Pending Approval') {   // v74.2: was canCreateWOB — approver-side only
-      ab += `<button class="btn btn-primary btn-sm" style="margin-left:4px;" onclick="approveWOC('${esc(c['WOC Number'])}')">Approve</button><button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','correction')">↩ Return</button><button class="btn btn-danger btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','reject')">✕ Reject</button>`;
-    }
-    if (perms.canCreateWOC && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWOC('${esc(c['WOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
-    }
-    if (hasRole('Admin')) {   // M37
-      ab += `<button class="btn btn-danger btn-sm" style="margin-left:4px;" title="Delete certification (Admin)" onclick="promptAdminDelete('WOC','${esc(c['WOC Number'])}')">🗑</button>`;
-    }
     const rr = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
     // v170.1: PO list theme
     return `<tr>
@@ -19011,6 +19002,22 @@ function _wocViewLeafHTML(act, l) {
 function _wocViewToggle(ai){ const el=document.getElementById('wocViewItem_'+ai); if(el) el.classList.toggle('open'); }
 function _wocViewExpandAll(open){ document.querySelectorAll('#wocViewTree .hoi-item').forEach(el=>el.classList.toggle('open',open)); }
 
+// v192 · WOC view actions — everything the list row used to carry
+function _wocViewActions(h, wocNum){
+  const p = mergedPerms(), st = h['Status']||'', n = esc(wocNum);
+  const print = `<button class="btn btn-secondary" onclick="closeModal();printWOCById('${n}')">🖨 Print</button>`;
+  const del   = hasRole('Admin') ? `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="closeModal();promptAdminDelete('WOC','${n}')">🗑 Delete</button>` : '';
+  const close = `<button class="btn btn-ghost" onclick="closeModal()">Close</button>`;
+  if (p.canApproveWOC && st === 'Pending Approval')
+    return `<div class="actions-row">${print}${del}${close}</div>
+      <div class="ph-approve-bar" style="display:flex;gap:6px;margin-top:10px;">
+        <button class="btn btn-primary" onclick="closeModal();approveWOC('${n}')">✓ Approve</button>
+        <button class="btn btn-warn" onclick="closeModal();promptReject('WOC','${n}','correction')">↩ Return</button>
+        <button class="btn btn-danger" onclick="closeModal();promptReject('WOC','${n}','reject')">✕ Reject</button>
+      </div>`;
+  const revise = (p.canCreateWOC && st === 'Rejected - Correction') ? `<button class="btn btn-warn" onclick="closeModal();reviseWOC('${n}')">✎ Revise &amp; Resubmit</button>` : '';
+  return `<div class="actions-row">${revise}${print}${del}${close}</div>`;
+}
 async function viewWOC(wocNum) {
   const r = await apiGetWOCDetails(wocNum); if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header;
@@ -19032,11 +19039,8 @@ async function viewWOC(wocNum) {
     <div id="wocViewTree">${treeHTML}</div>
     <div id="wocViewScq"></div>
     ${h['Remarks']?`<div style="margin-top:10px;padding:8px 12px;background:var(--panel-2);border-radius:4px;font-size:12px;"><strong>Remarks:</strong> ${esc(h['Remarks'])}</div>`:''}
-    <div class="actions-row">
-      <button class="btn btn-secondary" onclick="closeModal();printWOCById('${esc(wocNum)}')">🖨 Print</button>
-      ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('WOC','${esc(wocNum)}')">🗑 Delete certification</button>` : ''}
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>`, 'large');
+    ${h['Rejection Reason'] ? `<div style="margin-top:10px;padding:8px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;font-size:12px;color:#b91c1c;"><strong>Reason:</strong> ${esc(h['Rejection Reason'])}</div>` : ''}
+    ${_wocViewActions(h, wocNum)}`, 'large');
   _scqViewBlock(wocNum, h['WO Number'], h['Status']);   // v180
 }
 

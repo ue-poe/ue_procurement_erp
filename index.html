@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v191</title>
+<title>Penguin Suite v192</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -6422,6 +6422,25 @@ function openModal(html, size) {
     box.style.width = '';
   }
   document.getElementById('modalBg').classList.add('show');
+  try { _apvGather(); } catch(e) { console.warn('approval bar', e); }   // v192
+}
+
+// v192 · every document view: Approve / Return / Reject gathered into one approval bar
+// (phone: fixed at the bottom of the sheet). Views that already build the bar are left alone.
+function _apvGather(){
+  const mc=document.getElementById('modalContent'); if (!mc || mc.querySelector('.ph-approve-bar')) return;
+  const kind=b=>{ const o=b.getAttribute('onclick')||'';
+    if (/\b(confirmApprove[A-Za-z]*|approve(HOC|HOB|WOB|WOC|WO|HO|MIR|MIS|QC|PO|POB))\(/.test(o)) return 'a';
+    if (/promptReject[A-Za-z]*\([^)]*'correction'/.test(o)) return 'c';
+    if (/promptReject[A-Za-z]*\([^)]*'reject'|rejectDoc\(/.test(o)) return 'r';
+    return ''; };
+  const btns=[...mc.querySelectorAll('button[onclick]')].filter(b => !b.closest('table'));
+  const a=btns.filter(b => kind(b)==='a'), c=btns.filter(b => kind(b)==='c'), r=btns.filter(b => kind(b)==='r');
+  if (a.length!==1 || c.length>1 || r.length>1) return;
+  const bar=document.createElement('div'); bar.className='ph-approve-bar'; bar.style.cssText='display:flex;gap:6px;margin-top:10px;';
+  const lbl={a:'✓ Approve', c:'↩ Return', r:'✕ Reject'};
+  [a[0], c[0], r[0]].filter(Boolean).forEach(b => { b.classList.remove('btn-sm'); const k=kind(b); if (!(k==='a' && /override/i.test(b.textContent))) b.textContent=lbl[k]; bar.appendChild(b); });
+  mc.appendChild(bar);
 }
 function closeModal() { document.getElementById('modalBg').classList.remove('show'); window._modalNoBackdropClose = false; }
 document.getElementById('modalBg').addEventListener('click', e => {
@@ -13580,7 +13599,7 @@ function renderHOList() {
   tbody.innerHTML = rows.map(o => {
     const st = o['Status'] || 'Open';
     const stClass = st.toLowerCase().replace(/\s/g,'-').replace(/-closed/,'');
-    const actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHO('${esc(o['HO Number'])}')">View</button>`;
+    const actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHO('${esc(o['HO Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printHOById('${esc(o['HO Number'])}')">Print</button>`;   // v192
     return `<tr>
       <td class="mono" data-sort="${esc(o['HO Number'])}" style="font-weight:600;">${esc(o['HO Number'])}${_amwListBadge(o)}</td>
       <td data-sort="${esc(o['HO Date'])}">${fmtDate(o['HO Date'])}</td>
@@ -14403,19 +14422,7 @@ function renderHOCList() {
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(c => {
     const st = c['Status'] || 'Unbilled';
-    let actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHOC('${esc(c['HOC Number'])}')">View</button>
-      <button class="btn btn-ghost btn-sm" onclick="printHOCById('${esc(c['HOC Number'])}')">Print</button>`;
-    if (perms.canApproveHOC && st === 'Pending Approval') {   // v74.2: was canCreateHOB — approver-side only
-      actionBtns += `<button class="btn btn-primary btn-sm" onclick="approveHOC('${esc(c['HOC Number'])}','Approved')">Approve</button>
-        <button class="btn btn-warn btn-sm" onclick="promptReject('HOC','${esc(c['HOC Number'])}','correction')">↩ Return</button>
-        <button class="btn btn-danger btn-sm" onclick="promptReject('HOC','${esc(c['HOC Number'])}','reject')">✕ Reject</button>`;
-    }
-    if (perms.canCreateHOC && st === 'Rejected - Correction') {
-      actionBtns += `<button class="btn btn-warn btn-sm" onclick="reviseHOC('${esc(c['HOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
-    }
-    if (hasRole('Admin')) {   // M37
-      actionBtns += `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="promptAdminDelete('HOC','${esc(c['HOC Number'])}')">🗑</button>`;
-    }
+    let actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHOC('${esc(c['HOC Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printHOCById('${esc(c['HOC Number'])}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     const rejReason = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
     return `<tr>
       <td class="mono" data-sort="${esc(c['HOC Number'])}" style="font-weight:600;">${esc(c['HOC Number'])}</td>
@@ -15028,13 +15035,7 @@ function renderHOBList() {
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(b => {
     const st = b['Status'] || 'Unpaid';
-    let actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHOBById('${esc(b['Bill Number'])}')">View</button>`;
-    if (perms.canCreateHOB && st === 'Rejected - Correction') {
-      actionBtns += `<button class="btn btn-warn btn-sm" onclick="reviseHOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
-    }
-    if (hasRole('Admin')) {   // M37: admin delete, server RPC owns blockers
-      actionBtns += `<button class="btn btn-danger btn-sm" title="Delete bill (Admin)" onclick="promptAdminDelete('HOB','${esc(b['Bill Number'])}')">🗑</button>`;
-    }
+    let actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHOBById('${esc(b['Bill Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printHOBById('${esc(b['Bill Number'])}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     const rejReason = b['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(b['Rejection Reason'])}</span>` : '';
     const totalPaid = num(b['Total Paid'] || 0);
     const outstanding = num(b['Outstanding'] || 0);
@@ -16142,14 +16143,7 @@ function renderWOList() {
   tbody.innerHTML = rows.map(o => {
     const st = o['Status']||'';
     const stClass = st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/[\s-]+/g,'-');
-    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWO('${esc(o['WO Number'])}')">View</button>`;
-    // v108: Approve / Return / Reject live in the View modal only
-    if (perms.canCreateWO && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWO('${esc(o['WO Number'])}')">✎ Revise</button>`;
-    }
-    if (perms.canApproveWO && (st === 'Open'||st === 'Active')) {
-      ab += `<button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="shortCloseWO('${esc(o['WO Number'])}')">Short-Close</button><button class="btn btn-danger btn-sm" style="margin-left:4px;" onclick="terminateWO('${esc(o['WO Number'])}')">Terminate</button>`;
-    }
+    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWO('${esc(o['WO Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOById('${esc(o['WO Number'])}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     const rr = o['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(o['Rejection Reason'])}</span>` : '';
     // v170.1: PO list theme — mono doc no., plain-number amounts (₹ implied by header), bold key total, left-aligned actions
     return `<tr>
@@ -18232,19 +18226,10 @@ function renderWOCList() {
   ]);
   setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
   if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="center muted">No certifications found.</td></tr>'; return; }
-  const perms = mergedPerms();
   tbody.innerHTML = rows.map(c => {
     const st = c['Status']||'Unbilled';
+    // v192: View + Print only — Approve / Return / Reject / Revise / Delete live inside the certification
     let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOC('${esc(c['WOC Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOCById('${esc(c['WOC Number'])}')">Print</button>`;
-    if (perms.canApproveWOC && st === 'Pending Approval') {   // v74.2: was canCreateWOB — approver-side only
-      ab += `<button class="btn btn-primary btn-sm" style="margin-left:4px;" onclick="approveWOC('${esc(c['WOC Number'])}')">Approve</button><button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','correction')">↩ Return</button><button class="btn btn-danger btn-sm" style="margin-left:4px;" onclick="promptReject('WOC','${esc(c['WOC Number'])}','reject')">✕ Reject</button>`;
-    }
-    if (perms.canCreateWOC && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWOC('${esc(c['WOC Number'])}')">✎ Revise &amp; Resubmit</button>`;
-    }
-    if (hasRole('Admin')) {   // M37
-      ab += `<button class="btn btn-danger btn-sm" style="margin-left:4px;" title="Delete certification (Admin)" onclick="promptAdminDelete('WOC','${esc(c['WOC Number'])}')">🗑</button>`;
-    }
     const rr = c['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(c['Rejection Reason'])}</span>` : '';
     // v170.1: PO list theme
     return `<tr>
@@ -19011,6 +18996,22 @@ function _wocViewLeafHTML(act, l) {
 function _wocViewToggle(ai){ const el=document.getElementById('wocViewItem_'+ai); if(el) el.classList.toggle('open'); }
 function _wocViewExpandAll(open){ document.querySelectorAll('#wocViewTree .hoi-item').forEach(el=>el.classList.toggle('open',open)); }
 
+// v192 · WOC view actions — everything the list row used to carry
+function _wocViewActions(h, wocNum){
+  const p = mergedPerms(), st = h['Status']||'', n = esc(wocNum);
+  const print = `<button class="btn btn-secondary" onclick="closeModal();printWOCById('${n}')">🖨 Print</button>`;
+  const del   = hasRole('Admin') ? `<button class="btn btn-danger btn-sm" title="Delete certification (Admin)" onclick="closeModal();promptAdminDelete('WOC','${n}')">🗑 Delete</button>` : '';
+  const close = `<button class="btn btn-ghost" onclick="closeModal()">Close</button>`;
+  if (p.canApproveWOC && st === 'Pending Approval')
+    return `<div class="actions-row">${print}${del}${close}</div>
+      <div class="ph-approve-bar" style="display:flex;gap:6px;margin-top:10px;">
+        <button class="btn btn-primary" onclick="closeModal();approveWOC('${n}')">✓ Approve</button>
+        <button class="btn btn-warn" onclick="closeModal();promptReject('WOC','${n}','correction')">↩ Return</button>
+        <button class="btn btn-danger" onclick="closeModal();promptReject('WOC','${n}','reject')">✕ Reject</button>
+      </div>`;
+  const revise = (p.canCreateWOC && st === 'Rejected - Correction') ? `<button class="btn btn-warn" onclick="closeModal();reviseWOC('${n}')">✎ Revise &amp; Resubmit</button>` : '';
+  return `<div class="actions-row">${revise}${print}${del}${close}</div>`;
+}
 async function viewWOC(wocNum) {
   const r = await apiGetWOCDetails(wocNum); if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header;
@@ -19032,11 +19033,8 @@ async function viewWOC(wocNum) {
     <div id="wocViewTree">${treeHTML}</div>
     <div id="wocViewScq"></div>
     ${h['Remarks']?`<div style="margin-top:10px;padding:8px 12px;background:var(--panel-2);border-radius:4px;font-size:12px;"><strong>Remarks:</strong> ${esc(h['Remarks'])}</div>`:''}
-    <div class="actions-row">
-      <button class="btn btn-secondary" onclick="closeModal();printWOCById('${esc(wocNum)}')">🖨 Print</button>
-      ${hasRole('Admin') ? `<button class="btn btn-danger btn-sm" onclick="closeModal();promptAdminDelete('WOC','${esc(wocNum)}')">🗑 Delete certification</button>` : ''}
-      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>`, 'large');
+    ${h['Rejection Reason'] ? `<div style="margin-top:10px;padding:8px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;font-size:12px;color:#b91c1c;"><strong>Reason:</strong> ${esc(h['Rejection Reason'])}</div>` : ''}
+    ${_wocViewActions(h, wocNum)}`, 'large');
   _scqViewBlock(wocNum, h['WO Number'], h['Status']);   // v180
 }
 
@@ -19078,13 +19076,7 @@ function renderWOBList() {
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(b => {
     const st = b['Status']||'Unpaid';
-    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOBById('${esc(b['Bill Number'])}')">View</button>`;
-    if (perms.canCreateWOB && st === 'Rejected - Correction') {
-      ab += `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="reviseWOB('${esc(b['Bill Number'])}')">✎ Revise &amp; Resubmit</button>`;
-    }
-    if (hasRole('Admin')) {   // M37
-      ab += `<button class="btn btn-danger btn-sm" style="margin-left:4px;" title="Delete bill (Admin)" onclick="promptAdminDelete('WOB','${esc(b['Bill Number'])}')">🗑</button>`;
-    }
+    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWOBById('${esc(b['Bill Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOBById('${esc(b['Bill Number'])}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     const rr = b['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(b['Rejection Reason'])}</span>` : '';
     // v170.1: PO list theme
     return `<tr>
@@ -24236,11 +24228,7 @@ function renderMIRList() {
           .map(s => `<span style="display:inline-block;padding:1px 6px;background:${s.bg};color:${s.col};border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap;">${s.key} (${summary[s.key]})</span>`)
           .join(' ')
       : '';
-    let acts = `<button class="btn btn-ghost btn-sm" onclick="viewMIR('${esc(m.mir_number)}')">View</button>`;
-    if (perms.canApproveMIR && st==='Pending Approval') {
-      acts += ` <button class="btn btn-primary btn-sm" onclick="approveMIR('${esc(m.mir_number)}')">Approve</button>
-               <button class="btn btn-danger btn-sm" onclick="rejectDoc('MIR','${esc(m.mir_number)}')">Reject</button>`;
-    }
+    let acts = `<button class="btn btn-ghost btn-sm" onclick="viewMIR('${esc(m.mir_number)}')">View</button>`;   // v192: View + Print only — decisions live inside the document
     return `<tr>
       <td class="mono">${esc(m.mir_number)}</td><td>${fmtDate(m.mir_date)}</td>
       <td>${m.required_by_date?fmtDate(m.required_by_date):'—'}</td>
@@ -25232,7 +25220,8 @@ async function viewMIR(mirNum) {
         ? `<button class="btn btn-warn btn-sm" onclick="openMIRShortCloseModal('${esc(mirNum)}')">✂ Short-Close Balance</button>`
         : ''}
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
-    </div>`, 'large');
+    </div>
+    ${(mergedPerms().canApproveMIR && h.status === 'Pending Approval') ? `<div class="actions-row"><button class="btn btn-primary" onclick="closeModal();approveMIR('${esc(mirNum)}')">✓ Approve</button><button class="btn btn-danger" onclick="closeModal();rejectDoc('MIR','${esc(mirNum)}')">✕ Reject</button></div>` : ''}`, 'large');   // v192
 }
 
 // v142: clubbed-row selection helpers — group checkbox drives its lines; lines sync tri-state back
@@ -26902,9 +26891,7 @@ function renderQCList() {
   document.getElementById('qc_listBody').innerHTML=rows.map(q=>{
     const stCls=q.status.toLowerCase().replace(/\s/g,'-');
     let acts=`<button class="btn btn-ghost btn-sm" onclick="viewQC('${esc(q.qc_number)}')">View</button>`;
-    if (perms.canApproveQC && q.status === 'Pending Approval') {
-      acts += ` <button class="btn btn-primary btn-sm" onclick="approveQC('${esc(q.qc_number)}')">✓ Approve</button>`;
-    }
+    acts += `<button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printQCPopup('${esc(q.qc_number)}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     return `<tr>
       <td class="mono">${esc(q.qc_number)}</td><td>${fmtDate(q.qc_date)}</td>
       <td class="mono">${esc(q.rfq_number||'—')}</td>
@@ -27409,8 +27396,7 @@ function renderPOList() {
   document.getElementById('po_listBody').innerHTML=rows.map(p=>{
     const stCls=p.status.toLowerCase().replace(/[\s/]+/g,'-');
     const canRevise = hasPerm('canCreatePO') && p.status === 'Rejected - Correction';
-    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewPO('${esc(p.po_number)}')">View</button>`
-      + (canRevise ? `<button class="btn btn-warn btn-sm" style="margin-left:4px;" onclick="revisePO('${esc(p.po_number)}')">✎ Revise</button>` : '');
+    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewPO('${esc(p.po_number)}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printPO('${esc(p.po_number)}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
     return `<tr>
       <td class="mono">${esc(p.po_number)}</td><td>${fmtDate(p.po_date)}</td>
       <td>${esc(p.vendor_name)}</td><td class="mono">${esc(p.qc_number||'—')}</td>
@@ -34477,10 +34463,7 @@ function renderMISList() {
     const stCls=m.status==='Approved'?'approved':m.status==='Rejected'?'rejected':m.status==='Rejected - Correction'?'rejected-correction':m.status==='Audit Entry'?'approved':'pending-approval';
     const stLabel=m.status==='Rejected - Correction'?'Needs Correction':(m.status||'Pending Approval');
     // View button only — Approve/Reject moved into the popup
-    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewMIS('${esc(m.mis_number)}')">View</button>`
-      + (hasPerm('canCreateMIS') && m.status==='Rejected - Correction'
-          ? ` <button class="btn btn-warn btn-sm" onclick="reviseMIS('${esc(m.mis_number)}')">✎ Revise</button>`
-          : '');
+    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewMIS('${esc(m.mis_number)}')">View</button>`;   // v192: View + Print only — decisions live inside the document
     const rmcBadge = (m.issued_to||'').toLowerCase().includes('rmc plant')
       ? ' <span class="rmc-badge">RMC</span>' : '';
     const ovrBadge = (m.requires_override && m.status==='Pending Approval')

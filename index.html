@@ -5714,7 +5714,7 @@ function formatRemarksNumbered(text) {
 // (Print With Specs → inline row under each item). Nothing is ever shown
 // unless the user asks.
 // ============================================================
-window._printWithSpecs = false;
+window._pgsPrintSpecs = false;
 let _specSeq = 0;
 function _specChip(text, id, label) {
   if (!text) return '';
@@ -5776,8 +5776,8 @@ function _printSpecRow(text, ncolsAfterFirst) {
 }
 const _PRINT_SPEC_CSS = 'table.items tr.spec-r td { background:#fbfcfe; font-size:7.8pt; line-height:1.5; color:#222; padding:4pt 8pt 5pt 14pt; border-top:0; }\ntable.items tr.spec-r td .sl { font-weight:700; font-size:7pt; letter-spacing:.5pt; text-transform:uppercase; color:#1e3a5f; margin-right:4pt; }\n';
 async function _printWithSpecs(fn) {
-  window._printWithSpecs = true;
-  try { await fn(); } finally { window._printWithSpecs = false; }
+  window._pgsPrintSpecs = true;
+  try { await fn(); } finally { window._pgsPrintSpecs = false; }
 }
 
 // ============================================================
@@ -5935,7 +5935,7 @@ async function _printOrderDoc(docType, docNumber, h, items, vmOverride) {
       <td class="r">₹ ${fi(amount)}</td>
       <td>${esc((isPO ? it.remarks : '') ||'')}</td>
     </tr>`;
-    if (window._printWithSpecs) {   // v197
+    if (window._pgsPrintSpecs) {   // v197
       const _sp = isPO ? (it.specification || _specOfMaterial(it.material_code, it.material_name)) : (it['_specification'] || it.specification || '');
       rowsHTML += _printSpecRow(_sp, 6);
     }
@@ -6185,7 +6185,7 @@ async function _printWOTree(woNum, h, items) {
       <td class="r"><strong>${fi(br.qty)}</strong></td>
       <td class="r">${br.rateCell}</td>
       <td class="r"><strong>₹ ${fi(br.amt)}</strong></td>
-    </tr>${window._printWithSpecs ? _printSpecRow(act.spec, 5) : ''}${br.html}`;
+    </tr>${window._pgsPrintSpecs ? _printSpecRow(act.spec, 5) : ''}${br.html}`;
   });
 
   const gstAmt = num(h['GST Amount']||h.gst_amount||0);
@@ -13834,7 +13834,7 @@ function renderHOList() {
   tbody.innerHTML = rows.map(o => {
     const st = o['Status'] || 'Open';
     const stClass = st.toLowerCase().replace(/\s/g,'-').replace(/-closed/,'');
-    const actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHO('${esc(o['HO Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printHOById('${esc(o['HO Number'])}')">Print</button>`;   // v192
+    const actionBtns = `<button class="btn btn-ghost btn-sm" onclick="viewHO('${esc(o['HO Number'])}')">View</button>`;   // v197.3: View only
     return `<tr>
       <td class="mono" data-sort="${esc(o['HO Number'])}" style="font-weight:600;">${esc(o['HO Number'])}${_amwListBadge(o)}</td>
       <td data-sort="${esc(o['HO Date'])}">${fmtDate(o['HO Date'])}</td>
@@ -16385,7 +16385,7 @@ function renderWOList() {
   tbody.innerHTML = rows.map(o => {
     const st = o['Status']||'';
     const stClass = st === 'Rejected - Correction' ? 'rejected-correction' : st.toLowerCase().replace(/[\s-]+/g,'-');
-    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWO('${esc(o['WO Number'])}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printWOById('${esc(o['WO Number'])}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
+    let ab = `<button class="btn btn-ghost btn-sm" onclick="viewWO('${esc(o['WO Number'])}')">View</button>`;   // v197.3: View only — Print / Print With Specs live inside the document
     const rr = o['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(o['Rejection Reason'])}</span>` : '';
     // v170.1: PO list theme — mono doc no., plain-number amounts (₹ implied by header), bold key total, left-aligned actions
     return `<tr>
@@ -27642,7 +27642,7 @@ function renderPOList() {
   document.getElementById('po_listBody').innerHTML=rows.map(p=>{
     const stCls=p.status.toLowerCase().replace(/[\s/]+/g,'-');
     const canRevise = hasPerm('canCreatePO') && p.status === 'Rejected - Correction';
-    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewPO('${esc(p.po_number)}')">View</button><button class="btn btn-ghost btn-sm" style="margin-left:4px;" onclick="printPO('${esc(p.po_number)}')">Print</button>`;   // v192: View + Print only — decisions live inside the document
+    const acts=`<button class="btn btn-ghost btn-sm" onclick="viewPO('${esc(p.po_number)}')">View</button>`;   // v197.3: View only
     return `<tr>
       <td class="mono">${esc(p.po_number)}</td><td>${fmtDate(p.po_date)}</td>
       <td>${esc(p.vendor_name)}</td><td class="mono">${esc(p.qc_number||'—')}</td>

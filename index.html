@@ -2871,7 +2871,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
             <td style="padding:4px 6px;"><input id="hoF_vendor" placeholder="Filter&#8230;" oninput="renderHOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="hoF_scope" placeholder="Filter&#8230;" oninput="renderHOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"></td>
-            <td style="padding:4px 6px;"><select id="hoF_status" onchange="renderHOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Active</option><option>Completed</option><option>Short-Closed</option><option>Cancelled</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup></select></td>
+            <td style="padding:4px 6px;"><select id="hoF_status" onchange="renderHOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Active</option><option>Completed</option><option>Short-Closed</option><option>Cancelled</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup><optgroup label="Progress" data-op="HO"></optgroup></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('hoF_number','hoF_vendor','hoF_scope','hoF_dateFrom','hoF_dateTo','hoF_status','renderHOList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
         </thead>
@@ -3389,7 +3389,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
             <td style="padding:4px 6px;"><input id="woF_vendor" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="woF_scope" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"></td>
-            <td style="padding:4px 6px;"><select id="woF_status" onchange="renderWOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Active</option><option>Completed</option><option>Short-Closed</option><option>Terminated</option><option>Cancelled</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup></select></td>
+            <td style="padding:4px 6px;"><select id="woF_status" onchange="renderWOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Active</option><option>Completed</option><option>Short-Closed</option><option>Terminated</option><option>Cancelled</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup><optgroup label="Progress" data-op="WO"></optgroup></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('woF_number','woF_vendor','woF_scope','woF_dateFrom','woF_dateTo','woF_status','renderWOList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
         </thead>
@@ -4858,7 +4858,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
               <td style="padding:4px 6px;"><input id="poF_qcref" placeholder="Filter&#8230;" oninput="renderPOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
               <td style="padding:4px 6px;"><input id="poF_mirref" placeholder="Filter&#8230;" oninput="renderPOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
               <td style="padding:4px 6px;"></td>
-              <td style="padding:4px 6px;"><select id="poF_status" onchange="renderPOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Partial Receipt</option><option>Fully Received</option><option>Closed</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><option>Cancelled</option><option>Short-Closed</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup></select></td>
+              <td style="padding:4px 6px;"><select id="poF_status" onchange="renderPOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Partial Receipt</option><option>Fully Received</option><option>Closed</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><option>Cancelled</option><option>Short-Closed</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup><optgroup label="Progress" data-op="PO"></optgroup></select></td>
               <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('poF_number','poF_vendor','poF_qcref','poF_mirref','poF_dateFrom','poF_dateTo','poF_status','renderPOList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
             </tr>
           </thead>
@@ -5788,6 +5788,7 @@ async function _printWithSpecs(fn) {
 // exposure strip: Adv O/S − BG cover = Unsecured).
 // ============================================================
 const _opCache = { WO: null, HO: null, PO: null };
+(function _opFillFilters(){ const run = () => document.querySelectorAll('optgroup[data-op]').forEach(g => { g.outerHTML = _opFilterOpts(g.dataset.op); }); if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run(); })();   // v197.4
 async function _opLoad(type) {
   try {
     const { data, error } = await sb.rpc('rpc_order_progress', { p_order_type: type, p_order_numbers: null });
@@ -5798,6 +5799,23 @@ async function _opLoad(type) {
 }
 function _opRow(type, no) { const m = _opCache[type]; return m ? (m[no] || null) : undefined; }   // undefined = not loaded yet
 function _opSort(type, no, fallback) { const r = _opRow(type, no); return r ? num(r.unsecured) * 1e12 + num(r.billed_pct) : num(fallback); }
+// v197.4 · "Progress" group in the status filter (prg:*) — driven by the same RPC row
+function _opFilter(code, type, no) {
+  const r = _opRow(type, no); if (!r) return false;
+  switch (code) {
+    case 'prg:cert_unbilled': return num(r.cert_unbilled) > 0.005;
+    case 'prg:due':           return num(r.due_os) > 0.005;
+    case 'prg:pending_bills': return num(r.billed_pending) > 0.005;
+    case 'prg:unsecured':     return num(r.unsecured) > 0.005;
+    case 'prg:adv_os':        return num(r.adv_os) > 0.005;
+    case 'prg:unbilled':      return num(r.billed_total) <= 0.005;
+    case 'prg:partbilled':    return num(r.billed_total) > 0.005 && num(r.billed_pct) < 99.95;
+    case 'prg:fullbilled':    return num(r.billed_pct) >= 99.95;
+    default: return true;
+  }
+}
+const _OP_FILTER_OPTS = (certLabel) => `<optgroup label="Progress"><option value="prg:cert_unbilled">${certLabel}</option><option value="prg:pending_bills">Bills Awaiting Approval</option><option value="prg:due">Due Outstanding</option><option value="prg:adv_os">Advance Outstanding</option><option value="prg:unsecured">Unsecured Advance</option><option value="prg:unbilled">Nothing Billed Yet</option><option value="prg:partbilled">Partly Billed</option><option value="prg:fullbilled">Fully Billed</option></optgroup>`;
+function _opFilterOpts(type) { return _OP_FILTER_OPTS(type === 'PO' ? 'Received, Not Yet Billed' : 'Certified, Not Yet Billed'); }
 function _opBlock(type, no) {
   const r = _opRow(type, no);
   if (r === undefined) return '<span class="rk-wait">Loading…</span>';
@@ -13825,7 +13843,8 @@ function renderHOList() {
   if(fNum)  rows=rows.filter(o=>(o['HO Number']||'').toLowerCase().includes(fNum));
   if(fVen)  rows=rows.filter(o=>(o['Vendor Name']||'').toLowerCase().includes(fVen));
   if(fSc)   rows=rows.filter(o=>(o['Scope']||'').toLowerCase().includes(fSc));
-  if(fSt)   rows=rows.filter(o=>_stAmdMatch(fSt,o['Status'],_amwState(o)));   // v189
+  if(fSt&&fSt.startsWith('prg:')) rows=rows.filter(o=>_opFilter(fSt,'HO',o['HO Number']));   // v197.4
+  else if(fSt) rows=rows.filter(o=>_stAmdMatch(fSt,o['Status'],_amwState(o)));   // v189
   if(fFrom) rows=rows.filter(o=>o['HO Date']&&o['HO Date']>=fFrom);
   if(fTo)   rows=rows.filter(o=>o['HO Date']&&o['HO Date']<=fTo);
   if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="center muted">No hire orders found.</td></tr>'; return; }
@@ -16372,7 +16391,8 @@ function renderWOList() {
   if(fNum)  rows=rows.filter(o=>(o['WO Number']||'').toLowerCase().includes(fNum));
   if(fVen)  rows=rows.filter(o=>(o['Vendor Name']||'').toLowerCase().includes(fVen));
   if(fSc)   rows=rows.filter(o=>(o['Scope']||'').toLowerCase().includes(fSc));
-  if(fSt)   rows=rows.filter(o=>_stAmdMatch(fSt,o['Status'],_amwState(o)));   // v189
+  if(fSt&&fSt.startsWith('prg:')) rows=rows.filter(o=>_opFilter(fSt,'WO',o['WO Number']));   // v197.4
+  else if(fSt) rows=rows.filter(o=>_stAmdMatch(fSt,o['Status'],_amwState(o)));   // v189
   if(fFrom) rows=rows.filter(o=>o['WO Date']&&o['WO Date']>=fFrom);
   if(fTo)   rows=rows.filter(o=>o['WO Date']&&o['WO Date']<=fTo);
   rows = _applyTableSort('wo_listBody', rows, [   // v170.1: PO-style sortable columns
@@ -27631,7 +27651,8 @@ function renderPOList() {
   if(fVen)  rows=rows.filter(p=>(p.vendor_name||'').toLowerCase().includes(fVen));
   if(fQC)   rows=rows.filter(p=>(p.qc_number||'').toLowerCase().includes(fQC));
   if(fMIR)  rows=rows.filter(p=>(p.mir_number||'').toLowerCase().includes(fMIR));
-  if(fSt)   rows=rows.filter(p=>_stAmdMatch(fSt,p.status,p.amendment_state));   // v189
+  if(fSt&&fSt.startsWith('prg:')) rows=rows.filter(p=>_opFilter(fSt,'PO',p.po_number));   // v197.4
+  else if(fSt) rows=rows.filter(p=>_stAmdMatch(fSt,p.status,p.amendment_state));   // v189
   if(fFrom) rows=rows.filter(p=>p.po_date&&p.po_date>=fFrom);
   if(fTo)   rows=rows.filter(p=>p.po_date&&p.po_date<=fTo);
   rows = _applyTableSort('po_listBody', rows, [

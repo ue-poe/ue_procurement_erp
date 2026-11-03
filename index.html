@@ -5754,10 +5754,15 @@ function _specOfWbs(node, lineSpec) {
   if (lineSpec) return lineSpec;
   if (!node) return '';
   if (node.specification) return node.specification;
-  const acts = (window.state && state.masters && state.masters.activities) || [];
+  const acts = (typeof state !== 'undefined' && state.masters && state.masters.activities) || [];   // state is a const — never reach it via window
   let a = node.activity_code ? acts.find(x => x['Activity Code'] === node.activity_code) : null;
   if (!a && node.name) { const k = String(node.name).trim().replace(/\s+/g,' ').toLowerCase(); a = acts.find(x => String(x['Activity Description']||'').trim().replace(/\s+/g,' ').toLowerCase() === k); }
   return (a && a['Specification']) || '';
+}
+async function _specEnrichHO(items) {
+  if (!items || !items.length || items.every(it => it['_specification'])) return;
+  const wm = Object.fromEntries((await _loadWbsTree()).map(n => [String(n.id), n]));
+  items.forEach(it => { if (!it['_specification']) it['_specification'] = _specOfWbs(wm[String(it['_wbs_node_id'])], '') || null; });
 }
 function _specOfMaterial(code, name) {
   const ms = (window.puState && puState.materials) || [];
@@ -14541,6 +14546,7 @@ async function viewHO(hoNum) {
   const r = await apiGetHODetails(hoNum);
   if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header; const items = r.items || [];
+  await _specEnrichHO(items);   // v197.2: old HOs saved without a line spec fall back to the equipment / activity master
   const _hist = await _amwLoadHistory('HO', hoNum); window._amwViewCtx = { doc:'HO', h, items, hist:_hist };   // v148
   const st = h['Status'] || '';
   const perms = mergedPerms();
@@ -14622,6 +14628,7 @@ async function viewHO(hoNum) {
 async function printHOById(hoNum) {
   const r = await apiGetHODetails(hoNum);
   if (!r.ok) { toast(r.error,'error'); return; }
+  await _specEnrichHO(r.items||[]);   // v197.2
   await _printOrderDoc('HO', hoNum, r.header, r.items||[], null);
 }
 

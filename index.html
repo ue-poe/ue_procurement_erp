@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Suite v196</title>
+<title>Penguin Suite v197</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -708,6 +708,36 @@ input[type="number"] {
 .hoi-subtotal .lbl{color:var(--muted);font-weight:500;}
 .hoi-subtotal .val{font-weight:600;color:var(--accent);}
 .hoi-subtotal .muted-val{font-weight:600;color:var(--muted);}
+/* ===== v197 · specifications on orders / certifications ===== */
+.spec-chip{display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:1px 8px;border-radius:10px;border:1px solid #99f6e4;background:#f0fdfa;color:#0f766e;font-size:10.5px;font-weight:700;cursor:pointer;white-space:nowrap;vertical-align:middle;letter-spacing:.3px;user-select:none;}
+.spec-chip.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.spec-block{display:none;margin:0 14px 10px 40px;padding:8px 12px;background:#fafcff;border:1px dashed #bfd0e6;border-left:3px solid var(--navy-print);border-radius:4px;font-size:12px;line-height:1.55;color:#1f2937;white-space:pre-wrap;}
+.spec-block.on{display:block;}
+.spec-block .sb-h{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--navy-print);margin-bottom:4px;}
+tr.spec-tr{display:none;} tr.spec-tr.on{display:table-row;}
+tr.spec-tr>td{background:#fafcff !important;font-size:12px;line-height:1.55;white-space:pre-wrap;padding:6px 12px 8px 28px !important;border-top:0 !important;}
+tr.spec-tr>td .sb-h{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--navy-print);margin-right:6px;}
+.spec-inl{display:none;font-size:11.5px;line-height:1.5;color:#1f2937;margin-top:4px;padding:6px 10px;background:#fafcff;border:1px dashed #bfd0e6;border-left:3px solid var(--navy-print);border-radius:4px;white-space:pre-wrap;}
+.spec-inl.on{display:block;}
+/* ===== v197 · order progress & risk exposure (M60 rpc_order_progress) ===== */
+.rk{display:grid;grid-template-columns:1fr;gap:5px;min-width:250px;font-size:11px;line-height:1.3;}
+.rk .bars{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.rk .b .t{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-bottom:2px;} .rk .b .t b{color:#0f766e;font-size:11.5px;}
+.rk .b .bar{height:7px;border-radius:4px;background:#e2e8f0;overflow:hidden;} .rk .b .bar i{display:block;height:100%;background:var(--accent);border-radius:4px;}
+.rk .b.pay .bar i{background:var(--navy-print);} .rk .b.pay .t b{color:var(--navy-print);}
+.rk .b .bar i.warn{background:#f59e0b;} .rk .b .bar i.done{background:#16a34a;}
+.rk .g{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e6ebf1;border:1px solid #e6ebf1;border-radius:4px;overflow:hidden;}
+.rk .g div{background:#fff;padding:3px 6px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.rk .g div b{display:block;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);text-align:left;}
+.rk .g div.hi{background:#fff7ed;color:#9a3412;font-weight:600;} .rk .g div.ok{color:#15803d;}
+.rk .exh{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#991b1b;margin:1px 0 -2px;} .rk .exh.safe{color:#15803d;}
+.rk .ex{border:1px solid #fecaca;border-radius:4px;overflow:hidden;background:#fecaca;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+.rk .ex.safe{border-color:#bbf7d0;background:#bbf7d0;}
+.rk .ex div{background:#fff;padding:3px 5px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.rk .ex div b{display:block;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);text-align:left;}
+.rk .ex div.bad{background:#fef2f2;color:#b91c1c;font-weight:700;} .rk .ex div.ok{background:#f0fdf4;color:#15803d;font-weight:600;}
+.rk .ex div small{display:block;font-size:9px;color:#b45309;text-align:left;font-weight:600;}
+.rk-wait{font-size:11px;color:var(--muted);font-style:italic;}
 .hoi-specbar{display:flex;align-items:flex-start;gap:8px;padding:10px 14px 12px;}
 .hoi-specbar label{margin-top:6px;white-space:nowrap;font-size:12px;color:var(--muted);font-weight:500;}
 .hoi-specbar textarea{flex:1;font-size:12px;padding:6px 8px;border:1px solid var(--border);border-radius:5px;resize:vertical;min-height:34px;background:var(--input-bg);color:var(--text);font-family:inherit;}
@@ -2327,6 +2357,13 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
   .hoi-subtotal > span { display: block; font-size: 12px; }
   .hoi-subtotal .lbl { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .3px; font-weight: 600; }
   .hoi-head { padding: 9px 10px; gap: 8px; flex-wrap: wrap; }
+  /* v197 · spec chip is a full-width thumb target; risk block spans the card */
+  .hoi-head .spec-chip { margin: 0; min-height: 30px; padding: 0 12px; font-size: 11px; flex: 1 1 100%; justify-content: center; }
+  .spec-block { margin: 0 10px 10px; }
+  table.ph-cards > tbody > tr[data-ph="1"] > td.ph-wide { flex: 1 1 100% !important; box-shadow: inset 0 -1px 0 #e6ebf1; }
+  .rk { min-width: 0; } .rk .g div, .rk .ex div { padding: 4px 5px; font-size: 10.5px; }
+  table.ph-cards > tbody > tr.spec-tr { display: none; } table.ph-cards > tbody > tr.spec-tr.on { display: block; padding: 6px 10px; border: 1px solid var(--border); border-top: 0; border-radius: 0 0 8px 8px; margin: -9px 0 8px; background: #fafcff; font-size: 12px; white-space: pre-wrap; }
+  table.ph-cards > tbody > tr.spec-tr.on > td { display: block; padding: 0 !important; }
   .hoi-head .hoi-meta { font-size: 11px; }
   .hoi-grp-head { padding: 7px 8px; gap: 6px; }
   .hoi-grp-head input[type="checkbox"] { width: 18px; height: 18px; }
@@ -2826,7 +2863,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
         <thead>
           <tr>
             <th>HO Number</th><th>Date</th><th>Vendor</th><th>Scope</th>
-            <th class="num">Order Value</th><th>Status</th><th class="center">Actions</th>
+            <th style="min-width:290px;">Progress &amp; Exposure</th><th>Status</th><th class="center">Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
             <td style="padding:4px 6px;"><input id="hoF_number" placeholder="Filter&#8230;" oninput="renderHOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
@@ -3344,14 +3381,14 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
         <thead>
           <tr>
             <th>WO Number</th><th>Date</th><th>Vendor</th><th>Scope</th>
-            <th class="num">WO Value</th><th>Cert Mode</th><th>Status</th><th>Actions</th>
+            <th style="min-width:290px;">Progress &amp; Exposure</th><th>Status</th><th>Actions</th>
           </tr>
           <tr style="background:var(--input-bg);">
             <td style="padding:4px 6px;"><input id="woF_number" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><div style="display:flex;gap:4px;align-items:center;"><input type="date" id="woF_dateFrom" oninput="renderWOList()" style="flex:1;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><span style="font-size:10px;color:var(--text-muted);">&#8594;</span><input type="date" id="woF_dateTo" oninput="renderWOList()" style="flex:1;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></div></td>
             <td style="padding:4px 6px;"><input id="woF_vendor" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
             <td style="padding:4px 6px;"><input id="woF_scope" placeholder="Filter&#8230;" oninput="renderWOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
-            <td style="padding:4px 6px;"></td><td style="padding:4px 6px;"></td>
+            <td style="padding:4px 6px;"></td>
             <td style="padding:4px 6px;"><select id="woF_status" onchange="renderWOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Active</option><option>Completed</option><option>Short-Closed</option><option>Terminated</option><option>Cancelled</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup></select></td>
             <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('woF_number','woF_vendor','woF_scope','woF_dateFrom','woF_dateTo','woF_status','renderWOList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
           </tr>
@@ -4811,7 +4848,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
           <thead>
             <tr>
               <th>PO Number</th><th>Date</th><th>Vendor</th><th>QC Ref</th><th>MIR Ref</th>
-              <th class="num">Basic Value</th><th class="num">Grand Total</th>
+              <th style="min-width:290px;">Progress &amp; Exposure</th>
               <th>Status</th><th>Actions</th>
             </tr>
             <tr style="background:var(--input-bg);">
@@ -4820,7 +4857,6 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
               <td style="padding:4px 6px;"><input id="poF_vendor" placeholder="Filter&#8230;" oninput="renderPOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
               <td style="padding:4px 6px;"><input id="poF_qcref" placeholder="Filter&#8230;" oninput="renderPOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
               <td style="padding:4px 6px;"><input id="poF_mirref" placeholder="Filter&#8230;" oninput="renderPOList()" style="width:100%;padding:4px 6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"></td>
-              <td style="padding:4px 6px;"></td>
               <td style="padding:4px 6px;"></td>
               <td style="padding:4px 6px;"><select id="poF_status" onchange="renderPOList()" style="width:100%;padding:4px 5px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;"><option value="">All</option><option>Pending Approval</option><option>Open</option><option>Partial Receipt</option><option>Fully Received</option><option>Closed</option><option>Rejected</option><option value="Rejected - Correction">Needs Correction</option><option>Cancelled</option><option>Short-Closed</option><optgroup label="Amendment"><option value="amd:*">Any Amendment</option><option value="amd:Amendment Requested">Amendment Requested</option><option value="amd:Under Amendment">Under Amendment</option><option value="amd:Amendment Pending Approval">Amendment Pending Approval</option><option value="amd:Amendment - Correction">Amendment - Correction</option></optgroup></select></td>
               <td style="padding:4px 6px;text-align:center;"><button onclick="clearColFilters('poF_number','poF_vendor','poF_qcref','poF_mirref','poF_dateFrom','poF_dateTo','poF_status','renderPOList')" title="Clear" style="font-size:10px;padding:3px 8px;background:var(--input-bg);color:var(--text-muted);border:1px solid var(--border);border-radius:4px;cursor:pointer;">&#10005; Clear</button></td>
@@ -5670,6 +5706,116 @@ function formatRemarksNumbered(text) {
 // Shared print layout engine for PO / HO / WO
 // Produces a consistent A4 document across all three doc types
 // ============================================================
+// ============================================================
+// v197 · SPECIFICATIONS ON ORDERS / CERTIFICATIONS
+// Spec source: the saved order line (frozen at order time) → else the master
+// (wbs_nodes.specification for activities / equipment, pu_material_master for
+// materials). Shown on demand (chip / Show All Specs), printed on demand
+// (Print With Specs → inline row under each item). Nothing is ever shown
+// unless the user asks.
+// ============================================================
+window._printWithSpecs = false;
+let _specSeq = 0;
+function _specChip(text, id, label) {
+  if (!text) return '';
+  return `<span class="spec-chip" data-spec="${id}" onclick="event.stopPropagation();_specToggle('${id}',this)">📋 ${label||'Spec'}</span>`;
+}
+function _specBlock(text, id) {
+  if (!text) return '';
+  return `<div class="spec-block" id="${id}"><div class="sb-h">Specification</div>${esc(text)}</div>`;
+}
+function _specTr(text, id, ncols) {
+  if (!text) return '';
+  return `<tr class="spec-tr" id="${id}"><td colspan="${ncols}"><span class="sb-h">Specification</span>${esc(text)}</td></tr>`;
+}
+function _specInl(text, id) {
+  if (!text) return '';
+  return `<div class="spec-inl" id="${id}"><b style="font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--navy-print);margin-right:6px;">Specification</b>${esc(text)}</div>`;
+}
+function _specToggle(id, chip) {
+  const el = document.getElementById(id); if (!el) return;
+  const on = !el.classList.contains('on');
+  el.classList.toggle('on', on);
+  if (chip) chip.classList.toggle('on', on);
+  else document.querySelectorAll(`.spec-chip[data-spec="${id}"]`).forEach(c => c.classList.toggle('on', on));
+}
+function _specToggleAll(rootId, btn) {
+  const root = document.getElementById(rootId); if (!root) return;
+  const on = !btn.classList.contains('on');
+  btn.classList.toggle('on', on);
+  btn.style.background = on ? '#ccfbf1' : ''; btn.style.borderColor = on ? 'var(--accent)' : '';
+  root.querySelectorAll('.spec-block, .spec-tr, .spec-inl').forEach(el => el.classList.toggle('on', on));
+  root.querySelectorAll('.spec-chip').forEach(c => c.classList.toggle('on', on));
+}
+function _specOfMaterial(code, name) {
+  const ms = (window.puState && puState.materials) || [];
+  let m = code ? ms.find(x => x.material_code === code) : null;
+  if (!m && name) { const k = String(name).trim().toLowerCase(); m = ms.find(x => (x.material_name||'').trim().toLowerCase() === k); }
+  return (m && m.specification) || '';
+}
+function _printSpecRow(text, ncolsAfterFirst) {
+  if (!text) return '';
+  return `<tr class="spec-r"><td></td><td colspan="${ncolsAfterFirst}"><span class="sl">Specification</span>${esc(text).replace(/\n/g,'<br>')}</td></tr>`;
+}
+const _PRINT_SPEC_CSS = 'table.items tr.spec-r td { background:#fbfcfe; font-size:7.8pt; line-height:1.5; color:#222; padding:4pt 8pt 5pt 14pt; border-top:0; }\ntable.items tr.spec-r td .sl { font-weight:700; font-size:7pt; letter-spacing:.5pt; text-transform:uppercase; color:#1e3a5f; margin-right:4pt; }\n';
+async function _printWithSpecs(fn) {
+  window._printWithSpecs = true;
+  try { await fn(); } finally { window._printWithSpecs = false; }
+}
+
+// ============================================================
+// v197 · ORDER PROGRESS & RISK EXPOSURE — fed by rpc_order_progress (M60).
+// One RPC per list load, aggregated on the DB (RLS-scoped, nothing stored).
+// Billed % = approved bills (basic+GST) ÷ order total; Paid % = payments on
+// those bills ÷ order total (advances NOT included — they sit in the red
+// exposure strip: Adv O/S − BG cover = Unsecured).
+// ============================================================
+const _opCache = { WO: null, HO: null, PO: null };
+async function _opLoad(type) {
+  try {
+    const { data, error } = await sb.rpc('rpc_order_progress', { p_order_type: type, p_order_numbers: null });
+    if (error) throw error;
+    const m = {}; (data || []).forEach(r => { m[r.order_number] = r; });
+    _opCache[type] = m;
+  } catch (e) { console.warn('rpc_order_progress', type, e); _opCache[type] = {}; }
+}
+function _opRow(type, no) { const m = _opCache[type]; return m ? (m[no] || null) : undefined; }   // undefined = not loaded yet
+function _opSort(type, no, fallback) { const r = _opRow(type, no); return r ? num(r.unsecured) * 1e12 + num(r.billed_pct) : num(fallback); }
+function _opBlock(type, no) {
+  const r = _opRow(type, no);
+  if (r === undefined) return '<span class="rk-wait">Loading…</span>';
+  if (r === null) return '<span class="rk-wait">—</span>';
+  const f = v => num(v).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const bp = num(r.billed_pct), pp = num(r.paid_pct);
+  const cls = p => Math.abs(p - 100) < 0.05 ? 'done' : (p > 100 ? 'warn' : '');
+  const w = p => Math.min(Math.max(p, 0), 100).toFixed(1);
+  const advPaid = num(r.adv_paid), advOs = num(r.adv_os), unsec = num(r.unsecured), bg = num(r.bg_cover);
+  const due = num(r.due_os), cu = num(r.cert_unbilled), pend = num(r.billed_pending);
+  const safe = unsec <= 0.005;
+  let exp = '';
+  if (advPaid > 0 || num(r.adv_pending) > 0) {
+    let bgNote = '';
+    if (bg > 0 && r.bg_next_expiry) { const d = (new Date(r.bg_next_expiry) - new Date()) / 864e5; if (d <= 90) bgNote = `<small>expires ${fmtDate(r.bg_next_expiry)}</small>`; }
+    exp = `<div class="exh${safe ? ' safe' : ''}">Risk Exposure — Advances${safe ? ' · Secured' : ''}${num(r.adv_pending) > 0 ? ' · ₹' + f(r.adv_pending) + ' pending' : ''}</div>
+    <div class="ex${safe ? ' safe' : ''}">
+      <div><b>Adv Paid</b>${f(advPaid)}</div><div><b>Recovered</b>${f(r.adv_recovered)}</div><div><b>Adv O/S</b>${f(advOs)}</div>
+      <div><b>BG Cover</b>${f(bg)}${bgNote}</div><div class="${safe ? 'ok' : 'bad'}" style="grid-column:2/4;"><b>Unsecured</b>${f(unsec)}</div>
+    </div>`;
+  }
+  const tip = `Order basic ₹${f(r.order_basic)} + GST ₹${f(r.order_gst)}\nBilled basic ₹${f(r.billed_basic)} + GST ₹${f(r.billed_gst)}${pend > 0 ? '\nBills awaiting approval ₹' + f(pend) : ''}${num(r.bg_other) > 0 ? '\nOther BGs (performance / retention) ₹' + f(r.bg_other) : ''}`;
+  return `<div class="rk" title="${esc(tip)}">
+    <div class="bars">
+      <div class="b"><div class="t"><span>Billed</span><b>${bp.toFixed(1)}%</b></div><div class="bar"><i class="${cls(bp)}" style="width:${w(bp)}%"></i></div></div>
+      <div class="b pay"><div class="t"><span>Paid</span><b>${pp.toFixed(1)}%</b></div><div class="bar"><i class="${cls(pp)}" style="width:${w(pp)}%"></i></div></div>
+    </div>
+    <div class="g">
+      <div><b>Order + GST</b>${f(r.order_total)}</div><div><b>Billed + GST</b>${f(r.billed_total)}</div><div><b>Paid On Bills</b>${f(r.paid_bills)}</div>
+      <div class="${due > 0.005 ? 'hi' : 'ok'}"><b>Due O/S</b>${f(due)}</div><div><b>Retention Held</b>${f(r.retention_held)}</div><div><b>TDS</b>${f(r.tds)}</div>
+      <div class="${cu > 0.005 ? 'hi' : ''}" style="grid-column:1/4;"><b>${type === 'PO' ? 'Received, Not Yet Billed' : 'Certified, Not Yet Billed'}</b>${f(cu)}</div>
+    </div>${exp}
+  </div>`;
+}
+
 async function _printOrderDoc(docType, docNumber, h, items, vmOverride) {
   // vmOverride: { name, address, gstin, contact, phone } from vendor master
   // h: raw DB row (po_orders / ho_orders / wo_orders)
@@ -5739,7 +5885,6 @@ async function _printOrderDoc(docType, docNumber, h, items, vmOverride) {
     if (h['Project']||h.project) metaExtra += `<tr><td class="l">Project</td><td>${esc(h['Project']||h.project)}</td></tr>`;
     if (h['Start Date']||h.start_date) metaExtra += `<tr><td class="l">Start Date</td><td>${fmtDate(h['Start Date']||h.start_date)}</td></tr>`;
     if (h['End Date']||h.end_date)     metaExtra += `<tr><td class="l">End Date</td><td>${fmtDate(h['End Date']||h.end_date)}</td></tr>`;
-    if (h['Cert Mode']||h.cert_mode) metaExtra += `<tr><td class="l">Cert Mode</td><td>${esc(h['Cert Mode']||h.cert_mode)}</td></tr>`;
   }
 
   // Line items rows
@@ -5773,6 +5918,10 @@ async function _printOrderDoc(docType, docNumber, h, items, vmOverride) {
       <td class="r">₹ ${fi(amount)}</td>
       <td>${esc((isPO ? it.remarks : '') ||'')}</td>
     </tr>`;
+    if (window._printWithSpecs) {   // v197
+      const _sp = isPO ? (it.specification || _specOfMaterial(it.material_code, it.material_name)) : (it['_specification'] || it.specification || '');
+      rowsHTML += _printSpecRow(_sp, 6);
+    }
   });
 
   // Totals block
@@ -5890,6 +6039,7 @@ table.items th.c, table.items td.c { text-align:center; }
 table.items th.r, table.items td.r { text-align:right; }
 table.items td { padding:5pt 6pt; font-size:8.5pt; border:.4pt solid #ddd; vertical-align:top; }
 table.items tr:nth-child(even) td { background:#f8fafc; }
+${_PRINT_SPEC_CSS}
 table.totals { width:100%; border-collapse:collapse; }
 table.totals td { padding:4pt 8pt; font-size:8.5pt; border:.4pt solid #ccc; }
 table.totals td:first-child { font-weight:600; background:#f0f5fb; color:#1e3a5f; }
@@ -5999,7 +6149,7 @@ async function _printWOTree(woNum, h, items) {
   const byAct = {};
   (items||[]).forEach(it => {
     const wid = String(it['_wbs_node_id']);
-    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [] };
+    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [], spec: it['_specification'] || (wbsMap[wid] && wbsMap[wid].specification) || '' };   // v197
     const qty = num(it['Qty']), rate = num(it['Unit Rate']), amt = num(it['Amount'])||qty*rate;
     const lp = _woLocParts(locMap, it['_loc_node_id']);
     byAct[wid].lines.push({ blk: _topBlock(it['_loc_node_id']), rk: _woRk(rate), rate, qty, amt, locId: it['_loc_node_id'], pid: lp.pid, pname: lp.pname, lname: lp.lname });
@@ -6018,7 +6168,7 @@ async function _printWOTree(woNum, h, items) {
       <td class="r"><strong>${fi(br.qty)}</strong></td>
       <td class="r">${br.rateCell}</td>
       <td class="r"><strong>₹ ${fi(br.amt)}</strong></td>
-    </tr>${br.html}`;
+    </tr>${window._printWithSpecs ? _printSpecRow(act.spec, 5) : ''}${br.html}`;
   });
 
   const gstAmt = num(h['GST Amount']||h.gst_amount||0);
@@ -6041,7 +6191,6 @@ async function _printWOTree(woNum, h, items) {
   if (h['Project']||h.project) metaExtra += `<tr><td class="l">Project</td><td>${esc(h['Project']||h.project)}</td></tr>`;
   if (h['Start Date']||h.start_date) metaExtra += `<tr><td class="l">Start Date</td><td>${fmtDate(h['Start Date']||h.start_date)}</td></tr>`;
   if (h['End Date']||h.end_date) metaExtra += `<tr><td class="l">End Date</td><td>${fmtDate(h['End Date']||h.end_date)}</td></tr>`;
-  if (h['Cert Mode']||h.cert_mode) metaExtra += `<tr><td class="l">Cert Mode</td><td>${esc(h['Cert Mode']||h.cert_mode)}</td></tr>`;
 
   const doc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>WORK ORDER — ${esc(woNum)}</title>
 <style>
@@ -6065,7 +6214,7 @@ table.items th.c, table.items td.c { text-align:center; }
 table.items th.r, table.items td.r { text-align:right; }
 table.items td { padding:4pt 6pt; font-size:8.5pt; border:.4pt solid #ddd; vertical-align:top; }
 table.items tr.act-row td { background:#eef3f9; border-top:.6pt solid #1e3a5f; }
-table.totals { width:100%; border-collapse:collapse; }
+${_PRINT_SPEC_CSS}table.totals { width:100%; border-collapse:collapse; }
 table.totals td { padding:4pt 8pt; font-size:8.5pt; border:.4pt solid #ccc; }
 table.totals td:first-child { font-weight:600; background:#f0f5fb; color:#1e3a5f; }
 table.totals td:last-child { text-align:right; }
@@ -7669,6 +7818,7 @@ async function apiGetWODetails(woNumber) {
     'Description': r.description, 'UOM': r.uom, 'Qty': r.qty,
     'Unit Rate': r.unit_rate, 'Amount': r.amount, 'S.No': r.sno,
     '_order_item_id': r.id, '_wbs_node_id': r.wbs_node_id, '_loc_node_id': r.loc_node_id,
+    '_specification': r.specification,   // v197
     'Activity Code': r.activity_code,
     '_line_status': r.line_status||'Active', '_split_from': r.split_from_item_id, '_added_in_rev': r.added_in_rev, '_closed_in_rev': r.closed_in_rev,   // v148
     '_stages': (stagesByOiid[r.id]||[]).map(s => ({ id: s.id, stage_seq: s.stage_seq, stage_name: s.stage_name, stage_pct: Number(s.stage_pct) }))
@@ -7699,6 +7849,7 @@ async function apiSaveWO(data) {
         qty: it.qty, unit_rate: it.rate, amount: it.amount,
         wbs_node_id: it.wbs_node_id||null,
         loc_node_id: it.loc_node_id||null,
+        specification: it.specification||null,   // v197
         stages: (it.stages||[]).length ? it.stages : undefined
       })),
     });
@@ -7736,6 +7887,7 @@ async function apiReviseWO(woNumber, data) {
         qty: it.qty, unit_rate: it.rate, amount: it.amount,
         wbs_node_id: it.wbs_node_id||null,
         loc_node_id: it.loc_node_id||null,
+        specification: it.specification||null,   // v197
         stages: (it.stages||[]).length ? it.stages : undefined
       })),
     });
@@ -13645,6 +13797,7 @@ async function loadHOList() {
     console.error('loadHOList error:', r.error);
   }
   renderHOList();
+  _opLoad('HO').then(() => renderHOList());   // v197
 }
 
 function renderHOList() {
@@ -13670,7 +13823,7 @@ function renderHOList() {
       <td data-sort="${esc(o['HO Date'])}">${fmtDate(o['HO Date'])}</td>
       <td data-sort="${esc(o['Vendor Name'])}">${esc(o['Vendor Name'])}</td>
       <td style="font-size:12px;color:var(--muted);">${esc(o['Scope']||'')}</td>
-      <td class="num mono" data-sort="${num(o['Total Amount'])}">${fmtINRSym(o['Total Amount'])}</td>
+      <td class="ph-wide" data-sort="${_opSort('HO', o['HO Number'], o['Total Amount'])}">${_opBlock('HO', o['HO Number'])}</td>
       <td data-sort="${esc(st)}">
         <span class="status ${stClass}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>
         ${(st === 'Rejected' || st === 'Rejected - Correction') && o['Rejection Reason'] ? `<br><span style="font-size:11px;color:var(--danger);">Reason: ${esc(o['Rejection Reason'])}</span>` : ''}
@@ -14426,15 +14579,16 @@ async function viewHO(hoNum) {
       <div><label class="muted" style="font-size:11px;">GST</label><div>${h['GST %']}%</div></div>
       <div><label class="muted" style="font-size:11px;">TOTAL VALUE</label><div style="font-weight:700;color:var(--accent);">${fmtINRSym(h['Total Amount'])}</div></div>
     </div>
-    <div class="table-wrap"><table>
+    ${items.some(it=>it['_specification']) ? `<div style="display:flex;justify-content:flex-end;margin-bottom:6px;"><button class="btn btn-ghost btn-sm" onclick="_specToggleAll('hoViewItems',this)">📋 Show All Specs</button></div>` : ''}
+    <div class="table-wrap" id="hoViewItems"><table>
       <thead><tr><th>#</th><th>Description</th><th>UOM</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr></thead>
       <tbody>${items.map((it,i) => `<tr class="${it['_line_status']==='Closed'?'amw-lnclosed':(it['_line_status']==='Removed'?'amw-lnremoved':'')}">
         <td class="center">${it['S.No']||i+1}</td>
-        <td>${esc(it['Description'])}</td><td>${esc(it['UOM'])}</td>
+        <td>${esc(it['Description'])}${_specChip(it['_specification'], 'hospec_'+i)}</td><td>${esc(it['UOM'])}</td>
         <td class="num mono">${fmtINR(it['Qty'])}${_amwPill(it['_order_item_id'], _hist)}</td>
         <td class="num mono">${fmtINR(it['Unit Rate'])}</td>
         <td class="num mono">${fmtINR(it['Amount'])}</td>
-      </tr>`).join('')}</tbody>
+      </tr>${_specTr(it['_specification'], 'hospec_'+i, 6)}`).join('')}</tbody>
     </table></div>
     <div style="display:flex;justify-content:flex-end;margin-top:8px;gap:8px;">
       <div style="text-align:right;font-size:13px;">
@@ -14447,7 +14601,8 @@ async function viewHO(hoNum) {
     <div class="actions-row">
       ${actionBtns}
       ${_amwActions('HO', h, _hist)}
-      <button class="btn btn-secondary" onclick="closeModal();printHOById('${esc(hoNum)}')">🖨 Print HO</button>
+      <button class="btn btn-secondary" onclick="closeModal();printHOById('${esc(hoNum)}')">🖨 Print</button>
+      <button class="btn btn-secondary" onclick="closeModal();_printWithSpecs(()=>printHOById('${esc(hoNum)}'))">🖨 Print With Specs</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`);
 }
@@ -14906,6 +15061,7 @@ async function viewHOC(hocNum) {
   pbDone();
   if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header; const items = r.items || [];
+  const _wbsSpec = Object.fromEntries((await _loadWbsTree()).map(n => [String(n.id), n.specification||'']));   // v197
 
   const stCls = h['Status']==='Unbilled'||h['Status']==='Billed'||h['Status']==='Pending Billing'?'approved'
     :h['Status']==='Rejected'?'rejected'
@@ -14918,9 +15074,10 @@ async function viewHOC(hocNum) {
     const currQty  = num(it['This Period Qty']);
     const cumQty   = num(it['Cumulative Qty']) || (prevQty+currQty);
     const prevAmt  = prevQty*rate, currAmt = currQty*rate, cumAmt = cumQty*rate;
+    const _sp = _wbsSpec[String(it['_wbs_node_id'])] || '';   // v197
     return `<tr>
       <td style="text-align:center;">${it['S.No']||i+1}</td>
-      <td>${esc(it['Description'])}</td>
+      <td>${esc(it['Description'])}${_specChip(_sp, 'hocspec_'+i)}${_specInl(_sp, 'hocspec_'+i)}</td>
       <td style="text-align:center;">${esc(it['UOM']||'')}</td>
       <td style="text-align:right;">${fmtINR(it['HO Qty'])}</td>
       <td style="text-align:right;background:#eef2f7;border-left:2px solid #1e3a5f;">${fmtINR(prevQty)}</td>
@@ -16185,6 +16342,7 @@ async function loadWOList() {
   const r = await apiGetWOList();
   if (r.ok) { state.workOrders = r.orders || []; document.getElementById('wo_listBadge').textContent = state.workOrders.length; }
   renderWOList();
+  _opLoad('WO').then(() => renderWOList());   // v197: progress & exposure (M60)
 }
 
 function renderWOList() {
@@ -16200,10 +16358,10 @@ function renderWOList() {
   if(fTo)   rows=rows.filter(o=>o['WO Date']&&o['WO Date']<=fTo);
   rows = _applyTableSort('wo_listBody', rows, [   // v170.1: PO-style sortable columns
     o=>o['WO Number']||'', o=>o['WO Date']||'', o=>o['Vendor Name']||'', o=>o['Scope']||'',
-    o=>num(o['Total Amount']), o=>o['Cert Mode']||'QTY', o=>o['Status']||'',
+    o=>_opSort('WO', o['WO Number'], o['Total Amount']), o=>o['Status']||'',   // v197: progress column sorts by unsecured, then billed %
   ]);
   setTimeout(() => { const t=tbody.closest('table'); if(t) makeSortable(t); }, 50);
-  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="8" class="center muted">No work orders found.</td></tr>'; return; }
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="center muted">No work orders found.</td></tr>'; return; }
   const perms = mergedPerms();
   tbody.innerHTML = rows.map(o => {
     const st = o['Status']||'';
@@ -16216,8 +16374,7 @@ function renderWOList() {
       <td>${fmtDate(o['WO Date'])}</td>
       <td>${esc(o['Vendor Name']||'')}</td>
       <td>${esc(o['Scope']||'')}</td>
-      <td class="num" style="font-weight:600;">${fmtINR(o['Total Amount'])}</td>
-      <td><span style="font-size:11px;padding:2px 7px;border-radius:8px;background:#dbeafe;color:#1e40af;">${esc(o['Cert Mode']||'QTY')}</span></td>
+      <td class="ph-wide">${_opBlock('WO', o['WO Number'])}</td>
       <td><span class="status ${stClass}">${esc(st === 'Rejected - Correction' ? 'Needs Correction' : st)}</span>${_amwListBadge(o)}${rr}</td>
       <td style="white-space:nowrap;">${ab}</td>
     </tr>`;
@@ -17703,6 +17860,7 @@ function getWOFormData() {
           sno: ++sno, description: item.name, uom: isLS ? 'LS (\u20b9)' : (item.uom||null),
           qty, rate, amount: qty*rate,
           wbs_node_id: Number(item.id), loc_node_id: l.id,
+          specification: (item.spec||'').trim()||null,   // v197: frozen at order time
           stages: stages.map((st,si) => ({ stage_seq: si+1, stage_name: st.name.trim(), stage_pct: Number(st.pct)||0 }))
         });
       });
@@ -17977,11 +18135,12 @@ async function viewWO(woNum) {
       <div><label class="muted" style="font-size:11px;">CONTRACTOR</label><div><strong>${esc(h['Vendor Name'])}</strong></div></div>
       <div><label class="muted" style="font-size:11px;">DATE</label><div>${fmtDate(h['WO Date'])}</div></div>
       <div><label class="muted" style="font-size:11px;">STATUS</label><div><span class="status ${stClass}">${esc(st)}</span></div></div>
-      <div><label class="muted" style="font-size:11px;">CERT MODE</label><div>${esc(h['Cert Mode']||'—')}</div></div>
       <div><label class="muted" style="font-size:11px;">RETENTION</label><div>${h['Retention %']}%</div></div>
+      <div><label class="muted" style="font-size:11px;">PERIOD</label><div>${h['Start Date']||h['End Date'] ? fmtDate(h['Start Date']||'')+' → '+fmtDate(h['End Date']||'') : '—'}</div></div>
       <div><label class="muted" style="font-size:11px;">TOTAL VALUE</label><div style="font-weight:700;color:var(--accent);">${fmtINRSym(h['Total Amount'])}</div></div>
     </div>
-    <div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;">
+    <div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="_specToggleAll('woViewTree',this)">📋 Show All Specs</button>
       <button class="btn btn-ghost btn-sm" onclick="_woViewExpandAll(true)">⊞ Expand all</button>
       <button class="btn btn-ghost btn-sm" onclick="_woViewExpandAll(false)">⊟ Collapse all</button>
     </div>
@@ -17997,7 +18156,8 @@ async function viewWO(woNum) {
     <div class="actions-row">
       ${actionBtns}
       ${_amwActions('WO', h, _hist)}
-      <button class="btn btn-secondary" onclick="closeModal();printWOById('${esc(woNum)}')">🖨 Print WO</button>
+      <button class="btn btn-secondary" onclick="closeModal();printWOById('${esc(woNum)}')">🖨 Print</button>
+      <button class="btn btn-secondary" onclick="closeModal();_printWithSpecs(()=>printWOById('${esc(woNum)}'))">🖨 Print With Specs</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`, 'large');
 }
@@ -18033,7 +18193,7 @@ async function _woViewBuildTreeHTML(items) {
     const wid = String(it['_wbs_node_id']);
     if (!byAct[wid]) {
       const node = wbsMap[wid];
-      byAct[wid] = { id: wid, name: it['Description'] || (node?node.name:'—'), path: node?(node.path||node.name):(it['Description']||''), uom: it['UOM']||(node?node.uom:'')||'', rows: [] };
+      byAct[wid] = { id: wid, name: it['Description'] || (node?node.name:'—'), path: node?(node.path||node.name):(it['Description']||''), uom: it['UOM']||(node?node.uom:'')||'', rows: [], spec: it['_specification'] || (node && node.specification) || '' };   // v197
     }
     byAct[wid].rows.push(it);
   });
@@ -18123,11 +18283,12 @@ async function _woViewBuildTreeHTML(items) {
       <div class="hoi-head" onclick="_woViewToggle(${ai})">
         <span class="hoi-chev">▶</span>
         <div style="flex:1;min-width:0;">
-          <div class="hoi-name">${esc(act.name)}</div>
+          <div class="hoi-name">${esc(act.name)}${_specChip(act.spec, 'wospec_'+ai)}</div>
           ${_wbsCrumbLine(act.path)}
         </div>
         <span class="hoi-meta">${esc(act.uom)}</span>
       </div>
+      ${_specBlock(act.spec, 'wospec_'+ai)}
       <div class="hoi-subtotal woi-summary">
         <span><span class="lbl">Total Qty:</span> <span class="val">${subTotalQty.toLocaleString('en-IN')} ${esc(unit)}</span></span>
         <span><span class="lbl">Total Amount:</span> <span class="val">₹${_f2(subTotalAmt)}</span></span>
@@ -18979,7 +19140,7 @@ async function _wocViewBuildTree(items) {
     const grandpa   = depth>=3?chain[depth-3]:null;
     const outerNode = grandpa||parentNode||leafNode;
     const innerNode = grandpa?parentNode:null;
-    const act = byAct[actKey] || (byAct[actKey] = { name: it['Description'], path: (wbsMap[String(it['_wbs_node_id'])]?(wbsMap[String(it['_wbs_node_id'])].path||wbsMap[String(it['_wbs_node_id'])].name):(it['Description']||'')), uom: it['UOM']||'', rate: num(it['Unit Rate']), rateMin:null, rateMax:null, groups:{} });
+    const act = byAct[actKey] || (byAct[actKey] = { name: it['Description'], path: (wbsMap[String(it['_wbs_node_id'])]?(wbsMap[String(it['_wbs_node_id'])].path||wbsMap[String(it['_wbs_node_id'])].name):(it['Description']||'')), uom: it['UOM']||'', rate: num(it['Unit Rate']), rateMin:null, rateMax:null, groups:{}, spec: (wbsMap[String(it['_wbs_node_id'])]&&wbsMap[String(it['_wbs_node_id'])].specification)||'' });   // v197
     const _lr = num(it['Unit Rate']);   // v167.1: per-line rate
     act.rateMin = (act.rateMin==null) ? _lr : Math.min(act.rateMin, _lr);
     act.rateMax = (act.rateMax==null) ? _lr : Math.max(act.rateMax, _lr);
@@ -19021,11 +19182,12 @@ function _wocViewTreeHTML(acts) {
       <div class="hoi-head" onclick="_wocViewToggle(${ai})">
         <span class="hoi-chev">▶</span>
         <div style="flex:1;min-width:0;">
-          <div class="hoi-name">${esc(act.name)}</div>
+          <div class="hoi-name">${esc(act.name)}${_specChip(act.spec, 'wocspec_'+ai)}</div>
           ${_wbsCrumbLine(act.path)}
         </div>
         <span class="hoi-meta">${esc(act.uom)} · ${_wocRateLabel(act)}</span>
       </div>
+      ${_specBlock(act.spec, 'wocspec_'+ai)}
       <div class="hoi-subtotal woi-summary">
         <span><span class="lbl">Certified Qty:</span> <span class="val">${aQty.toLocaleString('en-IN')} ${esc(unit)}</span></span>
         <span><span class="lbl">Certified Amount:</span> <span class="val">₹${aAmt.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</span></span>
@@ -20434,7 +20596,6 @@ function renderPrintWO(d) {
     <div class="pd-doc-block"><div class="pd-doc-type">WORK ORDER</div>
     <div class="pd-doc-meta">WO No.: <b>${esc(_amwDocLabel('WO', d))}</b><br>
     Date: <b>${fmtDate(d['WO Date'])}</b><br>${num(d['Rev No'])>0?`Amendment: <b>A${num(d['Rev No'])}</b> — supersedes revision ${num(d['Rev No'])-1}<br>`:''}
-    Cert Mode: <b>${esc(d['Cert Mode']||'QTY')}</b><br>
     Retention: <b>${d['Retention %']}%</b></div></div></div>
   <table class="pd-vt" style="width:100%;margin-bottom:16px;">
     <tr><td style="width:50%;vertical-align:top;padding:8px;border:1px solid #ccc;"><b>To</b><br>${vendorBody}</td>
@@ -27440,6 +27601,7 @@ async function loadPOList() {
   const {data}=await sb.from('pu_po_orders').select('*').order('created_at',{ascending:false});
   puState.poList=data||[];
   renderPOList();
+  _opLoad('PO').then(() => renderPOList());   // v197
 }
 
 function renderPOList() {
@@ -27456,7 +27618,7 @@ function renderPOList() {
   rows = _applyTableSort('po_listBody', rows, [
     p=>p.po_number||'', p=>p.po_date||'', p=>p.vendor_name||'',
     p=>p.qc_number||'', p=>p.mir_number||'',
-    p=>p.basic_value||0, p=>p.grand_total||0, p=>p.status||'',
+    p=>_opSort('PO', p.po_number, p.grand_total), p=>p.status||'',   // v197
   ]);
   document.getElementById('po_listBody').innerHTML=rows.map(p=>{
     const stCls=p.status.toLowerCase().replace(/[\s/]+/g,'-');
@@ -27466,10 +27628,9 @@ function renderPOList() {
       <td class="mono">${esc(p.po_number)}</td><td>${fmtDate(p.po_date)}</td>
       <td>${esc(p.vendor_name)}</td><td class="mono">${esc(p.qc_number||'—')}</td>
       <td class="mono">${esc(p.mir_number||'—')}</td>
-      <td class="num">${fmtINR(p.basic_value)}</td>
-      <td class="num" style="font-weight:600;">${fmtINR(p.grand_total)}</td>
+      <td class="ph-wide">${_opBlock('PO', p.po_number)}</td>
       <td><span class="status ${stCls}">${p.status}</span>${_amdListBadge(p)}</td><td>${acts}</td></tr>`;
-  }).join('')||'<tr><td colspan="9" class="center muted">No POs.</td></tr>';
+  }).join('')||'<tr><td colspan="8" class="center muted">No POs.</td></tr>';
   setTimeout(() => { const t=document.getElementById('po_listBody')?.closest('table'); if(t) makeSortable(t); }, 50);
 }
 
@@ -28778,7 +28939,7 @@ function getPOItemsData() {
     const _mk=(q)=>{ const base=q*rate, cgst=base*cgstP/100, sgst=base*sgstP/100, igst=base*igstP/100;
       return {sno:items.length+1,material_code:matCode,material_name:mat,uom,qty:q,unit_rate:rate,base_amount:base,
         cgst_pct:cgstP,sgst_pct:sgstP,igst_pct:igstP,cgst_amount:cgst,sgst_amount:sgst,igst_amount:igst,
-        total_amount:base+cgst+sgst+igst,remarks:_rmk}; };
+        total_amount:base+cgst+sgst+igst,remarks:_rmk,specification:_specOfMaterial(matCode,mat)||null}; };   // v197
     const _alloc=_poAlloc[rn];
     if(_alloc && _alloc.length){
       _alloc.forEach(a=>_poExplodeAllocLeg(a, _mk, items));   // v174: per-leg source stamp + overflow split
@@ -29526,7 +29687,7 @@ async function viewPO(poNum) {
       if(!L.removed){ _vBaseSum+=num(it.base_amount); _vTotSum+=num(it.total_amount); }
       _vParts.push('<tr'+_amdRowAttr(it)+'>'
         +'<td></td><td>'+gN+'</td>'
-        +'<td>'+esc(it.material_name)+badge+_vGrnCell(L,it.uom)+'</td>'
+        +'<td>'+esc(it.material_name)+badge+_specChip(it.specification||_specOfMaterial(it.material_code,it.material_name),'pospec_'+gN)+_vGrnCell(L,it.uom)+_specInl(it.specification||_specOfMaterial(it.material_code,it.material_name),'pospec_'+gN)+'</td>'
         +'<td style="min-width:220px;">'+wl0(L)+'</td>'
         +'<td>'+esc(it.uom)+'</td>'
         +'<td class="num mono">'+fmtINR(L.ordered)+_amdPill(it,_amdH)+'</td>'
@@ -29551,8 +29712,9 @@ async function viewPO(poNum) {
       _vParts.push('<tr data-pgsgrp="1" data-open="0" style="cursor:pointer;background:#f8fafc;font-weight:600;" onclick="_pgsGrpToggle(\''+cls+'\',this)">'
         +'<td><span class="pgs-chev" style="color:#0f766e;font-weight:700;">\u25b8</span></td>'
         +'<td>'+gN+'</td>'
-        +'<td>'+esc(G.name)
+        +'<td>'+esc(G.name)+_specChip(G.lines[0].it.specification||_specOfMaterial(G.lines[0].it.material_code,G.name),'pospec_'+gN)
         +  '<span style="font-size:10px;font-weight:700;color:#0f766e;background:#ccfbf1;border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle;">'+G.lines.length+' lines</span>'
+        +  _specInl(G.lines[0].it.specification||_specOfMaterial(G.lines[0].it.material_code,G.name),'pospec_'+gN)
         +  (nDirect?' <span style="display:inline-block;margin-left:6px;padding:1px 7px;font-size:10px;font-weight:700;color:#92400e;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;vertical-align:middle;">'+nDirect+' not in MIR</span>':'')
         +'</td>'
         +'<td><span class="pgs-ghint" style="font-size:10.5px;color:#94a3b8;font-style:italic;">'+G.lines.length+' \u00d7 (WBS \u00b7 location) \u2014 click to expand</span></td>'
@@ -29644,7 +29806,7 @@ async function viewPO(poNum) {
         <div style="font-size:12px;white-space:pre-line;">${esc(h.remarks)}</div>
       </div>` : ''}
     </div>
-    <div class="actions-row">${closeActions}<button class="btn btn-secondary" onclick="closeModal();printPO('${esc(h.po_number)}')">🖨 Print PO</button><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`, 'wide');
+    <div class="actions-row">${closeActions}<button class="btn btn-ghost btn-sm" onclick="_specToggleAll('modalContent',this)">📋 Show All Specs</button><button class="btn btn-secondary" onclick="closeModal();printPO('${esc(h.po_number)}')">🖨 Print</button><button class="btn btn-secondary" onclick="closeModal();_printWithSpecs(()=>printPO('${esc(h.po_number)}'))">🖨 Print With Specs</button><button class="btn btn-ghost" onclick="closeModal()">Close</button></div>`, 'wide');
 }
 
 // ═══════════════════════════════════════════════════════════════════════

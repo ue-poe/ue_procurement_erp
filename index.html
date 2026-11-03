@@ -5747,6 +5747,18 @@ function _specToggleAll(rootId, btn) {
   root.querySelectorAll('.spec-block, .spec-tr, .spec-inl').forEach(el => el.classList.toggle('on', on));
   root.querySelectorAll('.spec-chip').forEach(c => c.classList.toggle('on', on));
 }
+function _specOfWbs(node, lineSpec) {
+  // WBS activity nodes are created with specification=null and only activity_code
+  // (planning suite) — the activity's spec lives in ho_activities. Hire-equipment
+  // nodes carry their own spec. Order of truth: saved line → node → activity master.
+  if (lineSpec) return lineSpec;
+  if (!node) return '';
+  if (node.specification) return node.specification;
+  const acts = (window.state && state.masters && state.masters.activities) || [];
+  let a = node.activity_code ? acts.find(x => x['Activity Code'] === node.activity_code) : null;
+  if (!a && node.name) { const k = String(node.name).trim().replace(/\s+/g,' ').toLowerCase(); a = acts.find(x => String(x['Activity Description']||'').trim().replace(/\s+/g,' ').toLowerCase() === k); }
+  return (a && a['Specification']) || '';
+}
 function _specOfMaterial(code, name) {
   const ms = (window.puState && puState.materials) || [];
   let m = code ? ms.find(x => x.material_code === code) : null;
@@ -6149,7 +6161,7 @@ async function _printWOTree(woNum, h, items) {
   const byAct = {};
   (items||[]).forEach(it => {
     const wid = String(it['_wbs_node_id']);
-    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [], spec: it['_specification'] || (wbsMap[wid] && wbsMap[wid].specification) || '' };   // v197
+    if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [], spec: _specOfWbs(wbsMap[wid], it['_specification']) };   // v197
     const qty = num(it['Qty']), rate = num(it['Unit Rate']), amt = num(it['Amount'])||qty*rate;
     const lp = _woLocParts(locMap, it['_loc_node_id']);
     byAct[wid].lines.push({ blk: _topBlock(it['_loc_node_id']), rk: _woRk(rate), rate, qty, amt, locId: it['_loc_node_id'], pid: lp.pid, pname: lp.pname, lname: lp.lname });
@@ -14012,7 +14024,7 @@ async function hoSelectPackage(pkgId, pkgName) {
           id: eq.id, name: eq.name, uom: eq.uom || '',
           wbsNodeId: (eq.id != null ? Number(eq.id) : null),
           est_rate: Number(eq.default_rate)||0,
-          spec: eq.specification || '', tier: bestTier,
+          spec: _specOfWbs(eq,''), tier: bestTier,   // v197
           groups: Object.values(groups)
         };
       });
@@ -15061,7 +15073,7 @@ async function viewHOC(hocNum) {
   pbDone();
   if (!r.ok) { toast(r.error,'error'); return; }
   const h = r.header; const items = r.items || [];
-  const _wbsSpec = Object.fromEntries((await _loadWbsTree()).map(n => [String(n.id), n.specification||'']));   // v197
+  const _wbsSpec = Object.fromEntries((await _loadWbsTree()).map(n => [String(n.id), _specOfWbs(n,'')]));   // v197
 
   const stCls = h['Status']==='Unbilled'||h['Status']==='Billed'||h['Status']==='Pending Billing'?'approved'
     :h['Status']==='Rejected'?'rejected'
@@ -17260,7 +17272,7 @@ async function _hoBuildTree(selMap){
     });
     items.push({
       id:eq.id, name:eq.name, uom:eq.uom||'', wbsNodeId:Number(eq.id),
-      est_rate:Number(eq.default_rate)||0, spec:eq.specification||'',
+      est_rate:Number(eq.default_rate)||0, spec:_specOfWbs(eq,''),   // v197
       pkgId:pkg?Number(pkg.id):null, pkgName:pkg?pkg.name:'—', tier,
       groups:Object.values(groups)
     });
@@ -18193,7 +18205,7 @@ async function _woViewBuildTreeHTML(items) {
     const wid = String(it['_wbs_node_id']);
     if (!byAct[wid]) {
       const node = wbsMap[wid];
-      byAct[wid] = { id: wid, name: it['Description'] || (node?node.name:'—'), path: node?(node.path||node.name):(it['Description']||''), uom: it['UOM']||(node?node.uom:'')||'', rows: [], spec: it['_specification'] || (node && node.specification) || '' };   // v197
+      byAct[wid] = { id: wid, name: it['Description'] || (node?node.name:'—'), path: node?(node.path||node.name):(it['Description']||''), uom: it['UOM']||(node?node.uom:'')||'', rows: [], spec: _specOfWbs(node, it['_specification']) };   // v197
     }
     byAct[wid].rows.push(it);
   });
@@ -19140,7 +19152,7 @@ async function _wocViewBuildTree(items) {
     const grandpa   = depth>=3?chain[depth-3]:null;
     const outerNode = grandpa||parentNode||leafNode;
     const innerNode = grandpa?parentNode:null;
-    const act = byAct[actKey] || (byAct[actKey] = { name: it['Description'], path: (wbsMap[String(it['_wbs_node_id'])]?(wbsMap[String(it['_wbs_node_id'])].path||wbsMap[String(it['_wbs_node_id'])].name):(it['Description']||'')), uom: it['UOM']||'', rate: num(it['Unit Rate']), rateMin:null, rateMax:null, groups:{}, spec: (wbsMap[String(it['_wbs_node_id'])]&&wbsMap[String(it['_wbs_node_id'])].specification)||'' });   // v197
+    const act = byAct[actKey] || (byAct[actKey] = { name: it['Description'], path: (wbsMap[String(it['_wbs_node_id'])]?(wbsMap[String(it['_wbs_node_id'])].path||wbsMap[String(it['_wbs_node_id'])].name):(it['Description']||'')), uom: it['UOM']||'', rate: num(it['Unit Rate']), rateMin:null, rateMax:null, groups:{}, spec: _specOfWbs(wbsMap[String(it['_wbs_node_id'])], '') });   // v197
     const _lr = num(it['Unit Rate']);   // v167.1: per-line rate
     act.rateMin = (act.rateMin==null) ? _lr : Math.min(act.rateMin, _lr);
     act.rateMax = (act.rateMax==null) ? _lr : Math.max(act.rateMax, _lr);
@@ -34969,7 +34981,7 @@ async function _fetchAllRows(table, columns) {
 async function _loadWbsTree(){
   if (_wbsTreeCache) return _wbsTreeCache;
   let data;
-  try { data = await _fetchAllRows('wbs_nodes', 'id,name,parent_id,node_type,uom,default_rate,specification'); }
+  try { data = await _fetchAllRows('wbs_nodes', 'id,name,parent_id,node_type,uom,default_rate,specification,activity_code'); }   // v197: activity_code → ho_activities.specification
   catch(e){ toast('WBS load: '+e.message,'error'); _wbsTreeCache=[]; return _wbsTreeCache; }
   const map = Object.fromEntries((data||[]).map(n=>[n.id,n]));
   _wbsTreeCache = (data||[]).map(n=>{

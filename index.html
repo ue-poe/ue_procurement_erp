@@ -708,6 +708,11 @@ input[type="number"] {
 .hoi-subtotal .lbl{color:var(--muted);font-weight:500;}
 .hoi-subtotal .val{font-weight:600;color:var(--accent);}
 .hoi-subtotal .muted-val{font-weight:600;color:var(--muted);}
+/* ===== v197.7 · MIS per-line over-issue note ===== */
+.ms-note{display:flex;align-items:center;gap:5px;margin-top:4px;}
+.ms-note label{font-size:9.5px;font-weight:700;color:#b91c1c;letter-spacing:.3px;white-space:nowrap;}
+.ms-note input{flex:1;min-width:120px;border:1px solid #fca5a5;border-radius:4px;padding:3px 6px;font-size:11.5px;background:#fff;}
+.mis-lnv{font-size:11px;color:#7c2d12;background:#fff7ed;border-left:3px solid #f59e0b;padding:3px 8px;margin-top:4px;border-radius:0 4px 4px 0;}
 /* ===== v197 · specifications on orders / certifications ===== */
 .spec-chip{display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:1px 8px;border-radius:10px;border:1px solid #99f6e4;background:#f0fdfa;color:#0f766e;font-size:10.5px;font-weight:700;cursor:pointer;white-space:nowrap;vertical-align:middle;letter-spacing:.3px;user-select:none;}
 .spec-chip.on{background:var(--accent);color:#fff;border-color:var(--accent);}
@@ -5470,7 +5475,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
       </div>
       <div id="misOverrideBox" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:10px 12px;margin:6px 0 12px;font-size:12px;color:#7f1d1d;">
         <div id="misOverrideSummary" style="font-weight:600;margin-bottom:6px;"></div>
-        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:3px;">Reason for over-issue (mandatory — entered by store)</label>
+        <label style="font-size:11px;font-weight:600;display:block;margin-bottom:3px;">Reason For Over-Issue (Mandatory — Entered By Store)</label>
         <textarea id="mis_overrideReason" rows="2" style="width:100%;border:1px solid #dc2626;border-radius:6px;padding:7px;font-size:12px;" placeholder="Why is issuing above the approved estimate necessary?"></textarea>
       </div>
       <div class="actions-row">
@@ -5507,7 +5512,7 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
           <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;"><span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#fff7ed;color:#92400e;white-space:nowrap;min-width:170px;text-align:center;flex-shrink:0;">Needs Correction</span><span style="font-size:11px;color:var(--text-muted);line-height:1.4;">Returned by approver; creator can revise and resubmit</span></div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;"><span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#fee2e2;color:#991b1b;white-space:nowrap;min-width:170px;text-align:center;flex-shrink:0;">Rejected</span><span style="font-size:11px;color:var(--text-muted);line-height:1.4;">Rejected by approver; terminal; cannot be revised</span></div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;"><span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#f3e8ff;color:#6b21a8;white-space:nowrap;min-width:170px;text-align:center;flex-shrink:0;">Audit Entry</span><span style="font-size:11px;color:var(--text-muted);line-height:1.4;">Stock-count adjustment posted through the audit, not an issue to a party</span></div>
-          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;"><span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#f1f5f9;color:#334155;white-space:nowrap;min-width:170px;text-align:center;flex-shrink:0;">Pending Override</span><span style="font-size:11px;color:var(--text-muted);line-height:1.4;">Filter shortcut: Pending Approval issues that exceed the estimate and need an override</span></div>
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;"><span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#f1f5f9;color:#334155;white-space:nowrap;min-width:170px;text-align:center;flex-shrink:0;">Pending Override</span><span style="font-size:11px;color:var(--text-muted);line-height:1.4;">Filter shortcut: Pending Approval issues that exceed the estimate — the MIS approver decides with a mandatory comment</span></div>
         </div>
       </div>
       <div class="table-wrap">
@@ -24768,7 +24773,7 @@ function _mirPooledCells(){
 function _mpCellLive(c){
   // v153: in MIS mode an LS line is issued FROM STOCK (v130) \u2014 an exhausted
   // \u20b9 pool must not block issuing material the store already received.
-  if(_mpMode==='mis' && c.isLS) return true;
+  if(_mpMode==='mis') return true;   // v197.7: over-issue is allowed — a fully-issued cell stays live (reason + Manager approval on the form)
   return c.isLS ? (c.lsRem>0.009) : ((c.remaining||0)>0); }
 
 // v144: locId -> tower-level grouping ancestor (nearest node_type='tower';
@@ -24918,6 +24923,9 @@ function _mpRenderCart(){
   const lines=_mpCart.size;
   const cc=document.getElementById('mpCartCount'); if(cc) cc.textContent=groups.length+' material'+(groups.length===1?'':'s');
   const cm=document.getElementById('mpCommitCount'); if(cm) cm.textContent=lines;
+  { const ow=document.getElementById('mpOverWarn');   // v197.7
+    if(ow){ let nOv=0; if(_mpMode==='mis') _mpCart.forEach(v=>{ if(!v.isLS && Number(v.qty)>Number(v.remaining||0)+1e-9) nOv++; });
+      ow.style.display=nOv?'':'none'; ow.textContent=nOv?('\u26a0 '+nOv+' line'+(nOv===1?'':'s')+' over estimate \u2014 reason required on the form; Manager approval with comment'):''; } }
   if(!groups.length){ host.innerHTML='<div class="mp-empty"><div style="font-size:30px;">\ud83e\uddfa</div>Nothing selected yet.<br>Tick a floor or a material on the left.</div>'; return; }
   // v164: card body unchanged; adds the active highlight (accent ring +
   // 'current' pill + auto-open locs) on the material being worked on.
@@ -24931,8 +24939,9 @@ function _mpRenderCart(){
       return '<span class="mp-lchip'+(l.orphan?' mp-orphan':'')+(l.isLS?' wp-ls':'')+'"><span class="mp-lp">\ud83d\udccd '+esc(_mpLabel3(l.locPath)||l.locName||'loc')+'</span>'
         + (g.multiPkg?'<span class="mp-mini">\ud83d\udce6 '+esc(l.pkgName||'')+'</span>':'')
         + (l.isLS?'<span class="wo-ls-pill">LS \u20b9</span>':'')
-        + '<input type="number" step="0.001" value="'+_fmtQin(l.qty)+'" onwheel="this.blur()" data-mpk="'+K+'" oninput="_mpSetLocQtyK(\''+K+'\',this.value,this)" onchange="_mpRenderCart()">'
+        + '<input type="number" step="0.001" class="'+((_mpMode==='mis'&&!l.isLS&&Number(l.qty)>Number(l.remaining||0)+1e-9)?'over':'')+'" value="'+_fmtQin(l.qty)+'" onwheel="this.blur()" data-mpk="'+K+'" oninput="_mpSetLocQtyK(\''+K+'\',this.value,this)" onchange="_mpRenderCart()">'
         + '<span class="mp-mini">'+(l.isLS?('pool \u20b9'+_fmtQ(l.lsRem)):('/ '+_fmtQ(l.remaining)))+'</span>'
+        + (_mpMode==='mis'?'<span class="mp-over">'+((!l.isLS&&Number(l.qty)>Number(l.remaining||0)+1e-9)?('+'+_fmtQ(Number(l.qty)-Number(l.remaining||0))+' over'):'')+'</span>':'')
         + '<span class="mp-x" onclick="_mpDelK(\''+K+'\');_mpRefresh();">\u2715</span></span>';
     }).join('');
     return '<div class="mp-ci'+(isAct?' mp-active':'')+'">'
@@ -24972,9 +24981,10 @@ function _mpSetLocQtyK(k,val,el){ const v=_mpCart.get(k); if(!v) return;
   // the input mid-typing (only one digit could be entered before focus was lost).
   // Model + peer fields update in place; the full re-render moved to onchange.
   const q0=Math.max(0,Number(val)||0);
-  v.qty = v.isLS ? q0 : Math.min(q0, v.remaining);
+  v.qty = (v.isLS || _mpMode==='mis') ? q0 : Math.min(q0, v.remaining);   // v197.7: MIS may go over (flagged, reason on the form)
   if(el){
-    if(!v.isLS && q0>v.remaining+1e-9) el.value=_fmtQin(v.qty);   // snap when capped
+    if(!v.isLS && _mpMode!=='mis' && q0>v.remaining+1e-9) el.value=_fmtQin(v.qty);   // snap when capped
+    if(_mpMode==='mis'){ const ov=!v.isLS && q0>v.remaining+1e-9; el.classList.toggle('over',ov); const ovl=el.parentNode&&el.parentNode.querySelector('.mp-over'); if(ovl) ovl.textContent=ov?('+'+_fmtQ(q0-v.remaining)+' over'):''; }
     const head=el.closest('.mp-ci')?.querySelector('.mp-ci-head .mp-qbox input');
     if(head && document.activeElement!==head){ let s=0; _mpCart.forEach(x=>{ if(x.code===v.code) s+=Number(x.qty)||0; }); head.value=_fmtQin(s); }
   }
@@ -24983,7 +24993,7 @@ function _mpSetCumulative(code,val,el){
   let left=Math.max(0,Number(val)||0);
   const grp=_mpCartGroups().find(g=>g.code===code); if(!grp) return;
   grp.locs.slice().sort((a,b)=>(a.locPath||'').localeCompare(b.locPath||'')).forEach(l=>{
-    const cap=l.isLS?left:l.remaining;   // v148: LS lines take freely (\u20b9-gated at PO)
+    const cap=(l.isLS||_mpMode==='mis')?left:l.remaining;   // v148: LS lines take freely (\u20b9-gated at PO) · v197.7: MIS may go over
     const take=Math.max(0,Math.min(left,cap)); l.qty=take; left-=take;   // hard cap: overflow discarded
   });
   // v153: surgical fan-out into the visible chip inputs (see _mpSetLocQtyK note);
@@ -25198,6 +25208,9 @@ function _mpInjectCss(){
   .mp-lchip.mp-orphan{background:#fff7ed;border-color:#fed7aa;}
   .mp-lp{color:var(--muted);}
   .mp-lchip input{width:60px;padding:2px 5px;border:1px solid var(--border);border-radius:4px;font-size:11px;text-align:right;}
+  .mp-lchip input.over{border-color:#dc2626;color:#b91c1c;font-weight:700;background:#fff7f7;}   /* v197.7 */
+  .mp-over{font-size:10px;font-weight:700;color:#b91c1c;white-space:nowrap;}
+  .mp-overwarn{font-size:11.5px;font-weight:700;color:#b91c1c;margin-left:10px;}
   .mp-mini{font-size:10px;color:var(--muted);}
   .mp-x{width:18px;height:18px;font-size:10px;color:#dc2626;}
   .mp-warnpill{font-size:9px;font-weight:700;color:#9a3412;background:#fff7ed;border:1px solid #fed7aa;border-radius:9px;padding:1px 6px;}
@@ -28067,6 +28080,7 @@ async function _ppOpenPicker(mode){
     + '</div>'
     + '<div class="mp-foot">'
     +   '<span class="mp-legend"><span class="mp-dot">\u25cf</span> approved estimate &nbsp;\u00b7&nbsp; '+T.basis+' &nbsp;\u00b7&nbsp; '+T.ls+'</span>'
+    +   '<span id="mpOverWarn" class="mp-overwarn" style="display:none;"></span>'
     +   '<div class="mp-spacer"></div>'
     +   '<button class="btn btn-ghost btn-sm" onclick="_mpClear()">Clear</button>'
     +   '<button class="btn btn-primary btn-sm" onclick="'+T.commit+'">'+T.commitLbl+' <span class="mp-pill" id="mpCommitCount">0</span></button>'
@@ -28346,7 +28360,7 @@ function _ppSetQtyK(k,el){
   const cell=_mpCells.byKey.get(k); if(!cell) return;
   _mpActiveMat=cell.code;   // v164
   let q=Math.max(0,Number(el.value)||0);
-  if(!cell.isLS && q>cell.remaining) q=cell.remaining;   // v148: LS lines are \u20b9-gated at PO, not qty-capped
+  if(!cell.isLS && _mpMode!=='mis' && q>cell.remaining) q=cell.remaining;   // v148: LS lines are \u20b9-gated at PO, not qty-capped · v197.7: MIS may go over
   if(q<=0){ _mpCart.delete(k); } else if(v){ v.qty=q; } else { _mpCart.set(k,{...cell, key:k, qty:q}); }
   _ppRefresh();
 }
@@ -28442,13 +28456,15 @@ function _ppLocRow(c,subText){
   const remTxt=c.isLS
     ? (_mpMode==='mis' ? '<b>LS</b> \u00b7 from stock' : ('pool <b>\u20b9'+_fmtQ(c.lsRem)+'</b>'))
     : ((_mpMode==='mis'?'issuable <b>':'rem <b>')+_fmtQ(c.remaining)+'</b> '+esc(c.uom||''));
-  return '<div class="pp-lrow'+(inCart?' added':'')+'">'
+  const _ov=_mpMode==='mis' && inCart && !c.isLS && (Number(qty)||0)>Number(c.remaining||0)+1e-9;   // v197.7
+  const _ovTxt=_ov?'<div class="pp-over">\u26a0 +'+_fmtQ((Number(qty)||0)-Number(c.remaining||0))+' over estimate</div>':'';
+  return '<div class="pp-lrow'+(inCart?' added':'')+(_ov?' over':'')+'">'
     + '<input type="checkbox" class="mp-cb" data-pcell="'+_mpAttr(k)+'" '+(inCart?'checked':'')+' '+(zero?'disabled':'')
     +   ' onchange="_ppToggleCellK(\''+_mpAttr(k)+'\',this.checked)">'
     + '<span class="pp-nmwrap"><div class="pp-nm">'+esc(c.locName||'loc')+lsPill+'</div>'
-    +   (subText?('<div class="pp-sub" title="'+_mpAttr(subText)+'">'+esc(subText)+'</div>'):'')+'</span>'
+    +   (subText?('<div class="pp-sub" title="'+_mpAttr(subText)+'">'+esc(subText)+'</div>'):'')+_ovTxt+'</span>'
     + '<span class="pp-lrem'+(zero?' zero':'')+'">'+remTxt+'</span>'
-    + '<input type="number" step="0.001" class="pp-qty" placeholder="qty" onwheel="this.blur()" value="'+(inCart?_fmtQin(qty):'')+'" '+((!inCart||zero)?'disabled':'')
+    + '<input type="number" step="0.001" class="pp-qty'+(_ov?' over':'')+'" placeholder="qty" onwheel="this.blur()" value="'+(inCart?_fmtQin(qty):'')+'" '+((!inCart||zero)?'disabled':'')
     +   ' onchange="_ppSetQtyK(\''+_mpAttr(k)+'\',this)">'
     + '</div>';
 }
@@ -28578,6 +28594,9 @@ function _ppInjectCss(){
   .pp-grph .pp-ellip,.pp-ctx .pp-ellip{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;flex:1 1 auto;line-height:1.25;}
   .pp-grph{flex-wrap:nowrap;}
   .pp-lrow{display:flex;align-items:center;gap:9px;padding:5px 8px;border-radius:7px;}
+  .pp-lrow.over{background:#fff7f7;}   /* v197.7 */
+  .pp-lrow .pp-qty.over{border-color:#dc2626;color:#b91c1c;font-weight:700;}
+  .pp-over{font-size:10px;font-weight:700;color:#b91c1c;margin-top:2px;}
   .pp-lrow:hover{background:var(--panel-2);}
   .pp-lrow.added{background:rgba(13,148,136,.07);}
   .pp-lrem{font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted);flex-shrink:0;}
@@ -34824,7 +34843,7 @@ function renderMISList() {
     const rmcBadge = (m.issued_to||'').toLowerCase().includes('rmc plant')
       ? ' <span class="rmc-badge">RMC</span>' : '';
     const ovrBadge = (m.requires_override && m.status==='Pending Approval')
-      ? ' <span style="font-size:10px;background:#dc2626;color:#fff;padding:1px 6px;border-radius:3px;font-weight:600;vertical-align:middle;" title="Over-issue — needs Admin override approval">OVERRIDE</span>' : '';
+      ? ' <span style="font-size:10px;background:#dc2626;color:#fff;padding:1px 6px;border-radius:3px;font-weight:600;vertical-align:middle;" title="Over-issue — needs Manager approval with comment">OVER-ISSUE</span>' : '';
     return `<tr>
       <td class="mono">${esc(m.mis_number)}${cashBadge}${rmcBadge}${auditBadge}${ovrBadge}</td><td>${fmtDate(m.issue_date)}</td>
       <td>${esc(m.issued_to)}</td>
@@ -35560,8 +35579,8 @@ function _misRefreshOverrideUI(){
   const sum=document.getElementById('misOverrideSummary');
   if(overLines){
     if(box) box.style.display='';
-    if(sum) sum.textContent=overLines+' line(s) exceed the approved estimate — Admin override approval required.';
-    if(btn){ btn.textContent='⤴ Submit for Admin Override Approval'; btn.classList.remove('btn-primary'); btn.classList.add('btn-warn'); }
+    if(sum) sum.textContent=overLines+' line(s) exceed the approved estimate — goes to the Manager for approval with a comment.';
+    if(btn){ btn.textContent='⤴ Submit for Approval (Over-Issue)'; btn.classList.remove('btn-primary'); btn.classList.add('btn-warn'); }
   } else {
     if(box) box.style.display='none';
     if(btn){ btn.textContent='Save & Issue'; btn.classList.remove('btn-warn'); btn.classList.add('btn-primary'); }
@@ -35743,7 +35762,8 @@ function _renderMisItems(){
   if(_pgsWbsPM==null){ _pgsEnsureNodePMs().then(()=>_renderMisItems()); }
   let n=0; const rows=[];
   const _wl=(g,l)=>_pgsWLCell(l.wbsPath||(_pgsWbsPM?_pgsWbsPM[String(l.leafId)]:null)||l.pkgName||null, l.locPath||l.locName);
-  const _qtyTd=(g,l,lk)=>'<td class="num" style="min-width:130px;"><input class="mi-ql num" type="number" step="0.001" style="width:100px;text-align:right;" value="'+_fmtQin(l.qty)+'" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()" oninput="_msSetQty(\''+esc(g.code)+'\',\''+esc(lk)+'\',this.value,this)"><div class="'+_msCapCls(g,l)+'" id="msCal_'+esc(lk)+'" style="font-size:10px;">'+_msCapText(g,l)+'</div></td>';
+  const _qtyTd=(g,l,lk)=>'<td class="num" style="min-width:130px;"><input class="mi-ql num" type="number" step="0.001" style="width:100px;text-align:right;" value="'+_fmtQin(l.qty)+'" onwheel="this.blur()" onkeydown="if(event.key===\'ArrowUp\'||event.key===\'ArrowDown\')event.preventDefault()" oninput="_msSetQty(\''+esc(g.code)+'\',\''+esc(lk)+'\',this.value,this)"><div class="'+_msCapCls(g,l)+'" id="msCal_'+esc(lk)+'" style="font-size:10px;">'+_msCapText(g,l)+'</div>'
+    + '<div class="ms-note" id="msNote_'+esc(lk)+'" style="'+((!l.isLS&&(Number(l.qty)||0)>num(l.rem)+0.001)?'':'display:none;')+'"><label>WHY?</label><input type="text" value="'+esc(l.note||'')+'" placeholder="optional \u2014 this line only" oninput="_msSetNote(\''+esc(g.code)+'\',\''+esc(lk)+'\',this.value)"></div></td>';   // v197.7
   _misGroups.forEach(g=>{
     const multi=g.locs.length>1;
     n++;
@@ -35830,12 +35850,15 @@ function _msSetQty(code,lk,val,el){
   l.qty=Math.max(0,Number(val)||0);
   const cap=document.getElementById('msCal_'+lk);
   if(cap){ cap.textContent=_msCapText(g,l); cap.className=_msCapCls(g,l); }
+  { const nb=document.getElementById('msNote_'+lk); if(nb) nb.style.display=(!l.isLS && l.qty>num(l.rem)+0.001)?'':'none'; }   // v197.7
   const la=document.getElementById('msLAmt_'+lk); if(la) la.textContent='\u20b9'+fmtINR(l.qty*num(g.rate));
   const cum=document.getElementById('msCum_'+code); if(cum) cum.textContent=_fmtQ(_misGroupCum(g));
   const ga=document.getElementById('msGAmt_'+code); if(ga) ga.textContent='\u20b9'+fmtINR(_misGroupCum(g)*num(g.rate));
   _misFlatPaintStock(); _misFlatPaintTotal();
   _misRefreshOverrideUI();
 }
+
+function _msSetNote(code,lk,val){ const g=_misFindGroup(code); const l=_msFindLoc(g,lk); if(l) l.note=String(val||''); }   // v197.7
 
 async function saveMIS() {
   if(!hasPerm('canCreateMIS')){toast('Not permitted','error');return;}
@@ -35864,7 +35887,8 @@ async function saveMIS() {
       qty_issued:qty, stock_before:0, stock_after:0,     // stamped from live stock below
       unit_rate:num(g.rate), amount:qty*num(g.rate),
       wbs_node_id:Number(l.leafId!=null?l.leafId:l.pkgId), loc_node_id:l.locId,   // v160 (pairs with S1 leaf flip): store the estimate LEAF; server climbs for the package name
-      wbs_activity:l.pkgName||null});
+      wbs_activity:l.pkgName||null,
+      remarks:((!l.isLS && qty>num(l.rem)+0.001) ? ((l.note||'').trim()||null) : null)});   // v197.7: per-line reason, only on over lines
   }}
   if(!items.length){toast('Add at least one item','error');return;}
   // over-issue override: store must supply a reason; routes to Admin approval
@@ -36033,7 +36057,7 @@ async function saveMIS() {
     const okMsg = revisingMIS
       ? 'MIS '+misRef+' revised and resubmitted for approval'
       : (res.requires_override
-          ? 'MIS '+misRef+' submitted for Admin override approval ('+_qf(res.override_qty||0)+' over estimate)'
+          ? 'MIS '+misRef+' submitted for Manager approval — over-issue of '+_qf(res.override_qty||0)+' needs a comment on approval'
           : 'MIS '+misRef+' saved — pending Site Manager approval');
     if (revisingMIS) delete document.getElementById('misForm').dataset.revisingMIS;
     if (res.untagged_count > 0) {
@@ -36046,12 +36070,30 @@ async function saveMIS() {
   finally{pbDone();}
 }
 
+// v197.7 / M61: an over-issue is approved by the MIS approver with a mandatory comment
+// (the DB trigger refuses the approval without it). Collected here, then the normal path runs.
+function promptApproveOverMIS(misNum) {
+  const _meta = window._misApprovalMeta || {};
+  openModal(`
+    <h3 style="color:var(--warn);">Approve Over-Issue \u2014 ${esc(misNum)}</h3>
+    ${_meta.override_qty!=null?`<div style="font-size:12px;color:#7c2d12;margin-bottom:8px;">${_qf(_meta.override_qty)} over the approved estimate.${_meta.override_reason?' <b>Store:</b> '+esc(_meta.override_reason):''}</div>`:''}
+    <div class="field" style="margin-bottom:16px;">
+      <label class="req">Approval Comment</label>
+      <textarea id="misOvrNote" rows="3" style="width:100%;padding:9px;border:1px solid var(--border);border-radius:4px;font-family:inherit;font-size:13px;resize:vertical;" placeholder="Why this over-issue is accepted \u2014 recorded against the MIS"></textarea>
+    </div>
+    <div class="actions-row">
+      <button class="btn btn-primary" onclick="(function(){const v=(document.getElementById('misOvrNote')?.value||'').trim(); if(!v){toast('Approval comment is mandatory for an over-issue','error');return;} window._misApprovalMeta=Object.assign(window._misApprovalMeta||{},{override_note:v}); confirmApproveMIS('${esc(misNum)}');})()">\u2713 Approve &amp; Issue</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+    </div>`);
+}
+
 async function confirmApproveMIS(misNum) {
   const _meta = window._misApprovalMeta || {};
+  if (!hasPerm('canApproveMIS')) { toast('Only the MIS approver can approve','error'); return; }
   if (_meta.requires_override) {
-    if (!hasPerm('canOverrideMIS')) { toast('Over-issue override can be approved only by Admin','error'); return; }
-    if (_meta.issued_by_id && state.userId && _meta.issued_by_id===state.userId) { toast('Maker-checker: you raised this over-issue — a different Admin must approve','error'); return; }
-  } else if (!hasPerm('canApproveMIS')) { toast('Only Site Manager can approve MIS','error'); return; }
+    if (_meta.issued_by_id && state.userId && _meta.issued_by_id===state.userId) { toast('Maker-checker: you raised this over-issue — a different approver must decide it','error'); return; }
+    if (!(_meta.override_note||'').trim()) { promptApproveOverMIS(misNum); return; }   // collect the mandatory comment first
+  }
 
   const misItems = window._misApprovalItems || [];
 
@@ -36060,12 +36102,12 @@ async function confirmApproveMIS(misNum) {
   try {
     // ── 2. Set MIS status to Approved ──────────────────────────────────────────
     const {error:approveErr} = await sb.from('pu_mis')
-      .update({
+      .update(Object.assign({
         status:         'Approved',
         approved_by:    state.userName,
         approved_by_id: state.userId,
         approved_at:    new Date().toISOString(),
-      }).eq('mis_number', misNum);
+      }, (_meta.requires_override && (_meta.override_note||'').trim()) ? { override_approval_note: _meta.override_note.trim() } : {})).eq('mis_number', misNum);   // v197.7 / M61
     if (approveErr) throw new Error(approveErr.message);
 
     flashSuccess('MIS '+misNum+' Approved');
@@ -36118,7 +36160,7 @@ async function viewMIS(misNum) {
   const isAuditEntry = h?.status === 'Audit Entry';
   const reqOv = !!h?.requires_override;
   const isSelfMaker = !!(h?.issued_by_id && state.userId && h.issued_by_id===state.userId);
-  const canApprove = isPending && (reqOv ? (perms.canOverrideMIS && !isSelfMaker) : perms.canApproveMIS);
+  const canApprove = isPending && perms.canApproveMIS && !(reqOv && isSelfMaker);   // v197.7 / M61: the MIS approver decides over-issues too (maker-checker kept)
   const total=(items||[]).reduce((s,it)=>s+num(it.amount),0);
   const anyCash = (items||[]).some(it=>it.is_cash_purchase);
 
@@ -36149,7 +36191,7 @@ async function viewMIS(misNum) {
   const _mAnyGrp=_mGrpsArr.some(g=>g.lines.length>1);
   const _mParts=[];
   if(_mAnyGrp) _mParts.push(_pgsGrpBarRow(9));
-  const _mOv=it=>num(it.over_issue_qty)>0 ? ` <span style="font-size:9px;background:#dc2626;color:#fff;padding:1px 5px;border-radius:3px;font-weight:700;" title="Issued over estimate">OVER +${_qf(it.over_issue_qty)}</span>` : '';
+  const _mOv=it=>num(it.over_issue_qty)>0 ? ` <span style="font-size:9px;background:#dc2626;color:#fff;padding:1px 5px;border-radius:3px;font-weight:700;" title="Issued over estimate">OVER +${_qf(it.over_issue_qty)}</span>${it.remarks?`<div class="mis-lnv"><b>Why:</b> ${esc(it.remarks)}</div>`:''}` : '';   // v197.7: per-line reason
   _mGrpsArr.forEach((G,gi)=>{
     const gN=gi+1, cls='mG'+gi, multi=G.lines.length>1;
     if(!multi){
@@ -36208,16 +36250,17 @@ async function viewMIS(misNum) {
         <span style="font-weight:700;color:#b45309;">⚠ Over-issue override</span>
         <span style="color:#7c2d12;margin-left:6px;">${h.override_qty!=null?(_qf(h.override_qty)+' over the approved estimate.'):''}</span>
         ${h.override_reason?`<div style="margin-top:4px;color:#7c2d12;"><b>Reason (store):</b> ${esc(h.override_reason)}</div>`:''}
+        ${h.override_approval_note?`<div style="margin-top:4px;color:#166534;"><b>Approver (${esc(h.approved_by||'')}):</b> ${esc(h.override_approval_note)}</div>`:''}
        </div>`
     : '';
   let actionBtns = '';
   if (!isAuditEntry && canApprove) {
     actionBtns = `
       <button class="btn btn-primary"
-        onclick="confirmApproveMIS('${esc(misNum)}')">${reqOv?'✓ Approve Override & Issue':'✓ Approve'}</button>
+        onclick="confirmApproveMIS('${esc(misNum)}')">${reqOv?'✓ Approve Over-Issue (With Comment)':'✓ Approve'}</button>
       <button class="btn btn-danger" onclick="closeModal();rejectDoc('MIS','${esc(misNum)}')">✕ Reject</button>`;
   } else if (!isAuditEntry && isPending && reqOv) {
-    actionBtns = `<div style="font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 12px;">${isSelfMaker?'You raised this over-issue — a <b>different Admin</b> must authorize it.':'This over-issue can be authorized only by an <b>Admin</b>.'}</div>`;
+    actionBtns = `<div style="font-size:12px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 12px;">${isSelfMaker?'You raised this over-issue — a <b>different approver</b> must decide it.':'This over-issue is decided by the <b>MIS approver</b> with a comment.'}</div>`;
   }
   if (!isAuditEntry && hasPerm('canCreateMIS') && h?.status === 'Rejected - Correction') {
     actionBtns += `<button class="btn btn-warn" onclick="reviseMIS('${esc(misNum)}')">✎ Revise & Resubmit</button>`;
@@ -36236,7 +36279,7 @@ async function viewMIS(misNum) {
   window._misApprovalItems = (items||[]).map(it=>({
     id: it.id, sno: it.sno, material_name: it.material_name
   }));
-  window._misApprovalMeta = { requires_override: !!h?.requires_override, issued_by_id: h?.issued_by_id||null };
+  window._misApprovalMeta = { requires_override: !!h?.requires_override, issued_by_id: h?.issued_by_id||null, override_qty: h?.override_qty, override_reason: h?.override_reason||'' };   // v197.7
 
   openModal(`
     <h3 style="margin-bottom:4px;">MIS — ${esc(misNum)}${headerBadge}${auditHeaderBadge}
@@ -37248,7 +37291,7 @@ async function reviseMIS(misNum) {
       locName:wl?(wl.loc_name||''):'', locPath:wl?(wl.loc_path||''):('loc #'+it.loc_node_id),
       pkgName:it.wbs_activity||(wl?(wl.package_name||''):''),
       wbsPath:((_pgsWbsPM&&_pgsWbsPM[String(it.wbs_node_id)])||it.wbs_activity||''),
-      qty:num(it.qty_issued), rem:(ir?ir.rem:(wl?num(wl.remaining):0)), isLS:!!(wl&&wl.is_ls===true)});
+      qty:num(it.qty_issued), rem:(ir?ir.rem:(wl?num(wl.remaining):0)), isLS:!!(wl&&wl.is_ls===true), note:it.remarks||''});   // v197.7
   }
   // v110: groups start collapsed on resume too (summary rows show sums)
   _renderMisItems();

@@ -2362,6 +2362,32 @@ select.dash-set{border-color:#2563eb!important;background:#eff6ff!important;colo
   .hoi-subtotal > span { display: block; font-size: 12px; }
   .hoi-subtotal .lbl { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .3px; font-weight: 600; }
   .hoi-head { padding: 9px 10px; gap: 8px; flex-wrap: wrap; }
+  /* v197.8 · Vendor / Contractor master trees → one card per row (desktop keeps the grid) */
+  .vct-hdr { display: none !important; }
+  .vct-row { display: flex !important; flex-wrap: wrap; padding: 0 !important; border-bottom: 0 !important; border-top: 1px solid #e6ebf1; background: #fff; gap: 0 !important; }
+  .vct-row > .vct-c { flex: 0 0 50%; box-sizing: border-box; padding: 6px 10px; box-shadow: inset -1px 0 0 #e6ebf1, inset 0 -1px 0 #e6ebf1; overflow-wrap: anywhere; min-width: 0; }
+  .vct-row > .vct-c::before { content: attr(data-l); display: block; font-size: 9.5px; font-weight: 600; letter-spacing: .3px; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+  .vct-row > .vct-c[data-k="code"] { order: -3; flex: 0 0 auto; background: #dde6f0; padding: 8px 10px; box-shadow: none; }
+  .vct-row > .vct-c[data-k="code"]::before { display: none; }
+  .vct-row > .vct-c[data-k="name"] { order: -2; flex: 1 1 55%; background: #dde6f0; font-weight: 600; font-size: 13px; padding: 8px 10px 8px 0; box-shadow: none; }
+  .vct-row > .vct-c[data-k="name"]::before { display: none; }
+  .vct-row > .vct-c[data-k="acts"] { order: 99; flex: 1 1 100%; padding: 8px 10px; box-shadow: none; border-top: 1px solid #e6ebf1; }
+  .vct-row > .vct-c[data-k="acts"]::before { display: none; }
+  .vct-row > .vct-c[data-k="acts"] > span { justify-content: flex-start !important; flex-wrap: wrap; gap: 6px !important; }
+  .vct-row > .vct-c[data-k="acts"] .btn { min-height: 38px; padding: 6px 12px; font-size: 12px; margin: 0; }
+  .vct-row > .vct-c .mono { font-size: 11.5px !important; }
+  /* v197.8 · Material / Activity master rows → cards; nested indents trimmed */
+  div[id^="mmg_"][id$="_ch"], div[id^="mms_"][id$="_ch"], div[id^="amg_"][id$="_ch"], div[id^="ams_"][id$="_ch"] { margin-left: 6px !important; }
+  div[id^="mmmat_"], div[id^="amact_"] { flex-wrap: wrap !important; align-items: center; gap: 4px 8px !important; padding: 8px 10px !important; border-bottom: 0 !important; border: 1px solid var(--border) !important; border-radius: 8px; margin-bottom: 8px; background: #fff; }
+  div[id^="mmmat_"] > span:first-child, div[id^="amact_"] > span:first-child { order: -2; min-width: 0 !important; }
+  div[id^="mmmat_"] > span:nth-child(2), div[id^="amact_"] > span:nth-child(2) { order: -1; flex: 1 1 calc(100% - 84px) !important; font-weight: 600; font-size: 13px; line-height: 1.3; }
+  div[id^="amact_"] > span:nth-child(2) > span { max-width: none !important; white-space: normal !important; font-weight: 400; margin-top: 2px; }
+  div[id^="mmmat_"] > span[style*="max-width:200px"] { flex: 1 1 100%; max-width: none !important; white-space: normal !important; }
+  div[id^="mmmat_"] > span[style="flex:1;"]:empty, div[id^="amact_"] > span[style="flex:1;"]:empty { display: none; }
+  div[id^="mmmat_"]::after, div[id^="amact_"]::after { content: ''; flex: 1 1 100%; order: 98; height: 0; }
+  div[id^="mmmat_"] > button, div[id^="amact_"] > button, div[id^="mmmat_"] > .mst-inl, div[id^="amact_"] > .mst-inl { order: 99; }
+  div[id^="mmmat_"] .btn, div[id^="amact_"] .btn { min-height: 38px; padding: 6px 12px; font-size: 12px; margin: 0; }
+  div[id^="mmmat_"] > .mst-inl, div[id^="amact_"] > .mst-inl { display: flex; gap: 6px; }
   /* v197 · spec chip is a full-width thumb target; risk block spans the card */
   .hoi-head .spec-chip { margin: 0; min-height: 30px; padding: 0 12px; font-size: 11px; flex: 1 1 100%; justify-content: center; }
   .spec-block { margin: 0 10px 10px; }
@@ -12408,7 +12434,8 @@ function _vctTree(rows, opts) {
   const names = Object.keys(groups).sort((a,b)=>a==='(No trade set)'?1:b==='(No trade set)'?-1:a.localeCompare(b));
   if (!names.length)
     return `<div class="center muted" style="padding:24px;">${searching?'No matches for "'+esc(q)+'".':'Nothing here yet.'}</div>`;
-  const hdr = `<div style="display:grid;grid-template-columns:${opts.grid};gap:0 10px;padding:5px 12px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#64748b;border-bottom:1px solid var(--border);">${opts.headers.map(h=>`<span>${h}</span>`).join('')}</div>`;
+  const hdr = `<div class="vct-hdr" style="display:grid;grid-template-columns:${opts.grid};gap:0 10px;padding:5px 12px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#64748b;border-bottom:1px solid var(--border);">${opts.headers.map(h=>`<span>${h}</span>`).join('')}</div>`;
+  const _lbl = opts.headers.map(h => String(h).replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim());   // v197.8: phone card labels
   return names.map((g, gi) => {
     const items = groups[g];
     const pend = items.filter(r => (r._appr||'Approved') === 'Pending Approval').length;
@@ -12418,7 +12445,7 @@ function _vctTree(rows, opts) {
     const rowsHtml = items.sort((a,b)=>opts.nameOf(a).localeCompare(opts.nameOf(b))).map(r => {
       const isP = (r._appr||'Approved') === 'Pending Approval';
       const isR = r._appr === 'Rejected';
-      return `<div style="display:grid;grid-template-columns:${opts.grid};gap:0 10px;align-items:center;padding:6px 12px;border-bottom:1px solid #f1f5f9;font-size:12px;${isP?'background:#fffbeb;':isR?'background:#fef2f2;':''}">${opts.cols(r).join('')}</div>`;
+      return `<div class="vct-row" style="display:grid;grid-template-columns:${opts.grid};gap:0 10px;align-items:center;padding:6px 12px;border-bottom:1px solid #f1f5f9;font-size:12px;${isP?'background:#fffbeb;':isR?'background:#fef2f2;':''}">${opts.cols(r).map((c,i)=>`<span class="vct-c" data-l="${esc(_lbl[i]||'')}" data-k="${/^(code)$/i.test(_lbl[i])?'code':/^(name)$/i.test(_lbl[i])?'name':/^(actions)$/i.test(_lbl[i])?'acts':''}">${c}</span>`).join('')}</div>`;   // v197.8
     }).join('');
     return `<div style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden;">
       <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;background:#dde6f0;cursor:pointer;font-weight:700;color:#1e3a5f;" onclick="vctToggle('${gid}')">

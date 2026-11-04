@@ -34707,8 +34707,8 @@ function renderMISList() {
   if(fBy)   rows=rows.filter(m=>(m.issued_by||'').toLowerCase().includes(fBy));
   if(fSt==='__override__') rows=rows.filter(m=>m.requires_override && m.status==='Pending Approval');
   else if(fSt) rows=rows.filter(m=>m.status===fSt);
-  if(fFrom) rows=rows.filter(m=>m.mis_date&&m.mis_date>=fFrom);
-  if(fToD)  rows=rows.filter(m=>m.mis_date&&m.mis_date<=fToD);
+  if(fFrom) rows=rows.filter(m=>(m.issue_date||'').slice(0,10)>=fFrom);   // v197.5: header column is issue_date, not mis_date
+  if(fToD)  rows=rows.filter(m=>(m.issue_date||'').slice(0,10)<=fToD);
   rows = _applyTableSort('mis_listBody', rows, [
     m=>m.mis_number||'', m=>m.issue_date||'', m=>m.issued_to||'',
     m=>m.issued_by||'', m=>0, m=>m.status||'',

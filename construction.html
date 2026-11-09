@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.4.6</title>
+<title>Penguin Construction v5.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3292,7 +3292,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf input[type=number]::-webkit-inner-spin-button,#mod-dpr .dp2 .pf input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 #mod-dpr .dp2 .pf input[type=number]{-moz-appearance:textfield}
 /* footer */
-#mod-dpr .dp2 .d2-foot.pf{position:sticky;bottom:0;z-index:25;flex-wrap:wrap;border-radius:0 0 12px 12px;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
+#mod-dpr .dp2 .d2-foot.pf{position:sticky;bottom:0;z-index:25;display:flex!important;flex-direction:row!important;flex-wrap:wrap;align-items:center;border-radius:0 0 12px 12px;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
 #mod-dpr .dp2 .d2-foot.pf .msg{flex:1 1 160px;min-width:0;font-size:11.5px;line-height:1.3}
 #mod-dpr .dp2 .d2-foot.pf .d2-btn{min-height:38px;font-size:13px;font-weight:800}
 /* preview */
@@ -3396,7 +3396,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2.eng .d2-card.pfc.blank{min-height:0}
 /* phone */
 @media(max-width:999px){
-  #mod-dpr.module.pf-on,#mod-dpr.module:has(.d2-card.pfc){overflow:visible;overflow-x:clip}   /* overflow-x:hidden would become the sticky scrollport; clip keeps sticky and still stops sideways overflow */
+  #mod-dpr.module.pf-on,#mod-dpr.module:has(.d2-card.pfc){overflow:visible;overflow-x:clip}
+  #mod-dpr .dp2.mp .pf-top{border-radius:0}   /* overflow-x:hidden would become the sticky scrollport; clip keeps sticky and still stops sideways overflow */
   #mod-dpr .dp2 .pf-top .st,#mod-dpr .dp2 .pfrv .ach>div,#mod-dpr .dp2 .pf-card>.hd>div:first-child{min-width:0;overflow-wrap:anywhere}
   #mod-dpr .dp2.eng .d2-side,#mod-dpr .dp2.eng .d2-toptabs{display:none}
   #mod-dpr .dp2.eng .d2-card.pfc{border-radius:0;min-height:60vh;margin:0 -6px;border-left:0;border-right:0}
@@ -3420,6 +3421,73 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pfrv .kp{grid-template-columns:repeat(6,1fr)}
   #mod-dpr .dp2 .pf-card .units .u{min-width:84px}
 }
+/* ===== v5.5 · Manager phone flow ===== */
+#mod-dpr .dp2 .pf-top .seg{display:flex;gap:6px;padding:7px 0 8px}
+#mod-dpr .dp2 .pf-top .seg button{flex:1;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+#mod-dpr .dp2 .pf-top .seg button i{font-style:normal;font-size:9.5px;opacity:.8;font-weight:700}
+#mod-dpr .dp2 .pf-top .seg button.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .engnav{display:flex;gap:6px;overflow-x:auto;padding:0 0 8px;scrollbar-width:none}
+#mod-dpr .dp2 .pf-top .engnav::-webkit-scrollbar{display:none}
+#mod-dpr .dp2 .pf-top .engnav button{flex:none;height:30px;padding:0 10px;border-radius:15px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+#mod-dpr .dp2 .pf-top .engnav button.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .engnav button i{font-style:normal;font-size:10px;margin-left:4px;opacity:.75}
+#mod-dpr .dp2 .mg{padding:6px 3px 10px;display:flex;flex-direction:column;gap:6px;background:var(--bg,#eef1f6)}
+#mod-dpr .dp2 .mg h3{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);font-weight:800;margin:6px 2px 0}
+#mod-dpr .dp2 .mg .one{background:#fff;border:1px solid var(--ln,#c3ccd9);border-left:4px solid var(--dn);border-radius:10px;padding:7px 10px;font-size:12.5px;line-height:1.5}
+#mod-dpr .dp2 .mg .one .red{color:var(--drd)}
+#mod-dpr .dp2 .mg .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+#mod-dpr .dp2 .mg .kp>div{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:9px;padding:5px 8px}
+#mod-dpr .dp2 .mg .kp b{display:block;font-size:18px;line-height:1.1;color:var(--dn)}#mod-dpr .dp2 .mg .kp b small{font-size:12px;color:var(--ink3)}
+#mod-dpr .dp2 .mg .kp span{font-size:10.5px;color:var(--ink3);font-weight:700}
+#mod-dpr .dp2 .mg .kp .vio b{color:var(--dv)}#mod-dpr .dp2 .mg .kp .ok b{color:var(--dok)}#mod-dpr .dp2 .mg .kp .red b{color:var(--drd)}
+#mod-dpr .dp2 .ec{background:#fff;border:1px solid var(--tintb,var(--ln,#c3ccd9));border-radius:10px;--tintb:var(--ln,#c3ccd9);--tinth:#e9eef5;min-width:0}
+#mod-dpr .dp2 .ec.t1{--tinth:#dfe8f7;--tintb:#c9d7ec}#mod-dpr .dp2 .ec.t2{--tinth:#dcefe3;--tintb:#c3dfcf}#mod-dpr .dp2 .ec.t3{--tinth:#f3e7d2;--tintb:#e6d3b1}#mod-dpr .dp2 .ec.t4{--tinth:#e8e0f5;--tintb:#d5c7ea}#mod-dpr .dp2 .ec.t5{--tinth:#dcebef;--tintb:#c2d9e0}#mod-dpr .dp2 .ec.ns{opacity:.8}
+#mod-dpr .dp2 .ec .eh{display:flex;align-items:center;gap:8px;padding:6px 9px;background:var(--tinth);border-bottom:1px solid var(--tintb);border-radius:10px 10px 0 0}
+#mod-dpr .dp2 .ec .eh b{font-size:13.5px}#mod-dpr .dp2 .ec .eh small{display:block;font-size:10.5px;color:var(--ink2)}#mod-dpr .dp2 .ec .eh .l{flex:1;min-width:0}
+#mod-dpr .dp2 .ec .cells{display:grid}#mod-dpr .dp2 .ec .cells.c2{grid-template-columns:1fr 1fr}#mod-dpr .dp2 .ec .cells.c3{grid-template-columns:repeat(3,1fr)}#mod-dpr .dp2 .ec .cells.c5{grid-template-columns:repeat(5,1fr)}
+#mod-dpr .dp2 .ec .cells>div{padding:4px 8px;border-right:1px solid var(--ln2,#e0e5ec);border-bottom:1px solid var(--ln2,#e0e5ec);min-width:0}
+#mod-dpr .dp2 .ec .cells.c2>div:nth-child(2n),#mod-dpr .dp2 .ec .cells.c3>div:nth-child(3n),#mod-dpr .dp2 .ec .cells.c5>div:nth-child(5n){border-right:0}
+#mod-dpr .dp2 .ec .cells label{display:block;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:1px}
+#mod-dpr .dp2 .ec .cells span{font-size:13px;font-weight:700;color:var(--ink);display:block;word-break:break-word}
+#mod-dpr .dp2 .ec .cells span .pill{vertical-align:middle}
+#mod-dpr .dp2 .ec .cells span.big{font-size:16px;color:var(--dn)}#mod-dpr .dp2 .ec .cells span.vio{color:var(--dv)}#mod-dpr .dp2 .ec .cells span.ok{color:var(--dok)}#mod-dpr .dp2 .ec .cells span.red{color:var(--drd)}#mod-dpr .dp2 .ec .cells .mut{color:var(--ink3);font-weight:600;font-style:normal}
+#mod-dpr .dp2 .ec .cells.k>div{text-align:center;padding:5px 3px}#mod-dpr .dp2 .ec .cells.k span{font-size:15px}#mod-dpr .dp2 .ec .cells.k label{font-size:9px}
+#mod-dpr .dp2 .ec .act{display:flex;gap:6px;align-items:center;padding:6px 8px;flex-wrap:wrap}
+#mod-dpr .dp2 .ec .act .sp{flex:1}
+#mod-dpr .dp2 .ec .act .d2-btn{min-height:34px;font-size:12.5px;font-weight:800;border-radius:8px;padding:0 12px}
+#mod-dpr .dp2 .ec .act .note{font-size:11.5px;color:var(--ink2);flex:1 1 160px;border:0;background:none;padding:0;margin:0}
+#mod-dpr .dp2 .ec .act .note.amb{color:var(--dam);font-weight:700}#mod-dpr .dp2 .ec .act .note.red{color:var(--drd);font-weight:700}
+#mod-dpr .dp2 .ec .rv-c.flat{border:0;border-radius:0;margin:0;box-shadow:none}
+#mod-dpr .dp2 .ec .rv-c.flat>.h{padding:5px 9px 2px}
+#mod-dpr .dp2 .ec .chk{display:flex;align-items:flex-start;gap:8px;padding:5px 9px;border-bottom:1px solid var(--ln2,#e0e5ec);font-size:12px}
+#mod-dpr .dp2 .ec .chk:last-child{border-bottom:0}
+#mod-dpr .dp2 .ec .chk .ic{width:18px;height:18px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;background:var(--ink3);margin-top:1px}
+#mod-dpr .dp2 .ec .chk .ic.amb{background:var(--dam)}#mod-dpr .dp2 .ec .chk .ic.red{background:var(--drd)}
+#mod-dpr .dp2 .ec .chk b{display:block;font-size:12px}#mod-dpr .dp2 .ec .chk small{display:block;color:var(--ink2);font-size:11px}
+#mod-dpr .dp2 .d2-btn.amb{border-color:var(--damb);color:var(--dam)}#mod-dpr .dp2 .d2-btn.red{border-color:var(--drdb);color:var(--drd)}#mod-dpr .dp2 .d2-btn.red.fill{background:var(--drd);color:#fff;border-color:var(--drd)}
+#mod-dpr .dp2 .ret{background:#fff;border:1px solid var(--drdb);border-radius:10px;padding:8px 9px;display:flex;flex-direction:column;gap:6px}
+#mod-dpr .dp2 .ret>b{font-size:12.5px;color:var(--drd)}
+#mod-dpr .dp2 .ret .q{display:flex;gap:5px;flex-wrap:wrap}#mod-dpr .dp2 .ret .q button{border:1px solid var(--drdb);background:var(--drdl);color:var(--drd);border-radius:7px;padding:4px 8px;font-size:11.5px;font-weight:700;cursor:pointer}
+#mod-dpr .dp2 .ret input.rvm-in{width:100%;height:36px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 10px;font-size:13px;margin:0;box-sizing:border-box}
+#mod-dpr .dp2 .ret .bt{display:flex;gap:6px;align-items:center}#mod-dpr .dp2 .ret .bt .sp{flex:1}
+#mod-dpr .dp2 .ret .bt .d2-btn{min-height:36px;font-weight:800}
+#mod-dpr .dp2 .cov{display:flex;gap:5px;flex-wrap:wrap}
+#mod-dpr .dp2 .cov span{border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700;background:#fff}
+#mod-dpr .dp2 .cov span.ok{border-color:var(--dokb);background:var(--dokl);color:var(--dok)}#mod-dpr .dp2 .cov span.pend{border-color:#b9c8e4;background:#e8eef8;color:var(--dn)}#mod-dpr .dp2 .cov span.out{border-color:var(--drdb);background:var(--drdl);color:var(--drd)}
+#mod-dpr .dp2 .mpb{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:10px;padding:6px 9px}
+#mod-dpr .dp2 .mg .hzl{margin-bottom:0}
+#mod-dpr .dp2 .mg .pfrv{padding:0}
+#mod-dpr .dp2 .mg .sentnote{font-size:11.5px;color:var(--ink3);text-align:center}
+#mod-dpr .dp2 .pfrv .sec.fl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 9px 4px;border-top:1px solid var(--tintb);background:var(--tinth);text-transform:none;letter-spacing:0;font-size:12px;color:var(--ink)}
+#mod-dpr .dp2 .pfrv .sec.fl.pend{background:#e8eef8}
+#mod-dpr .dp2 .pfrv .sec.fl .where{font-weight:800;font-size:12.5px}#mod-dpr .dp2 .pfrv .sec.fl .who{color:var(--ink2);font-weight:700;display:flex;align-items:center;gap:4px}#mod-dpr .dp2 .pfrv .sec.fl .cw{color:var(--ink2);font-weight:600;font-size:11.5px}#mod-dpr .dp2 .pfrv .sec.fl .cw b{color:var(--dn)}
+@media(max-width:999px){
+  #mod-dpr .dp2.mp .d2-side,#mod-dpr .dp2.mp .d2-toptabs{display:none}
+  #mod-dpr .dp2.mp .d2-card.pfc{border-radius:0;min-height:60vh;margin:0 -6px;border-left:0;border-right:0}
+  #mod-dpr .dp2.mp .d2-card.pfc .rv.pfrvw{overflow:visible}
+  #mod-dpr .dp2 .mg{padding-bottom:72px}
+}
+@media(min-width:1000px){#mod-dpr .dp2 .mg .kp{grid-template-columns:repeat(6,1fr)}}
 </style>
 
 </head>
@@ -7022,14 +7090,14 @@ const DPR = (function () {
   function mDrop(id) { if (id) delete S.mPay[id]; S.sheet = null; if (S.mQ && S.mDate) delete S.mQ[S.mDate]; }
 
   /* ----- shell ----- */
-  function mShell() { $('dpr_root').innerHTML = `<div class="drp dp2" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`; fit(); mPaint(); }
+  function mShell() { $('dpr_root').innerHTML = `<div class="drp dp2 mp" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`; fit(); mPaint(); }
   let mPaintQ = 0;
   const mPaintSoon = () => { if (mPaintQ) return; mPaintQ = requestAnimationFrame(() => { mPaintQ = 0; mPaint(); }); };
   function mPaint() {
     if (!$('d2_main')) return;
     if (S.mProg) holdsEnsure(S.mProg);   // v5.3 · M49
     const a = document.activeElement, k = a && a.id && a.id.indexOf('mr_') === 0 ? a.id : null, sc = $('d2_sc'), top = sc ? sc.scrollTop : 0;
-    $('d2_side').innerHTML = mSide(); $('d2_main').innerHTML = mMain();
+    $('d2_side').innerHTML = mSide(); $('d2_main').innerHTML = mMain(); pfStick();   // v5.5
     const s2 = $('d2_sc'); if (s2) s2.scrollTop = top; if (k && $(k)) { $(k).focus(); }
   }
   const mDayKey = c => !c ? 'none' : c.published ? 'pub' : num(c.to_review) ? 'sent' : num(c.accepted) ? 'acc' : (num(c.draft) || num(c.returned)) ? 'draft' : 'none';
@@ -7072,9 +7140,9 @@ const DPR = (function () {
   }
   const mNeed = () => S.m39 === false ? `<div class="dpr-note r" style="margin:10px">This Screen Needs <b>M39</b> (Three Read-Only Functions) On The Database — Run <b>M39_dpr_manager_review_reads.sql</b> Once. Accept / Return / Publish Still Work From The List Below.</div>` : '';
   function mMain() {
-    if (S.mv === 'eng' && S.mEng && S.mPay[S.mEng]) return mTabsRow() + mEngView();
-    if (S.mv === 'dpr') return mTabsRow() + mDprView();
-    S.mv = 'day'; return mTabsRow() + mDayView();
+    if (S.mv === 'eng' && S.mEng && S.mPay[S.mEng]) return mTabsRow() + mpEng();   // v5.5 · phone flow (mEngView / mDprView / mDayView kept for reference)
+    if (S.mv === 'dpr') return mTabsRow() + mpDpr();
+    S.mv = 'day'; return mTabsRow() + mpDay();
   }
 
   /* ----- view 1 · the day: one row per engineer / area ----- */
@@ -7882,12 +7950,143 @@ const DPR = (function () {
     return `<div class="pfrv">${h}</div>`;
   }
 
+  /* ==================================================================
+     v5.5 · MANAGER PHONE FLOW (DPR_Manager_Phone_mock_v1, approved 10 Nov 2026)
+     Same header as the engineer (‹ date ▾ › · DPR state · ⋯ menu) + two segment tabs: Engineer Reports · Combined DPR.
+     Engineer Reports = one tinted PO-style card per engineer (sent · KPIs · Review / View); Review one report = Manager Checks +
+     the engineer's own preview cards (pfPreview on that engineer's context) + Accept / Return; Combined DPR = one master card
+     per ACTIVITY across the project, a section per floor / area (who reported it · crew · heads) with its location nodes.
+     Reads unchanged: rpc_dpr_review_queue · rpc_dpr_review_payload · rpc_dpr_review_calendar · rpc_dpr_labour_trend.
+     ================================================================== */
+  const MP_STM = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'], Returned: ['p-red', 'Returned'], Draft: ['p-amb', 'Draft · Not Sent'] };
+  function mpHead(sub) {
+    const pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, all = Math.max(mSubs().length, sent.length + mNotSent().length);
+    const st = pub ? `<b class="acc">Published</b> · ${esc(pub.dpr_no || '')}` : !S.sheet ? '<b>Checking…</b>' : `<b class="draft">DPR Open</b> · Not Published`;
+    return `<div class="pf-top mp" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.mDay(-1)">‹</button><button class="date" onclick="DPR.mpCal()"><b>${esc(dmy(S.mProg))}</b><i>▾</i></button><button class="nav" ${S.mDate >= S.mToday ? 'disabled' : ''} onclick="DPR.mDay(1)">›</button>
+      <div class="st"><div>${st}</div><div class="m">Progress ${esc(dsh(S.mProg))} · Labour ${esc(dsh(S.mDate))} · ${sent.length} Of ${all} Sent${tr ? ` · <span class="late">${tr} To Review</span>` : ''}</div></div><button class="menu" title="Reporting Plan · Hindrances · Areas · Setup · PDF" onclick="DPR.mpMenu()">⋯</button></div>
+      <div class="seg"><button class="${S.mv !== 'dpr' ? 'on' : ''}" onclick="DPR.mV('day')">Engineer Reports<i>${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" onclick="DPR.mV('dpr')">Combined DPR<i>One Report · Cumulative</i></button></div>${sub || ''}</div>`;
+  }
+  function mpMenu() {
+    const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
+    let b = MTABS.filter(t => mCan(t[0]) && t[0] !== 'rev').map(t => row(t[1], t[2], `DPR.sheetClose();DPR.mTab('${t[0]}')`)).join('');
+    b += row('Day Reports (Calendar)', 'Pick A Date · Published Archive', 'DPR.sheetClose();DPR.mpCal()');
+    if (mPub()) b += row('⎙ PDF · Phone', 'One Column · 120 × 213 mm', "DPR.sheetClose();DPR.mPrint('phone')") + row('⎙ PDF · Laptop', 'A4 Landscape · Three Columns', "DPR.sheetClose();DPR.mPrint('land')");
+    else b += row('⎙ Preview PDF', 'Draft DPR · Figures May Still Change', "DPR.sheetClose();DPR.mPrint('land')");
+    if (!mPub() && mSent().some(s => s.status === 'Submitted')) b += row((S.mIncl ? '☑' : '☐') + ' Preview Reports Still To Review', 'Show Them In The Combined DPR (Preview Only)', `DPR.sheetClose();DPR.mIncl(${S.mIncl ? 'false' : 'true'})`);
+    if (!S.holdOff) b += row((S.wPdf ? '☑' : '☐') + ' Waiting Appendix In PDF', 'Held Activities', `DPR.sheetClose();DPR.wPdf(${S.wPdf ? 'false' : 'true'});DPR.mpMenu()`);
+    b += row('↻ Reload', 'Re-Read The Queue', 'DPR.sheetClose();DPR.refresh()');
+    sheetOpen('Review · ' + dsh(S.mProg), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  function mpCalHtml() {
+    const today = todayYmd(), m = (S.mCal && S.mCal.month) || monthOf(S.mProg), first = new Date(m + 'T00:00:00'), dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7, days = (S.mCal && S.mCal.days) || {}, calOk = !!(S.mCal && S.mCal.loaded[m] === true);
+    let h = ''; for (let i = 0; i < lead; i++) h += '<span class="d pad"></span>';
+    for (let n = 1; n <= dim; n++) { const d = m.slice(0, 8) + String(n).padStart(2, '0'), c = days[d], fut = d > today, k = calOk ? mDayKey(c) : 'none';
+      const t = !c ? 'No Reports' : c.published ? 'Published' + (c.dpr_no ? ' · ' + c.dpr_no : '') : num(c.to_review) ? c.to_review + ' To Review' : num(c.accepted) ? 'All Sent Accepted' : 'Open · Nothing Sent';
+      h += `<button class="d ${k} ${fut ? 'fut' : ''} ${d === today ? 'today' : ''} ${d === S.mProg ? 'sel' : ''}" ${fut ? 'disabled' : ''} title="${esc(dsh(d) + ' · ' + t)}" onclick="DPR.sheetClose();DPR.mGo('${d}')"><b>${n}</b><i>${fut ? '' : k === 'pub' ? 'Pub' : k === 'sent' ? (c.to_review || '') + ' Rev' : k === 'acc' ? 'Acc' : k === 'draft' ? 'Open' : '·'}</i></button>`; }
+    return h;
+  }
+  function mpCal() {
+    const today = todayYmd(), y1 = addDays(today, -1), m = (S.mCal && S.mCal.month) || monthOf(S.mProg);
+    const q = (d, t) => `<button class="${S.mProg === d ? 'on' : ''}" onclick="DPR.sheetClose();DPR.mGo('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
+    sheetOpen('Report Date', 'Tap A Day', `<div class="pfcal" id="pf_cal"><div class="quick">${q(y1, 'Yesterday')}${q(today, 'Today')}</div><div class="mh"><button onclick="DPR.mpCalMove(-1)">‹</button><b>${esc(mLabel(m))}</b><button ${m >= monthOf(today) ? 'disabled' : ''} onclick="DPR.mpCalMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${mpCalHtml()}</div>
+      <div class="leg"><span><i class="sent"></i>To Review</span><span><i class="draft"></i>Open · Nothing Sent</span><span><i class="acc"></i>All Accepted</span><span><i class="pub"></i>Published</span><span><i class="none"></i>No Reports</span></div></div>`,
+      '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  async function mpCalMove(n) { await mCalMove(n); mpCal(); }
+  function mpRet(k) { S.mpRet = S.mpRet === k ? null : k; mPaint(); if (S.mpRet) setTimeout(() => { const el = $('mr_' + k); if (el) { el.scrollIntoView({ block: 'center' }); el.focus(); } }, 60); }
+  function mpQuick(k, t) { S.mRet[k] = t; const el = $('mr_' + k); if (el) el.value = t; }
+  /* ----- Engineer Reports · one card per engineer ----- */
+  function mpDay() {
+    const subs = mSubs(), pub = mPub();
+    let h = `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc">${mNeed()}<div class="mg">`;
+    if ((S.mQueue || {})._loading) h += `<div class="dpr-load" style="padding:16px;text-align:center">Loading…</div>`;
+    const rows = subs.slice().sort((a, b) => (a.status === 'Draft') - (b.status === 'Draft'));
+    rows.forEach((s, i) => { const P = S.mPay[s.submission_id], F = P && P.F, st = MP_STM[s.status] || ['p-grey', s.status], sentS = s.status === 'Submitted' || s.status === 'Accepted', k = s.submission_id;
+      const eo = P && P.data.earlier_open, waits = s.status === 'Submitted' && eo;
+      const act = waits ? `<button class="d2-btn amb" onclick="DPR.mJump('${eo.report_date}','${eo.submission_id}')">Review ${esc(dsh(eo.report_date))} First →</button>`
+        : s.status === 'Submitted' ? (P ? `<button class="d2-btn navy" onclick="DPR.mEng('${k}')">Review →</button>` : (S.mPayErr && S.mPayErr[k]) ? `<button class="d2-btn" onclick="DPR.mRetryPay('${k}')">↻ Retry</button>` : '<span class="muted">Loading…</span>')
+        : s.status === 'Accepted' ? (P ? `<button class="d2-btn" onclick="DPR.mEng('${k}')">View Report</button>` : '<span class="muted">Loading…</span>') : '';
+      const note = waits ? `<span class="note amb">Waits · ${esc(dsh(eo.report_date))} ${eo.status === 'Submitted' ? 'Still To Review' : 'Is ' + esc(eo.status)} · Date Order</span>`
+        : s.status === 'Accepted' ? `<span class="note">Accepted${s.reviewed_at ? ' ' + esc(hm(s.reviewed_at)) : ''} · ${pub ? 'In ' + esc(pub.dpr_no || 'The DPR') : 'In The Combined DPR'}</span>`
+        : s.status === 'Returned' ? `<span class="note red">Returned · ${esc(s.return_reason || '')} · Waiting For Resend</span>` : s.status === 'Draft' ? '<span class="note">Draft Open · Not Sent · Goes As Not Reported</span>' : '';
+      const kp = F ? [['Reported', `${F.reported}/${F.active}`, ''], ['Worked · Moved', `${F.W.length} · ${F.moved.length}`, 'vio'], ['Done', F.fin.length + F.subFin.length, 'ok'], ['Hind.', F.H.length, F.H.length ? 'red' : ''], ['Heads', fmt(F.heads), 'big']]
+        : sentS ? [['Reported', num(s.groups_reported), ''], ['Worked', num(s.groups_worked), 'vio'], ['Done', '—', ''], ['Hind.', num(s.hindrances), num(s.hindrances) ? 'red' : ''], ['Heads', fmt(s.heads), 'big']] : null;
+      h += `<div class="ec ${PF_TINT[i % 5]} ${s.status === 'Draft' ? 'ns' : ''}"><div class="eh"><div class="l"><b>${esc(s.engineer || '')}</b><small>${esc((s.areas || []).join(' · ') || '—')}</small></div>${pill(st[0], st[1])}</div>
+        <div class="cells c2"><div><label>Sent</label><span>${s.submitted_at ? `${esc(dts(s.submitted_at))} ${s.is_late ? pill('p-red', 'Late') : pill('p-ok', 'On Time')}` : '<i class="mut">Not Sent</i>'}</span></div><div><label>Attempt · Covers</label><span>${num(s.attempt_no) || 1}${num(s.days_covered) > 1 ? ' · ' + s.days_covered + ' Days' : ' · ' + esc(dsh(S.mProg))}</span></div></div>
+        ${kp ? `<div class="cells c5 k">${kp.map(([a, v, c]) => `<div><label>${a}</label><span class="${c}">${v}</span></div>`).join('')}</div>` : ''}
+        ${act || note ? `<div class="act">${note}<span class="sp"></span>${act}</div>` : ''}</div>`; });
+    mNotSent().filter(a => !(a.submission_ids || []).some(id => subs.some(s => s.submission_id === id))).forEach(a => {
+      h += `<div class="ec ns"><div class="eh"><div class="l"><b>${esc(a.home_engineers || 'No Engineer Allocated')}</b><small>${esc(a.area_name)}</small></div>${pill('p-grey', 'Not Sent')}</div><div class="act"><span class="note">No Report${istMins() <= 0 && S.mDate === S.mToday ? ' · Past 1 PM' : ''} · ${num(a.running_works)} Running Work${num(a.running_works) === 1 ? '' : 's'} Carry Forward · Goes As Not Reported</span></div></div>`; });
+    if (!subs.length && !mNotSent().length && !(S.mQueue || {})._loading) h += `<div class="d2-empty"><b>No Report For ${esc(dsh(S.mProg))}</b></div>`;
+    const Ps = mSent().map(s => S.mPay[s.submission_id]).filter(Boolean), H = [].concat(...Ps.map(P => P.F.H.map(x => Object.assign({ eng: P.name }, x))));
+    const by = {}; let hd = 0, np = 0; Ps.forEach(P => { Object.entries(P.F.by).forEach(([c, m]) => { by[c] = by[c] || {}; Object.entries(m).forEach(([t, v]) => { by[c][t] = num(by[c][t]) + num(v); }); }); hd += P.F.heads; np += P.F.np; });
+    h += `<h3>Hindrances · ${esc(dsh(S.mProg))} · ${H.length ? H.length + ' Open' : 'None'}</h3>`;
+    if (H.length) h += `<div class="hzl">${H.map(x => `<div class="r"><div class="n">${esc(x.where)} <span class="muted">· ${esc(short(x.what, 40))} · ${esc(x.eng)}</span><small>${esc(x.rc || 'Reason Missing')} · Since ${esc(dsh(x.since))}</small></div><div class="d"><b>${x.days}</b>Day${x.days > 1 ? 's' : ''}</div></div>`).join('')}</div>`;
+    h += `<h3>Manpower · ${esc(dsh(S.mProg))} · ${fmt(hd)} Heads · All Sent Reports</h3><div class="mpb">${mMp(by, hd, np)}</div>`;
+    const tr = mSent().filter(s => s.status === 'Submitted').length;
+    return h + `</div></div><div class="d2-foot pf" id="d2_foot"><span class="msg"><b>${esc(dsh(S.mProg))}</b> · ${tr} To Review · ${mNotSent().length} Area${mNotSent().length === 1 ? '' : 's'} Not Sent${pub ? ` · Published ${esc(pub.dpr_no || '')}` : tr ? ' · Publish Waits Until No Sent Report Is Still To Review' : ''}</span><button class="d2-btn" onclick="DPR.mV('dpr')">Combined DPR →</button>${mPubBtn()}</div></div>`;
+  }
+  /* ----- Review one report · Manager Checks + the engineer's own preview cards ----- */
+  function mpEng() {
+    const P = S.mPay[S.mEng]; mUse(P); const F = P.F, s = P.s, k = s.submission_id, eo = P.data.earlier_open, pub = mPub(), st = MP_STM[s.status] || ['p-grey', s.status];
+    const others = mSent().map(x => S.mPay[x.submission_id]).filter(Boolean);
+    const nav = `<div class="engnav scroll"><button onclick="DPR.mV('day')">‹ All Reports</button>${others.map(o => `<button class="${o.id === k ? 'on' : ''}" onclick="DPR.mEng('${o.id}')">${esc(o.name.split(' ')[0])}<i>${esc((MP_STM[o.s.status] || ['', o.s.status])[1])}</i></button>`).join('')}</div>`;
+    let h = `<div class="d2-card pfc mpc">${mpHead(nav)}<div class="rv pfrvw" id="d2_sc"><div class="mg">`;
+    h += `<div class="ec t1"><div class="eh"><div class="l"><b>${esc(P.name)} · ${esc(dsh(S.mProg))}</b><small>${esc((P.areas || []).join(' · '))} · Sent ${esc(dts(s.submitted_at))} · ${s.is_late ? 'Late' : 'On Time'} · Attempt ${num(s.attempt_no) || 1}${s.status === 'Accepted' && s.reviewed_at ? ' · Accepted ' + esc(dts(s.reviewed_at)) : ''}</small></div>${pill(st[0], st[1])}</div>${mChecks(P).replace('<div class="rv-c">', '<div class="rv-c flat">')}</div>`;
+    if (S.mpRet === k) h += `<div class="ret on"><b>Return To ${esc(P.name.split(' ')[0])} — Say What Needs Fixing</b><div class="q">${['Heads Missing', 'Progress Doubtful — Recheck', 'Hindrance Reason Missing', 'Site Cert. Qty Missing', 'Wrong Location / Activity'].map(t => `<button onclick="DPR.mpQuick('${k}','${t}')">${t}</button>`).join('')}</div><input class="rvm-in" id="mr_${k}" placeholder="Reason For Return (Required)…" value="${esc(S.mRet[k] || '')}" oninput="DPR.mRetNote('${k}',this.value)"><div class="bt"><button class="d2-btn" onclick="DPR.mpRet('${k}')">Cancel</button><span class="sp"></span><button class="d2-btn red fill" onclick="DPR.mReturnGo('${k}')">↩ Return Now</button></div></div>`;
+    h += `<div class="pfrv">${pfPreview()}</div></div></div>`;
+    const foot = s.status === 'Accepted' ? `<span class="msg">✓ <b>Accepted${s.reviewed_at ? ' ' + esc(dts(s.reviewed_at)) : ''}</b> · ${pub ? 'Published In ' + esc(pub.dpr_no || '') + ' · Read-Only' : 'In The Combined DPR · Return Possible Until Published'}</span>${pub ? '' : `<button class="d2-btn red" onclick="DPR.mpRet('${k}')">↩ Return</button>`}<button class="d2-btn" onclick="DPR.mV('dpr')">Combined DPR →</button>`
+      : s.status === 'Submitted' ? `<span class="msg"><b>${esc(P.name.split(' ')[0])} · ${esc(dsh(S.mProg))}</b> · ${eo ? `<span class="late">Accept ${esc(dsh(eo.report_date))} First — Date Order</span>` : 'Accept Freezes The Figures · Return Sends It Back To Correct'}</span><button class="d2-btn red" onclick="DPR.mpRet('${k}')">↩ Return</button>${eo ? `<button class="d2-btn amb" onclick="DPR.mJump('${eo.report_date}','${eo.submission_id}')">Open ${esc(dsh(eo.report_date))} →</button>` : `<button class="d2-btn ok" onclick="DPR.mAccept('${k}')">✓ Accept</button>`}`
+      : `<span class="msg"><b>${esc(P.name)}</b> · ${esc(st[1])}</span><button class="d2-btn" onclick="DPR.mV('day')">← All Reports</button>`;
+    return h + `<div class="d2-foot pf" id="d2_foot">${foot}</div></div>`;
+  }
+  /* ----- Combined DPR · one master card per activity across the project ----- */
+  function mpDpr() {
+    const C = mComb(), sent = mSent(), pub = mPub(), days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null, dd = esc(dsh(S.mProg));
+    // gather every reported activity card from every included report
+    const acts = new Map();
+    C.inc.forEach(P => { mUse(P); const M = pfModel(true);
+      M.cards.forEach(c => { const items = c.items.filter(it => outOf(it.g, it.l) !== '' || outT(it.g, it.l) !== '' || lineX(it.g, it.l).fin); if (!items.length) return;
+        const key = c.act + '\u0001' + c.pkg; if (!acts.has(key)) acts.set(key, { act: c.act, pkg: c.pkg, secs: [], est: 0, n: 0, areas: new Set(), heads: 0, cons: new Set(), rows: [], pct: 0, b: 0, fin: 0 });
+        const A = acts.get(key), Cw = pfCrewOf(c), rows = c.gs.flatMap(g => rvRows(dOf(g)));
+        A.secs.push({ P, c, Cw, items, skip: c.items.length - items.length, cons: Cw.mode === 'unit' ? [...new Set(c.gs.flatMap(pfCons))] : pfCons(Cw.g || c.gs[0]) });
+        A.est += c.est; A.n += c.items.length; A.areas.add(c.floor.split(' › ')[0]); A.heads += Cw.heads; rows.forEach(r => { if (r.con) A.cons.add(r.con); A.rows.push(r); }); A.pct += c.pct * c.items.length; A.b += c.b * c.items.length; A.fin += c.items.filter(it => finT(it.g, it.l)).length; }); });
+    S.to = S.mProg;
+    const inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length, fin = C.fin.length + C.subFin.length, Hn = C.H.length, dH = C.prevOk && C.inc.length ? C.heads - C.prev : null;
+    let h = `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc">${mNeed()}<div class="mg">`;
+    h += `<div class="cov">${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—'); return `<span class="${inn && s.status === 'Accepted' ? 'ok' : 'pend'}">${a} · ${esc((s.engineer || '').split(' ')[0])} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'Preview Only') : 'To Review — Not In'}</span>`; }).join('')}${mNotSent().map(a => `<span class="out">${esc(a.area_name)} · No Report → Not Reported</span>`).join('')}</div>`;
+    h += `<div class="one"><b>${dd} · Project Total</b> · <b>${C.W.length} Activit${C.W.length === 1 ? 'y' : 'ies'} Worked</b> Across ${inAreas} Area${inAreas === 1 ? '' : 's'} · <b>${fin} Completed</b> · ${Hn ? `<b class="red">${Hn} Under Hindrance</b> · ` : ''}<b>${fmt(C.heads)} Heads</b> (${Object.keys(C.by).length} Contractor${Object.keys(C.by).length === 1 ? '' : 's'})${C.np && C.heads ? ` · ${Math.round(C.np / C.heads * 100)}% On Non-Estimated Work` : ''}${out ? ` · <b class="red">${out} Area${out > 1 ? 's' : ''} Not In</b>` : ''}</div>`;
+    h += `<div class="kp"><div><b>${C.W.length}</b><span>Worked</span></div><div class="vio"><b>${C.moved.length}</b><span>Moved</span></div><div class="ok"><b>${fin}</b><span>Completed</span></div><div class="red"><b>${Hn}</b><span>Hindrance</span></div><div><b>${inAreas}<small>/${Math.max(inAreas + out, 1)}</small></b><span>Areas In</span></div><div class="vio"><b>${fmt(C.heads)}</b><span>Heads${dH != null ? ' · ' + (dH >= 0 ? '+' : '') + fmt(dH) : ''}</span></div></div>`;
+    h += `<h3>By Activity · Across The Project · Location Nodes Under Each</h3>`;
+    if (!acts.size) h += `<div class="d2-empty"><b>No Activity Worked On ${dd}${C.inc.length ? '' : ' In An Accepted Report'}</b></div>`;
+    h += '<div class="pfrv">'; let i = 0;
+    [...acts.values()].sort((a, b) => pfNatCmp(a.pkg, b.pkg) || pfNatCmp(a.act, b.act)).forEach(A => {
+      const pct = A.n ? A.pct / A.n : 0, b = A.n ? A.b / A.n : 0, allFin = A.fin === A.n, pk = allFin ? 'ok' : A.secs.some(s => s.items.some(it => hasHT(it.g, it.l) || hasH(it.g, it.l))) ? 'red' : 'vio';
+      const cons = [...A.cons].map(conName), mix = tradeTxt(tradeMix(A.rows)), uom = [...new Set(A.secs.map(s => s.c.uom).filter(Boolean))].join(' / ');
+      h += `<div class="ac ${PF_TINT[i++ % 5]}"><div class="ach"><div><b>${esc(A.act)}</b><small>${esc(A.pkg)} · ${A.n} Location${A.n === 1 ? '' : 's'} Across ${A.areas.size} Area${A.areas.size === 1 ? '' : 's'} · Est ${fmt(A.est)} ${esc(uom)}</small></div>${pill('p-' + pk, Math.round(pct) + '%' + (pct - b > 0.0005 ? ' · +' + Math.round(pct - b) + '%' : allFin ? ' · Finished' : ''))}</div>
+        <div class="cells c3 crewrow"><div><label>Contractors</label><span>${cons.length ? cons.map(esc).join(' · ') : '—'}</span></div><div><label>Trades</label><span>${mix || '—'}</span></div><div><label>Heads ${esc(dsh(S.mDate))}</label><span class="big">${fmt(A.heads)}</span></div></div>`;
+      A.secs.sort((x, y) => pfNatCmp(x.c.floor, y.c.floor)).forEach(sec => { const P = sec.P, pend = P.s.status === 'Submitted'; mUse(P);
+        const who = sec.Cw.mode === 'crew' && sec.Cw.club ? 'Booked To ' + esc(pathTail(bookedTo(sec.Cw.g))) : sec.Cw.mode === 'unit' ? 'Per Unit' : sec.Cw.mode === 'crew' ? '' : 'Per ' + (sec.Cw.mode === 'sub' ? 'Sub-Activity' : 'Group');
+        h += `<div class="sec fl ${pend ? 'pend' : ''}"><span class="where">${esc(sec.c.floor)}</span><span class="who">${esc(P.name.split(' ')[0])} · ${pend ? pill('p-navy', 'To Review') : pill('p-ok', 'Accepted')}</span><span class="sp"></span><span class="cw">${sec.cons.length ? esc(sec.cons.join(' · ')) : 'No Labour'}${who ? ' · ' + who : ''} · <b>${fmt(sec.Cw.heads)}</b> Heads${sec.skip ? ` · ${sec.skip} Not Reported` : ''}</span></div><div class="nodes">${sec.items.map(it => pfNode(it.g, it.l, sec.Cw)).join('')}</div>`; });
+      h += `</div>`; });
+    h += '</div>'; S.to = S.mProg;
+    if (C.npE.length) h += `<h3>Non-Estimated Work · ${fmt(C.np)} Heads</h3><div class="ec"><div class="cells c3">${C.npE.map(e => `<div><label>${esc(e.area || e.eng)}</label><span>${esc(e.text)} · ${fmt(e.h)}</span></div>`).join('')}</div></div>`;
+    if (out) h += `<h3>Not In This DPR</h3><div class="ec">${C.waitOut.map(s => `<div class="chk"><span class="ic amb">!</span><div><b>${esc((s.areas || []).join(', '))} — ${esc(s.engineer || '')}</b><small>To Review${S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''} · Not In Until Accepted</small></div></div>`).join('')}${mNotSent().map(a => `<div class="chk"><span class="ic red">!</span><div><b>${esc(a.area_name)} — ${esc(a.home_engineers || 'No Engineer')}</b><small>No Report · Goes As Not Reported</small></div></div>`).join('')}</div>`;
+    h += `<h3>Hindrances · ${C.H.length ? C.H.length + ' Carried In' : 'None'}</h3>`;
+    if (C.H.length) h += `<div class="hzl">${C.H.map(x => `<div class="r"><div class="n">${esc(x.where)} <span class="muted">· ${esc(short(x.what, 40))} · ${esc(x.area || x.eng)}</span><small>${esc(x.rc || 'Reason Missing')} · Since ${esc(dsh(x.since))}</small></div><div class="d"><b>${x.days}</b>Day${x.days > 1 ? 's' : ''}</div></div>`).join('')}</div>`;
+    h += `<h3>Manpower · ${fmt(C.heads)} Heads${T && T.on ? ` · 7-Day Avg ${fmt(T.avg)}` : ''}</h3><div class="mpb">${mMp(C.by, C.heads, C.np)}</div>`;
+    if (pub) h += `<div class="sentnote">Published ${esc(dts(pub.published_at))}${S.sheet && S.sheet.published_by_name ? ' By ' + esc(S.sheet.published_by_name) : ''} · ${esc(pub.dpr_no || '')} · Immutable</div>`;
+    const tr = sent.filter(s => s.status === 'Submitted').length;
+    return h + `</div></div><div class="d2-foot pf" id="d2_foot"><span class="msg"><b>DPR ${dd}</b> · ${pub ? 'Published ' + esc(pub.dpr_no || '') : tr ? tr + ' Still To Review — Publish Takes Accepted Ones' : C.inc.length ? 'All Reviewed — Ready To Publish' : 'Nothing Accepted Yet'}</span>${pub ? `<button class="d2-btn" onclick="DPR.mPrint('phone')">⎙ PDF · Phone</button><button class="d2-btn" onclick="DPR.mPrint('land')">⎙ PDF · Laptop</button>` : `<button class="d2-btn" onclick="DPR.mPrint('land')">⎙ Preview PDF</button>${mPubBtn()}`}</div></div>`;
+  }
+
   return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
     setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, setOcT, wAllT, rcSetT, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved, noLabTog, openDay,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu,   // v5.4 · phone flow
+    mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.3.1</title>
+<title>Penguin Construction v5.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3168,6 +3168,198 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .rv-t td .d2-btn{max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
 #mod-dpr .dp2 .rvm-two{align-items:start}
 </style>
+<style id="dpr-pf-css">
+/* ===== v5.4 · Phone Flow — one DPR entry flow for every device (DPR_Phone_mock_v7, approved 09 Nov 2026) ===== */
+#mod-dpr .dp2.eng .d2-card.pfc{min-height:0;overflow:visible}
+#mod-dpr .dp2.eng .d2-card.pfc .d2-sc{overflow:visible;max-height:none}
+#mod-dpr .dp2.eng .d2-card.pfc .d2-sc .d2-sc{overflow:visible}
+/* header */
+#mod-dpr .dp2 .pf-top{position:sticky;top:var(--pf-sb,0px);z-index:30;background:var(--dn);color:#fff;padding:7px 10px 0;border-radius:12px 12px 0 0}
+#mod-dpr .dp2 .pf-top .r1{display:flex;align-items:center;gap:6px;min-height:40px}
+#mod-dpr .dp2 .pf-top .nav{width:34px;height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;font-size:20px;font-weight:800;cursor:pointer;flex:none}
+#mod-dpr .dp2 .pf-top .nav:disabled{opacity:.35;cursor:default}
+#mod-dpr .dp2 .pf-top .date{display:flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;white-space:nowrap;flex:none}
+#mod-dpr .dp2 .pf-top .date b{font-size:14px}#mod-dpr .dp2 .pf-top .date i{font-style:normal;font-size:10px;opacity:.8}
+#mod-dpr .dp2 .pf-top .st{flex:1;min-width:0;font-size:11.5px;line-height:1.3;padding-left:4px}
+#mod-dpr .dp2 .pf-top .st b{font-weight:800}#mod-dpr .dp2 .pf-top .st b.draft{color:#ffd58a}#mod-dpr .dp2 .pf-top .st b.sent,#mod-dpr .dp2 .pf-top .st b.acc,#mod-dpr .dp2 .pf-top .st b.pub{color:#9fe3c2}#mod-dpr .dp2 .pf-top .st b.ret{color:#ff9d93}
+#mod-dpr .dp2 .pf-top .st .m{color:#c6cede;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .pf-top .late{color:#ffb4ad;font-weight:800}
+#mod-dpr .dp2 .pf-top .who{text-align:right;line-height:1.2;flex:none;max-width:120px}
+#mod-dpr .dp2 .pf-top .who b{display:block;font-size:12.5px}#mod-dpr .dp2 .pf-top .who small{display:block;font-size:10px;color:#c6cede;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .pf-top .menu{width:34px;height:36px;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;font-size:18px;font-weight:900;cursor:pointer;flex:none}
+#mod-dpr .dp2 .pf-top .floors{display:flex;gap:6px;overflow-x:auto;padding:7px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#mod-dpr .dp2 .pf-top .floors::-webkit-scrollbar{display:none}
+#mod-dpr .dp2 .pf-top .floors button{flex:none;position:relative;height:32px;padding:0 12px;border-radius:16px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+#mod-dpr .dp2 .pf-top .floors button i{font-style:normal;opacity:.75;margin-left:3px;font-size:11px}
+#mod-dpr .dp2 .pf-top .floors button.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .floors button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff8a80;margin-left:5px;vertical-align:middle}
+#mod-dpr .dp2 .pf-top .floors button.add{border-style:dashed;background:transparent}
+#mod-dpr .dp2 .pf-top .floors .rvt{color:#c6cede;font-size:12px;font-weight:700;line-height:32px}
+#mod-dpr .dp2 .pf-top .find{display:flex;align-items:center;gap:8px;padding:0 0 8px;font-size:12px;color:#fff}
+#mod-dpr .dp2 .pf-top .find span{flex:1}
+/* cards */
+#mod-dpr .dp2 .pf{display:flex;flex-direction:column;gap:10px;padding:10px 8px 12px;background:var(--bg,#eef1f6)}
+#mod-dpr .dp2 .pf-card{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:12px;overflow:hidden}
+#mod-dpr .dp2 .pf-card.att{border-color:var(--drdb)}
+#mod-dpr .dp2 .pf-card>.hd{display:flex;align-items:flex-start;gap:10px;padding:9px 12px 7px;background:#f3f6fa;border-bottom:1px solid var(--ln2,#e0e5ec)}
+#mod-dpr .dp2 .pf-card>.hd>div:first-child{flex:1;min-width:0}
+#mod-dpr .dp2 .pf-card>.hd b{display:block;font-size:14px;line-height:1.25}
+#mod-dpr .dp2 .pf-card>.hd small{display:block;font-size:11px;color:var(--ink3);margin-top:2px}
+#mod-dpr .dp2 .pf-card>.hd small .bad{color:var(--drd);font-weight:800}
+#mod-dpr .dp2 .pf-card>.hd .pct{text-align:right;flex:none}
+#mod-dpr .dp2 .pf-card>.hd .pct b{font-size:18px;color:var(--dv);line-height:1}#mod-dpr .dp2 .pf-card>.hd .pct small{font-size:10px;color:var(--ink3)}
+#mod-dpr .dp2 .pf-card .crew{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 12px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfbff;font-size:12.5px}
+#mod-dpr .dp2 .pf-card .crew .k{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--dv)}
+#mod-dpr .dp2 .pf-card .crew .v{font-weight:700}
+#mod-dpr .dp2 .pf-card .crew .hd{font-size:15px;color:var(--dn)}
+#mod-dpr .dp2 .pf-card .crew .sp{flex:1}
+#mod-dpr .dp2 .pf-card .cd-mp.full{margin:0;border-radius:0;border-left:0;border-right:0}
+#mod-dpr .dp2 .pf-card .units{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;scrollbar-width:none;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fff}
+#mod-dpr .dp2 .pf-card .units::-webkit-scrollbar{display:none}
+#mod-dpr .dp2 .pf-card .units .u{flex:none;min-width:66px;height:44px;padding:0 10px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;color:var(--ink)}
+#mod-dpr .dp2 .pf-card .units .u b{font-size:12.5px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
+#mod-dpr .dp2 .pf-card .units .u small{font-size:10px;color:var(--ink3);font-weight:700}
+#mod-dpr .dp2 .pf-card .units .u.done{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .pf-card .units .u.done small{color:var(--dok)}
+#mod-dpr .dp2 .pf-card .units .u.run{background:var(--dvl);border-color:var(--dvb);color:var(--dv)}#mod-dpr .dp2 .pf-card .units .u.run small{color:var(--dv)}
+#mod-dpr .dp2 .pf-card .units .u.h{background:var(--drdl);border-color:var(--drdb);color:var(--drd)}#mod-dpr .dp2 .pf-card .units .u.h small{color:var(--drd)}
+#mod-dpr .dp2 .pf-card .units .u.att{border-color:var(--drd);border-width:2px}#mod-dpr .dp2 .pf-card .units .u.att small{color:var(--drd)}
+#mod-dpr .dp2 .pf-card .units .u.ns{color:var(--ink3);border-style:dashed}
+#mod-dpr .dp2 .pf-card .units .u.on{outline:2px solid var(--dn);outline-offset:1px;background:var(--dn);color:#fff;border-color:var(--dn)}
+#mod-dpr .dp2 .pf-card .units .u.on small,#mod-dpr .dp2 .pf-card .units .u.on b{color:#fff}
+#mod-dpr .dp2 .pf-card .units .u.tk{outline:2px solid var(--dam);outline-offset:1px}
+/* entry */
+#mod-dpr .dp2 .pf-ent{padding:8px 12px 10px;background:#fafbfd}
+#mod-dpr .dp2 .pf-ent .eh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+#mod-dpr .dp2 .pf-ent .eh>b{font-size:15px;font-family:ui-monospace,Menlo,monospace}
+#mod-dpr .dp2 .pf-ent .eh small{font-size:11px;color:var(--ink3)}
+#mod-dpr .dp2 .pf-ent .eh .sp{flex:1}
+#mod-dpr .dp2 .pf-ent .eh .pct{font-size:16px;color:var(--dv)}
+#mod-dpr .dp2 .pf-ent .subs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+#mod-dpr .dp2 .pf-ent .subs::-webkit-scrollbar{display:none}
+#mod-dpr .dp2 .pf-ent .subs .sub{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:72px;padding:5px 10px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.2;text-align:left}
+#mod-dpr .dp2 .pf-ent .subs .sub i{font-style:normal;font-size:9.5px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+#mod-dpr .dp2 .pf-ent .subs .sub b{font-size:11px;color:var(--ink3)}
+#mod-dpr .dp2 .pf-ent .subs .sub.done{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .pf-ent .subs .sub.done b{color:var(--dok)}
+#mod-dpr .dp2 .pf-ent .subs .sub.run{background:var(--dvl);border-color:var(--dvb);color:var(--dv)}#mod-dpr .dp2 .pf-ent .subs .sub.run b{color:var(--dv)}
+#mod-dpr .dp2 .pf-ent .subs .sub.h{background:var(--drdl);border-color:var(--drdb);color:var(--drd)}#mod-dpr .dp2 .pf-ent .subs .sub.h b{color:var(--drd)}
+#mod-dpr .dp2 .pf-ent .subs .sub.att{border-color:var(--drd);border-width:2px}
+#mod-dpr .dp2 .pf-ent .subs .sub.on{outline:2px solid var(--dn);outline-offset:1px}
+#mod-dpr .dp2 .pf-ent .lbl{display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+#mod-dpr .dp2 .pf-ent .lbl i{font-style:normal;text-transform:none;letter-spacing:0;font-weight:600;margin-left:4px}
+#mod-dpr .dp2 .pf-ent .prog,#mod-dpr .dp2 .pf-ent .today,#mod-dpr .dp2 .pf-ent .ulab,#mod-dpr .dp2 .pf-ent .rem{background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:9px;padding:7px 10px;margin-bottom:6px}
+#mod-dpr .dp2 .pf-ent .snap{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent .snap button{height:34px;min-width:40px;padding:0 10px;border-radius:8px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
+#mod-dpr .dp2 .pf-ent .snap button:disabled{opacity:.4;cursor:default}
+#mod-dpr .dp2 .pf-ent .snap button.on{background:var(--dv);border-color:var(--dv);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap button.done{color:var(--dok);border-color:var(--dokb)}#mod-dpr .dp2 .pf-ent .snap button.done.on{background:var(--dok);border-color:var(--dok);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap button.wip{color:var(--dam);border-color:var(--damb)}#mod-dpr .dp2 .pf-ent .snap button.wip.on{background:var(--dam);border-color:var(--dam);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap button.h{color:var(--drd);border-color:var(--drdb)}#mod-dpr .dp2 .pf-ent .snap button.h.on{background:var(--drd);border-color:var(--drd);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap button.n{color:var(--ink2)}#mod-dpr .dp2 .pf-ent .snap button.n.on{background:var(--ink2);border-color:var(--ink2);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap .gap{flex:1;min-width:4px}
+#mod-dpr .dp2 .pf-ent .snap .pc{display:inline-flex;align-items:center;gap:4px;font-weight:800;font-size:13px;color:var(--ink2)}
+#mod-dpr .dp2 .pf-ent .snap .pc input{width:58px;height:34px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 8px;font-size:15px;font-weight:800;text-align:center;color:var(--dv);background:#fff}
+#mod-dpr .dp2 .pf-ent .snap .pc.q input{width:84px}
+#mod-dpr .dp2 .pf-ent .snap .pc input.bad{border-color:var(--drd)}
+#mod-dpr .dp2 .pf-ent .st2{margin-top:5px;font-size:11.5px}
+#mod-dpr .dp2 .pf-ent .hrw{margin-top:5px}
+#mod-dpr .dp2 .pf-ent .today .cq{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent .today .d2-oc button{height:34px;min-width:44px;font-size:13px}
+#mod-dpr .dp2 .pf-ent .today .st2{margin-top:0;align-self:center}
+#mod-dpr .dp2 .pf-ent .rem{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent .rem input.rem{flex:1;min-width:140px;height:32px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 8px;font-size:12.5px;margin:0}
+#mod-dpr .dp2 .pf-ent .cd-mp{margin:0 0 6px;border-radius:9px}
+#mod-dpr .dp2 .pf-ent .cd-fin{margin:0 0 6px;border-radius:9px}
+#mod-dpr .dp2 .pf-ent .ulab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent .ulab .lbl{margin:0;flex:1}
+#mod-dpr .dp2 .pf input[type=number]::-webkit-inner-spin-button,#mod-dpr .dp2 .pf input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#mod-dpr .dp2 .pf input[type=number]{-moz-appearance:textfield}
+/* footer */
+#mod-dpr .dp2 .d2-foot.pf{position:sticky;bottom:0;z-index:25;flex-wrap:wrap;border-radius:0 0 12px 12px;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
+#mod-dpr .dp2 .d2-foot.pf .msg{flex:1 1 160px;min-width:0;font-size:11.5px;line-height:1.3}
+#mod-dpr .dp2 .d2-foot.pf .d2-btn{min-height:38px;font-size:13px;font-weight:800}
+/* preview */
+#mod-dpr .dp2 .rv.pfrvw{padding:0;background:var(--bg,#eef1f6)}
+#mod-dpr .dp2 .pfrv{padding:10px 8px 14px;font-size:12.5px;color:var(--ink)}
+#mod-dpr .dp2 .pfrv .one{background:#fff;border:1px solid var(--ln,#c3ccd9);border-left:4px solid var(--dn);border-radius:10px;padding:8px 12px;margin-bottom:8px;line-height:1.5}
+#mod-dpr .dp2 .pfrv .one .red,#mod-dpr .dp2 .pfrv .red{color:var(--drd)}
+#mod-dpr .dp2 .pfrv .att{background:var(--drdl);border:1px solid var(--drdb);border-radius:10px;padding:8px 12px;margin-bottom:8px;font-weight:800;color:var(--drd)}
+#mod-dpr .dp2 .pfrv .att.ok{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}
+#mod-dpr .dp2 .pfrv .att div{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink);padding:6px 0 0;margin-top:6px;border-top:1px dashed var(--drdb)}
+#mod-dpr .dp2 .pfrv .att div .sp{flex:1}
+#mod-dpr .dp2 .pfrv .att button,#mod-dpr .dp2 .pfrv .pcn button{border:1px solid var(--drdb);background:#fff;color:var(--drd);border-radius:8px;padding:5px 12px;font-weight:800;font-size:12px;cursor:pointer}
+#mod-dpr .dp2 .pfrv .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+#mod-dpr .dp2 .pfrv .kp>div{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:10px;padding:7px 10px}
+#mod-dpr .dp2 .pfrv .kp b{display:block;font-size:19px;line-height:1.1;color:var(--dn)}#mod-dpr .dp2 .pfrv .kp b small{font-size:12px;color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .kp span{font-size:10.5px;color:var(--ink3);font-weight:700}
+#mod-dpr .dp2 .pfrv .kp .vio b{color:var(--dv)}#mod-dpr .dp2 .pfrv .kp .ok b{color:var(--dok)}#mod-dpr .dp2 .pfrv .kp .red b{color:var(--drd)}
+#mod-dpr .dp2 .pfrv h3{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);margin:12px 2px 6px}
+#mod-dpr .dp2 .pfrv .ac{border:1px solid var(--ln,#c3ccd9);border-radius:12px;margin-bottom:12px;--tint:#fff;--tinth:#e9eef5;--tintb:var(--ln,#c3ccd9);background:var(--tint);border-color:var(--tintb)}
+#mod-dpr .dp2 .pfrv .ac>:last-child{border-radius:0 0 12px 12px}
+#mod-dpr .dp2 .pfrv .ac.t1{--tint:#f6f9ff;--tinth:#dfe8f7;--tintb:#c9d7ec}#mod-dpr .dp2 .pfrv .ac.t2{--tint:#f5fbf7;--tinth:#dcefe3;--tintb:#c3dfcf}#mod-dpr .dp2 .pfrv .ac.t3{--tint:#fdf9f2;--tinth:#f3e7d2;--tintb:#e6d3b1}#mod-dpr .dp2 .pfrv .ac.t4{--tint:#f9f6fd;--tinth:#e8e0f5;--tintb:#d5c7ea}#mod-dpr .dp2 .pfrv .ac.t5{--tint:#f6fafb;--tinth:#dcebef;--tintb:#c2d9e0}
+#mod-dpr .dp2 .pfrv .ach{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--tinth);border-bottom:1px solid var(--tintb);border-radius:12px 12px 0 0;position:sticky;top:var(--pf-top,0px);z-index:5}
+#mod-dpr .dp2 .pfrv .ach>div{flex:1;min-width:0}#mod-dpr .dp2 .pfrv .ach b{display:block;font-size:14px;line-height:1.25}#mod-dpr .dp2 .pfrv .ach small{display:block;font-size:11px;color:var(--ink2);margin-top:1px}
+#mod-dpr .dp2 .pfrv .ach .pill{flex:none;white-space:nowrap}
+#mod-dpr .dp2 .pfrv .cells{display:grid}#mod-dpr .dp2 .pfrv .cells.c2{grid-template-columns:1fr 1fr}#mod-dpr .dp2 .pfrv .cells.c3{grid-template-columns:repeat(3,1fr)}
+#mod-dpr .dp2 .pfrv .cells>div{padding:7px 12px;border-right:1px solid var(--ln2,#e0e5ec);border-bottom:1px solid var(--ln2,#e0e5ec);min-width:0}
+#mod-dpr .dp2 .pfrv .cells.c2>div:nth-child(2n){border-right:0}#mod-dpr .dp2 .pfrv .cells.c3>div:nth-child(3n){border-right:0}
+#mod-dpr .dp2 .pfrv .cells label{display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+#mod-dpr .dp2 .pfrv .cells span{font-size:13px;font-weight:700;color:var(--ink);word-break:break-word}
+#mod-dpr .dp2 .pfrv .cells.crewrow{background:var(--tint)}#mod-dpr .dp2 .pfrv .cells.crewrow>div{border-bottom:1px solid var(--tintb)}
+#mod-dpr .dp2 .pfrv .cells span.crew{color:var(--dn)}#mod-dpr .dp2 .pfrv .cells span.num{color:var(--dn);font-size:15px}#mod-dpr .dp2 .pfrv .cells span.red{color:var(--drd);font-size:15px}#mod-dpr .dp2 .pfrv .cells span.mut{color:var(--ink3);font-weight:600}#mod-dpr .dp2 .pfrv .cells span.ok{color:var(--dok)}#mod-dpr .dp2 .pfrv .cells span.big{font-size:17px;color:var(--dn)}
+#mod-dpr .dp2 .pfrv .sec{display:flex;align-items:center;gap:8px;padding:8px 12px 4px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);background:var(--tint)}#mod-dpr .dp2 .pfrv .sec .sp{flex:1}
+#mod-dpr .dp2 .pfrv .nodes{padding:4px 10px 10px;display:flex;flex-direction:column;gap:8px}
+#mod-dpr .dp2 .pfrv .ln{border:1px solid var(--tintb);border-radius:10px;overflow:hidden;background:#fff}
+#mod-dpr .dp2 .pfrv .ln.done{background:#fafcfb}#mod-dpr .dp2 .pfrv .ln.ns{opacity:.75}#mod-dpr .dp2 .pfrv .ln.warn,#mod-dpr .dp2 .pfrv .ln.hz{border-color:var(--drdb)}
+#mod-dpr .dp2 .pfrv .lnh{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f3f6fa;border-bottom:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .pfrv .ln.warn .lnh,#mod-dpr .dp2 .pfrv .ln.hz .lnh{background:var(--drdl)}
+#mod-dpr .dp2 .pfrv .lnh b{font-size:14px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}#mod-dpr .dp2 .pfrv .lnh small{color:var(--ink3);font-size:11px}#mod-dpr .dp2 .pfrv .lnh .sp{flex:1}
+#mod-dpr .dp2 .pfrv .ln>:last-child>div{border-bottom:0}
+#mod-dpr .dp2 .pfrv .pcs{padding:8px 12px 6px;border-bottom:1px solid var(--ln2,#e0e5ec)}
+#mod-dpr .dp2 .pfrv .pcs label{display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+#mod-dpr .dp2 .pfrv .pcs .qt{font-size:11.5px;color:var(--ink2);margin-top:4px;font-weight:600}
+#mod-dpr .dp2 .pfrv .pbar{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}
+#mod-dpr .dp2 .pfrv .pbar .bar{flex:1;height:8px;border-radius:5px;background:#e7ebf1;position:relative;overflow:hidden}
+#mod-dpr .dp2 .pfrv .pbar .bar i{position:absolute;left:0;top:0;bottom:0;background:#9fb3c8;border-radius:5px}#mod-dpr .dp2 .pfrv .pbar .bar i.d{background:var(--dv);border-radius:0 5px 5px 0}
+#mod-dpr .dp2 .pfrv .pbar span{color:var(--ink2);min-width:34px}#mod-dpr .dp2 .pfrv .pbar span.r{text-align:right;color:var(--dv)}
+#mod-dpr .dp2 .pfrv .pbar span.h+.bar+.r{color:var(--drd)}#mod-dpr .dp2 .pfrv .pbar span.ok+.bar+.r{color:var(--dok)}#mod-dpr .dp2 .pfrv .pbar span.mut+.bar+.r{color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .cells.subs>div{padding:6px 12px}#mod-dpr .dp2 .pfrv .cells.subs label{font-size:9.5px}#mod-dpr .dp2 .pfrv .cells.subs span{font-size:12.5px}
+#mod-dpr .dp2 .pfrv .cells.subs>div.ok span{color:var(--dok)}#mod-dpr .dp2 .pfrv .cells.subs>div.w span{color:var(--dv)}#mod-dpr .dp2 .pfrv .cells.subs>div.h span{color:var(--drd)}#mod-dpr .dp2 .pfrv .cells.subs>div:not(.ok):not(.w):not(.h) span{color:var(--ink3);font-weight:600}
+#mod-dpr .dp2 .pfrv .pcn{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--drdl);color:var(--drd);font-weight:700;font-size:12px;border-top:1px solid var(--drdb)}
+#mod-dpr .dp2 .pfrv .pcn.hz{background:#fff3f1}#mod-dpr .dp2 .pfrv .pcn span{flex:1}
+#mod-dpr .dp2 .pfrv .hzl{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:12px;overflow:hidden;margin-bottom:8px}
+#mod-dpr .dp2 .pfrv .hzl .r{display:flex;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--ln2,#e0e5ec);font-size:12.5px}
+#mod-dpr .dp2 .pfrv .hzl .r:last-child{border-bottom:0}#mod-dpr .dp2 .pfrv .hzl .r .n{flex:1}#mod-dpr .dp2 .pfrv .hzl .r .n small{display:block;color:var(--drd);font-size:11px;font-weight:700}
+#mod-dpr .dp2 .pfrv .hzl .r .d{text-align:right;font-size:10px;color:var(--ink3);font-weight:700}#mod-dpr .dp2 .pfrv .hzl .r .d b{display:block;font-size:17px;color:var(--drd);line-height:1}
+#mod-dpr .dp2 .pfrv .lb{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:12px;overflow:hidden}
+#mod-dpr .dp2 .pfrv .lb .r{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 12px;border-bottom:1px solid var(--ln2,#e0e5ec);font-size:12.5px;align-items:center}
+#mod-dpr .dp2 .pfrv .lb .r:last-child{border-bottom:0}#mod-dpr .dp2 .pfrv .lb .r>b{font-size:15px;color:var(--dn)}
+#mod-dpr .dp2 .pfrv .lb .r .tr{grid-column:1/-1;display:flex;gap:4px;flex-wrap:wrap}
+#mod-dpr .dp2 .pfrv .lb .r .tr span{border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:1px 6px;font-size:10.5px;color:var(--ink2);background:#fafbfd}
+#mod-dpr .dp2 .pfrv .lb .r.tot{background:#f3f6fa;font-weight:800}
+#mod-dpr .dp2 .pfrv .sentnote{margin-top:10px;font-size:11.5px;color:var(--ink3);text-align:center}
+#mod-dpr .dp2 .pfcal{border:0;padding:6px}
+/* phone */
+@media(max-width:999px){
+  #mod-dpr.module.pf-on,#mod-dpr.module:has(.d2-card.pfc){overflow:visible}   /* the module's overflow-x:hidden would become the sticky scrollport */
+  #mod-dpr .dp2.eng .d2-side,#mod-dpr .dp2.eng .d2-toptabs{display:none}
+  #mod-dpr .dp2.eng .d2-card.pfc{border-radius:12px;min-height:60vh}
+  #mod-dpr .dp2.eng .d2-card.pfc .rv.pfrvw{overflow:visible}
+  #mod-dpr .dp2 .d2-foot.pf{position:fixed;left:0;right:0;bottom:0;border-radius:0;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
+  #mod-dpr .dp2 .pf,#mod-dpr .dp2 .pfrv{padding-bottom:92px}
+  #mod-dpr .dp2 .pf-top .who{display:none}
+}
+@media(min-width:1000px){
+  #mod-dpr .dp2.eng.fit .d2-card.pfc .d2-sc{overflow:auto}
+  #mod-dpr .dp2 .pf-top{top:0}
+  #mod-dpr .dp2 .d2-foot.pf{flex-wrap:nowrap;position:static}
+  #mod-dpr .dp2 .pfrv .ach{top:0}
+  #mod-dpr .dp2 .pfrv .nodes{display:grid;grid-template-columns:1fr 1fr}
+  #mod-dpr .dp2 .pfrv .cells.c3.subs{grid-template-columns:repeat(5,1fr)}#mod-dpr .dp2 .pfrv .cells.c3.subs>div:nth-child(3n){border-right:1px solid var(--ln2,#e0e5ec)}#mod-dpr .dp2 .pfrv .cells.c3.subs>div:nth-child(5n){border-right:0}
+  #mod-dpr .dp2 .pfrv .kp{grid-template-columns:repeat(6,1fr)}
+  #mod-dpr .dp2 .pf-card .units .u{min-width:84px}
+}
+</style>
+
 </head>
 <body>
 
@@ -4034,6 +4226,7 @@ const DPR = (function () {
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null,
+    pfF: '', pfU: {}, pfS: {},   // v5.4 · phone flow: floor chip · selected unit per card · selected sub-activity per unit
     holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
 
@@ -4421,8 +4614,9 @@ const DPR = (function () {
   }
   function attP(g, l) {
     if (finL(l) || heldL(g, l)) return false; const x = lineX(g, l);   // v5.3 · M49
-    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && !x.wip && !(num(x.qty) > 0));
+    if (!staged(l)) return (x.out === 'h' && !x.rc) || (x.out === 'w' && !x.wip && !(num(x.qty) > 0)) || (x.out === '' && outT(g, l) !== '' && startedB(l));   // v5.4 · yesterday blank, today marked
     if (x.fin && !(x.cert > 0)) return true;   // v5.3.1 · a finishing staged line without its Site Cert. Qty
+    if (outOf(g, l) === '' && outT(g, l) !== '' && startedB(l) && !x.fin) return true;   // v5.4 · today marked, yesterday blank on a running line (M42 rule in payloadOf)
     return (l.stages || []).some(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && !heldS(g, l, s) && ((y.out === 'h' && !y.rc) || (y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005)); });
   }
   const attOf = (g, l) => attW(g, l) || attP(g, l);   // v159 · one sheet carries status, labour and progress
@@ -4627,7 +4821,7 @@ const DPR = (function () {
     if (!$('d2_main')) return;
     const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null, ss = a && a.selectionStart != null ? [a.selectionStart, a.selectionEnd] : null;
     const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0;
-    $('d2_side').innerHTML = sideHtml(); paintMain();
+    $('d2_side').innerHTML = sideHtml(); paintMain(); pfStick();   // v5.4
     const s2 = $('d2_sc'); if (s2) { s2.scrollTop = top; s2.scrollLeft = left; }
     if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el) { el.focus(); if (ss) try { el.setSelectionRange(ss[0], ss[1]); } catch (e) {} } }
   }
@@ -4692,7 +4886,16 @@ const DPR = (function () {
     const m = Math.round((new Date(d + 'T13:00:00+05:30') - Date.now()) / 60000);
     return m > 0 ? `<div><span class="pill p-amb">Due By 1 PM ${d === todayYmd() ? 'Today' : 'Of ' + esc(dsh(d))}</span></div>` : `<div><span class="pill p-red">Late · Past 1 PM Of ${esc(dsh(d))}</span></div>`;
   };
-  function logHtml() {
+  function logHtml() {   // v5.4 · phone flow: ‹ date ▾ › header + floor chips; the table toolbar lives in the ⋯ menu (logHtmlTable kept for reference)
+    const ro = isRo(), sub = S.sub;
+    let h = `<div class="d2-card pfc">${pfHead(ro, rvOn())}`;
+    if (sub && sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
+    if (rvOn()) return h + `<div class="rv pfrvw" id="d2_sc">${pfPreview()}</div><div class="d2-foot pf" id="d2_foot">${footHtml()}</div></div>`;
+    if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tap Units To Tick Them → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> <button class="d2-btn sm" onclick="DPR.clubMode()">Done</button> · Progress Stays Per Unit; Manpower Is Entered Once For The Club.</div>`;
+    h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : sheetHtml3(ro)}</div>`;
+    return h + `<div class="d2-foot pf" id="d2_foot">${footHtml()}</div></div>`;
+  }
+  function logHtmlTable() {
     const ro = isRo(), st = stOf(stKey()), today = todayYmd(), y1 = addDays(today, -1);
     const areas = {}; allLines().forEach(({ g }) => { const a = g.area || 'Unassigned'; areas[a] = (areas[a] || 0) + 1; });
     const aKeys = Object.keys(areas).sort((a, b) => a === 'Unassigned' ? 1 : b === 'Unassigned' ? -1 : a.localeCompare(b));
@@ -4728,7 +4931,7 @@ const DPR = (function () {
   }
   function footHtml() {
     const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount();
-    if (S.prev) return `<span class="msg"><b>${d}</b> · Review The Report, Then Send — Date &amp; Time Of Submission Are Recorded.</span><button class="d2-btn" onclick="DPR.prevClose()">← Back To Edit</button><button class="d2-btn ok" onclick="DPR.submitGo()">Send ${d} To Manager ✓</button>`;
+    if (S.prev) { const blk = att || labStats().miss; return `<span class="msg"><b>${d}</b> · ${blk ? `<span style="color:var(--drd)"><b>${blk}</b> Need${blk === 1 ? 's' : ''} Attention</span> · Fix, Then Send` : 'Sending Records Date &amp; Time'} · 1 PM Due</span><button class="d2-btn" onclick="DPR.prevClose()">← Edit</button><button class="d2-btn ok" ${blk ? 'disabled' : ''} onclick="DPR.submitGo()">Send To Manager ✓</button>`; }   // v5.4
     if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span>${S.sub.status === 'Submitted' && !Object.values((S.cal && S.cal.days) || {}).some(x => x.report_date > S.to) ? `<button class="d2-btn amb" onclick="DPR.retrieveAsk()">↩ Retrieve For Correction</button>` : ''}<button class="d2-btn" onclick="DPR.tab('rep')">← Back To Day Reports</button>`;   // v163 · item 3
     const L = labStats(), attTxt = att ? ` · <span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : '';
     return `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}Progress Of ${esc(dsh(PD()))} · Status &amp; Manpower Of ${d}${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send ${d} →</button>`;
@@ -4907,7 +5110,7 @@ const DPR = (function () {
   }
   function flatSet(b) { S.nested = false; S.cards = true; S.cd = null; S.mpo = null; S.remo = null; redraw(); }   // C5 · Flat / Nested retired — Cards only   // v165.1 · Cards is the third Rows option (cardsSet)
   function sheetHtml3(ro) {
-    if (S.cards && !S.fs) return cdSheet(ro);   // v165.1 · Rows · Cards (Find stays flat)
+    if (S.cards) return pfSheet(ro);   // v5.4 · phone flow (Find filters its cards) · v165.1 Rows · Cards
     if (!S.nested || S.fs) return flatHtml(ro);   // v163 · flat is the default; Find always flat
     const items = visibleLines(), cols = COLS;
     if (!items.length) return `<div class="d2-empty"><b>Nothing Here</b><div style="margin-top:6px">${allLines().length ? 'No Activity Matches The Filter.' : 'Use + Add Activities Or ⊞ Grid To Put Activities On Your Sheet.'}</div></div>`;
@@ -6132,8 +6335,8 @@ const DPR = (function () {
     if (dirtyAll()) { const ok = await saveAll(true); if (!ok) return; }
     S.ylab = false; S.mpo = null; S.remo = null;
     const nAtt = attCount(), nMiss = labStats().miss;   // v159.3 · every attention row blocks preview (heads, hindrance reason, qty / % or WIP)
-    if (nMiss || nAtt) { S.filt = 'att'; S.foldDef = false; S.fold = new Set(); paint(); toast((nAtt || nMiss) + ' Row' + ((nAtt || nMiss) === 1 ? ' Needs' : 's Need') + ' Attention On ' + dsh(S.to) + ' — Heads, Hindrance Reason, Or Qty / % (Or WIP) First. Showing Needs Attention', 'warn', 6000); return; }
-    S.prev = true; S.rvFull = false; S.catMode = false; S.foldDef = false; S.fold = new Set(); paint();
+    if (nMiss || nAtt) toast((nAtt || nMiss) + ' Row' + ((nAtt || nMiss) === 1 ? ' Needs' : 's Need') + ' Attention On ' + dsh(S.to) + ' — Send Stays Off Until They Are Fixed', 'warn', 5000);   // v5.4 · the preview opens and lists them with Fix buttons
+    S.prev = true; S.rvFull = false; S.catMode = false; S.foldDef = false; S.fold = new Set(); paint(); window.scrollTo(0, 0);
   }
   function prevClose() { S.prev = false; paint(); }
   async function submitGo() {
@@ -7335,11 +7538,264 @@ const DPR = (function () {
     else printSheet();
   }
 
+  /* ==================================================================
+     v5.4 · PHONE FLOW — one entry flow for every device (DPR_Phone_mock_v7, approved 09 Nov 2026)
+     Header: ‹ date ▾ › · status · floor chips.  One card per activity × floor; the card carries the Crew (labour once, booked to
+     the floor node = a Report Together club made for the engineer) and a unit scroller; the selected unit's entry sits under it.
+     Preview & Send: one tinted card per activity, PO-style cells, every location node boxed inside (workers · status today ·
+     progress · hindrance).  Same drafts, setters and rpc_dpr_save_card payloads as the table / card views — nothing new is sent.
+     ================================================================== */
+  const PF_TINT = ['t1', 't2', 't3', 't4', 't5'];
+  const pfFloorKey = (g, l) => { const p = lineLocPath(g, l) || ''; if (p.split(' › ').filter(Boolean).length >= 2) return p; const loc = lineLoc(g, l); return p && loc ? p + ' › ' + loc : (loc || p || g.area || '—'); };   // a node directly under the tower (RCC slab at '16th Floor') is its own floor
+  const pfFloorLabel = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length ? segs[segs.length - 1] : (k || '—'); };
+  const pfCardKey = (g, l) => pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '—') + '\u0001' + l.activity;
+  const pfNatCmp = (a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
+  const pfHit = (g, l) => !S.fs || fz(l.activity + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + linePkg(g, l) + ' ' + (l.stages || []).map(s => s.name).join(' '), S.fs);
+  function pfModel(all) {   // floors → cards → units, over the live lines (held lines live on the Waiting shelf)
+    const lines = allLines().filter(({ g, l }) => !heldL(g, l));
+    const floors = new Map();
+    lines.forEach(it => { const k = pfFloorKey(it.g, it.l); if (!floors.has(k)) floors.set(k, { key: k, label: pfFloorLabel(k), items: [], att: 0, act: 0 }); const F = floors.get(k); F.items.push(it); if (!finL(it.l)) F.act++; if (attOf(it.g, it.l)) F.att++; });
+    const fl = [...floors.values()].sort((a, b) => pfNatCmp(a.key, b.key));
+    if (S.pfF && !floors.has(S.pfF)) S.pfF = '';
+    const pick = all || !S.pfF ? lines : floors.get(S.pfF).items;
+    const cards = new Map();
+    pick.filter(it => pfHit(it.g, it.l)).forEach(it => { const k = pfCardKey(it.g, it.l); if (!cards.has(k)) cards.set(k, { key: k, floor: pfFloorKey(it.g, it.l), pkg: linePkg(it.g, it.l) || '—', act: it.l.activity, items: [] }); cards.get(k).items.push(it); });
+    const cs = [...cards.values()];
+    cs.forEach(c => { c.items.sort((a, b) => pfNatCmp(lineLoc(a.g, a.l), lineLoc(b.g, b.l))); c.gs = [...new Set(c.items.map(it => it.g))]; c.est = c.items.reduce((a, it) => a + num(it.l.est_qty), 0); c.uom = [...new Set(c.items.map(it => it.l.uom).filter(Boolean))].join(' / ');
+      c.pct = c.items.length ? c.items.reduce((a, it) => a + (finL(it.l) ? 100 : Math.min(100, linePct(it.g, it.l))), 0) / c.items.length : 0; c.b = c.items.length ? c.items.reduce((a, it) => a + (finL(it.l) ? 100 : Math.min(100, lineBasePct(it.l))), 0) / c.items.length : 0;
+      c.att = c.items.filter(it => attOf(it.g, it.l)).length; });
+    cs.sort((a, b) => pfNatCmp(a.floor, b.floor) || b.att - a.att || pfNatCmp(a.act, b.act));
+    return { lines, floors: fl, cards: cs };
+  }
+  /* ----- crew: who carries this card's labour ----- */
+  const pfLiveGs = c => { const live = c.items.filter(it => !finL(it.l)); return [...new Set((live.length ? live : c.items).map(it => it.g))]; };   // finished units (own cards) do not split the crew
+  function pfCrewOf(c) {   // one card (club or single unit) → its 'A' labour unit; several cards → per unit (the Crew button clubs them)
+    const gs = pfLiveGs(c);
+    if (gs.length !== 1) return { mode: 'unit', heads: gs.reduce((a, g) => a + cardHeads(g), 0) };
+    const g = gs[0], lv = labLevel(g);
+    if (lv !== 'activity') return { mode: lv, g, heads: cardHeads(g) };
+    return { mode: 'crew', g, u: { key: 'A', worked: cardHasW(g) }, heads: cardHeads(g), club: g.lines.length > 1 };
+  }
+  const pfCons = g => [...new Set(rvRows(dOf(g)).map(x => conName(x.con)).filter(Boolean))];
+  function pfCrewLine(c, ro) {
+    const C = pfCrewOf(c), dd = esc(dsh(S.to));
+    if (C.mode === 'unit') {
+      const live = pfLiveGs(c);
+      return `<div class="crew"><span class="k">Crew</span><span class="v muted">Per Unit · Heads Inside Each Unit</span><span class="sp"></span><b class="hd">${fmt(C.heads)}</b><span class="muted">Heads</span>${ro || live.length < 2 ? '' : `<button class="d2-btn sm navy" onclick="DPR.pfCrew('${cdQ(c.key)}')">One Crew For ${esc(pfFloorLabel(c.floor))}</button>`}</div>`;
+    }
+    if (C.mode !== 'crew') return `<div class="crew"><span class="k">Crew</span><span class="v muted">Labour Per ${C.mode === 'sub' ? 'Sub-Activity' : 'Group'} · Inside The Unit</span><span class="sp"></span><b class="hd">${fmt(C.heads)}</b><span class="muted">Heads</span></div>`;
+    const g = C.g, u = C.u, cons = pfCons(g), d = dOf(g), con0 = (d.cons[0] || {}).con;
+    const who = cons.length ? cons.map(esc).join(' · ') : con0 ? esc(conName(con0)) : '<i class="muted">Contractor —</i>';
+    const fin = c.items.every(it => finT(it.g, it.l));
+    const mp = fin ? `<span class="muted">Finished · No Labour</span>` : u.worked ? mpCell(g, u, ro) : `<span class="muted">No Unit Working ${dd}</span>`;
+    const where = C.club ? pill('p-grey', 'Booked To ' + esc(bookedTo(g))) : '';
+    const split = !ro && C.club && g.lines.length > 1 ? `<button class="d2-btn sm" title="Back To One Card Per Unit" onclick="DPR.unclub('${g.wgroup_id}')">Split Per Unit</button>` : '';
+    return `<div class="crew"><span class="k">Crew</span><span class="v">${who}</span>${where}<span class="sp"></span>${mp}${split}</div>${!fin && u.worked ? cdMpUnder(g, u, c.act, ro) : ''}`;
+  }
+  async function pfCrew(key) {   // club every unit of this activity on this floor → one card, labour once (M33 rpc_dpr_club; M42 books it to the floor node)
+    const M = pfModel(true), c = M.cards.find(x => x.key === key); if (!c) return;
+    const gs = pfLiveGs(c), ids = []; gs.forEach(g => g.lines.forEach(l => { if (ids.indexOf(l.work_id) < 0) ids.push(l.work_id); }));   // a unit already in a club brings its club along (same rule as the # tick); finished units stay out
+    if (gs.length < 2) return;
+    if (dirtyAll() && !(await saveAll(true))) return;
+    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast('One Crew · ' + c.act + ' · ' + pfFloorLabel(c.floor), 'success'); await engLoad(tDate(), true); }
+    catch (e) { toast(err(e, 'Could not make one crew'), 'error'); return; }
+    const e0 = S.W[ids[0]]; if (e0) { S.mpo = e0.g.wgroup_id + '|A'; redraw(); }
+  }
+  /* ----- units ----- */
+  const pfUnitCls = (g, l) => { const x = lineX(g, l); if (finL(l) || x.fin) return 'done'; if (hasH(g, l) || hasHT(g, l)) return 'h'; if (attOf(g, l)) return 'att'; if (outT(g, l) === 'w' || outOf(g, l) === 'w') return 'run'; return startedB(l) ? 'run0' : 'ns'; };
+  function pfSelUnit(c) {   // the unit whose entry is open: remembered per card, else the first needing attention, else the first active
+    const cur = S.pfU[c.key]; if (cur && c.items.some(it => it.l.work_id === cur)) return cur;
+    const it = c.items.find(x => attOf(x.g, x.l)) || c.items.find(x => !finL(x.l)) || c.items[0]; return it ? it.l.work_id : '';
+  }
+  function pfUnit(ck, wid) { S.pfU[ck] = wid; S.mpo = null; S.remo = null; redraw(); }
+  function pfSub(wid, sid) { S.pfS[wid] = sid; redraw(); }
+  function pfFloor(k) { S.pfF = k || ''; S.mpo = null; redraw(); }
+  function pfFind(v) { S.fs = String(v || '').trim() ? v : ''; redraw(); }
+  function pfGo(wid) {   // Fix → back to the sheet, on that unit
+    const e = S.W[wid]; if (!e) return; S.prev = false; S.pfF = pfFloorKey(e.g, e.l); S.pfU[pfCardKey(e.g, e.l)] = wid; S.fs = ''; paint();
+    setTimeout(() => { const el = document.querySelector('#d2 .pf-card[data-k="' + CSS.escape(pfCardKey(e.g, e.l)) + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 40);
+  }
+  /* ----- the entry under the unit scroller ----- */
+  function pfSnapRow(g, l, s, ro) {   // yesterday's progress: 25 · 50 · 75 · ✓ Done · WIP · % (or qty) · H · N
+    const x = lineX(g, l), wid = l.work_id;
+    if (s) {
+      const y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), sid = s.id;
+      if (done) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span>${pill('p-ok', 'Done' + (y.e || s.finished_on ? ' ' + esc(dsh(y.e || s.finished_on)) : ''))}</div>`;
+      if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc) + '%') : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, true)}</div>`;
+      return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${Math.round(base)}%</i></span><div class="snap">${[25, 50, 75].map(p => `<button class="${o === 'w' && !y.wip && Math.round(pc) === p ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" onclick="DPR.snapPct('${wid}','${sid}',100)">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
+    }
+    const est = num(l.est_qty), base = cumBase(l), fin = finL(l), o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
+    if (fin) return `<div class="prog"><span class="lbl">Progress</span>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)} ${uom}</span>` : ''}</div>`;
+    if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(q) + ' ' + uom) : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b> <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span><div class="st2">${statusDir(g, l)}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, true)}</div>`;
+    return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2">${statusDir(g, l)} <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span></div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
+  }
+  function pfFinRow(g, l, ro) {   // a direct line finishing on this sheet: finish date + Site Cert. Qty (staged lines use cdFinStrip)
+    const x = lineX(g, l); if (staged(l) || finL(l) || !x.fin) return '';
+    const pd = PD(), uom = esc(l.uom || ''), wid = l.work_id, d0 = x.finOn || finDef(x.started || l.started_on), ok = x.cert > 0;
+    const dateC = ro || l.end_locked ? `<b>${esc(dsh(d0))}</b>${l.end_locked ? lockI : ''}` : `<span class="dtw"><b class="dtv">${dsh(d0)}</b><input type="date" class="dt" data-k="le:${wid}" value="${d0}" min="${lineMinEnd(g, l)}" max="${pd}" onchange="DPR.lineEnd('${wid}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`;
+    const certC = ro ? `<b>${x.cert == null ? '—' : fmt(x.cert)} ${uom}</b>` : `<input class="qty ${ok ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>`;
+    return `<div class="cd-fin ${ok ? '' : 'bad'}"><span class="t">${pill('p-ok', 'Activity Finished')}</span><span class="kv"><span>Finish</span>${dateC}</span><span class="kv"><span>Site Cert. Qty</span>${certC}${certOver(l, x)}</span>${ok || ro ? '' : '<span class="need">Required To Send</span>'}</div>`;
+  }
+  function pfEntry(c, ro) {
+    const wid = pfSelUnit(c); if (!wid) return '';
+    const e = S.W[wid]; if (!e) return ''; const { g, l } = e, x = lineX(g, l), fin = finL(l), C = pfCrewOf(c), lv = labLevel(g), loc = lineLoc(g, l);
+    const n = cdNodeLive(g, l);
+    let h = `<div class="pf-ent"><div class="eh"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small><span class="sp"></span><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
+    if (staged(l)) {
+      const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
+      let sid = S.pfS[wid]; if (!live.some(s => s.id === sid)) { const op = live.find(s => !subDoneT(s, x.subs[s.id])); sid = op ? op.id : (live[0] || {}).id; }
+      h += `<div class="subs scroll">${live.map(s => { const y = x.subs[s.id], base = subBase(s), p = Math.min(100, subPct(g, l, s)), t = subT(y), done = base >= 99.9995, cls = done || (y.out === 'w' && !y.wip && p >= 99.9995) ? 'done' : (y.out === 'h' || t.out === 'h') ? 'h' : (y.out === 'w' || t.out === 'w' || base > 0.0005) ? 'run' : 'ns', att = subAttOf(g, l, s);
+        return `<button class="sub ${cls} ${att ? 'att' : ''} ${s.id === sid ? 'on' : ''}" onclick="DPR.pfSub('${wid}','${s.id}')">${hasG && s.group_name ? `<i>${esc(s.group_name)}</i>` : ''}${esc(s.name)}<b>${done ? '✓' : Math.round(p) + '%'}</b></button>`; }).join('')}${cdWaitNote((l.stages || []).length - live.length, cdKey(g, l))}</div>`;
+      const s = live.find(z => z.id === sid);
+      if (s) {
+        const y = x.subs[s.id], done = subDoneT(s, y), Gp = Gs.find(G => G.subs.some(z => z.id === s.id)) || null;
+        h += pfSnapRow(g, l, s, ro);
+        h += `<div class="today"><span class="lbl">Status · ${esc(dsh(S.to))}</span><div class="cq">${tInner(g, l, s, ro)}</div></div>`;
+        if (!done && subT(y).out === 'w' && lv === 'sub' && g.lines.length === 1) h += cdMpBlock(g, labUnits(g).find(z => z.key === 'S:' + s.id) || { key: 'S:' + s.id, worked: true }, s.name, 'Per Sub-Activity · ' + s.name, loc, ro);
+        if (!done && lv === 'group' && Gp && Gp.id && g.lines.length === 1) { const gu = labUnits(g).find(z => z.key === 'G:' + Gp.id); if (gu) h += cdMpBlock(g, gu, Gp.name, 'Per Group · ' + Gp.name, loc, ro); }
+        h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${ro || S.holdOff || done ? '' : holdBtn('sub', wid, s.id, 'Hold')}</div>`;
+      }
+      h += cdFinStrip(g, l, ro);
+    } else {
+      h += pfSnapRow(g, l, null, ro);
+      if (!fin) h += `<div class="today"><span class="lbl">Status · ${esc(dsh(S.to))}</span><div class="cq">${tInner(g, l, null, ro)}</div></div>`;
+      h += pfFinRow(g, l, ro);
+      if (!fin) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)"></div>`;
+    }
+    if (C.mode === 'unit' && lv === 'activity' && !finT(g, l)) { const u = { key: 'A', worked: cardHasW(g) }; h += `<div class="ulab"><span class="lbl">Heads On This Unit · ${esc(dsh(S.to))}</span>${u.worked ? mpCell(g, u, ro) : '<span class="muted">Mark W Today To Enter Heads</span>'}</div>${u.worked ? cdMpUnder(g, u, loc, ro) : ''}`; }
+    return h + '</div>';
+  }
+  function pfCard(c, ro) {
+    const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
+    const cm = S.cm && !ro;
+    const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
+    return `<article class="pf-card ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
+  }
+  function pfSheet(ro) {
+    const M = pfModel(false), live = cdModel('live'), o = { ro };
+    setTimeout(pfStick, 0);
+    if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Use ＋ Add Activities Or ⊞ Grid (Menu) To Put Activities On Your Sheet.</div></div>` + cdNp(live, o) + cdWaiting(live, o);
+    if (!M.cards.length) return `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">No Activity Matches The Find Text On This Floor.</div></div>`;
+    return `<div class="pf">${M.cards.map(c => pfCard(c, ro)).join('')}</div>` + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o);
+  }
+  /* ----- header: ‹ date ▾ › · status · floor chips ----- */
+  function pfHead(ro, rv) {
+    const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = attCount();
+    const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
+    const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
+    return `<div class="pf-top" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
+      <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(PD()))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
+      <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfMenu()">＋ Add</button>`}</div>`}${S.fs && !rv ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+  }
+  function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
+    const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return;
+    const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
+    const top = $('pf_top'), th = top ? top.offsetHeight : 0;
+    d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
+  }
+  if (!window._pfStick) { window._pfStick = true; window.addEventListener('resize', () => { if (document.getElementById('pf_top')) pfStick(); }); }
+  function pfCal() {   // the month calendar in a sheet (the side column is hidden on phones)
+    const nextOff = S.cal.month >= monthOf(todayYmd());
+    sheetOpen('Report Date', 'Pick A Date', `<div class="d2-cal pfcal" id="pf_cal"><div class="mh"><button onclick="DPR.pfCalMove(-1)">‹</button><b>${esc(mLabel(S.cal.month))}</b><button ${nextOff ? 'disabled' : ''} onclick="DPR.pfCalMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${calHtml()}</div></div>
+      <div class="d2-leg" style="padding:8px 10px"><span><i class="b lab"></i>Labour Entered</span><span><i class="b draft"></i>Draft</span><span><i class="b sent"></i>Submitted</span><span><i class="b acc"></i>Accepted</span><span><i class="b ret"></i>Returned</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>Not Created</span></div>`,
+      `<button class="dbtn" onclick="DPR.sheetClose();DPR.tab('rep')">Day Reports</button><span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>`);
+  }
+  async function pfCalMove(n) { const d = new Date(S.cal.month + 'T00:00:00'); d.setMonth(d.getMonth() + n); const m = ymd(d); if (m > monthOf(todayYmd())) return; await calLoad(m); pfCal(); }
+  function pfMenu() {   // Find · Add Work · Report Together · Day Reports · Delete
+    const ro = isRo(), sub = S.sub;
+    const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
+    let b = `<div class="dpr-srch" style="padding:8px"><input placeholder="Find Activity · Sub-Activity · Location…" value="${esc(S.fs || '')}" oninput="DPR.pfFind(this.value)"></div>`;
+    if (!ro) b += `<div class="dpr-srch" style="padding:0 8px 8px"><input placeholder="Add Work · Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)" onfocus="DPR.sheetClose();DPR.srch(this.value||' ')"></div>`
+      + row('＋ Add Activities', 'Browse The Approved Estimate', 'DPR.sheetClose();DPR.startOpen()') + row('⊞ Grid', 'Tick Units Across A Floor', 'DPR.sheetClose();DPR.gridOpen()')
+      + row('☑ Report Together', (S.cm ? 'On · Tick Rows On The Table Sheet' : 'Club Any Activities At Any Locations'), 'DPR.sheetClose();DPR.clubMode()');
+    b += row('Day Reports', 'Calendar · Sent Reports · Preview', 'DPR.sheetClose();DPR.tab(\'rep\')');
+    if (sub && sub.status === 'Draft' && !ro) b += row('Delete ' + esc(dsh(S.to)) + ' Report', 'Unsent Draft Only', `DPR.sheetClose();DPR.delDay('${S.to}')`, 'red');
+    sheetOpen('Sheet · ' + dsh(S.to), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  /* ----- Preview & Send · the day report (also the sent report, read-only) ----- */
+  function pfWhy(g, l) {   // why a row needs attention, in words
+    const w = []; if (finL(l) || heldL(g, l)) return w; const x = lineX(g, l);
+    if (tReasonMissing(g, l)) w.push('Today’s Hindrance Reason Missing');
+    if (!staged(l)) { if (x.out === 'h' && !x.rc) w.push('Hindrance Reason Missing'); if (x.out === 'w' && !x.wip && !(num(x.qty) > 0)) w.push('Qty Missing'); }
+    else { if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && !heldS(g, l, s) && y.out === 'h' && !y.rc; })) w.push('Hindrance Reason Missing'); const q = (l.stages || []).filter(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && !heldS(g, l, s) && y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005; }); if (q.length) w.push(q.map(s => s.name).join(', ') + ' · % Missing'); }
+    if (x.fin && !(x.cert > 0)) w.push('Site Cert. Qty Required');
+    if (outOf(g, l) === '' && outT(g, l) !== '' && startedB(l) && !x.fin) w.push(dsh(PD()) + ' Progress Status Missing (W / H / N)');
+    if (labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key))) w.push('Heads Missing');
+    return w;
+  }
+  function pfHinds() {   // open hindrances on this sheet (today's H, else yesterday's), with since / days
+    const out = [];
+    allLines().forEach(({ g, l }) => { if (finL(l) || heldL(g, l)) return; const x = lineX(g, l);
+      const add = (what, rc, oh) => { const since = (oh && oh.from_date) || PD(); out.push({ wid: l.work_id, where: lineLoc(g, l) + ' · ' + pathTail(lineLocPath(g, l)), act: l.activity, what, rc: rvRc(rc), since, days: daysBetween(since, S.to) + 1 }); };
+      if (!staged(l)) { const t = tOf(g, l); if (t.out === 'h') add('', t.rc, l.open_hindrance); else if (x.out === 'h') add('', x.rc, l.open_hindrance_yday); return; }
+      subsLive(g, l).forEach(s => { const y = x.subs[s.id], t = subT(y); if (subDoneT(s, y)) return; if (t.out === 'h') add(s.name, t.rc, s.open_hindrance); else if (y.out === 'h') add(s.name, y.rc, s.open_hindrance_yday); }); });
+    return out;
+  }
+  function pfNode(g, l, C) {
+    const x = lineX(g, l), n = cdNodeLive(g, l), fin = finL(l), oT = fin ? '' : outT(g, l), o = fin ? '' : outOf(g, l), why = pfWhy(g, l), dd = esc(dsh(S.to));
+    const stPill = fin || x.fin ? pill('p-grey', 'Finished') : oT === 'w' ? pill('p-ok', 'W') : oT === 'h' ? pill('p-red', 'H') : oT === 'n' ? pill('p-grey', 'N') : pill('p-grey', '—');
+    const cls = fin || x.fin ? 'done' : (oT === 'h' || o === 'h') ? 'hz' : why.length ? 'warn' : (!o && !oT && !startedB(l)) ? 'ns' : '';
+    const sub = fin ? 'Done ' + esc(dsh(l.finished_on) || '—') : x.fin ? 'Finished ' + esc(dsh(x.finOn || finDef(x.started || l.started_on))) : n.ds ? 'Day ' + (daysBetween(n.ds, S.to) + 1) : '';
+    let h = `<div class="ln ${cls}"><div class="lnh"><b>${esc(n.loc)}</b>${sub ? `<small>${sub}</small>` : ''}<span class="sp"></span>${stPill}</div>`;
+    if (fin) return h + `<div class="cells c2"><div><label>Finished</label><span>${esc(dsh(l.finished_on) || '—')}</span></div><div><label>Site Cert. Qty</label><span class="ok">${l.site_cert_qty != null ? fmt(l.site_cert_qty) + ' ' + esc(l.uom || '') : '—'}</span></div></div></div>`;
+    if (!o && !oT && !startedB(l) && !x.fin) return h + `<div class="cells c2"><div><label>Today</label><span class="mut">Not Started</span></div><div><label>Heads</label><span class="mut">—</span></div></div></div>`;
+    const tTxt = x.fin ? 'Finished' : oT === 'w' ? 'Working' : oT === 'h' ? 'Hindrance' : oT === 'n' ? 'No Work' : 'Not Filled';
+    let hd, hc = '';
+    if (finT(g, l)) hd = '—';
+    else if (C.mode === 'crew') { if (oT !== 'w') { hd = '—'; hc = 'mut'; } else { hd = C.heads ? 'Crew · ' + fmt(C.heads) : (noLab(C.g, 'A') ? 'No Labour' : '0'); hc = C.heads ? 'crew' : noLab(C.g, 'A') ? 'mut' : 'red'; } }
+    else if (C.mode === 'unit') { const nh = cardHeads(g); hd = nh ? fmt(nh) : (noLab(g, 'A') ? 'No Labour' : (oT === 'w' ? '0' : '—')); hc = nh ? 'num' : oT === 'w' && !noLab(g, 'A') ? 'red' : 'mut'; }
+    else { const nh = cardHeads(g); hd = nh ? fmt(nh) + ' · Per ' + (C.mode === 'sub' ? 'Sub' : 'Group') : (oT === 'w' ? '0' : '—'); hc = nh ? 'num' : oT === 'w' ? 'red' : 'mut'; }
+    h += `<div class="cells c2"><div><label>Today ${dd}</label><span class="${oT === 'h' ? 'red' : ''}">${tTxt}</span></div><div><label>Heads Deployed</label><span class="${hc}">${hd}</span></div></div>`;
+    const b = Math.min(100, n.b), p = Math.min(100, n.pct), pcls = x.fin ? 'ok' : (o === 'h') ? 'h' : p - b > 0.0005 ? 'w' : 'mut';
+    h += `<div class="pcs"><label>Progress · ${esc(dsh(PD()))} EOD</label><div class="pbar"><span class="${pcls}">${Math.round(b)}%</span><div class="bar"><i style="width:${b}%"></i><i class="d" style="left:${b}%;width:${Math.max(0, p - b)}%"></i></div><span class="r">${Math.round(p)}%</span></div>${!staged(l) && o === 'w' ? `<div class="qt">${x.wip ? 'WIP · Nothing Completed' : '+' + fmt(num(x.qty)) + ' ' + esc(l.uom || '') + ' · Cum. ' + fmt(cumBase(l) + num(x.qty)) + ' / ' + fmt(num(l.est_qty))}</div>` : ''}</div>`;
+    if (staged(l)) h += `<div class="cells c3 subs">${subsLive(g, l).map(s => { const y = x.subs[s.id], base = subBase(s), pc = Math.min(100, subPct(g, l, s)), t = subT(y), done = base >= 99.9995 || (y.out === 'w' && !y.wip && pc >= 99.9995);
+      const v = done ? '✓ Done' : y.out === 'h' || t.out === 'h' ? 'H' : y.out === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc)) : y.out === 'n' ? 'No Work' : base > 0.0005 ? Math.round(base) + '%' : '—', k = done ? 'ok' : (y.out === 'h' || t.out === 'h') ? 'h' : (y.out === 'w' || t.out === 'w') ? 'w' : '';
+      return `<div class="${k}"><label>${esc(s.name)}</label><span>${v}</span></div>`; }).join('')}</div>`;
+    const H = pfHinds().filter(z => z.wid === l.work_id);
+    H.forEach(z => { h += `<div class="pcn hz"><span>${z.what ? esc(z.what) + ' · ' : ''}${esc(z.rc || 'Reason Missing')} · Since ${esc(dsh(z.since))} · Day ${z.days}</span></div>`; });
+    if (why.length) h += `<div class="pcn"><span>${esc(why.join(' · '))}</span>${S.prev && !S.locked ? `<button onclick="DPR.pfGo('${l.work_id}')">Fix</button>` : ''}</div>`;
+    return h + '</div>';
+  }
+  function pfPreview() {
+    const M = pfModel(true), dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
+    const L = allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l));
+    const rep = L.filter(({ g, l }) => outOf(g, l) !== '').length, moved = L.filter(({ g, l }) => lineMoved(g, l)).length, done = L.filter(({ g, l }) => lineX(g, l).fin).length, hz = L.filter(({ g, l }) => hasHT(g, l) || hasH(g, l)).length, wT = L.filter(({ g, l }) => outT(g, l) === 'w').length, heads0 = allHeads();
+    const prevH = ((S.lprev || {}).rows || []).reduce((a, r) => a + heads(r.heads || {}), 0), dH = heads0 - prevH;
+    const att = allLines().filter(({ g, l }) => attOf(g, l)), miss = labStats().miss;
+    let h = `<div class="one"><b>${dd}</b> · ${rep} Of ${L.length} Reported · <b>${moved}</b> Moved · ${done} Completed · <b class="${hz ? 'red' : ''}">${hz} Hindrance</b> · <b>${fmt(heads0)} Heads</b>${prevH ? ` (${dH >= 0 ? '+' : ''}${fmt(dH)} Vs ${pdd})` : ''} · ${wT} Working Today</div>`;
+    if (S.prev && !S.locked && (att.length || miss)) h += `<div class="att">${att.length || miss} Row${(att.length || miss) === 1 ? '' : 's'} Need${(att.length || miss) === 1 ? 's' : ''} Attention · Send Is Blocked Until They Are Fixed${att.map(({ g, l }) => `<div><span>${esc(lineLoc(g, l))} · ${esc(short(l.activity, 40))} — ${esc(pfWhy(g, l).join(' · ') || 'Check')}</span><span class="sp"></span><button onclick="DPR.pfGo('${l.work_id}')">Fix</button></div>`).join('')}</div>`;
+    else if (S.prev && !S.locked) h += `<div class="att ok">✓ Nothing Missing — Ready To Send</div>`;
+    h += `<div class="kp"><div><b>${rep}<small>/${L.length}</small></b><span>Reported ${pdd}</span></div><div class="vio"><b>${moved}</b><span>Progress Moved</span></div><div class="ok"><b>${done}</b><span>Completed</span></div><div class="red"><b>${hz}</b><span>Hindrance</span></div><div><b>${wT}</b><span>Working Today</span></div><div class="vio"><b>${fmt(heads0)}</b><span>Heads${prevH ? ' · ' + (dH >= 0 ? '+' : '') + fmt(dH) : ''}</span></div></div>`;
+    h += `<h3>By Activity · Location Node · Workers · Status ${dd} · Progress ${pdd}</h3>`;
+    M.cards.forEach((c, i) => {
+      const C = pfCrewOf(c), g0 = C.g || c.gs[0], cons = C.mode === 'unit' ? [...new Set(c.gs.flatMap(pfCons))] : pfCons(g0), mix = C.mode === 'unit' ? tradeTxt(tradeMix(c.gs.flatMap(g => rvRows(dOf(g))))) : cdTrades(g0);   // finished units carry no labour, so c.gs is safe here
+      const allFin = c.items.every(it => finT(it.g, it.l)), anyH = c.items.some(it => hasHT(it.g, it.l));
+      const book = allFin ? pill('p-grey', 'Finished') : !C.heads ? (anyH ? pill('p-red', 'Hindrance Today') : pill('p-grey', 'No Labour Today')) : C.mode === 'crew' && C.club ? pill('p-grey', 'Labour Booked To ' + esc(bookedTo(C.g))) : C.mode === 'crew' ? pill('p-grey', 'Labour On The Unit') : C.mode === 'unit' ? pill('p-vio', 'Labour Per Unit') : pill('p-vio', 'Labour Per ' + (C.mode === 'sub' ? 'Sub-Activity' : 'Group'));
+      const pk = allFin ? 'ok' : anyH ? 'red' : 'vio';
+      h += `<div class="ac ${PF_TINT[i % 5]}"><div class="ach"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(c.floor)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Est ${fmt(c.est)} ${esc(c.uom)}</small></div>${pill('p-' + pk, Math.round(c.pct) + '%' + (c.pct - c.b > 0.0005 ? ' · +' + Math.round(c.pct - c.b) + '%' : allFin ? ' · Finished' : ''))}</div>
+        <div class="cells c3 crewrow"><div><label>Crew</label><span>${cons.length ? cons.map(esc).join(' · ') : '—'}</span></div><div><label>Trades</label><span>${mix || '—'}</span></div><div><label>Heads ${dd}</label><span class="big">${fmt(C.heads)}</span></div></div>
+        <div class="sec"><span>Location Nodes · ${c.items.length}</span><span class="sp"></span>${book}</div><div class="nodes">${c.items.map(it => pfNode(it.g, it.l, C)).join('')}</div></div>`;
+    });
+    const np = npDraft().filter(e => heads(e.heads) > 0 || e.text);
+    if (np.length) { h += `<h3>Non-Estimated Work</h3>`; np.forEach((e, i) => { h += `<div class="ac ${PF_TINT[(M.cards.length + i) % 5]}"><div class="ach"><div><b>${esc(e.text)}</b><small>${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location'} · Labour Only</small></div>${pill('p-ok', 'W')}</div><div class="cells c3 crewrow"><div><label>Contractor</label><span>${e.con ? esc(conName(e.con)) : '<i class="red">Not Picked</i>'}</span></div><div><label>Trades</label><span>${tradeTxt(e.heads) || '—'}</span></div><div><label>Heads ${dd}</label><span class="big">${fmt(heads(e.heads))}</span></div></div></div>`; }); }
+    const H = pfHinds();
+    h += `<h3>Hindrances · ${H.length ? H.length + ' Open' : 'None'}</h3>`;
+    if (H.length) h += `<div class="hzl">${H.map(z => `<div class="r"><div class="n">${esc(z.where)} · ${esc(short(z.act, 40))}${z.what ? ' · ' + esc(z.what) : ''}<small>${esc(z.rc || 'Reason Missing')} · Since ${esc(dsh(z.since))}</small></div><div class="d"><b>${z.days}</b>Day${z.days === 1 ? '' : 's'}</div></div>`).join('')}</div>`;
+    const rows = cdLabRows(''), byC = new Map(); rows.forEach(r => { const k = r.con || ''; if (!byC.has(k)) byC.set(k, []); byC.get(k).push(r); });
+    const tot = cdTrSum(rows), ne = rows.filter(r => r.np).reduce((a, r) => a + sum(r.hd), 0);
+    h += `<h3>Labour · ${dd} · ${fmt(sum(tot))} Heads</h3><div class="lb">${[...byC.entries()].sort((a, b) => sum(cdTrSum(b[1])) - sum(cdTrSum(a[1]))).map(([k, ls]) => ls.map(r => `<div class="r"><span>${k ? esc(conName(k)) : '<i class="red">Contractor Not Available</i>'} · ${esc(r.loc)} · ${esc(short(r.act, 48))}${r.club ? ' · ' + pill('p-grey', 'Crew') : ''}</span><b>${fmt(sum(r.hd))}</b><div class="tr">${cdTrOrder(r.hd).filter(t => num(r.hd[t]) > 0).map(t => `<span>${esc(tCode(t))} ${fmt(r.hd[t])}</span>`).join('')}</div></div>`).join('')).join('')}<div class="r tot"><span>Total · Estimated ${fmt(sum(tot) - ne)} · Non-Estimated ${fmt(ne)}</span><b>${fmt(sum(tot))}</b></div></div>`;
+    if (!S.prev && S.sub && S.sub.submitted_at) h += `<div class="sentnote">Sent ${esc(dts(S.sub.submitted_at))}${S.sub.is_late ? ' · Late' : ''}${S.sub.reviewed_at ? ' · Reviewed ' + esc(dts(S.sub.reviewed_at)) : ''}</div>`;
+    setTimeout(pfStick, 0);
+    return `<div class="pfrv">${h}</div>`;
+  }
+
   return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
     setOc, setQty, snapQty, toggleWip, setPct, snapPct, wipAll, rcSet, noteSet, setOcT, wAllT, rcSetT, lineStart, lineEnd, certSet, subDate, setHead, conPick, conFilter, conSet, rmCon, tradeAdd, tradeSet, tradeDrop, dropGroup, dropWork, delDay, foldKeys, saveAll, askLeave, leaveGo, unsaved, noLabTog, openDay,
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
+    pfFloor, pfUnit, pfSub, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu,   // v5.4 · phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.4.4</title>
+<title>Penguin Construction v5.4.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3199,9 +3199,11 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .find span{flex:1}
 /* cards */
 #mod-dpr .dp2 .pf{display:flex;flex-direction:column;gap:6px;padding:5px 3px 6px;background:var(--bg,#eef1f6)}
-#mod-dpr .dp2 .pf-card{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:12px;overflow:hidden}
+#mod-dpr .dp2 .pf-card{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:10px;min-width:0}
+#mod-dpr .dp2 .pf-card>.hd{position:sticky;top:var(--pf-top,0px);z-index:4;border-radius:10px 10px 0 0}
+#mod-dpr .dp2 .pf-card>:last-child{border-radius:0 0 10px 10px}
 #mod-dpr .dp2 .pf-card.att{border-color:var(--drdb)}
-#mod-dpr .dp2 .pf-card>.hd{display:flex;align-items:flex-start;gap:6px;padding:4px 7px 3px;background:#f3f6fa;border-bottom:1px solid var(--ln2,#e0e5ec)}
+#mod-dpr .dp2 .pf-card>.hd{display:flex;align-items:flex-start;gap:6px;padding:4px 7px 3px;background:#e9eef5;border-bottom:1px solid var(--ln,#c3ccd9)}
 #mod-dpr .dp2 .pf-card>.hd>div:first-child{flex:1;min-width:0}
 #mod-dpr .dp2 .pf-card>.hd b{display:block;font-size:13.5px;line-height:1.2}
 #mod-dpr .dp2 .pf-card>.hd small{display:block;font-size:10.5px;color:var(--ink3);margin-top:1px}
@@ -3216,8 +3218,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-card .cd-mp.full{margin:0;border-radius:0;border-left:0;border-right:0}
 #mod-dpr .dp2 .pf-card .units{display:flex;gap:4px;overflow-x:auto;padding:4px 5px;scrollbar-width:none;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fff}
 #mod-dpr .dp2 .pf-card .units::-webkit-scrollbar{display:none}
-#mod-dpr .dp2 .pf-card .units .u{flex:none;min-width:56px;height:38px;padding:0 7px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;color:var(--ink)}
-#mod-dpr .dp2 .pf-card .units .u b{font-size:12.5px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
+#mod-dpr .dp2 .pf-card .units .u{flex:none;min-width:52px;height:34px;padding:0 7px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;color:var(--ink)}
+#mod-dpr .dp2 .pf-card .units .u b{font-size:12px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
 #mod-dpr .dp2 .pf-card .units .u small{font-size:10px;color:var(--ink3);font-weight:700}
 #mod-dpr .dp2 .pf-card .units .u.done{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .pf-card .units .u.done small{color:var(--dok)}
 #mod-dpr .dp2 .pf-card .units .u.run{background:var(--dvl);border-color:var(--dvb);color:var(--dv)}#mod-dpr .dp2 .pf-card .units .u.run small{color:var(--dv)}
@@ -3229,17 +3231,18 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-card .units .u.tk{outline:2px solid var(--dam);outline-offset:1px}
 /* entry */
 #mod-dpr .dp2 .pf-ent{padding:4px 4px 5px;background:#fafbfd}
-#mod-dpr .dp2 .pf-ent .eh{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;padding:0 3px}
-#mod-dpr .dp2 .pf-ent .eh>b{font-size:14px;font-family:ui-monospace,Menlo,monospace}
+#mod-dpr .dp2 .pf-ent .eh{display:flex;align-items:center;gap:6px;margin-bottom:3px;padding:0 3px}
+#mod-dpr .dp2 .pf-ent .eh .l{flex:1;min-width:0}#mod-dpr .dp2 .pf-ent .eh .l small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .pf-ent .eh .l>b{font-size:13.5px;font-family:ui-monospace,Menlo,monospace}
 #mod-dpr .dp2 .pf-ent .eh small{font-size:11px;color:var(--ink3)}
 #mod-dpr .dp2 .pf-ent .eh .sp{flex:1}
-#mod-dpr .dp2 .pf-ent .eh .pct{font-size:16px;color:var(--dv)}
-#mod-dpr .dp2 .pf-ent .subs{display:flex;gap:5px;overflow-x:auto;padding:2px 0 5px;scrollbar-width:none}
+#mod-dpr .dp2 .pf-ent .eh .pct{font-size:15px;color:var(--dv)}
+#mod-dpr .dp2 .pf-ent .subs{display:flex;gap:4px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
 #mod-dpr .dp2 .pf-ent .subs::-webkit-scrollbar{display:none}
-#mod-dpr .dp2 .pf-ent .subs .sub{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:64px;padding:4px 8px;border-radius:8px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.2;text-align:left}
-#mod-dpr .dp2 .pf-ent .subs .sub .nm{display:block;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .pf-ent .subs .sub{flex:none;display:flex;flex-direction:row;align-items:center;gap:6px;min-width:0;height:28px;padding:0 8px;border-radius:7px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.2;text-align:left}
+#mod-dpr .dp2 .pf-ent .subs .sub .nm{display:block;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #mod-dpr .dp2 .pf-ent .subs .sub i{font-style:normal;font-size:9.5px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-#mod-dpr .dp2 .pf-ent .subs .sub b{font-size:11px;color:var(--ink3)}
+#mod-dpr .dp2 .pf-ent .subs .sub b{font-size:11px;color:var(--ink3);flex:none}
 #mod-dpr .dp2 .pf-ent .subs .sub.done{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .pf-ent .subs .sub.done b{color:var(--dok)}
 #mod-dpr .dp2 .pf-ent .subs .sub.run{background:var(--dvl);border-color:var(--dvb);color:var(--dv)}#mod-dpr .dp2 .pf-ent .subs .sub.run b{color:var(--dv)}
 #mod-dpr .dp2 .pf-ent .subs .sub.h{background:var(--drdl);border-color:var(--drdb);color:var(--drd)}#mod-dpr .dp2 .pf-ent .subs .sub.h b{color:var(--drd)}
@@ -3250,30 +3253,31 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .grp{border:1px solid var(--ln2,#e0e5ec);border-radius:8px;background:#fff;overflow:hidden}
 #mod-dpr .dp2 .pf-ent .grp.open{border-color:var(--ln,#c3ccd9)}
 #mod-dpr .dp2 .pf-ent .grp.done{background:#f7fcf9}
-#mod-dpr .dp2 .pf-ent .grp .gh{display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;font-size:12px;min-height:30px}
+#mod-dpr .dp2 .pf-ent .grp .gh{display:flex;align-items:center;gap:6px;padding:2px 7px;cursor:pointer;font-size:11.5px;min-height:26px}
 #mod-dpr .dp2 .pf-ent .grp.open .gh{border-bottom:1px solid var(--ln2,#e0e5ec);background:#f3f6fa}
 #mod-dpr .dp2 .pf-ent .grp .gh>b{font-size:12.5px}#mod-dpr .dp2 .pf-ent .grp .gh>span{font-size:10.5px;color:var(--ink3)}
 #mod-dpr .dp2 .pf-ent .grp .gh .sp{flex:1}#mod-dpr .dp2 .pf-ent .grp .gh .pc{color:var(--dv);font-size:13px}#mod-dpr .dp2 .pf-ent .grp .gh .hd{color:var(--dn)}
 #mod-dpr .dp2 .pf-ent .grp .gh .car{font-style:normal;color:var(--ink3);font-size:11px}
 #mod-dpr .dp2 .pf-ent .grp .gh .bad{font-style:normal;color:var(--drd);font-weight:800}
-#mod-dpr .dp2 .pf-ent .grp .subs{padding:5px 6px}
-#mod-dpr .dp2 .pf-ent .lbl{display:block;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
-#mod-dpr .dp2 .pf-ent .lbl i{font-style:normal;text-transform:none;letter-spacing:0;font-weight:600;margin-left:4px}
+#mod-dpr .dp2 .pf-ent .grp .subs{padding:4px 5px 3px}
+#mod-dpr .dp2 .pf-ent .lbl{display:flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+#mod-dpr .dp2 .pf-ent .lbl i{font-style:normal;text-transform:none;letter-spacing:0;font-weight:600}
+#mod-dpr .dp2 .pf-ent .lbl .sp{flex:1}#mod-dpr .dp2 .pf-ent .lbl .st2{margin:0;text-transform:none;letter-spacing:0;font-size:10.5px;font-weight:700}
 #mod-dpr .dp2 .pf-ent .prog,#mod-dpr .dp2 .pf-ent .today,#mod-dpr .dp2 .pf-ent .ulab,#mod-dpr .dp2 .pf-ent .rem{background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:8px;padding:3px 6px 4px;margin-bottom:3px}
-#mod-dpr .dp2 .pf-ent .snap{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-#mod-dpr .dp2 .pf-ent .snap button{height:30px;min-width:36px;padding:0 7px;border-radius:8px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-weight:800;font-size:13px;cursor:pointer;color:var(--ink)}
+#mod-dpr .dp2 .pf-ent .snap{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent .snap button{height:30px;min-width:32px;padding:0 6px;border-radius:7px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-weight:800;font-size:12.5px;cursor:pointer;color:var(--ink)}
 #mod-dpr .dp2 .pf-ent .snap button:disabled{opacity:.4;cursor:default}
 #mod-dpr .dp2 .pf-ent .snap button.on{background:var(--dv);border-color:var(--dv);color:#fff}
 #mod-dpr .dp2 .pf-ent .snap button.done{color:var(--dok);border-color:var(--dokb)}#mod-dpr .dp2 .pf-ent .snap button.done.on{background:var(--dok);border-color:var(--dok);color:#fff}
 #mod-dpr .dp2 .pf-ent .snap button.wip{color:var(--dam);border-color:var(--damb)}#mod-dpr .dp2 .pf-ent .snap button.wip.on{background:var(--dam);border-color:var(--dam);color:#fff}
-#mod-dpr .dp2 .pf-ent .snap button.h{color:var(--drd);border-color:var(--drdb)}#mod-dpr .dp2 .pf-ent .snap button.h.on{background:var(--drd);border-color:var(--drd);color:#fff}
+#mod-dpr .dp2 .pf-ent .snap button.h{color:var(--drd);border-color:var(--drdb);margin-left:auto}#mod-dpr .dp2 .pf-ent .snap button.h.on{background:var(--drd);border-color:var(--drd);color:#fff}
 #mod-dpr .dp2 .pf-ent .snap button.n{color:var(--ink2)}#mod-dpr .dp2 .pf-ent .snap button.n.on{background:var(--ink2);border-color:var(--ink2);color:#fff}
-#mod-dpr .dp2 .pf-ent .snap .gap{flex:1;min-width:4px}
-#mod-dpr .dp2 .pf-ent .snap .pc{display:inline-flex;align-items:center;gap:4px;font-weight:800;font-size:13px;color:var(--ink2)}
-#mod-dpr .dp2 .pf-ent .snap .pc input{width:54px;height:30px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 8px;font-size:15px;font-weight:800;text-align:center;color:var(--dv);background:#fff}
+#mod-dpr .dp2 .pf-ent .snap .gap{display:none}
+#mod-dpr .dp2 .pf-ent .snap .pc{display:inline-flex;align-items:center;gap:2px;font-weight:800;font-size:12px;color:var(--ink2)}
+#mod-dpr .dp2 .pf-ent .snap .pc input{width:42px;height:30px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 8px;font-size:15px;font-weight:800;text-align:center;color:var(--dv);background:#fff}
 #mod-dpr .dp2 .pf-ent .snap .pc.q input{width:84px}
 #mod-dpr .dp2 .pf-ent .snap .pc input.bad{border-color:var(--drd)}
-#mod-dpr .dp2 .pf-ent .st2{margin-top:3px;font-size:11px}
+#mod-dpr .dp2 .pf-ent .st2{margin-top:3px;font-size:11px}#mod-dpr .dp2 .pf-ent .st2.cum{color:var(--ink3);font-weight:600}
 #mod-dpr .dp2 .pf-ent .hrw{margin-top:5px}
 #mod-dpr .dp2 .pf-ent .today .cq{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
 #mod-dpr .dp2 .pf-ent .today .d2-oc button{height:30px;min-width:42px;font-size:12.5px}
@@ -3408,6 +3412,7 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pf-top{top:0}
   #mod-dpr .dp2 .d2-foot.pf{flex-wrap:nowrap;position:static}
   #mod-dpr .dp2 .pfrv .ach{top:0}
+  #mod-dpr .dp2 .pf-card>.hd{top:0}
   #mod-dpr .dp2 .pfrv .nodes{display:grid;grid-template-columns:1fr 1fr}
   #mod-dpr .dp2 .pfrv .cells.c3.subs{grid-template-columns:repeat(5,1fr)}#mod-dpr .dp2 .pfrv .cells.c3.subs>div:nth-child(3n){border-right:1px solid var(--ln2,#e0e5ec)}#mod-dpr .dp2 .pfrv .cells.c3.subs>div:nth-child(5n){border-right:0}
   #mod-dpr .dp2 .pfrv .kp{grid-template-columns:repeat(6,1fr)}
@@ -7679,12 +7684,12 @@ const DPR = (function () {
       const y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), sid = s.id;
       if (done) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span>${pill('p-ok', 'Done' + (y.e || s.finished_on ? ' ' + esc(dsh(y.e || s.finished_on)) : ''))}</div>`;
       if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc) + '%') : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, true)}</div>`;
-      return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${Math.round(base)}%</i></span><div class="snap">${[25, 50, 75].map(p => `<button class="${o === 'w' && !y.wip && Math.round(pc) === p ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" onclick="DPR.snapPct('${wid}','${sid}',100)">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
+      return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${Math.round(base)}%</i><span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => `<button class="${o === 'w' && !y.wip && Math.round(pc) === p ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapPct('${wid}','${sid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" onclick="DPR.snapPct('${wid}','${sid}',100)">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
     }
     const est = num(l.est_qty), base = cumBase(l), fin = finL(l), o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
     if (fin) return `<div class="prog"><span class="lbl">Progress</span>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)} ${uom}</span>` : ''}</div>`;
     if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(q) + ' ' + uom) : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b> <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span><div class="st2">${statusDir(g, l)}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, true)}</div>`;
-    return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2">${statusDir(g, l)} <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span></div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
+    return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i><span class="sp"></span><span class="st2">${statusDir(g, l)}</span></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',100)">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2 cum">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
   }
   function pfFinRow(g, l, ro) {   // a direct line finishing on this sheet: finish date + Site Cert. Qty (staged lines use cdFinStrip)
     const x = lineX(g, l); if (staged(l) || finL(l) || !x.fin) return '';
@@ -7697,7 +7702,7 @@ const DPR = (function () {
     const wid = pfSelUnit(c); if (!wid) return '';
     const e = S.W[wid]; if (!e) return ''; const { g, l } = e, x = lineX(g, l), fin = finL(l), C = pfCrewOf(c), lv = labLevel(g), loc = lineLoc(g, l);
     const n = cdNodeLive(g, l);
-    let h = `<div class="pf-ent"><div class="eh"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small><span class="sp"></span><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
+    let h = `<div class="pf-ent"><div class="eh"><div class="l"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small></div><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
     if (staged(l)) {
       const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
       let sid = S.pfS[wid]; if (!live.some(s => s.id === sid)) { const op = live.find(s => !subDoneT(s, x.subs[s.id])); sid = op ? op.id : (live[0] || {}).id; }

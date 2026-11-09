@@ -1,4 +1,5 @@
 /* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later)
+   v16 (C8 deploy: construction.html v5.4 — DPR phone flow: floor chips · activity cards · crew · PO-style preview)
    v14 (C7 deploy: construction.html v5.3 — Waiting / On Hold, M49)
    v13 (C6 deploy: construction.html — Non-Estimated cards, Work-Wise toggle removed)
    v10 (C5 deploy: construction.html v5 — Cards only)
@@ -14,7 +15,7 @@
    of work and is NOT what this does.
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
-const VERSION = 'pgs-shell-v15';
+const VERSION = 'pgs-shell-v16';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

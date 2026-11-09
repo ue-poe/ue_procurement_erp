@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.4</title>
+<title>Penguin Construction v5.4.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3237,6 +3237,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .subs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
 #mod-dpr .dp2 .pf-ent .subs::-webkit-scrollbar{display:none}
 #mod-dpr .dp2 .pf-ent .subs .sub{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:72px;padding:5px 10px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;line-height:1.2;text-align:left}
+#mod-dpr .dp2 .pf-ent .subs .sub .nm{display:block;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #mod-dpr .dp2 .pf-ent .subs .sub i{font-style:normal;font-size:9.5px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
 #mod-dpr .dp2 .pf-ent .subs .sub b{font-size:11px;color:var(--ink3)}
 #mod-dpr .dp2 .pf-ent .subs .sub.done{background:var(--dokl);border-color:var(--dokb);color:var(--dok)}#mod-dpr .dp2 .pf-ent .subs .sub.done b{color:var(--dok)}
@@ -3337,15 +3338,54 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pfrv .lb .r .tr span{border:1px solid var(--ln2,#e0e5ec);border-radius:5px;padding:1px 6px;font-size:10.5px;color:var(--ink2);background:#fafbfd}
 #mod-dpr .dp2 .pfrv .lb .r.tot{background:#f3f6fa;font-weight:800}
 #mod-dpr .dp2 .pfrv .sentnote{margin-top:10px;font-size:11.5px;color:var(--ink3);text-align:center}
-#mod-dpr .dp2 .pfcal{border:0;padding:6px}
+/* v5.4.1 · calendar sheet (lives in #dprSheet, outside .dp2) */
+#mod-dpr .pfcal{padding:10px 12px 6px;background:#fff}
+#mod-dpr .pfcal .quick{display:flex;gap:8px;margin-bottom:10px}
+#mod-dpr .pfcal .quick button{flex:1;height:44px;border:1px solid #c3ccd9;border-radius:10px;background:#f3f6fa;font-weight:800;font-size:13px;color:#132338;cursor:pointer;line-height:1.1}
+#mod-dpr .pfcal .quick button i{display:block;font-style:normal;font-size:10.5px;color:#8a98ad;font-weight:700}
+#mod-dpr .pfcal .quick button.on{background:#12305a;border-color:#12305a;color:#fff}#mod-dpr .pfcal .quick button.on i{color:#c6cede}
+#mod-dpr .pfcal .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+#mod-dpr .pfcal .mh b{font-size:15px}
+#mod-dpr .pfcal .mh button{width:44px;height:40px;border:1px solid #c3ccd9;border-radius:10px;background:#fff;font-size:20px;font-weight:800;cursor:pointer;color:#12305a}
+#mod-dpr .pfcal .mh button:disabled{opacity:.35}
+#mod-dpr .pfcal .dow,#mod-dpr .pfcal .g{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+#mod-dpr .pfcal .dow span{text-align:center;font-size:10.5px;font-weight:800;color:#8a98ad;text-transform:uppercase;padding:2px 0 4px}
+#mod-dpr .pfcal .g .d{height:50px;border:1px solid #dde3ea;border-radius:9px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;color:#132338;padding:0}
+#mod-dpr .pfcal .g .d.pad{border:0;background:transparent}
+#mod-dpr .pfcal .g .d b{font-size:15px;line-height:1}#mod-dpr .pfcal .g .d i{font-style:normal;font-size:9.5px;font-weight:800;color:#8a98ad;text-transform:uppercase;letter-spacing:.03em}
+#mod-dpr .pfcal .g .d.fut{opacity:.3;cursor:default}
+#mod-dpr .pfcal .g .d.none{border-style:dashed;color:#8a98ad}
+#mod-dpr .pfcal .g .d.draft{background:#fdf1dc;border-color:#e8cb96}#mod-dpr .pfcal .g .d.draft i{color:#a8690a}
+#mod-dpr .pfcal .g .d.lab{background:#e1f4f4;border-color:#b2dede}#mod-dpr .pfcal .g .d.lab i{color:#0b7d7d}
+#mod-dpr .pfcal .g .d.sent{background:#e8eef8;border-color:#b9c8e4}#mod-dpr .pfcal .g .d.sent i{color:#12305a}
+#mod-dpr .pfcal .g .d.acc{background:#e4f5ec;border-color:#a9dcbe}#mod-dpr .pfcal .g .d.acc i{color:#128a4a}
+#mod-dpr .pfcal .g .d.ret{background:#fceceb;border-color:#eab8b4}#mod-dpr .pfcal .g .d.ret i{color:#b3261e}
+#mod-dpr .pfcal .g .d.pub{background:#f2eefc;border-color:#d5c9ef}#mod-dpr .pfcal .g .d.pub i{color:#5b3fa8}
+#mod-dpr .pfcal .g .d.today{box-shadow:inset 0 0 0 2px #0b7d7d}
+#mod-dpr .pfcal .g .d.sel{outline:3px solid #12305a;outline-offset:1px}
+#mod-dpr .pfcal .leg{display:flex;flex-wrap:wrap;gap:6px 12px;margin:10px 0 4px;font-size:10.5px;color:#51627a;font-weight:700}
+#mod-dpr .pfcal .leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px;border:1px solid #c3ccd9}
+#mod-dpr .pfcal .leg i.lab{background:#0b7d7d}#mod-dpr .pfcal .leg i.draft{background:#a8690a}#mod-dpr .pfcal .leg i.sent{background:#12305a}#mod-dpr .pfcal .leg i.acc{background:#128a4a}#mod-dpr .pfcal .leg i.ret{background:#b3261e}#mod-dpr .pfcal .leg i.pub{background:#5b3fa8}#mod-dpr .pfcal .leg i.none{background:#fff;border-style:dashed}
+/* v5.4.1 · Not Created date */
+#mod-dpr .dp2 .pf-blank{padding:12px 10px 16px;background:var(--bg,#eef1f6)}
+#mod-dpr .dp2 .pf-blank .bx{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:12px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:8px}
+#mod-dpr .dp2 .pf-blank .bx>b{font-size:15px}#mod-dpr .dp2 .pf-blank .bx>span{font-size:12px;color:var(--ink3)}
+#mod-dpr .dp2 .pf-blank .note{background:var(--daml);border:1px solid var(--damb);color:var(--dam);border-radius:9px;padding:8px 10px;font-size:12px;font-weight:700}
+#mod-dpr .dp2 .pf-blank .note a{text-decoration:underline;cursor:pointer}
+#mod-dpr .dp2 .pf-blank .d2-btn.big{height:46px;font-size:14px;font-weight:800;margin-top:4px}
+#mod-dpr .dp2 .pf-blank .alt{display:flex;gap:8px;flex-wrap:wrap}#mod-dpr .dp2 .pf-blank .alt .d2-btn{flex:1;min-height:40px}
+#mod-dpr .dp2.eng .d2-card.pfc.blank{min-height:0}
 /* phone */
 @media(max-width:999px){
   #mod-dpr.module.pf-on,#mod-dpr.module:has(.d2-card.pfc){overflow:visible}   /* the module's overflow-x:hidden would become the sticky scrollport */
   #mod-dpr .dp2.eng .d2-side,#mod-dpr .dp2.eng .d2-toptabs{display:none}
   #mod-dpr .dp2.eng .d2-card.pfc{border-radius:12px;min-height:60vh}
   #mod-dpr .dp2.eng .d2-card.pfc .rv.pfrvw{overflow:visible}
-  #mod-dpr .dp2 .d2-foot.pf{position:fixed;left:0;right:0;bottom:0;border-radius:0;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
-  #mod-dpr .dp2 .pf,#mod-dpr .dp2 .pfrv{padding-bottom:92px}
+  #mod-dpr .dp2 .d2-foot.pf{position:fixed;left:0;right:0;bottom:0;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center;border-radius:0;padding:6px 10px calc(8px + env(safe-area-inset-bottom,0px))!important;gap:6px 8px}
+  #mod-dpr .dp2 .d2-foot.pf .msg{flex:1 1 100%;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+  #mod-dpr .dp2 .d2-foot.pf .d2-btn{flex:1 1 0;min-height:42px;white-space:nowrap}
+  #mod-dpr .dp2 .pf,#mod-dpr .dp2 .pfrv{padding-bottom:84px}
+  #mod-dpr .dp2 .pf-blank{padding-bottom:84px}
   #mod-dpr .dp2 .pf-top .who{display:none}
 }
 @media(min-width:1000px){
@@ -4875,7 +4915,8 @@ const DPR = (function () {
       <div class="d2-sk"><div class="r"><span>Today</span><b>${esc(dmy(today))}</b></div><div class="r"><span>Last Submitted</span><b>${last ? esc(dts(last.submitted_at)) : '—'}</b></div><div class="r"><span>Pending Dates</span><b style="color:var(--drd)">${esc(pend || '—')}</b></div><div class="r"><span>Returned</span><b style="color:var(--drd)">${esc(ret || '—')}</b></div></div>`;
   }
   const stKeyY = () => S.R ? inCtx('Y', stKey) : stKey();
-  function blankHtml() {
+  function blankHtml() { return pfBlank(); }   // v5.4.1
+  function blankHtmlTable() {
     return `<div class="d2-card"><div class="d2-fix d2-hd"><div class="date"><b>${esc(dLong(S.to))}</b></div><div class="meta"><div>Status <span class="pill p-grey">Not Created</span></div></div></div>
       <div class="d2-empty"><b style="font-size:14px">No Report For This Date Yet</b><div style="margin:8px 0 14px">Create It To Enter Work, Manpower And Progress For ${esc(dsh(S.to))}. The Date And Time You Send It Are Recorded.</div><button class="d2-btn navy" onclick="DPR.createDay()">Create Report For ${esc(dsh(S.to))}</button></div></div>`;
   }
@@ -7645,7 +7686,7 @@ const DPR = (function () {
       const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
       let sid = S.pfS[wid]; if (!live.some(s => s.id === sid)) { const op = live.find(s => !subDoneT(s, x.subs[s.id])); sid = op ? op.id : (live[0] || {}).id; }
       h += `<div class="subs scroll">${live.map(s => { const y = x.subs[s.id], base = subBase(s), p = Math.min(100, subPct(g, l, s)), t = subT(y), done = base >= 99.9995, cls = done || (y.out === 'w' && !y.wip && p >= 99.9995) ? 'done' : (y.out === 'h' || t.out === 'h') ? 'h' : (y.out === 'w' || t.out === 'w' || base > 0.0005) ? 'run' : 'ns', att = subAttOf(g, l, s);
-        return `<button class="sub ${cls} ${att ? 'att' : ''} ${s.id === sid ? 'on' : ''}" onclick="DPR.pfSub('${wid}','${s.id}')">${hasG && s.group_name ? `<i>${esc(s.group_name)}</i>` : ''}${esc(s.name)}<b>${done ? '✓' : Math.round(p) + '%'}</b></button>`; }).join('')}${cdWaitNote((l.stages || []).length - live.length, cdKey(g, l))}</div>`;
+        return `<button class="sub ${cls} ${att ? 'att' : ''} ${s.id === sid ? 'on' : ''}" title="${esc(s.name)}" onclick="DPR.pfSub('${wid}','${s.id}')">${hasG && s.group_name ? `<i>${esc(s.group_name)}</i>` : ''}<span class="nm">${esc(s.name)}</span><b>${done ? '✓' : Math.round(p) + '%'}</b></button>`; }).join('')}${cdWaitNote((l.stages || []).length - live.length, cdKey(g, l))}</div>`;
       const s = live.find(z => z.id === sid);
       if (s) {
         const y = x.subs[s.id], done = subDoneT(s, y), Gp = Gs.find(G => G.subs.some(z => z.id === s.id)) || null;
@@ -7680,13 +7721,13 @@ const DPR = (function () {
   }
   /* ----- header: ‹ date ▾ › · status · floor chips ----- */
   function pfHead(ro, rv) {
-    const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = attCount();
+    const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = sub ? attCount() : 0;
     const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
     const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
     return `<div class="pf-top" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
-      <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(PD()))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
+      <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfMenu()">＋ Add</button>`}</div>`}${S.fs && !rv ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfMenu()">＋ Add</button>`}</div>`}${S.fs && !rv ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
   }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
     const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return;
@@ -7695,10 +7736,22 @@ const DPR = (function () {
     d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
   }
   if (!window._pfStick) { window._pfStick = true; window.addEventListener('resize', () => { if (document.getElementById('pf_top')) pfStick(); }); }
-  function pfCal() {   // the month calendar in a sheet (the side column is hidden on phones)
-    const nextOff = S.cal.month >= monthOf(todayYmd());
-    sheetOpen('Report Date', 'Pick A Date', `<div class="d2-cal pfcal" id="pf_cal"><div class="mh"><button onclick="DPR.pfCalMove(-1)">‹</button><b>${esc(mLabel(S.cal.month))}</b><button ${nextOff ? 'disabled' : ''} onclick="DPR.pfCalMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${calHtml()}</div></div>
-      <div class="d2-leg" style="padding:8px 10px"><span><i class="b lab"></i>Labour Entered</span><span><i class="b draft"></i>Draft</span><span><i class="b sent"></i>Submitted</span><span><i class="b acc"></i>Accepted</span><span><i class="b ret"></i>Returned</span><span><i class="b pub"></i>Published</span><span><i class="b none"></i>Not Created</span></div>`,
+  function pfCalHtml() {   // v5.4.1 · tap-sized month grid for the sheet (the side calendar's styles never reached #dprSheet)
+    const m = S.cal.month, first = new Date(m + 'T00:00:00'), dim = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate(), lead = (first.getDay() + 6) % 7, today = todayYmd(), cur = tDate();
+    let h = ''; for (let i = 0; i < lead; i++) h += '<span class="d pad"></span>';
+    for (let n = 1; n <= dim; n++) {
+      const d = m.slice(0, 8) + String(n).padStart(2, '0'), c = S.cal.days[d], fut = d > today;
+      const k = !c ? 'none' : c.published ? 'pub' : (c.status === 'Draft' && num(c.heads) > 0 && !num(c.reported)) ? 'lab' : stOf(c.status)[0];
+      const title = !c ? 'Not Created' : k === 'lab' ? 'Labour Entered · Progress Pending' : stOf(c.published ? 'pub' : c.status)[1];
+      h += `<button class="d ${k} ${fut ? 'fut' : ''} ${d === today ? 'today' : ''} ${d === cur ? 'sel' : ''}" ${fut ? 'disabled' : ''} title="${esc(dsh(d) + ' · ' + title)}" onclick="DPR.sheetClose();DPR.pickDate('${d}')"><b>${n}</b><i>${fut ? '' : !c ? '·' : k === 'pub' ? 'Pub' : k === 'acc' ? 'Acc' : k === 'sent' ? 'Sent' : k === 'ret' ? 'Ret' : k === 'lab' ? 'Lab' : 'Draft'}</i></button>`;
+    }
+    return h;
+  }
+  function pfCal() {
+    const nextOff = S.cal.month >= monthOf(todayYmd()), today = todayYmd(), y1 = addDays(today, -1), cur = tDate();
+    const q = (d, t) => `<button class="${cur === d ? 'on' : ''}" onclick="DPR.sheetClose();DPR.pickDate('${d}')">${t}<i>${esc(dsh(d))}</i></button>`;
+    sheetOpen('Report Date', 'Tap A Day', `<div class="pfcal" id="pf_cal"><div class="quick">${q(y1, 'Yesterday')}${q(today, 'Today')}</div><div class="mh"><button onclick="DPR.pfCalMove(-1)">‹</button><b>${esc(mLabel(S.cal.month))}</b><button ${nextOff ? 'disabled' : ''} onclick="DPR.pfCalMove(1)">›</button></div><div class="dow"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="g">${pfCalHtml()}</div>
+      <div class="leg"><span><i class="lab"></i>Labour Entered</span><span><i class="draft"></i>Draft</span><span><i class="sent"></i>Submitted</span><span><i class="acc"></i>Accepted</span><span><i class="ret"></i>Returned</span><span><i class="pub"></i>Published</span><span><i class="none"></i>Not Created</span></div></div>`,
       `<button class="dbtn" onclick="DPR.sheetClose();DPR.tab('rep')">Day Reports</button><span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>`);
   }
   async function pfCalMove(n) { const d = new Date(S.cal.month + 'T00:00:00'); d.setMonth(d.getMonth() + n); const m = ymd(d); if (m > monthOf(todayYmd())) return; await calLoad(m); pfCal(); }
@@ -7712,6 +7765,14 @@ const DPR = (function () {
     b += row('Day Reports', 'Calendar · Sent Reports · Preview', 'DPR.sheetClose();DPR.tab(\'rep\')');
     if (sub && sub.status === 'Draft' && !ro) b += row('Delete ' + esc(dsh(S.to)) + ' Report', 'Unsent Draft Only', `DPR.sheetClose();DPR.delDay('${S.to}')`, 'red');
     sheetOpen('Sheet · ' + dsh(S.to), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  function pfBlank() {   // v5.4.1 · a date with no report: the same header (‹ date ▾ ›) and a compact create card, not a 70vh empty box
+    const today = todayYmd(), d = S.to, prev = Object.values((S.cal && S.cal.days) || {}).filter(x => x.report_date < d).sort((a, b) => a.report_date < b.report_date ? 1 : -1)[0];
+    const blk = Object.values((S.cal && S.cal.days) || {}).filter(x => x.report_date < d && (x.status === 'Draft' || x.status === 'Returned')).sort((a, b) => a.report_date < b.report_date ? -1 : 1)[0];
+    return `<div class="d2-card pfc blank">${pfHead(true, 'blank')}<div class="pf-blank"><div class="bx"><b>No Report For ${esc(dmy(d))}</b><span>${d === today ? 'Today' : d === addDays(today, -1) ? 'Yesterday' : 'Past Date'} · Progress Of ${esc(dsh(addDays(d, -1)))} · Status &amp; Labour Of ${esc(dsh(d))}</span>
+      ${blk ? `<div class="note">Your ${esc(dsh(blk.report_date))} Report Is Still ${esc(blk.status)} — Reports Go In Date Order. <a onclick="DPR.pickDate('${blk.report_date}')">Open ${esc(dsh(blk.report_date))}</a></div>` : ''}
+      <button class="d2-btn navy big" onclick="DPR.createDay()">Create Report For ${esc(dsh(d))}</button>
+      <div class="alt">${prev ? `<button class="d2-btn" onclick="DPR.pickDate('${prev.report_date}')">Open ${esc(dsh(prev.report_date))} · ${esc(stOf(prev.published ? 'pub' : prev.status)[1])}</button>` : ''}<button class="d2-btn" onclick="DPR.pfCal()">Pick Another Date</button></div></div></div></div>`;
   }
   /* ----- Preview & Send · the day report (also the sent report, read-only) ----- */
   function pfWhy(g, l) {   // why a row needs attention, in words

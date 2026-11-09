@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.4.5</title>
+<title>Penguin Construction v5.4.6</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3198,25 +3198,26 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .find{display:flex;align-items:center;gap:8px;padding:0 0 8px;font-size:12px;color:#fff}
 #mod-dpr .dp2 .pf-top .find span{flex:1}
 /* cards */
-#mod-dpr .dp2 .pf{display:flex;flex-direction:column;gap:6px;padding:5px 3px 6px;background:var(--bg,#eef1f6)}
-#mod-dpr .dp2 .pf-card{background:#fff;border:1px solid var(--ln,#c3ccd9);border-radius:10px;min-width:0}
+#mod-dpr .dp2 .pf{display:flex;flex-direction:column;gap:6px;padding:4px 2px 6px;background:var(--bg,#eef1f6)}
+#mod-dpr .dp2 .pf-card{--tint:#fff;--tinth:#e9eef5;--tintb:var(--ln,#c3ccd9);background:var(--tint);border:1px solid var(--tintb);border-radius:10px;min-width:0}
+#mod-dpr .dp2 .pf-card.t1{--tint:#f6f9ff;--tinth:#dfe8f7;--tintb:#c9d7ec}#mod-dpr .dp2 .pf-card.t2{--tint:#f5fbf7;--tinth:#dcefe3;--tintb:#c3dfcf}#mod-dpr .dp2 .pf-card.t3{--tint:#fdf9f2;--tinth:#f3e7d2;--tintb:#e6d3b1}#mod-dpr .dp2 .pf-card.t4{--tint:#f9f6fd;--tinth:#e8e0f5;--tintb:#d5c7ea}#mod-dpr .dp2 .pf-card.t5{--tint:#f6fafb;--tinth:#dcebef;--tintb:#c2d9e0}
 #mod-dpr .dp2 .pf-card>.hd{position:sticky;top:var(--pf-top,0px);z-index:4;border-radius:10px 10px 0 0}
 #mod-dpr .dp2 .pf-card>:last-child{border-radius:0 0 10px 10px}
 #mod-dpr .dp2 .pf-card.att{border-color:var(--drdb)}
-#mod-dpr .dp2 .pf-card>.hd{display:flex;align-items:flex-start;gap:6px;padding:4px 7px 3px;background:#e9eef5;border-bottom:1px solid var(--ln,#c3ccd9)}
+#mod-dpr .dp2 .pf-card>.hd{display:flex;align-items:flex-start;gap:6px;padding:4px 7px 3px;background:var(--tinth);border-bottom:1px solid var(--tintb)}
 #mod-dpr .dp2 .pf-card>.hd>div:first-child{flex:1;min-width:0}
 #mod-dpr .dp2 .pf-card>.hd b{display:block;font-size:13.5px;line-height:1.2}
 #mod-dpr .dp2 .pf-card>.hd small{display:block;font-size:10.5px;color:var(--ink3);margin-top:1px}
 #mod-dpr .dp2 .pf-card>.hd small .bad{color:var(--drd);font-weight:800}
 #mod-dpr .dp2 .pf-card>.hd .pct{text-align:right;flex:none}
 #mod-dpr .dp2 .pf-card>.hd .pct b{font-size:18px;color:var(--dv);line-height:1}#mod-dpr .dp2 .pf-card>.hd .pct small{font-size:10px;color:var(--ink3)}
-#mod-dpr .dp2 .pf-card .crew{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:3px 7px;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fbfbff;font-size:12.5px}
+#mod-dpr .dp2 .pf-card .crew{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:3px 6px;border-bottom:1px solid var(--tintb);background:var(--tint);font-size:12.5px}
 #mod-dpr .dp2 .pf-card .crew .k{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--dv)}
 #mod-dpr .dp2 .pf-card .crew .v{font-weight:700}
 #mod-dpr .dp2 .pf-card .crew .hd{font-size:15px;color:var(--dn)}
 #mod-dpr .dp2 .pf-card .crew .sp{flex:1}
 #mod-dpr .dp2 .pf-card .cd-mp.full{margin:0;border-radius:0;border-left:0;border-right:0}
-#mod-dpr .dp2 .pf-card .units{display:flex;gap:4px;overflow-x:auto;padding:4px 5px;scrollbar-width:none;border-bottom:1px solid var(--ln2,#e0e5ec);background:#fff}
+#mod-dpr .dp2 .pf-card .units{display:flex;gap:4px;overflow-x:auto;padding:4px 4px;scrollbar-width:none;border-bottom:1px solid var(--tintb);background:var(--tint)}
 #mod-dpr .dp2 .pf-card .units::-webkit-scrollbar{display:none}
 #mod-dpr .dp2 .pf-card .units .u{flex:none;min-width:52px;height:34px;padding:0 7px;border-radius:9px;border:1px solid var(--ln,#c3ccd9);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;color:var(--ink)}
 #mod-dpr .dp2 .pf-card .units .u b{font-size:12px;font-family:ui-monospace,Menlo,monospace;letter-spacing:.02em}
@@ -3230,8 +3231,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-card .units .u.on small,#mod-dpr .dp2 .pf-card .units .u.on b{color:#fff}
 #mod-dpr .dp2 .pf-card .units .u.tk{outline:2px solid var(--dam);outline-offset:1px}
 /* entry */
-#mod-dpr .dp2 .pf-ent{padding:4px 4px 5px;background:#fafbfd}
-#mod-dpr .dp2 .pf-ent .eh{display:flex;align-items:center;gap:6px;margin-bottom:3px;padding:0 3px}
+#mod-dpr .dp2 .pf-ent{padding:3px 2px 4px;background:var(--tint)}
+#mod-dpr .dp2 .pf-ent .eh{display:flex;align-items:center;gap:6px;margin-bottom:3px;padding:0 4px}
 #mod-dpr .dp2 .pf-ent .eh .l{flex:1;min-width:0}#mod-dpr .dp2 .pf-ent .eh .l small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #mod-dpr .dp2 .pf-ent .eh .l>b{font-size:13.5px;font-family:ui-monospace,Menlo,monospace}
 #mod-dpr .dp2 .pf-ent .eh small{font-size:11px;color:var(--ink3)}
@@ -3250,7 +3251,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .subs .sub.on{outline:2px solid var(--dn);outline-offset:1px}
 /* v5.4.2 · stage groups: one strip per group */
 #mod-dpr .dp2 .pf-ent .grps{display:flex;flex-direction:column;gap:3px;margin-bottom:4px}
-#mod-dpr .dp2 .pf-ent .grp{border:1px solid var(--ln2,#e0e5ec);border-radius:8px;background:#fff;overflow:hidden}
+#mod-dpr .dp2 .pf-ent .grp{border:1px solid var(--ln2,#e0e5ec);border-radius:7px;background:#fff;overflow:hidden}
 #mod-dpr .dp2 .pf-ent .grp.open{border-color:var(--ln,#c3ccd9)}
 #mod-dpr .dp2 .pf-ent .grp.done{background:#f7fcf9}
 #mod-dpr .dp2 .pf-ent .grp .gh{display:flex;align-items:center;gap:6px;padding:2px 7px;cursor:pointer;font-size:11.5px;min-height:26px}
@@ -3263,9 +3264,9 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .lbl{display:flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
 #mod-dpr .dp2 .pf-ent .lbl i{font-style:normal;text-transform:none;letter-spacing:0;font-weight:600}
 #mod-dpr .dp2 .pf-ent .lbl .sp{flex:1}#mod-dpr .dp2 .pf-ent .lbl .st2{margin:0;text-transform:none;letter-spacing:0;font-size:10.5px;font-weight:700}
-#mod-dpr .dp2 .pf-ent .prog,#mod-dpr .dp2 .pf-ent .today,#mod-dpr .dp2 .pf-ent .ulab,#mod-dpr .dp2 .pf-ent .rem{background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:8px;padding:3px 6px 4px;margin-bottom:3px}
+#mod-dpr .dp2 .pf-ent .prog,#mod-dpr .dp2 .pf-ent .today,#mod-dpr .dp2 .pf-ent .ulab,#mod-dpr .dp2 .pf-ent .rem{background:#fff;border:1px solid var(--ln2,#e0e5ec);border-radius:7px;padding:3px 5px 4px;margin-bottom:3px}
 #mod-dpr .dp2 .pf-ent .snap{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
-#mod-dpr .dp2 .pf-ent .snap button{height:30px;min-width:32px;padding:0 6px;border-radius:7px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-weight:800;font-size:12.5px;cursor:pointer;color:var(--ink)}
+#mod-dpr .dp2 .pf-ent .snap button{height:30px;min-width:30px;padding:0 5px;border-radius:7px;border:1px solid var(--ln,#c3ccd9);background:#fff;font-weight:800;font-size:12px;cursor:pointer;color:var(--ink)}
 #mod-dpr .dp2 .pf-ent .snap button:disabled{opacity:.4;cursor:default}
 #mod-dpr .dp2 .pf-ent .snap button.on{background:var(--dv);border-color:var(--dv);color:#fff}
 #mod-dpr .dp2 .pf-ent .snap button.done{color:var(--dok);border-color:var(--dokb)}#mod-dpr .dp2 .pf-ent .snap button.done.on{background:var(--dok);border-color:var(--dok);color:#fff}
@@ -3274,7 +3275,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .snap button.n{color:var(--ink2)}#mod-dpr .dp2 .pf-ent .snap button.n.on{background:var(--ink2);border-color:var(--ink2);color:#fff}
 #mod-dpr .dp2 .pf-ent .snap .gap{display:none}
 #mod-dpr .dp2 .pf-ent .snap .pc{display:inline-flex;align-items:center;gap:2px;font-weight:800;font-size:12px;color:var(--ink2)}
-#mod-dpr .dp2 .pf-ent .snap .pc input{width:42px;height:30px;border:1px solid var(--ln,#c3ccd9);border-radius:8px;padding:0 8px;font-size:15px;font-weight:800;text-align:center;color:var(--dv);background:#fff}
+#mod-dpr .dp2 .pf-ent .snap .pc input{width:40px;height:30px;border:1px solid var(--ln,#c3ccd9);border-radius:7px;padding:0 4px;font-size:14px;font-weight:800;text-align:center;color:var(--dv);background:#fff}
 #mod-dpr .dp2 .pf-ent .snap .pc.q input{width:84px}
 #mod-dpr .dp2 .pf-ent .snap .pc input.bad{border-color:var(--drd)}
 #mod-dpr .dp2 .pf-ent .st2{margin-top:3px;font-size:11px}#mod-dpr .dp2 .pf-ent .st2.cum{color:var(--ink3);font-weight:600}
@@ -3398,9 +3399,10 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr.module.pf-on,#mod-dpr.module:has(.d2-card.pfc){overflow:visible;overflow-x:clip}   /* overflow-x:hidden would become the sticky scrollport; clip keeps sticky and still stops sideways overflow */
   #mod-dpr .dp2 .pf-top .st,#mod-dpr .dp2 .pfrv .ach>div,#mod-dpr .dp2 .pf-card>.hd>div:first-child{min-width:0;overflow-wrap:anywhere}
   #mod-dpr .dp2.eng .d2-side,#mod-dpr .dp2.eng .d2-toptabs{display:none}
-  #mod-dpr .dp2.eng .d2-card.pfc{border-radius:12px;min-height:60vh}
+  #mod-dpr .dp2.eng .d2-card.pfc{border-radius:0;min-height:60vh;margin:0 -6px;border-left:0;border-right:0}
+  #mod-dpr .dp2 .pf-top{border-radius:0}
   #mod-dpr .dp2.eng .d2-card.pfc .rv.pfrvw{overflow:visible}
-  #mod-dpr .dp2 .d2-foot.pf{position:fixed;left:0;right:0;bottom:0;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center;border-radius:0;padding:4px 9px calc(6px + env(safe-area-inset-bottom,0px))!important;gap:3px 6px}
+  #mod-dpr .dp2 .d2-foot.pf{position:fixed;left:0;right:0;bottom:0;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center;border-radius:0;padding:4px 2px calc(6px + env(safe-area-inset-bottom,0px))!important;gap:3px 6px}
   #mod-dpr .dp2 .d2-foot.pf .msg{flex:1 1 100%;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
   #mod-dpr .dp2 .d2-foot.pf .d2-btn{flex:1 1 0;min-height:36px;padding:0 8px;font-size:12.5px;white-space:nowrap;border-radius:8px}
   #mod-dpr .dp2 .pf,#mod-dpr .dp2 .pfrv{padding-bottom:72px}
@@ -7739,14 +7741,14 @@ const DPR = (function () {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
   }
   function pfSheet(ro) {
     const M = pfModel(false), live = cdModel('live'), o = { ro };
     setTimeout(pfStick, 0);
     if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Use ＋ Add Activities Or ⊞ Grid (Menu) To Put Activities On Your Sheet.</div></div>` + cdNp(live, o) + cdWaiting(live, o);
     if (!M.cards.length) return `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">No Activity Matches The Find Text On This Floor.</div></div>`;
-    return `<div class="pf">${M.cards.map(c => pfCard(c, ro)).join('')}</div>` + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o);
+    return `<div class="pf">${M.cards.map((c, i) => { c.i = i; return pfCard(c, ro); }).join('')}</div>` + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o);
   }
   /* ----- header: ‹ date ▾ › · status · floor chips ----- */
   function pfHead(ro, rv) {

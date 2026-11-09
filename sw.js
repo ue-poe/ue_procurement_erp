@@ -1,4 +1,5 @@
 /* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later) · redeploy 10 Nov 2026 (Pages build for db8ccd0 failed on GitHub side)
+   v21 (C8.6 deploy: construction.html v5.4.6 — edge-to-edge tinted activity cards · minimal gutters)
    v20 (C8.5 deploy: construction.html v5.4.5 — one-line sub chips · tighter entry · sticky activity header on the sheet)
    v19 (C8.4 deploy: construction.html v5.4.4 — denser sheet and preview · slim footer aligned to the cards)
    v18 (C8.3 deploy: construction.html v5.4.3 — half padding · stage groups as strips · no sideways overflow on the preview)
@@ -19,7 +20,7 @@
    of work and is NOT what this does.
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
-const VERSION = 'pgs-shell-v20';
+const VERSION = 'pgs-shell-v21';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

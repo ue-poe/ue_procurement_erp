@@ -1,4 +1,4 @@
-/* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later)
+/* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later) · redeploy 10 Nov 2026 (Pages build for db8ccd0 failed on GitHub side)
    v18 (C8.3 deploy: construction.html v5.4.3 — half padding · stage groups as strips · no sideways overflow on the preview)
    v17 (C8.1 deploy: construction.html v5.4.1 — tap-sized calendar sheet · Not Created screen · one-row footer)
    v16 (C8 deploy: construction.html v5.4 — DPR phone flow: floor chips · activity cards · crew · PO-style preview)

@@ -27,7 +27,8 @@
 // v26 · construction.html v5.5.4 — Resume on a sheet opens the whole sheet (resume date = the sheet's progress date)
 // v27 · construction.html v5.5.5 — Add Work: the estimate picker with its search always on screen
 // v28 · construction.html v5.5.6 — floor chips carry the tower mark
-const VERSION = 'pgs-shell-v28';
+// v29 · construction.html v5.6 — DPR compact header on phone (names · date row · chips; shrinks while scrolling)
+const VERSION = 'pgs-shell-v29';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

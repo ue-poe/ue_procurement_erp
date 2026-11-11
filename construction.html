@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.5.6</title>
+<title>Penguin Construction v5.6</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3516,6 +3516,49 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pfc .dpr-addfab.big .sp{display:none}
   #mod-dpr .dp2 .pfc .dpr-addfab.big .dbtn{flex:1 1 0;min-height:42px;white-space:normal;line-height:1.15}
   #mod-dpr .dp2 .pfc .dpr-addfab.big .dbtn.ghost{flex:0 0 auto}
+}
+/* v5.6 · compact header: names · date row · chips (phone); names and the app ☰ are a phone idea — the sidebar carries them on wider screens */
+#mod-dpr .dp2 .pf-top .nm,#mod-dpr .dp2 .pf-top .menu.app{display:none}
+#mod-dpr .dp2 .pf-top .m .m2{display:none}
+#mod-dpr .dp2 .pf-top .mp2 .sg{flex:none;display:flex;height:32px;border-radius:9px;border:1px solid rgba(255,255,255,.3);overflow:hidden}
+#mod-dpr .dp2 .pf-top .mp2 .sg button{height:auto;border:0;border-radius:0;background:transparent;padding:0 10px;font-weight:800}
+#mod-dpr .dp2 .pf-top .mp2 .sg button.on{background:#fff;color:var(--dn)}
+#mod-dpr .dp2 .pf-top .mp2 .vr{flex:none;width:1px;height:20px;background:rgba(255,255,255,.28);align-self:center;margin:0 1px}
+#mod-dpr .dp2 .pf-top .mp2 .sd{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+#mod-dpr .dp2 .pf-top .mp2 .sd.a{background:#fbbf24}#mod-dpr .dp2 .pf-top .mp2 .sd.g{background:#34d399}#mod-dpr .dp2 .pf-top .mp2 .sd.r{background:#f87171}
+@media(max-width:860px){
+  /* the shell's top bar gives way to the sheet header; ☰ opens the same drawer (project, Switch Project, modules) */
+  body:has(#mod-dpr.active #pf_top):not(.pgs-nav-open) .pgs-sidebar{position:static!important;box-shadow:none!important;padding:0!important;min-height:0!important}
+  body:has(#mod-dpr.active #pf_top):not(.pgs-nav-open) .pgs-sidebar > *{display:none!important}
+  body:has(#mod-dpr.active #pf_top) .pgs-main > .container{padding-top:0!important}
+  body:has(#mod-dpr.active #pf_top){overflow-anchor:none}
+  #mod-dpr #d2.dp2:has(#pf_top){padding-top:0}
+  #mod-dpr .dp2 .d2-card.pfc:has(#pf_top){border-top:0}
+  #mod-dpr .dp2 .pf-top{padding:env(safe-area-inset-top,0px) 0 0;top:0}
+  #mod-dpr .dp2 .pf-top .menu.app{display:block;font-size:17px}
+  #mod-dpr .dp2 .pf-top .nm{display:block;background:#101a2e;color:#b9c4d8;padding:6px 10px 5px;height:46px;overflow:hidden}
+  #mod-dpr .dp2 .pf-top .nm .b1{display:flex;gap:6px;align-items:center;font-size:15px;line-height:18px;white-space:nowrap}
+  #mod-dpr .dp2 .pf-top .nm .b1 b{color:#2dd4bf;font-weight:800}
+  #mod-dpr .dp2 .pf-top .nm .b2{display:flex;gap:5px;align-items:baseline;font-size:12px;line-height:17px;white-space:nowrap;min-width:0}
+  #mod-dpr .dp2 .pf-top .nm .co{overflow:hidden;text-overflow:ellipsis;min-width:0}
+  #mod-dpr .dp2 .pf-top .nm .co::after{content:' ·'}
+  #mod-dpr .dp2 .pf-top .nm .pj{color:#fff;font-size:13px;font-weight:800;flex:none;max-width:70%;overflow:hidden;text-overflow:ellipsis}
+  #mod-dpr .dp2 .pf-top.sc .nm{display:flex;align-items:center;gap:5px;height:22px;padding:0 6px;font-size:10px}
+  #mod-dpr .dp2 .pf-top.sc .nm .b1{font-size:10px;line-height:22px;gap:4px;flex:none}
+  #mod-dpr .dp2 .pf-top.sc .nm .b1::after{content:'·';opacity:.5;margin-left:1px}
+  #mod-dpr .dp2 .pf-top.sc .nm .b2{font-size:10px;line-height:22px;gap:4px;flex:1}
+  #mod-dpr .dp2 .pf-top.sc .nm .pj{font-size:10px}
+  #mod-dpr .dp2 .pf-top .r1{min-height:40px;padding:0 6px;gap:4px}
+  #mod-dpr .dp2 .pf-top .nav,#mod-dpr .dp2 .pf-top .menu{width:32px;height:32px}
+  #mod-dpr .dp2 .pf-top .nav{background:transparent;width:26px}
+  #mod-dpr .dp2 .pf-top .date{height:32px}
+  #mod-dpr .dp2 .pf-top .st .m{font-size:10.5px}
+  #mod-dpr .dp2 .pf-top .floors{padding:0 6px 6px;gap:5px}
+  #mod-dpr .dp2 .pf-top .floors button{height:30px;padding:0 10px}
+  #mod-dpr .dp2 .pf-top .mp2 .sg{height:30px}
+  #mod-dpr .dp2 .pf-top .find{padding:0 8px 6px}
+  #mod-dpr .dp2 .pf-top.tk .r2{display:none}
+  #mod-dpr .dp2 .pf-top.tk .m .m1{display:none}#mod-dpr .dp2 .pf-top.tk .m .m2{display:inline}
 }
 </style>
 
@@ -7855,10 +7898,11 @@ const DPR = (function () {
     const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = sub ? attCount() : 0;
     const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
     const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${pfFloorMark(F.key) ? `<u>${esc(pfFloorMark(F.key))}</u>` : ''}${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
-    return `<div class="pf-top" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
-      <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
+    const where = S.pfF ? (pfFloorMark(S.pfF) ? pfFloorMark(S.pfF) + ' › ' : '') + pfFloorLabel(S.pfF) : 'All Floors';
+    return `<div class="pf-top" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
+      <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m"><span class="m1">${nAtt ? `<span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span> · ` : ''}Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}</span><span class="m2">${esc(where)}</span></div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `<div class="floors scroll r2">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
   }
   /* v5.5.5 · Add Work: the estimate picker (tick activities × locations → each on its own, or Report Together) with its search always on screen */
   function pfAddBar() {
@@ -7874,8 +7918,29 @@ const DPR = (function () {
     const b = document.querySelector('#pf_top .pf-add .all'); if (b) b.classList.toggle('on', v === '/');
     catDraw();
   }
+  /* v5.6 · compact header (phone): names · date row · chips. Names are large at the top of the page and one thin line once scrolled;
+     the chips row tucks away while scrolling down and returns on a small scroll up. The date row never leaves. */
+  function pfNames() {
+    const org = (pgsS.org && (pgsS.org.org_name || pgsS.org.display_name || pgsS.org.name)) || (state && state.orgName) || '';
+    return `<div class="nm"><div class="b1"><span>🐧</span><b>Penguin Construction</b></div><div class="b2">${org ? `<span class="co">${esc(org)}</span>` : ''}<b class="pj">${esc(projName())}</b></div></div>`;
+  }
+  const pfSc = { sc: false, tk: false, y: 0, hold: 0 };
+  function pfScApply() {
+    const top = $('pf_top'); if (!top) return; const phone = window.innerWidth <= 860;
+    if (!phone || !top.querySelector('.r2')) pfSc.tk = false; if (!phone) pfSc.sc = false;
+    top.classList.toggle('sc', pfSc.sc); top.classList.toggle('tk', pfSc.tk);
+  }
+  function pfScroll() {
+    const top = $('pf_top'); if (!top || window.innerWidth > 860) return; const y = window.scrollY || 0, now = Date.now();
+    if (now < pfSc.hold) { pfSc.y = y; return; }   // the header just changed height — ignore the echo
+    let sc = pfSc.sc, tk = pfSc.tk;
+    if (y > 60) sc = true; else if (y < 10) { sc = false; tk = false; }
+    if (y > pfSc.y) { if (y - pfSc.y > 6 && y > 120) tk = true; pfSc.y = y; } else if (pfSc.y - y > 24) { tk = false; pfSc.y = y; }
+    if (sc !== pfSc.sc || tk !== pfSc.tk) { pfSc.sc = sc; pfSc.tk = tk; pfSc.hold = now + 220; pfStick(); }
+  }
+  if (!window._pfScroll) { window._pfScroll = true; window.addEventListener('scroll', () => { if (document.getElementById('pf_top')) pfScroll(); }, { passive: true }); }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
-    const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return;
+    const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return; pfScApply();
     const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
     const top = $('pf_top'), th = top ? top.offsetHeight : 0;
     d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
@@ -8036,12 +8101,15 @@ const DPR = (function () {
      Reads unchanged: rpc_dpr_review_queue · rpc_dpr_review_payload · rpc_dpr_review_calendar · rpc_dpr_labour_trend.
      ================================================================== */
   const MP_STM = { Submitted: ['p-navy', 'To Review'], Accepted: ['p-ok', 'Accepted'], Returned: ['p-red', 'Returned'], Draft: ['p-amb', 'Draft · Not Sent'] };
-  function mpHead(sub) {
+  function mpHead(cur) {   // v5.6 · names · date row · one row: Reports / Combined switch + the engineers (status dot)
     const pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, all = Math.max(mSubs().length, sent.length + mNotSent().length);
-    const st = pub ? `<b class="acc">Published</b> · ${esc(pub.dpr_no || '')}` : !S.sheet ? '<b>Checking…</b>' : `<b class="draft">DPR Open</b> · Not Published`;
-    return `<div class="pf-top mp" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.mDay(-1)">‹</button><button class="date" onclick="DPR.mpCal()"><b>${esc(dmy(S.mProg))}</b><i>▾</i></button><button class="nav" ${S.mDate >= S.mToday ? 'disabled' : ''} onclick="DPR.mDay(1)">›</button>
-      <div class="st"><div>${st}</div><div class="m">Progress ${esc(dsh(S.mProg))} · Labour ${esc(dsh(S.mDate))} · ${sent.length} Of ${all} Sent${tr ? ` · <span class="late">${tr} To Review</span>` : ''}</div></div><button class="menu" title="Reporting Plan · Hindrances · Areas · Setup · PDF" onclick="DPR.mpMenu()">⋯</button></div>
-      <div class="seg"><button class="${S.mv !== 'dpr' ? 'on' : ''}" onclick="DPR.mV('day')">Engineer Reports<i>${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" onclick="DPR.mV('dpr')">Combined DPR<i>One Report · Cumulative</i></button></div>${sub || ''}</div>`;
+    const st = pub ? `<b class="acc">Published</b> · ${esc(pub.dpr_no || '')}` : !S.sheet ? '<b>Checking…</b>' : `<b class="draft">DPR Open</b>`;
+    const engs = sent.map(x => S.mPay[x.submission_id]).filter(Boolean), me = engs.find(o => o.id === cur);
+    const dot = o => o.s.status === 'Accepted' ? 'g' : o.s.status === 'Returned' ? 'r' : 'a';
+    const where = me ? me.name.split(' ')[0] + ' · ' + (MP_STM[me.s.status] || ['', me.s.status])[1] : S.mv === 'dpr' ? 'Combined DPR' : 'Engineer Reports';
+    return `<div class="pf-top mp" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.mDay(-1)">‹</button><button class="date" onclick="DPR.mpCal()"><b>${esc(dmy(S.mProg))}</b><i>▾</i></button><button class="nav" ${S.mDate >= S.mToday ? 'disabled' : ''} onclick="DPR.mDay(1)">›</button>
+      <div class="st"><div>${st}</div><div class="m"><span class="m1">${sent.length} Of ${all} Sent${tr ? ` · <span class="late">${tr} To Review</span>` : ''} · Labour ${esc(dsh(S.mDate))}</span><span class="m2">${esc(where)}</span></div></div><button class="menu" title="Reporting Plan · Hindrances · Areas · Setup · PDF" onclick="DPR.mpMenu()">⋯</button></div>
+      <div class="floors scroll r2 mp2"><span class="sg"><button class="${S.mv !== 'dpr' ? 'on' : ''}" title="${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}" onclick="DPR.mV('day')">Reports <i>${sent.length}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" title="One Report · Cumulative" onclick="DPR.mV('dpr')">Combined</button></span>${engs.length ? '<span class="vr"></span>' : ''}${engs.map(o => `<button class="${o.id === cur ? 'on' : ''}" title="${esc(o.name + ' · ' + (MP_STM[o.s.status] || ['', o.s.status])[1])}" onclick="DPR.mEng('${o.id}')"><span class="sd ${dot(o)}"></span>${esc(o.name.split(' ')[0])}</button>`).join('')}</div></div>`;
   }
   function mpMenu() {
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
@@ -8107,8 +8175,7 @@ const DPR = (function () {
   function mpEng() {
     const P = S.mPay[S.mEng]; mUse(P); const F = P.F, s = P.s, k = s.submission_id, eo = P.data.earlier_open, pub = mPub(), st = MP_STM[s.status] || ['p-grey', s.status];
     const others = mSent().map(x => S.mPay[x.submission_id]).filter(Boolean);
-    const nav = `<div class="engnav scroll"><button onclick="DPR.mV('day')">‹ All Reports</button>${others.map(o => `<button class="${o.id === k ? 'on' : ''}" onclick="DPR.mEng('${o.id}')">${esc(o.name.split(' ')[0])}<i>${esc((MP_STM[o.s.status] || ['', o.s.status])[1])}</i></button>`).join('')}</div>`;
-    let h = `<div class="d2-card pfc mpc">${mpHead(nav)}<div class="rv pfrvw" id="d2_sc"><div class="mg">`;
+    let h = `<div class="d2-card pfc mpc">${mpHead(k)}<div class="rv pfrvw" id="d2_sc"><div class="mg">`;
     h += `<div class="ec t1"><div class="eh"><div class="l"><b>${esc(P.name)} · ${esc(dsh(S.mProg))}</b><small>${esc((P.areas || []).join(' · '))} · Sent ${esc(dts(s.submitted_at))} · ${s.is_late ? 'Late' : 'On Time'} · Attempt ${num(s.attempt_no) || 1}${s.status === 'Accepted' && s.reviewed_at ? ' · Accepted ' + esc(dts(s.reviewed_at)) : ''}</small></div>${pill(st[0], st[1])}</div>${mChecks(P).replace('<div class="rv-c">', '<div class="rv-c flat">')}</div>`;
     if (S.mpRet === k) h += `<div class="ret on"><b>Return To ${esc(P.name.split(' ')[0])} — Say What Needs Fixing</b><div class="q">${['Heads Missing', 'Progress Doubtful — Recheck', 'Hindrance Reason Missing', 'Site Cert. Qty Missing', 'Wrong Location / Activity'].map(t => `<button onclick="DPR.mpQuick('${k}','${t}')">${t}</button>`).join('')}</div><input class="rvm-in" id="mr_${k}" placeholder="Reason For Return (Required)…" value="${esc(S.mRet[k] || '')}" oninput="DPR.mRetNote('${k}',this.value)"><div class="bt"><button class="d2-btn" onclick="DPR.mpRet('${k}')">Cancel</button><span class="sp"></span><button class="d2-btn red fill" onclick="DPR.mReturnGo('${k}')">↩ Return Now</button></div></div>`;
     h += `<div class="pfrv">${pfPreview()}</div></div></div>`;

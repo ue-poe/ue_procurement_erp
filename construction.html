@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.5.2</title>
+<title>Penguin Construction v5.5.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3492,13 +3492,6 @@ html,body{touch-action:pan-x pan-y}
 }
 @media(min-width:1000px){#mod-dpr .dp2 .mg .kp{grid-template-columns:repeat(6,1fr)}}
 /* v5.5.2 · recently resumed strip on the Waiting shelf */
-#mod-dpr .dp2 .cd-rs{border-top:1px solid var(--ln2,#e0e5ec);background:#fff}
-#mod-dpr .dp2 .cd-rs .h{display:flex;align-items:center;gap:8px;padding:6px 10px 2px;font-size:11.5px}
-#mod-dpr .dp2 .cd-rs .h b{color:var(--dam)}
-#mod-dpr .dp2 .cd-rs .r{display:flex;align-items:center;gap:8px;padding:5px 10px;border-top:1px dashed var(--ln2,#e0e5ec);font-size:12px}
-#mod-dpr .dp2 .cd-rs .r.na{opacity:.7}
-#mod-dpr .dp2 .cd-rs .r .n{flex:1;min-width:0}#mod-dpr .dp2 .cd-rs .r .n small{display:block;color:var(--ink3);font-size:10.5px}
-#mod-dpr .dp2 .cd-rs .r .d2-btn{min-height:32px;font-weight:800;white-space:nowrap}
 </style>
 
 </head>
@@ -4774,7 +4767,7 @@ const DPR = (function () {
   const HOLD_MISS = e => /rpc_dpr_hold|rpc_dpr_resume|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
   async function holdsLoad(d) {   // the holds open AS OF date d (cached per date; refreshed after every hold / resume)
     if (S.holdOff || !d) return null;
-    try { const r = await rpc('rpc_dpr_holds', { p_date: d }); S.holdsBy[d] = { holds: (r && r.holds) || [], days: num((r || {}).review_days) || 21, at: Date.now() }; S.holdDays = S.holdsBy[d].days; S.hx = null; if (S.view !== 'mgr' && !S.rsBy[d]) resumedLoad(d).then(l => { if (l.length) redraw(); }); return S.holdsBy[d]; }   // v5.5.2 · M62
+    try { const r = await rpc('rpc_dpr_holds', { p_date: d }); S.holdsBy[d] = { holds: (r && r.holds) || [], days: num((r || {}).review_days) || 21, at: Date.now() }; S.holdDays = S.holdsBy[d].days; S.hx = null; return S.holdsBy[d]; }
     catch (e) { if (HOLD_MISS(e)) { S.holdOff = true; console.warn('[DPR] holds: M49 not on the database — Waiting / On Hold is off'); } else console.warn('[DPR] holds', e); return null; }
   }
   function holdsEnsure(d) {   // manager: read in the background, paint when it lands
@@ -4827,7 +4820,7 @@ const DPR = (function () {
   /* ----- the Waiting shelf: closed by default; open = packages › activity cards; a card opens its location node cards with the held rows ----- */
   function cdWaiting(M, o) {
     if (S.holdOff) return '';
-    const live = M.live && !o.ro, all = holdRows(M), rs = cdResumed(M, o); if (!all.length) return rs ? `<section class="cd-pkg wait" id="cd_wait">${rs}</section>` : '';   // v5.5.2
+    const live = M.live && !o.ro, all = holdRows(M); if (!all.length) return '';
     const W = !live && S.wF === 'due' ? all.filter(r => r.due) : !live && S.wF === 'ready' ? all.filter(r => r.ready) : all, s = holdSum(all), open = !!S.wOpen;
     const seg = live ? '' : `<span class="d2-seg sm" onclick="event.stopPropagation()"><button class="${S.wF === 'all' ? 'on' : ''}" onclick="DPR.wF('all')">All <span class="muted">${s.n}</span></button><button class="${S.wF === 'due' ? 'on' : ''}" onclick="DPR.wF('due')">Review Due <span class="muted">${s.due}</span></button><button class="${S.wF === 'ready' ? 'on' : ''}" onclick="DPR.wF('ready')">Ready <span class="muted">${s.ready}</span></button></span>`;
     let body = '';
@@ -4835,7 +4828,7 @@ const DPR = (function () {
       if (S.wA) { const rows = W.filter(r => r.key === S.wA); body = rows.length ? cdWaitDrill(rows, M, live) : (S.wA = null, cdWaitPkgs(W, M)); }
       else body = cdWaitPkgs(W, M);
     }
-    return `<section class="cd-pkg wait ${open ? '' : 'closed'}" id="cd_wait"><div class="hd" onclick="DPR.wTog()"><span class="car">${open ? '▾' : '▸'}</span><b class="nm">Waiting · On Hold</b><span class="meta"><b>${s.n}</b> Row${s.n === 1 ? '' : 's'} In ${s.pk} Package${s.pk === 1 ? '' : 's'} · <b>${s.ready}</b> Ready · <b>${s.due}</b> Review Due${M.mode === 'mgr' ? ' · All Areas' : ''}</span><span class="sp"></span>${seg}</div>${rs}${open ? `<div class="wbody">${body}</div>` : ''}</section>`;
+    return `<section class="cd-pkg wait ${open ? '' : 'closed'}" id="cd_wait"><div class="hd" onclick="DPR.wTog()"><span class="car">${open ? '▾' : '▸'}</span><b class="nm">Waiting · On Hold</b><span class="meta"><b>${s.n}</b> Row${s.n === 1 ? '' : 's'} In ${s.pk} Package${s.pk === 1 ? '' : 's'} · <b>${s.ready}</b> Ready · <b>${s.due}</b> Review Due${M.mode === 'mgr' ? ' · All Areas' : ''}</span><span class="sp"></span>${seg}</div>${open ? `<div class="wbody">${body}</div>` : ''}</section>`;
   }
   function cdWaitPkgs(W, M) {
     const pk = new Map(); W.forEach(r => { if (!pk.has(r.pkg)) pk.set(r.pkg, new Map()); const m = pk.get(r.pkg); if (!m.has(r.key)) m.set(r.key, []); m.get(r.key).push(r); });
@@ -4931,7 +4924,7 @@ const DPR = (function () {
   }
   async function resumeGo() {
     const E = S.hEd; if (!E || !E.resume) return;
-    try { await rpc('rpc_dpr_resume', { p_id: E.resume, p_on: E.on || S.to }); sheetClose(); S.hEd = null; toast('Resumed — Reporting Again', 'success'); await holdAfter(); }
+    try { await resumeCall(E.resume, E.on || S.to); sheetClose(); S.hEd = null; toast('Resumed — Reporting Again', 'success'); await holdAfter(); }
     catch (e) { toast(err(e, 'Could not resume'), 'error', 8000); }
   }
   function resumeAll(ids) {
@@ -4942,7 +4935,7 @@ const DPR = (function () {
   }
   async function resumeAllGo() {
     const E = S.hEd; if (!E || !E.resumeAll) return; let n = 0;
-    try { for (const id of E.resumeAll) { await rpc('rpc_dpr_resume', { p_id: id, p_on: E.on || S.to }); n++; } sheetClose(); S.hEd = null; toast(n + ' Resumed', 'success'); }
+    try { for (const id of E.resumeAll) { await resumeCall(id, E.on || S.to); n++; } sheetClose(); S.hEd = null; toast(n + ' Resumed', 'success'); }
     catch (e) { toast(err(e, 'Could not resume') + (n ? ' · ' + n + ' Done' : ''), 'error', 8000); }
     await holdAfter();
   }
@@ -7970,12 +7963,10 @@ const DPR = (function () {
     try { const r = await rpc('rpc_dpr_resumed', { p_date: d }); S.rsBy[d] = (r && r.resumed) || []; return S.rsBy[d]; }
     catch (e) { if (RS_MISS(e)) { S.rsOff = true; console.warn('[DPR] resumed: M62 not on the database — Undo Resume is off'); } else console.warn('[DPR] resumed', e); return []; }
   }
-  const resumedFor = d => (S.rsBy[d] || []);
   async function unresume(id, quiet) {
     try { const r = await rpc('rpc_dpr_unresume', { p_id: id }); if (!quiet) toast('Back On Hold Since ' + dsh((r || {}).held_from || ''), 'success'); return true; }
     catch (e) { if (!quiet) toast(err(e, 'Could not undo the resume'), 'error', 8000); return false; }
   }
-  async function unresumeGo(id) { if (isRo()) return; if (!(await unresume(id))) return; S.rsBy = {}; await holdAfter(); }
   async function unresumeForDay(d) {   // after a Draft is deleted: every hold resumed ON that date, by me, with nothing reported since, goes back on hold
     if (S.holdOff || S.rsOff) return 0;
     const list = await resumedLoad(d), mine = list.filter(h => h.resumed_on === d && h.can_undo && h.resumed_mine !== false);
@@ -7983,12 +7974,14 @@ const DPR = (function () {
     if (n) { S.rsBy = {}; S.hx = null; S.holdsBy = {}; S.holdReq = {}; toast(n + ' Hold' + (n === 1 ? '' : 's') + ' Back On Hold — The Resume Went With The Deleted Report', 'success', 7000); }
     return n;
   }
-  function cdResumed(M, o) {   // "Recently Resumed" strip on the Waiting shelf (engineer live sheet) — Undo while nothing was reported since
-    if (S.holdOff || S.rsOff || M.mode === 'mgr') return '';
-    if (!S.rsBy[S.to] && !S.rsReq) { S.rsReq = true; resumedLoad(S.to).then(l => { S.rsReq = false; if (l.length) redraw(); }); return ''; }
-    const L = resumedFor(S.to); if (!L.length) return '';
-    const live = M.live && !o.ro;
-    return `<div class="cd-rs"><div class="h"><b>Recently Resumed · ${L.length}</b><span class="muted">Undo Puts It Back On Hold From Where It Was</span></div>${L.map(h => `<div class="r ${h.can_undo ? '' : 'na'}"><div class="n"><b>${esc(h.activity || '')}</b>${h.sub_name ? ' · ' + esc(h.sub_name) : h.group_name ? ' · ' + esc(h.group_name) : ''}<small>${esc(h.loc_name || '')} · Held ${esc(dsh(h.held_from))} → Resumed ${esc(dsh(h.resumed_on))} (${num(h.days)} Day${num(h.days) === 1 ? '' : 's'})${h.resumed_by_name ? ' · ' + esc(h.resumed_by_name) : ''}${h.can_undo ? '' : h.reported_since ? ' · Reported Since — Place A New Hold Instead' : h.covered_now ? ' · On Hold Again' : ''}</small></div>${live && h.can_undo ? `<button class="d2-btn sm" onclick="DPR.unresumeGo('${h.id}')">↩ Undo Resume</button>` : ''}</div>`).join('')}</div>`;
+  /* v5.5.3 · M63 · Resume also works on a hold already resumed on another date (a resume made on a later sheet, e.g. one whose Draft was deleted): the resume date moves */
+  async function resumeCall(id, on) {
+    try { return await rpc('rpc_dpr_resume', { p_id: id, p_on: on }); }
+    catch (e) {
+      if (!/DPR_HOLD_CLOSED|already resumed/i.test(String((e && e.message) || e))) throw e;
+      try { return await rpc('rpc_dpr_resume_set', { p_id: id, p_on: on }); }
+      catch (e2) { if (/PGRST202|rpc_dpr_resume_set/.test(String((e2 && e2.message) || e2))) throw e; throw e2; }
+    }
   }
 
   /* ==================================================================
@@ -8128,7 +8121,6 @@ const DPR = (function () {
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
-    unresumeGo,   // v5.5.2 · M62
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,

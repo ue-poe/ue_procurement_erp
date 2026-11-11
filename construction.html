@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.5.4</title>
+<title>Penguin Construction v5.5.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3492,6 +3492,29 @@ html,body{touch-action:pan-x pan-y}
 }
 @media(min-width:1000px){#mod-dpr .dp2 .mg .kp{grid-template-columns:repeat(6,1fr)}}
 /* v5.5.2 · recently resumed strip on the Waiting shelf */
+/* v5.5.5 · Add Work bar (the estimate picker's search stays on screen) */
+#mod-dpr .dp2 .pf-top .pf-add{padding:6px 8px 8px;display:flex;flex-direction:column;gap:6px}
+#mod-dpr .dp2 .pf-top .pf-add .a1{display:flex;align-items:center;gap:8px;color:#fff;min-width:0}
+#mod-dpr .dp2 .pf-top .pf-add .a1 b{font-size:14px;white-space:nowrap}
+#mod-dpr .dp2 .pf-top .pf-add .a1 span{font-size:11.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#mod-dpr .dp2 .pf-top .pf-add .bk{min-height:36px;padding:0 12px;border-radius:9px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;font-size:13px;white-space:nowrap;cursor:pointer}
+#mod-dpr .dp2 .pf-top .pf-add .a2{display:flex;gap:6px}
+#mod-dpr .dp2 .pf-top .pf-add .a2 input{flex:1;min-width:0;min-height:44px;border-radius:10px;border:2px solid #fff;background:#fff;color:#0f1e33;font-size:16px;padding:0 12px;outline:none}
+#mod-dpr .dp2 .pf-top .pf-add .a2 .all{min-height:44px;padding:0 12px;border-radius:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-weight:800;font-size:12.5px;white-space:nowrap;cursor:pointer}
+#mod-dpr .dp2 .pf-top .pf-add .a2 .all.on{background:#fff;color:#0f1e33}
+#mod-dpr .dp2 .pfc .d2-cathd{display:none}
+#mod-dpr .dp2 .pfc.cat .d2-foot{display:none!important}
+#mod-dpr .dp2 .pfc.cat .dpr-addfab.big{position:sticky;bottom:0;z-index:6}
+.pf-mlab{padding:8px 10px 4px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#5b6b82}
+.dpr-lrow.pri{background:#eef4ff}.dpr-lrow.pri .nm b{color:#12356b}
+@media (max-width:999px){
+  #mod-dpr .dp2 .pfc .dpr-rbar{flex-wrap:wrap;gap:6px;padding:6px 8px}
+  #mod-dpr .dp2 .pfc .dpr-addfab.big{position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:6px;padding:8px;z-index:6}
+  #mod-dpr .dp2 .pfc .dpr-addfab.big > span:first-child{flex:1 1 100%}
+  #mod-dpr .dp2 .pfc .dpr-addfab.big .sp{display:none}
+  #mod-dpr .dp2 .pfc .dpr-addfab.big .dbtn{flex:1 1 0;min-height:42px;white-space:normal;line-height:1.15}
+  #mod-dpr .dp2 .pfc .dpr-addfab.big .dbtn.ghost{flex:0 0 auto}
+}
 </style>
 
 </head>
@@ -5024,7 +5047,7 @@ const DPR = (function () {
   };
   function logHtml() {   // v5.4 · phone flow: ‹ date ▾ › header + floor chips; the table toolbar lives in the ⋯ menu (logHtmlTable kept for reference)
     const ro = isRo(), sub = S.sub;
-    let h = `<div class="d2-card pfc">${pfHead(ro, rvOn())}`;
+    let h = `<div class="d2-card pfc ${S.catMode && !rvOn() ? 'cat' : ''}">${pfHead(ro, rvOn())}`;
     if (sub && sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
     if (rvOn()) return h + `<div class="rv pfrvw" id="d2_sc">${pfPreview()}</div><div class="d2-foot pf" id="d2_foot">${footHtml()}</div></div>`;
     if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tap Units To Tick Them → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> <button class="d2-btn sm" onclick="DPR.clubMode()">Done</button> · Progress Stays Per Unit; Manpower Is Entered Once For The Club.</div>`;
@@ -7820,8 +7843,8 @@ const DPR = (function () {
   function pfSheet(ro) {
     const M = pfModel(false), live = cdModel('live'), o = { ro };
     setTimeout(pfStick, 0);
-    if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Use ＋ Add Activities Or ⊞ Grid (Menu) To Put Activities On Your Sheet.</div></div>` + cdNp(live, o) + cdWaiting(live, o);
-    if (!M.cards.length) return `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">No Activity Matches The Find Text On This Floor.</div></div>`;
+    if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Add The Activities You Are Working On From The Approved Estimate.</div>${ro ? '' : `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd()">＋ Add Work</button>`}</div>` + cdNp(live, o) + cdWaiting(live, o);
+    if (!M.cards.length) return `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">Nothing On This Sheet Matches${S.fs ? ' “' + esc(S.fs) + '”' : ''}${S.pfF ? ' On This Floor' : ''}.</div>${S.fs && !ro ? `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd(1)">＋ Add “${esc(S.fs)}” From The Estimate</button>` : ''}</div>`;
     return `<div class="pf">${M.cards.map((c, i) => { c.i = i; return pfCard(c, ro); }).join('')}</div>` + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o);
   }
   /* ----- header: ‹ date ▾ › · status · floor chips ----- */
@@ -7832,7 +7855,21 @@ const DPR = (function () {
     return `<div class="pf-top" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
       <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfMenu()">＋ Add</button>`}</div>`}${S.fs && !rv ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `<div class="floors scroll">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+  }
+  /* v5.5.5 · Add Work: the estimate picker (tick activities × locations → each on its own, or Report Together) with its search always on screen */
+  function pfAddBar() {
+    return `<div class="pf-add"><div class="a1"><button class="bk" onclick="DPR.catBack()">← Sheet</button><b>Add Work</b><span>Tick Activities · Then Add Or Report Together</span></div>
+      <div class="a2"><input id="pf_addq" placeholder="Search The Estimate — Activity · Package · Location…" value="${esc(S.q === '/' ? '' : (S.q || ''))}" oninput="DPR.pfAddQ(this.value)" autocomplete="off"><button class="all ${S.q === '/' ? 'on' : ''}" onclick="DPR.pfAddQ('/')">Show All</button></div></div>`;
+  }
+  function pfAdd(q) {   // open the picker (from ＋ Add, the ⋯ menu, or a Find with no match)
+    if (isRo()) return; sheetClose(); S.catMode = true; S.q = String(q === 1 ? (S.fs || '') : (q || '')).trim(); S.fs = ''; S.cv = S.cv === 'grid' ? 'loc' : (S.cv || 'loc'); S.ct = new Set(); S.co = new Set(); S.coAll = false; paint(); window.scrollTo(0, 0);
+    setTimeout(() => { const i = $('pf_addq'); if (i) { i.focus(); const n = i.value.length; try { i.setSelectionRange(n, n); } catch (e) { /* not a text field */ } } }, 60);
+  }
+  function pfAddQ(v) {   // typing never leaves the picker (the old box dropped back to the sheet when emptied)
+    S.q = v; S.catMode = true; if (v === '/') { const i = $('pf_addq'); if (i) i.value = ''; }
+    const b = document.querySelector('#pf_top .pf-add .all'); if (b) b.classList.toggle('on', v === '/');
+    catDraw();
   }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
     const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return;
@@ -7863,10 +7900,11 @@ const DPR = (function () {
   function pfMenu() {   // Find · Add Work · Report Together · Day Reports · Delete
     const ro = isRo(), sub = S.sub;
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
-    let b = `<div class="dpr-srch" style="padding:8px"><input placeholder="Find Activity · Sub-Activity · Location…" value="${esc(S.fs || '')}" oninput="DPR.pfFind(this.value)"></div>`;
-    if (!ro) b += `<div class="dpr-srch" style="padding:0 8px 8px"><input placeholder="Add Work · Search The Estimate (WBS)…" value="${esc(S.q)}" oninput="DPR.srch(this.value)" onfocus="DPR.sheetClose();DPR.srch(this.value||' ')"></div>`
-      + row('＋ Add Activities', 'Browse The Approved Estimate', 'DPR.sheetClose();DPR.startOpen()') + row('⊞ Grid', 'Tick Units Across A Floor', 'DPR.sheetClose();DPR.gridOpen()')
-      + row('☑ Report Together', (S.cm ? 'On · Tick Rows On The Table Sheet' : 'Club Any Activities At Any Locations'), 'DPR.sheetClose();DPR.clubMode()');
+    let b = `<div class="pf-mlab">Find On This Sheet</div><div class="dpr-srch" style="padding:0 8px 8px"><input placeholder="Activity · Sub-Activity · Location Already On The Sheet…" value="${esc(S.fs || '')}" oninput="DPR.pfFind(this.value)"></div>`;
+    if (!ro) b += row('＋ Add Work', 'Search The Estimate · Tick Many Locations · Add Or Report Together', 'DPR.pfAdd()', 'pri')
+      + row('⊞ Grid', 'Tick Units Across A Floor', 'DPR.sheetClose();DPR.gridOpen()')
+      + row('Start Work By Location', 'Pick A Location, Tick Its Lines', 'DPR.sheetClose();DPR.startOpen()')
+      + row('☑ Report Together', (S.cm ? 'On · Tap Units To Tick Them' : 'Club Activities Already On The Sheet'), 'DPR.sheetClose();DPR.clubMode()');
     b += row('Day Reports', 'Calendar · Sent Reports · Preview', 'DPR.sheetClose();DPR.tab(\'rep\')');
     if (sub && sub.status === 'Draft' && !ro) b += row('Delete ' + esc(dsh(S.to)) + ' Report', 'Unsent Draft Only', `DPR.sheetClose();DPR.delDay('${S.to}')`, 'red');
     sheetOpen('Sheet · ' + dsh(S.to), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
@@ -8121,7 +8159,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

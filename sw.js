@@ -1,4 +1,5 @@
 /* Penguin Suite service worker · v15 (shell fetch bypasses the HTTP cache — a deploy shows on the next launch, not 10 min later) · redeploy 10 Nov 2026 (Pages build for db8ccd0 failed on GitHub side)
+   v24 (C9.2 deploy: construction.html v5.5.2 — M62 undo a resume: auto when the Draft is deleted · Undo Resume on the Waiting shelf)
    v23 (C9.1 deploy: construction.html v5.5.1 — tap a lit snap to clear yesterday's status · chips wrap on laptops)
    v22 (C9 deploy: construction.html v5.5 — manager phone flow: engineer-report cards · review with Accept / Return · Combined DPR by activity)
    v21 (C8.6 deploy: construction.html v5.4.6 — edge-to-edge tinted activity cards · minimal gutters)
@@ -22,7 +23,7 @@
    of work and is NOT what this does.
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
-const VERSION = 'pgs-shell-v23';
+const VERSION = 'pgs-shell-v24';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

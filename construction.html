@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.5.3</title>
+<title>Penguin Construction v5.5.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -4917,9 +4917,9 @@ const DPR = (function () {
     catch (e) { toast(HOLD_MISS(e) ? 'Waiting / On Hold Needs M49 On The Database — Ask The Admin' : err(e, 'Could not hold'), 'error', 8000); }
   }
   function resumeAsk(id) {
-    const h = HX().byId[id]; if (!h || isRo()) return; const d = S.to <= todayYmd() ? S.to : todayYmd();
+    const h = HX().byId[id]; if (!h || isRo()) return; const d = resumeDef();   // v5.5.4
     S.hEd = { resume: id, on: d < h.held_from ? h.held_from : d };
-    sheetOpen('Resume · ' + (h.sub_name || h.group_name || h.activity || 'Club'), holdWaitTxt(h) + ' · Since ' + dsh(h.held_from), `<div class="hs"><div class="f"><label>Resume On</label><div class="v"><input type="date" class="hs-in" value="${esc(S.hEd.on)}" min="${esc(h.held_from)}" max="${todayYmd()}" onchange="DPR.holdSet('on',this.value)"><span class="muted">The Row Reports Again From This Date · ${h.frozen_pct == null ? '' : 'Frozen At ' + Math.round(num(h.frozen_pct)) + '% · '}${holdDaysOf(h)} Day${holdDaysOf(h) === 1 ? '' : 's'} Waiting</span></div></div><div class="hs-ft">A Resume Is Not A Hindrance Close · No Days Lost</div></div>`,
+    sheetOpen('Resume · ' + (h.sub_name || h.group_name || h.activity || 'Club'), holdWaitTxt(h) + ' · Since ' + dsh(h.held_from), `<div class="hs"><div class="f"><label>Resume On</label><div class="v"><input type="date" class="hs-in" value="${esc(S.hEd.on)}" min="${esc(h.held_from)}" max="${todayYmd()}" onchange="DPR.holdSet('on',this.value)"><span class="muted">Reports Again From This Date — Progress And Status On This Sheet · ${h.frozen_pct == null ? '' : 'Frozen At ' + Math.round(num(h.frozen_pct)) + '% · '}${holdDaysOf(h)} Day${holdDaysOf(h) === 1 ? '' : 's'} Waiting</span></div></div><div class="hs-ft">A Resume Is Not A Hindrance Close · No Days Lost</div></div>`,
       `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.resumeGo()">▶ Resume</button>`);
   }
   async function resumeGo() {
@@ -4929,13 +4929,13 @@ const DPR = (function () {
   }
   function resumeAll(ids) {
     const list = String(ids || '').split(',').filter(Boolean); if (!list.length || isRo()) return;
-    S.hEd = { resumeAll: list, on: S.to <= todayYmd() ? S.to : todayYmd() };
+    S.hEd = { resumeAll: list, on: resumeDef() };   // v5.5.4
     sheetOpen('Resume All · ' + list.length + ' Rows', 'Every Held Row On This Location Node', `<div class="hs"><div class="f"><label>Resume On</label><div class="v"><input type="date" class="hs-in" value="${esc(S.hEd.on)}" max="${todayYmd()}" onchange="DPR.holdSet('on',this.value)"></div></div></div>`,
       `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" onclick="DPR.resumeAllGo()">▶ Resume ${list.length}</button>`);
   }
   async function resumeAllGo() {
     const E = S.hEd; if (!E || !E.resumeAll) return; let n = 0;
-    try { for (const id of E.resumeAll) { await resumeCall(id, E.on || S.to); n++; } sheetClose(); S.hEd = null; toast(n + ' Resumed', 'success'); }
+    try { for (const id of E.resumeAll) { const h = HX().byId[id], on = E.on || resumeDef(); await resumeCall(id, h && on < h.held_from ? h.held_from : on); n++; } sheetClose(); S.hEd = null; toast(n + ' Resumed', 'success'); }
     catch (e) { toast(err(e, 'Could not resume') + (n ? ' · ' + n + ' Done' : ''), 'error', 8000); }
     await holdAfter();
   }
@@ -7983,6 +7983,8 @@ const DPR = (function () {
       catch (e2) { if (/PGRST202|rpc_dpr_resume_set/.test(String((e2 && e2.message) || e2))) throw e; throw e2; }
     }
   }
+  /* v5.5.4 · the sheet of date D saves progress dated D-1 and status dated D — a resume made on the sheet must free both, so it defaults to D-1 */
+  const resumeDef = () => addDays(S.to <= todayYmd() ? S.to : todayYmd(), -1);
 
   /* ==================================================================
      v5.5 · MANAGER PHONE FLOW (DPR_Manager_Phone_mock_v1, approved 10 Nov 2026)

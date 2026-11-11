@@ -24,7 +24,8 @@
    v5 (C1): construction.html and its manifest join the precached shell;
    a failed navigation falls back to the page that was asked for. */
 // v25 · construction.html v5.5.3 — Resume moves the date of an already-resumed hold (M63); Recently Resumed strip removed
-const VERSION = 'pgs-shell-v25';
+// v26 · construction.html v5.5.4 — Resume on a sheet opens the whole sheet (resume date = the sheet's progress date)
+const VERSION = 'pgs-shell-v26';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

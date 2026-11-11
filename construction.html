@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.5.5</title>
+<title>Penguin Construction v5.5.6</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3192,6 +3192,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .floors button{flex:none;position:relative;height:32px;padding:0 12px;border-radius:16px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
 #mod-dpr .dp2 .pf-top .floors button i{font-style:normal;opacity:.75;margin-left:3px;font-size:11px}
 #mod-dpr .dp2 .pf-top .floors button.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .floors button u{text-decoration:none;font-size:10.5px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:8px;background:rgba(255,255,255,.2);margin-right:6px;vertical-align:1px}
+#mod-dpr .dp2 .pf-top .floors button.on u{background:var(--dn);color:#fff}
 #mod-dpr .dp2 .pf-top .floors button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff8a80;margin-left:5px;vertical-align:middle}
 #mod-dpr .dp2 .pf-top .floors button.add{border-style:dashed;background:transparent}
 #mod-dpr .dp2 .pf-top .floors .rvt{color:#c6cede;font-size:12px;font-weight:700;line-height:32px}
@@ -7708,6 +7710,7 @@ const DPR = (function () {
   const PF_TINT = ['t1', 't2', 't3', 't4', 't5'];
   const pfFloorKey = (g, l) => { const p = lineLocPath(g, l) || ''; if (p.split(' › ').filter(Boolean).length >= 2) return p; const loc = lineLoc(g, l); return p && loc ? p + ' › ' + loc : (loc || p || g.area || '—'); };   // a node directly under the tower (RCC slab at '16th Floor') is its own floor
   const pfFloorLabel = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length ? segs[segs.length - 1] : (k || '—'); };
+  const pfFloorMark = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length >= 2 ? segs[segs.length - 2] : ''; };   // v5.5.6 · the level above the floor (tower / block / wing — whatever the project's tree has there)
   const pfCardKey = (g, l) => pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '—') + '\u0001' + l.activity;
   const pfNatCmp = (a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
   const pfHit = (g, l) => !S.fs || fz(l.activity + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + linePkg(g, l) + ' ' + (l.stages || []).map(s => s.name).join(' '), S.fs);
@@ -7838,7 +7841,7 @@ const DPR = (function () {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
   }
   function pfSheet(ro) {
     const M = pfModel(false), live = cdModel('live'), o = { ro };
@@ -7851,7 +7854,7 @@ const DPR = (function () {
   function pfHead(ro, rv) {
     const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = sub ? attCount() : 0;
     const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
-    const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
+    const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${pfFloorMark(F.key) ? `<u>${esc(pfFloorMark(F.key))}</u>` : ''}${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
     return `<div class="pf-top" id="pf_top"><div class="r1"><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
       <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m">Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}${nAtt ? ` · <span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span>` : ''}</div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>

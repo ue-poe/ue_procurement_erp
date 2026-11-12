@@ -28,7 +28,8 @@
 // v27 · construction.html v5.5.5 — Add Work: the estimate picker with its search always on screen
 // v28 · construction.html v5.5.6 — floor chips carry the tower mark
 // v29 · construction.html v5.6 — DPR compact header on phone (names · date row · chips; shrinks while scrolling)
-const VERSION = 'pgs-shell-v29';
+// v30 · construction.html v5.6.1 — DPR header: names follow the scroll (fluid), rounded top corners
+const VERSION = 'pgs-shell-v30';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

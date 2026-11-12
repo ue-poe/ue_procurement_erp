@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.6</title>
+<title>Penguin Construction v5.6.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3533,21 +3533,24 @@ html,body{touch-action:pan-x pan-y}
   body:has(#mod-dpr.active #pf_top) .pgs-main > .container{padding-top:0!important}
   body:has(#mod-dpr.active #pf_top){overflow-anchor:none}
   #mod-dpr #d2.dp2:has(#pf_top){padding-top:0}
-  #mod-dpr .dp2 .d2-card.pfc:has(#pf_top){border-top:0}
-  #mod-dpr .dp2 .pf-top{padding:env(safe-area-inset-top,0px) 0 0;top:0}
+  #mod-dpr .dp2 .d2-card.pfc:has(#pf_top){border-top:0;background:transparent}
+  /* a card: rounded top corners, a sliver of page above; the ::before keeps scrolled content out of the corner cut-outs */
+  #mod-dpr .dp2 .pf-top{padding:0;top:calc(6px + env(safe-area-inset-top,0px));margin-top:calc(6px + env(safe-area-inset-top,0px));border-radius:14px 14px 0 0!important}
+  #mod-dpr .dp2 .pf-top::before{content:'';position:absolute;left:0;right:0;top:calc(-7px - env(safe-area-inset-top,0px));height:calc(22px + env(safe-area-inset-top,0px));background:var(--bg,#eef1f6);z-index:-1}
   #mod-dpr .dp2 .pf-top .menu.app{display:block;font-size:17px}
-  #mod-dpr .dp2 .pf-top .nm{display:block;background:#101a2e;color:#b9c4d8;padding:6px 10px 5px;height:46px;overflow:hidden}
+  #mod-dpr .dp2 .pf-top .nm{display:block;position:relative;background:#101a2e;color:#b9c4d8;height:calc(46px - 24px * var(--p,0));overflow:hidden;border-radius:14px 14px 0 0;will-change:height}
+  #mod-dpr .dp2 .pf-top .nm .big{position:absolute;left:0;right:0;top:0;padding:6px 10px 0;opacity:calc(1 - 1.7 * var(--p,0));transform-origin:left top;transform:scale(calc(1 - .22 * var(--p,0)));will-change:opacity,transform}
   #mod-dpr .dp2 .pf-top .nm .b1{display:flex;gap:6px;align-items:center;font-size:15px;line-height:18px;white-space:nowrap}
   #mod-dpr .dp2 .pf-top .nm .b1 b{color:#2dd4bf;font-weight:800}
   #mod-dpr .dp2 .pf-top .nm .b2{display:flex;gap:5px;align-items:baseline;font-size:12px;line-height:17px;white-space:nowrap;min-width:0}
   #mod-dpr .dp2 .pf-top .nm .co{overflow:hidden;text-overflow:ellipsis;min-width:0}
-  #mod-dpr .dp2 .pf-top .nm .co::after{content:' ·'}
-  #mod-dpr .dp2 .pf-top .nm .pj{color:#fff;font-size:13px;font-weight:800;flex:none;max-width:70%;overflow:hidden;text-overflow:ellipsis}
-  #mod-dpr .dp2 .pf-top.sc .nm{display:flex;align-items:center;gap:5px;height:22px;padding:0 6px;font-size:10px}
-  #mod-dpr .dp2 .pf-top.sc .nm .b1{font-size:10px;line-height:22px;gap:4px;flex:none}
-  #mod-dpr .dp2 .pf-top.sc .nm .b1::after{content:'·';opacity:.5;margin-left:1px}
-  #mod-dpr .dp2 .pf-top.sc .nm .b2{font-size:10px;line-height:22px;gap:4px;flex:1}
-  #mod-dpr .dp2 .pf-top.sc .nm .pj{font-size:10px}
+  #mod-dpr .dp2 .pf-top .nm .b2 .co::after{content:' ·'}
+  #mod-dpr .dp2 .pf-top .nm .b2 .pj{color:#fff;font-size:13px;font-weight:800;flex:none;max-width:70%;overflow:hidden;text-overflow:ellipsis}
+  #mod-dpr .dp2 .pf-top .nm .slim{position:absolute;left:0;right:0;bottom:0;height:22px;display:flex;align-items:center;gap:4px;padding:0 8px;font-size:10px;white-space:nowrap;opacity:calc(1.7 * var(--p,0) - .7);will-change:opacity}
+  #mod-dpr .dp2 .pf-top .nm .slim .br{color:#2dd4bf;font-weight:800;flex:none}
+  #mod-dpr .dp2 .pf-top .nm .slim .co::before{content:'· ';opacity:.6}
+  #mod-dpr .dp2 .pf-top .nm .slim .pj{color:#fff;font-weight:800;flex:none;max-width:55%;overflow:hidden;text-overflow:ellipsis}
+  #mod-dpr .dp2 .pf-top .nm .slim .pj::before{content:'· ';opacity:.6;font-weight:400}
   #mod-dpr .dp2 .pf-top .r1{min-height:40px;padding:0 6px;gap:4px}
   #mod-dpr .dp2 .pf-top .nav,#mod-dpr .dp2 .pf-top .menu{width:32px;height:32px}
   #mod-dpr .dp2 .pf-top .nav{background:transparent;width:26px}
@@ -3557,7 +3560,8 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pf-top .floors button{height:30px;padding:0 10px}
   #mod-dpr .dp2 .pf-top .mp2 .sg{height:30px}
   #mod-dpr .dp2 .pf-top .find{padding:0 8px 6px}
-  #mod-dpr .dp2 .pf-top.tk .r2{display:none}
+  #mod-dpr .dp2 .pf-top .r2{max-height:40px;overflow-y:hidden;transition:max-height .22s ease,opacity .18s ease,padding .22s ease}
+  #mod-dpr .dp2 .pf-top.tk .r2{max-height:0;opacity:0;padding-bottom:0;pointer-events:none}
   #mod-dpr .dp2 .pf-top.tk .m .m1{display:none}#mod-dpr .dp2 .pf-top.tk .m .m2{display:inline}
 }
 </style>
@@ -7920,29 +7924,39 @@ const DPR = (function () {
   }
   /* v5.6 · compact header (phone): names · date row · chips. Names are large at the top of the page and one thin line once scrolled;
      the chips row tucks away while scrolling down and returns on a small scroll up. The date row never leaves. */
-  function pfNames() {
-    const org = (pgsS.org && (pgsS.org.org_name || pgsS.org.display_name || pgsS.org.name)) || (state && state.orgName) || '';
-    return `<div class="nm"><div class="b1"><span>🐧</span><b>Penguin Construction</b></div><div class="b2">${org ? `<span class="co">${esc(org)}</span>` : ''}<b class="pj">${esc(projName())}</b></div></div>`;
+  function pfNames() {   // two layers that cross-fade with the scroll: the large two-line block and the thin one-line strip
+    const org = (pgsS.org && (pgsS.org.org_name || pgsS.org.display_name || pgsS.org.name)) || (state && state.orgName) || '', pj = esc(projName());
+    return `<div class="nm"><div class="big"><div class="b1"><span>🐧</span><b>Penguin Construction</b></div><div class="b2">${org ? `<span class="co">${esc(org)}</span>` : ''}<b class="pj">${pj}</b></div></div>`
+      + `<div class="slim"><span>🐧</span><b class="br">Penguin Construction</b>${org ? `<span class="co">${esc(org)}</span>` : ''}<b class="pj">${pj}</b></div></div>`;
   }
-  const pfSc = { sc: false, tk: false, y: 0, hold: 0 };
+  /* v5.6.1 · the names follow the scroll position itself (p = 0 at the top of the page … 1 after 60 px), so the change is fluid and always
+     returns to the large block at the top. The chips row tucks on scroll direction, with a short eased transition. */
+  const pfSc = { p: 0, tk: false, y: 0, raf: 0, until: 0 };
   function pfScApply() {
     const top = $('pf_top'); if (!top) return; const phone = window.innerWidth <= 860;
-    if (!phone || !top.querySelector('.r2')) pfSc.tk = false; if (!phone) pfSc.sc = false;
-    top.classList.toggle('sc', pfSc.sc); top.classList.toggle('tk', pfSc.tk);
+    if (!phone) pfSc.p = 0; if (!phone || !top.querySelector('.r2')) pfSc.tk = false;
+    top.style.setProperty('--p', pfSc.p.toFixed(3)); top.classList.toggle('tk', pfSc.tk);
   }
-  function pfScroll() {
-    const top = $('pf_top'); if (!top || window.innerWidth > 860) return; const y = window.scrollY || 0, now = Date.now();
-    if (now < pfSc.hold) { pfSc.y = y; return; }   // the header just changed height — ignore the echo
-    let sc = pfSc.sc, tk = pfSc.tk;
-    if (y > 60) sc = true; else if (y < 10) { sc = false; tk = false; }
-    if (y > pfSc.y) { if (y - pfSc.y > 6 && y > 120) tk = true; pfSc.y = y; } else if (pfSc.y - y > 24) { tk = false; pfSc.y = y; }
-    if (sc !== pfSc.sc || tk !== pfSc.tk) { pfSc.sc = sc; pfSc.tk = tk; pfSc.hold = now + 220; pfStick(); }
+  function pfScFrame() {
+    pfSc.raf = 0; const top = $('pf_top'); if (!top) return;
+    if (window.innerWidth <= 860) {
+      const y = Math.max(0, window.scrollY || 0), doc = document.documentElement, atEnd = window.innerHeight + y >= doc.scrollHeight - 2;
+      let tk = pfSc.tk; pfSc.p = Math.min(1, y / 60);
+      if (y < 10) tk = false;
+      else if (y > pfSc.y) { if (y - pfSc.y > 6 && y > 120) tk = true; }
+      else if (pfSc.y - y > 24 && !atEnd) tk = false;
+      if (y > pfSc.y || pfSc.y - y > 24 || y < 10) pfSc.y = y;
+      if (tk !== pfSc.tk) { pfSc.tk = tk; pfSc.until = Date.now() + 280; }   // keep the sticky offsets in step while the row eases
+    }
+    pfStick();
+    if (Date.now() < pfSc.until) pfSc.raf = requestAnimationFrame(pfScFrame);
   }
+  function pfScroll() { if (!pfSc.raf) pfSc.raf = requestAnimationFrame(pfScFrame); }
   if (!window._pfScroll) { window._pfScroll = true; window.addEventListener('scroll', () => { if (document.getElementById('pf_top')) pfScroll(); }, { passive: true }); }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
     const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return; pfScApply();
     const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
-    const top = $('pf_top'), th = top ? top.offsetHeight : 0;
+    const top = $('pf_top'), th = top ? top.offsetHeight + (window.innerWidth <= 860 ? (parseFloat(getComputedStyle(top).top) || 0) : 0) : 0;
     d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
   }
   if (!window._pfStick) { window._pfStick = true; window.addEventListener('resize', () => { if (document.getElementById('pf_top')) pfStick(); }); }

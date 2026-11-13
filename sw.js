@@ -30,7 +30,8 @@
 // v29 · construction.html v5.6 — DPR compact header on phone (names · date row · chips; shrinks while scrolling)
 // v30 · construction.html v5.6.1 — DPR header: names follow the scroll (fluid), rounded top corners
 // v31 · index.html v199 — BBS and Quantity Take Off as their own pages under Planning & QS
-const VERSION = 'pgs-shell-v31';
+// v32 · index.html v200 — BBS: general notes reader on Detailing Parameters · reinforcement refresh · pan on plan and sections
+const VERSION = 'pgs-shell-v32';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

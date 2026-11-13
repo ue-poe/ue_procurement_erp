@@ -31,7 +31,8 @@
 // v30 · construction.html v5.6.1 — DPR header: names follow the scroll (fluid), rounded top corners
 // v31 · index.html v199 — BBS and Quantity Take Off as their own pages under Planning & QS
 // v32 · index.html v200 — BBS: general notes reader on Detailing Parameters · reinforcement refresh · pan on plan and sections
-const VERSION = 'pgs-shell-v32';
+// v33 · index.html v201 — BBS: top bars per isolated footing on the Footing Register (M68)
+const VERSION = 'pgs-shell-v33';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -34,7 +34,8 @@
 // v33 · index.html v201 — BBS: top bars per isolated footing on the Footing Register (M68)
 // v34 · construction.html v5.6.2 — a deleted Draft stays deleted until Create Report (it was re-created on reopen)
 // v35 · construction.html v5.6.3 — Add Work asks before adding more than 20 activities at once
-const VERSION = 'pgs-shell-v35';
+// v36 · index.html v202 — BBS: combined footings (reinforcement drawing reader · bar sets · splices marked on the plan) (M69, M70)
+const VERSION = 'pgs-shell-v36';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

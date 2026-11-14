@@ -32,7 +32,8 @@
 // v31 · index.html v199 — BBS and Quantity Take Off as their own pages under Planning & QS
 // v32 · index.html v200 — BBS: general notes reader on Detailing Parameters · reinforcement refresh · pan on plan and sections
 // v33 · index.html v201 — BBS: top bars per isolated footing on the Footing Register (M68)
-const VERSION = 'pgs-shell-v33';
+// v34 · construction.html v5.6.2 — a deleted Draft stays deleted until Create Report (it was re-created on reopen)
+const VERSION = 'pgs-shell-v34';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -36,7 +36,8 @@
 // v35 · construction.html v5.6.3 — Add Work asks before adding more than 20 activities at once
 // v36 · index.html v202 — BBS: combined footings (reinforcement drawing reader · bar sets · splices marked on the plan) (M69, M70)
 // v37 · index.html v203 — BBS: combined footings checked beside the uploaded drawing · cover and spacing acceptance · several drawings · depth from layout (M71)
-const VERSION = 'pgs-shell-v37';
+// v38 · index.html v204 — BBS: Bar Sets and Reinforcement Drawing fill the window (drawings stay, table scrolls) · drawings in a popup · compact header
+const VERSION = 'pgs-shell-v38';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

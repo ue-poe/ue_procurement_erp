@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.6.2</title>
+<title>Penguin Construction v5.6.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -6688,6 +6688,7 @@ const DPR = (function () {
   async function catGo(together, fill) {
     const byLoc = {}; [...S.ct].forEach(k => { const [w, l] = k.split('|'); (byLoc[l] = byLoc[l] || []).push(Number(w)); });
     const locs = Object.keys(byLoc); let ok = 0; const ids = [];
+    if (S.ct.size > 20 && !confirm('Add ' + S.ct.size + ' Activities At ' + locs.length + ' Location' + (locs.length === 1 ? '' : 's') + ' To Your Sheet?\n\nEach One Becomes A Card On Every Day Sheet Until It Is Finished. Add Only The Work That Is Actually Starting.')) return;   // v5.6.3
     try {
       for (const l of locs) { const { data, error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: l, p_wbs_node_ids: byLoc[l], p_together: together }); if (error) throw error; ok++; ((data && data.wgroup_ids) || []).forEach(x => ids.push(x)); }
       toast('Added ' + (together ? ok + ' group' + (ok === 1 ? '' : 's') : [...S.ct].length + ' activit' + ([...S.ct].length === 1 ? 'y' : 'ies')) + ' to your list', 'success');

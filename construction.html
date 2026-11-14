@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.6.1</title>
+<title>Penguin Construction v5.6.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -4649,6 +4649,8 @@ const DPR = (function () {
     try {
       await masters();
       if (!date) { S.today = S.today || ymd(new Date()); date = await defaultDate(); }
+      if (!S._mk && delGet(date)) { await calLoad(monthOf(date), true); if (!S.cal.days[date]) { showBlank(date); return; } delSet(''); }   // v5.6.2
+      S._mk = false;
       const dataT = await rpc('rpc_dpr_open_day', { p_report_date: date, p_shift: 'D' });
       S.today = dataT.today || S.today || ymd(new Date());
       await holdsLoad(date);   // v5.3 · M49 holds open as of this date (no-op without M49)
@@ -4709,7 +4711,7 @@ const DPR = (function () {
     if (!S.cal.days[d] && d !== todayYmd()) { S.R = null; S.same = true; S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; engRender(); return; }
     await engLoad(d); if (then === 'send') await preview();
   }
-  async function createDay() { if (S.blank) await engLoad(S.blank); }
+  async function createDay() { if (S.blank) { delSet(''); S._mk = true; await engLoad(S.blank); } }
   async function dayMove(n) { const d = addDays(S.to, n); if (d > todayYmd()) return; await pickDate(d); }   // v159 · ‹ › on the sheet header
   async function calMove(n) {
     const d = new Date(S.cal.month + 'T00:00:00'); d.setMonth(d.getMonth() + n); const m = ymd(d);
@@ -6427,6 +6429,7 @@ const DPR = (function () {
       toast('Deleted ' + dsh(d) + ' Report' + (r && num(r.hindrances_removed) ? ' · ' + num(r.hindrances_removed) + ' Hindrance Withdrawn' : ''), 'success');
       await calLoad(monthOf(d), true);
       await unresumeForDay(d);   // v5.5.2 · M62 · a resume made for that Draft goes with it
+      delSet(d);   // v5.6.2
       if (cur) {   // the screen was on that date: show it as Not Created (opening it again would create a fresh Draft)
         S.R = null; S.same = true; S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; S.prev = false; S.catMode = false; S.tab = 'log';
         engRender();
@@ -6561,7 +6564,7 @@ const DPR = (function () {
   async function refresh() {
     if (dirtyAll() && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
     S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; S.NP = null; S.npDirty = false;
-    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await ENG.wipe(); S.mScope = null; S.mPay = {}; S.mQ = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank ? null : tDate(), true);
+    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await ENG.wipe(); S.mScope = null; S.mPay = {}; S.mQ = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank || tDate(), true);
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -8105,6 +8108,15 @@ const DPR = (function () {
   }
   /* v5.5.4 · the sheet of date D saves progress dated D-1 and status dated D — a resume made on the sheet must free both, so it defaults to D-1 */
   const resumeDef = () => addDays(S.to <= todayYmd() ? S.to : todayYmd(), -1);
+  /* v5.6.2 · a deleted Draft for TODAY stays deleted: today's sheet used to be created again the moment the screen reopened (opening today always
+     creates a Draft), so the report "kept coming back". The date is remembered on this device until Create Report is tapped or the day passes. */
+  const delK = () => cdCK().replace('pgs_dpr_cd', 'pgs_dpr_del');
+  const delGet = d => { try { return localStorage.getItem(delK()) === d; } catch (e) { return false; } };
+  const delSet = d => { try { if (d) localStorage.setItem(delK(), d); else localStorage.removeItem(delK()); } catch (e) { /* storage off — today reopens as before */ } };
+  function showBlank(d) {
+    S.R = null; S.same = true; S.blank = d; S.to = S.rdate = d; S.sub = null; S.groups = []; S.D = {}; S.W = {}; S.np = []; S.locked = false; S.NP = null; S.npDirty = false; S.prev = false; S.catMode = false; S.tab = 'log';
+    engRender();
+  }
 
   /* ==================================================================
      v5.5 · MANAGER PHONE FLOW (DPR_Manager_Phone_mock_v1, approved 10 Nov 2026)

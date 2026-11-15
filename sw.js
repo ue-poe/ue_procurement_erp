@@ -37,7 +37,8 @@
 // v36 · index.html v202 — BBS: combined footings (reinforcement drawing reader · bar sets · splices marked on the plan) (M69, M70)
 // v37 · index.html v203 — BBS: combined footings checked beside the uploaded drawing · cover and spacing acceptance · several drawings · depth from layout (M71)
 // v38 · index.html v204 — BBS: Bar Sets and Reinforcement Drawing fill the window (drawings stay, table scrolls) · drawings in a popup · compact header
-const VERSION = 'pgs-shell-v38';
+// v39 · index.html v205 — BBS: rafts with sunk parts and sections · drawings without types · register built on reading · Reinforcement Drawing corrects, Bar Sets checks · section view
+const VERSION = 'pgs-shell-v39';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

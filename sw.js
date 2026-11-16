@@ -40,7 +40,8 @@
 // v39 · index.html v205 — BBS: rafts with sunk parts and sections · drawings without types · register built on reading · Reinforcement Drawing corrects, Bar Sets checks · section view
 // v40 · index.html v206 — BBS: tables as cards beside the drawing · Layout view of the whole drawing · assisted Add Bar Set and Copy · layer mapping status · section kept for the BBS report
 // v41 · index.html v207 — BBS: after a change only the footing that changed is read again · sheet and header read side by side
-const VERSION = 'pgs-shell-v41';
+// v42 · index.html v208 — BBS: Footing Layout window on combined footing sheets (every footing mapped on the layout plan, what is left to resolve) · Layout pane toggle removed
+const VERSION = 'pgs-shell-v42';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

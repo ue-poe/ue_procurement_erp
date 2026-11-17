@@ -47,7 +47,8 @@
 // v46 · index.html v212 — BBS on a phone: only the view switch and model stay pinned on Reinforcement · bar mark cards on one grid
 // v47 · index.html v213 — BBS on a phone: the BBS area reaches down to the Suite's navigation (no empty band below it)
 // v48 · index.html v214 — Estimation: one Add / Edit Estimate screen replaces Add Estimate and Bulk Edit · line lock and Allocation Rules retired (M81a, M81b)
-const VERSION = 'pgs-shell-v48';
+// v49 · index.html v214 (in place) — Add / Edit Estimate: full width, locations as a band of tick buttons that keeps its place · the line's estimated items listed for edit (M81c) · Expand All / Collapse All
+const VERSION = 'pgs-shell-v49';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -44,7 +44,8 @@
 // v43 · index.html v209 — BBS: Delete on the BBS Register (reason required, recorded in the deletion audit)
 // v44 · index.html v210 — BBS: bar shapes drawn with their lengths on them (cards, schedule, report, Excel) · lengths typed on the sketch · A B C columns removed
 // v45 · index.html v211 — BBS on a phone (register, reinforcement, BBS sheet; submit, approve, return) · Summary By Footing on the BBS sheet, report and Excel
-const VERSION = 'pgs-shell-v45';
+// v46 · index.html v212 — BBS on a phone: only the view switch and model stay pinned on Reinforcement · bar mark cards on one grid
+const VERSION = 'pgs-shell-v46';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

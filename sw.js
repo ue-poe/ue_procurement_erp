@@ -46,7 +46,8 @@
 // v45 · index.html v211 — BBS on a phone (register, reinforcement, BBS sheet; submit, approve, return) · Summary By Footing on the BBS sheet, report and Excel
 // v46 · index.html v212 — BBS on a phone: only the view switch and model stay pinned on Reinforcement · bar mark cards on one grid
 // v47 · index.html v213 — BBS on a phone: the BBS area reaches down to the Suite's navigation (no empty band below it)
-const VERSION = 'pgs-shell-v47';
+// v48 · index.html v214 — Estimation: one Add / Edit Estimate screen replaces Add Estimate and Bulk Edit · line lock and Allocation Rules retired (M81a, M81b)
+const VERSION = 'pgs-shell-v48';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

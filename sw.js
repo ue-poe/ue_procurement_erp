@@ -43,7 +43,8 @@
 // v42 · index.html v208 — BBS: Footing Layout window on combined footing sheets (every footing mapped on the layout plan, what is left to resolve) · Layout pane toggle removed
 // v43 · index.html v209 — BBS: Delete on the BBS Register (reason required, recorded in the deletion audit)
 // v44 · index.html v210 — BBS: bar shapes drawn with their lengths on them (cards, schedule, report, Excel) · lengths typed on the sketch · A B C columns removed
-const VERSION = 'pgs-shell-v44';
+// v45 · index.html v211 — BBS on a phone (register, reinforcement, BBS sheet; submit, approve, return) · Summary By Footing on the BBS sheet, report and Excel
+const VERSION = 'pgs-shell-v45';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

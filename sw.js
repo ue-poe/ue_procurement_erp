@@ -45,7 +45,8 @@
 // v44 · index.html v210 — BBS: bar shapes drawn with their lengths on them (cards, schedule, report, Excel) · lengths typed on the sketch · A B C columns removed
 // v45 · index.html v211 — BBS on a phone (register, reinforcement, BBS sheet; submit, approve, return) · Summary By Footing on the BBS sheet, report and Excel
 // v46 · index.html v212 — BBS on a phone: only the view switch and model stay pinned on Reinforcement · bar mark cards on one grid
-const VERSION = 'pgs-shell-v46';
+// v47 · index.html v213 — BBS on a phone: the BBS area reaches down to the Suite's navigation (no empty band below it)
+const VERSION = 'pgs-shell-v47';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

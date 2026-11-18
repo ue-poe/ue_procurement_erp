@@ -53,7 +53,8 @@
 // v52 · index.html v214 (in place) — Add / Edit Estimate is item first: search the item, its WBS and locations show if it is estimated; a new item gets both picked · Reset · Reason For Change always on screen
 // v53 · index.html v214 (in place) — Add / Edit Estimate: Qty By Location in the location table's order · a qty that differs by location reads Varies with its range · unchanged row shows no change · Paste Rows and Select N Loc removed
 // v54 · index.html v214 (in place) — Add / Edit Estimate lists Your Drafts and re-opens them · Board shows lines at every location that holds an estimate, draft or pending change · WBS Structure shows material lines and adds them
-const VERSION = 'pgs-shell-v54';
+// v55 · index.html v214 (in place) — Add / Edit Estimate: each item shows its total with every qty / wastage / rate combination and its locations under it; rate and wastage can differ by location (M81e)
+const VERSION = 'pgs-shell-v55';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

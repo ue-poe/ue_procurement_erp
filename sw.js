@@ -51,7 +51,8 @@
 // v50 · index.html v214 (in place) — Add / Edit Estimate: items on the left half, locations on the right half · Board is view only (no tick boxes or select buttons) · WBS / Location panel shows on the Board only
 // v51 · index.html v214 (in place) — Add / Edit Estimate: a searched item that is already estimated shows its figures · listed rows show their totals · changing a listed row ticks its locations · clearer button names · a failed read is shown (M81d)
 // v52 · index.html v214 (in place) — Add / Edit Estimate is item first: search the item, its WBS and locations show if it is estimated; a new item gets both picked · Reset · Reason For Change always on screen
-const VERSION = 'pgs-shell-v52';
+// v53 · index.html v214 (in place) — Add / Edit Estimate: Qty By Location in the location table's order · a qty that differs by location reads Varies with its range · unchanged row shows no change · Paste Rows and Select N Loc removed
+const VERSION = 'pgs-shell-v53';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

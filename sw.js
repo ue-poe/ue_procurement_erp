@@ -55,7 +55,8 @@
 // v54 · index.html v214 (in place) — Add / Edit Estimate lists Your Drafts and re-opens them · Board shows lines at every location that holds an estimate, draft or pending change · WBS Structure shows material lines and adds them
 // v55 · index.html v214 (in place) — Add / Edit Estimate: each item shows its total with every qty / wastage / rate combination and its locations under it; rate and wastage can differ by location (M81e)
 // v56 · index.html v214 (in place) — Add / Edit Estimate: Delete From Estimate moves to the WBS / Basis row behind a selection box and a confirmation · a draft that repeats the approved figure no longer reads Your Draft
-const VERSION = 'pgs-shell-v56';
+// v57 · index.html v214 (in place) — Estimation: the Changes tab is retired (entries go straight to Approvals; drafts are under Your Drafts on Add / Edit Estimate)
+const VERSION = 'pgs-shell-v57';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.6.3</title>
+<title>Penguin Construction v5.7</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3564,6 +3564,72 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pf-top.tk .r2{max-height:0;opacity:0;padding-bottom:0;pointer-events:none}
   #mod-dpr .dp2 .pf-top.tk .m .m1{display:none}#mod-dpr .dp2 .pf-top.tk .m .m2{display:inline}
 }
+/* v5.7 · two tabs: Labour (today) · Progress (till yesterday) */
+#mod-dpr .dp2 .pf-top .pftabs{display:flex;gap:6px;padding:2px 6px 6px;background:transparent!important;border:0!important}
+#mod-dpr .dp2 .pf-top .pftabs .tab{flex:1;min-width:0;display:flex;align-items:center;gap:7px;border-radius:10px;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;padding:5px 8px;text-align:left;cursor:pointer;font:inherit}
+#mod-dpr .dp2 .pf-top .pftabs .tab .n{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.18);font-size:11px;font-weight:800;display:grid;place-items:center}
+#mod-dpr .dp2 .pf-top .pftabs .tab .tx{min-width:0;overflow:hidden}
+#mod-dpr .dp2 .pf-top .pftabs .tab b{display:block;font-size:13px;line-height:1.15}
+#mod-dpr .dp2 .pf-top .pftabs .tab small{display:block;font-size:10.5px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .pf-top .pftabs .tab .c{margin-left:auto;font-size:11px;font-weight:800;white-space:nowrap}
+#mod-dpr .dp2 .pf-top .pftabs .tab .c.ok{color:#34d399}#mod-dpr .dp2 .pf-top .pftabs .tab .c.pend{color:#fbbf24}
+#mod-dpr .dp2 .pf-top .pftabs .tab.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .pftabs .tab.on .n{background:var(--dn);color:#fff}
+#mod-dpr .dp2 .pf-top .pftabs .tab.on .c.ok{color:#047857}#mod-dpr .dp2 .pf-top .pftabs .tab.on .c.pend{color:#b45309}
+#mod-dpr .dp2 .pf.lab{display:block}
+#mod-dpr .dp2 .lab-tot{display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--ln,#d8e0ec);border-radius:10px;padding:6px 9px;margin:0 0 6px;font-size:12px}
+#mod-dpr .dp2 .lab-tot > b{font-size:18px;color:#0f1e33}#mod-dpr .dp2 .lab-tot .k{color:#5b6b82}
+#mod-dpr .dp2 .lab-tot .tm{border:1px solid #d8e0ec;border-radius:8px;padding:1px 7px;font-weight:700;color:#33415f;white-space:nowrap}
+#mod-dpr .dp2 .sp{flex:1}
+#mod-dpr .dp2 .lab-club,#mod-dpr .dp2 .lab-rest{display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#fff7e0;border:1px solid #f1d28a;border-radius:10px;padding:6px 9px;margin:0 0 6px;font-size:12px;color:#7a4b06}
+#mod-dpr .dp2 .lab-club > span,#mod-dpr .dp2 .lab-rest > span{flex:1 1 180px}
+#mod-dpr .dp2 .lab-c{border:1px solid #c9d6ea;border-radius:10px;background:#fff;margin:0 0 6px;overflow:hidden}
+#mod-dpr .dp2 .lab-c .lh{display:flex;gap:8px;align-items:flex-start;padding:6px 9px}
+#mod-dpr .dp2 .lab-c .lh .t{flex:1;min-width:0}
+#mod-dpr .dp2 .lab-c .lh .t b{font-size:13.5px;line-height:1.2;color:#0f1e33;overflow-wrap:anywhere}
+#mod-dpr .dp2 .lab-c .lh .t small{display:block;color:#5b6b82;font-size:11px;margin-top:1px;overflow-wrap:anywhere}
+#mod-dpr .dp2 .lab-c .lh .hd{flex:none;text-align:right;line-height:1.05}
+#mod-dpr .dp2 .lab-c .lh .hd b{font-size:20px;color:#9aa6b8}#mod-dpr .dp2 .lab-c .lh .hd small{display:block;font-size:10.5px;color:#5b6b82}
+#mod-dpr .dp2 .lab-c .lab-b.s-w .lh .hd b{color:var(--ind,#4f46e5)}#mod-dpr .dp2 .lab-c .lab-b.s-h .lh .hd b{color:#b91c1c}
+#mod-dpr .dp2 .lab-c .lh .tk{flex:none;display:grid;place-items:center;width:30px;height:30px}#mod-dpr .dp2 .lab-c .lh .tk input{width:20px;height:20px}
+#mod-dpr .dp2 .lab-c.t1 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t1 > .lh.top{background:#dfe8f6}
+#mod-dpr .dp2 .lab-c.t2 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t2 > .lh.top{background:#dcefe2}
+#mod-dpr .dp2 .lab-c.t3 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t3 > .lh.top{background:#f4e6d2}
+#mod-dpr .dp2 .lab-c.t4 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t4 > .lh.top{background:#ece3f6}
+#mod-dpr .dp2 .lab-c.t5 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t5 > .lh.top{background:#f6e3e6}
+#mod-dpr .dp2 .lab-c .lab-b.in{border-top:1px solid #c9d6ea}#mod-dpr .dp2 .lab-c .lab-b.in > .lh{background:#f6f8fc;padding:4px 9px}
+#mod-dpr .dp2 .lab-c .lr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-top:1px solid #dfe6f0;padding:6px 9px;font-size:12px}
+#mod-dpr .dp2 .lab-c .lr .cn{flex:1 1 100%;display:flex;gap:8px;align-items:baseline;min-width:0}
+#mod-dpr .dp2 .lab-c .lr .con{font-weight:800;font-size:12.5px;color:#0f1e33;overflow-wrap:anywhere}
+#mod-dpr .dp2 .lab-c .lr .lk{color:var(--ind,#4f46e5);font-weight:700;font-size:11.5px;cursor:pointer}#mod-dpr .dp2 .lab-c .lr .lk.bad{color:#b91c1c}
+#mod-dpr .dp2 .lab-c .lr .sts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+#mod-dpr .dp2 .lab-c .lr .lbl{font-size:10.5px;font-weight:800;letter-spacing:.04em;color:#5b6b82;text-transform:uppercase}
+#mod-dpr .dp2 .lab-c .stp{display:inline-flex;align-items:stretch;border:1px solid #d8e0ec;border-radius:9px;overflow:hidden;background:#fff;height:34px}
+#mod-dpr .dp2 .lab-c .stp > span{display:flex;align-items:center;padding:0 8px;font-size:11.5px;color:#33415f;border-right:1px solid #d8e0ec;white-space:nowrap}
+#mod-dpr .dp2 .lab-c .stp button{width:32px;border:0;background:#f4f6fa;font-weight:800;font-size:16px;color:#33415f;cursor:pointer}
+#mod-dpr .dp2 .lab-c .stp input{width:38px;border:0;text-align:center;font-weight:800;font-size:14px;color:#0f1e33;background:#fff;-moz-appearance:textfield;padding:0}
+#mod-dpr .dp2 .lab-c .stp input::-webkit-outer-spin-button,#mod-dpr .dp2 .lab-c .stp input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+#mod-dpr .dp2 .lab-c .stp.dim{opacity:.6}#mod-dpr .dp2 .lab-c .stp.dim b{display:flex;align-items:center;padding:0 10px;font-size:14px}
+#mod-dpr .dp2 .lb{min-height:34px;border:1px solid #d8e0ec;border-radius:9px;padding:0 11px;font-weight:800;font-size:12px;background:#fff;color:#0f1e33;white-space:nowrap;cursor:pointer}
+#mod-dpr .dp2 .lb.ok{background:#047857;color:#fff;border-color:#047857}
+#mod-dpr .dp2 .lb.h{color:#b91c1c;border-color:#f5b5b5}#mod-dpr .dp2 .lb.h.on{background:#b91c1c;color:#fff;border-color:#b91c1c}
+#mod-dpr .dp2 .lb.n.on{background:#33415f;color:#fff;border-color:#33415f}#mod-dpr .dp2 .lb.on{background:#16233b;color:#fff;border-color:#16233b}
+#mod-dpr .dp2 .lab-c .tag,#mod-dpr .dp2 .lab-b .tag{font-size:10.5px;font-weight:800;border-radius:7px;padding:2px 7px;white-space:nowrap;margin-left:4px}
+#mod-dpr .dp2 .tag.y{background:#fff3d6;color:#b45309;border:1px solid #f1d28a}#mod-dpr .dp2 .tag.g{background:#dff5ea;color:#047857;border:1px solid #a7e3c8}
+#mod-dpr .dp2 .tag.r{background:#fde4e4;color:#b91c1c;border:1px solid #f5b5b5}#mod-dpr .dp2 .tag.b{background:#e6e9ff;color:#4f46e5;border:1px solid #c7d0ea}#mod-dpr .dp2 .tag.n{background:#eef1f6;color:#44536a;border:1px solid #d8e0ec}
+#mod-dpr .dp2 .lab-c .rs{flex:1;min-width:0;min-height:34px;border:1px solid #d8e0ec;border-radius:9px;padding:0 8px;font-size:13px;background:#fff}#mod-dpr .dp2 .lab-c .rs.bad{border-color:#b91c1c}
+#mod-dpr .dp2 .lab-c .us{display:flex;gap:5px;flex-wrap:wrap;flex:1 1 100%}
+#mod-dpr .dp2 .lab-c .uu{min-height:30px;border:1px solid #c7d0ea;background:#fff;color:#44536a;border-radius:8px;padding:0 9px;font-weight:700;font-size:11.5px;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mod-dpr .dp2 .lab-c .uu.on{background:#16233b;color:#fff;border-color:#16233b}
+#mod-dpr .dp2 .d2-foot.pf .d2-btn.back{flex:0 0 auto!important}
+#mod-dpr .dp2 .pf2 > .col > h3{display:none}
+@media (min-width:1000px){
+  #mod-dpr .dp2 .pf-top .pftabs{display:none}
+  #mod-dpr .dp2 .pf2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:12px;align-items:start}
+  #mod-dpr .dp2 .pf2 > .col > h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font-size:13px;font-weight:800;color:#16233b;position:sticky;top:0;z-index:6;background:var(--bg,#eef1f6);padding:6px 2px}
+  #mod-dpr .dp2 .pf2 > .col > h3 i{font-style:normal;width:20px;height:20px;border-radius:50%;background:#16233b;color:#fff;font-size:11px;display:grid;place-items:center}
+  #mod-dpr .dp2 .pf2 .pf-card .hd{top:32px}
+}
 </style>
 
 </head>
@@ -5101,7 +5167,6 @@ const DPR = (function () {
     let h = `<div class="d2-card pfc ${S.catMode && !rvOn() ? 'cat' : ''}">${pfHead(ro, rvOn())}`;
     if (sub && sub.status === 'Returned') h += `<div class="d2-fix d2-ret"><b>Returned By The Manager:</b> ${esc(sub.return_reason || '')}${sub.return_note ? ' — ' + esc(sub.return_note) : ''} · Correct And Resend (Attempt ${num(sub.attempt_no) + 1})</div>`;
     if (rvOn()) return h + `<div class="rv pfrvw" id="d2_sc">${pfPreview()}</div><div class="d2-foot pf" id="d2_foot">${footHtml()}</div></div>`;
-    if (S.cm && !ro) h += `<div class="d2-fix d2-warn"><b>Report Together:</b> Tap Units To Tick Them → <button class="d2-btn sm ok" onclick="DPR.makeClub()">Club ${S.ticks.size} Ticked</button> <button class="d2-btn sm" onclick="DPR.clubMode()">Done</button> · Progress Stays Per Unit; Manpower Is Entered Once For The Club.</div>`;
     h += `<div class="d2-sc" id="d2_sc">${S.catMode ? catHtml() : sheetHtml3(ro)}</div>`;
     return h + `<div class="d2-foot pf" id="d2_foot">${footHtml()}</div></div>`;
   }
@@ -5141,8 +5206,9 @@ const DPR = (function () {
   }
   function footHtml() {
     const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount();
-    if (S.prev) { const blk = att || labStats().miss; return `<span class="msg"><b>${d}</b> · ${blk ? `<span style="color:var(--drd)"><b>${blk}</b> Need${blk === 1 ? 's' : ''} Attention</span> · Fix, Then Send` : 'Sending Records Date &amp; Time'} · 1 PM Due</span><button class="d2-btn" onclick="DPR.prevClose()">← Edit</button><button class="d2-btn ok" ${blk ? 'disabled' : ''} onclick="DPR.submitGo()">Send To Manager ✓</button>`; }   // v5.4
+    if (S.prev) { const blk = att || labStats().miss || (S.cards ? labPend() : 0); return `<span class="msg"><b>${d}</b> · ${blk ? `<span style="color:var(--drd)"><b>${blk}</b> Need${blk === 1 ? 's' : ''} Attention</span> · Fix, Then Send` : 'Sending Records Date &amp; Time'} · 1 PM Due</span><button class="d2-btn" onclick="DPR.prevClose()">← Edit</button><button class="d2-btn ok" ${blk ? 'disabled' : ''} onclick="DPR.submitGo()">Send To Manager ✓</button>`; }   // v5.4
     if (S.locked) return `<span class="msg">🔒 <b>${esc(stOf(stKey())[1])}${S.sub.submitted_at ? ' ' + esc(dts(S.sub.submitted_at)) : ''}</b> · ${S.sub.status === 'Accepted' ? 'Accepted By The Manager' : S.sub.status === 'Published' ? 'Published' : 'Awaiting Manager'} · Read-Only</span>${S.sub.status === 'Submitted' && !Object.values((S.cal && S.cal.days) || {}).some(x => x.report_date > S.to) ? `<button class="d2-btn amb" onclick="DPR.retrieveAsk()">↩ Retrieve For Correction</button>` : ''}<button class="d2-btn" onclick="DPR.tab('rep')">← Back To Day Reports</button>`;   // v163 · item 3
+    if (S.cards) return pfFoot();   // v5.7 · two tabs
     const L = labStats(), attTxt = att ? ` · <span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : '';
     return `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}Progress Of ${esc(dsh(PD()))} · Status &amp; Manpower Of ${d}${L.miss ? ` · <span style="color:var(--drd)"><b>${L.miss}</b> Worked Row${L.miss === 1 ? '' : 's'} Without Heads</span>` : ''}${attTxt}</span><button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button><button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send →</button>`;
   }
@@ -6444,7 +6510,7 @@ const DPR = (function () {
     const ids = [...S.ticks]; if (ids.length < 2) { toast('Tick Two Or More Activities To Report Them Together', 'warn'); return; }
     if (new Set(ids.map(w => S.W[w] && S.W[w].g.wgroup_id)).size < 2) { toast('Those Activities Already Report Together', 'warn'); return; }
     if (dirtyAll() && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast(ids.length + ' Activities Now Report Together', 'success'); await engLoad(tDate(), true); }
+    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast(ids.length + ' Activities Now Report Together', 'success'); S.cm = false; S.ticks = new Set(); await engLoad(tDate(), true); }
     catch (e) { toast(err(e, 'Could not club them'), 'error'); }
   }
   async function unclub(gid) {
@@ -6469,7 +6535,7 @@ const DPR = (function () {
       const x = d.lines[l.work_id]; if (finL(l) || heldL(g, l)) continue;   // v5.3 · M49 a held line sends nothing
       let o = outOf(g, l); const nm = l.activity + ' · ' + lineLoc(g, l), oT = outT(g, l);
       if (o === '' && !x.fin && oT === '') continue;
-      if (o === '' && !x.fin) { if (startedB(l)) { problems.push('Fill The ' + dsh(PD()) + ' Status (W / H / N) On ' + nm + ' — Its ' + dsh(S.to) + ' Status Is Marked'); } else o = 'n'; }   // v165 · today marked, yesterday blank: a part not yet started is No Work yesterday; a running one must be told
+      if (o === '' && !x.fin) { if (startedB(l)) { problems.push('Fill The ' + dsh(PD()) + ' Status (W / H / N) On ' + nm + ' On The Progress Tab — Its ' + dsh(S.to) + ' Labour Is Marked'); } else o = 'n'; }   // v165 · today marked, yesterday blank: a part not yet started is No Work yesterday; a running one must be told
       const ln = { work_id: l.work_id, outcome: o === 'w' ? 'worked' : o === 'h' ? 'hindrance' : 'none' };
       if (staged(l)) {
         ln.stages = subsLive(g, l).map(s => { const y = x.subs[s.id], b = subBase(s), so = b >= 99.9995 ? 'none' : y.out === 'w' ? 'worked' : y.out === 'h' ? 'hindrance' : 'none';
@@ -7827,7 +7893,7 @@ const DPR = (function () {
   function pfFloor(k) { S.pfF = k || ''; S.mpo = null; redraw(); }
   function pfFind(v) { S.fs = String(v || '').trim() ? v : ''; redraw(); }
   function pfGo(wid) {   // Fix → back to the sheet, on that unit
-    const e = S.W[wid]; if (!e) return; S.prev = false; S.pfF = pfFloorKey(e.g, e.l); S.pfU[pfCardKey(e.g, e.l)] = wid; S.fs = ''; paint();
+    const e = S.W[wid]; if (!e) return; S.prev = false; S.pft = attP(e.g, e.l) || !attW(e.g, e.l) ? 'prog' : 'lab'; S.pfF = pfFloorKey(e.g, e.l); S.pfU[pfCardKey(e.g, e.l)] = wid; S.fs = ''; paint();
     setTimeout(() => { const el = document.querySelector('#d2 .pf-card[data-k="' + CSS.escape(pfCardKey(e.g, e.l)) + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 40);
   }
   /* ----- the entry under the unit scroller ----- */
@@ -7873,33 +7939,162 @@ const DPR = (function () {
       if (s) {
         const y = x.subs[s.id], done = subDoneT(s, y), Gp = Gs.find(G => G.subs.some(z => z.id === s.id)) || null;
         h += pfSnapRow(g, l, s, ro);
-        h += `<div class="today"><span class="lbl">Status · ${esc(dsh(S.to))}</span><div class="cq">${tInner(g, l, s, ro)}</div></div>`;
-        if (!done && subT(y).out === 'w' && lv === 'sub' && g.lines.length === 1) h += cdMpBlock(g, labUnits(g).find(z => z.key === 'S:' + s.id) || { key: 'S:' + s.id, worked: true }, s.name, 'Per Sub-Activity · ' + s.name, loc, ro);
-        if (!done && lv === 'group' && Gp && Gp.id && g.lines.length === 1) { const gu = labUnits(g).find(z => z.key === 'G:' + Gp.id); if (gu) h += cdMpBlock(g, gu, Gp.name, 'Per Group · ' + Gp.name, loc, ro); }
         h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${ro || S.holdOff || done ? '' : holdBtn('sub', wid, s.id, 'Hold')}</div>`;
       }
       h += cdFinStrip(g, l, ro);
     } else {
       h += pfSnapRow(g, l, null, ro);
-      if (!fin) h += `<div class="today"><span class="lbl">Status · ${esc(dsh(S.to))}</span><div class="cq">${tInner(g, l, null, ro)}</div></div>`;
       h += pfFinRow(g, l, ro);
       if (!fin) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)"></div>`;
     }
-    if (C.mode === 'unit' && lv === 'activity' && !finT(g, l)) { const u = { key: 'A', worked: cardHasW(g) }; h += `<div class="ulab"><span class="lbl">Heads On This Unit · ${esc(dsh(S.to))}</span>${u.worked ? mpCell(g, u, ro) : '<span class="muted">Mark W Today To Enter Heads</span>'}</div>${u.worked ? cdMpUnder(g, u, loc, ro) : ''}`; }
     return h + '</div>';
   }
   function pfCard(c, ro) {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${pfCrewLine(c, ro)}<div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div><div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
   }
+  /* ==================================================================
+     v5.7 · TWO TABS (DPR_TwoTabs_mock_v1, approved 19 Nov 2026) — the same sheet, entered the way the site works:
+       1 · Labour   · today (D)        one block per crew (card / club): contractor + heads per trade, or Hindrance / No Work
+       2 · Progress · till D-1 EOD     the unit → sub-activity → 25 / 50 / 75 / Done entry
+     Heads on a crew mark its running rows Working today (M42: today's status is provisional; tomorrow's Progress writes the fact).
+     Yesterday's labour is SHOWN, never counted, until ✓ Same Today. Wide screens show both side by side. Payloads are unchanged.
+     ================================================================== */
+  const pfWide = () => window.innerWidth >= 1000;
+  const pfTabOf = () => (S.pft === 'prog' ? 'prog' : 'lab');
+  function pfTab(t) { S.pft = t === 'prog' ? 'prog' : 'lab'; S.mpo = null; S.remo = null; redraw(); try { window.scrollTo(0, 0); } catch (e) { /* no window scroll */ } }
+  const labLive = g => g.lines.filter(l => !finT(g, l) && !heldL(g, l));
+  const labRunSubs = (g, l) => { const x = lineX(g, l), op = openT(g, l), run = op.filter(s => subStartedAsOf(s, x.subs[s.id])); return run.length ? run : op.slice(0, 1); };   // the sub-activities taken as worked today: those already started, else the next one
+  function labLineSet(g, l, oc) {   // today's status of one row from the Labour tab: 'w' | 'h' | 'n' | ''
+    if (finT(g, l) || heldL(g, l)) return; const x = lineX(g, l);
+    if (!staged(l)) { const t = tOf(g, l); t.out = oc; t.started = oc === 'w' && !lineStartedAsOf(g, l) ? S.to : ''; if (oc !== 'h') t.rc = ''; return; }
+    const run = oc === 'w' ? labRunSubs(g, l) : [];
+    openT(g, l).forEach(s => { const y = x.subs[s.id], t = subT(y), v = oc === 'w' ? (run.indexOf(s) >= 0 ? 'w' : (t.out === 'w' ? '' : t.out)) : oc; t.out = v; t.s = v === 'w' && !subStartedAsOf(s, y) ? S.to : ''; if (v !== 'h') t.rc = ''; });
+  }
+  const labState = g => { const ls = labLive(g); if (!ls.length) return 'fin'; const os = ls.map(l => outT(g, l)); if (os.some(o => o === 'w')) return 'w'; if (os.every(o => o === 'h')) return 'h'; if (os.every(o => o)) return 'n'; return os.some(o => o) ? 'mix' : ''; };
+  const labRc = g => { for (const l of labLive(g)) { if (!staged(l)) { if (tOf(g, l).rc) return tOf(g, l).rc; } else for (const s of openT(g, l)) { const t = subT(lineX(g, l).subs[s.id]); if (t.rc) return t.rc; } } return ''; };
+  const labHeadsAll = g => cardHeads(g);
+  const labDone = g => { const st = labState(g); if (st === 'fin') return true; if (st === '' || st === 'mix') return false; if (g.lines.some(l => tReasonMissing(g, l))) return false; return !(st === 'w' && cardNeedsLab(g)); };
+  const labCards = () => S.groups.filter(g => labLive(g).length);
+  const labPend = () => labCards().filter(g => !labDone(g)).length;
+  function labClearHeads(g) { const d = dOf(g); d.cons.forEach(c => { c.heads = {}; }); Object.keys(d.rows || {}).forEach(k => d.rows[k].forEach(c => { c.heads = {}; })); if (d.nolab) d.nolab = new Set(); }
+  function labW(gid) { const g = G(gid); if (!g || isRo()) return; labLive(g).forEach(l => labLineSet(g, l, 'w')); markDirty(g); redraw(); }
+  function labSame(gid) { const g = G(gid); if (!g || isRo()) return; const src = ydRows(g, 'A'); if (src.length) { const arr = unitRows(g, { key: 'A' }); arr.length = 0; src.forEach(c => arr.push({ con: c.con, heads: Object.assign({}, c.heads) })); } labLive(g).forEach(l => labLineSet(g, l, 'w')); markDirty(g); redraw(); }
+  function labOut(gid, oc) { const g = G(gid); if (!g || isRo()) return; const cur = labState(g), v = cur === oc ? '' : oc; labLive(g).forEach(l => labLineSet(g, l, v)); if (v === 'h' || v === 'n') labClearHeads(g); markDirty(g); redraw(); }
+  function labReason(gid, rc) { const g = G(gid); if (!g) return; labLive(g).forEach(l => { const x = lineX(g, l); if (!staged(l)) { if (tOf(g, l).out === 'h') tOf(g, l).rc = rc; } else openT(g, l).forEach(s => { const t = subT(x.subs[s.id]); if (t.out === 'h') t.rc = rc; }); }); markDirty(g); redraw(); }
+  function labUnitTog(wid) { const e = S.W[wid]; if (!e || isRo()) return; labLineSet(e.g, e.l, outT(e.g, e.l) === 'w' ? 'n' : 'w'); markDirty(e.g); redraw(); }
+  function labSubTog(wid, sid) { const e = S.W[wid]; if (!e || isRo()) return; const y = lineX(e.g, e.l).subs[sid], s = (e.l.stages || []).find(z => z.id === sid), t = subT(y); t.out = t.out === 'w' ? '' : 'w'; t.s = t.out === 'w' && !subStartedAsOf(s, y) ? S.to : ''; t.rc = ''; markDirty(e.g); redraw(); }
+  function labHead(gid, key, ci, tc, v, step) {   // a stepper or a typed number; heads on a crew that has no status yet mark it Working today
+    const g = G(gid); if (!g || isRo()) return; const c = unitRows(g, { key })[ci]; if (!c) return;
+    const n = Math.max(0, Math.round(step ? num(c.heads[tc]) + step : num(v))); if (n) c.heads[tc] = n; else delete c.heads[tc];
+    if (n && key === 'A' && labState(g) !== 'w') labLive(g).forEach(l => labLineSet(g, l, 'w'));
+    markDirty(g); redraw();
+  }
+  function labTrade(gid, key, ci) {
+    const g = G(gid); if (!g) return; const c = unitRows(g, { key })[ci] || {}, have = new Set(Object.keys(c.heads || {}).filter(t => num(c.heads[t]) > 0));
+    const rest = S.masters.trades.filter(t => !have.has(t.trade_code));
+    sheetOpen('Add Trade', 'Trades Come From Labour Setup (Manager)', rest.length ? rest.map(t => `<div class="dpr-lrow" onclick="DPR.sheetClose();DPR.labHead('${gid}','${key}',${ci},'${esc(t.trade_code)}',1)"><div class="nm"><b>${esc(t.trade_name)}</b><span>${esc(t.trade_code)}</span></div>＋</div>`).join('') : '<div class="dpr-note">Every Trade Is Already On This Crew.</div>', '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
+  }
+  function labRest() {   // every crew still without labour / status → No Work today (one tap for the idle ones)
+    if (isRo()) return; const gs = labCards().filter(g => { const st = labState(g); return st === '' || st === 'mix'; }); if (!gs.length) return;
+    if (!confirm('Mark ' + gs.length + ' Remaining Activit' + (gs.length === 1 ? 'y' : 'ies') + ' As No Work On ' + dsh(S.to) + '?')) return;
+    gs.forEach(g => { labLive(g).forEach(l => { if (!outT(g, l)) labLineSet(g, l, 'n'); }); markDirty(g); }); redraw();
+  }
+  const labTname = tc => ((S.masters.trades.find(t => t.trade_code === tc) || {}).trade_name) || tc;
+  function labSteppers(g, key, ro, dimRows) {   // one line per contractor: name · a stepper per trade · ＋ Trade
+    const rows = dimRows || unitRows(g, { key }), gid = g.wgroup_id;
+    return rows.map((c, ci) => { const tcs = Object.keys(c.heads || {}).filter(t => num(c.heads[t]) > 0);
+      const con = `<span class="con">${c.con ? esc(conName(c.con)) : '<b class="bad">Contractor Not Available</b>'}</span>${dimRows || ro ? '' : `<a class="lk" onclick="DPR.conPick('${gid}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a>${ci > 0 ? `<a class="lk bad" onclick="DPR.rmCon('${gid}',${ci},'${key}')">×</a>` : ''}`}`;
+      const st = tcs.map(t => dimRows || ro ? `<span class="stp dim"><span>${esc(labTname(t))}</span><b>${fmt(c.heads[t])}</b></span>`
+        : `<span class="stp"><span>${esc(labTname(t))}</span><button onclick="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',0,-1)">−</button><input data-k="lh:${gid}:${key}:${ci}:${esc(t)}" type="number" inputmode="numeric" min="0" value="${c.heads[t]}" onchange="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',this.value)"><button onclick="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',0,1)">+</button></span>`).join('');
+      return `<div class="lr"><div class="cn">${con}</div><div class="sts">${st}${dimRows || ro ? '' : `<button class="lb" onclick="DPR.labTrade('${gid}','${key}',${ci})">＋ Trade</button>`}</div></div>`; }).join('')
+      + (dimRows || ro ? '' : `<div class="lr acts"><button class="lb" onclick="DPR.conPick('${gid}',-1,'${key}')">＋ Contractor</button></div>`);
+  }
+  function labBlock(g, ro, inner) {   // one crew: a club (labour once) or a single unit
+    const gid = g.wgroup_id, ls = labLive(g), st = labState(g), lv = labLevel(g), acts = [...new Set(g.lines.map(l => l.activity))], club = g.lines.length > 1;
+    const l0 = ls[0] || g.lines[0], fk = pfFloorKey(g, l0), tot = labHeadsAll(g), yd = lv === 'activity' ? ydRows(g, 'A') : [], ydN = yd.reduce((a, c) => a + heads(c.heads), 0);
+    const title = acts.length > 1 ? (linePkg(g, l0) || 'Report Together') : acts[0];
+    const where = club ? pathTail(bookedTo(g), 2) + ' · ' + g.lines.length + (acts.length > 1 ? ' Rows · ' + acts.length + ' Activities' : ' Units') + ' · One Crew' : (pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk) + ' · ' + lineLoc(g, l0);
+    const starts = ls.some(l => !startedB(l)) && st === 'w';
+    const tickBox = S.cm && !ro ? `<label class="tk"><input type="checkbox" ${g.lines.every(l => S.ticks.has(l.work_id)) ? 'checked' : ''} onchange="DPR.tick('${g.lines[0].work_id}',this.checked)"></label>` : '';
+    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${inner ? '' : `<small>${esc(where)}</small>`}${!inner && acts.length > 1 ? `<small class="acts">${acts.map(esc).join(' · ')}</small>` : ''}</div>
+      <div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    const hn = `<button class="lb h ${st === 'h' ? 'on' : ''}" onclick="DPR.labOut('${gid}','h')">H · Hindrance</button><button class="lb n ${st === 'n' ? 'on' : ''}" onclick="DPR.labOut('${gid}','n')">N · No Work</button>`;
+    if (ro) {
+      h += st === 'w' ? (lv === 'activity' ? labSteppers(g, 'A', true) : `<div class="lr"><span class="muted">${fmt(tot)} Heads · Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span></div>`) : `<div class="lr">${st === 'h' ? pill('p-red', 'Hindrance') + ' ' + esc(((S.masters.hindrance_reasons.find(r => r.reason_code === labRc(g)) || {}).reason_text) || '') : st === 'n' ? pill('p-grey', 'No Work') : '<span class="muted">Not Filled</span>'}</div>`;
+      return h + '</div>';
+    }
+    if (st === 'h') {
+      const rc = labRc(g);
+      h += `<div class="lr acts">${hn}</div><div class="lr"><span class="lbl">Reason</span><select class="rs ${rc ? '' : 'bad'}" data-k="lrc:${gid}" onchange="DPR.labReason('${gid}',this.value)"><option value="">Pick Reason…</option>${S.masters.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select><span class="tag r">From ${esc(dsh(S.to))}</span></div>`;
+    } else if (st === 'n') {
+      h += `<div class="lr acts">${hn}<span class="sp"></span><span class="tag n">No Work ${esc(dsh(S.to))}</span></div>`;
+    } else if (st === '' || st === 'mix') {
+      if (ydN) h += `<div class="lr"><span class="tag y">From ${esc(dsh(PD()))} · Not Counted Yet</span></div>` + labSteppers(g, 'A', false, yd);
+      h += `<div class="lr acts"><button class="lb ok" onclick="DPR.${ydN ? 'labSame' : 'labW'}('${gid}')">${ydN ? '✓ Same Today' : '＋ Labour Today'}</button>${hn}</div>`;
+    } else {   // working today
+      if (lv === 'activity') {
+        h += `<div class="lr"><span class="tag ${tot ? 'g' : 'r'}">${tot ? '✓ ' + fmt(tot) + ' Heads Today' : 'Heads Missing'}</span>${ydN && !tot ? `<button class="lb" onclick="DPR.labSame('${gid}')">Same As ${esc(dsh(PD()))} · ${fmt(ydN)}</button>` : ''}<span class="sp"></span>${club ? `<button class="lb" title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</div>` + labSteppers(g, 'A', false);
+        if (club) h += `<div class="lr"><span class="lbl">Working Today</span><div class="us">${ls.map(l => `<button class="uu ${outT(g, l) === 'w' ? 'on' : ''}" onclick="DPR.labUnitTog('${l.work_id}')">${esc(lineLoc(g, l))}${acts.length > 1 ? ' · ' + esc(l.activity.split(' ').slice(-2).join(' ')) : ''}</button>`).join('')}</div></div>`;
+        else if (staged(l0)) h += `<div class="lr"><span class="lbl">Working Today</span><div class="us">${openT(g, l0).map(s => `<button class="uu ${subT(lineX(g, l0).subs[s.id]).out === 'w' ? 'on' : ''}" onclick="DPR.labSubTog('${l0.work_id}','${s.id}')">${esc(s.name)}</button>`).join('')}</div></div>`;
+      } else {   // the Reporting Plan asks labour per sub-activity / per group on this activity
+        const l = l0, x = lineX(g, l);
+        h += `<div class="lr"><span class="lbl">Working Today · Labour Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span><div class="us">${openT(g, l).map(s => `<button class="uu ${subT(x.subs[s.id]).out === 'w' ? 'on' : ''}" onclick="DPR.labSubTog('${l.work_id}','${s.id}')">${esc(s.name)}</button>`).join('')}</div></div>`;
+        labUnits(g).forEach(u => { unitRows(g, u); h += `<div class="lr"><span class="lbl">${esc(u.label)}</span><span class="tag ${unitHeads(g, u) ? 'g' : 'r'}">${unitHeads(g, u) ? fmt(unitHeads(g, u)) + ' Heads' : 'Heads Missing'}</span></div>` + labSteppers(g, u.key, false); });
+      }
+      h += `<div class="lr acts">${hn}</div>`;
+    }
+    return h + '</div>';
+  }
+  function pfLab(M, ro) {   // the Labour tab: crews in floor → package → activity order; single units of one activity on a floor share a frame
+    const seen = new Set(), gs = []; M.lines.forEach(it => { if (!seen.has(it.g) && pfHit(it.g, it.l) && (!S.pfF || pfFloorKey(it.g, it.l) === S.pfF)) { seen.add(it.g); gs.push(it.g); } });
+    const live = gs.filter(g => labLive(g).length);
+    const keyOf = g => { const l = labLive(g)[0]; return pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '') + '\u0001' + (g.lines.length > 1 ? '\u0000' + g.wgroup_id : l.activity); };
+    live.sort((a, b) => pfNatCmp(keyOf(a), keyOf(b)) || pfNatCmp(lineLoc(a, labLive(a)[0]), lineLoc(b, labLive(b)[0])));
+    const all = labCards(), rows = []; all.forEach(g => { if (labState(g) === 'w') rvRows(dOf(g)).forEach(r => rows.push(r)); });
+    const mix = tradeMix(rows), tot = rows.reduce((a, c) => a + heads(c.heads), 0), cons = new Set(rows.map(r => r.con).filter(Boolean)).size, pend = all.filter(g => { const st = labState(g); return st === '' || st === 'mix'; }).length;
+    let h = `<div class="lab-tot"><b>${fmt(tot)}</b><span class="k">Heads Today</span>${Object.entries(mix).map(([t, v]) => `<span class="tm">${esc(labTname(t))} ${fmt(v)}</span>`).join('')}${cons ? `<span class="k">${cons} Contractor${cons === 1 ? '' : 's'}</span>` : ''}<span class="sp"></span>${ro ? '' : `<button class="lb ${S.cm ? 'on' : ''}" title="Tick Crews To Report Them Together — Labour Once" onclick="DPR.clubMode()">☑ Club</button>`}</div>`;
+    if (S.cm && !ro) h += `<div class="lab-club"><span><b>${new Set([...S.ticks].map(w => S.W[w] && S.W[w].g.wgroup_id)).size}</b> Ticked · Any Activities, Any Units — They Share One Crew</span><button class="lb ok" onclick="DPR.makeClub()">One Crew For The Ticked</button><button class="lb" onclick="DPR.clubMode()">Cancel</button></div>`;
+    if (!live.length) return h + `<div class="d2-empty"><b>${gs.length ? 'Everything Here Is Finished' : 'No Match'}</b></div>`;
+    let i = 0, tint = 0;
+    while (i < live.length) {
+      const g = live[i], k = keyOf(g); let j = i + 1; while (j < live.length && g.lines.length === 1 && live[j].lines.length === 1 && keyOf(live[j]) === k) j++;
+      const grp = live.slice(i, j), cls = PF_TINT[tint++ % 5];
+      if (grp.length === 1) h += `<article class="lab-c ${cls}">${labBlock(g, ro, false)}</article>`;
+      else { const l = labLive(g)[0], fk = pfFloorKey(g, l), tot2 = grp.reduce((a, x) => a + labHeadsAll(x), 0);
+        h += `<article class="lab-c ${cls} multi"><div class="lh top"><div class="t"><b>${esc(l.activity)}</b><small>${esc((pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk))} · ${grp.length} Units · A Crew Per Unit</small></div><div class="hd"><b>${fmt(tot2)}</b><small>Heads</small></div></div>${ro ? '' : `<div class="lr acts"><button class="lb" onclick="DPR.pfCrew('${cdQ(pfCardKey(g, l))}')">One Crew For ${esc(pfFloorLabel(fk))}</button></div>`}${grp.map(x => labBlock(x, ro, true)).join('')}</article>`; }
+      i = j;
+    }
+    if (pend && !ro) h += `<div class="lab-rest"><span><b>${pend}</b> Activit${pend === 1 ? 'y' : 'ies'} Still Need Labour, Hindrance Or No Work</span><button class="lb" onclick="DPR.labRest()">No Work For The Rest</button></div>`;
+    return `<div class="pf lab">${h}</div>`;
+  }
+  const pfStartsToday = (g, l) => !finL(l) && !startedB(l) && outOf(g, l) === '' && outT(g, l) === 'w';   // new today: labour only, no progress yet
+  const progLines = () => allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l) && !pfStartsToday(g, l) && (startedB(l) || outOf(g, l) !== ''));
+  const progDone = () => progLines().filter(({ g, l }) => outOf(g, l) !== '' && !attP(g, l)).length;
   function pfSheet(ro) {
     const M = pfModel(false), live = cdModel('live'), o = { ro };
     setTimeout(pfStick, 0);
     if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Add The Activities You Are Working On From The Approved Estimate.</div>${ro ? '' : `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd()">＋ Add Work</button>`}</div>` + cdNp(live, o) + cdWaiting(live, o);
-    if (!M.cards.length) return `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">Nothing On This Sheet Matches${S.fs ? ' “' + esc(S.fs) + '”' : ''}${S.pfF ? ' On This Floor' : ''}.</div>${S.fs && !ro ? `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd(1)">＋ Add “${esc(S.fs)}” From The Estimate</button>` : ''}</div>`;
-    return `<div class="pf">${M.cards.map((c, i) => { c.i = i; return pfCard(c, ro); }).join('')}</div>` + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o);
+    const noMatch = `<div class="d2-empty"><b>No Match</b><div style="margin-top:6px">Nothing On This Sheet Matches${S.fs ? ' “' + esc(S.fs) + '”' : ''}${S.pfF ? ' On This Floor' : ''}.</div>${S.fs && !ro ? `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd(1)">＋ Add “${esc(S.fs)}” From The Estimate</button>` : ''}</div>`;
+    const lab = () => (M.cards.length ? pfLab(M, ro) : noMatch) + cdNp(live, o);
+    const prog = () => { const cs = M.cards.map(c => Object.assign({}, c, { items: c.items.filter(it => !pfStartsToday(it.g, it.l)) })).filter(c => c.items.length);
+      return cs.length ? `<div class="pf">${cs.map((c, i) => { c.i = i; return pfCard(c, ro); }).join('')}</div>` : (M.cards.length ? `<div class="d2-empty"><b>No Progress To Enter</b><div style="margin-top:6px">Everything Here Starts Today.</div></div>` : noMatch); };
+    if (pfWide()) return `<div class="pf2"><section class="col"><h3><i>1</i>Labour · Today ${esc(dsh(S.to))}</h3>${lab()}</section><section class="col"><h3><i>2</i>Progress · Till ${esc(dsh(PD()))} EOD</h3>${prog()}</section></div>` + cdLabour(live, o) + cdWaiting(live, o);
+    return (pfTabOf() === 'prog' ? prog() : lab() + cdLabour(live, o)) + cdWaiting(live, o);
+  }
+  function pfTabs() {   // the two tabs (phone) with their own counts
+    const lt = labCards().length, lp = labPend(), pl = progLines().length, pd = progDone(), t = pfTabOf();
+    const tb = (k, n, name, sub, done, tot) => `<button class="tab ${t === k ? 'on' : ''}" onclick="DPR.pfTab('${k}')"><span class="n">${n}</span><span class="tx"><b>${name}</b><small>${sub}</small></span><span class="c ${tot && done >= tot ? 'ok' : 'pend'}">${tot && done >= tot ? '✓ ' : ''}${done} / ${tot}</span></button>`;
+    return `<div class="pftabs">${tb('lab', 1, 'Labour', 'Today · ' + esc(dsh(S.to)), lt - lp, lt)}${tb('prog', 2, 'Progress', 'Till ' + esc(dsh(PD())) + ' EOD', pd, pl)}</div>`;
+  }
+  function pfFoot() {   // sheet footer for the two tabs
+    const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount(), lp = labPend(), t = pfTabOf(), wide = pfWide();
+    const msg = `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}${lp ? `<span style="color:var(--drd)"><b>${lp}</b> Need${lp === 1 ? 's' : ''} Labour, Hindrance Or No Work</span>` : 'Labour Complete'} · ${att ? `<span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : 'Progress Of ' + esc(dsh(PD()))}</span>`;
+    const save = `<button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button>`;
+    if (!wide && t === 'lab') return msg + save + `<button class="d2-btn navy" onclick="DPR.pfTab('prog')">Next: Progress →</button>`;
+    return msg + (wide ? '' : `<button class="d2-btn back" onclick="DPR.pfTab('lab')">← Labour</button>`) + save + `<button class="d2-btn navy" onclick="DPR.preview()">Preview &amp; Send →</button>`;
   }
   /* ----- header: ‹ date ▾ › · status · floor chips ----- */
   function pfHead(ro, rv) {
@@ -7910,7 +8105,7 @@ const DPR = (function () {
     return `<div class="pf-top" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
       <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m"><span class="m1">${nAtt ? `<span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span> · ` : ''}Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}</span><span class="m2">${esc(where)}</span></div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `<div class="floors scroll r2">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `${pfTabs()}<div class="floors scroll r2">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
   }
   /* v5.5.5 · Add Work: the estimate picker (tick activities × locations → each on its own, or Report Together) with its search always on screen */
   function pfAddBar() {
@@ -7990,7 +8185,7 @@ const DPR = (function () {
     if (!ro) b += row('＋ Add Work', 'Search The Estimate · Tick Many Locations · Add Or Report Together', 'DPR.pfAdd()', 'pri')
       + row('⊞ Grid', 'Tick Units Across A Floor', 'DPR.sheetClose();DPR.gridOpen()')
       + row('Start Work By Location', 'Pick A Location, Tick Its Lines', 'DPR.sheetClose();DPR.startOpen()')
-      + row('☑ Report Together', (S.cm ? 'On · Tap Units To Tick Them' : 'Club Activities Already On The Sheet'), 'DPR.sheetClose();DPR.clubMode()');
+      + row('☑ Report Together', (S.cm ? 'On · Tick Crews On The Labour Tab' : 'Club Any Activities · Any Units — Labour Once'), "DPR.sheetClose();DPR.pfTab('lab');DPR.clubMode()");
     b += row('Day Reports', 'Calendar · Sent Reports · Preview', 'DPR.sheetClose();DPR.tab(\'rep\')');
     if (sub && sub.status === 'Draft' && !ro) b += row('Delete ' + esc(dsh(S.to)) + ' Report', 'Unsent Draft Only', `DPR.sheetClose();DPR.delDay('${S.to}')`, 'red');
     sheetOpen('Sheet · ' + dsh(S.to), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
@@ -8256,7 +8451,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

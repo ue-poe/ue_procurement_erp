@@ -14017,6 +14017,7 @@ async function newHO() {
   document.getElementById('hoForm').style.display = 'block';
   document.getElementById('hoListCard').style.display = 'none';
   (function(){ const f=document.getElementById('hoForm'); if(f) delete f.dataset.draftId; const d=document.getElementById('btn_form_discard_HO'); if(d) d.style.display='none'; })();
+  _draftClearRevise('HO');
   document.getElementById('ho_date').value = today();
   document.getElementById('ho_vendor').value = '';
   document.getElementById('ho_vendorCode').value = '';
@@ -14042,7 +14043,7 @@ async function newHO() {
 function closeHOForm() {
   document.getElementById('hoForm').style.display = 'none';
   document.getElementById('hoListCard').style.display = 'block';
-  document.getElementById('hoForm').dataset.revisingHO = '';
+  document.getElementById('hoForm').dataset.revisingHO = ''; _draftSyncSaveBtn('HO');
   document.getElementById('ho_formTitle').textContent = 'Hire Order — New';
   ho_vendor_locked = false;
   const vEl = document.getElementById('ho_vendor');
@@ -14523,7 +14524,7 @@ async function saveHO_direct() {
     const r = await apiReviseHO(revisingHO, data);
     if (r.ok) {
       flashSuccess('HO ' + revisingHO + ' revised and resubmitted for approval.');
-      document.getElementById('hoForm').dataset.revisingHO = '';
+      document.getElementById('hoForm').dataset.revisingHO = ''; _draftSyncSaveBtn('HO');
       state.hireOrders = [];
       closeHOForm(); loadHOList();
     } else toast(r.error || 'Save failed','error');
@@ -14611,7 +14612,7 @@ async function reviseHO(hoNum) {
   // v56: multi-package revise — rebuild the whole order's tree from its saved
   // lines using composite wbsNodeId|locId keys. Set the revise flag first so
   // fn_package_remaining excludes this order's own reservation.
-  document.getElementById('hoForm').dataset.revisingHO = hoNum;
+  document.getElementById('hoForm').dataset.revisingHO = hoNum; _draftEnterRevise('HO');
   const _rvSel = {};
   items.forEach(it => {
     const w = Number(it['_wbs_node_id']);
@@ -14639,7 +14640,7 @@ async function reviseHO(hoNum) {
   ['ho_expandAllBtn','ho_collapseAllBtn','ho_printBtn'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = ''; });
   hoRenderTree();
 
-  document.getElementById('hoForm').dataset.revisingHO = hoNum;
+  document.getElementById('hoForm').dataset.revisingHO = hoNum; _draftEnterRevise('HO');
   toast('Revising ' + hoNum + ' — make corrections and resubmit','info', 5000);
   window.scrollTo(0,0);
 }
@@ -14839,6 +14840,7 @@ async function newHOC() {
   document.getElementById('hocForm').style.display = 'block';
   document.getElementById('hocListCard').style.display = 'none';
   (function(){ const f=document.getElementById('hocForm'); if(f) delete f.dataset.draftId; const d=document.getElementById('btn_form_discard_HOC'); if(d) d.style.display='none'; })();
+  _draftClearRevise('HOC');
   document.getElementById('hoc_date').value = today();
   document.getElementById('hoc_certifiedBy').value = state.userName;
   document.getElementById('hoc_remarks').value = '';
@@ -14859,7 +14861,7 @@ async function newHOC() {
 function closeHOCForm() {
   document.getElementById('hocForm').style.display = 'none';
   document.getElementById('hocListCard').style.display = 'block';
-  document.getElementById('hocForm').dataset.revising = '';
+  document.getElementById('hocForm').dataset.revising = ''; _draftSyncSaveBtn('HOC');
   const titleEl = document.querySelector('#hocForm h3');
   if (titleEl) titleEl.textContent = 'New Hire Order Certification';
 }
@@ -15226,7 +15228,7 @@ async function reviseHOC(hocNum) {
   } finally { pbDone(); }
 
   // Tag the form as a revision so save overwrites the same record
-  document.getElementById('hocForm').dataset.revising = hocNum;
+  document.getElementById('hocForm').dataset.revising = hocNum; _draftEnterRevise('HOC');
   const hocTitleEl = document.querySelector('#hocForm h3');
   if (hocTitleEl) hocTitleEl.textContent = 'Revise Certification — ' + hocNum;
   toast('Revising ' + hocNum + ' — update quantities and save again','info', 5000);
@@ -16585,7 +16587,7 @@ async function newWO() {
   document.getElementById('wo_endDate').value = '';
   const cp = document.getElementById('wo_contactPerson'); if (cp) cp.value = '';
   document.getElementById('wo_tc_editor').innerHTML = ''; tcInitEmpty('wo_tc_editor');
-  document.getElementById('woForm').dataset.revisingWO = '';
+  document.getElementById('woForm').dataset.revisingWO = ''; _draftSyncSaveBtn('WO');
   _woResetTreeState();
   window.scrollTo(0,0);
 }
@@ -16593,7 +16595,7 @@ async function newWO() {
 function closeWOForm() {
   document.getElementById('woForm').style.display = 'none';
   document.getElementById('woListCard').style.display = 'block';
-  document.getElementById('woForm').dataset.revisingWO = '';
+  document.getElementById('woForm').dataset.revisingWO = ''; _draftSyncSaveBtn('WO');
   wo_vendor_locked = false;
   const vEl = document.getElementById('wo_vendor');
   if (vEl) vEl.readOnly = false;
@@ -18173,7 +18175,7 @@ async function reviseWO(woNum) {
   // have silently deleted the rest on resave.)
   // Set the revise flag BEFORE loading, so fn_package_remaining excludes
   // this order's own reservation — quantities can be freely rearranged.
-  document.getElementById('woForm').dataset.revisingWO = woNum;
+  document.getElementById('woForm').dataset.revisingWO = woNum; _draftEnterRevise('WO');
   const actIds = [...new Set(items.map(it => Number(it['_wbs_node_id'])).filter(Boolean))];
   if (!actIds.length) { toast('Could not resolve activities for this order.','error'); return; }
   try { await _woLoadActivities(actIds); }
@@ -18207,7 +18209,7 @@ async function reviseWO(woNum) {
   });
 
   woRenderTree();
-  document.getElementById('woForm').dataset.revisingWO = woNum;
+  document.getElementById('woForm').dataset.revisingWO = woNum; _draftEnterRevise('WO');
   toast('Revising ' + woNum + ' — make corrections and resubmit','info',5000);
   window.scrollTo(0,0);
 }
@@ -18665,14 +18667,14 @@ async function newWOC() {
   sel.innerHTML = '<option value="">— Select WO —</option>' +
     (r.ok ? r.orders : []).map(o => `<option value="${esc(o['WO Number'])}">${esc(o['WO Number'])} — ${esc(o['Vendor Name'])}${(o['Scope']||'').trim()?' — '+esc(o['Scope'].length>50?o['Scope'].slice(0,50)+'…':o['Scope']):''}</option>`).join('');
   document.getElementById('woc_number').value = '— select WO first —';
-  document.getElementById('wocForm').dataset.revising = '';
+  document.getElementById('wocForm').dataset.revising = ''; _draftSyncSaveBtn('WOC');
   window.scrollTo(0,0);
 }
 
 function closeWOCForm() {
   document.getElementById('wocForm').style.display = 'none';
   document.getElementById('wocListCard').style.display = 'block';
-  document.getElementById('wocForm').dataset.revising = '';
+  document.getElementById('wocForm').dataset.revising = ''; _draftSyncSaveBtn('WOC');
   _wocResetTree();
 }
 
@@ -19297,7 +19299,7 @@ async function reviseWOC(wocNum) {
 
   document.getElementById('woc_date').value    = r.header['WOC Date']||today();
   document.getElementById('woc_remarks').value = r.header['Remarks']||'';
-  document.getElementById('wocForm').dataset.revising = wocNum;
+  document.getElementById('wocForm').dataset.revising = wocNum; _draftEnterRevise('WOC');
 }
 
 // Build a read-only certification tree (activity → block → floor → unit → stage rows)
@@ -23760,6 +23762,34 @@ const DRAFT_ADAPTERS = {
 // returns to the doc-type list.
 
 function _draftFormId(docType) { return (DRAFT_ADAPTERS[docType] || {}).formId; }
+// Draft / revise isolation: a draft is always a NEW document, a revise always
+// targets ONE returned document. The two states must never share a form session.
+const DRAFT_REVISE_KEY = { PO:'revisingPO', HO:'revisingHO', WO:'revisingWO', HOC:'revising', WOC:'revising' };
+const DRAFT_PO_LINK_KEYS = ['directMirNum','directMirSnos','directMirMats','directMirQtys','poMirNum'];
+function _draftRevising(docType) {
+  const f = document.getElementById(_draftFormId(docType)); const k = DRAFT_REVISE_KEY[docType];
+  return (f && k && f.dataset[k]) ? f.dataset[k] : '';
+}
+function _draftSyncSaveBtn(docType) {
+  const b = document.querySelector('button[onclick="saveDraft(\'' + docType + '\')"]');
+  if (b) b.style.display = _draftRevising(docType) ? 'none' : '';
+}
+function _draftClearRevise(docType) {
+  const f = document.getElementById(_draftFormId(docType)); const k = DRAFT_REVISE_KEY[docType];
+  if (f && k) delete f.dataset[k];
+  _draftSyncSaveBtn(docType);
+}
+function _draftEnterRevise(docType) {
+  _draftSetCurrentId(docType, null);
+  const fd = document.getElementById('btn_form_discard_' + docType); if (fd) fd.style.display = 'none';
+  _draftSyncSaveBtn(docType);
+}
+function _poClearReviseUi() {
+  const f = document.getElementById('poForm'); if (f) delete f.dataset.revisingPO;
+  const t = document.getElementById('po_formTitle'); if (t) t.textContent = 'Purchase Order \u2014 New';
+  document.querySelectorAll('#poForm .po-rev-note').forEach(n => n.remove());
+  _draftSyncSaveBtn('PO');
+}
 function _draftCurrentId(docType) {
   const f = document.getElementById(_draftFormId(docType));
   return (f && f.dataset.draftId) ? f.dataset.draftId : null;
@@ -23803,6 +23833,7 @@ function _draftHasLines(docType, payload) {
 // Save Draft — persist current form (update open draft or insert new), exit to list.
 async function saveDraft(docType) {
   const a = DRAFT_ADAPTERS[docType]; if (!a) return;
+  if (_draftRevising(docType)) { toast('This Document Is Being Revised \u2014 Resubmit It Instead Of Saving A Draft.', 'warn', 6000); return; }
   try {
     const payload = a.capture();
     if (!_draftHasLines(docType, payload)) {
@@ -23835,9 +23866,11 @@ async function resumeDraftId(docType, id) {
   const d = await _draftFetchOne(id);
   if (!d) { toast('Draft not found (it may have been discarded).', 'info'); return; }
   await a.open();
+  _draftClearRevise(docType);                      // a resumed draft is always a new document
   try { await Promise.all([_loadLocTree(), _loadWbsTree()]); } catch (e) { /* names cosmetic */ }
   try { await a.restore(d.payload); }
   catch (e) { toast('Could not fully restore the draft: ' + e.message, 'error'); }
+  _draftClearRevise(docType);                      // restore must not re-arm a revise
   _draftSetCurrentId(docType, id);                 // track which draft is open
   const fd = document.getElementById('btn_form_discard_' + docType);
   if (fd) fd.style.display = '';                    // in-form Discard now meaningful
@@ -23982,7 +24015,7 @@ function _draftCapturePO() {
     qc_ref:         document.getElementById('po_qcRef')?.value || null,
     mir_ref:        document.getElementById('po_mirRef')?.value || null,
     vendor_locked:  !!_poVendorLocked,
-    mir_dataset:    { ...(document.getElementById('poForm')?.dataset || {}) },
+    mir_dataset:    (function(){ const d = document.getElementById('poForm')?.dataset || {}, o = {}; DRAFT_PO_LINK_KEYS.forEach(k => { if (d[k] != null) o[k] = d[k]; }); return o; })(),
   };
   const items = [];
   document.querySelectorAll('#poItemsBody tr').forEach(tr => {
@@ -24027,7 +24060,7 @@ function _draftRestorePO(pl) {
   }
   if (h.mir_dataset) {
     Object.entries(h.mir_dataset).forEach(([k, v]) => {
-      if (k !== 'resumingDraft') document.getElementById('poForm').dataset[k] = v;
+      if (DRAFT_PO_LINK_KEYS.includes(k)) document.getElementById('poForm').dataset[k] = v;
     });
   }
   // Rebuild line rows.
@@ -27842,6 +27875,7 @@ async function newPO() {
   });
   // v102: clear stale MIR/QC link dataset so a fresh PO never inherits a previous PO's MIR linkage
   ['directMirNum','directMirSnos','directMirMats','directMirQtys','poMirNum'].forEach(k=>{ delete document.getElementById('poForm').dataset[k]; });
+  _poClearReviseUi();   // a fresh form never inherits a previous revise
   // Pre-fill contact person with default site contacts (editable)
   const cpEl=document.getElementById('po_contactPerson');
   if(cpEl) cpEl.value=(window.PGS_META&&PGS_META.proj&&PGS_META.proj.contact_person)||'';   // v66
@@ -27937,6 +27971,7 @@ async function newPOFromQC(qcNum) {
 function closePOForm() {
   document.getElementById('poForm').style.display='none';
   document.getElementById('poListCard').style.display='block';
+  _poClearReviseUi();
   _poVendorLocked=false;
   const ve=document.getElementById('po_vendor'); if(ve) ve.readOnly=false;
   const vc=document.getElementById('po_vendor_clear'); if(vc) vc.style.display='none';
@@ -29546,6 +29581,7 @@ async function revisePO(poNum) {
   await newPO();  // resets form
   document.getElementById('po_formTitle') && (document.getElementById('po_formTitle').textContent = 'Revise Purchase Order — ' + poNum);
   document.getElementById('poForm').dataset.revisingPO = poNum;
+  _draftEnterRevise('PO');
 
   // v131.1: restore GST. newPO() resets mode→overall and blanks the %, and the old
   // prefill never put them back — every revised PO was resubmitted at 0% GST.
@@ -29594,6 +29630,7 @@ async function revisePO(poNum) {
   if(h.rejection_reason){
     const notice = document.createElement('div');
     notice.style.cssText = 'margin:8px 0 12px;padding:10px 14px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;font-size:13px;color:#92400e;';
+    notice.className = 'po-rev-note';
     notice.innerHTML = `<strong>PM Note:</strong> ${esc(h.rejection_reason)}`;
     document.getElementById('po_formTitle')?.parentNode?.insertBefore(notice, document.getElementById('po_formTitle')?.nextSibling);
   }

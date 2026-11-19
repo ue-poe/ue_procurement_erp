@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7.1</title>
+<title>Penguin Construction v5.7.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3583,7 +3583,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .sp{flex:1}
 #mod-dpr .dp2 .lab-club,#mod-dpr .dp2 .lab-rest{display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#fff7e0;border:1px solid #f1d28a;border-radius:10px;padding:6px 9px;margin:0 0 6px;font-size:12px;color:#7a4b06}
 #mod-dpr .dp2 .lab-club > span,#mod-dpr .dp2 .lab-rest > span{flex:1 1 180px}
-#mod-dpr .dp2 .lab-c{border:1px solid #c9d6ea;border-radius:10px;background:#fff;margin:0 0 6px;overflow:hidden}
+#mod-dpr .dp2 .lab-c{border:1px solid #c9d6ea;border-radius:10px;background:#fff;margin:0 0 6px}
 #mod-dpr .dp2 .lab-c .lh{display:flex;gap:8px;align-items:flex-start;padding:6px 9px}
 #mod-dpr .dp2 .lab-c .lh .t{flex:1;min-width:0}
 #mod-dpr .dp2 .lab-c .lh .t b{font-size:13.5px;line-height:1.2;color:#0f1e33;overflow-wrap:anywhere}
@@ -3592,11 +3592,11 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c .lh .hd b{font-size:20px;color:#9aa6b8}#mod-dpr .dp2 .lab-c .lh .hd small{display:block;font-size:10.5px;color:#5b6b82}
 #mod-dpr .dp2 .lab-c .lab-b.s-w .lh .hd b{color:var(--ind,#4f46e5)}#mod-dpr .dp2 .lab-c .lab-b.s-h .lh .hd b{color:#b91c1c}
 #mod-dpr .dp2 .lab-c .lh .tk{flex:none;display:grid;place-items:center;width:30px;height:30px}#mod-dpr .dp2 .lab-c .lh .tk input{width:20px;height:20px}
-#mod-dpr .dp2 .lab-c.t1 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t1 > .lh.top{background:#dfe8f6}
-#mod-dpr .dp2 .lab-c.t2 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t2 > .lh.top{background:#dcefe2}
-#mod-dpr .dp2 .lab-c.t3 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t3 > .lh.top{background:#f4e6d2}
-#mod-dpr .dp2 .lab-c.t4 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t4 > .lh.top{background:#ece3f6}
-#mod-dpr .dp2 .lab-c.t5 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t5 > .lh.top{background:#f6e3e6}
+#mod-dpr .dp2 .lab-c.t1 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t1 > .lab-b:not(.in) > .lhl,#mod-dpr .dp2 .lab-c.t1 > .lh.top{background:#dfe8f6}
+#mod-dpr .dp2 .lab-c.t2 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t2 > .lab-b:not(.in) > .lhl,#mod-dpr .dp2 .lab-c.t2 > .lh.top{background:#dcefe2}
+#mod-dpr .dp2 .lab-c.t3 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t3 > .lab-b:not(.in) > .lhl,#mod-dpr .dp2 .lab-c.t3 > .lh.top{background:#f4e6d2}
+#mod-dpr .dp2 .lab-c.t4 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t4 > .lab-b:not(.in) > .lhl,#mod-dpr .dp2 .lab-c.t4 > .lh.top{background:#ece3f6}
+#mod-dpr .dp2 .lab-c.t5 > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c.t5 > .lab-b:not(.in) > .lhl,#mod-dpr .dp2 .lab-c.t5 > .lh.top{background:#f6e3e6}
 #mod-dpr .dp2 .lab-c .lab-b.in{border-top:1px solid #c9d6ea}#mod-dpr .dp2 .lab-c .lab-b.in > .lh{background:#f6f8fc;padding:4px 9px}
 #mod-dpr .dp2 .lab-c .lr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-top:1px solid #dfe6f0;padding:6px 9px;font-size:12px}
 #mod-dpr .dp2 .lab-c .lr .cn{flex:1 1 100%;display:flex;gap:8px;align-items:baseline;min-width:0}
@@ -3651,6 +3651,12 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent .hrw .rpk{position:relative;display:inline-block;cursor:pointer;border:1px dashed #f5b5b5;border-radius:8px;background:#fde4e4;color:#b91c1c;font-weight:700;padding:5px 9px;min-height:32px}
 #mod-dpr .dp2 .pf-ent .hrw .rpk i{font-style:normal;font-size:10px;opacity:.7}
 #mod-dpr .dp2 .pf-ent .hrw .rpk select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+/* v5.7.2 · Labour cards: the title row sticks under the sheet header, like the Progress cards */
+#mod-dpr .dp2 .lab-c > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .lab-c > .lh.top{position:sticky;top:var(--pf-top,0px);z-index:4;border-radius:10px 10px 0 0;border-bottom:1px solid rgba(15,30,51,.08)}
+#mod-dpr .dp2 .lab-c > .lab-b:not(.in) > .lhl{padding:0 9px 6px}
+#mod-dpr .dp2 .lab-c > .lab-b:not(.in) > .lhl .locs{margin-top:0;padding-top:4px}
+#mod-dpr .dp2 .lab-c > .lab-b:last-child,#mod-dpr .dp2 .lab-c > .lab-b:last-child > .lr:last-child{border-radius:0 0 10px 10px}
+@media (min-width:1000px){ #mod-dpr .dp2 .pf2 .lab-c > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .pf2 .lab-c > .lh.top{top:32px} }
 </style>
 
 </head>
@@ -8070,8 +8076,9 @@ const DPR = (function () {
     const short = labShort(acts), locs = `<div class="locs">${g.lines.map(l => `<span class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}" title="${esc(l.activity + ' · ' + lineLoc(g, l))}">${acts.length > 1 ? esc(short[l.activity]) + ' · ' : ''}${esc(lineLoc(g, l))}</span>`).join('')}</div>`;
     const starts = ls.length > 0 && ls.every(l => !startedB(l)) && st === 'w';
     const tickBox = S.cm && !ro ? `<label class="tk"><input type="checkbox" ${g.lines.every(l => S.ticks.has(l.work_id)) ? 'checked' : ''} onchange="DPR.tick('${g.lines[0].work_id}',this.checked)"></label>` : '';
-    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${acts.length > 1 ? `<span class="tag b">${acts.length} Activities</span>` : ''}${inner ? '' : `<small>${esc(where)}</small>${locs}`}</div>
+    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${acts.length > 1 ? `<span class="tag b">${acts.length} Activities</span>` : ''}${inner ? '' : `<small>${esc(where)}</small>`}</div>
       <div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    if (!inner) h += `<div class="lhl">${locs}</div>`;   // v5.7.2 · the title row sticks while scrolling; the location tags scroll with the card
     const hn = `<button class="lb h ${st === 'h' ? 'on' : ''}" onclick="DPR.labOut('${gid}','h')">H · Hindrance</button><button class="lb n ${st === 'n' ? 'on' : ''}" onclick="DPR.labOut('${gid}','n')">N · No Work</button>`;
     if (ro) {
       h += st === 'w' ? (lv === 'activity' ? labSteppers(g, 'A', true) : `<div class="lr"><span class="muted">${fmt(tot)} Heads · Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span></div>`) : `<div class="lr">${st === 'h' ? pill('p-red', 'Hindrance') + ' ' + esc(((S.masters.hindrance_reasons.find(r => r.reason_code === labRc(g)) || {}).reason_text) || '') : st === 'n' ? pill('p-grey', 'No Work') : '<span class="muted">Not Filled</span>'}</div>`;

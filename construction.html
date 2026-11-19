@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7</title>
+<title>Penguin Construction v5.7.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3630,6 +3630,27 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pf2 > .col > h3 i{font-style:normal;width:20px;height:20px;border-radius:50%;background:#16233b;color:#fff;font-size:11px;display:grid;place-items:center}
   #mod-dpr .dp2 .pf2 .pf-card .hd{top:32px}
 }
+/* v5.7.1 · locations in the labour header · labour under each sub-activity by group · one progress block per location */
+#mod-dpr .dp2 .lab-c .locs{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+#mod-dpr .dp2 .lab-c .locs span{font-size:11px;font-weight:800;border-radius:7px;padding:2px 7px;background:rgba(15,30,51,.1);color:#0f1e33;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .dp2 .lab-c .locs span.fin{opacity:.5;text-decoration:line-through}#mod-dpr .dp2 .lab-c .locs span.hold{opacity:.6;font-style:italic}
+#mod-dpr .dp2 .lab-c .gb{display:flex;align-items:center;gap:8px;background:#eef2f8;border-top:1px solid #c9d6ea;padding:5px 9px;font-size:12px}
+#mod-dpr .dp2 .lab-c .gb b{font-size:13px;color:#0f1e33}#mod-dpr .dp2 .lab-c .gb small{color:#5b6b82}#mod-dpr .dp2 .lab-c .gb .hh{margin-left:auto;font-weight:800;color:var(--ind,#4f46e5);white-space:nowrap}
+#mod-dpr .dp2 .lab-c .sr{display:flex;align-items:center;gap:6px;border-top:1px solid #dfe6f0;padding:6px 9px;font-size:12.5px;min-height:38px}
+#mod-dpr .dp2 .lab-c .sr .nm{flex:1;min-width:0;font-weight:700;color:#33415f;overflow-wrap:anywhere}
+#mod-dpr .dp2 .lab-c .sr .pc{color:#5b6b82;font-size:11px;font-weight:700;white-space:nowrap}
+#mod-dpr .dp2 .lab-c .sr.on{background:#f4f6ff}#mod-dpr .dp2 .lab-c .sr.on .nm{font-weight:800;color:#16233b}
+#mod-dpr .dp2 .lab-c .sr.dn{min-height:30px}#mod-dpr .dp2 .lab-c .sr.dn .nm{color:#8795a8;font-weight:600;font-size:12px}
+#mod-dpr .dp2 .lab-c .sr .lk{font-weight:800;font-size:16px;color:#b91c1c;cursor:pointer;padding:0 4px}
+#mod-dpr .dp2 .lab-c .smp{background:#f4f6ff}#mod-dpr .dp2 .lab-c .smp .lr{border-top:0;padding-top:0}#mod-dpr .dp2 .lab-c .smp .lr.acts{padding-top:0}
+#mod-dpr .dp2 .lab-c .add{min-height:30px;border:1px dashed #b9c3d3;border-radius:8px;padding:0 10px;font-weight:800;font-size:11.5px;color:#33415f;background:#fff;white-space:nowrap;cursor:pointer}
+#mod-dpr .dp2 .pf-card .pf-ent + .pf-ent,#mod-dpr .dp2 .pf-card .pf-fin + .pf-ent,#mod-dpr .dp2 .pf-card .pf-ent + .pf-fin{border-top:2px solid #c9d6ea}
+#mod-dpr .dp2 .pf-card .pf-ent .eh{background:#f6f8fc}
+#mod-dpr .dp2 .pf-card .pf-fin{display:flex;align-items:center;gap:8px;padding:6px 9px;border-top:1px solid #dfe6f0;font-size:12.5px;cursor:pointer;background:#f8fbf9}
+#mod-dpr .dp2 .pf-card .pf-fin b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:#33415f}#mod-dpr .dp2 .pf-card .pf-fin i{font-style:normal;color:#8795a8}
+#mod-dpr .dp2 .pf-ent .hrw .rpk{position:relative;display:inline-block;cursor:pointer;border:1px dashed #f5b5b5;border-radius:8px;background:#fde4e4;color:#b91c1c;font-weight:700;padding:5px 9px;min-height:32px}
+#mod-dpr .dp2 .pf-ent .hrw .rpk i{font-style:normal;font-size:10px;opacity:.7}
+#mod-dpr .dp2 .pf-ent .hrw .rpk select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
 </style>
 
 </head>
@@ -4498,7 +4519,7 @@ const DPR = (function () {
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null,
-    pfF: '', pfU: {}, pfS: {}, pfG: {},   // v5.4
+    pfF: '', pfU: {}, pfS: {}, pfG: {}, pfO: {}, pfLs: {},   // v5.4
     rsBy: {}, rsOff: false,   // v5.5.2 · M62 · recently resumed holds per date · M62 absent · phone flow: floor chip · selected unit per card · selected sub-activity per unit
     holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
@@ -7917,8 +7938,8 @@ const DPR = (function () {
     const certC = ro ? `<b>${x.cert == null ? '—' : fmt(x.cert)} ${uom}</b>` : `<input class="qty ${ok ? '' : 'bad'}" data-k="c:${wid}" type="number" inputmode="decimal" placeholder="Req." value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${wid}',this.value)"> <span class="muted">${uom}</span>`;
     return `<div class="cd-fin ${ok ? '' : 'bad'}"><span class="t">${pill('p-ok', 'Activity Finished')}</span><span class="kv"><span>Finish</span>${dateC}</span><span class="kv"><span>Site Cert. Qty</span>${certC}${certOver(l, x)}</span>${ok || ro ? '' : '<span class="need">Required To Send</span>'}</div>`;
   }
-  function pfEntry(c, ro) {
-    const wid = pfSelUnit(c); if (!wid) return '';
+  function pfEntry(c, ro, wid0) {
+    const wid = wid0 || pfSelUnit(c); if (!wid) return '';
     const e = S.W[wid]; if (!e) return ''; const { g, l } = e, x = lineX(g, l), fin = finL(l), C = pfCrewOf(c), lv = labLevel(g), loc = lineLoc(g, l);
     const n = cdNodeLive(g, l);
     let h = `<div class="pf-ent"><div class="eh"><div class="l"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small></div><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
@@ -7951,10 +7972,12 @@ const DPR = (function () {
   }
   function pfCard(c, ro) {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
+    const blocks = c.items.map(it => { const l = it.l, g = it.g; if (finL(l) && !S.pfO[l.work_id]) { const n = cdNodeLive(g, l); return `<div class="pf-fin" onclick="DPR.pfOpen('${l.work_id}')"><b>${esc(n.loc)}</b>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}<span class="sp"></span><span class="muted">100%</span><i>▸</i></div>`; } return pfEntry(c, ro, l.work_id); }).join('');   // v5.7.1 · one block per location
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div><div class="units scroll">${units}</div>${pfEntry(c, ro)}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${blocks}</article>`;
   }
+  function pfOpen(wid) { S.pfO[wid] = !S.pfO[wid]; redraw(); }
   /* ==================================================================
      v5.7 · TWO TABS (DPR_TwoTabs_mock_v1, approved 19 Nov 2026) — the same sheet, entered the way the site works:
        1 · Labour   · today (D)        one block per crew (card / club): contractor + heads per trade, or Hindrance / No Work
@@ -8012,14 +8035,42 @@ const DPR = (function () {
       return `<div class="lr"><div class="cn">${con}</div><div class="sts">${st}${dimRows || ro ? '' : `<button class="lb" onclick="DPR.labTrade('${gid}','${key}',${ci})">＋ Trade</button>`}</div></div>`; }).join('')
       + (dimRows || ro ? '' : `<div class="lr acts"><button class="lb" onclick="DPR.conPick('${gid}',-1,'${key}')">＋ Contractor</button></div>`);
   }
+  function labShort(acts) {   // what tells clubbed activities apart: their names without the common leading words ('… On Ceiling Area' / '… On Wall Area' → Ceiling Area / Wall Area)
+    const o = {}; if (acts.length < 2) { acts.forEach(a => { o[a] = a; }); return o; }
+    const ws = acts.map(a => a.split(/\s+/)); let k = 0; while (ws.every(w => w.length > k + 1 && w[k].toLowerCase() === ws[0][k].toLowerCase())) k++;
+    acts.forEach((a, i) => { let t = ws[i].slice(k); while (t.length > 1 && /^(on|of|for|in|at|the|-|–)$/i.test(t[0])) t = t.slice(1); o[a] = t.join(' ') || a; }); return o;
+  }
+  function labFold(k) { S.pfLs[k] = !S.pfLs[k]; redraw(); }
+  function labStaged(g, l, lv, ro) {   // labour per sub-activity / per group: a band per group, each sub-activity a row, its manpower right below it
+    const x = lineX(g, l), wid = l.work_id, gid = g.wgroup_id, Gs = subGroups(l), open = new Set(openT(g, l).map(s => s.id)); let h = '';
+    const uOf = k => { const u = { key: k, worked: true }; unitRows(g, u); return u; };
+    Gs.forEach(G => {
+      const subs = G.subs.filter(s => !heldS(g, l, s)); if (!subs.length) return;
+      const done = subs.filter(s => !open.has(s.id)), live = subs.filter(s => open.has(s.id)), on = live.filter(s => subT(x.subs[s.id]).out === 'w');
+      const gKey = 'G:' + G.id, gHeads = lv === 'group' && G.id ? (on.length ? unitHeads(g, uOf(gKey)) : 0) : on.reduce((a, s) => a + unitHeads(g, uOf('S:' + s.id)), 0);
+      if (G.id || Gs.length > 1) h += `<div class="gb"><b>${esc(G.name || 'Other')}</b><small>${G.weight ? fmt(G.weight) + '% Of Activity · ' : ''}${done.length} / ${subs.length} Done</small><span class="hh">${gHeads ? fmt(gHeads) + ' Heads' : ''}</span></div>`;
+      if (done.length) h += `<div class="sr dn"><span class="nm">✓ ${done.slice(0, 2).map(s => esc(s.name)).join(' · ')}${done.length > 2 ? ' · +' + (done.length - 2) + ' More' : ''}</span><span class="pc">Done</span></div>`;
+      const idle = live.filter(s => on.indexOf(s) < 0), started = idle.filter(s => subBase(s) > 0.0005 || subStartedAsOf(s, x.subs[s.id])), fresh = idle.filter(s => started.indexOf(s) < 0);
+      const fk = gid + '|' + (G.id || 'x'), showAll = !!S.pfLs[fk] || fresh.length <= 2, shown = new Set(on.concat(started, showAll ? fresh : fresh.slice(0, 1)).map(s => s.id));
+      live.forEach(s => { if (!shown.has(s.id)) return; const y = x.subs[s.id], isOn = subT(y).out === 'w', pc = Math.round(Math.min(100, subPct(g, l, s)));
+        if (!isOn) { h += `<div class="sr"><span class="nm">${esc(s.name)}</span><span class="pc">${pc}%</span>${ro ? '' : `<button class="add" onclick="DPR.labSubTog('${wid}','${s.id}')">＋ Labour</button>`}</div>`; return; }
+        const u = lv === 'sub' ? uOf('S:' + s.id) : null, n = u ? unitHeads(g, u) : 0;
+        h += `<div class="sr on"><span class="nm">${esc(s.name)}</span><span class="pc">${pc}%</span>${u ? `<span class="tag ${n ? 'g' : 'r'}">${n ? fmt(n) + ' Heads' : 'Heads Missing'}</span>` : '<span class="tag g">Working</span>'}${ro ? '' : `<a class="lk bad" title="Not Working Today" onclick="DPR.labSubTog('${wid}','${s.id}')">×</a>`}</div>${u ? `<div class="smp">${labSteppers(g, u.key, ro)}</div>` : ''}`; });
+      if (!showAll && fresh.length > 1) h += `<div class="sr"><span class="nm muted">${esc(fresh[1].name)}${fresh.length > 2 ? ' · +' + (fresh.length - 2) + ' Not Started' : ''}</span>${`<button class="add" onclick="DPR.labFold('${fk}')">Show ${fresh.length - 1}</button>`}</div>`;
+      if (lv === 'group' && G.id && on.length) { const u = uOf(gKey), n = unitHeads(g, u); h += `<div class="sr on"><span class="nm">${esc(G.name)} · Manpower</span><span class="tag ${n ? 'g' : 'r'}">${n ? fmt(n) + ' Heads' : 'Heads Missing'}</span></div><div class="smp">${labSteppers(g, gKey, ro)}</div>`; }
+    });
+    return h;
+  }
   function labBlock(g, ro, inner) {   // one crew: a club (labour once) or a single unit
     const gid = g.wgroup_id, ls = labLive(g), st = labState(g), lv = labLevel(g), acts = [...new Set(g.lines.map(l => l.activity))], club = g.lines.length > 1;
     const l0 = ls[0] || g.lines[0], fk = pfFloorKey(g, l0), tot = labHeadsAll(g), yd = lv === 'activity' ? ydRows(g, 'A') : [], ydN = yd.reduce((a, c) => a + heads(c.heads), 0);
     const title = acts.length > 1 ? (linePkg(g, l0) || 'Report Together') : acts[0];
-    const where = club ? pathTail(bookedTo(g), 2) + ' · ' + g.lines.length + (acts.length > 1 ? ' Rows · ' + acts.length + ' Activities' : ' Units') + ' · One Crew' : (pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk) + ' · ' + lineLoc(g, l0);
-    const starts = ls.some(l => !startedB(l)) && st === 'w';
+    const flr = (pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk);
+    const where = club ? (acts.length > 1 ? '' : (linePkg(g, l0) ? linePkg(g, l0) + ' · ' : '')) + pathTail(bookedTo(g), 2) + ' · One Crew For ' + g.lines.length + (acts.length > 1 ? ' Rows' : ' Locations') : (linePkg(g, l0) ? linePkg(g, l0) + ' · ' : '') + flr + (lv === 'activity' ? '' : ' · Labour Per ' + (lv === 'sub' ? 'Sub-Activity' : 'Group'));
+    const short = labShort(acts), locs = `<div class="locs">${g.lines.map(l => `<span class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}" title="${esc(l.activity + ' · ' + lineLoc(g, l))}">${acts.length > 1 ? esc(short[l.activity]) + ' · ' : ''}${esc(lineLoc(g, l))}</span>`).join('')}</div>`;
+    const starts = ls.length > 0 && ls.every(l => !startedB(l)) && st === 'w';
     const tickBox = S.cm && !ro ? `<label class="tk"><input type="checkbox" ${g.lines.every(l => S.ticks.has(l.work_id)) ? 'checked' : ''} onchange="DPR.tick('${g.lines[0].work_id}',this.checked)"></label>` : '';
-    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${inner ? '' : `<small>${esc(where)}</small>`}${!inner && acts.length > 1 ? `<small class="acts">${acts.map(esc).join(' · ')}</small>` : ''}</div>
+    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${acts.length > 1 ? `<span class="tag b">${acts.length} Activities</span>` : ''}${inner ? '' : `<small>${esc(where)}</small>${locs}`}</div>
       <div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
     const hn = `<button class="lb h ${st === 'h' ? 'on' : ''}" onclick="DPR.labOut('${gid}','h')">H · Hindrance</button><button class="lb n ${st === 'n' ? 'on' : ''}" onclick="DPR.labOut('${gid}','n')">N · No Work</button>`;
     if (ro) {
@@ -8032,18 +8083,13 @@ const DPR = (function () {
     } else if (st === 'n') {
       h += `<div class="lr acts">${hn}<span class="sp"></span><span class="tag n">No Work ${esc(dsh(S.to))}</span></div>`;
     } else if (st === '' || st === 'mix') {
-      if (ydN) h += `<div class="lr"><span class="tag y">From ${esc(dsh(PD()))} · Not Counted Yet</span></div>` + labSteppers(g, 'A', false, yd);
-      h += `<div class="lr acts"><button class="lb ok" onclick="DPR.${ydN ? 'labSame' : 'labW'}('${gid}')">${ydN ? '✓ Same Today' : '＋ Labour Today'}</button>${hn}</div>`;
+      if (lv !== 'activity') h += labStaged(g, l0, lv, false) + `<div class="lr acts">${hn}</div>`;
+      else { if (ydN) h += `<div class="lr"><span class="tag y">From ${esc(dsh(PD()))} · Not Counted Yet</span></div>` + labSteppers(g, 'A', false, yd);
+        h += `<div class="lr acts"><button class="lb ok" onclick="DPR.${ydN ? 'labSame' : 'labW'}('${gid}')">${ydN ? '✓ Same Today' : '＋ Labour Today'}</button>${hn}</div>`; }
     } else {   // working today
       if (lv === 'activity') {
         h += `<div class="lr"><span class="tag ${tot ? 'g' : 'r'}">${tot ? '✓ ' + fmt(tot) + ' Heads Today' : 'Heads Missing'}</span>${ydN && !tot ? `<button class="lb" onclick="DPR.labSame('${gid}')">Same As ${esc(dsh(PD()))} · ${fmt(ydN)}</button>` : ''}<span class="sp"></span>${club ? `<button class="lb" title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</div>` + labSteppers(g, 'A', false);
-        if (club) h += `<div class="lr"><span class="lbl">Working Today</span><div class="us">${ls.map(l => `<button class="uu ${outT(g, l) === 'w' ? 'on' : ''}" onclick="DPR.labUnitTog('${l.work_id}')">${esc(lineLoc(g, l))}${acts.length > 1 ? ' · ' + esc(l.activity.split(' ').slice(-2).join(' ')) : ''}</button>`).join('')}</div></div>`;
-        else if (staged(l0)) h += `<div class="lr"><span class="lbl">Working Today</span><div class="us">${openT(g, l0).map(s => `<button class="uu ${subT(lineX(g, l0).subs[s.id]).out === 'w' ? 'on' : ''}" onclick="DPR.labSubTog('${l0.work_id}','${s.id}')">${esc(s.name)}</button>`).join('')}</div></div>`;
-      } else {   // the Reporting Plan asks labour per sub-activity / per group on this activity
-        const l = l0, x = lineX(g, l);
-        h += `<div class="lr"><span class="lbl">Working Today · Labour Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span><div class="us">${openT(g, l).map(s => `<button class="uu ${subT(x.subs[s.id]).out === 'w' ? 'on' : ''}" onclick="DPR.labSubTog('${l.work_id}','${s.id}')">${esc(s.name)}</button>`).join('')}</div></div>`;
-        labUnits(g).forEach(u => { unitRows(g, u); h += `<div class="lr"><span class="lbl">${esc(u.label)}</span><span class="tag ${unitHeads(g, u) ? 'g' : 'r'}">${unitHeads(g, u) ? fmt(unitHeads(g, u)) + ' Heads' : 'Heads Missing'}</span></div>` + labSteppers(g, u.key, false); });
-      }
+      } else h += labStaged(g, l0, lv, false);
       h += `<div class="lr acts">${hn}</div>`;
     }
     return h + '</div>';
@@ -8451,7 +8497,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

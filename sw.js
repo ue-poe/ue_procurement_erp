@@ -57,7 +57,8 @@
 // v56 · index.html v214 (in place) — Add / Edit Estimate: Delete From Estimate moves to the WBS / Basis row behind a selection box and a confirmation · a draft that repeats the approved figure no longer reads Your Draft
 // v57 · index.html v214 (in place) — Estimation: the Changes tab is retired (entries go straight to Approvals; drafts are under Your Drafts on Add / Edit Estimate)
 // v63 · construction.html v5.7 — Daily Report in two tabs: Labour (today) · Progress (till yesterday); club any activities
-const VERSION = 'pgs-shell-v63';
+// v64 · construction.html v5.7.1 — Labour: locations in the header, manpower under each sub-activity by group; Progress: a block per location
+const VERSION = 'pgs-shell-v64';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

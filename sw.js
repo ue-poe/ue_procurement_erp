@@ -58,7 +58,8 @@
 // v57 · index.html v214 (in place) — Estimation: the Changes tab is retired (entries go straight to Approvals; drafts are under Your Drafts on Add / Edit Estimate)
 // v63 · construction.html v5.7 — Daily Report in two tabs: Labour (today) · Progress (till yesterday); club any activities
 // v64 · construction.html v5.7.1 — Labour: locations in the header, manpower under each sub-activity by group; Progress: a block per location
-const VERSION = 'pgs-shell-v64';
+// v65 · construction.html v5.7.2 — Labour cards: sticky title row, like the Progress cards
+const VERSION = 'pgs-shell-v65';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

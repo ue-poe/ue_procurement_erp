@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7.2</title>
+<title>Penguin Construction v5.7.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3657,6 +3657,12 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c > .lab-b:not(.in) > .lhl .locs{margin-top:0;padding-top:4px}
 #mod-dpr .dp2 .lab-c > .lab-b:last-child,#mod-dpr .dp2 .lab-c > .lab-b:last-child > .lr:last-child{border-radius:0 0 10px 10px}
 @media (min-width:1000px){ #mod-dpr .dp2 .pf2 .lab-c > .lab-b:not(.in) > .lh,#mod-dpr .dp2 .pf2 .lab-c > .lh.top{top:32px} }
+/* v5.7.3 · wide screens: Labour and Progress each scroll on their own */
+@media (min-width:1000px){
+  #mod-dpr .dp2 .pf2{height:var(--pf-colh,70vh);align-items:stretch}
+  #mod-dpr .dp2 .pf2 > .col{height:100%;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-right:4px}
+  #mod-dpr .dp2 .pf2 > .col > h3{top:0}
+}
 </style>
 
 </head>
@@ -5122,9 +5128,10 @@ const DPR = (function () {
     if (S.view === 'mgr') { if (S.mTab === 'rev') mPaint(); return; }   // v162 · manager Review & Publish reuses the Day Report helpers
     if (!$('d2_main')) return;
     const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null, ss = a && a.selectionStart != null ? [a.selectionStart, a.selectionEnd] : null;
-    const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0;
+    const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0, colY = [...document.querySelectorAll('#d2_sc .pf2 > .col')].map(c => c.scrollTop);   // v5.7.3
     $('d2_side').innerHTML = sideHtml(); paintMain(); pfStick();   // v5.4
     const s2 = $('d2_sc'); if (s2) { s2.scrollTop = top; s2.scrollLeft = left; }
+    document.querySelectorAll('#d2_sc .pf2 > .col').forEach((c, i) => { if (colY[i]) c.scrollTop = colY[i]; });   // v5.7.3
     if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el) { el.focus(); if (ss) try { el.setSelectionRange(ss[0], ss[1]); } catch (e) {} } }
   }
   // v160.4 · the v159.3 cell fitter is removed — it re-measured every cell after each entry
@@ -8210,6 +8217,7 @@ const DPR = (function () {
     const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
     const top = $('pf_top'), th = top ? top.offsetHeight + (window.innerWidth <= 860 ? (parseFloat(getComputedStyle(top).top) || 0) : 0) : 0;
     d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
+    const sc = $('d2_sc'); if (sc && !phone && sc.clientHeight > 120) d2.style.setProperty('--pf-colh', sc.clientHeight + 'px');   // v5.7.3 · the two columns fill the sheet area and scroll on their own
   }
   if (!window._pfStick) { window._pfStick = true; window.addEventListener('resize', () => { if (document.getElementById('pf_top')) pfStick(); }); }
   function pfCalHtml() {   // v5.4.1 · tap-sized month grid for the sheet (the side calendar's styles never reached #dprSheet)

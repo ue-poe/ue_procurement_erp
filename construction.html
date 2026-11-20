@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7.5</title>
+<title>Penguin Construction v5.8</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3663,6 +3663,66 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .pf2 > .col{height:100%;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-right:4px}
   #mod-dpr .dp2 .pf2 > .col > h3{top:0}
 }
+/* ===== v5.8 · card focus: location rail · quiet H / N · one-row floor ribbon ===== */
+#mod-dpr .dp2 .pf-top .rib{display:flex;align-items:center;gap:5px;padding:5px 0 6px}
+#mod-dpr .dp2 .pf-top .rib .floors{flex:1;min-width:0;display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:4px;padding:0;align-items:center;scroll-behavior:smooth}
+#mod-dpr .dp2 .pf-top .rib button{flex:none;position:relative;height:27px;padding:0 8px;border-radius:14px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+#mod-dpr .dp2 .pf-top .rib button i{font-style:normal;opacity:.75;margin-left:2px;font-size:10.5px}
+#mod-dpr .dp2 .pf-top .rib button.on{background:#fff;color:var(--dn);border-color:#fff}
+#mod-dpr .dp2 .pf-top .rib button .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff8a80;margin-left:4px;vertical-align:middle}
+#mod-dpr .dp2 .pf-top .rib button.add{border-style:dashed;background:transparent}
+#mod-dpr .dp2 .pf-top .rib button.ar{width:24px;padding:0;font-size:15px;line-height:1;background:transparent;display:none}
+#mod-dpr .dp2 .pf-top .rib .tw{flex:none;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#c6cede;padding:0 2px 0 7px;white-space:nowrap}
+#mod-dpr .dp2 .pf-top .rib .tw:first-child{padding-left:2px}
+@media (min-width:861px){ #mod-dpr .dp2 .pf-top .rib button.ar{display:block} #mod-dpr .dp2 .pf-top .rib.fit button.ar{display:none} }
+@media (max-width:860px){ #mod-dpr .dp2 .pf-top .rib{padding:0 6px 5px} #mod-dpr .dp2 .pf-top .rib.r2{max-height:34px} }
+/* card header on one line */
+#mod-dpr .dp2 .pf-card>.hd.one{align-items:center;padding:4px 8px}
+#mod-dpr .dp2 .pf-card>.hd.one>div:first-child{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-card>.hd.one b{display:inline}#mod-dpr .dp2 .pf-card>.hd.one small{display:inline;margin:0}
+#mod-dpr .dp2 .pf-card>.hd.one .pct b{font-size:15px}
+/* Progress block: rail | body */
+#mod-dpr .dp2 .pf-ent.rl{display:grid;grid-template-columns:86px minmax(0,1fr);padding:0;background:#fff}
+#mod-dpr .dp2 .pf-ent.rl>.rail,#mod-dpr .dp2 .lab-b .lrow>.rail{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;padding:6px 4px;background:var(--tinth,#e6ecf5);border-right:2px solid var(--tintb,#c9d6ea);text-align:center;min-width:0}
+#mod-dpr .dp2 .rail b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15.5px;line-height:1.15;color:#0f1e33;overflow-wrap:anywhere;max-width:100%}
+#mod-dpr .dp2 .rail .p{font-size:12px;font-weight:800;color:var(--dv)}#mod-dpr .dp2 .rail .p.z{color:#9aa6b8}
+#mod-dpr .dp2 .rail small{font-size:9.5px;color:#5b6b82;font-weight:700;line-height:1.2}
+#mod-dpr .dp2 .rail b.fin{opacity:.45;text-decoration:line-through}#mod-dpr .dp2 .rail b.hold{opacity:.6;font-style:italic}
+#mod-dpr .dp2 .rail.multi b{font-size:13px}#mod-dpr .dp2 .rail.multi small{margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+#mod-dpr .dp2 .rail .tk{display:grid;place-items:center;width:28px;height:26px}#mod-dpr .dp2 .rail .tk input{width:19px;height:19px}
+#mod-dpr .dp2 .pf-ent.rl>.eb{position:relative;min-width:0;padding:4px 5px 3px}
+#mod-dpr .dp2 .pf-ent.rl .prog,#mod-dpr .dp2 .pf-ent.rl .today,#mod-dpr .dp2 .pf-ent.rl .rem{border:0;padding:1px 0 2px;margin-bottom:2px;background:transparent}
+#mod-dpr .dp2 .pf-ent.rl .prog{display:flex;flex-direction:column}
+#mod-dpr .dp2 .pf-ent.rl .prog>.lbl.mt{order:9;margin:3px 0 0;text-transform:none;letter-spacing:0;font-weight:600;font-size:10.5px;flex-wrap:wrap}
+#mod-dpr .dp2 .pf-ent.rl .snap button.h,#mod-dpr .dp2 .pf-ent.rl .snap button.n{height:24px;min-width:24px;padding:0 4px;font-size:10.5px;border-color:#dfe5ee;color:#9aa6b8;background:#fff;align-self:center}
+#mod-dpr .dp2 .pf-ent.rl .snap button.h.on{background:var(--drd);border-color:var(--drd);color:#fff}#mod-dpr .dp2 .pf-ent.rl .snap button.n.on{background:var(--ink2);border-color:var(--ink2);color:#fff}
+#mod-dpr .dp2 .pf-ent.rl .more{position:absolute;top:5px;right:4px;z-index:2;width:24px;height:24px;border-radius:7px;border:1px solid transparent;background:transparent;color:#9aa6b8;font-size:15px;font-weight:800;line-height:1;cursor:pointer;padding:0}
+#mod-dpr .dp2 .pf-ent.rl .more.on{background:#eef2f8;border-color:#c3ccd9;color:#33415f}
+#mod-dpr .dp2 .pf-ent.rl .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0 3px;border-top:1px dashed #dfe6f0;font-size:10.5px}
+#mod-dpr .dp2 .pf-ent.rl>.eb>.more + *{padding-right:28px}
+#mod-dpr .dp2 .onel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:30px;padding:3px 9px;font-size:12px}
+#mod-dpr .dp2 .pf-ent.rl .onel{padding:3px 4px}
+#mod-dpr .dp2 .onel .tag{margin-left:0;font-size:10.5px;font-weight:800;border-radius:7px;padding:2px 7px;white-space:normal}
+#mod-dpr .dp2 .onel .tag.r{background:#fde4e4;color:#b91c1c}#mod-dpr .dp2 .onel .tag.n{background:#e9edf3;color:#48566b}#mod-dpr .dp2 .onel .tag.g{background:#dcf3e4;color:#17643a}
+#mod-dpr .dp2 .onel .lk{margin-left:auto;color:#5b6b82;font-weight:700;font-size:11px;cursor:pointer;text-decoration:underline}
+#mod-dpr .dp2 .onel select.rs{height:28px;border-radius:7px;border:1px solid #c3ccd9;font-size:12px;max-width:190px}
+#mod-dpr .dp2 .onel select.rs.bad{border-color:#b91c1c;background:#fff5f5}
+#mod-dpr .dp2 .onel select.rs.mini{width:22px;padding:0;border-color:#dfe5ee;color:transparent;background:#fff}
+#mod-dpr .dp2 .pf-ent.rl.one>.rail{padding:3px 4px}#mod-dpr .dp2 .pf-ent.rl.one>.rail b{font-size:13.5px}#mod-dpr .dp2 .pf-ent.rl.one>.rail .p,#mod-dpr .dp2 .pf-ent.rl.one>.rail small{display:none}
+#mod-dpr .dp2 .pf-ent.rl.fin{cursor:pointer}#mod-dpr .dp2 .pf-ent.rl.fin>.rail b{color:#5b6b82}
+#mod-dpr .dp2 .pf-card .pf-ent.rl + .pf-ent.rl{border-top:2px solid var(--tintb,#c9d6ea)}
+/* Labour block: rail | body */
+#mod-dpr .dp2 .lab-b .lrow{display:grid;grid-template-columns:86px minmax(0,1fr);background:#fff}
+#mod-dpr .dp2 .lab-b .lbd{min-width:0}
+#mod-dpr .dp2 .lab-b .lbd>.lr:first-child,#mod-dpr .dp2 .lab-b .lbd>.onel:first-child{border-top:0}
+#mod-dpr .dp2 .lab-c.t1 .rail{background:#dfe8f6;border-color:#b9cbe8}#mod-dpr .dp2 .lab-c.t2 .rail{background:#dcefe2;border-color:#b4dcc2}#mod-dpr .dp2 .lab-c.t3 .rail{background:#f4e6d2;border-color:#e6cda6}#mod-dpr .dp2 .lab-c.t4 .rail{background:#ece3f6;border-color:#d3c0ea}#mod-dpr .dp2 .lab-c.t5 .rail{background:#f6e3e6;border-color:#eac0c7}
+#mod-dpr .dp2 .lab-c .lab-b.in{border-top:2px solid #c9d6ea}
+#mod-dpr .dp2 .lab-c .lr .cn{align-items:center}
+#mod-dpr .dp2 .lab-c .q{margin-left:auto;display:inline-flex;gap:4px;flex:none}
+#mod-dpr .dp2 .lab-c .q button{height:24px;min-width:24px;padding:0 5px;border-radius:7px;border:1px solid #dfe5ee;background:#fff;color:#9aa6b8;font-size:10.5px;font-weight:800;cursor:pointer}
+#mod-dpr .dp2 .lab-c .q button.onh{background:#b91c1c;border-color:#b91c1c;color:#fff}#mod-dpr .dp2 .lab-c .q button.onn{background:#48566b;border-color:#48566b;color:#fff}
+#mod-dpr .dp2 .lab-c .lr .sts .add{height:28px;padding:0 8px;border-radius:7px;border:1px dashed #c3ccd9;background:#fff;color:#5b6b82;font-size:11px;font-weight:700;cursor:pointer}
+@media (max-width:560px){ #mod-dpr .dp2 .pf-ent.rl .snap{gap:2px;flex-wrap:nowrap} #mod-dpr .dp2 .pf-ent.rl .snap button{min-width:27px;padding:0 4px;font-size:11.5px} #mod-dpr .dp2 .pf-ent.rl .snap .pc input{width:34px} #mod-dpr .dp2 .pf-ent.rl .snap .pc.q input{width:64px} #mod-dpr .dp2 .pf-ent.rl .snap button.h,#mod-dpr .dp2 .pf-ent.rl .snap button.n{min-width:22px;padding:0 3px} #mod-dpr .dp2 .pf-ent.rl,#mod-dpr .dp2 .lab-b .lrow{grid-template-columns:70px minmax(0,1fr)} #mod-dpr .dp2 .rail b{font-size:14px} #mod-dpr .dp2 .rail.multi b{font-size:12px} }
 </style>
 
 </head>
@@ -4531,7 +4591,7 @@ const DPR = (function () {
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null,
-    pfF: '', pfU: {}, pfS: {}, pfSa: {}, pfG: {}, pfO: {}, pfLs: {},   // v5.4
+    pfF: '', pfU: {}, pfS: {}, pfSa: {}, pfG: {}, pfO: {}, pfLs: {}, pfM: {}, pfRx: 0,   // v5.4
     rsBy: {}, rsOff: false,   // v5.5.2 · M62 · recently resumed holds per date · M62 absent · phone flow: floor chip · selected unit per card · selected sub-activity per unit
     holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
@@ -7937,12 +7997,12 @@ const DPR = (function () {
       const y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), sid = s.id;
       if (done) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span>${pill('p-ok', 'Done' + (y.e || s.finished_on ? ' ' + esc(dsh(y.e || s.finished_on)) : ''))}</div>`;
       if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc) + '%') : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, true)}</div>`;
-      return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${Math.round(base)}%</i><span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
+      return `<div class="prog"><span class="lbl mt"><i class="muted">${esc(s.name)} · Last ${Math.round(base)}%</i><span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
     }
     const est = num(l.est_qty), base = cumBase(l), fin = finL(l), o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
     if (fin) return `<div class="prog"><span class="lbl">Progress</span>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)} ${uom}</span>` : ''}</div>`;
     if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(q) + ' ' + uom) : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b> <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span><div class="st2">${statusDir(g, l)}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, true)}</div>`;
-    return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD <i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i><span class="sp"></span><span class="st2">${statusDir(g, l)}</span></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} title="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? `DPR.setOc('${wid}','w')` : `DPR.snapQty('${wid}',100)`}">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2 cum">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
+    return `<div class="prog"><span class="lbl mt"><i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i><span class="sp"></span><span class="st2">${statusDir(g, l)}</span></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} title="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? `DPR.setOc('${wid}','w')` : `DPR.snapQty('${wid}',100)`}">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2 cum">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
   }
   function pfFinRow(g, l, ro) {   // a direct line finishing on this sheet: finish date + Site Cert. Qty (staged lines use cdFinStrip)
     const x = lineX(g, l); if (staged(l) || finL(l) || !x.fin) return '';
@@ -7955,7 +8015,13 @@ const DPR = (function () {
     const wid = wid0 || pfSelUnit(c); if (!wid) return '';
     const e = S.W[wid]; if (!e) return ''; const { g, l } = e, x = lineX(g, l), fin = finL(l), C = pfCrewOf(c), lv = labLevel(g), loc = lineLoc(g, l);
     const n = cdNodeLive(g, l);
-    let h = `<div class="pf-ent"><div class="eh"><div class="l"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small></div><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
+    // v5.8 · the location is a rail down the full height of its block; the entry sits beside it
+    const more = !!S.pfM[wid], oL = outOf(g, l), quietOne = !ro && !fin && !more && (oL === 'n' || oL === 'h') && !attOf(g, l);
+    const rail = `<div class="rail" title="${esc(lineLocPath(g, l))} · Est ${fmt(n.est)} ${esc(n.uom)}"><b>${esc(loc)}</b><span class="p">${Math.round(n.pct)}%</span>${n.ds ? `<small>${n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)}</small>` : ''}</div>`;
+    if (quietOne) { const rc = oL === 'h' ? pfRcOf(g, l) : '';
+      return `<div class="pf-ent rl one">${rail}<div class="eb"><div class="onel"><span class="tag ${oL === 'h' ? 'r' : 'n'}">${oL === 'h' ? 'Hindrance' + (rc ? ' · ' + esc(rc) : '') : 'No Work'} ${esc(dsh(PD()))}</span><a class="lk" onclick="DPR.pfMore('${wid}')">Change</a></div></div></div>`; }
+    let h = `<div class="pf-ent rl">${rail}<div class="eb">${ro || fin ? '' : `<button class="more ${more ? 'on' : ''}" title="Remarks · Hold · Remove" onclick="DPR.pfMore('${wid}')">⋯</button>`}`;
+    const tools = ro || fin || !more ? '' : `<div class="tools">${S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)}${dropBtn(g, l)}<span class="muted">${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}</span></div>`;
     if (staged(l)) {
       const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
       // v5.7.4 · the sub-activity shown stays where the engineer is working: the default (first one still open) is remembered for this sheet date,
@@ -7976,24 +8042,26 @@ const DPR = (function () {
       if (s) {
         const y = x.subs[s.id], done = subDoneT(s, y), Gp = Gs.find(G => G.subs.some(z => z.id === s.id)) || null;
         h += pfSnapRow(g, l, s, ro);
-        h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${ro || S.holdOff || done ? '' : holdBtn('sub', wid, s.id, 'Hold')}</div>`;
+        if (more || y.note || y.out === 'h') h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${ro || S.holdOff || done || !more ? '' : holdBtn('sub', wid, s.id, 'Hold')}</div>`;
       }
       h += cdFinStrip(g, l, ro);
     } else {
       h += pfSnapRow(g, l, null, ro);
       h += pfFinRow(g, l, ro);
-      if (!fin) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note (Goes To The Register)' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)"></div>`;
+      if (!fin && (more || x.note || x.out === 'h')) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)"></div>`;
     }
-    return h + '</div>';
+    return h + tools + '</div></div>';
   }
   function pfCard(c, ro) {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
-    const blocks = c.items.map(it => { const l = it.l, g = it.g; if (finL(l) && !S.pfO[l.work_id]) { const n = cdNodeLive(g, l); return `<div class="pf-fin" onclick="DPR.pfOpen('${l.work_id}')"><b>${esc(n.loc)}</b>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}<span class="sp"></span><span class="muted">100%</span><i>▸</i></div>`; } return pfEntry(c, ro, l.work_id); }).join('');   // v5.7.1 · one block per location
+    const blocks = c.items.map(it => { const l = it.l, g = it.g; if (finL(l) && !S.pfO[l.work_id]) { const n = cdNodeLive(g, l); return `<div class="pf-ent rl one fin" onclick="DPR.pfOpen('${l.work_id}')"><div class="rail"><b>${esc(n.loc)}</b></div><div class="eb"><div class="onel"><span class="tag g">Finished${l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''}</span><span class="muted">100%</span></div></div></div>`; } return pfEntry(c, ro, l.work_id); }).join('');   // v5.7.1 · one block per location
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} Need${c.att === 1 ? 's' : ''} Attention</span>` : ''}</small></div><div class="pct"><b>${Math.round(c.pct)}%</b><small>${c.pct - c.b > 0.0005 ? '+' + Math.round(c.pct - c.b) + '% · ' : ''}Floor</small></div></div>${blocks}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd one"><div><b>${esc(c.act)}</b><small>${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} To Fill</span>` : ''}</small></div><div class="pct" title="${esc(c.pkg)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Floor Average"><b>${Math.round(c.pct)}%</b></div></div>${blocks}</article>`;
   }
   function pfOpen(wid) { S.pfO[wid] = !S.pfO[wid]; redraw(); }
+  function pfMore(wid) { S.pfM[wid] = !S.pfM[wid]; redraw(); }
+  const pfRcOf = (g, l) => { const x = lineX(g, l); let rc = x.rc || ''; if (staged(l)) for (const s of subsLive(g, l)) { const y = x.subs[s.id]; if (y && y.out === 'h' && y.rc) { rc = y.rc; break; } } return ((S.masters.hindrance_reasons.find(r => r.reason_code === rc) || {}).reason_text) || ''; };
   /* ==================================================================
      v5.7 · TWO TABS (DPR_TwoTabs_mock_v1, approved 19 Nov 2026) — the same sheet, entered the way the site works:
        1 · Labour   · today (D)        one block per crew (card / club): contractor + heads per trade, or Hindrance / No Work
@@ -8042,14 +8110,13 @@ const DPR = (function () {
     gs.forEach(g => { labLive(g).forEach(l => { if (!outT(g, l)) labLineSet(g, l, 'n'); }); markDirty(g); }); redraw();
   }
   const labTname = tc => ((S.masters.trades.find(t => t.trade_code === tc) || {}).trade_name) || tc;
-  function labSteppers(g, key, ro, dimRows) {   // one line per contractor: name · a stepper per trade · ＋ Trade
+  function labSteppers(g, key, ro, dimRows, tail, after) {   // one line per contractor: name · a stepper per trade · ＋ Trade
     const rows = dimRows || unitRows(g, { key }), gid = g.wgroup_id;
     return rows.map((c, ci) => { const tcs = Object.keys(c.heads || {}).filter(t => num(c.heads[t]) > 0);
       const con = `<span class="con">${c.con ? esc(conName(c.con)) : '<b class="bad">Contractor Not Available</b>'}</span>${dimRows || ro ? '' : `<a class="lk" onclick="DPR.conPick('${gid}',${ci},'${key}')">${c.con ? 'Change' : 'Pick'}</a>${ci > 0 ? `<a class="lk bad" onclick="DPR.rmCon('${gid}',${ci},'${key}')">×</a>` : ''}`}`;
       const st = tcs.map(t => dimRows || ro ? `<span class="stp dim"><span>${esc(labTname(t))}</span><b>${fmt(c.heads[t])}</b></span>`
         : `<span class="stp"><span>${esc(labTname(t))}</span><button onclick="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',0,-1)">−</button><input data-k="lh:${gid}:${key}:${ci}:${esc(t)}" type="number" inputmode="numeric" min="0" value="${c.heads[t]}" onchange="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',this.value)"><button onclick="DPR.labHead('${gid}','${key}',${ci},'${esc(t)}',0,1)">+</button></span>`).join('');
-      return `<div class="lr"><div class="cn">${con}</div><div class="sts">${st}${dimRows || ro ? '' : `<button class="lb" onclick="DPR.labTrade('${gid}','${key}',${ci})">＋ Trade</button>`}</div></div>`; }).join('')
-      + (dimRows || ro ? '' : `<div class="lr acts"><button class="lb" onclick="DPR.conPick('${gid}',-1,'${key}')">＋ Contractor</button></div>`);
+      return `<div class="lr"><div class="cn">${con}${ci === 0 && tail ? tail : ''}</div><div class="sts">${st}${dimRows || ro ? '' : `<button class="add" onclick="DPR.labTrade('${gid}','${key}',${ci})">＋ Trade</button>`}${dimRows || ro || ci !== rows.length - 1 ? '' : `<button class="add" onclick="DPR.conPick('${gid}',-1,'${key}')">＋ Contractor</button>`}${ci === rows.length - 1 && after ? after : ''}</div></div>`; }).join('');
   }
   function labShort(acts) {   // what tells clubbed activities apart: their names without the common leading words ('… On Ceiling Area' / '… On Wall Area' → Ceiling Area / Wall Area)
     const o = {}; if (acts.length < 2) { acts.forEach(a => { o[a] = a; }); return o; }
@@ -8083,33 +8150,38 @@ const DPR = (function () {
     const title = acts.length > 1 ? (linePkg(g, l0) || 'Report Together') : acts[0];
     const flr = (pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk);
     const where = club ? (acts.length > 1 ? '' : (linePkg(g, l0) ? linePkg(g, l0) + ' · ' : '')) + pathTail(bookedTo(g), 2) + ' · One Crew For ' + g.lines.length + (acts.length > 1 ? ' Rows' : ' Locations') : (linePkg(g, l0) ? linePkg(g, l0) + ' · ' : '') + flr + (lv === 'activity' ? '' : ' · Labour Per ' + (lv === 'sub' ? 'Sub-Activity' : 'Group'));
-    const short = labShort(acts), locs = `<div class="locs">${g.lines.map(l => `<span class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}" title="${esc(l.activity + ' · ' + lineLoc(g, l))}">${acts.length > 1 ? esc(short[l.activity]) + ' · ' : ''}${esc(lineLoc(g, l))}</span>`).join('')}</div>`;
+    const short = labShort(acts);
     const starts = ls.length > 0 && ls.every(l => !startedB(l)) && st === 'w';
     const tickBox = S.cm && !ro ? `<label class="tk"><input type="checkbox" ${g.lines.every(l => S.ticks.has(l.work_id)) ? 'checked' : ''} onchange="DPR.tick('${g.lines[0].work_id}',this.checked)"></label>` : '';
-    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}"><div class="lh">${tickBox}<div class="t"><b>${inner ? esc(lineLoc(g, l0)) : esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}${acts.length > 1 ? `<span class="tag b">${acts.length} Activities</span>` : ''}${inner ? '' : `<small>${esc(where)}</small>`}</div>
-      <div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
-    if (!inner) h += `<div class="lhl">${locs}</div>`;   // v5.7.2 · the title row sticks while scrolling; the location tags scroll with the card
-    const hn = `<button class="lb h ${st === 'h' ? 'on' : ''}" onclick="DPR.labOut('${gid}','h')">H · Hindrance</button><button class="lb n ${st === 'n' ? 'on' : ''}" onclick="DPR.labOut('${gid}','n')">N · No Work</button>`;
+    // v5.8 · the locations are a rail down the block; a club's rail lists them all (grouped by activity when it spans activities)
+    const railLocs = () => { if (!club) return `<b>${esc(lineLoc(g, l0))}</b>`; if (acts.length < 2) return g.lines.map(l => `<b class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}">${esc(lineLoc(g, l))}</b>`).join('');
+      return acts.map(a => `<small>${esc(short[a])}</small>` + g.lines.filter(l => l.activity === a).map(l => `<b class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}">${esc(lineLoc(g, l))}</b>`).join('')).join(''); };
+    const rail = `<div class="rail ${club ? 'multi' : ''}">${tickBox}${railLocs()}${inner ? `<span class="p ${st === 'w' && tot ? '' : 'z'}">${st === 'w' ? fmt(tot) + ' H' : ''}</span>` : club ? `<small>${g.lines.length} ${acts.length > 1 ? 'Rows' : 'Locations'}</small>` : ''}</div>`;
+    let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}">`;
+    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div><div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    h += `<div class="lrow">${rail}<div class="lbd">`;
+    const end = '</div></div></div>';
+    const q = ro ? '' : `<span class="q"><button class="${st === 'h' ? 'onh' : ''}" title="Hindrance Today" onclick="DPR.labOut('${gid}','h')">H</button><button class="${st === 'n' ? 'onn' : ''}" title="No Work Today" onclick="DPR.labOut('${gid}','n')">N</button>${club ? `<button title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</span>`;
+    const rcTxt = ((S.masters.hindrance_reasons.find(r => r.reason_code === labRc(g)) || {}).reason_text) || '';
     if (ro) {
-      h += st === 'w' ? (lv === 'activity' ? labSteppers(g, 'A', true) : `<div class="lr"><span class="muted">${fmt(tot)} Heads · Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span></div>`) : `<div class="lr">${st === 'h' ? pill('p-red', 'Hindrance') + ' ' + esc(((S.masters.hindrance_reasons.find(r => r.reason_code === labRc(g)) || {}).reason_text) || '') : st === 'n' ? pill('p-grey', 'No Work') : '<span class="muted">Not Filled</span>'}</div>`;
-      return h + '</div>';
+      h += st === 'w' ? (lv === 'activity' ? labSteppers(g, 'A', true) : `<div class="lr"><span class="muted">${fmt(tot)} Heads · Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span></div>`) : `<div class="onel">${st === 'h' ? `<span class="tag r">Hindrance${rcTxt ? ' · ' + esc(rcTxt) : ''}</span>` : st === 'n' ? '<span class="tag n">No Work</span>' : '<span class="muted">Not Filled</span>'}</div>`;
+      return h + end;
     }
     if (st === 'h') {
       const rc = labRc(g);
-      h += `<div class="lr acts">${hn}</div><div class="lr"><span class="lbl">Reason</span><select class="rs ${rc ? '' : 'bad'}" data-k="lrc:${gid}" onchange="DPR.labReason('${gid}',this.value)"><option value="">Pick Reason…</option>${S.masters.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select><span class="tag r">From ${esc(dsh(S.to))}</span></div>`;
+      h += rc ? `<div class="onel"><span class="tag r">Hindrance · ${esc(rcTxt)} · ${esc(dsh(S.to))}</span><select class="rs mini" title="Change The Reason" data-k="lrc:${gid}" onchange="DPR.labReason('${gid}',this.value)">${S.masters.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}" ${r.reason_code === rc ? 'selected' : ''}>${esc(r.reason_text)}</option>`).join('')}</select><a class="lk" onclick="DPR.labOut('${gid}','h')">Change</a></div>`
+        : `<div class="onel"><span class="tag r">Hindrance</span><select class="rs bad" data-k="lrc:${gid}" onchange="DPR.labReason('${gid}',this.value)"><option value="">Pick Reason…</option>${S.masters.hindrance_reasons.map(r => `<option value="${esc(r.reason_code)}">${esc(r.reason_text)}</option>`).join('')}</select><a class="lk" onclick="DPR.labOut('${gid}','h')">Change</a></div>`;
     } else if (st === 'n') {
-      h += `<div class="lr acts">${hn}<span class="sp"></span><span class="tag n">No Work ${esc(dsh(S.to))}</span></div>`;
+      h += `<div class="onel"><span class="tag n">No Work ${esc(dsh(S.to))}</span><a class="lk" onclick="DPR.labOut('${gid}','n')">Change</a></div>`;
     } else if (st === '' || st === 'mix') {
-      if (lv !== 'activity') h += labStaged(g, l0, lv, false) + `<div class="lr acts">${hn}</div>`;
-      else { if (ydN) h += `<div class="lr"><span class="tag y">From ${esc(dsh(PD()))} · Not Counted Yet</span></div>` + labSteppers(g, 'A', false, yd);
-        h += `<div class="lr acts"><button class="lb ok" onclick="DPR.${ydN ? 'labSame' : 'labW'}('${gid}')">${ydN ? '✓ Same Today' : '＋ Labour Today'}</button>${hn}</div>`; }
+      if (lv !== 'activity') h += `<div class="lr"><span class="muted">Labour Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span>${q}</div>` + labStaged(g, l0, lv, false);
+      else if (ydN) h += labSteppers(g, 'A', false, yd, `<span class="tag y">From ${esc(dsh(PD()))} · Not Counted Yet</span>${q}`, `<button class="lb ok" onclick="DPR.labSame('${gid}')">✓ Same Today</button>`);
+      else h += `<div class="lr"><button class="lb ok" onclick="DPR.labW('${gid}')">＋ Labour Today</button>${q}</div>`;
     } else {   // working today
-      if (lv === 'activity') {
-        h += `<div class="lr"><span class="tag ${tot ? 'g' : 'r'}">${tot ? '✓ ' + fmt(tot) + ' Heads Today' : 'Heads Missing'}</span>${ydN && !tot ? `<button class="lb" onclick="DPR.labSame('${gid}')">Same As ${esc(dsh(PD()))} · ${fmt(ydN)}</button>` : ''}<span class="sp"></span>${club ? `<button class="lb" title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</div>` + labSteppers(g, 'A', false);
-      } else h += labStaged(g, l0, lv, false);
-      h += `<div class="lr acts">${hn}</div>`;
+      if (lv === 'activity') h += labSteppers(g, 'A', false, null, (tot ? '' : '<span class="tag r">Heads Missing</span>') + (ydN && !tot ? `<a class="lk" onclick="DPR.labSame('${gid}')">Same As ${esc(dsh(PD()))} · ${fmt(ydN)}</a>` : '') + q);
+      else h += `<div class="lr"><span class="muted">Labour Per ${lv === 'sub' ? 'Sub-Activity' : 'Group'}</span>${q}</div>` + labStaged(g, l0, lv, false);
     }
-    return h + '</div>';
+    return h + end;
   }
   function pfLab(M, ro) {   // the Labour tab: crews in floor → package → activity order; single units of one activity on a floor share a frame
     const seen = new Set(), gs = []; M.lines.forEach(it => { if (!seen.has(it.g) && pfHit(it.g, it.l) && (!S.pfF || pfFloorKey(it.g, it.l) === S.pfF)) { seen.add(it.g); gs.push(it.g); } });
@@ -8163,12 +8235,15 @@ const DPR = (function () {
   function pfHead(ro, rv) {
     const today = todayYmd(), st = stOf(stKey()), sub = S.sub, M = pfModel(true), nAtt = sub ? attCount() : 0;
     const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
-    const chips = `<button class="${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>` + M.floors.map(F => `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${pfFloorMark(F.key) ? `<u>${esc(pfFloorMark(F.key))}</u>` : ''}${esc(F.label)} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`).join('');
+    // v5.8 · one row: All · (tower once → its floors as small chips) · ＋ Add; ‹ › step along the row on a computer, a swipe on a phone
+    const allChip = `<button class="all ${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>`;
+    let lastTw = null; const chips = M.floors.map(F => { const tw = pfFloorMark(F.key), head = tw !== lastTw && tw ? `<span class="tw">${esc(tw)}</span>` : ''; lastTw = tw;
+      return head + `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${esc(pfRibLabel(F.label, !!tw))} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`; }).join('');
     const where = S.pfF ? (pfFloorMark(S.pfF) ? pfFloorMark(S.pfF) + ' › ' : '') + pfFloorLabel(S.pfF) : 'All Floors';
     return `<div class="pf-top" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
       <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m"><span class="m1">${nAtt ? `<span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span> · ` : ''}Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}</span><span class="m2">${esc(where)}</span></div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `${pfTabs()}<div class="floors scroll r2">${chips}${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `${pfTabs()}<div class="rib r2">${allChip}<button class="ar" title="Earlier Floors" onclick="DPR.pfRib(-1)">‹</button><div class="floors scroll" id="pf_rib" onscroll="DPR.pfRibAt(this.scrollLeft)">${chips}</div><button class="ar" title="More Floors" onclick="DPR.pfRib(1)">›</button>${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
   }
   /* v5.5.5 · Add Work: the estimate picker (tick activities × locations → each on its own, or Report Together) with its search always on screen */
   function pfAddBar() {
@@ -8215,8 +8290,13 @@ const DPR = (function () {
   }
   function pfScroll() { if (!pfSc.raf) pfSc.raf = requestAnimationFrame(pfScFrame); }
   if (!window._pfScroll) { window._pfScroll = true; window.addEventListener('scroll', () => { if (document.getElementById('pf_top')) pfScroll(); }, { passive: true }); }
+  const pfRibLabel = (label, hasTw) => hasTw ? String(label).replace(/\s+Floor$/i, '') : label;   // '6th Floor' → '6th' once the tower label carries the context; other nodes keep their name
+  function pfRib(dir) { const el = $('pf_rib'); if (el) el.scrollBy({ left: dir * Math.max(160, el.clientWidth * 0.7), behavior: 'smooth' }); }
+  function pfRibAt(x) { S.pfRx = x; }
+  function pfRibFix() { const el = $('pf_rib'); if (!el) return; if (S.pfRx) el.scrollLeft = S.pfRx; const on = el.querySelector('button.on'); if (on) { const a = on.offsetLeft, b = a + on.offsetWidth; if (a < el.scrollLeft || b > el.scrollLeft + el.clientWidth) el.scrollLeft = Math.max(0, a - 40); }
+    const wrap = el.parentElement; if (wrap) wrap.classList.toggle('fit', el.scrollWidth <= el.clientWidth + 1); }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
-    const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return; pfScApply();
+    const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return; pfScApply(); pfRibFix();
     const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
     const top = $('pf_top'), th = top ? top.offsetHeight + (window.innerWidth <= 860 ? (parseFloat(getComputedStyle(top).top) || 0) : 0) : 0;
     d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
@@ -8515,7 +8595,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

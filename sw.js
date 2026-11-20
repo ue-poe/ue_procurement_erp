@@ -62,7 +62,8 @@
 // v66 · construction.html v5.7.3 — wide screens: Labour and Progress scroll on their own
 // v67 · construction.html v5.7.4 — Progress: the block stays on the sub-activity just filled (no jump to the next one)
 // v68 · construction.html v5.7.5 — Progress cards keep a fixed order (no re-sort by attention after an entry)
-const VERSION = 'pgs-shell-v68';
+// v69 · construction v5.8 · DPR cards: location rail, quiet H / N, one-row floor ribbon
+const VERSION = 'pgs-shell-v69';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

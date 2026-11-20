@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7.4</title>
+<title>Penguin Construction v5.7.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -7878,7 +7878,7 @@ const DPR = (function () {
     cs.forEach(c => { c.items.sort((a, b) => pfNatCmp(lineLoc(a.g, a.l), lineLoc(b.g, b.l))); c.gs = [...new Set(c.items.map(it => it.g))]; c.est = c.items.reduce((a, it) => a + num(it.l.est_qty), 0); c.uom = [...new Set(c.items.map(it => it.l.uom).filter(Boolean))].join(' / ');
       c.pct = c.items.length ? c.items.reduce((a, it) => a + (finL(it.l) ? 100 : Math.min(100, linePct(it.g, it.l))), 0) / c.items.length : 0; c.b = c.items.length ? c.items.reduce((a, it) => a + (finL(it.l) ? 100 : Math.min(100, lineBasePct(it.l))), 0) / c.items.length : 0;
       c.att = c.items.filter(it => attOf(it.g, it.l)).length; });
-    cs.sort((a, b) => pfNatCmp(a.floor, b.floor) || b.att - a.att || pfNatCmp(a.act, b.act));
+    cs.sort((a, b) => pfNatCmp(a.floor, b.floor) || pfNatCmp(a.pkg, b.pkg) || pfNatCmp(a.act, b.act));   // v5.7.5 · a fixed order: cards used to re-sort by attention count, so the card under the finger changed after an entry
     return { lines, floors: fl, cards: cs };
   }
   /* ----- crew: who carries this card's labour ----- */

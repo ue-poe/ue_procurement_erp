@@ -6292,7 +6292,7 @@ ${(function(){ if(isPO){ return '<table class="footer-table" style="width:100%;b
   };
 }
 
-// WO print: activity → block-rollup. One row per top-level block (Tower-A/B…)
+// WO print: activity → block-rollup. One row per block (Tower-A/B…) and rate
 // under each activity, with block qty/amount and an activity subtotal — so the
 // contractor sees which blocks the order covers without 100+ unit rows.
 async function _printWOTree(woNum, h, items) {
@@ -6300,12 +6300,6 @@ async function _printWOTree(woNum, h, items) {
   const [wbsTree, locTree] = await Promise.all([_loadWbsTree(), _loadLocTree()]);
   const wbsMap = Object.fromEntries(wbsTree.map(n => [String(n.id), n]));
   const locMap = Object.fromEntries(locTree.map(n => [String(n.id), n]));
-  const _topBlock = locId => {
-    let cur = locMap[String(locId)], top = cur, g = 0;
-    while (cur && cur.parent_id != null && g++ < 50) { const p = locMap[String(cur.parent_id)]; if (!p) break; top = p; cur = p; }
-    return top ? top.name : '—';
-  };
-
   // Resolve contractor block
   let vm = null;
   const vCode = h.vendor_code || h['Vendor Code'];
@@ -6325,7 +6319,7 @@ async function _printWOTree(woNum, h, items) {
     if (!byAct[wid]) byAct[wid] = { name: it['Description']||(wbsMap[wid]?wbsMap[wid].name:'—'), uom: it['UOM']||(wbsMap[wid]?wbsMap[wid].uom:'')||'', lines: [], spec: _specOfWbs(wbsMap[wid], it['_specification']) };   // v197
     const qty = num(it['Qty']), rate = num(it['Unit Rate']), amt = num(it['Amount'])||qty*rate;
     const lp = _woLocParts(locMap, it['_loc_node_id']);
-    byAct[wid].lines.push({ blk: _topBlock(it['_loc_node_id']), rk: _woRk(rate), rate, qty, amt, locId: it['_loc_node_id'], pid: lp.pid, pname: lp.pname, lname: lp.lname });
+    byAct[wid].lines.push({ blk: lp.blk, stg: lp.stg, rk: _woRk(rate), rate, qty, amt, locId: it['_loc_node_id'], pid: lp.pid, pname: lp.pname, lname: lp.lname });
   });
 
   // Build rows
@@ -6471,7 +6465,6 @@ async function _printWOCTree(wocNum, h, items) {
   const fi = n => (num(n)).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
   const locTreeArr = await _loadLocTree();
   const locMap = Object.fromEntries(locTreeArr.map(n => [String(n.id), n]));
-  const _topBlock = locId => { let cur=locMap[String(locId)],top=cur,g=0; while(cur&&cur.parent_id!=null&&g++<50){const p=locMap[String(cur.parent_id)];if(!p)break;top=p;cur=p;} return top?top.name:'—'; };
 
   // contractor
   let vm=null;
@@ -6485,7 +6478,7 @@ async function _printWOCTree(wocNum, h, items) {
     if(!byAct[k]) byAct[k]={name:it['Description'],uom:it['UOM']||'',lines:[]};
     const rate=num(it['Unit Rate']), q=num(it['This Period Qty']), v=num(it['Cert Value']);
     const lp=_woLocParts(locMap, it['_loc_node_id']);
-    byAct[k].lines.push({blk:_topBlock(it['_loc_node_id']),rk:_woRk(rate),rate,qty:q,amt:v,locId:it['_loc_node_id'],pid:lp.pid,pname:lp.pname,lname:lp.lname});
+    byAct[k].lines.push({blk:lp.blk,stg:lp.stg,rk:_woRk(rate),rate,qty:q,amt:v,locId:it['_loc_node_id'],pid:lp.pid,pname:lp.pname,lname:lp.lname});
   });
 
   let rowsHTML='', grand=0, sno=0;
@@ -18419,8 +18412,9 @@ async function _woViewBuildTreeHTML(items) {
       subTotalQty += qty; subTotalAmt += amt;
       const leafData = { name: leafNode.name, path: leafNode.path||leafNode.name, qty, rate, amt, rem, uom: act.uom, oiid: r['_order_item_id'], lineStatus: r['_line_status']||'Active' };   // v148
       const lp = _woLocParts(locMap, r['_loc_node_id']);
-      recs.push({ leafData, outerNode, innerNode, rk: _woRk(rate), rate, qty, amt, locId: r['_loc_node_id'], blk: lp.blk, pid: lp.pid, pname: lp.pname, lname: lp.lname });
+      recs.push({ leafData, outerNode, innerNode, rk: _woRk(rate), rate, qty, amt, locId: r['_loc_node_id'], blk: lp.blk, stg: lp.stg, pid: lp.pid, pname: lp.pname, lname: lp.lname });
     });
+    _woStageQualify(recs);
 
     // v160.6 rate bands — "varies" ignores lines removed by amendment
     const liveRks = new Set(recs.filter(x => x.leafData.lineStatus !== 'Removed').map(x => x.rk));
@@ -18486,15 +18480,27 @@ async function _woViewBuildTreeHTML(items) {
 }
 
 // v160.6 rate bands: one activity may carry different unit rates across locations.
-// _woRk = stable 2-dp rate key. _woLocParts = top block / direct parent / leaf for a loc node.
+// _woRk = stable 2-dp rate key. _woLocParts = block (tower level) / stage / direct parent / leaf for a loc node.
 // _woRateRuns = describe, within ONE block, the locations at rate key rk: parents fully at that
 // rate compress into ranges ("GF – 5th Floor"); partially covered parents list their units.
 function _woRk(r){ return (Math.round(num(r)*100)/100).toFixed(2); }
 function _woLocParts(locMap, locId){
   const c=[]; let cur=locMap[String(locId)], g=0;
   while(cur && g++<50){ c.unshift(cur); cur = cur.parent_id!=null ? locMap[String(cur.parent_id)] : null; }
-  const leaf=c[c.length-1], top=c[0], par=c.length>=3 ? c[c.length-2] : null;
-  return { blk: top?top.name:'—', pid: par?String(par.id):null, pname: par?par.name:'', lname: leaf?leaf.name:'—' };
+  const leaf=c[c.length-1], root=c[0], up=c.length>=2 ? c[c.length-2] : null;
+  // Block = nearest ancestor tagged 'tower'; else the child of a stage root; else the same
+  // outer node the on-screen location tree shows (grandparent → parent → the node itself).
+  let b=null;
+  for(let i=c.length-1;i>=0;i--){ if((c[i].node_type||'')==='tower'){ b=c[i]; break; } }
+  if(!b && root && (root.node_type||'')==='stage' && c.length>=2) b=c[1];
+  if(!b) b = c.length>=3 ? c[c.length-3] : (up||leaf);
+  const par = (up && b && up!==b && leaf!==b && c.indexOf(up)>c.indexOf(b)) ? up : null;
+  return { blk: b?b.name:'—', stg: (root && b && root!==b) ? root.name : '', pid: par?String(par.id):null, pname: par?par.name:'', lname: leaf?leaf.name:'—' };
+}
+// An order spread over more than one stage: the block reads "Stage › Block", so same-named blocks stay apart.
+function _woStageQualify(lines){
+  if(new Set(lines.map(l=>l.stg||'')).size>1) lines.forEach(l=>{ if(l.stg) l.blk=l.stg+' \u203a '+l.blk; });
+  return lines;
 }
 function _woRateRuns(entries, rk){
   const byP={}, order=[], flat=[];
@@ -18517,6 +18523,7 @@ function _woRateRuns(entries, rk){
 }
 // Print rows for one activity: one row per (block, rate). Lines: {blk,rk,rate,qty,amt,locId,pid,pname,lname}.
 function _woPrintBandRows(lines, uom, fi){
+  _woStageQualify(lines);
   const blocks={};
   lines.forEach(l=>{ (blocks[l.blk]||(blocks[l.blk]=[])).push(l); });
   let qty=0, amt=0, html='';
@@ -18524,14 +18531,14 @@ function _woPrintBandRows(lines, uom, fi){
   Object.keys(blocks).sort(_siteOrder).forEach(blk=>{
     const bl=blocks[blk], byR={};
     bl.forEach(l=>{ (byR[l.rk]||(byR[l.rk]={rate:l.rate,lines:[]})).lines.push(l); });
-    const rks=Object.keys(byR).sort((a,b)=>Number(a)-Number(b)), multi=rks.length>1;
+    const rks=Object.keys(byR).sort((a,b)=>Number(a)-Number(b));
     rks.forEach(rk=>{
       const g=byR[rk], q=g.lines.reduce((s,x)=>s+x.qty,0), a=g.lines.reduce((s,x)=>s+x.amt,0);
       const n=new Set(g.lines.map(x=>String(x.locId))).size;
       qty+=q; amt+=a;
       html+=`<tr>
         <td></td>
-        <td style="padding-left:18pt;">${esc(blk)} <span style="color:#888;">(${n} location${n>1?'s':''})</span>${multi?`<div style="color:#555;font-size:7.5pt;margin-top:1pt;">${esc(_woRateRuns(bl,rk))}</div>`:''}</td>
+        <td style="padding-left:18pt;">${esc(blk)} <span style="color:#888;">(${n} location${n>1?'s':''})</span></td>
         <td class="c">${esc(uom)}</td>
         <td class="r">${fi(q)}</td>
         <td class="r">₹ ${fi(g.rate)}</td>

@@ -60,7 +60,8 @@
 // v64 · construction.html v5.7.1 — Labour: locations in the header, manpower under each sub-activity by group; Progress: a block per location
 // v65 · construction.html v5.7.2 — Labour cards: sticky title row, like the Progress cards
 // v66 · construction.html v5.7.3 — wide screens: Labour and Progress scroll on their own
-const VERSION = 'pgs-shell-v66';
+// v67 · construction.html v5.7.4 — Progress: the block stays on the sub-activity just filled (no jump to the next one)
+const VERSION = 'pgs-shell-v67';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

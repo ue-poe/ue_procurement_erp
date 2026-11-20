@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.7.3</title>
+<title>Penguin Construction v5.7.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -4531,7 +4531,7 @@ const DPR = (function () {
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null,
-    pfF: '', pfU: {}, pfS: {}, pfG: {}, pfO: {}, pfLs: {},   // v5.4
+    pfF: '', pfU: {}, pfS: {}, pfSa: {}, pfG: {}, pfO: {}, pfLs: {},   // v5.4
     rsBy: {}, rsOff: false,   // v5.5.2 · M62 · recently resumed holds per date · M62 absent · phone flow: floor chip · selected unit per card · selected sub-activity per unit
     holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
@@ -7958,7 +7958,10 @@ const DPR = (function () {
     let h = `<div class="pf-ent"><div class="eh"><div class="l"><b>${esc(loc)}</b><small>${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}${n.ds ? ' · ' + (n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)) : ''}</small></div><b class="pct">${Math.round(n.pct)}%</b>${ro || fin ? '' : (S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)) + dropBtn(g, l)}</div>`;
     if (staged(l)) {
       const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
-      let sid = S.pfS[wid]; if (!live.some(s => s.id === sid)) { const op = live.find(s => !subDoneT(s, x.subs[s.id])); sid = op ? op.id : (live[0] || {}).id; }
+      // v5.7.4 · the sub-activity shown stays where the engineer is working: the default (first one still open) is remembered for this sheet date,
+      //          so marking it Done no longer jumps the block to the next sub-activity — the engineer taps the next chip himself
+      const au = S.pfSa[wid]; let sid = S.pfS[wid] || (au && au.d === S.to ? au.sid : null);
+      if (!live.some(s => s.id === sid)) { const op = live.find(s => !subDoneT(s, x.subs[s.id])); sid = op ? op.id : (live[0] || {}).id; if (sid) S.pfSa[wid] = { d: S.to, sid }; }
       const chip = s => { const y = x.subs[s.id], base = subBase(s), p = Math.min(100, subPct(g, l, s)), t = subT(y), done = base >= 99.9995, cls = done || (y.out === 'w' && !y.wip && p >= 99.9995) ? 'done' : (y.out === 'h' || t.out === 'h') ? 'h' : (y.out === 'w' || t.out === 'w' || base > 0.0005) ? 'run' : 'ns', att = subAttOf(g, l, s);
         return `<button class="sub ${cls} ${att ? 'att' : ''} ${s.id === sid ? 'on' : ''}" title="${esc(s.name)}" onclick="DPR.pfSub('${wid}','${s.id}')"><span class="nm">${esc(s.name)}</span><b>${done ? '✓' : Math.round(p) + '%'}</b></button>`; };
       const waitN = (l.stages || []).length - live.length;

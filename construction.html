@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.8.2</title>
+<title>Penguin Construction v5.8.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3728,6 +3728,14 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c .q button.onh{background:#b91c1c;border-color:#b91c1c;color:#fff}#mod-dpr .dp2 .lab-c .q button.onn{background:#48566b;border-color:#48566b;color:#fff}
 #mod-dpr .dp2 .lab-c .lr .sts .add{height:28px;padding:0 8px;border-radius:7px;border:1px dashed #c3ccd9;background:#fff;color:#5b6b82;font-size:11px;font-weight:700;cursor:pointer}
 @media (max-width:560px){ #mod-dpr .dp2 .pf-ent.rl .snap{gap:2px;flex-wrap:nowrap} #mod-dpr .dp2 .pf-ent.rl .snap button{min-width:27px;padding:0 4px;font-size:11.5px} #mod-dpr .dp2 .pf-ent.rl .snap .pc input{width:34px} #mod-dpr .dp2 .pf-ent.rl .snap .pc.q input{width:64px} #mod-dpr .dp2 .pf-ent.rl .snap button.h,#mod-dpr .dp2 .pf-ent.rl .snap button.n{min-width:22px;padding:0 3px} #mod-dpr .dp2 .pf-ent.rl,#mod-dpr .dp2 .lab-b .lrow{grid-template-columns:70px minmax(0,1fr)} #mod-dpr .dp2 .rail b{font-size:14px} #mod-dpr .dp2 .rail.multi b{font-size:12px} }
+/* v5.8.3 · Hold once per card; no ⋯ on the blocks */
+#mod-dpr .dp2 .hb2{flex:none;align-self:center;height:26px;padding:0 9px;border-radius:13px;border:1px solid rgba(15,30,51,.22);background:rgba(255,255,255,.7);color:#33415f;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+#mod-dpr .dp2 .pf-ent.rl>.eb>*{padding-right:0;margin-right:0}
+#mod-dpr .dp2 .pf-ent .lbl.mt .nt,#mod-dpr .dp2 .pf-ent .rem .nt{color:#8795a8;font-weight:700;font-size:10.5px;cursor:pointer;margin-left:8px;white-space:nowrap;text-decoration:none}
+#mod-dpr .dp2 .pf-ent .lbl.mt .d2-btn.sm{height:20px;min-width:20px;padding:0 5px;margin-left:6px}
+.hc-locs{display:flex;flex-wrap:wrap;gap:6px}
+.hc-locs button{height:32px;padding:0 10px;border-radius:8px;border:1px solid #c3ccd9;background:#fff;color:#8795a8;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:13px;cursor:pointer;text-decoration:line-through}
+.hc-locs button.on{background:#0f1e33;border-color:#0f1e33;color:#fff;text-decoration:none}
 </style>
 
 </head>
@@ -8003,12 +8011,12 @@ const DPR = (function () {
       const y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), sid = s.id;
       if (done) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span>${pill('p-ok', 'Done' + (y.e || s.finished_on ? ' ' + esc(dsh(y.e || s.finished_on)) : ''))}</div>`;
       if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc) + '%') : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, true)}</div>`;
-      return `<div class="prog"><span class="lbl mt"><i class="muted">${esc(s.name)} · Last ${Math.round(base)}%</i><span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
+      return `<div class="prog"><span class="lbl mt"><i class="muted">${esc(s.name)} · Last ${Math.round(base)}%</i>${ro || y.note || y.out === 'h' || S.pfM[wid] ? '' : `<a class="nt" onclick="DPR.pfMore('${wid}')">＋ Note</a>`}<span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
     }
     const est = num(l.est_qty), base = cumBase(l), fin = finL(l), o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
     if (fin) return `<div class="prog"><span class="lbl">Progress</span>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)} ${uom}</span>` : ''}</div>`;
     if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (x.wip ? 'WIP' : '+' + fmt(q) + ' ' + uom) : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b> <span class="muted">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</span><div class="st2">${statusDir(g, l)}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, true)}</div>`;
-    return `<div class="prog"><span class="lbl mt"><i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i><span class="sp"></span><span class="st2">${statusDir(g, l)}</span></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} title="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? `DPR.setOc('${wid}','w')` : `DPR.snapQty('${wid}',100)`}">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2 cum">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
+    return `<div class="prog"><span class="lbl mt"><i class="muted">Last ${fmt(base)} · Left ${fmt(left)} ${uom}</i>${ro || x.note || x.out === 'h' || S.pfM[wid] ? '' : `<a class="nt" onclick="DPR.pfMore('${wid}')">＋ Note</a>`}${ro ? '' : dropBtn(g, l)}<span class="sp"></span><span class="st2">${statusDir(g, l)}</span></span><div class="snap"><span class="pc q"><input class="qty ${q > left + 0.0005 ? 'bad' : ''}" data-k="q:${wid}" type="number" inputmode="${cnt ? 'numeric' : 'decimal'}" step="${cnt ? '1' : 'any'}" value="${o === 'w' && !x.wip && x.qty ? x.qty : ''}" placeholder="${x.wip ? 'WIP' : 'Qty'}" ${x.wip ? 'disabled' : ''} onchange="DPR.setQty('${wid}',this.value)">${uom}</span>${[25, 50, 75].map(p => `<button ${snapTgt(l, p) <= base + 0.0005 ? 'disabled' : ''} onclick="DPR.snapQty('${wid}',${p})">${p}</button>`).join('')}<button class="done ${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'on' : ''}" ${left <= 0.0005 ? 'disabled' : ''} title="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !x.wip && base + q >= est - 0.0005 && est > 0 ? `DPR.setOc('${wid}','w')` : `DPR.snapQty('${wid}',100)`}">✓ Done</button><button class="wip ${x.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}')">WIP</button><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" onclick="DPR.setOc('${wid}','h')">H</button><button class="n ${o === 'n' ? 'on' : ''}" onclick="DPR.setOc('${wid}','n')">N</button></div><div class="st2 cum">Cum. ${fmt(base + q)} / ${fmt(est)} ${uom}</div>${hinRow(wid, '', o, x.rc, l.open_hindrance_yday, false)}</div>`;
   }
   function pfFinRow(g, l, ro) {   // a direct line finishing on this sheet: finish date + Site Cert. Qty (staged lines use cdFinStrip)
     const x = lineX(g, l); if (staged(l) || finL(l) || !x.fin) return '';
@@ -8026,8 +8034,8 @@ const DPR = (function () {
     const rail = `<div class="rail" title="${esc(lineLocPath(g, l))} · Est ${fmt(n.est)} ${esc(n.uom)}"><b>${esc(loc)}</b><span class="p">${Math.round(n.pct)}%</span>${n.ds ? `<small>${n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)}</small>` : ''}</div>`;
     if (quietOne) { const rc = oL === 'h' ? pfRcOf(g, l) : '';
       return `<div class="pf-ent rl one">${rail}<div class="eb"><div class="onel"><span class="tag ${oL === 'h' ? 'r' : 'n'}">${oL === 'h' ? 'Hindrance' + (rc ? ' · ' + esc(rc) : '') : 'No Work'} ${esc(dsh(PD()))}</span><a class="lk" onclick="DPR.pfMore('${wid}')">Change</a></div></div></div>`; }
-    let h = `<div class="pf-ent rl">${rail}<div class="eb">${ro || fin ? '' : `<button class="more ${more ? 'on' : ''}" title="Remarks · Hold · Remove" onclick="DPR.pfMore('${wid}')">⋯</button>`}`;
-    const tools = ro || fin || !more ? '' : `<div class="tools">${S.holdOff || finT(g, l) ? '' : holdBtn('work', l.work_id)}${dropBtn(g, l)}<span class="muted">${esc(pathTail(lineLocPath(g, l)))} · Est ${fmt(n.est)} ${esc(n.uom)}</span></div>`;
+    let h = `<div class="pf-ent rl">${rail}<div class="eb">`;   // v5.8.3 · no ⋯: Hold sits once on the card header, the note opens from the detail line
+    const hide = more && !ro ? `<a class="nt" onclick="DPR.pfMore('${wid}')">Hide</a>` : '';
     if (staged(l)) {
       const live = subsLive(g, l), Gs = subGroups(l), hasG = Gs.some(G => G.id);
       // v5.7.4 · the sub-activity shown stays where the engineer is working: the default (first one still open) is remembered for this sheet date,
@@ -8048,24 +8056,72 @@ const DPR = (function () {
       if (s) {
         const y = x.subs[s.id], done = subDoneT(s, y), Gp = Gs.find(G => G.subs.some(z => z.id === s.id)) || null;
         h += pfSnapRow(g, l, s, ro);
-        if (more || y.note || y.out === 'h') h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${ro || S.holdOff || done || !more ? '' : holdBtn('sub', wid, s.id, 'Hold')}</div>`;
+        if (more || y.note || y.out === 'h') h += `<div class="rem"><span class="muted">${y.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:${s.id}" value="${esc(y.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','${s.id}',this.value)">${y.note || y.out === 'h' ? '' : hide}</div>`;
       }
       h += cdFinStrip(g, l, ro);
     } else {
       h += pfSnapRow(g, l, null, ro);
       h += pfFinRow(g, l, ro);
-      if (!fin && (more || x.note || x.out === 'h')) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)"></div>`;
+      if (!fin && (more || x.note || x.out === 'h')) h += `<div class="rem"><span class="muted">${x.out === 'h' ? 'Hindrance Note' : 'Remarks'}</span><input class="rem" data-k="n:${wid}:" value="${esc(x.note || '')}" ${ro ? 'disabled' : ''} onchange="DPR.noteSet('${wid}','',this.value)">${x.note || x.out === 'h' ? '' : hide}</div>`;
     }
-    return h + tools + '</div></div>';
+    return h + '</div></div>';
   }
   function pfCard(c, ro) {
     const sel = pfSelUnit(c), nFin = c.items.filter(it => finL(it.l) || lineX(it.g, it.l).fin).length;
     const blocks = c.items.map(it => { const l = it.l, g = it.g; if (finL(l) && !S.pfO[l.work_id]) { const n = cdNodeLive(g, l); return `<div class="pf-ent rl one fin" onclick="DPR.pfOpen('${l.work_id}')"><div class="rail"><b>${esc(n.loc)}</b></div><div class="eb"><div class="onel"><span class="tag g">Finished${l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''}</span><span class="muted">100%</span></div></div></div>`; } return pfEntry(c, ro, l.work_id); }).join('');   // v5.7.1 · one block per location
     const cm = S.cm && !ro;
     const units = c.items.map(it => { const n = cdNodeLive(it.g, it.l), cls = pfUnitCls(it.g, it.l), tk = cm && S.ticks.has(it.l.work_id); return `<button class="u ${cls} ${it.l.work_id === sel ? 'on' : ''} ${tk ? 'tk' : ''}" onclick="${cm ? `DPR.tick('${it.l.work_id}',${tk ? 'false' : 'true'})` : `DPR.pfUnit('${cdQ(c.key)}','${it.l.work_id}')`}"><b>${tk ? '☑ ' : ''}${esc(n.loc)}</b><small>${cls === 'done' ? '✓' : Math.round(n.pct) + '%'}</small></button>`; }).join('');
-    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd one"><div><b>${esc(c.act)}</b><small>${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} To Fill</span>` : ''}</small></div><div class="pct" title="${esc(c.pkg)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Floor Average"><b>${Math.round(c.pct)}%</b></div></div>${blocks}</article>`;
+    return `<article class="pf-card ${PF_TINT[c.i % 5]} ${c.att ? 'att' : ''}" data-k="${esc(c.key)}"><div class="hd one"><div><b>${esc(c.act)}</b><small>${pfFloorMark(c.floor) ? esc(pfFloorMark(c.floor)) + ' › ' : ''}${esc(pfFloorLabel(c.floor))}${nFin ? ' · ' + nFin + ' Done' : ''}${c.att ? ` · <span class="bad">${c.att} To Fill</span>` : ''}</small></div>${ro || S.holdOff || !c.items.some(it => !finT(it.g, it.l)) ? '' : `<button class="hb2" title="Put This Activity On Hold — Waiting, Not A Hindrance" onclick="DPR.hcOpen('${cdQ(c.key)}')">⏸ Hold</button>`}<div class="pct" title="${esc(c.pkg)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Floor Average"><b>${Math.round(c.pct)}%</b></div></div>${blocks}</article>`;
   }
   function pfOpen(wid) { S.pfO[wid] = !S.pfO[wid]; redraw(); }
+  /* v5.8.3 · Hold once per activity card. The sheet holds the activity at every location on the card (untick a location to leave it running),
+     either whole or from one sub-activity. Each location is held with the same rpc_dpr_hold the per-location button used — no new database function. */
+  function hcOpen(key) {
+    if (isRo() || S.holdOff) return; const c = pfModel().cards.find(x => x.key === key); if (!c) return;
+    const items = c.items.filter(it => !finT(it.g, it.l) && !heldL(it.g, it.l)); if (!items.length) { toast('Nothing Open To Hold On This Card', 'info'); return; }
+    const subs = []; items.forEach(it => { if (staged(it.l)) (it.l.stages || []).forEach(z => { if (subBase(z) < 99.9995 && !heldS(it.g, it.l, z) && !subs.includes(z.name)) subs.push(z.name); }); });
+    S.hc = { act: c.act, where: (pfFloorMark(c.floor) ? pfFloorMark(c.floor) + ' › ' : '') + pfFloorLabel(c.floor), items: items.map(it => ({ wid: it.l.work_id, loc: lineLoc(it.g, it.l), on: true })), subs, sub: '', from: S.to, reason: '', wait: '', mode: 'finished', review: '', loc0: items[0].l.loc_node_id, targets: null, tErr: '' };
+    hcPaint(); hcTargets();
+  }
+  async function hcTargets() {
+    const E = S.hc; if (!E) return;
+    try { const r = await rpc('rpc_dpr_hold_targets', { p_loc_node_id: E.loc0, p_work_id: E.items[0].wid }); if (S.hc !== E) return; E.targets = (r || []).filter(t => t.status !== 'finished' || t.pct < 100); }
+    catch (e) { if (S.hc !== E) return; E.targets = []; E.tErr = HOLD_MISS(e) ? 'Needs M49 On The Database' : err(e, 'Could not list the activities here'); }
+    hcPaint();
+  }
+  function hcPaint() {
+    const E = S.hc; if (!E) return; const today = todayYmd(), nOn = E.items.filter(i => i.on).length, tg = E.targets;
+    const a = document.activeElement; if (a && a.classList && a.classList.contains('hs-in') && a.tagName === 'TEXTAREA') return;   // typing the reason: never rebuild under the cursor
+    const byAct = new Map(); (tg || []).forEach(t => { if (!byAct.has(t.activity)) byAct.set(t.activity, []); byAct.get(t.activity).push(t); });
+    const wOpts = `<option value="">No Link · Arbitrary Hold</option>` + [...byAct.entries()].map(([ac, ts]) => `<optgroup label="${esc(ac)}">${ts.map(t => `<option value="${t.wbs_node_id}|${esc(t.loc_node_id)}" ${t.wbs_node_id + '|' + t.loc_node_id === E.wait ? 'selected' : ''}>${t.loc_node_id === E.loc0 && E.items.length > 1 ? 'Same Location As Each Held Row' : esc(t.loc_name) + (num(t.units) > 1 ? ' · All ' + t.units + ' Units' : '')} · ${Math.round(num(t.pct))}%</option>`).join('')}</optgroup>`).join('');
+    const body = `<div class="hs">
+      <div class="f"><label>Hold</label><div class="v"><select class="hs-in" onchange="DPR.hcSet('sub',this.value)"><option value="">Whole Activity</option>${E.subs.map(n => `<option value="${esc(n)}" ${n === E.sub ? 'selected' : ''}>Only · ${esc(n)}</option>`).join('')}</select></div></div>
+      <div class="f"><label>Locations</label><div class="v"><div class="hc-locs">${E.items.map((it, i) => `<button class="${it.on ? 'on' : ''}" onclick="DPR.hcTog(${i})">${esc(it.loc)}</button>`).join('')}</div><span class="muted">${nOn} Of ${E.items.length} · Tap To Leave One Running</span></div></div>
+      <div class="f"><label>Hold From</label><div class="v"><input type="date" class="hs-in" value="${esc(E.from || '')}" max="${today}" onchange="DPR.hcSet('from',this.value)"></div></div>
+      <div class="f"><label>Reason</label><div class="v"><textarea class="hs-in" rows="2" placeholder="Why It Waits — Required" oninput="DPR.hcSet('reason',this.value)">${esc(E.reason || '')}</textarea></div></div>
+      <div class="f"><label>Waiting For</label><div class="v">${tg ? `<select class="hs-in" onchange="DPR.hcSet('wait',this.value)">${wOpts}</select>` : `<span class="muted">${E.tErr || 'Loading The Activities At This Location…'}</span>`}<span class="muted">Optional</span></div></div>
+      <div class="f"><label>Wait Until</label><div class="v"><span class="d2-seg sm"><button class="${E.mode === 'finished' ? 'on' : ''}" ${E.wait ? '' : 'disabled'} onclick="DPR.hcSet('mode','finished')">Finished</button><button class="${E.mode === 'any' ? 'on' : ''}" ${E.wait ? '' : 'disabled'} onclick="DPR.hcSet('mode','any')">Any Progress</button></span></div></div>
+      <div class="f"><label>Review By</label><div class="v"><input type="date" class="hs-in" value="${esc(E.review || '')}" min="${esc(E.from || '')}" onchange="DPR.hcSet('review',this.value)"><span class="muted">Optional · Blank = ${S.holdDays || 21} Days</span></div></div>
+      <div class="hs-ft">Hold · Not A Hindrance · No Days Lost · Resume By Hand From Waiting · On Hold</div></div>`;
+    sheetOpen('Hold · ' + E.act, E.where + ' · ' + nOn + ' Location' + (nOn === 1 ? '' : 's'), body, `<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><button class="dbtn pri" ${nOn ? '' : 'disabled'} onclick="DPR.hcGo()">⏸ Hold${nOn > 1 ? ' ' + nOn : ''}</button>`);
+  }
+  function hcSet(k, v) { const E = S.hc; if (!E) return; E[k] = v; if (k === 'wait' && !v) E.mode = 'finished'; if (k !== 'reason' && k !== 'from' && k !== 'review') hcPaint(); }
+  function hcTog(i) { const E = S.hc; if (!E || !E.items[i]) return; E.items[i].on = !E.items[i].on; hcPaint(); }
+  async function hcGo() {
+    const E = S.hc; if (!E || E.busy) return;
+    if (!String(E.reason || '').trim()) { toast('A Reason Is Required', 'warn'); return; }
+    const [wb, wl] = (E.wait || '').split('|'); let n = 0, skip = 0; E.busy = true;
+    try {
+      for (const it of E.items.filter(i => i.on)) {
+        const e = S.W[it.wid]; if (!e) { skip++; continue; } const l = e.l; let sid = null;
+        if (E.sub) { const z = (l.stages || []).find(q => q.name === E.sub && subBase(q) < 99.9995 && !heldS(e.g, l, q)); if (!z) { skip++; continue; } sid = z.id; }
+        await rpc('rpc_dpr_hold', { p: { scope: sid ? 'sub' : 'work', work_id: it.wid, work_sub_id: sid, plan_group_id: null, wgroup_id: null, held_from: E.from || S.to, reason: E.reason.trim(), wait_wbs_node_id: wb ? Number(wb) : null, wait_loc_node_id: wb ? (wl === E.loc0 ? l.loc_node_id : wl) : null, wait_mode: wb ? E.mode : 'finished', wait_sub_id: null, review_by: E.review || null } });
+        n++;
+      }
+      sheetClose(); S.hc = null; toast(n + ' On Hold — Waiting' + (skip ? ' · ' + skip + ' Skipped (Nothing Open There)' : ''), 'success');
+    } catch (e) { E.busy = false; toast((HOLD_MISS(e) ? 'Waiting / On Hold Needs M49 On The Database — Ask The Admin' : err(e, 'Could not hold')) + (n ? ' · ' + n + ' Already Held' : ''), 'error', 8000); if (!n) return; sheetClose(); S.hc = null; }
+    await holdAfter();
+  }
   function pfMore(wid) { S.pfM[wid] = !S.pfM[wid]; redraw(); }
   const pfRcOf = (g, l) => { const x = lineX(g, l); let rc = x.rc || ''; if (staged(l)) for (const s of subsLive(g, l)) { const y = x.subs[s.id]; if (y && y.out === 'h' && y.rc) { rc = y.rc; break; } } return ((S.masters.hindrance_reasons.find(r => r.reason_code === rc) || {}).reason_text) || ''; };
   /* ==================================================================
@@ -8164,7 +8220,7 @@ const DPR = (function () {
       return acts.map(a => `<small>${esc(short[a])}</small>` + g.lines.filter(l => l.activity === a).map(l => `<b class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}">${esc(lineLoc(g, l))}</b>`).join('')).join(''); };
     const rail = `<div class="rail ${club ? 'multi' : ''}">${tickBox}${railLocs()}${inner ? `<span class="p ${st === 'w' && tot ? '' : 'z'}">${st === 'w' ? fmt(tot) + ' H' : ''}</span>` : club ? `<small>${g.lines.length} ${acts.length > 1 ? 'Rows' : 'Locations'}</small>` : ''}</div>`;
     let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}">`;
-    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div><div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div>${club && !ro && !S.holdOff ? `<button class="hb2" title="Put The Whole Club On Hold — Waiting, Not A Hindrance" onclick="DPR.holdOpen('club','${gid}','')">⏸ Hold</button>` : ''}<div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
     h += `<div class="lrow">${rail}<div class="lbd">`;
     const end = '</div></div></div>';
     const q = ro ? '' : `<span class="q"><button class="${st === 'h' ? 'onh' : ''}" title="Hindrance Today" onclick="DPR.labOut('${gid}','h')">H</button><button class="${st === 'n' ? 'onn' : ''}" title="No Work Today" onclick="DPR.labOut('${gid}','n')">N</button>${club ? `<button title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</span>`;
@@ -8636,7 +8692,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

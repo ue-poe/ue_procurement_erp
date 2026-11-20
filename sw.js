@@ -66,7 +66,8 @@
 // v70 · construction v5.8.1 · DPR paints only the cards that changed; contractor name on one line
 // v71 · construction v5.8.2 · tucked floor ribbon gives its height back; ⋯ no longer covers the sub-activity strip
 // v72 · construction v5.8.3 · Hold once per activity card and per club; ⋯ removed from the blocks
-const VERSION = 'pgs-shell-v72';
+// v73 · construction v5.8.4 · no Hold button on the Labour screen
+const VERSION = 'pgs-shell-v73';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

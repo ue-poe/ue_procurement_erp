@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.8.3</title>
+<title>Penguin Construction v5.8.4</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -8220,7 +8220,7 @@ const DPR = (function () {
       return acts.map(a => `<small>${esc(short[a])}</small>` + g.lines.filter(l => l.activity === a).map(l => `<b class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}">${esc(lineLoc(g, l))}</b>`).join('')).join(''); };
     const rail = `<div class="rail ${club ? 'multi' : ''}">${tickBox}${railLocs()}${inner ? `<span class="p ${st === 'w' && tot ? '' : 'z'}">${st === 'w' ? fmt(tot) + ' H' : ''}</span>` : club ? `<small>${g.lines.length} ${acts.length > 1 ? 'Rows' : 'Locations'}</small>` : ''}</div>`;
     let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}">`;
-    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div>${club && !ro && !S.holdOff ? `<button class="hb2" title="Put The Whole Club On Hold — Waiting, Not A Hindrance" onclick="DPR.holdOpen('club','${gid}','')">⏸ Hold</button>` : ''}<div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div><div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
     h += `<div class="lrow">${rail}<div class="lbd">`;
     const end = '</div></div></div>';
     const q = ro ? '' : `<span class="q"><button class="${st === 'h' ? 'onh' : ''}" title="Hindrance Today" onclick="DPR.labOut('${gid}','h')">H</button><button class="${st === 'n' ? 'onn' : ''}" title="No Work Today" onclick="DPR.labOut('${gid}','n')">N</button>${club ? `<button title="Back To One Card Per Row" onclick="DPR.unclub('${gid}')">Split</button>` : ''}</span>`;

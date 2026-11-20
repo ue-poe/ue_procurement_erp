@@ -59,7 +59,8 @@
 // v63 · construction.html v5.7 — Daily Report in two tabs: Labour (today) · Progress (till yesterday); club any activities
 // v64 · construction.html v5.7.1 — Labour: locations in the header, manpower under each sub-activity by group; Progress: a block per location
 // v65 · construction.html v5.7.2 — Labour cards: sticky title row, like the Progress cards
-const VERSION = 'pgs-shell-v65';
+// v66 · construction.html v5.7.3 — wide screens: Labour and Progress scroll on their own
+const VERSION = 'pgs-shell-v66';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

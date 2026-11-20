@@ -64,7 +64,8 @@
 // v68 · construction.html v5.7.5 — Progress cards keep a fixed order (no re-sort by attention after an entry)
 // v69 · construction v5.8 · DPR cards: location rail, quiet H / N, one-row floor ribbon
 // v70 · construction v5.8.1 · DPR paints only the cards that changed; contractor name on one line
-const VERSION = 'pgs-shell-v70';
+// v71 · construction v5.8.2 · tucked floor ribbon gives its height back; ⋯ no longer covers the sub-activity strip
+const VERSION = 'pgs-shell-v71';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

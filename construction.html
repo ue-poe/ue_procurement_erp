@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.8.1</title>
+<title>Penguin Construction v5.8.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3675,7 +3675,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .rib .tw{flex:none;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#c6cede;padding:0 2px 0 7px;white-space:nowrap}
 #mod-dpr .dp2 .pf-top .rib .tw:first-child{padding-left:2px}
 @media (min-width:861px){ #mod-dpr .dp2 .pf-top .rib button.ar{display:block} #mod-dpr .dp2 .pf-top .rib.fit button.ar{display:none} }
-@media (max-width:860px){ #mod-dpr .dp2 .pf-top .rib{padding:0 6px 5px} #mod-dpr .dp2 .pf-top .rib.r2{max-height:34px} }
+@media (max-width:860px){ #mod-dpr .dp2 .pf-top .rib{padding:0 6px 5px} #mod-dpr .dp2 .pf-top .rib.r2{max-height:34px} #mod-dpr .dp2 .pf-top.tk .rib.r2{max-height:0;padding-bottom:0;opacity:0;pointer-events:none} }   /* v5.8.2 · the tucked ribbon gives its height back */
 /* card header on one line */
 #mod-dpr .dp2 .pf-card>.hd.one{align-items:center;padding:4px 8px}
 #mod-dpr .dp2 .pf-card>.hd.one>div:first-child{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
@@ -3700,6 +3700,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-ent.rl .more.on{background:#eef2f8;border-color:#c3ccd9;color:#33415f}
 #mod-dpr .dp2 .pf-ent.rl .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0 3px;border-top:1px dashed #dfe6f0;font-size:10.5px}
 #mod-dpr .dp2 .pf-ent.rl>.eb>.more + *{padding-right:28px}
+/* v5.8.2 · the sub-activity strip scrolls sideways, so padding did not keep it clear of the ⋯ — it now stops short of it */
+#mod-dpr .dp2 .pf-ent.rl>.eb>.more + .subs{padding-right:0;margin-right:30px}
 #mod-dpr .dp2 .onel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:30px;padding:3px 9px;font-size:12px}
 #mod-dpr .dp2 .pf-ent.rl .onel{padding:3px 4px}
 #mod-dpr .dp2 .onel .tag{margin-left:0;font-size:10.5px;font-weight:800;border-radius:7px;padding:2px 7px;white-space:normal}

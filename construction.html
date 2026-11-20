@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.8</title>
+<title>Penguin Construction v5.8.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3718,6 +3718,9 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c.t1 .rail{background:#dfe8f6;border-color:#b9cbe8}#mod-dpr .dp2 .lab-c.t2 .rail{background:#dcefe2;border-color:#b4dcc2}#mod-dpr .dp2 .lab-c.t3 .rail{background:#f4e6d2;border-color:#e6cda6}#mod-dpr .dp2 .lab-c.t4 .rail{background:#ece3f6;border-color:#d3c0ea}#mod-dpr .dp2 .lab-c.t5 .rail{background:#f6e3e6;border-color:#eac0c7}
 #mod-dpr .dp2 .lab-c .lab-b.in{border-top:2px solid #c9d6ea}
 #mod-dpr .dp2 .lab-c .lr .cn{align-items:center}
+/* v5.8.1 · the contractor name keeps one line for as long as the row allows; the note and H / N drop below it instead of squeezing it */
+#mod-dpr .dp2 .lab-c .lr .cn{flex-wrap:wrap;row-gap:4px}
+#mod-dpr .dp2 .lab-c .lr .cn .con{flex:0 1 auto;max-width:100%;overflow-wrap:break-word}
 #mod-dpr .dp2 .lab-c .q{margin-left:auto;display:inline-flex;gap:4px;flex:none}
 #mod-dpr .dp2 .lab-c .q button{height:24px;min-width:24px;padding:0 5px;border-radius:7px;border:1px solid #dfe5ee;background:#fff;color:#9aa6b8;font-size:10.5px;font-weight:800;cursor:pointer}
 #mod-dpr .dp2 .lab-c .q button.onh{background:#b91c1c;border-color:#b91c1c;color:#fff}#mod-dpr .dp2 .lab-c .q button.onn{background:#48566b;border-color:#48566b;color:#fff}
@@ -4600,7 +4603,8 @@ const DPR = (function () {
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const num = v => (v === null || v === undefined || v === '') ? 0 : Number(v);
   const r2 = v => Math.round(num(v) * 100) / 100;
-  const fmt = v => { const n = num(v); return (Math.round(n * 1000) / 1000).toLocaleString('en-IN'); };
+  const _fmtC = new Map(), _fmtN = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 3 });   // v5.8.1 · same output as toLocaleString('en-IN'), formatter built once and results remembered
+  const fmt = v => { const n = Math.round(num(v) * 1000) / 1000; let r = _fmtC.get(n); if (r === undefined) { r = _fmtN.format(n); if (_fmtC.size > 5000) _fmtC.clear(); _fmtC.set(n, r); } return r; };
   const dmy = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' }) : '—';
   const _dshM = new Map();
   const dsh = d => { if (!d) return '—'; let v = _dshM.get(d); if (v === undefined) { v = new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }); _dshM.set(d, v); } return v; };   // v160.4 · memoised
@@ -5189,7 +5193,7 @@ const DPR = (function () {
     if (!$('d2_main')) return;
     const a = document.activeElement, k = a && a.dataset ? a.dataset.k : null, ss = a && a.selectionStart != null ? [a.selectionStart, a.selectionEnd] : null;
     const sc = $('d2_sc'), top = sc ? sc.scrollTop : 0, left = sc ? sc.scrollLeft : 0, colY = [...document.querySelectorAll('#d2_sc .pf2 > .col')].map(c => c.scrollTop);   // v5.7.3
-    $('d2_side').innerHTML = sideHtml(); paintMain(); pfStick();   // v5.4
+    domSet($('d2_side'), sideHtml()); paintMain(true); pfStick();   // v5.4 · v5.8.1 partial paint
     const s2 = $('d2_sc'); if (s2) { s2.scrollTop = top; s2.scrollLeft = left; }
     document.querySelectorAll('#d2_sc .pf2 > .col').forEach((c, i) => { if (colY[i]) c.scrollTop = colY[i]; });   // v5.7.3
     if (k) { const el = document.querySelector('#d2 [data-k="' + k + '"]'); if (el) { el.focus(); if (ss) try { el.setSelectionRange(ss[0], ss[1]); } catch (e) {} } }
@@ -5213,7 +5217,7 @@ const DPR = (function () {
     $('dpr_root').innerHTML = `<div class="drp dp2 eng" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
     fit(); $('d2_side').innerHTML = sideHtml(); paintMain();
   }
-  function paintMain() { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); m.innerHTML = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); }
+  function paintMain(part) { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); const h = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); if (part) domSet(m, h); else m.innerHTML = h; }
   // v160 · Day Sheet | Report as one slim row above the date banner (moved out of the calendar column)
   const topTabs = () => `<div class="d2-toptabs"><button class="${S.tab === 'log' ? 'on' : ''}" onclick="DPR.tab('log')">Day Sheet<i>${esc(dsh(S.to))} · ${esc(stOf(stKey())[1])}</i></button><button class="${S.tab === 'rep' ? 'on' : ''}" onclick="DPR.tab('rep')">Report<i>Day Reports · Preview &amp; Send</i></button></div>`;
   function calHtml() {
@@ -7923,7 +7927,7 @@ const DPR = (function () {
   const pfFloorLabel = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length ? segs[segs.length - 1] : (k || '—'); };
   const pfFloorMark = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length >= 2 ? segs[segs.length - 2] : ''; };   // v5.5.6 · the level above the floor (tower / block / wing — whatever the project's tree has there)
   const pfCardKey = (g, l) => pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '—') + '\u0001' + l.activity;
-  const pfNatCmp = (a, b) => String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
+  const pfColl = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }), pfNatCmp = (a, b) => pfColl.compare(String(a), String(b));   // v5.8.1 · one collator, not one per comparison
   const pfHit = (g, l) => !S.fs || fz(l.activity + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + linePkg(g, l) + ' ' + (l.stages || []).map(s => s.name).join(' '), S.fs);
   function pfModel(all) {   // floors → cards → units, over the live lines (held lines live on the Waiting shelf)
     const lines = allLines().filter(({ g, l }) => !heldL(g, l));
@@ -8295,12 +8299,47 @@ const DPR = (function () {
   function pfRibAt(x) { S.pfRx = x; }
   function pfRibFix() { const el = $('pf_rib'); if (!el) return; if (S.pfRx) el.scrollLeft = S.pfRx; const on = el.querySelector('button.on'); if (on) { const a = on.offsetLeft, b = a + on.offsetWidth; if (a < el.scrollLeft || b > el.scrollLeft + el.clientWidth) el.scrollLeft = Math.max(0, a - 40); }
     const wrap = el.parentElement; if (wrap) wrap.classList.toggle('fit', el.scrollWidth <= el.clientWidth + 1); }
+  /* v5.8.1 · paint only what changed. The sheet's HTML is still built from state in one pass, but it is compared block by block with what is on screen and
+     only the blocks whose HTML differs are swapped. Untouched cards keep their DOM, so the browser re-lays-out one card instead of the whole sheet, and
+     nothing scrolls or flickers. No request is made here — entries stay in memory until Save Draft. */
+  function domSet(root, html) {
+    if (!root) return; if (!root.firstElementChild || S.noMorph) { root.innerHTML = html; return; }
+    const t = document.createElement('template'); t.innerHTML = html;
+    if (!domKids(root, t.content)) { root.innerHTML = html; return; }
+    const act = document.activeElement;   // a field that was typed in but is not part of a swapped block goes back to what the state says, exactly as a full repaint did
+    root.querySelectorAll('input,select,textarea').forEach(el => { if (el === act) return;
+      if (el.tagName === 'SELECT') { let ix = -1; for (let i = 0; i < el.options.length; i++) if (el.options[i].defaultSelected) { ix = i; break; } if (ix < 0) ix = el.options.length ? 0 : -1; if (el.selectedIndex !== ix) el.selectedIndex = ix; }
+      else if (el.type === 'checkbox' || el.type === 'radio') { if (el.checked !== el.defaultChecked) el.checked = el.defaultChecked; }
+      else if (el.value !== el.defaultValue) el.value = el.defaultValue; });
+  }
+  const DOM_BLOCK = '.pf-card,.lab-c,.pf-top,.d2-foot,.d2-toptabs,.cd-pkg,.d2-side > *,table,input,select,textarea,svg,button';
+  const domText = n => { for (let c = n.firstChild; c; c = c.nextSibling) if (c.nodeType === 3 && c.nodeValue.trim()) return true; return false; };
+  function domKids(o, n) {   // same number and kind of children → go child by child; otherwise the caller swaps the whole parent
+    const a = o.children, b = n.children; if (a.length !== b.length || !b.length || domText(n) || domText(o)) return false;
+    for (let i = 0; i < a.length; i++) if (a[i].tagName !== b[i].tagName || a[i].id !== b[i].id) return false;
+    const pairs = []; for (let i = 0; i < a.length; i++) pairs.push([a[i], b[i]]);
+    pairs.forEach(([x, y]) => domNode(x, y)); return true;
+  }
+  function domNode(o, n) {
+    // a card, the header, the footer and the side blocks are compared whole; only the frames around them are walked
+    if (!n.matches(DOM_BLOCK) && n.children.length && n.children.length === o.children.length && !domText(n) && !domText(o)) {
+      let same = true; for (let i = 0; i < n.children.length; i++) if (n.children[i].tagName !== o.children[i].tagName || n.children[i].id !== o.children[i].id) { same = false; break; }
+      if (same) { domAttrs(o, n); domKids(o, n); return; }
+    }
+    const src = n.outerHTML; if ((o._src !== undefined ? o._src : o.outerHTML) === src) { o._src = src; return; }   // a block drawn by a full paint has no remembered source yet: read it off the screen once
+    n._src = src; o.replaceWith(n);
+  }
+  function domAttrs(o, n) {   // a kept container takes the new attributes (class, title, handlers); inline style written by the scroll / sticky code is left alone
+    for (const at of [...n.attributes]) if (o.getAttribute(at.name) !== at.value) o.setAttribute(at.name, at.value);
+    for (const at of [...o.attributes]) if (at.name !== 'style' && !n.hasAttribute(at.name)) o.removeAttribute(at.name);
+  }
   function pfStick() {   // sticky offsets: the phone shell's top bar, then the sheet header, then each activity header
     const d2 = $('d2'), mod = $('mod-dpr'); if (mod) mod.classList.toggle('pf-on', !!$('pf_top')); if (!d2) return; pfScApply(); pfRibFix();
     const sb = document.querySelector('.pgs-sidebar'), phone = window.innerWidth < 1000, sbh = phone && sb && getComputedStyle(sb).position === 'sticky' ? sb.offsetHeight : 0;
     const top = $('pf_top'), th = top ? top.offsetHeight + (window.innerWidth <= 860 ? (parseFloat(getComputedStyle(top).top) || 0) : 0) : 0;
-    d2.style.setProperty('--pf-sb', sbh + 'px'); d2.style.setProperty('--pf-top', (sbh + th) + 'px');
-    const sc = $('d2_sc'); if (sc && !phone && sc.clientHeight > 120) d2.style.setProperty('--pf-colh', sc.clientHeight + 'px');   // v5.7.3 · the two columns fill the sheet area and scroll on their own
+    const sv = (k, v) => { if (d2.style.getPropertyValue(k) !== v) d2.style.setProperty(k, v); };   // v5.8.1 · write a sheet-wide variable only when it changes (a write re-styles every card)
+    sv('--pf-sb', sbh + 'px'); sv('--pf-top', (sbh + th) + 'px');
+    const sc = $('d2_sc'); if (sc && !phone && sc.clientHeight > 120) sv('--pf-colh', sc.clientHeight + 'px');   // v5.7.3 · the two columns fill the sheet area and scroll on their own
   }
   if (!window._pfStick) { window._pfStick = true; window.addEventListener('resize', () => { if (document.getElementById('pf_top')) pfStick(); }); }
   function pfCalHtml() {   // v5.4.1 · tap-sized month grid for the sheet (the side calendar's styles never reached #dprSheet)

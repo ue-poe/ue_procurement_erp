@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.10</title>
+<title>Penguin Construction v5.11</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3778,6 +3778,46 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .hov .hc .t{display:flex;align-items:center;gap:8px}#mod-dpr .hov .hc .t .sp{flex:1}#mod-dpr .hov .hc .m{color:#5b6b82;font-size:12px;margin:4px 0 8px}
 #mod-dpr .hov .hc.old{background:#f7f9fc}#mod-dpr .hov .hc.old .m{margin-bottom:0}
 #mod-dpr .hov .sm{height:32px;padding:0 12px;border-radius:8px;border:1px solid #4338ca;background:#fff;color:#4338ca;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer}
+/* v5.11 · review / preview: location rail rows, one-line activity header */
+#mod-dpr .dp2 .pfrv .ach.a1{flex-wrap:wrap;row-gap:2px}
+#mod-dpr .dp2 .pfrv .ach.a1>div{flex:1 1 260px}
+#mod-dpr .dp2 .pfrv .ach.a1 b{display:inline}#mod-dpr .dp2 .pfrv .ach.a1 small{display:inline;margin-left:8px}
+#mod-dpr .dp2 .pfrv .ach.a1 .crew{flex:0 1 auto;font-size:12px;color:var(--ink2);min-width:0}#mod-dpr .dp2 .pfrv .ach.a1 .crew b{font-size:12px}#mod-dpr .dp2 .pfrv .ach.a1 .crew i{color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .ach.a1 .crew .pill{font-size:10px;margin-left:4px}
+#mod-dpr .dp2 .pfrv .ach.a1 .hn{flex:none;font-size:19px;font-weight:800;line-height:1;color:#0f1e33}#mod-dpr .dp2 .pfrv .ach.a1 .hn small{display:inline;font-size:10px;font-weight:700;margin-left:3px;color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .nodes.rl{display:block;padding:0}
+#mod-dpr .dp2 .pfrv .ln.rl{display:grid;grid-template-columns:96px minmax(0,1fr);border:0;border-top:2px solid var(--tintb);border-radius:0;background:#fff}
+#mod-dpr .dp2 .pfrv .nodes.rl>.ln.rl:first-child{border-top:0}
+#mod-dpr .dp2 .pfrv .sec.fl + .nodes.rl>.ln.rl:first-child{border-top:0}
+#mod-dpr .dp2 .pfrv .ln.rl>.rail{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 4px;text-align:center;background:var(--tinth);border-right:2px solid var(--tintb);min-width:0}
+#mod-dpr .dp2 .pfrv .ln.rl>.rail b{font:800 15.5px ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere;max-width:100%;line-height:1.15}
+#mod-dpr .dp2 .pfrv .ln.rl>.rail .p{font-size:12px;font-weight:800;color:var(--dv)}#mod-dpr .dp2 .pfrv .ln.rl>.rail small{font-size:9.5px;font-weight:700;color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .ln.rl.hz>.rail,#mod-dpr .dp2 .pfrv .ln.rl.warn>.rail{box-shadow:inset 4px 0 0 var(--drd)}
+#mod-dpr .dp2 .pfrv .ln.rl>.lbx{padding:6px 10px;min-width:0}
+#mod-dpr .dp2 .pfrv .ln.rl .l1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#mod-dpr .dp2 .pfrv .ln.rl .st{font-size:11px;font-weight:800;border-radius:7px;padding:2px 8px;white-space:nowrap}
+#mod-dpr .dp2 .pfrv .st.w{background:#dcf3e4;color:#17643a}#mod-dpr .dp2 .pfrv .st.g{background:#dcf3e4;color:#17643a}#mod-dpr .dp2 .pfrv .st.n{background:#e9edf3;color:#48566b}#mod-dpr .dp2 .pfrv .st.h{background:#fde4e4;color:#b91c1c}#mod-dpr .dp2 .pfrv .st.x{background:#fff1d6;color:#8a5a00}
+#mod-dpr .dp2 .pfrv .ln.rl .hh{font-size:12px;color:var(--ink2);white-space:nowrap}#mod-dpr .dp2 .pfrv .ln.rl .hh b{font-size:13px;color:#0f1e33}#mod-dpr .dp2 .pfrv .ln.rl .hh.red,#mod-dpr .dp2 .pfrv .ln.rl .hh.red b{color:var(--drd)}
+#mod-dpr .dp2 .pfrv .ln.rl .mut{font-size:12px;color:var(--ink3)}
+#mod-dpr .dp2 .pfrv .ln.rl .l1 .bar{flex:1 1 120px;min-width:90px;height:8px !important;border:0;border-radius:5px;background:#e9edf3;position:relative;overflow:hidden}
+#mod-dpr .dp2 .pfrv .ln.rl .bar i{position:absolute;top:0;bottom:0;left:0;background:#9fb1cc}#mod-dpr .dp2 .pfrv .ln.rl .bar i.d{background:var(--dv)}
+#mod-dpr .dp2 .pfrv .ln.rl .dl{font-size:11.5px;font-weight:800;color:var(--dv);white-space:nowrap}#mod-dpr .dp2 .pfrv .ln.rl .dl.z{color:#9aa6b8}#mod-dpr .dp2 .pfrv .ln.rl .dl.h{color:var(--drd)}
+#mod-dpr .dp2 .pfrv .ln.rl .qt{font-size:11.5px;color:var(--ink2);margin-top:4px;font-weight:600}
+#mod-dpr .dp2 .pfrv .ln.rl .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;align-items:center}
+#mod-dpr .dp2 .pfrv .ch{display:inline-flex;align-items:center;gap:6px;border:1px solid #dfe6f0;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700;background:#fff;max-width:100%}
+#mod-dpr .dp2 .pfrv .ch i{font-style:normal;font-weight:800;color:var(--ink3);white-space:nowrap}
+#mod-dpr .dp2 .pfrv .ch.mv i{color:var(--dv)}#mod-dpr .dp2 .pfrv .ch.dn{border-color:#b4dcc2;background:#f1faf4;color:#17643a}#mod-dpr .dp2 .pfrv .ch.dn i{color:#17643a}
+#mod-dpr .dp2 .pfrv .ch.hz{border-color:#f3b4b4;background:#fff5f5;color:#b91c1c}#mod-dpr .dp2 .pfrv .ch.hz i{color:#b91c1c}
+#mod-dpr .dp2 .pfrv .ch.ns,#mod-dpr .dp2 .pfrv .ch.nw{color:var(--ink2)}
+#mod-dpr .dp2 .pfrv .hidc{display:none}#mod-dpr .dp2 .pfrv .ln.all .hidc{display:contents}
+#mod-dpr .dp2 .pfrv .more{font-size:11.5px;color:var(--ink3);font-weight:700;cursor:pointer}#mod-dpr .dp2 .pfrv .more u.b{display:none}
+#mod-dpr .dp2 .pfrv .ln.all .more u.a{display:none}#mod-dpr .dp2 .pfrv .ln.all .more u.b{display:inline}
+#mod-dpr .dp2 .pfrv .ln.rl .pcn{margin:5px 0 0;border-radius:8px}
+#mod-dpr .dp2 .pfrv .gapl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 12px;border-top:2px solid var(--tintb);background:#fffaf0;font-size:12px}
+#mod-dpr .dp2 .pfrv .gapl b{color:#8a5a00}#mod-dpr .dp2 .pfrv .gapl .u{font:800 12.5px ui-monospace,Menlo,Consolas,monospace;border:1px solid #f2d999;border-radius:7px;padding:2px 7px;background:#fff}
+#mod-dpr .dp2 .pfrv .gapl.ns{background:#f7f9fc}#mod-dpr .dp2 .pfrv .gapl.ns b{color:var(--ink3)}#mod-dpr .dp2 .pfrv .gapl.ns .u{border-color:#dfe6f0;color:var(--ink2)}
+#mod-dpr .dp2 .pfrv .nodes.rl>.gapl:first-child{border-top:0}
+@media (max-width:620px){ #mod-dpr .dp2 .pfrv .ln.rl{grid-template-columns:72px minmax(0,1fr)} #mod-dpr .dp2 .pfrv .ln.rl>.rail b{font-size:14px} #mod-dpr .dp2 .pfrv .ach.a1 .crew{order:5;flex:1 1 100%} #mod-dpr .dp2 .pfrv .ln.rl .bar{flex-basis:100%;order:5} #mod-dpr .dp2 .pfrv .ln.rl .dl{order:6} }
 </style>
 
 </head>
@@ -8633,30 +8673,53 @@ const DPR = (function () {
       subsLive(g, l).forEach(s => { const y = x.subs[s.id], t = subT(y); if (subDoneT(s, y)) return; if (t.out === 'h') add(s.name, t.rc, s.open_hindrance); else if (y.out === 'h') add(s.name, y.rc, s.open_hindrance_yday); }); });
     return out;
   }
+  /* v5.11 · review / preview rows: the location is a rail down the left (as on the entry screen), one full-width row per location,
+     only what was reported is shown; untouched sub-activities fold behind a count, locations with nothing reported are named in one line. */
+  const pfNodeIdle = (g, l) => { const x = lineX(g, l); return !finL(l) && !x.fin && outOf(g, l) === '' && outT(g, l) === '' && !pfWhy(g, l).length && !pfHinds().some(z => z.wid === l.work_id); };
   function pfNode(g, l, C) {
-    const x = lineX(g, l), n = cdNodeLive(g, l), fin = finL(l), oT = fin ? '' : outT(g, l), o = fin ? '' : outOf(g, l), why = pfWhy(g, l), dd = esc(dsh(S.to));
-    const stPill = fin || x.fin ? pill('p-grey', 'Finished') : oT === 'w' ? pill('p-ok', 'W') : oT === 'h' ? pill('p-red', 'H') : oT === 'n' ? pill('p-grey', 'N') : pill('p-grey', '—');
-    const cls = fin || x.fin ? 'done' : (oT === 'h' || o === 'h') ? 'hz' : why.length ? 'warn' : (!o && !oT && !startedB(l)) ? 'ns' : '';
-    const sub = fin ? 'Done ' + esc(dsh(l.finished_on) || '—') : x.fin ? 'Finished ' + esc(dsh(x.finOn || finDef(x.started || l.started_on))) : n.ds ? 'Day ' + (daysBetween(n.ds, S.to) + 1) : '';
-    let h = `<div class="ln ${cls}"><div class="lnh"><b>${esc(n.loc)}</b>${sub ? `<small>${sub}</small>` : ''}<span class="sp"></span>${stPill}</div>`;
-    if (fin) return h + `<div class="cells c2"><div><label>Finished</label><span>${esc(dsh(l.finished_on) || '—')}</span></div><div><label>Site Cert. Qty</label><span class="ok">${l.site_cert_qty != null ? fmt(l.site_cert_qty) + ' ' + esc(l.uom || '') : '—'}</span></div></div></div>`;
-    if (!o && !oT && !startedB(l) && !x.fin) return h + `<div class="cells c2"><div><label>Today</label><span class="mut">Not Started</span></div><div><label>Heads</label><span class="mut">—</span></div></div></div>`;
-    const tTxt = x.fin ? 'Finished' : oT === 'w' ? 'Working' : oT === 'h' ? 'Hindrance' : oT === 'n' ? 'No Work' : 'Not Filled';
-    let hd, hc = '';
-    if (finT(g, l)) hd = '—';
-    else if (C.mode === 'crew') { if (oT !== 'w') { hd = '—'; hc = 'mut'; } else { hd = C.heads ? 'Crew · ' + fmt(C.heads) : (noLab(C.g, 'A') ? 'No Labour' : '0'); hc = C.heads ? 'crew' : noLab(C.g, 'A') ? 'mut' : 'red'; } }
-    else if (C.mode === 'unit') { const nh = cardHeads(g); hd = nh ? fmt(nh) : (noLab(g, 'A') ? 'No Labour' : (oT === 'w' ? '0' : '—')); hc = nh ? 'num' : oT === 'w' && !noLab(g, 'A') ? 'red' : 'mut'; }
-    else { const nh = cardHeads(g); hd = nh ? fmt(nh) + ' · Per ' + (C.mode === 'sub' ? 'Sub' : 'Group') : (oT === 'w' ? '0' : '—'); hc = nh ? 'num' : oT === 'w' ? 'red' : 'mut'; }
-    h += `<div class="cells c2"><div><label>Today ${dd}</label><span class="${oT === 'h' ? 'red' : ''}">${tTxt}</span></div><div><label>Heads Deployed</label><span class="${hc}">${hd}</span></div></div>`;
-    const b = Math.min(100, n.b), p = Math.min(100, n.pct), pcls = x.fin ? 'ok' : (o === 'h') ? 'h' : p - b > 0.0005 ? 'w' : 'mut';
-    h += `<div class="pcs"><label>Progress · ${esc(dsh(PD()))} EOD</label><div class="pbar"><span class="${pcls}">${Math.round(b)}%</span><div class="bar"><i style="width:${b}%"></i><i class="d" style="left:${b}%;width:${Math.max(0, p - b)}%"></i></div><span class="r">${Math.round(p)}%</span></div>${!staged(l) && o === 'w' ? `<div class="qt">${x.wip ? 'WIP · Nothing Completed' : '+' + fmt(num(x.qty)) + ' ' + esc(l.uom || '') + ' · Cum. ' + fmt(cumBase(l) + num(x.qty)) + ' / ' + fmt(num(l.est_qty))}</div>` : ''}</div>`;
-    if (staged(l)) h += `<div class="cells c3 subs">${subsLive(g, l).map(s => { const y = x.subs[s.id], base = subBase(s), pc = Math.min(100, subPct(g, l, s)), t = subT(y), done = base >= 99.9995 || (y.out === 'w' && !y.wip && pc >= 99.9995);
-      const v = done ? '✓ Done' : y.out === 'h' || t.out === 'h' ? 'H' : y.out === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc)) : y.out === 'n' ? 'No Work' : base > 0.0005 ? Math.round(base) + '%' : '—', k = done ? 'ok' : (y.out === 'h' || t.out === 'h') ? 'h' : (y.out === 'w' || t.out === 'w') ? 'w' : '';
-      return `<div class="${k}"><label>${esc(s.name)}</label><span>${v}</span></div>`; }).join('')}</div>`;
-    const H = pfHinds().filter(z => z.wid === l.work_id);
-    H.forEach(z => { h += `<div class="pcn hz"><span>${z.what ? esc(z.what) + ' · ' : ''}${esc(z.rc || 'Reason Missing')} · Since ${esc(dsh(z.since))} · Day ${z.days}</span></div>`; });
+    const x = lineX(g, l), n = cdNodeLive(g, l), fin = finL(l), oT = fin ? '' : outT(g, l), o = fin ? '' : outOf(g, l), why = pfWhy(g, l), dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
+    const cls = fin || x.fin ? 'done' : (oT === 'h' || o === 'h') ? 'hz' : why.length ? 'warn' : '';
+    const day = fin ? '' : n.ds ? 'Day ' + (daysBetween(n.ds, S.to) + 1) : '', b = Math.min(100, n.b), p = Math.min(100, n.pct);
+    const rail = `<div class="rail" title="${esc(lineLocPath(g, l))}"><b>${esc(n.loc)}</b>${fin ? '' : `<span class="p">${Math.round(p)}%</span>`}${day ? `<small>${day}</small>` : ''}</div>`;
+    if (fin) return `<div class="ln rl fn1 done">${rail}<div class="lbx"><div class="l1"><span class="st g">Finished ${esc(dsh(l.finished_on) || '')}</span><span class="mut">Site Cert. ${l.site_cert_qty != null ? fmt(l.site_cert_qty) + ' ' + esc(l.uom || '') : '—'}</span></div></div></div>`;
+    // today's status + heads
+    const tTxt = x.fin ? 'Finished ' + esc(dsh(x.finOn || PD())) : oT === 'w' ? 'Working ' + dd : oT === 'h' ? 'Hindrance ' + dd : oT === 'n' ? 'No Work ' + dd : 'Not Filled ' + dd, tCls = x.fin ? 'g' : oT === 'w' ? 'w' : oT === 'h' ? 'h' : oT === 'n' ? 'n' : 'x';
+    let hd = '', hc = '';
+    if (!finT(g, l) && oT === 'w') {
+      if (C.mode === 'crew') { hd = C.heads ? 'Crew · <b>' + fmt(C.heads) + '</b>' : (noLab(C.g, 'A') ? 'No Labour' : '<b>0</b> Heads'); hc = C.heads || noLab(C.g, 'A') ? '' : 'red'; }
+      else { const nh = cardHeads(g); hd = nh ? '<b>' + fmt(nh) + '</b> Head' + (nh === 1 ? '' : 's') + (C.mode === 'sub' ? ' · Per Sub-Activity' : C.mode === 'group' ? ' · Per Group' : '') : (noLab(g, 'A') ? 'No Labour' : '<b>0</b> Heads'); hc = nh || noLab(g, 'A') ? '' : 'red'; }
+    }
+    const moved = p - b > 0.0005, dl = x.fin ? 'Completed ' + pdd : moved ? '+' + Math.round(p - b) + '% On ' + pdd : o === 'h' ? 'Hindrance ' + pdd : o === 'n' ? 'No Work ' + pdd : o === 'w' ? (x.wip ? 'WIP ' + pdd : 'No Change ' + pdd) : 'Not Filled ' + pdd;
+    const bar = `<div class="bar"><i style="width:${b}%"></i><i class="d" style="left:${b}%;width:${Math.max(0, p - b)}%"></i></div><span class="dl ${moved || x.fin ? '' : o === 'h' ? 'h' : 'z'}">${dl}</span>`;
+    let h = `<div class="ln rl ${cls}">${rail}<div class="lbx"><div class="l1"><span class="st ${tCls}">${tTxt}</span>${hd ? `<span class="hh ${hc}">${hd}</span>` : ''}${bar}</div>`;
+    if (!staged(l) && o === 'w') h += `<div class="qt">${x.wip ? 'WIP · Nothing Completed' : '+' + fmt(num(x.qty)) + ' ' + esc(l.uom || '') + ' · Cum. ' + fmt(cumBase(l) + num(x.qty)) + ' / ' + fmt(num(l.est_qty))}</div>`;
+    if (staged(l)) {
+      const subs = subsLive(g, l), sh = labShort(subs.map(s => s.name)), key = [], rest = [], nw = [], doneOld = [];
+      subs.forEach(s => { const y = x.subs[s.id], base = subBase(s), pc = Math.min(100, subPct(g, l, s)), t = subT(y), nm = esc(sh[s.name] || s.name), ti = esc(s.name);
+        const chip = (c, v) => `<span class="ch ${c}" title="${ti}">${nm} <i>${v}</i></span>`;
+        if (base >= 99.9995) { doneOld.push(chip('dn', '✓ Done')); return; }
+        if (y.out === 'w' && !y.wip && pc >= 99.9995) { key.push(chip('dn', '✓ Done ' + pdd)); return; }
+        if (y.out === 'h' || t.out === 'h') { key.push(chip('hz', 'Hindrance' + (y.out === 'h' ? ' ' + pdd : ' ' + dd))); return; }
+        if (y.out === 'w') { key.push(chip('mv', y.wip ? 'WIP' : Math.round(base) + ' → ' + Math.round(pc) + '%')); return; }
+        if (t.out === 'w') { key.push(chip('mv', (base > 0.0005 ? Math.round(base) + '% · ' : '') + 'Working ' + dd)); return; }
+        if (y.out === 'n' || t.out === 'n') { nw.push(chip('nw', 'No Work')); return; }
+        rest.push(chip(base > 0.0005 ? 'ip' : 'ns', base > 0.0005 ? Math.round(base) + '%' : 'Not Started')); });
+      const dOld = doneOld.length > 2 ? [`<span class="ch dn"><i>✓ ${doneOld.length} Done Earlier</i></span>`] : doneOld, dHid = doneOld.length > 2 ? doneOld : [];
+      const shown = dOld.concat(key, !key.length && nw.length ? nw.slice(0, 1) : []), hid = dHid.concat(!key.length ? nw.slice(1) : nw, rest);
+      const nNw = (!key.length ? nw.length - 1 : nw.length), moreTxt = [nNw > 0 ? nNw + ' No Work' : '', rest.length ? rest.length + ' Not Reported' : '', dHid.length && !nNw && !rest.length ? 'Names' : ''].filter(Boolean).join(' · ');
+      if (shown.length || hid.length) h += `<div class="chips">${shown.join('')}${hid.length ? `<span class="hidc">${hid.join('')}</span><a class="more" onclick="this.closest('.ln').classList.toggle('all')"><u class="a">${moreTxt || hid.length + ' More'}</u><u class="b">Show Less</u></a>` : ''}</div>`;
+    }
+    pfHinds().filter(z => z.wid === l.work_id).forEach(z => { h += `<div class="pcn hz"><span>${z.what ? esc(z.what) + ' · ' : ''}${esc(z.rc || 'Reason Missing')} · Since ${esc(dsh(z.since))} · Day ${z.days}</span></div>`; });
     if (why.length) h += `<div class="pcn"><span>${esc(why.join(' · '))}</span>${S.prev && !S.locked ? `<button onclick="DPR.pfGo('${l.work_id}')">Fix</button>` : ''}</div>`;
-    return h + '</div>';
+    return h + '</div></div>';
+  }
+  function pfNodes(items, C) {   // rows for what was reported; one line naming the locations with nothing reported, one for those not started
+    const idle = items.filter(it => pfNodeIdle(it.g, it.l)), rows = items.filter(it => idle.indexOf(it) < 0);
+    const gap = idle.filter(it => startedB(it.l)), ns = idle.filter(it => !startedB(it.l)), names = a => a.map(it => `<span class="u" title="${esc(lineLocPath(it.g, it.l))}">${esc(lineLoc(it.g, it.l))}</span>`).join('');
+    return `<div class="nodes rl">${rows.map(it => pfNode(it.g, it.l, C)).join('')}${gap.length ? `<div class="gapl"><b>${gap.length} Location${gap.length === 1 ? '' : 's'} · Nothing Reported:</b>${names(gap)}</div>` : ''}${ns.length ? `<div class="gapl ns"><b>${ns.length} Not Started:</b>${names(ns)}</div>` : ''}</div>`;
+  }
+  function pfAch(title, sub, cons, mix, hN, hLabel, extra, pct) {   // activity header on one line: what and where on the left; crew, trades, heads and % on the right
+    return `<div class="ach a1"><div><b>${esc(title)}</b><small>${sub}</small></div><span class="crew">${cons.length ? '<b>' + cons.map(esc).join(' · ') + '</b>' : '<i>No Crew</i>'}${mix ? ' · ' + mix : ''}${extra ? ' ' + extra : ''}</span><span class="hn" title="${esc(hLabel)}">${fmt(hN)}<small>Heads</small></span>${pct}</div>`;
   }
   function pfPreview() {
     const M = pfModel(true), dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
@@ -8674,9 +8737,7 @@ const DPR = (function () {
       const allFin = c.items.every(it => finT(it.g, it.l)), anyH = c.items.some(it => hasHT(it.g, it.l));
       const book = allFin ? pill('p-grey', 'Finished') : !C.heads ? (anyH ? pill('p-red', 'Hindrance Today') : pill('p-grey', 'No Labour Today')) : C.mode === 'crew' && C.club ? pill('p-grey', 'Labour Booked To ' + esc(pathTail(bookedTo(C.g), 2))) : C.mode === 'crew' ? pill('p-grey', 'Labour On The Unit') : C.mode === 'unit' ? pill('p-vio', 'Labour Per Unit') : pill('p-vio', 'Labour Per ' + (C.mode === 'sub' ? 'Sub-Activity' : 'Group'));
       const pk = allFin ? 'ok' : anyH ? 'red' : 'vio';
-      h += `<div class="ac ${PF_TINT[i % 5]}"><div class="ach"><div><b>${esc(c.act)}</b><small>${esc(c.pkg)} · ${esc(c.floor)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Est ${fmt(c.est)} ${esc(c.uom)}</small></div>${pill('p-' + pk, Math.round(c.pct) + '%' + (c.pct - c.b > 0.0005 ? ' · +' + Math.round(c.pct - c.b) + '%' : allFin ? ' · Finished' : ''))}</div>
-        <div class="cells c3 crewrow"><div><label>Crew</label><span>${cons.length ? cons.map(esc).join(' · ') : '—'}</span></div><div><label>Trades</label><span>${mix || '—'}</span></div><div><label>Heads ${dd}</label><span class="big">${fmt(C.heads)}</span></div></div>
-        <div class="sec"><span>Location Nodes · ${c.items.length}</span><span class="sp"></span>${book}</div><div class="nodes">${c.items.map(it => pfNode(it.g, it.l, C)).join('')}</div></div>`;
+      h += `<div class="ac ${PF_TINT[i % 5]}">${pfAch(c.act, `${esc(c.pkg)} · ${esc(c.floor)} · ${c.items.length} Unit${c.items.length === 1 ? '' : 's'} · Est ${fmt(c.est)} ${esc(c.uom)}`, cons, mix, C.heads, 'Heads ' + dsh(S.to), book, pill('p-' + pk, Math.round(c.pct) + '%' + (c.pct - c.b > 0.0005 ? ' · +' + Math.round(c.pct - c.b) + '%' : allFin ? ' · Finished' : '')))}${pfNodes(c.items, C)}</div>`;
     });
     const np = npDraft().filter(e => heads(e.heads) > 0 || e.text);
     if (np.length) { h += `<h3>Non-Estimated Work</h3>`; np.forEach((e, i) => { h += `<div class="ac ${PF_TINT[(M.cards.length + i) % 5]}"><div class="ach"><div><b>${esc(e.text)}</b><small>${e.locs.length ? e.locs.map(x => esc(x.name || '')).join(', ') : 'No Location'} · Labour Only</small></div>${pill('p-ok', 'W')}</div><div class="cells c3 crewrow"><div><label>Contractor</label><span>${e.con ? esc(conName(e.con)) : '<i class="red">Not Picked</i>'}</span></div><div><label>Trades</label><span>${tradeTxt(e.heads) || '—'}</span></div><div><label>Heads ${dd}</label><span class="big">${fmt(heads(e.heads))}</span></div></div></div>`; }); }
@@ -8845,11 +8906,10 @@ const DPR = (function () {
     [...acts.values()].sort((a, b) => pfNatCmp(a.pkg, b.pkg) || pfNatCmp(a.act, b.act)).forEach(A => {
       const pct = A.n ? A.pct / A.n : 0, b = A.n ? A.b / A.n : 0, allFin = A.fin === A.n, pk = allFin ? 'ok' : A.secs.some(s => s.items.some(it => hasHT(it.g, it.l) || hasH(it.g, it.l))) ? 'red' : 'vio';
       const cons = [...A.cons].map(conName), mix = tradeTxt(tradeMix(A.rows)), uom = [...new Set(A.secs.map(s => s.c.uom).filter(Boolean))].join(' / ');
-      h += `<div class="ac ${PF_TINT[i++ % 5]}"><div class="ach"><div><b>${esc(A.act)}</b><small>${esc(A.pkg)} · ${A.n} Location${A.n === 1 ? '' : 's'} Across ${A.areas.size} Area${A.areas.size === 1 ? '' : 's'} · Est ${fmt(A.est)} ${esc(uom)}</small></div>${pill('p-' + pk, Math.round(pct) + '%' + (pct - b > 0.0005 ? ' · +' + Math.round(pct - b) + '%' : allFin ? ' · Finished' : ''))}</div>
-        <div class="cells c3 crewrow"><div><label>Contractors</label><span>${cons.length ? cons.map(esc).join(' · ') : '—'}</span></div><div><label>Trades</label><span>${mix || '—'}</span></div><div><label>Heads ${esc(dsh(S.mDate))}</label><span class="big">${fmt(A.heads)}</span></div></div>`;
+      h += `<div class="ac ${PF_TINT[i++ % 5]}">${pfAch(A.act, `${esc(A.pkg)} · ${A.n} Location${A.n === 1 ? '' : 's'} Across ${A.areas.size} Area${A.areas.size === 1 ? '' : 's'} · Est ${fmt(A.est)} ${esc(uom)}`, cons, mix, A.heads, 'Heads ' + dsh(S.mDate), '', pill('p-' + pk, Math.round(pct) + '%' + (pct - b > 0.0005 ? ' · +' + Math.round(pct - b) + '%' : allFin ? ' · Finished' : '')))}`;
       A.secs.sort((x, y) => pfNatCmp(x.c.floor, y.c.floor)).forEach(sec => { const P = sec.P, pend = P.s.status === 'Submitted'; mUse(P);
         const who = sec.Cw.mode === 'crew' && sec.Cw.club ? 'Booked To ' + esc(pathTail(bookedTo(sec.Cw.g))) : sec.Cw.mode === 'unit' ? 'Per Unit' : sec.Cw.mode === 'crew' ? '' : 'Per ' + (sec.Cw.mode === 'sub' ? 'Sub-Activity' : 'Group');
-        h += `<div class="sec fl ${pend ? 'pend' : ''}"><span class="where">${esc(sec.c.floor)}</span><span class="who">${esc(P.name.split(' ')[0])} · ${pend ? pill('p-navy', 'To Review') : pill('p-ok', 'Accepted')}</span><span class="sp"></span><span class="cw">${sec.cons.length ? esc(sec.cons.join(' · ')) : 'No Labour'}${who ? ' · ' + who : ''} · <b>${fmt(sec.Cw.heads)}</b> Heads${sec.skip ? ` · ${sec.skip} Not Reported` : ''}</span></div><div class="nodes">${sec.items.map(it => pfNode(it.g, it.l, sec.Cw)).join('')}</div>`; });
+        h += `<div class="sec fl ${pend ? 'pend' : ''}"><span class="where">${esc(sec.c.floor)}</span><span class="who">${esc(P.name.split(' ')[0])} · ${pend ? pill('p-navy', 'To Review') : pill('p-ok', 'Accepted')}</span><span class="sp"></span><span class="cw">${sec.cons.length ? esc(sec.cons.join(' · ')) : 'No Labour'}${who ? ' · ' + who : ''} · <b>${fmt(sec.Cw.heads)}</b> Heads${sec.skip ? ` · ${sec.skip} Not Reported` : ''}</span></div>${pfNodes(sec.items, sec.Cw)}`; });
       h += `</div>`; });
     h += '</div>'; S.to = S.mProg;
     if (C.npE.length) h += `<h3>Non-Estimated Work · ${fmt(C.np)} Heads</h3><div class="ec"><div class="cells c3">${C.npE.map(e => `<div><label>${esc(e.area || e.eng)}</label><span>${esc(e.text)} · ${fmt(e.h)}</span></div>`).join('')}</div></div>`;

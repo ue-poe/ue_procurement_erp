@@ -70,7 +70,8 @@
 // v74 · construction v5.8.5 · a sub-activity hindrance no longer folds away as 'No Work'
 // v75 · construction v5.9 · club sub-activities for labour (needs M87 on the database)
 // v76 · construction v5.10 · Handover tab for the manager (needs M88 on the database)
-const VERSION = 'pgs-shell-v76';
+// v77 · construction v5.11 · review / preview rows with the location rail; one-line activity header
+const VERSION = 'pgs-shell-v77';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.8.4</title>
+<title>Penguin Construction v5.8.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3736,6 +3736,7 @@ html,body{touch-action:pan-x pan-y}
 .hc-locs{display:flex;flex-wrap:wrap;gap:6px}
 .hc-locs button{height:32px;padding:0 10px;border-radius:8px;border:1px solid #c3ccd9;background:#fff;color:#8795a8;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:800;font-size:13px;cursor:pointer;text-decoration:line-through}
 .hc-locs button.on{background:#0f1e33;border-color:#0f1e33;color:#fff;text-decoration:none}
+#mod-dpr .dp2 .onel .nt2{flex:1 1 120px;min-width:0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 
 </head>
@@ -8030,10 +8031,10 @@ const DPR = (function () {
     const e = S.W[wid]; if (!e) return ''; const { g, l } = e, x = lineX(g, l), fin = finL(l), C = pfCrewOf(c), lv = labLevel(g), loc = lineLoc(g, l);
     const n = cdNodeLive(g, l);
     // v5.8 · the location is a rail down the full height of its block; the entry sits beside it
-    const more = !!S.pfM[wid], oL = outOf(g, l), quietOne = !ro && !fin && !more && (oL === 'n' || oL === 'h') && !attOf(g, l);
+    const more = !!S.pfM[wid], hSub = staged(l) ? subsLive(g, l).find(z => (x.subs[z.id] || {}).out === 'h') : null, oL0 = outOf(g, l), oL = oL0 !== 'w' && hSub ? 'h' : oL0, quietOne =   /* v5.8.5 · one sub-activity under hindrance is a hindrance on the block, never 'No Work' */ !ro && !fin && !more && (oL === 'n' || (oL === 'h' && !dOf(g).dirty)) && !attOf(g, l);   // v5.8.5 · a hindrance being logged stays open (reason + note) until the card is saved
     const rail = `<div class="rail" title="${esc(lineLocPath(g, l))} · Est ${fmt(n.est)} ${esc(n.uom)}"><b>${esc(loc)}</b><span class="p">${Math.round(n.pct)}%</span>${n.ds ? `<small>${n.de ? 'Done ' + esc(dsh(n.de)) : 'Day ' + (daysBetween(n.ds, S.to) + 1)}</small>` : ''}</div>`;
     if (quietOne) { const rc = oL === 'h' ? pfRcOf(g, l) : '';
-      return `<div class="pf-ent rl one">${rail}<div class="eb"><div class="onel"><span class="tag ${oL === 'h' ? 'r' : 'n'}">${oL === 'h' ? 'Hindrance' + (rc ? ' · ' + esc(rc) : '') : 'No Work'} ${esc(dsh(PD()))}</span><a class="lk" onclick="DPR.pfMore('${wid}')">Change</a></div></div></div>`; }
+      return `<div class="pf-ent rl one">${rail}<div class="eb"><div class="onel"><span class="tag ${oL === 'h' ? 'r' : 'n'}">${oL === 'h' ? 'Hindrance' + (hSub ? ' · ' + esc(hSub.name) : '') + (rc ? ' · ' + esc(rc) : '') : 'No Work'} ${esc(dsh(PD()))}</span>${oL === 'h' && pfNoteOf(g, l) ? `<span class="muted nt2">${esc(pfNoteOf(g, l))}</span>` : ''}<a class="lk" onclick="DPR.pfMore('${wid}')">Change</a></div></div></div>`; }
     let h = `<div class="pf-ent rl">${rail}<div class="eb">`;   // v5.8.3 · no ⋯: Hold sits once on the card header, the note opens from the detail line
     const hide = more && !ro ? `<a class="nt" onclick="DPR.pfMore('${wid}')">Hide</a>` : '';
     if (staged(l)) {
@@ -8123,6 +8124,7 @@ const DPR = (function () {
     await holdAfter();
   }
   function pfMore(wid) { S.pfM[wid] = !S.pfM[wid]; redraw(); }
+  const pfNoteOf = (g, l) => { const x = lineX(g, l); if (!staged(l)) return x.note || ''; for (const z of subsLive(g, l)) { const y = x.subs[z.id]; if (y && y.out === 'h' && y.note) return y.note; } return ''; };
   const pfRcOf = (g, l) => { const x = lineX(g, l); let rc = x.rc || ''; if (staged(l)) for (const s of subsLive(g, l)) { const y = x.subs[s.id]; if (y && y.out === 'h' && y.rc) { rc = y.rc; break; } } return ((S.masters.hindrance_reasons.find(r => r.reason_code === rc) || {}).reason_text) || ''; };
   /* ==================================================================
      v5.7 · TWO TABS (DPR_TwoTabs_mock_v1, approved 19 Nov 2026) — the same sheet, entered the way the site works:

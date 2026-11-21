@@ -67,7 +67,8 @@
 // v71 · construction v5.8.2 · tucked floor ribbon gives its height back; ⋯ no longer covers the sub-activity strip
 // v72 · construction v5.8.3 · Hold once per activity card and per club; ⋯ removed from the blocks
 // v73 · construction v5.8.4 · no Hold button on the Labour screen
-const VERSION = 'pgs-shell-v73';
+// v74 · construction v5.8.5 · a sub-activity hindrance no longer folds away as 'No Work'
+const VERSION = 'pgs-shell-v74';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

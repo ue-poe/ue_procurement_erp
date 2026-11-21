@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.9</title>
+<title>Penguin Construction v5.10</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3754,6 +3754,30 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c .scbar .sp{flex:1}#mod-dpr .dp2 .lab-c .scbar a{color:#d9d6ff;text-decoration:underline;font-size:11.5px;cursor:pointer}
 #mod-dpr .dp2 .lab-c .scbar button{height:30px;padding:0 12px;border-radius:8px;border:0;background:#fff;color:#4338ca;font-weight:800;cursor:pointer}
 #mod-dpr .dp2 .lab-c .scbar button:disabled{opacity:.5}
+/* v5.10 · Handover tab (M88) */
+#mod-dpr .hov{max-width:760px;padding:12px 4px;font-size:13.5px;color:#0f1e33}
+#mod-dpr .hov .hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}#mod-dpr .hov .hd a{color:#4338ca;font-weight:700;cursor:pointer;font-size:12.5px}#mod-dpr .hov .hd b{font-size:16px}
+#mod-dpr .hov .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media (max-width:560px){#mod-dpr .hov .two{grid-template-columns:1fr}}
+#mod-dpr .hov .f{margin-bottom:10px;display:block}#mod-dpr .hov .f label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#5b6b82;margin-bottom:3px}
+#mod-dpr .hov select,#mod-dpr .hov input{width:100%;height:38px;border:1px solid #c3ccd9;border-radius:9px;padding:0 10px;font:inherit;font-weight:700;background:#fff;color:#0f1e33}
+#mod-dpr .hov .seg{display:inline-flex;border:1px solid #c3ccd9;border-radius:9px;overflow:hidden;flex-wrap:wrap}
+#mod-dpr .hov .seg button{height:36px;padding:0 12px;border:0;background:#fff;font:inherit;font-weight:700;font-size:12.5px;color:#33415f;cursor:pointer}#mod-dpr .hov .seg button.on{background:#0f1e33;color:#fff}
+#mod-dpr .hov .tree{border:1px solid #dfe6f0;border-radius:9px;overflow:hidden;background:#fff;margin-bottom:10px}
+#mod-dpr .hov .tr{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #eef2f8;font-size:12.5px}#mod-dpr .hov .tr:last-child{border-bottom:0}
+#mod-dpr .hov .tr.l1{background:#f5f7fb;font-weight:800;font-size:11.5px;letter-spacing:.03em;text-transform:uppercase;color:#48566b}
+#mod-dpr .hov .tr.ck{cursor:pointer}#mod-dpr .hov .tr .nm{flex:1;min-width:0}#mod-dpr .hov .tr i{font-style:normal;color:#5b6b82;font-size:11.5px;white-space:nowrap}
+#mod-dpr .hov .cb{width:18px;height:18px;border-radius:5px;border:2px solid #9aa6b8;flex:none;display:grid;place-items:center;font-size:12px;color:#fff}#mod-dpr .hov .cb.on{background:#4338ca;border-color:#4338ca}
+#mod-dpr .hov .tg{font-size:10.5px;font-weight:800;border-radius:7px;padding:2px 7px;white-space:nowrap}
+#mod-dpr .hov .tg.h{background:#fff1d6;color:#8a5a00}#mod-dpr .hov .tg.g{background:#dcf3e4;color:#17643a}#mod-dpr .hov .tg.n{background:#e9edf3;color:#48566b}#mod-dpr .hov .tg.b{background:#e3e8ff;color:#3730a3}#mod-dpr .hov .tg.r{background:#fde4e4;color:#b91c1c}
+#mod-dpr .hov .note{background:#fff8e6;border:1px solid #f2d999;border-radius:9px;padding:8px 10px;font-size:12px;color:#6b4a00;margin:0 0 10px}
+#mod-dpr .hov .note.g{background:#f3f6fb;border-color:#dfe6f0;color:#48566b}#mod-dpr .hov .note.bad{background:#fde4e4;border-color:#f3b4b4;color:#b91c1c}
+#mod-dpr .hov .go{display:block;width:100%;height:42px;border-radius:10px;border:0;background:#4338ca;color:#fff;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+#mod-dpr .hov .go:disabled{opacity:.45;cursor:default}#mod-dpr .hov .go.ghost{background:#fff;color:#0f1e33;border:1px solid #c3ccd9}
+#mod-dpr .hov h4{margin:14px 0 6px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#5b6b82}
+#mod-dpr .hov .hc{border:1px solid #dfe6f0;border-radius:11px;padding:10px 12px;margin-bottom:10px;background:#fff}
+#mod-dpr .hov .hc .t{display:flex;align-items:center;gap:8px}#mod-dpr .hov .hc .t .sp{flex:1}#mod-dpr .hov .hc .m{color:#5b6b82;font-size:12px;margin:4px 0 8px}
+#mod-dpr .hov .hc.old{background:#f7f9fc}#mod-dpr .hov .hc.old .m{margin-bottom:0}
+#mod-dpr .hov .sm{height:32px;padding:0 12px;border-radius:8px;border:1px solid #4338ca;background:#fff;color:#4338ca;font:inherit;font-weight:800;font-size:12.5px;cursor:pointer}
 </style>
 
 </head>
@@ -4622,7 +4646,7 @@ const DPR = (function () {
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
     masters: null, _conMap: null, _cons: null,
-    pfF: '', pfU: {}, pfS: {}, pfSa: {}, pfG: {}, pfO: {}, pfLs: {}, pfM: {}, pfRx: 0, pfSc: null,   // v5.4
+    pfF: '', pfU: {}, pfS: {}, pfSa: {}, pfG: {}, pfO: {}, pfLs: {}, pfM: {}, pfRx: 0, pfSc: null, hov: null,   // v5.4
     rsBy: {}, rsOff: false,   // v5.5.2 · M62 · recently resumed holds per date · M62 absent · phone flow: floor chip · selected unit per card · selected sub-activity per unit
     holdsBy: {}, holdReq: {}, holdOff: false, hx: null, holdDays: 21, wOpen: false, wA: null, wF: 'all', wPdf: false, hEd: null, _prW: null   // v5.3 · M49 Waiting / On Hold
   };
@@ -7101,7 +7125,7 @@ const DPR = (function () {
   /* ==================================================================
      MANAGER · Daily Report module (mock v3): Review & Publish · Reporting Plan · Hindrances · Site Areas · Labour Setup · Hidden From Site
      ================================================================== */
-  const MTABS = [['rev', 'Review &amp; Publish', 'Engineer Submissions · DPR', 'canReviewDPR'], ['plan', 'Reporting Plan', 'Activities · Groups · Sub-Activities', 'canPlanDPR'], ['hnd', 'Hindrances', 'Report → Allocate → Classify → Close', 'canReviewDPR'], ['areas', 'Site Areas', 'Locations · Engineers', 'canManageAreas'], ['setup', 'Labour Setup', 'Trades · Daywork Rates · Non-Estimated Work', 'canManageAreas'], ['hid', 'Hidden From Site', 'Milestone / Payment Activities', 'canManageAreas']];
+  const MTABS = [['rev', 'Review &amp; Publish', 'Engineer Submissions · DPR', 'canReviewDPR'], ['plan', 'Reporting Plan', 'Activities · Groups · Sub-Activities', 'canPlanDPR'], ['hnd', 'Hindrances', 'Report → Allocate → Classify → Close', 'canReviewDPR'], ['hov', 'Handover', 'Leave · Resignation · Return', 'canReviewDPR'], ['areas', 'Site Areas', 'Locations · Engineers', 'canManageAreas'], ['setup', 'Labour Setup', 'Trades · Daywork Rates · Non-Estimated Work', 'canManageAreas'], ['hid', 'Hidden From Site', 'Milestone / Payment Activities', 'canManageAreas']];
   const mCan = t => { const m = MTABS.find(x => x[0] === t); return m && (hasPerm(m[3]) || (m[3] === 'canReviewDPR' && hasPerm('canClassifyHindrance') && t === 'hnd')); };
   /* v163.7 · Review data engine — every date already seen stays on this device (memory + IndexedDB, per user × project);
      a date is re-read only when the server calendar says it changed; the dates around the picked one and every date with
@@ -7231,7 +7255,7 @@ const DPR = (function () {
     let h = `<div class="drp mgr"><div class="bar"><div class="ttl"><b>📋 Daily Report</b><span>${esc(projName())} · Site Team Module — Review, Reporting Plan, Site Areas, Labour Setup</span></div><div class="sp"></div><span class="role">${esc(state.userName || '')}</span><button class="dbtn sm" style="background:var(--dn2);color:#fff;border-color:#2e5794" title="Reload" onclick="DPR.refresh()">↻</button></div>
       <div class="tabs">${MTABS.filter(t => mCan(t[0])).map(t => `<button class="${S.mTab === t[0] ? 'on' : ''}" onclick="DPR.mTab('${t[0]}')">${t[1]}<i>${t[2]}</i></button>`).join('')}</div><div id="dpr_mbody"></div></div>`;
     hostsHide(); $('dpr_root').innerHTML = h;
-    if (S.mTab === 'rev') revDraw(); else if (S.mTab === 'plan') planDraw(); else if (S.mTab === 'hnd') hndDraw(); else if (S.mTab === 'areas') hostShow('dpr_host_areas', () => AREAS.load()); else if (S.mTab === 'setup') hostShow('dpr_host_labour', () => DPRM.load('setup'), 'Labour Setup', "Trades on the engineer's steppers, non-estimated work items and daywork rates per contractor."); else if (S.mTab === 'hid') hostShow('dpr_host_labour', () => DPRM.load('lines'), 'Hidden From Site', 'Milestone and payment activities the QS estimated for billing, not for site progress. Hidden activities never appear on the engineer\'s picker.');
+    if (S.mTab === 'rev') revDraw(); else if (S.mTab === 'plan') planDraw(); else if (S.mTab === 'hnd') hndDraw(); else if (S.mTab === 'hov') { if (!S.hov) S.hov = { view: 'list' }; if (S.hov.view === 'list') S.hov.list = null; hovDraw(); } else if (S.mTab === 'areas') hostShow('dpr_host_areas', () => AREAS.load()); else if (S.mTab === 'setup') hostShow('dpr_host_labour', () => DPRM.load('setup'), 'Labour Setup', "Trades on the engineer's steppers, non-estimated work items and daywork rates per contractor."); else if (S.mTab === 'hid') hostShow('dpr_host_labour', () => DPRM.load('lines'), 'Hidden From Site', 'Milestone and payment activities the QS estimated for billing, not for site progress. Hidden activities never appear on the engineer\'s picker.');
   }
   function hostShow(id, fn, title, intro) {
     // v154 · AREAS / DPRM keep their own markup and CSS (#master-areas / #master-labour); they render as a sibling of dpr_root, outside the mock's reset
@@ -8241,6 +8265,100 @@ const DPR = (function () {
     if (pick) h += `<div class="scbar"><b>${pick.ids.size} Ticked</b><span class="sp"></span><a onclick="DPR.scMode('${wid}')">Cancel</a><button ${pick.ids.size > 1 ? '' : 'disabled'} onclick="DPR.scGo()">Club ${pick.ids.size > 1 ? pick.ids.size + ' ' : ''}→ One Crew</button></div>`;
     return h;
   }
+  /* ============ v5.10 · M88 · Handover of reporting cards (manager tab) ============
+     Leave / resignation: the manager moves an engineer's open cards to another engineer and returns them later.
+     Reads rpc_dpr_handovers + rpc_dpr_handover_cards; writes rpc_dpr_handover / rpc_dpr_handover_return. Nothing is computed here. */
+  const HOV_MISS = e => /rpc_dpr_handover|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
+  const HOV_REASONS = ['Leave', 'Resigned', 'Transfer', 'Other'];
+  const hovDay = t => t ? dsh(String(t).slice(0, 10)) : '';
+  async function hovLoad() {
+    const H = S.hov = S.hov || { view: 'list' }; H.err = '';
+    try { const [a, b] = await Promise.all([rpc('rpc_dpr_handovers', {}), rpc('rpc_dpr_handover_cards', { p_engineer: null })]); H.list = (a && a.handovers) || []; H.eng = (b && b.engineers) || []; }
+    catch (e) { H.list = []; H.eng = []; H.err = HOV_MISS(e) ? 'Handover Needs M88 On The Database — Ask The Admin' : err(e, 'Could not load the handovers'); }
+    if (S.mTab === 'hov') hovDraw();
+  }
+  function hovCardRow(c, tick, onclick) {
+    const acts = (c.activities || []), nm = acts.length ? acts[0] + (acts.length > 1 ? ' +' + (acts.length - 1) : '') : (c.label || '');
+    return `<div class="tr ${onclick ? 'ck' : ''}" ${onclick ? `onclick="${onclick}"` : ''}><span class="cb ${tick ? 'on' : ''}">${tick ? '✓' : ''}</span><span class="nm"><b>${esc(pathTail(c.loc_path || '') || c.label || '')}</b> · ${esc(nm)}</span>${c.is_club ? '<span class="tg b">Club</span>' : ''}${c.on_hold ? '<span class="tg h">On Hold</span>' : ''}${c.unsent ? '<span class="tg r">Unsent Entry</span>' : ''}<i>${c.open_units} Unit${num(c.open_units) === 1 ? '' : 's'}</i></div>`;
+  }
+  function hovDraw() {
+    const body = $('dpr_mbody'); if (!body) return; const H = S.hov = S.hov || { view: 'list' };
+    if (!H.list) { body.innerHTML = '<div class="dpr-load">Loading Handovers…</div>'; hovLoad(); return; }
+    if (H.err) { body.innerHTML = `<div class="hov"><div class="note bad">${esc(H.err)}</div></div>`; return; }
+    const name = id => ((H.eng || []).find(e => e.id === id) || {}).name || '';
+    let h = '<div class="hov">';
+    if (H.view === 'new') {
+      const from = (H.eng || []).find(e => e.id === H.from), cards = H.cards || [], sel = cards.filter(c => H.all || H.pick.has(c.wgroup_id)), drafts = from ? (from.drafts || []) : [];
+      h += `<div class="hd"><a onclick="DPR.hovBack()">← Handovers</a><b>New Handover</b></div>
+        <div class="two"><div class="f"><label>From</label><select onchange="DPR.hovSet('from',this.value)"><option value="">Pick Engineer…</option>${(H.eng || []).filter(e => num(e.cards) > 0).map(e => `<option value="${e.id}" ${e.id === H.from ? 'selected' : ''}>${esc(e.name)} · ${e.cards} Cards</option>`).join('')}</select></div>
+        <div class="f"><label>To</label><select onchange="DPR.hovSet('to',this.value)"><option value="">Pick Engineer…</option>${(H.eng || []).filter(e => e.id !== H.from).map(e => `<option value="${e.id}" ${e.id === H.to ? 'selected' : ''}>${esc(e.name)} · ${e.cards} Cards</option>`).join('')}</select></div></div>
+        <div class="two"><div class="f"><label>Reason</label><span class="seg">${HOV_REASONS.map(r => `<button class="${H.reason === r ? 'on' : ''}" onclick="DPR.hovSet('reason','${r}')">${r}</button>`).join('')}</span></div>
+        <div class="f"><label>Note</label><input value="${esc(H.note || '')}" placeholder="Optional" onchange="DPR.hovSet('note',this.value)"></div></div>`;
+      if (H.from) {
+        if (!H.cards) h += '<div class="dpr-load">Loading Cards…</div>';
+        else if (!cards.length) h += '<div class="note">This Engineer Has No Open Cards.</div>';
+        else {
+          h += `<div class="f"><label>What Moves</label><span class="seg"><button class="${H.all ? 'on' : ''}" onclick="DPR.hovAll(true)">Everything · ${cards.length}</button><button class="${H.all ? '' : 'on'}" onclick="DPR.hovAll(false)">Pick</button></span></div><div class="tree">`;
+          let last = null; cards.forEach(c => { const grp = String(c.loc_path || '').split(' › ').slice(0, -1).join(' › ') || 'Project'; if (grp !== last) { h += `<div class="tr l1">${esc(grp)}</div>`; last = grp; }
+            h += hovCardRow(c, H.all || H.pick.has(c.wgroup_id), H.all ? '' : `DPR.hovTick('${c.wgroup_id}')`); });
+          h += '</div>';
+          const hit = sel.filter(c => c.unsent).length;
+          if (drafts.length) h += `<div class="note">${esc(from.name)} Has An Unsent Report For ${drafts.map(d => esc(dsh(d.report_date))).join(', ')}.${hit ? ` Entries On ${hit} Of These Cards In It Will Be Cleared; ${esc(name(H.to) || 'The New Engineer')} Enters That Day For Them.` : ''} The Rest Of That Report Stays As It Is.</div>`;
+          h += `<div class="note g">Takes Effect At Once. Reports Already Sent Stay Under ${esc(from.name)}. Cards On Hold Move And Stay On Hold.</div>`;
+        }
+      }
+      h += `<button class="go" ${H.from && H.to && sel.length && !H.busy ? '' : 'disabled'} onclick="DPR.hovGo()">Hand Over ${sel.length || ''} Card${sel.length === 1 ? '' : 's'}${H.to ? ' → ' + esc(name(H.to)) : ''}</button>`;
+    } else if (H.view === 'ret') {
+      const x = (H.list || []).find(z => z.id === H.rid); if (!x) { H.view = 'list'; return hovDraw(); }
+      const open = x.open || [], added = x.added || [], n = open.length + added.filter(c => H.extra.has(c.wgroup_id)).length;
+      h += `<div class="hd"><a onclick="DPR.hovBack()">← Handovers</a><b>Return To ${esc(x.from_name || '')}</b></div>
+        <h4>Handed Over On ${esc(hovDay(x.created_at))} · ${open.length} Still Open${num(x.finished_since) ? ' · ' + x.finished_since + ' Finished Since' : ''}</h4>
+        <div class="tree">${open.length ? open.map(c => hovCardRow(c, true, '')).join('') : '<div class="tr"><span class="nm muted">Nothing Left To Return — Everything Was Finished</span></div>'}</div>`;
+      if (added.length) h += `<h4>Added By ${esc(x.to_name || '')} Since ${esc(hovDay(x.created_at))} · Tick To Move</h4><div class="tree">${added.map(c => hovCardRow(c, H.extra.has(c.wgroup_id), `DPR.hovRetTick('${c.wgroup_id}')`)).join('')}</div>`;
+      h += `<div class="note">${esc(x.to_name || '')}’s Unsent Entries On The Cards Being Returned Are Cleared, Same As At Handover.</div>
+        <button class="go" ${H.busy ? 'disabled' : ''} onclick="DPR.hovRetGo()">Return ${n} Card${n === 1 ? '' : 's'} To ${esc(x.from_name || '')}</button>`;
+    } else {
+      const act = (H.list || []).filter(x => !x.returned_at), old = (H.list || []).filter(x => x.returned_at);
+      h += `<button class="go ghost" onclick="DPR.hovNew()">＋ New Handover</button><h4>Active</h4>`;
+      h += act.length ? act.map(x => { const o = x.open || [], hold = o.filter(c => c.on_hold).length, ad = (x.added || []).length;
+        return `<div class="hc"><div class="t"><b>${esc(x.from_name || '')} → ${esc(x.to_name || '')}</b><span class="sp"></span><span class="tg ${x.reason === 'Leave' ? 'b' : 'n'}">${esc(x.reason || '')}</span></div>
+          <div class="m">Since ${esc(hovDay(x.created_at))}${x.by_name ? ' · By ' + esc(x.by_name) : ''} · ${x.cards} Card${num(x.cards) === 1 ? '' : 's'} Moved · ${o.length} Still Open${hold ? ' (' + hold + ' On Hold)' : ''}${num(x.finished_since) ? ' · ' + x.finished_since + ' Finished Since' : ''}${ad ? ' · ' + esc(x.to_name || '') + ' Added ' + ad : ''}${x.note ? ' · ' + esc(x.note) : ''}</div>
+          <button class="sm" onclick="DPR.hovReturn('${x.id}')">↩ Return To ${esc(x.from_name || '')}</button></div>`; }).join('') : '<div class="note">No Cards Are Out On Cover.</div>';
+      if (old.length) h += '<h4>Earlier</h4>' + old.map(x => `<div class="hc old"><div class="t"><b>${esc(x.from_name || '')} → ${esc(x.to_name || '')}</b><span class="sp"></span><span class="tg g">Returned</span></div>
+          <div class="m">${esc(hovDay(x.created_at))} → ${esc(hovDay(x.returned_at))} · ${x.cards} Card${num(x.cards) === 1 ? '' : 's'} Out · ${num(x.returned_cards)} Returned${num(x.returned_extra) ? ' + ' + x.returned_extra + ' Added' : ''} · ${esc(x.reason || '')}</div></div>`).join('');
+    }
+    body.innerHTML = h + '</div>';
+  }
+  function hovNew() { S.hov = Object.assign(S.hov || {}, { view: 'new', from: '', to: '', reason: 'Leave', note: '', cards: null, all: true, pick: new Set(), busy: false }); hovDraw(); }
+  function hovBack() { const H = S.hov; if (!H) return; H.view = 'list'; hovDraw(); }
+  async function hovSet(k, v) {
+    const H = S.hov; if (!H) return; H[k] = v;
+    if (k === 'from') { H.cards = null; H.pick = new Set(); H.all = true; if (H.to === v) H.to = ''; hovDraw(); if (!v) return;
+      try { const r = await rpc('rpc_dpr_handover_cards', { p_engineer: v }); if (S.hov !== H || H.from !== v) return; H.cards = (r && r.cards) || []; if (r && r.engineers) H.eng = r.engineers; } catch (e) { H.cards = []; toast(err(e, 'Could not list the cards'), 'error'); } }
+    if (k !== 'note') hovDraw();
+  }
+  function hovAll(v) { const H = S.hov; if (!H) return; H.all = !!v; if (!v && !H.pick.size) (H.cards || []).forEach(c => H.pick.add(c.wgroup_id)); hovDraw(); }
+  function hovTick(id) { const H = S.hov; if (!H) return; H.pick.has(id) ? H.pick.delete(id) : H.pick.add(id); hovDraw(); }
+  async function hovGo() {
+    const H = S.hov; if (!H || H.busy || !H.from || !H.to) return; const ids = (H.cards || []).filter(c => H.all || H.pick.has(c.wgroup_id)).map(c => c.wgroup_id); if (!ids.length) { toast('Pick At Least One Card', 'warn'); return; }
+    const nm = id => ((H.eng || []).find(e => e.id === id) || {}).name || '';
+    if (!confirm('Hand Over ' + ids.length + ' Card' + (ids.length === 1 ? '' : 's') + ' From ' + nm(H.from) + ' To ' + nm(H.to) + '? It Takes Effect At Once.')) return;
+    H.busy = true; hovDraw();
+    try { const r = await rpc('rpc_dpr_handover', { p: { from: H.from, to: H.to, reason: H.reason, note: H.note || null, wgroup_ids: ids } });
+      toast((r ? r.cards : ids.length) + ' Card' + (ids.length === 1 ? '' : 's') + ' Handed Over' + (r && num(r.unsent_entries_cleared) ? ' · ' + r.unsent_entries_cleared + ' Unsent Entr' + (num(r.unsent_entries_cleared) === 1 ? 'y' : 'ies') + ' Cleared' : ''), 'success', 6000);
+      S.hov = { view: 'list' }; S.mQueue = null; hovDraw(); }
+    catch (e) { H.busy = false; toast(HOV_MISS(e) ? 'Handover Needs M88 On The Database — Ask The Admin' : err(e, 'Could not hand over'), 'error', 8000); hovDraw(); }
+  }
+  function hovReturn(id) { const H = S.hov; if (!H) return; H.view = 'ret'; H.rid = id; H.extra = new Set(); H.busy = false; hovDraw(); }
+  function hovRetTick(id) { const H = S.hov; if (!H) return; H.extra.has(id) ? H.extra.delete(id) : H.extra.add(id); hovDraw(); }
+  async function hovRetGo() {
+    const H = S.hov; if (!H || H.busy) return; const x = (H.list || []).find(z => z.id === H.rid); if (!x) return;
+    if (!confirm('Return These Cards To ' + (x.from_name || '') + '? It Takes Effect At Once.')) return;
+    H.busy = true; hovDraw();
+    try { const r = await rpc('rpc_dpr_handover_return', { p: { handover_id: x.id, extra_wgroup_ids: [...H.extra] } });
+      toast((r ? num(r.cards) + num(r.extra) : 0) + ' Cards Returned To ' + (x.from_name || ''), 'success', 6000); S.hov = { view: 'list' }; S.mQueue = null; hovDraw(); }
+    catch (e) { H.busy = false; toast(err(e, 'Could not return the cards'), 'error', 8000); hovDraw(); }
+  }
   function scMode(wid) { if (isRo()) return; S.pfSc = S.pfSc && S.pfSc.wid === wid ? null : { wid, ids: new Set() }; redraw(); }
   function scTick(sid) { const P = S.pfSc; if (!P) return; P.ids.has(sid) ? P.ids.delete(sid) : P.ids.add(sid); redraw(); }
   async function scGo() {
@@ -8749,7 +8867,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

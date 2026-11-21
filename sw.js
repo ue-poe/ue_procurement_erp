@@ -69,7 +69,8 @@
 // v73 · construction v5.8.4 · no Hold button on the Labour screen
 // v74 · construction v5.8.5 · a sub-activity hindrance no longer folds away as 'No Work'
 // v75 · construction v5.9 · club sub-activities for labour (needs M87 on the database)
-const VERSION = 'pgs-shell-v75';
+// v76 · construction v5.10 · Handover tab for the manager (needs M88 on the database)
+const VERSION = 'pgs-shell-v76';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

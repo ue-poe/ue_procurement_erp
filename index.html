@@ -16497,12 +16497,14 @@ let wob_boq_locked   = false;
 let _woTree     = null;  // { pkgId, pkgName, items:[{id,name,uom,wbsNodeId,tier,groups:[{grp,path,leaves:[{id,name,path,rem,est_rate,approved}]}]}] }
 let _woActRate  = {};   // itemId -> activity header rate (bulk-fill source; new selections inherit it)
 let _woSel      = {};    // locId → { qty, rate }
+let _woSelStash = {};    // selKey → { qty, rate } typed on a location that was then unticked; restored when it is ticked again
+let _woTyped    = {};    // selKey -> { qty:true, rate:true } : the user entered this value on the location itself
 let _woStages   = {};    // itemId → [ { id, name, pct } ]
 let _woOpenItem = {};    // itemId → bool
 let _woOpenGrp  = {};    // 'itemId::grp' → bool
 
 function _woResetTreeState() {
-  _woTree = null; _woSel = {}; _woStages = {}; _woOpenItem = {}; _woOpenGrp = {}; _woActRate = {};
+  _woTree = null; _woSel = {}; _woSelStash = {}; _woTyped = {}; _woStages = {}; _woOpenItem = {}; _woOpenGrp = {}; _woActRate = {};
   const tree = document.getElementById('woItemTree'); if (tree) tree.innerHTML = '';
   const foot = document.getElementById('woItemFoot'); if (foot) foot.style.display = 'none';
   ['wo_refreshRemBtn','wo_expandAllBtn','wo_collapseAllBtn','wo_printBtn'].forEach(id => {
@@ -16951,7 +16953,7 @@ function _wpTri(cells){
 function _wpBulkCells(cells,turnOn){
   _wpLive(cells).forEach(c=>{
     const k=_wpKey(c.actId,c.locId);
-    if(turnOn){ if(!_wpCart.has(k)) _wpCart.set(k,{actId:c.actId,locId:c.locId,val:c.rem,rate:c.rate}); }
+    if(turnOn){ if(!_wpCart.has(k)) _wpCart.set(k,_wpSeedEntry(k,c)); }
     else _wpCart.delete(k);
   });
   _wpRenderAll();
@@ -17149,7 +17151,7 @@ function _wpToggleCell(actId,locId){
   const k=_wpKey(actId,locId);
   if(_wpCart.has(k)) _wpCart.delete(k);
   else { const c=_wpCells.get(k); if(!c||c.rem<=0) return;
-    _wpCart.set(k,{actId:c.actId,locId:c.locId,val:c.rem,rate:c.rate}); }
+    _wpCart.set(k,_wpSeedEntry(k,c)); }
   _wpRenderAll();
 }
 function _wpSetVal(actId,locId,v){ const e=_wpCart.get(_wpKey(actId,locId)); if(e){ e.val=Number(v)||0; } _wpFoot(); _wpPaintOver(); }
@@ -17468,6 +17470,8 @@ async function _wpCommit(){
       const c=_wpCells.get(k);
       newSel[k]={ qty:Number(e.val)||0, rate:(c&&c.isLS)?1:(Number(e.rate)||0) };
     });
+    Object.keys(_woSel).forEach(k=>{ if(!newSel[k]) _woUnsel(k); });
+    Object.keys(newSel).forEach(k=>{ delete _woSelStash[k]; });
     _woSel=newSel;
     // stages survive only for activities still on the order
     Object.keys(_woStages).forEach(id=>{ if(!actIds.includes(Number(id))) delete _woStages[id]; });
@@ -17582,6 +17586,41 @@ function _woTierBadge(t) {
   const [c,l] = m[t]||m.none; return `<span class="hoi-tier ${c}">${l}</span>`;
 }
 
+// Untick: remember what was typed. Tick: restore it; a location never entered before takes the header / estimate rate.
+// Only values entered on the location itself are remembered, so an untouched location still follows the header rate.
+function _woUnsel(selKey){
+  const s = _woSel[selKey], t = _woTyped[selKey];
+  if (s) {
+    const m = {};
+    if (t && t.qty  && Number(s.qty)  > 0) m.qty  = s.qty;
+    if (t && t.rate && Number(s.rate) > 0) m.rate = s.rate;
+    if (m.qty != null || m.rate != null) _woSelStash[selKey] = m; else delete _woSelStash[selKey];
+  }
+  delete _woSel[selKey];
+}
+function _woSeedSel(itemId, leaf){
+  const m = _woSelStash[leaf.selKey]; delete _woSelStash[leaf.selKey];
+  const out = { qty: leaf.rem, rate: _woRateFor(itemId, leaf), keptQty: false };
+  if (m) {
+    if (Number(m.qty) > 0) { out.qty = Math.min(Number(m.qty), Number(leaf.rem)||0); out.keptQty = true; }
+    if (!leaf.isLS && Number(m.rate) > 0) out.rate = Number(m.rate);
+  }
+  return out;
+}
+function _woSetActRate(itemId, v){ _woActRate[itemId] = v; }
+function _wpSeedEntry(k, c){
+  const e = { actId: c.actId, locId: c.locId, val: c.rem, rate: c.rate };
+  if (_wpTarget !== 'wo') return e;
+  const m = (_woSel && _woSel[k]) || _woSelStash[k];
+  if (m) {
+    if (Number(m.qty) > 0) e.val = Number(m.qty);
+    if (!c.isLS && Number(m.rate) > 0) e.rate = Number(m.rate);
+  } else if (!c.isLS) {
+    const hr = _woActRate[c.actId];
+    if (hr != null && hr !== '' && Number(hr) > 0) e.rate = Number(hr);
+  }
+  return e;
+}
 function _woRateFor(itemId, leaf){
   if (leaf && leaf.isLS) return 1;   // v143: LS lines carry rate 1 (qty IS the \u20b9 amount)
   const hr = _woActRate[itemId];
@@ -17597,6 +17636,7 @@ function applyActivityRate(itemId){
   const allLeaves = item.groups.flatMap(g=>[].concat(g.leaves||[], (g.subGroups||[]).flatMap(function(sg){return sg.leaves||[];})));
   let n=0;
   allLeaves.forEach(function(l){ if(l.isLS) return; if(_woSel[l.selKey]){ _woSel[l.selKey].rate = Number(v); n++; } });
+  allLeaves.forEach(function(l){ if(_woSelStash[l.selKey]) delete _woSelStash[l.selKey].rate; if(_woTyped[l.selKey]) delete _woTyped[l.selKey].rate; });
   _woActRate[itemId] = v;
   woRenderTree();
   if(!n) toast('Rate saved \u2014 it will fill locations as you select them','warn');
@@ -17635,7 +17675,7 @@ function woRenderTree() {
         <span style="margin-left:auto;color:var(--muted);font-size:11px;" id="woiSubLoc_${item.id}">${selLeaves.length} of ${approvableN} approved location(s) selected</span>
         <span class="woi-ratebulk" style="display:${item.allLS?'none':'inline-flex'};align-items:center;gap:6px;margin-left:14px;">
           <span style="font-size:11px;color:var(--muted);">Rate \u20b9</span>
-          <input id="woiRate_${item.id}" type="number" value="${_hdrRate}" placeholder="${_actEstRate||'rate'}" onwheel="this.blur()" onkeydown="if(event.key==='Enter'){event.preventDefault();applyActivityRate(${item.id});}else if(event.key==='ArrowUp'||event.key==='ArrowDown')event.preventDefault();" onclick="event.stopPropagation();" style="width:66px;padding:3px 6px;font-size:12px;text-align:right;border:1px solid var(--accent);border-radius:4px;font-weight:600;" title="Rate for this activity">
+          <input id="woiRate_${item.id}" type="number" value="${_hdrRate}" placeholder="${_actEstRate||'rate'}" oninput="_woSetActRate(${item.id},this.value)" onwheel="this.blur()" onkeydown="if(event.key==='Enter'){event.preventDefault();applyActivityRate(${item.id});}else if(event.key==='ArrowUp'||event.key==='ArrowDown')event.preventDefault();" onclick="event.stopPropagation();" style="width:66px;padding:3px 6px;font-size:12px;text-align:right;border:1px solid var(--accent);border-radius:4px;font-weight:600;" title="Rate for this activity">
           <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();applyActivityRate(${item.id})" style="padding:2px 9px;font-size:11px;" title="Fill this rate into every selected location in this activity">Apply to selected \u2192</button>
         </span>
       </div>
@@ -17797,8 +17837,9 @@ async function woToggleLeaf(itemId, leafId) {
   const leaf = _woFindLeafInItem(item, leafId);
   if (!leaf || !leaf.approved) return;
   const selKey = leaf.selKey;
-  if (_woSel[selKey]) { delete _woSel[selKey]; woRenderTree(); return; }
-  _woSel[selKey] = { qty: leaf.rem, rate: _woRateFor(itemId, leaf) };
+  if (_woSel[selKey]) { _woUnsel(selKey); woRenderTree(); return; }
+  const _seed = _woSeedSel(itemId, leaf);
+  _woSel[selKey] = { qty: _seed.qty, rate: _seed.rate };
   woRenderTree();
   if (leaf.isLS) return;   // v143: LS remaining is \u20b9 (budget \u2212 cert \u2212 reserved), already loaded with self-exclusion; \u21bb refreshes it
   try {
@@ -17808,7 +17849,7 @@ async function woToggleLeaf(itemId, leafId) {
       const rem = typeof data === 'object' ? num(data.remaining ?? Object.values(data)[0]) : num(data);
       leaf.rem = rem;
       leaf.remLive = true;
-      if (_woSel[selKey]) _woSel[selKey].qty = rem;
+      if (_woSel[selKey]) _woSel[selKey].qty = _seed.keptQty ? Math.min(Number(_woSel[selKey].qty)||0, rem) : rem;
       woRenderTree();
     }
   } catch(e) { console.error('fn_pair_remaining threw', e); }
@@ -17822,8 +17863,8 @@ function woToggleGrpSel(itemId, grpName, e) {
   const approvable = allLeaves.filter(l => l.approved);
   const allSel = approvable.every(l => _woSel[l.selKey]);
   approvable.forEach(l => {
-    if (allSel) delete _woSel[l.selKey];
-    else if (!_woSel[l.selKey]) _woSel[l.selKey] = { qty: l.rem, rate: _woRateFor(itemId, l) };
+    if (allSel) _woUnsel(l.selKey);
+    else if (!_woSel[l.selKey]) { const sd = _woSeedSel(itemId, l); _woSel[l.selKey] = { qty: sd.qty, rate: sd.rate }; }
   });
   woRenderTree();
 }
@@ -17837,14 +17878,15 @@ function woToggleSubGrpSel(itemId, grpName, subGrpName, e) {
   const approvable = sg.leaves.filter(l => l.approved);
   const allSel = approvable.every(l => _woSel[l.selKey]);
   approvable.forEach(l => {
-    if (allSel) delete _woSel[l.selKey];
-    else if (!_woSel[l.selKey]) _woSel[l.selKey] = { qty: l.rem, rate: _woRateFor(itemId, l) };
+    if (allSel) _woUnsel(l.selKey);
+    else if (!_woSel[l.selKey]) { const sd = _woSeedSel(itemId, l); _woSel[l.selKey] = { qty: sd.qty, rate: sd.rate }; }
   });
   woRenderTree();
 }
 
 function woSetField(selKey, k, v) {
   if (!_woSel[selKey]) return;
+  if (k === 'qty' || k === 'rate') (_woTyped[selKey] || (_woTyped[selKey] = {}))[k] = true;
   if (k === 'qty' && v !== '') {
     const f = _woFindLeafByKey(selKey);
     const rem = f ? num(f.leaf.rem) : null;
@@ -18181,6 +18223,7 @@ async function reviseWO(woNum) {
     const _f = _woFindLeafByKey(selKey);
     const _isLS = !!(_f && _f.leaf.isLS);
     _woSel[selKey] = { qty: Number(it['Qty'])||0, rate: _isLS ? 1 : (Number(it['Unit Rate'])||0) };
+    _woTyped[selKey] = { qty: true, rate: true };
     _woOpenItem[it['_wbs_node_id']] = true;
     const item = _woFindItem(it['_wbs_node_id']);
     if (item) item.groups.forEach(g => {

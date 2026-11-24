@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.13</title>
+<title>Penguin Construction v5.14</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3754,6 +3754,83 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .lab-c .scbar .sp{flex:1}#mod-dpr .dp2 .lab-c .scbar a{color:#d9d6ff;text-decoration:underline;font-size:11.5px;cursor:pointer}
 #mod-dpr .dp2 .lab-c .scbar button{height:30px;padding:0 12px;border-radius:8px;border:0;background:#fff;color:#4338ca;font-weight:800;cursor:pointer}
 #mod-dpr .dp2 .lab-c .scbar button:disabled{opacity:.5}
+/* v5.14 · Sequence tab (M90) — project format: S.No. · Activity · Predecessors · Successors · step chart */
+#mod-dpr .sq{--W:40px;--LW:340px;--RH:32px;--PW:104px;--IN:10px;font-size:13px;color:#0f1e33;background:#fff;border:1px solid #dfe6f0;border-top:0}
+#mod-dpr .sq .tool{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid #e6ebf2;flex-wrap:wrap}
+#mod-dpr .sq .tool input{flex:1;min-width:150px;height:34px;border:1px solid #c3ccd9;border-radius:8px;padding:0 10px;font:inherit}
+#mod-dpr .sq .sg{display:inline-flex;border:1px solid #c3ccd9;border-radius:8px;overflow:hidden}
+#mod-dpr .sq .sg button{height:32px;padding:0 11px;border:0;background:#fff;font:inherit;font-weight:700;font-size:12px;color:#33415f;cursor:pointer;white-space:nowrap}
+#mod-dpr .sq .sg button+button{border-left:1px solid #c3ccd9}
+#mod-dpr .sq .sg button.on{background:#0f1e33;color:#fff}
+#mod-dpr .sq .sg button i{font-style:normal;opacity:.7;margin-left:5px;font-weight:600}
+#mod-dpr .sq .b{height:32px;padding:0 11px;border:1px solid #c3ccd9;border-radius:8px;background:#fff;font:inherit;font-weight:700;font-size:12px;color:#33415f;cursor:pointer;white-space:nowrap}
+#mod-dpr .sq .b.pri{background:#4338ca;border-color:#4338ca;color:#fff}
+#mod-dpr .sq .b.red{color:#b91c1c;border-color:#f3b4b4}
+#mod-dpr .sq .b:disabled{opacity:.45;cursor:default}
+#mod-dpr .sq .lg{display:flex;gap:12px;align-items:center;font-size:11px;color:#48566b;flex-wrap:wrap}
+#mod-dpr .sq .lg i{display:inline-block;width:18px;height:0;border-top:2px solid;margin-right:5px;vertical-align:middle}
+#mod-dpr .sq .ch{overflow:auto;max-height:calc(100vh - 330px);min-height:220px;position:relative;background:#fff;-webkit-overflow-scrolling:touch}
+#mod-dpr .sq .in{display:flex;width:max-content;min-width:100%}
+#mod-dpr .sq .left{position:sticky;left:0;z-index:5;width:var(--LW);flex:none;background:#fff;border-right:2px solid #c3ccd9}
+#mod-dpr .sq .right{position:relative;flex:none}
+#mod-dpr .sq .hh{height:30px;position:sticky;top:0;z-index:4;background:#0f1e33;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center}
+#mod-dpr .sq .left .hh{padding:0 10px;z-index:6}
+#mod-dpr .sq .hh .c{width:var(--W);flex:none;text-align:center;border-right:1px solid #2a3d5c;line-height:30px}
+#mod-dpr .sq .hh .c.hp{width:var(--PW);text-align:left;padding-left:8px}
+#mod-dpr .sq .left .hh .no{width:38px;flex:none;text-align:center;margin-left:-10px;margin-right:8px;border-right:1px solid #2a3d5c;line-height:30px}
+#mod-dpr .sq .r{height:var(--RH);display:flex;align-items:center;border-bottom:1px solid #e6ebf2;padding:0 8px;gap:4px;white-space:nowrap;overflow:hidden}
+#mod-dpr .sq .r .no{width:38px;flex:none;align-self:stretch;display:flex;align-items:center;justify-content:center;border-right:1px solid #c3ccd9;margin-left:-8px;margin-right:4px;color:#5b6b82;font-size:11.5px;font-weight:700;background:#f7f9fc;letter-spacing:0}
+#mod-dpr .sq .r .tx{overflow:hidden;text-overflow:ellipsis;min-width:0}
+#mod-dpr .sq .r .tg{width:16px;flex:none;color:#5b6b82;font-size:11px;text-align:center}
+#mod-dpr .sq .r.p{background:#eef2f7;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:#33415f;font-weight:800}
+#mod-dpr .sq .r.p.d0{background:#e3e9f2}
+#mod-dpr .sq .r.a{font-weight:700;cursor:pointer}
+#mod-dpr .sq .r.s{color:#33415f;font-size:12px;background:#fafbfd;cursor:pointer}
+#mod-dpr .sq .r.g{background:#f3f5f9;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#5b6b82;font-weight:800}
+#mod-dpr .sq .r.sel{background:#e9ecff}
+#mod-dpr .sq .gr{height:var(--RH);border-bottom:1px solid #e6ebf2;display:flex}
+#mod-dpr .sq .gr.p{background:#eef2f7}#mod-dpr .sq .gr.p.d0{background:#e3e9f2}#mod-dpr .sq .gr.s{background:#fafbfd}#mod-dpr .sq .gr.g{background:#f3f5f9}
+#mod-dpr .sq .ga{position:relative;flex:1;background-image:linear-gradient(to right,transparent calc(var(--W) - 1px),#e6ebf2 calc(var(--W) - 1px));background-size:var(--W) 100%}
+#mod-dpr .sq .pc{width:var(--PW);flex:none;border-right:1px solid #c3ccd9;display:flex;align-items:center;gap:3px;padding:0 5px;background:#fff;overflow:hidden}
+#mod-dpr .sq .gr.p .pc,#mod-dpr .sq .gr.g .pc{background:transparent}
+#mod-dpr .sq .pc .au{color:#9aa6b8;font-size:12px;font-weight:700;flex:none}#mod-dpr .sq .pc .au:after{content:","}
+#mod-dpr .sq .pc .ro{font-size:13px;font-weight:800;color:#0f1e33;overflow:hidden;text-overflow:ellipsis}
+#mod-dpr .sq .pi{flex:1;min-width:0;width:100%;height:24px;border:1px solid transparent;border-radius:5px;background:transparent;font:inherit;font-size:13px;font-weight:800;color:#0f1e33;padding:0 4px}
+#mod-dpr .sq .pi:hover{border-color:#c3ccd9}#mod-dpr .sq .pi:focus{outline:0;border-color:#4338ca;background:#fff}
+#mod-dpr .sq .bar{position:absolute;top:7px;height:18px;border-radius:5px;border:0;padding:0;cursor:pointer;background:#4338ca;z-index:2}
+#mod-dpr .sq .bar.sb{background:#818cf8}
+#mod-dpr .sq .bar.dir{background:#0f766e}
+#mod-dpr .sq .bar.mini{top:10px;height:12px;border-radius:4px;background:#818cf8}
+#mod-dpr .sq .bar.sel{outline:3px solid #f59e0b;outline-offset:1px}
+#mod-dpr .sq .bar.tgt{outline:2px dashed #4338ca;outline-offset:2px}
+#mod-dpr .sq .span{position:absolute;top:15px;height:2px;background:#c7d2fe;z-index:1}
+#mod-dpr .sq svg.lk{position:absolute;left:calc(var(--PW)*2);top:30px;z-index:3;pointer-events:none;overflow:visible}
+#mod-dpr .sq svg.lk path{fill:none}
+#mod-dpr .sq svg.lk .im{stroke:#cbd5e1;stroke-width:1.5}
+#mod-dpr .sq svg.lk .ex{stroke:#4338ca;stroke-width:2}
+#mod-dpr .sq svg.lk .x{stroke:#ea580c;stroke-width:2}
+#mod-dpr .sq svg.lk .hot{stroke:#dc2626;stroke-width:3}
+#mod-dpr .sq svg.lk .hit{stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:pointer}
+#mod-dpr .sq .dt{border-top:1px solid #c3ccd9;padding:10px 12px;background:#fbfcfe}
+#mod-dpr .sq .dt:empty{display:none}
+#mod-dpr .sq .dt .nm{font-weight:800;font-size:14px;line-height:1.35}
+#mod-dpr .sq .dt .pth{font-size:11px;color:#5b6b82;margin-top:1px}
+#mod-dpr .sq .dt .rw{display:flex;gap:6px;align-items:flex-start;margin-top:8px;flex-wrap:wrap}
+#mod-dpr .sq .dt .lb{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#5b6b82;font-weight:800;width:84px;flex:none;padding-top:4px}
+#mod-dpr .sq .dt .cs{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
+#mod-dpr .sq .chip{display:inline-flex;align-items:center;gap:5px;background:#eef2ff;border:1px solid #c7d2fe;color:#312e81;border-radius:7px;padding:2px 4px 2px 8px;font-size:11.5px;font-weight:700;line-height:1.4;max-width:100%}
+#mod-dpr .sq .chip.x{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+#mod-dpr .sq .chip.au{background:#f7f9fc;border-color:#e6ebf2;color:#5b6b82;padding-right:8px}
+#mod-dpr .sq .chip button{border:0;background:transparent;color:inherit;font-size:12px;cursor:pointer;padding:0 3px;opacity:.7}
+#mod-dpr .sq .dt .em{color:#9aa6b8}
+#mod-dpr .sq .mode{display:flex;align-items:center;gap:8px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:6px 10px;font-weight:700;color:#312e81;margin-top:8px}
+#mod-dpr .sq .mode .sp{flex:1}
+#mod-dpr .sq .foot{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid #e6ebf2;flex-wrap:wrap}
+#mod-dpr .sq .foot .sp{flex:1}
+#mod-dpr .sq .pl{display:inline-block;border-radius:999px;font-size:10.5px;font-weight:800;padding:1px 8px;line-height:1.5;white-space:nowrap;border:1px solid #e6ebf2;background:#f7f9fc;color:#5b6b82}
+#mod-dpr .sq .pl.amb{background:#fff8e6;color:#8a5a00;border-color:#f2d999}
+#mod-dpr .sq .note{margin:12px;background:#fde4e4;border:1px solid #f3b4b4;border-radius:9px;padding:8px 10px;font-size:12.5px;color:#b91c1c}
+@media (max-width:860px){#mod-dpr .sq{--W:34px;--LW:178px;--PW:88px;--IN:4px}#mod-dpr .sq .r{font-size:12px}#mod-dpr .sq .r.s{font-size:11.5px}#mod-dpr .sq .r .no,#mod-dpr .sq .left .hh .no{width:32px}#mod-dpr .sq .left .hh .no,#mod-dpr .sq .hh .c.hp{font-size:9.5px;letter-spacing:0;padding-left:5px}#mod-dpr .sq .dt .lb{width:100%}#mod-dpr .sq .ch{max-height:58vh}}
 /* v5.10 · Handover tab (M88) */
 #mod-dpr .hov{max-width:760px;padding:12px 4px;font-size:13.5px;color:#0f1e33}
 #mod-dpr .hov .hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}#mod-dpr .hov .hd a{color:#4338ca;font-weight:700;cursor:pointer;font-size:12.5px}#mod-dpr .hov .hd b{font-size:16px}
@@ -6848,7 +6925,7 @@ const DPR = (function () {
   async function refresh() {
     if (dirtyAll() && !confirm('Unsaved Changes Will Be Lost. Reload?')) return;
     S.q = ''; S.cat = null; S.ct = new Set(); S.co = new Set(); S.masters = null; S._cons = null; S.NP = null; S.npDirty = false;
-    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; await ENG.wipe(); S.mScope = null; S.mPay = {}; S.mQ = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank || tDate(), true);
+    if (S.view === 'mgr') { S.sheet = null; S.hind = null; S.plans = null; if (S.seq && !sqDirty()) S.seq = null; await ENG.wipe(); S.mScope = null; S.mPay = {}; S.mQ = {}; S.mCal = null; S.mTr = null; S.pubList = null; S.m39 = null; await mgrLoad(); } else await engLoad(S.blank || tDate(), true);
   }
 
   /* ---------- estimate catalogue search (M25/M26), Grid (mock v32), Browse (start work) — carried from v153 ---------- */
@@ -7188,7 +7265,7 @@ const DPR = (function () {
   /* ==================================================================
      MANAGER · Daily Report module (mock v3): Review & Publish · Reporting Plan · Hindrances · Site Areas · Labour Setup · Hidden From Site
      ================================================================== */
-  const MTABS = [['rev', 'Review &amp; Publish', 'Engineer Submissions · DPR', 'canReviewDPR'], ['plan', 'Reporting Plan', 'Activities · Groups · Sub-Activities', 'canPlanDPR'], ['hnd', 'Hindrances', 'Report → Allocate → Classify → Close', 'canReviewDPR'], ['hov', 'Handover', 'Leave · Resignation · Return', 'canReviewDPR'], ['areas', 'Site Areas', 'Locations · Engineers', 'canManageAreas'], ['setup', 'Labour Setup', 'Trades · Daywork Rates · Non-Estimated Work', 'canManageAreas'], ['hid', 'Hidden From Site', 'Milestone / Payment Activities', 'canManageAreas']];
+  const MTABS = [['rev', 'Review &amp; Publish', 'Engineer Submissions · DPR', 'canReviewDPR'], ['plan', 'Reporting Plan', 'Activities · Groups · Sub-Activities', 'canPlanDPR'], ['seq', 'Sequence', 'Predecessors · Successors', 'canPlanDPR'], ['hnd', 'Hindrances', 'Report → Allocate → Classify → Close', 'canReviewDPR'], ['hov', 'Handover', 'Leave · Resignation · Return', 'canReviewDPR'], ['areas', 'Site Areas', 'Locations · Engineers', 'canManageAreas'], ['setup', 'Labour Setup', 'Trades · Daywork Rates · Non-Estimated Work', 'canManageAreas'], ['hid', 'Hidden From Site', 'Milestone / Payment Activities', 'canManageAreas']];
   const mCan = t => { const m = MTABS.find(x => x[0] === t); return m && (hasPerm(m[3]) || (m[3] === 'canReviewDPR' && hasPerm('canClassifyHindrance') && t === 'hnd')); };
   /* v163.7 · Review data engine — every date already seen stays on this device (memory + IndexedDB, per user × project);
      a date is re-read only when the server calendar says it changed; the dates around the picked one and every date with
@@ -7318,7 +7395,7 @@ const DPR = (function () {
     let h = `<div class="drp mgr"><div class="bar"><div class="ttl"><b>📋 Daily Report</b><span>${esc(projName())} · Site Team Module — Review, Reporting Plan, Site Areas, Labour Setup</span></div><div class="sp"></div><span class="role">${esc(state.userName || '')}</span><button class="dbtn sm" style="background:var(--dn2);color:#fff;border-color:#2e5794" title="Reload" onclick="DPR.refresh()">↻</button></div>
       <div class="tabs">${MTABS.filter(t => mCan(t[0])).map(t => `<button class="${S.mTab === t[0] ? 'on' : ''}" onclick="DPR.mTab('${t[0]}')">${t[1]}<i>${t[2]}</i></button>`).join('')}</div><div id="dpr_mbody"></div></div>`;
     hostsHide(); $('dpr_root').innerHTML = h;
-    if (S.mTab === 'rev') revDraw(); else if (S.mTab === 'plan') planDraw(); else if (S.mTab === 'hnd') hndDraw(); else if (S.mTab === 'hov') { if (!S.hov) S.hov = { view: 'list' }; if (S.hov.view === 'list') S.hov.list = null; hovDraw(); } else if (S.mTab === 'areas') hostShow('dpr_host_areas', () => AREAS.load()); else if (S.mTab === 'setup') hostShow('dpr_host_labour', () => DPRM.load('setup'), 'Labour Setup', "Trades on the engineer's steppers, non-estimated work items and daywork rates per contractor."); else if (S.mTab === 'hid') hostShow('dpr_host_labour', () => DPRM.load('lines'), 'Hidden From Site', 'Milestone and payment activities the QS estimated for billing, not for site progress. Hidden activities never appear on the engineer\'s picker.');
+    if (S.mTab === 'rev') revDraw(); else if (S.mTab === 'plan') planDraw(); else if (S.mTab === 'seq') seqDraw(); else if (S.mTab === 'hnd') hndDraw(); else if (S.mTab === 'hov') { if (!S.hov) S.hov = { view: 'list' }; if (S.hov.view === 'list') S.hov.list = null; hovDraw(); } else if (S.mTab === 'areas') hostShow('dpr_host_areas', () => AREAS.load()); else if (S.mTab === 'setup') hostShow('dpr_host_labour', () => DPRM.load('setup'), 'Labour Setup', "Trades on the engineer's steppers, non-estimated work items and daywork rates per contractor."); else if (S.mTab === 'hid') hostShow('dpr_host_labour', () => DPRM.load('lines'), 'Hidden From Site', 'Milestone and payment activities the QS estimated for billing, not for site progress. Hidden activities never appear on the engineer\'s picker.');
   }
   function hostShow(id, fn, title, intro) {
     // v154 · AREAS / DPRM keep their own markup and CSS (#master-areas / #master-labour); they render as a sibling of dpr_root, outside the mock's reset
@@ -7943,7 +8020,7 @@ const DPR = (function () {
     const E = pEdit(), a = pAct(); const subs = [], groups = []; let gi = 0;
     E.tree.forEach(n => { if (n.t === 'g') { gi++; groups.push({ name: n.name, weight: num(n.gw) }); n.kids.forEach(k => subs.push({ name: k.name, weight: num(k.w), group_seq: gi })); } else subs.push({ name: n.name, weight: num(n.w) }); });
     const args = { p_wbs_node_id: a.wbs_node_id, p_mode: E.mode, p_subs: subs, p_groups: groups, p_loc_node_id: E.loc, p_is_active: true, p_source_wo: null }; if (llOk()) args.p_labour_level = E.ll;   // v157.1
-    try { const r = await rpc('rpc_dpr_plan_save', args); toast('Plan Saved · ' + (r && r.note ? r.note : ''), 'success', 6000); const loc = E.loc; S.plans = null; S.pEd = null; await planDraw(); if (loc) pLoc(loc); }
+    try { const r = await rpc('rpc_dpr_plan_save', args); toast('Plan Saved · ' + (r && r.note ? r.note : ''), 'success', 6000); const loc = E.loc; S.plans = null; if (S.seq && !sqDirty()) S.seq = null; S.pEd = null; await planDraw(); if (loc) pLoc(loc); }
     catch (e) { toast(err(e, 'Could not save the plan'), 'error'); }
   }
   async function pLocDel(id) { if (!confirm('Remove This Location\'s Own Plan? It Falls Back To The Default Plan For Work Started From Now On.')) return; try { await rpc('rpc_dpr_plan_delete', { p_plan_id: id }); S.plans = null; S.pEd = null; await planDraw(); } catch (e) { toast(err(e, 'Could not remove'), 'error'); } }
@@ -8341,6 +8418,191 @@ const DPR = (function () {
     if (pick) h += `<div class="scbar"><b>${pick.ids.size} Ticked</b><span class="sp"></span><a onclick="DPR.scMode('${wid}')">Cancel</a><button ${pick.ids.size > 1 ? '' : 'disabled'} onclick="DPR.scGo()">Club ${pick.ids.size > 1 ? pick.ids.size + ' ' : ''}→ One Crew</button></div>`;
     return h;
   }
+  /* ============ v5.14 · M90 · Sequence (manager tab, project format) ============
+     Rows = the estimate's reportable activities in WBS order (rpc_dpr_sequence), sub-activities from the default Reporting Plan.
+     The manager only draws links (predecessor → successor); a bar's step column is worked out from the links.
+     Reads rpc_dpr_sequence; writes rpc_dpr_sequence_save (the whole set). The server repeats every check. */
+  const SEQ_MISS = e => /rpc_dpr_sequence|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
+  const sqKey = l => l.f + '>' + l.t;
+  const sqShort = n => String(n || '').replace(/^\s*labour\s+charges\s+for\s+(the\s+)?/i, '').replace(/^\s*completion\s+of\s+(the\s+)?/i, '').replace(/^./, c => c.toUpperCase());   // rows are narrow: the common lead-in is dropped there, the full name stays in the tooltip and the panel
+  const sqAct = id => { const Q = S.seq; return Q.byId[String(id).split(':')[0]]; };
+  const sqSub = id => { const a = sqAct(id), k = String(id).split(':')[1]; return k ? a.subs.find(s => s.id === k) : null; };
+  const sqLeafs = a => a.subs.length ? a.subs.map(s => a.id + ':' + s.id) : [a.id];
+  const sqPkg = a => a.path.length ? a.path[a.path.length - 1].name : '';
+  const sqLabel = (id, short) => { const Q = S.seq, a = sqAct(id), s = sqSub(id); if (!a) return ''; return (Q.no[id] ? Q.no[id] + ' · ' : '') + (short ? '' : (sqPkg(a) ? sqPkg(a) + ' › ' : '')) + a.name + (s ? ' › ' + (s.group ? s.group + ' › ' : '') + s.name : ''); };
+  async function seqLoad() {
+    const keep = S.seq || {}; let Q;
+    try {
+      const d = await rpc('rpc_dpr_sequence', {});
+      Q = { rows: [], byId: {}, L: [], canEdit: !!(d && d.can_edit) && !state.isViewer, all: !!keep.all, q: keep.q || '', open: keep.open || {}, sel: null, selLink: null, mode: null, err: '' };
+      ((d && d.rows) || []).forEach(r => { const a = { id: 'a' + r.wbs_node_id, wbs: r.wbs_node_id, name: r.name || '', path: r.path || [], works: num(r.works), plan: r.plan_id || null, mode: r.mode || null,
+        subs: (r.subs || []).map(s => ({ id: s.id, name: s.name || '', group: s.group || null, gid: s.group_id || null })) }; Q.rows.push(a); Q.byId[a.id] = a; });
+      ((d && d.links) || []).forEach(l => { const f = 'a' + l.from_wbs + (l.from_sub ? ':' + l.from_sub : ''), t = 'a' + l.to_wbs + (l.to_sub ? ':' + l.to_sub : ''); if (Q.byId['a' + l.from_wbs] && Q.byId['a' + l.to_wbs]) Q.L.push({ f, t }); });
+      Q.saved = Q.L.map(sqKey).sort().join('|');
+    } catch (e) { Q = { rows: [], byId: {}, L: [], saved: '', open: {}, err: SEQ_MISS(e) ? 'Sequence Needs M90 On The Database — Ask The Admin' : err(e, 'Could not load the sequence') }; }
+    S.seq = Q; if (S.mTab === 'seq') seqDraw();
+  }
+  const sqDirty = () => { const Q = S.seq; return !!Q && !Q.err && Q.L.map(sqKey).sort().join('|') !== Q.saved; };
+  /* S.No. — every row of the estimate tree numbered once, top to bottom (headings, activities, plan groups, sub-activities); collapsing or filtering never renumbers */
+  function sqNumber() {
+    const Q = S.seq, no = {}, rev = {}, heads = []; let k = 0, prev = [];
+    Q.rows.forEach(a => {
+      a.path.forEach((p, i) => { if (!prev[i] || prev[i].id !== p.id) { no['h' + p.id] = ++k; heads.push(p.id); prev.length = i; } prev[i] = p; }); prev.length = a.path.length;
+      no[a.id] = ++k; rev[k] = a.id; let g = null;
+      a.subs.forEach(s => { if (s.gid && s.gid !== g) { g = s.gid; no[a.id + '|' + g] = ++k; } no[a.id + ':' + s.id] = ++k; rev[k] = a.id + ':' + s.id; });
+    });
+    Q.no = no; Q.rev = rev; Q.max = k;
+  }
+  /* the graph the layout and the loop check run on: an activity with sub-activities has a start and an end, its sub-activities sit between them in
+     plan order inside a group — the same rule rpc_dpr_sequence_save applies */
+  function sqEdges() {
+    const Q = S.seq, E = [];
+    Q.rows.forEach(a => { if (!a.subs.length) return; const last = {};
+      a.subs.forEach(s => { const id = a.id + ':' + s.id, gk = s.gid || ''; E.push({ f: a.id + '^s', t: id, k: -2 }, { f: id, t: a.id + '^e', k: -2 }); if (last[gk]) E.push({ f: last[gk], t: id, k: -1 }); last[gk] = id; }); });
+    Q.L.forEach((l, k) => { const fa = sqAct(l.f), ta = sqAct(l.t); if (!fa || !ta) return;
+      E.push({ f: l.f.indexOf(':') < 0 && fa.subs.length ? fa.id + '^e' : l.f, t: l.t.indexOf(':') < 0 && ta.subs.length ? ta.id + '^s' : l.t, k, rf: l.f, rt: l.t }); });
+    return E;
+  }
+  function sqLevels(E) {
+    const pre = {}, lv = {}; E.forEach(e => (pre[e.t] = pre[e.t] || []).push(e.f));
+    const go = (id, st) => { if (lv[id] != null) return lv[id]; if (st.has(id)) return 0; st.add(id); const m = Math.max(0, ...(pre[id] || []).map(p => go(p, st))); st.delete(id); return lv[id] = m + (id.indexOf('^') < 0 ? 1 : 0); };
+    S.seq.rows.forEach(a => sqLeafs(a).forEach(id => go(id, new Set()))); return lv;
+  }
+  function sqReach(E, from, to) { const nx = {}; E.forEach(e => (nx[e.f] = nx[e.f] || []).push(e.t)); const seen = new Set(), st = [from]; while (st.length) { const c = st.pop(); if (c === to) return true; if (seen.has(c)) continue; seen.add(c); (nx[c] || []).forEach(x => st.push(x)); } return false; }
+  function sqAdd(f, t) {
+    const Q = S.seq, fa = sqAct(f), ta = sqAct(t); if (!fa || !ta) return false;
+    if (fa.id === ta.id) { toast('Same Activity · Order Comes From The Reporting Plan', 'warn'); return false; }
+    if (Q.L.some(l => l.f === f && l.t === t)) { toast('Already Linked', 'warn'); return false; }
+    const E = sqEdges(), ff = f.indexOf(':') < 0 && fa.subs.length ? fa.id + '^e' : f, tt = t.indexOf(':') < 0 && ta.subs.length ? ta.id + '^s' : t;
+    if (sqReach(E, tt, ff)) { toast('Not Allowed · ' + Q.no[f] + ' → ' + Q.no[t] + ' Would Make A Loop', 'error', 5000); return false; }
+    Q.L.push({ f, t }); return true;
+  }
+  function seqDraw() {
+    const body = $('dpr_mbody'); if (!body) return;
+    if (!S.seq) { body.innerHTML = '<div class="dpr-load">Loading The Sequence…</div>'; seqLoad(); return; }
+    const Q = S.seq;
+    if (Q.err) { body.innerHTML = `<div class="sq"><div class="note">${esc(Q.err)}</div></div>`; return; }
+    if (!$('sq_ch')) {
+      body.innerHTML = `<div class="sq"><div class="tool"><input id="sq_q" placeholder="Find Package · Activity · Sub-Activity" value="${esc(Q.q)}" oninput="DPR.seqQ(this.value)">
+        <div class="sg" id="sq_sc"></div><button class="b" onclick="DPR.seqExp(1)">Expand All</button><button class="b" onclick="DPR.seqExp(0)">Collapse All</button>
+        <span class="lg"><span><i style="border-color:#cbd5e1"></i>Plan Order</span><span><i style="border-color:#4338ca"></i>Link</span><span><i style="border-color:#ea580c"></i>Link To Another Package</span></span></div>
+        <div class="ch" id="sq_ch"><div class="in"><div class="left" id="sq_left" onclick="DPR.seqRow(event)"></div><div class="right" id="sq_right" onclick="DPR.seqBar(event)" onchange="DPR.seqIn(event)" onkeydown="if(event.key==='Enter'&&event.target.classList.contains('pi'))event.target.blur()"></div></div></div>
+        <div class="dt" id="sq_dt" onclick="DPR.seqDt(event)"></div>
+        <div class="foot"><span class="pl amb" id="sq_dirty" style="display:none"></span><span class="pl" id="sq_lc"></span><span class="pl" id="sq_uc"></span><span class="sp"></span>${Q.canEdit ? '<button class="b" id="sq_dis" onclick="DPR.seqDiscard()">Discard</button><button class="b pri" id="sq_sav" onclick="DPR.seqSave()">Save Sequence</button>' : ''}</div></div>`;
+    }
+    seqPaint();
+  }
+  function seqPaint() {
+    const Q = S.seq, wrap = $('sq_ch'); if (!wrap || !Q || Q.err) return;
+    const cs = getComputedStyle(wrap.parentNode), W = parseFloat(cs.getPropertyValue('--W')) || 40, RH = parseFloat(cs.getPropertyValue('--RH')) || 32;
+    sqNumber(); const E = sqEdges(), lv = sqLevels(E), max = Math.max(1, ...Object.values(lv)) + 1;
+    const linked = new Set(); Q.L.forEach(l => { linked.add(l.f.split(':')[0]); linked.add(l.t.split(':')[0]); });
+    const inRep = a => a.works > 0 || !!a.plan || linked.has(a.id);
+    const pool = Q.all ? Q.rows : Q.rows.filter(inRep);
+    const vis = pool.filter(a => !Q.q || fz(a.name + ' ' + a.path.map(p => p.name).join(' ') + ' ' + a.subs.map(s => s.name).join(' '), Q.q));
+    const ro = Q.canEdit ? '' : ' disabled';
+    const cells = (id, roll) => { const a = sqAct(id), num0 = x => Q.no[x];
+      let pa = E.filter(e => e.k === -1 && e.t === id).map(e => num0(e.f)), sa = E.filter(e => e.k === -1 && e.f === id).map(e => num0(e.t));
+      if (roll) { const own = x => x.split(':')[0] === a.id, uq = v => [...new Set(v)].sort((x, y) => x - y);
+        pa = uq(Q.L.filter(l => own(l.t) && l.t !== a.id && !own(l.f)).map(l => num0(l.f))); sa = uq(Q.L.filter(l => own(l.f) && l.f !== a.id && !own(l.t)).map(l => num0(l.t))); }
+      const pe = Q.L.filter(l => l.t === id).map(l => num0(l.f)).sort((x, y) => x - y), se = Q.L.filter(l => l.f === id).map(l => num0(l.t)).sort((x, y) => x - y);
+      const c = (au, ex, k) => `<div class="pc">${au.map(x => `<span class="au">${x}</span>`).join('')}<input class="pi" data-${k}="${id}" value="${ex.join(', ')}" inputmode="decimal" autocomplete="off"${ro}></div>`;
+      return c(pa, pe, 'pr') + c(sa, se, 'su'); };
+    const blank = '<div class="pc"></div><div class="pc"></div>';
+    let lh = '<div class="hh"><span class="no">S.No.</span>Activity</div>', rh = '<div class="hh"><div class="c hp">Predecessors</div><div class="c hp">Successors</div>' + Array.from({ length: max }, (_, i) => `<div class="c">${i + 1}</div>`).join('') + '</div>';
+    const pos = {}; let row = 0, prev = [];
+    const bar = (id, cls) => { const x = (lv[id] - 1) * W + 5; pos[id] = { x1: x, x2: x + W - 10, y: row * RH + RH / 2 };
+      return `<button class="bar ${cls} ${Q.sel === id ? 'sel' : ''} ${Q.mode && Q.sel !== id ? 'tgt' : ''}" data-n="${id}" style="left:${x}px;width:${W - 10}px" title="${esc(sqLabel(id))}"></button>`; };
+    vis.forEach(a => {
+      a.path.forEach((p, i) => { if (!prev[i] || prev[i].id !== p.id) { prev.length = i;
+        lh += `<div class="r p d${Math.min(i, 2)}"><span class="no">${Q.no['h' + p.id]}</span><span class="tx" style="padding-left:calc(var(--IN) * ${i})" title="${esc(p.name)}">${esc(p.name)}</span></div>`; rh += `<div class="gr p d${Math.min(i, 2)}">${blank}<div class="ga"></div></div>`; row++; } prev[i] = p; }); prev.length = a.path.length;
+      const d = a.path.length, hitS = Q.q ? a.subs.filter(s => fz(s.name, Q.q)) : [], open = a.subs.length && (Q.open[a.id] || hitS.length), showS = Q.open[a.id] ? a.subs : hitS;
+      lh += `<div class="r a ${Q.sel === a.id ? 'sel' : ''}" data-a="${a.id}"><span class="no">${Q.no[a.id]}</span><span class="tg" style="margin-left:calc(var(--IN) * ${Math.max(0, d - 1)})">${a.subs.length ? (open ? '▾' : '▸') : ''}</span><span class="tx" title="${esc(a.name)}">${esc(sqShort(a.name))}</span></div>`;
+      rh += `<div class="gr">${cells(a.id, a.subs.length && !open)}<div class="ga">`;
+      if (!a.subs.length) rh += bar(a.id, 'dir');
+      else { const ls = sqLeafs(a).map(i => lv[i]), a1 = (Math.min(...ls) - 1) * W + 5, a2 = Math.max(...ls) * W - 5; rh += `<span class="span" style="left:${a1}px;width:${a2 - a1}px"></span>`;
+        pos[a.id] = { x1: a1, x2: a2, y: row * RH + RH / 2 };
+        if (!open) a.subs.forEach(s => rh += bar(a.id + ':' + s.id, 'mini')); }
+      rh += '</div></div>'; row++;
+      if (open) { let g = null; showS.forEach(s => { const id = a.id + ':' + s.id;
+        if (s.gid && s.gid !== g) { g = s.gid; lh += `<div class="r g"><span class="no">${Q.no[a.id + '|' + g]}</span><span class="tx" style="padding-left:calc(var(--IN) * ${d} + 16px)">${esc(s.group || '')}</span></div>`; rh += `<div class="gr g">${blank}<div class="ga"></div></div>`; row++; }
+        lh += `<div class="r s ${Q.sel === id ? 'sel' : ''}" data-s="${id}"><span class="no">${Q.no[id]}</span><span class="tx" style="padding-left:calc(var(--IN) * ${d} + 16px)" title="${esc(s.name)}">${esc(sqShort(s.name))}</span></div>`;
+        rh += `<div class="gr s">${cells(id)}<div class="ga">${bar(id, 'sb')}</div></div>`; row++; }); }
+    });
+    if (!vis.length) { lh += '<div class="r"><span class="tx" style="color:#9aa6b8">No Activities</span></div>'; rh += `<div class="gr">${blank}<div class="ga"></div></div>`; row++; }
+    const paths = [];
+    E.forEach(e => { if (e.k === -2) return; const fid = e.k >= 0 ? e.rf : e.f, tid = e.k >= 0 ? e.rt : e.t, a = pos[fid], b = pos[tid]; if (!a || !b) return;
+      const fa = sqAct(fid), ta = sqAct(tid); if (e.k === -1 && !(Q.open[fa.id] || Q.q)) return;
+      const xp = sqPkg(fa) !== sqPkg(ta), cls = e.k < 0 ? 'im' : (Q.selLink === e.k ? 'hot' : (xp ? 'x' : 'ex'));
+      const bx = Math.max(b.x1, a.x2 + 12), mx = a.x2 + 5, d = a.y === b.y ? `M${a.x2},${a.y}H${bx - 1}` : `M${a.x2},${a.y}H${mx}V${b.y}H${bx - 1}`, head = `M${bx - 6},${b.y - 4}L${bx - 1},${b.y}L${bx - 6},${b.y + 4}`;
+      paths.push({ z: e.k < 0 ? 0 : (Q.selLink === e.k ? 2 : 1), h: `<path class="${cls}" d="${d}"/><path class="${cls}" d="${head}"/>` + (e.k >= 0 ? `<path class="hit" data-k="${e.k}" d="${d}"/>` : '') }); });
+    paths.sort((x, y) => x.z - y.z);
+    const PW = parseFloat(cs.getPropertyValue('--PW')) || 104;
+    $('sq_left').innerHTML = lh; $('sq_right').style.width = (max * W + 2 * PW) + 'px';
+    $('sq_right').innerHTML = rh + `<svg class="lk" width="${max * W}" height="${row * RH}">${paths.map(p => p.h).join('')}</svg>`;
+    $('sq_sc').innerHTML = `<button class="${Q.all ? '' : 'on'}" onclick="DPR.seqScope(0)">In Reporting<i>${Q.rows.filter(inRep).length}</i></button><button class="${Q.all ? 'on' : ''}" onclick="DPR.seqScope(1)">All Estimated<i>${Q.rows.length}</i></button>`;
+    seqDetail();
+    const dirty = sqDirty(), dp = $('sq_dirty'); dp.style.display = dirty ? '' : 'none'; dp.textContent = 'Unsaved';
+    if ($('sq_sav')) { $('sq_sav').disabled = !dirty || !!Q.busy; $('sq_dis').disabled = !dirty || !!Q.busy; }
+    $('sq_lc').textContent = Q.L.length + ' Link' + (Q.L.length === 1 ? '' : 's');
+    const un = Q.rows.filter(a => inRep(a) && !linked.has(a.id)).length; $('sq_uc').textContent = un + ' Without Links'; $('sq_uc').className = 'pl' + (un ? ' amb' : '');
+  }
+  function seqDetail() {
+    const Q = S.seq, d = $('sq_dt'); if (!d) return;
+    const chips = (list) => list.length ? list.map(x => `<span class="chip ${x.k < 0 ? 'au' : (sqPkg(sqAct(x.id)) !== sqPkg(sqAct(Q.sel)) ? 'x' : '')}">${esc(sqLabel(x.id))}${x.k < 0 || !Q.canEdit ? '' : `<button data-rm="${x.k}" title="Remove Link">✕</button>`}</span>`).join('') : '<span class="em">—</span>';
+    if (Q.selLink != null && Q.L[Q.selLink]) { const l = Q.L[Q.selLink];
+      d.innerHTML = `<div class="nm">${esc(sqLabel(l.t))}</div><div class="rw"><span class="lb">Predecessor</span><span class="cs"><span class="chip">${esc(sqLabel(l.f))}</span></span></div>${Q.canEdit ? `<div class="rw"><button class="b red" data-rm="${Q.selLink}">Remove Link</button></div>` : ''}`; return; }
+    if (!Q.sel || !sqAct(Q.sel)) { d.innerHTML = ''; return; }
+    const a = sqAct(Q.sel), whole = Q.sel.indexOf(':') < 0 && a.subs.length, mine = x => whole ? x.split(':')[0] === a.id : x === Q.sel;
+    const pr = Q.L.map((l, k) => ({ id: l.f, k, t: l.t })).filter(x => mine(x.t) && x.id.split(':')[0] !== a.id), su = Q.L.map((l, k) => ({ id: l.t, k, f: l.f })).filter(x => mine(x.f) && x.id.split(':')[0] !== a.id);
+    if (!whole) { const E = sqEdges(); E.filter(e => e.k === -1 && e.t === Q.sel).forEach(e => pr.unshift({ id: e.f, k: -1 })); E.filter(e => e.k === -1 && e.f === Q.sel).forEach(e => su.unshift({ id: e.t, k: -1 })); }
+    d.innerHTML = `<div class="nm">${esc(sqLabel(Q.sel, true))}</div><div class="pth">${esc(a.path.map(p => p.name).join(' › '))}</div>`
+      + (Q.mode ? `<div class="mode"><span>${Q.mode === 'next' ? 'Pick The Successor' : 'Pick The Predecessor'}</span><span class="sp"></span><button class="b" data-m="x">Cancel</button></div>`
+        : `<div class="rw"><span class="lb">Predecessors</span><span class="cs">${chips(pr)}</span></div><div class="rw"><span class="lb">Successors</span><span class="cs">${chips(su)}</span></div>`
+          + (Q.canEdit ? '<div class="rw"><button class="b pri" data-m="prev">＋ Predecessor</button><button class="b pri" data-m="next">＋ Successor</button></div>' : ''));
+  }
+  function sqPickNode(id) {
+    const Q = S.seq;
+    if (Q.mode && Q.sel && id !== Q.sel) { const f = Q.mode === 'next' ? Q.sel : id, t = Q.mode === 'next' ? id : Q.sel; sqAdd(f, t); Q.mode = null; seqPaint(); return; }
+    Q.sel = id; Q.selLink = null; Q.mode = null; seqPaint();
+  }
+  function seqRow(ev) {
+    const Q = S.seq, s = ev.target.closest('[data-s]'); if (s) { sqPickNode(s.dataset.s); return; }
+    const r = ev.target.closest('[data-a]'); if (!r) return; const a = Q.byId[r.dataset.a]; if (!a) return;
+    if (Q.mode) { sqPickNode(a.id); return; }
+    if (a.subs.length && (ev.target.closest('.tg') || Q.sel === a.id)) Q.open[a.id] = !Q.open[a.id];
+    Q.sel = a.id; Q.selLink = null; seqPaint();
+  }
+  function seqBar(ev) {
+    const Q = S.seq, b = ev.target.closest('.bar'); if (b) { sqPickNode(b.dataset.n); return; }
+    const h = ev.target.closest('.hit'); if (h) { Q.selLink = +h.dataset.k; Q.sel = null; Q.mode = null; seqPaint(); }
+  }
+  function seqDt(ev) {
+    const Q = S.seq, t = ev.target.closest('button'); if (!t || !Q.canEdit) return;
+    if (t.dataset.m) { Q.mode = t.dataset.m === 'x' ? null : t.dataset.m; seqPaint(); }
+    else if (t.dataset.rm != null) { Q.L.splice(+t.dataset.rm, 1); Q.selLink = null; seqPaint(); }
+  }
+  function seqIn(ev) {
+    const Q = S.seq, t = ev.target; if (!t.classList || !t.classList.contains('pi') || !Q.canEdit) return;
+    const isP = t.dataset.pr != null, id = isP ? t.dataset.pr : t.dataset.su, nums = [...new Set((t.value.match(/\d+/g) || []).map(Number))], ids = [];
+    for (const x of nums) { const o = Q.rev[x]; if (!o) { toast(x > 0 && x <= Q.max ? 'S.No. ' + x + ' Is A Heading' : 'S.No. ' + x + ' Not Found', 'warn'); seqPaint(); return; } ids.push(o); }
+    Q.L = Q.L.filter(l => !((isP ? l.t === id : l.f === id) && ids.indexOf(isP ? l.f : l.t) < 0));
+    ids.forEach(o => { const f = isP ? o : id, tt = isP ? id : o; if (!Q.L.some(l => l.f === f && l.t === tt)) sqAdd(f, tt); });
+    Q.sel = id; Q.selLink = null; Q.mode = null; seqPaint();
+  }
+  function seqQ(v) { S.seq.q = v; seqPaint(); }
+  function seqScope(all) { S.seq.all = !!all; seqPaint(); }
+  function seqExp(on) { const Q = S.seq; Q.open = {}; if (on) Q.rows.forEach(a => { if (a.subs.length) Q.open[a.id] = true; }); seqPaint(); }
+  function seqDiscard() { const Q = S.seq; if (!sqDirty()) return; Q.L = Q.saved ? Q.saved.split('|').map(k => { const p = k.split('>'); return { f: p[0], t: p[1] }; }) : []; Q.sel = null; Q.selLink = null; Q.mode = null; seqPaint(); }
+  async function seqSave() {
+    const Q = S.seq; if (!Q || !Q.canEdit || Q.busy || !sqDirty()) return;
+    const sp = id => { const p = id.split(':'); return [Number(p[0].slice(1)), p[1] || null]; };
+    const links = Q.L.map(l => { const f = sp(l.f), t = sp(l.t); return { from_wbs: f[0], from_sub: f[1], to_wbs: t[0], to_sub: t[1] }; });
+    Q.busy = true; seqPaint();
+    try { const r = await rpc('rpc_dpr_sequence_save', { p_links: links }); toast('Sequence Saved · ' + num(r && r.links) + ' Link' + (num(r && r.links) === 1 ? '' : 's'), 'success'); await seqLoad(); }
+    catch (e) { Q.busy = false; const m = String((e && e.message) || ''); toast(err(e, 'Could not save the sequence'), 'error', 8000); if (m.indexOf('DPR_SEQ_SUB') >= 0) await seqLoad(); else seqPaint(); }
+  }
+
   /* ============ v5.10 · M88 · Handover of reporting cards (manager tab) ============
      Leave / resignation: the manager moves an engineer's open cards to another engineer and returns them later.
      Reads rpc_dpr_handovers + rpc_dpr_handover_cards; writes rpc_dpr_handover / rpc_dpr_handover_return. Nothing is computed here. */
@@ -8982,7 +9244,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqDt, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

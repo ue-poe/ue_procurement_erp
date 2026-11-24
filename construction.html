@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.12.2</title>
+<title>Penguin Construction v5.13</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3836,6 +3836,10 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dpr-th .onp{margin-left:6px;white-space:nowrap}
 #mod-dpr .dpr-tick.ct4 .onp,#mod-dpr .dpr-th .onp{display:inline-block;margin-top:3px;font-style:normal;font-size:11px;font-weight:700;color:#047857;background:#d1fae5;border-radius:999px;padding:1px 8px}
 #mod-dpr .lab-c .lh .t .lrm{display:inline-block;margin-top:5px;color:var(--drd);align-self:flex-start}
+#mod-dpr .drp table.pl tr.addr td{height:34px;background:#fff}
+#mod-dpr .drp table.pl tr.addr .adds{border-style:dashed;color:var(--dn,#0f766e);font-weight:700}
+#mod-dpr .drp .tools select.mvg{height:30px;border:1px solid var(--line,#d5dbe5);border-radius:8px;padding:0 8px;font:inherit;font-size:12px;font-weight:700;margin-left:6px;background:#fff}
+#mod-dpr .drp .tools select.mvg:disabled{opacity:.5}
 </style>
 
 </head>
@@ -7892,13 +7896,14 @@ const DPR = (function () {
     if (E.loc) h += `<div class="mode-note">You Are Editing The Plan For <b>${esc(((a.plans || []).find(p => p.loc_node_id === E.loc) || {}).location || ((a.locations || []).find(l => l.loc_node_id === E.loc) || {}).name || '')}</b>. Locations Without Their Own Plan Use The Default Plan. A Location's Plan Applies To Work Started After It Is Saved.</div>`;
     if (E.mode === 'direct') { h += `<div class="note v" style="border:0;border-bottom:1px solid var(--dvb)">Direct: The Engineer Reports <b>Quantity Done</b> And <b>Labour</b> On The Activity Itself. No Sub-Activities.</div><div class="ft"><span>Direct Activities Need No Breakdown. Switch To Sub-Activities Or Groups To Break This Activity Down.</span><span class="sp"></span><button class="btn pri" ${can && !E.clean ? '' : 'disabled'} onclick="DPR.pSave()">Save Plan</button></div>`; el.innerHTML = h; return; }
     const ks = [...S.pTicks];
-    h += `<div class="tools"><button class="btn sm ${E.mode === 'groups' ? '' : 'hidden'}" ${can ? '' : 'disabled'} onclick="DPR.pAddG()">＋ Group</button><button class="btn sm" ${can ? '' : 'disabled'} onclick="DPR.pAddS()">＋ Sub-Activity</button><span class="lbl" style="font-size:9.5px;font-weight:800;color:var(--ink3);margin-left:6px">Ticked Row</span><button class="btn sm t" ${ks.length === 1 ? '' : 'disabled'} onclick="DPR.pMv(-1)">▲ Up</button><button class="btn sm t" ${ks.length === 1 ? '' : 'disabled'} onclick="DPR.pMv(1)">▼ Down</button><button class="btn sm" ${ks.length ? '' : 'disabled'} onclick="DPR.pDel()">🗑 Remove</button><span class="sp"></span><span style="font-size:11px;color:var(--ink2)" id="dpr_pcnt"></span></div>`;
+    h += `<div class="tools"><button class="btn sm ${E.mode === 'groups' ? '' : 'hidden'}" ${can ? '' : 'disabled'} onclick="DPR.pAddG()">＋ Group</button><button class="btn sm ${E.mode === 'groups' ? 'hidden' : ''}" ${can ? '' : 'disabled'} onclick="DPR.pAddS()">＋ Sub-Activity</button><span class="lbl" style="font-size:9.5px;font-weight:800;color:var(--ink3);margin-left:6px">Ticked Row</span><button class="btn sm t" ${ks.length === 1 ? '' : 'disabled'} onclick="DPR.pMv(-1)">▲ Up</button><button class="btn sm t" ${ks.length === 1 ? '' : 'disabled'} onclick="DPR.pMv(1)">▼ Down</button><button class="btn sm" ${ks.length ? '' : 'disabled'} onclick="DPR.pDel()">🗑 Remove</button>${E.mode === 'groups' && T.filter(n => n.t === 'g').length > 1 ? `<select class="mvg" ${can && ks.length && ks.every(k => k[0] === 's') ? '' : 'disabled'} onchange="DPR.pMoveTo(this.value)"><option value="">Move Ticked To Group…</option>${T.map((n, i) => n.t === 'g' ? `<option value="${i}">${esc(n.name || 'Group ' + (i + 1))}</option>` : '').join('')}</select>` : ''}<span class="sp"></span><span style="font-size:11px;color:var(--ink2)" id="dpr_pcnt"></span></div>`;
     h += `<table class="pl"><colgroup><col style="width:30px"><col style="width:34px"><col><col style="width:110px"><col style="width:110px"></colgroup><tr><th class="c"><input type="checkbox" onchange="DPR.pTickAll(this.checked)"></th><th class="c">#</th><th>${E.mode === 'groups' ? 'Group · Sub-Activity' : 'Sub-Activity'}</th><th class="n">Weight %<br><span style="font-weight:600">${E.mode === 'groups' ? 'Of Group' : 'Of Activity'}</span></th><th class="n">Share<br><span style="font-weight:600">Of Activity</span></th></tr>`;
     let row = 0; const tot = pTot(T);
     T.forEach((n, ix) => {
       if (n.t === 'g') { const k = 'g' + ix, gs = gSum(n), fd = S.pFold.has(ix);
         h += `<tr class="grp ${S.pTicks.has(k) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${S.pTicks.has(k) ? 'checked' : ''} onchange="DPR.pTick('${k}')"></td><td class="c">${++row}</td><td class="nm"><div class="gr"><button class="fold" onclick="DPR.pFold(${ix})">${fd ? '▸' : '▾'}</button><span class="gpill">GROUP</span><input class="tx" value="${esc(n.name)}" placeholder="Group Name" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${k}','name',this.value)"><span style="font-size:10.5px;color:var(--ink3);font-weight:600">${n.kids.length} Sub</span></div></td><td><input class="w" type="number" value="${r2(n.gw)}" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${k}','gw',this.value)" onchange="DPR.edDraw()"></td><td class="n"><b>${r2(n.gw)}%</b></td></tr>`;
         if (!fd) n.kids.forEach((x, j) => { const sk = 's' + ix + '-' + j; h += `<tr class="in ${S.pTicks.has(sk) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${S.pTicks.has(sk) ? 'checked' : ''} onchange="DPR.pTick('${sk}')"></td><td class="c">${++row}</td><td class="nm"><input class="tx" value="${esc(x.name)}" placeholder="Sub-Activity" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${sk}','name',this.value)"></td><td><input class="w" type="number" value="${r2(x.w)}" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${sk}','w',this.value)" onchange="DPR.edDraw()"></td><td class="n">${r2(n.gw * x.w / 100)}%</td></tr>`; }); else row += n.kids.length;
+        if (can && !fd) h += `<tr class="in addr"><td></td><td></td><td class="nm" colspan="3"><button class="btn sm adds" onclick="DPR.pAddS(${ix})">＋ Sub-Activity In ${esc(n.name || 'This Group')}</button></td></tr>`;
         h += `<tr class="tot"><td></td><td></td><td style="padding-left:26px">Σ ${esc(n.name || 'Group')} — Must Be 100</td><td class="n ${Math.abs(gs - 100) < .005 ? '' : 'bad'}">${r2(gs)}%</td><td class="n">${r2(n.gw)}%</td></tr>`; }
       else { const k = 't' + ix; h += `<tr class="${S.pTicks.has(k) ? 'sel' : ''}"><td class="c"><input type="checkbox" ${S.pTicks.has(k) ? 'checked' : ''} onchange="DPR.pTick('${k}')"></td><td class="c">${++row}</td><td class="nm"><input class="tx" value="${esc(n.name)}" placeholder="Sub-Activity" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${k}','name',this.value)"></td><td><input class="w" type="number" value="${r2(n.w)}" ${can ? '' : 'disabled'} oninput="DPR.pSetV('${k}','w',this.value)" onchange="DPR.edDraw()"></td><td class="n">${r2(n.w)}%</td></tr>`; }
     });
@@ -7920,9 +7925,19 @@ const DPR = (function () {
   function pTickAll(on) { S.pTicks = new Set(); if (on) pEdit().tree.forEach((n, i) => { S.pTicks.add((n.t === 'g' ? 'g' : 't') + i); if (n.t === 'g') n.kids.forEach((x, j) => S.pTicks.add('s' + i + '-' + j)); }); edDraw(); }
   function pFold(i) { S.pFold.has(i) ? S.pFold.delete(i) : S.pFold.add(i); edDraw(); }
   function pAddG() { pEdit().tree.push({ t: 'g', name: '', gw: 0, kids: [{ name: '', w: 0 }] }); pEdit().clean = false; edDraw(); }
-  function pAddS() { const E = pEdit(), k = [...S.pTicks][0]; if (E.mode === 'groups') { let g = null; if (k && k[0] === 'g') g = E.tree[+k.slice(1)]; else if (k && k[0] === 's') g = E.tree[+k.slice(1).split('-')[0]]; else g = E.tree.filter(n => n.t === 'g').slice(-1)[0]; if (!g) { pAddG(); return; } g.kids.push({ name: '', w: 0 }); } else E.tree.push({ t: 's', name: '', w: 0 }); E.clean = false; edDraw(); }
-  function pMv(d) { const k = [...S.pTicks][0], r = pRef(k), j = r.i + d; if (j < 0 || j >= r.arr.length) return; [r.arr[r.i], r.arr[j]] = [r.arr[j], r.arr[r.i]]; S.pTicks = new Set([k[0] === 's' ? 's' + k.slice(1).split('-')[0] + '-' + j : k[0] + j]); pEdit().clean = false; edDraw(); }
-  function pDel() { const E = pEdit(), ks = [...S.pTicks].sort().reverse(); ks.filter(k => k[0] === 's').forEach(k => { const r = pRef(k); r.arr.splice(r.i, 1); }); ks.filter(k => k[0] !== 's').forEach(k => { E.tree.splice(+k.slice(1), 1); }); S.pTicks = new Set(); E.clean = false; edDraw(); }
+  function pAddS(gi) { const E = pEdit(), k = [...S.pTicks][0]; let at = null;   // v5.13 · the group's own button names the group; the new row takes the cursor
+    if (E.mode === 'groups') { let g = null; if (gi != null && E.tree[gi] && E.tree[gi].t === 'g') g = E.tree[gi]; else if (k && k[0] === 'g') g = E.tree[+k.slice(1)]; else if (k && k[0] === 's') g = E.tree[+k.slice(1).split('-')[0]]; else g = E.tree.filter(n => n.t === 'g').slice(-1)[0]; if (!g) { pAddG(); return; } g.kids.push({ name: '', w: 0 }); const ix = E.tree.indexOf(g); S.pFold.delete(ix); at = 's' + ix + '-' + (g.kids.length - 1); }
+    else { E.tree.push({ t: 's', name: '', w: 0 }); at = 't' + (E.tree.length - 1); }
+    E.clean = false; edDraw(); const el = $('dpr_ped'), inp = el && [...el.querySelectorAll('input.tx')].find(x => (x.getAttribute('oninput') || '').includes("'" + at + "','name'")); if (inp) { inp.focus(); inp.scrollIntoView({ block: 'center' }); } }
+  function pMoveTo(v) { const E = pEdit(), gi = +v, g = v === '' ? null : E.tree[gi]; if (!g || g.t !== 'g') return;   // v5.13 · ticked sub-activities go to the end of the chosen group, in their order
+    const ks = [...S.pTicks].filter(k => k[0] === 's').map(k => k.slice(1).split('-').map(Number)).filter(p => p[0] !== gi).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const moved = ks.map(p => E.tree[p[0]].kids[p[1]]); ks.slice().reverse().forEach(p => E.tree[p[0]].kids.splice(p[1], 1)); const n0 = g.kids.length; moved.forEach(x => g.kids.push(x));
+    S.pTicks = new Set(moved.map((x, j) => 's' + gi + '-' + (n0 + j))); S.pFold.delete(gi); if (moved.length) E.clean = false; edDraw(); }
+  function pMv(d) { const k = [...S.pTicks][0], r = pRef(k), j = r.i + d;
+    if (k[0] === 's' && (j < 0 || j >= r.arr.length)) { const T = pEdit().tree, a = +k.slice(1).split('-')[0]; let b = a + d; while (b >= 0 && b < T.length && T[b].t !== 'g') b += d;   // v5.13 · past the edge of its group a row crosses into the next one
+      if (b < 0 || b >= T.length) return; const x = r.arr.splice(r.i, 1)[0]; if (d < 0) T[b].kids.push(x); else T[b].kids.unshift(x); S.pFold.delete(b); S.pTicks = new Set(['s' + b + '-' + (d < 0 ? T[b].kids.length - 1 : 0)]); pEdit().clean = false; edDraw(); return; }
+    if (j < 0 || j >= r.arr.length) return; [r.arr[r.i], r.arr[j]] = [r.arr[j], r.arr[r.i]]; S.pTicks = new Set([k[0] === 's' ? 's' + k.slice(1).split('-')[0] + '-' + j : k[0] + j]); pEdit().clean = false; edDraw(); }
+  function pDel() { const E = pEdit(), kn = k => k.slice(1).split('-').map(Number), ks = [...S.pTicks].sort((a, b) => { const x = kn(a), y = kn(b); return y[0] - x[0] || (y[1] || 0) - (x[1] || 0); }); ks.filter(k => k[0] === 's').forEach(k => { const r = pRef(k); r.arr.splice(r.i, 1); }); ks.filter(k => k[0] !== 's').forEach(k => { E.tree.splice(+k.slice(1), 1); }); S.pTicks = new Set(); E.clean = false; edDraw(); }
   function pDiscard() { S.pEd = null; S.pTicks = new Set(); edDraw(); }
   async function pSave() {
     const E = pEdit(), a = pAct(); const subs = [], groups = []; let gi = 0;
@@ -8971,7 +8986,7 @@ const DPR = (function () {
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
-    pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
+    pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pFold, pAddG, pAddS, pMoveTo, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();
 

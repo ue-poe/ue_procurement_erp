@@ -75,7 +75,8 @@
 // v79 · Construction v5.12.1 — DPR Add Work: work already on a sheet always shows, marked green
 // v80 · Construction v5.12.2 — DPR: × Remove on Labour cards too (pairs with M89 on the database)
 // v81 · Construction v5.13 — Reporting Plan: add a sub-activity inside a named group, move rows between groups
-const VERSION = 'pgs-shell-v81';
+// v82 · Construction v5.14 — Daily Report manager: Sequence tab (predecessors / successors, project format; pairs with M90 on the database)
+const VERSION = 'pgs-shell-v82';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -71,7 +71,8 @@
 // v75 · construction v5.9 · club sub-activities for labour (needs M87 on the database)
 // v76 · construction v5.10 · Handover tab for the manager (needs M88 on the database)
 // v77 · construction v5.11 · review / preview rows with the location rail; one-line activity header
-const VERSION = 'pgs-shell-v77';
+// v78 · Construction v5.12 — DPR: every slab level gets its own floor chip, labelled × Remove on never-reported work, confirm sheet before Add Work
+const VERSION = 'pgs-shell-v78';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.11</title>
+<title>Penguin Construction v5.12</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3818,6 +3818,19 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pfrv .gapl.ns{background:#f7f9fc}#mod-dpr .dp2 .pfrv .gapl.ns b{color:var(--ink3)}#mod-dpr .dp2 .pfrv .gapl.ns .u{border-color:#dfe6f0;color:var(--ink2)}
 #mod-dpr .dp2 .pfrv .nodes.rl>.gapl:first-child{border-top:0}
 @media (max-width:620px){ #mod-dpr .dp2 .pfrv .ln.rl{grid-template-columns:72px minmax(0,1fr)} #mod-dpr .dp2 .pfrv .ln.rl>.rail b{font-size:14px} #mod-dpr .dp2 .pfrv .ach.a1 .crew{order:5;flex:1 1 100%} #mod-dpr .dp2 .pfrv .ln.rl .bar{flex-basis:100%;order:5} #mod-dpr .dp2 .pfrv .ln.rl .dl{order:6} }
+/* v5.12 · Add Work review sheet · labelled Remove */
+.cr{font-size:13px;color:#0f1e33}
+.cr .crh{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:9px 11px;font-weight:600;margin-bottom:8px}.cr .crh b{font-size:15px}
+.cr .crh.big{background:#fff8e6;border-color:#f2d999}
+.cr .crw{background:#fde4e4;border:1px solid #f3b4b4;color:#b91c1c;border-radius:10px;padding:8px 11px;font-weight:700;font-size:12.5px;margin-bottom:8px}
+.cr .crf{display:flex;align-items:center;gap:8px;background:#0f1e33;color:#fff;font-weight:800;font-size:12px;letter-spacing:.04em;text-transform:uppercase;padding:6px 10px;border-radius:8px;margin:10px 0 4px}
+.cr .crf i{font-style:normal;margin-left:auto;background:rgba(255,255,255,.18);border-radius:10px;padding:0 8px;font-size:11.5px}
+.cr .cra{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;padding:7px 4px;border-bottom:1px solid #e3e9f1;align-items:start}
+.cr .cra b{display:block;font-size:13px;line-height:1.3}.cr .cra small{display:block;color:#5b6b82;font-size:11.5px;margin-top:2px}
+.cr .cu{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}.cr .cu span{font:800 12px ui-monospace,Menlo,Consolas,monospace;border:1px solid #c9d6ea;background:#f3f6fb;border-radius:6px;padding:2px 6px}
+.cr .crn{color:#5b6b82;font-size:11.5px;margin-top:10px}
+@media (max-width:560px){.cr .cra{grid-template-columns:1fr}.cr .cu{justify-content:flex-start}}
+#mod-dpr .dp2 .pf-ent .lbl.mt .d2-btn.sm.rmv{height:20px;padding:0 7px;margin-left:8px;font-size:10.5px;font-weight:800;border-color:var(--drdb);background:#fff;white-space:nowrap}
 </style>
 
 </head>
@@ -5437,8 +5450,8 @@ const DPR = (function () {
     return pill('p-grey', base > 0 || s.started_on ? 'Running' : 'Not Started');
   }
   const tickCell = (g, l, idx, ro) => `<td class="c" style="white-space:nowrap">${S.cm && !ro ? `<input type="checkbox" data-k="t:${l.work_id}" ${S.ticks.has(l.work_id) ? 'checked' : ''} ${finL(l) ? 'disabled title="Finished"' : g.lines.length > 1 ? 'title="Ticks The Whole Club — It Merges Into The New Club"' : ''} onchange="DPR.tick('${l.work_id}',this.checked)" style="margin-right:5px;vertical-align:middle">` : ''}${idx}</td>`;
-  const dropBtn = (g, l) => g.lines.length === 1 ? (canDrop(g) ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">×</button>` : '')
-    : (canDropL(g, l) ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove This Activity From The Club — Nothing Reported Yet" onclick="DPR.dropWork('${l.work_id}')">×</button>` : '');   // v158.2 · v161.3 per-activity
+  const dropBtn = (g, l) => g.lines.length === 1 ? (canDrop(g) ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove From My List — Nothing Reported Yet" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove</button>` : '')
+    : (canDropL(g, l) ? ` <button class="d2-btn sm" style="color:var(--drd)" title="Remove This Activity From The Club — Nothing Reported Yet" onclick="DPR.dropWork('${l.work_id}')">× Remove</button>` : '');   // v158.2 · v161.3 per-activity
   function certCell(g, l, x, r) {
     if (!x.fin || r) return '';
     return ` <span class="muted">Cert.</span> <input class="qty ${x.cert > 0 ? '' : 'bad'}" data-k="c:${l.work_id}" type="number" inputmode="decimal" value="${x.cert == null ? '' : x.cert}" onchange="DPR.certSet('${l.work_id}',this.value)">${l.end_locked ? '' : ` <span class="dtw"><b class="dtv">${dsh(x.finOn || finDef(x.started || l.started_on))}</b><input type="date" class="dt" data-k="le:${l.work_id}" value="${x.finOn || finDef(x.started || l.started_on)}" min="${lineMinEnd(g, l)}" max="${S.to}" onchange="DPR.lineEnd('${l.work_id}',this.value,this.min)" onclick="if(this.showPicker)this.showPicker()"></span>`}`;
@@ -6666,13 +6679,13 @@ const DPR = (function () {
   }
   function tradeSet(code) { S.showT.add(code); sheetClose(); redraw(); }
   function tradeDrop(code) { S.showT.delete(code); redraw(); }
-  const canDrop = g => !S.locked && !!g.never_reported && !dOf(g).dirty;   // v161.3 · M36 decides "untouched" (a saved No Work on an open report does not count)
-  const canDropL = (g, l) => !S.locked && !!l.never_reported && !dOf(g).dirty;   // v161.3 · one activity of a club
+  const canDrop = g => !S.locked && !!g.never_reported;   // v161.3 · M36 decides "untouched" (a saved No Work on an open report does not count)
+  const canDropL = (g, l) => !S.locked && !!l.never_reported;   // v161.3 · one activity of a club
   async function dropGroup(id) {
     const g = G(id); if (!g) return;
     const what = g.lines.length > 1 ? 'The Club "' + (g.label || '') + '" (' + g.lines.length + ' Activities)' : '"' + (g.package || g.label) + '" At ' + g.location;
-    if (!confirm('Remove ' + what + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.')) return;
-    try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); toast('Removed', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
+    if (!confirm('Remove ' + what + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.' + (dOf(g).dirty ? '\nWhat You Tapped On It Today And Have Not Saved Is Discarded.' : ''))) return;
+    try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); dOf(g).dirty = false; toast('Removed', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
   }
   async function dropWork(wid) {   // v158.2 · one activity out of a never-reported club (M35 rpc_dpr_drop_work)
     const e = S.W[wid]; if (!e) return; const { g, l } = e;
@@ -6950,7 +6963,7 @@ const DPR = (function () {
   async function catGo(together, fill) {
     const byLoc = {}; [...S.ct].forEach(k => { const [w, l] = k.split('|'); (byLoc[l] = byLoc[l] || []).push(Number(w)); });
     const locs = Object.keys(byLoc); let ok = 0; const ids = [];
-    if (S.ct.size > 20 && !confirm('Add ' + S.ct.size + ' Activities At ' + locs.length + ' Location' + (locs.length === 1 ? '' : 's') + ' To Your Sheet?\n\nEach One Becomes A Card On Every Day Sheet Until It Is Finished. Add Only The Work That Is Actually Starting.')) return;   // v5.6.3
+    if (S.cards && !S._catOk) return catReview(together, fill); S._catOk = false;   // v5.12 · review sheet replaces the >20 confirm
     try {
       for (const l of locs) { const { data, error } = await sb.rpc('rpc_dpr_start_group', { p_loc_node_id: l, p_wbs_node_ids: byLoc[l], p_together: together }); if (error) throw error; ok++; ((data && data.wgroup_ids) || []).forEach(x => ids.push(x)); }
       toast('Added ' + (together ? ok + ' group' + (ok === 1 ? '' : 's') : [...S.ct].length + ' activit' + ([...S.ct].length === 1 ? 'y' : 'ies')) + ' to your list', 'success');
@@ -8021,7 +8034,9 @@ const DPR = (function () {
      progress · hindrance).  Same drafts, setters and rpc_dpr_save_card payloads as the table / card views — nothing new is sent.
      ================================================================== */
   const PF_TINT = ['t1', 't2', 't3', 't4', 't5'];
-  const pfFloorKey = (g, l) => { const p = lineLocPath(g, l) || ''; if (p.split(' › ').filter(Boolean).length >= 2) return p; const loc = lineLoc(g, l); return p && loc ? p + ' › ' + loc : (loc || p || g.area || '—'); };   // a node directly under the tower (RCC slab at '16th Floor') is its own floor
+  const PF_LEVEL = /\b(floor|slab|level|terrace|roof|basement|podium|plinth|footing|raft|stilt|parking)\b/i;   // v5.12 · names that are a floor in themselves
+  const pfFloorKey = (g, l) => { const p = lineLocPath(g, l) || '', loc0 = lineLoc(g, l); if (p && loc0 && PF_LEVEL.test(loc0) && !PF_LEVEL.test(pfFloorLabel(p))) return p + ' › ' + loc0;   // '… › Tower-A › 24th Floor Slab' is a floor of its own, not one chip called 'Tower-A'
+    if (p.split(' › ').filter(Boolean).length >= 2) return p; const loc = lineLoc(g, l); return p && loc ? p + ' › ' + loc : (loc || p || g.area || '—'); };   // a node directly under the tower (RCC slab at '16th Floor') is its own floor
   const pfFloorLabel = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length ? segs[segs.length - 1] : (k || '—'); };
   const pfFloorMark = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length >= 2 ? segs[segs.length - 2] : ''; };   // v5.5.6 · the level above the floor (tower / block / wing — whatever the project's tree has there)
   const pfCardKey = (g, l) => pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '—') + '\u0001' + l.activity;
@@ -8099,7 +8114,7 @@ const DPR = (function () {
       const y = x.subs[s.id], base = subBase(s), done = base >= 99.9995, o = y.out, pc = num(y.pct), sid = s.id;
       if (done) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span>${pill('p-ok', 'Done' + (y.e || s.finished_on ? ' ' + esc(dsh(y.e || s.finished_on)) : ''))}</div>`;
       if (ro) return `<div class="prog"><span class="lbl">Progress · ${esc(dsh(PD()))} EOD</span><b>${o === 'w' ? (y.wip ? 'WIP' : Math.round(base) + '→' + Math.round(pc) + '%') : o === 'h' ? 'Hindrance' : o === 'n' ? 'No Work' : '—'}</b><div class="st2">${statusSub(s, y, base)}</div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, true)}</div>`;
-      return `<div class="prog"><span class="lbl mt"><i class="muted">${esc(s.name)} · Last ${Math.round(base)}%</i>${ro || y.note || y.out === 'h' || S.pfM[wid] ? '' : `<a class="nt" onclick="DPR.pfMore('${wid}')">＋ Note</a>`}<span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
+      return `<div class="prog"><span class="lbl mt"><i class="muted">${esc(s.name)} · Last ${Math.round(base)}%</i>${ro || y.note || y.out === 'h' || S.pfM[wid] ? '' : `<a class="nt" onclick="DPR.pfMore('${wid}')">＋ Note</a>`}${ro ? '' : dropBtn(g, l)}<span class="sp"></span><span class="st2">${statusSub(s, y, base)}</span></span><div class="snap">${[25, 50, 75].map(p => { const on = o === 'w' && !y.wip && Math.round(pc) === p; return `<button class="${on ? 'on' : ''}" ${p <= base + 0.0005 ? 'disabled' : ''} title="${on ? 'Tap Again To Clear' : ''}" onclick="${on ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',${p})`}">${p}</button>`; }).join('')}<button class="done ${o === 'w' && !y.wip && pc >= 99.9995 ? 'on' : ''}" title="${o === 'w' && !y.wip && pc >= 99.9995 ? 'Tap Again To Clear' : ''}" onclick="${o === 'w' && !y.wip && pc >= 99.9995 ? `DPR.setOc('${wid}','w','${sid}')` : `DPR.snapPct('${wid}','${sid}',100)`}">✓ Done</button><button class="wip ${y.wip ? 'on' : ''}" onclick="DPR.toggleWip('${wid}','${sid}')">WIP</button><span class="pc"><input class="qty" data-k="p:${wid}:${sid}" type="number" inputmode="numeric" min="${Math.round(base)}" max="100" value="${o === 'w' && !y.wip ? Math.round(pc) : ''}" placeholder="${y.wip ? 'WIP' : '0'}" ${y.wip ? 'disabled' : ''} onchange="DPR.setPct('${wid}','${sid}',this.value)">%</span><span class="gap"></span><button class="h ${o === 'h' ? 'on' : ''}" title="Hindrance ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','h','${sid}')">H</button><button class="n ${o === 'n' ? 'on' : ''}" title="No Work ${esc(dsh(PD()))}" onclick="DPR.setOc('${wid}','n','${sid}')">N</button></div>${hinRow(wid, sid, o, y.rc, s.open_hindrance_yday, false)}</div>`;
     }
     const est = num(l.est_qty), base = cumBase(l), fin = finL(l), o = fin ? '' : x.out, q = o === 'w' && !x.wip ? num(x.qty) : 0, left = Math.max(0, est - base), uom = esc(l.uom || ''), cnt = isCount(l.uom);
     if (fin) return `<div class="prog"><span class="lbl">Progress</span>${pill('p-ok', 'Finished' + (l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''))}${l.site_cert_qty != null ? ` <span class="muted">Cert. ${fmt(l.site_cert_qty)} ${uom}</span>` : ''}</div>`;
@@ -8514,7 +8529,8 @@ const DPR = (function () {
     const due = (() => { if (!sub) return ''; if (S.locked || sub.status === 'Accepted') return sub.is_late ? pill('p-red', 'Sent Late') : ''; const m = cutMins(); return m > 0 ? `Due 1 PM${S.to === today ? '' : ' Of ' + esc(dsh(S.to))}` : `<span class="late">Late · Past 1 PM</span>`; })();
     // v5.8 · one row: All · (tower once → its floors as small chips) · ＋ Add; ‹ › step along the row on a computer, a swipe on a phone
     const allChip = `<button class="all ${S.pfF ? '' : 'on'}" onclick="DPR.pfFloor('')">All <i>${M.lines.filter(it => !finL(it.l)).length}</i></button>`;
-    let lastTw = null; const chips = M.floors.map(F => { const tw = pfFloorMark(F.key), head = tw !== lastTw && tw ? `<span class="tw">${esc(tw)}</span>` : ''; lastTw = tw;
+    const pre = k => String(k || '').split(' › ').filter(Boolean).slice(0, -1), marks = {}; M.floors.forEach(F => { const a = pre(F.key), m = a[a.length - 1] || ''; (marks[m] = marks[m] || new Set()).add(a.join(' › ')); });
+    let lastTw = null; const chips = M.floors.map(F => { const a = pre(F.key), full = a.join(' › '), m = a[a.length - 1] || '', tw = m && marks[m].size > 1 && a.length > 1 ? a.slice(-2).join(' › ') : m, head = full !== lastTw && tw ? `<span class="tw" title="${esc(full)}">${esc(tw)}</span>` : ''; lastTw = full;
       return head + `<button class="${S.pfF === F.key ? 'on' : ''}" title="${esc(F.key)}" onclick="DPR.pfFloor('${cdQ(F.key)}')">${esc(pfRibLabel(F.label, !!tw))} <i>${F.act}</i>${F.att ? '<span class="dot"></span>' : ''}</button>`; }).join('');
     const where = S.pfF ? (pfFloorMark(S.pfF) ? pfFloorMark(S.pfF) + ' › ' : '') + pfFloorLabel(S.pfF) : 'All Floors';
     return `<div class="pf-top" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
@@ -8527,6 +8543,24 @@ const DPR = (function () {
     return `<div class="pf-add"><div class="a1"><button class="bk" onclick="DPR.catBack()">← Sheet</button><b>Add Work</b><span>Tick Activities · Then Add Or Report Together</span></div>
       <div class="a2"><input id="pf_addq" placeholder="Search The Estimate — Activity · Package · Location…" value="${esc(S.q === '/' ? '' : (S.q || ''))}" oninput="DPR.pfAddQ(this.value)" autocomplete="off"><button class="all ${S.q === '/' ? 'on' : ''}" onclick="DPR.pfAddQ('/')">Show All</button></div></div>`;
   }
+  /* v5.12 · Add Work → review first. Every ticked activity becomes a card on every day sheet until it is finished, so the engineer
+     sees exactly what is about to be added, grouped by floor, and confirms — the same idea as the Work Order confirmation. */
+  function catReview(together, fill) {
+    const rows = (S.cat || []).filter(r => S.ct.has(r[0] + '|' + r[1])); if (!rows.length) return;
+    const lv = r => { const p = String(r[9] || '').split(' › ').filter(Boolean); if (p.length > 1 && p[p.length - 1] === r[8]) p.pop(); if (p.length) return p.slice(-2).join(' › '); const a = catLevels(r); return [a[0], a[1]].filter(Boolean).join(' › ') || '—'; }, by = new Map();
+    rows.forEach(r => { const k = lv(r); if (!by.has(k)) by.set(k, new Map()); const m = by.get(k); if (!m.has(r[0])) m.set(r[0], { name: r[2], pkg: r[6] || '', uom: r[4] || '', est: 0, locs: [] }); const e = m.get(r[0]); e.est += num(r[5]); e.locs.push(r[8]); });
+    const nLoc = new Set(rows.map(r => r[1])).size, nAct = new Set(rows.map(r => r[0])).size, cards = together ? nLoc : rows.length;
+    let body = `<div class="cr"><div class="crh ${rows.length > 20 ? 'big' : ''}"><b>${nAct}</b> Activit${nAct === 1 ? 'y' : 'ies'} At <b>${nLoc}</b> Location${nLoc === 1 ? '' : 's'} → <b>${cards}</b> Card${cards === 1 ? '' : 's'} On Every Day Sheet${together ? ' · Labour Entered Once Per Card' : ''}</div>`;
+    if (rows.length > 20) body += `<div class="crw">That Is A Lot. Add Only The Work That Is Actually Starting — Each One Must Be Reported Or Marked No Work Every Day Until It Finishes.</div>`;
+    [...by.keys()].sort(pfNatCmp).forEach(k => { const m = by.get(k); body += `<div class="crf">${esc(k)}<i>${[...m.values()].reduce((a, e) => a + e.locs.length, 0)}</i></div>`;
+      [...m.values()].sort((a, b) => pfNatCmp(a.name, b.name)).forEach(e => { const L = e.locs.slice().sort(pfNatCmp);
+        body += `<div class="cra"><div><b>${esc(e.name)}</b><small>${esc(e.pkg)}${e.pkg ? ' · ' : ''}Est ${fmt(e.est)} ${esc(e.uom)}${L.length > 1 ? ' · ' + L.length + ' Locations' : ''}</small></div><div class="cu">${L.map(x => `<span>${esc(x)}</span>`).join('')}</div></div>`; }); });
+    body += `<div class="crn">Check The Floor And The Activity. Something Added By Mistake Can Be Removed From The Sheet With “× Remove” As Long As Nothing Was Reported On It.</div></div>`;
+    S._catGo = { together: !!together, fill: !!fill };
+    sheetOpen('Confirm Before Adding', 'Check Floor And Activity', body,
+      `<button class="dbtn" onclick="DPR.sheetClose()">← Change</button><span class="sp"></span><button class="dbtn pri" onclick="DPR.catConfirm()">✓ ${together ? 'Report Together · ' : 'Add '}${cards} Card${cards === 1 ? '' : 's'}</button>`);
+  }
+  function catConfirm() { const a = S._catGo; if (!a) return; S._catGo = null; S._catOk = true; sheetClose(); catGo(a.together, a.fill); }
   function pfAdd(q) {   // open the picker (from ＋ Add, the ⋯ menu, or a Find with no match)
     if (isRo()) return; sheetClose(); S.catMode = true; S.q = String(q === 1 ? (S.fs || '') : (q || '')).trim(); S.fs = ''; S.cv = S.cv === 'grid' ? 'loc' : (S.cv || 'loc'); S.ct = new Set(); S.co = new Set(); S.coAll = false; paint(); window.scrollTo(0, 0);
     setTimeout(() => { const i = $('pf_addq'); if (i) { i.focus(); const n = i.value.length; try { i.setSelectionRange(n, n); } catch (e) { /* not a text field */ } } }, 60);
@@ -8927,7 +8961,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

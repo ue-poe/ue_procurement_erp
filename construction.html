@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.12.1</title>
+<title>Penguin Construction v5.12.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3835,6 +3835,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dpr-tick.ct4.onl b{color:#065f46}
 #mod-dpr .dpr-th .onp{margin-left:6px;white-space:nowrap}
 #mod-dpr .dpr-tick.ct4 .onp,#mod-dpr .dpr-th .onp{display:inline-block;margin-top:3px;font-style:normal;font-size:11px;font-weight:700;color:#047857;background:#d1fae5;border-radius:999px;padding:1px 8px}
+#mod-dpr .lab-c .lh .t .lrm{display:inline-block;margin-top:5px;color:var(--drd);align-self:flex-start}
 </style>
 
 </head>
@@ -6688,7 +6689,7 @@ const DPR = (function () {
   async function dropGroup(id) {
     const g = G(id); if (!g) return;
     const what = g.lines.length > 1 ? 'The Club "' + (g.label || '') + '" (' + g.lines.length + ' Activities)' : '"' + (g.package || g.label) + '" At ' + g.location;
-    if (!confirm('Remove ' + what + ' From Your List?\nNothing Was Reported On It, So Nothing Is Lost.' + (dOf(g).dirty ? '\nWhat You Tapped On It Today And Have Not Saved Is Discarded.' : ''))) return;
+    if (!confirm('Remove ' + what + ' From Your List?\nNo Quantity, Labour Or Hindrance Was Ever Reported On It.\nIt Leaves Your Sheet From Today; It Can Be Added Again From ＋ Add.' + (dOf(g).dirty ? '\nWhat You Tapped On It Today And Have Not Saved Is Discarded.' : ''))) return;
     try { await rpc('rpc_dpr_drop_group', { p_wgroup_id: id }); dOf(g).dirty = false; toast('Removed', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not remove it'), 'error'); }
   }
   async function dropWork(wid) {   // v158.2 · one activity out of a never-reported club (M35 rpc_dpr_drop_work)
@@ -8454,7 +8455,7 @@ const DPR = (function () {
       return acts.map(a => `<small>${esc(short[a])}</small>` + g.lines.filter(l => l.activity === a).map(l => `<b class="${finT(g, l) ? 'fin' : heldL(g, l) ? 'hold' : ''}">${esc(lineLoc(g, l))}</b>`).join('')).join(''); };
     const rail = `<div class="rail ${club ? 'multi' : ''}">${tickBox}${railLocs()}${inner ? `<span class="p ${st === 'w' && tot ? '' : 'z'}">${st === 'w' ? fmt(tot) + ' H' : ''}</span>` : club ? `<small>${g.lines.length} ${acts.length > 1 ? 'Rows' : 'Locations'}</small>` : ''}</div>`;
     let h = `<div class="lab-b ${inner ? 'in' : ''} s-${st || 'x'}" data-g="${gid}">`;
-    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small></div><div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
+    if (!inner) h += `<div class="lh"><div class="t"><b>${esc(title)}</b>${starts ? '<span class="tag b">Starting Today</span>' : ''}<small>${esc(where)}${acts.length > 1 ? ' · ' + acts.length + ' Activities' : ''}</small>${!ro && canDrop(g) ? `<button class="d2-btn sm lrm" title="Remove From My List — Only No Work Was Ever Reported On It" onclick="DPR.dropGroup('${g.wgroup_id}')">× Remove${club ? ' Club' : ''}</button>` : ''}</div><div class="hd ${st === 'w' && tot ? '' : st === '' && ydN ? 'yd' : st === 'h' ? 'h' : ''}"><b>${st === '' && ydN ? fmt(ydN) : fmt(tot)}</b><small>${st === '' && ydN ? 'From ' + esc(dsh(PD())) : 'Heads'}</small></div></div>`;
     h += `<div class="lrow">${rail}<div class="lbd">`;
     const end = '</div></div></div>';
     const scPick = lv === 'sub' && !!S.pfSc && S.pfSc.wid === l0.work_id;

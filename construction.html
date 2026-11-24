@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.14</title>
+<title>Penguin Construction v5.14.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3769,7 +3769,7 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .sq .b:disabled{opacity:.45;cursor:default}
 #mod-dpr .sq .lg{display:flex;gap:12px;align-items:center;font-size:11px;color:#48566b;flex-wrap:wrap}
 #mod-dpr .sq .lg i{display:inline-block;width:18px;height:0;border-top:2px solid;margin-right:5px;vertical-align:middle}
-#mod-dpr .sq .ch{overflow:auto;max-height:calc(100vh - 330px);min-height:220px;position:relative;background:#fff;-webkit-overflow-scrolling:touch}
+#mod-dpr .sq .ch{overflow:auto;max-height:calc(100vh - 262px);min-height:220px;position:relative;background:#fff;-webkit-overflow-scrolling:touch}
 #mod-dpr .sq .in{display:flex;width:max-content;min-width:100%}
 #mod-dpr .sq .left{position:sticky;left:0;z-index:5;width:var(--LW);flex:none;background:#fff;border-right:2px solid #c3ccd9}
 #mod-dpr .sq .right{position:relative;flex:none}
@@ -3802,35 +3802,18 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .sq .bar.dir{background:#0f766e}
 #mod-dpr .sq .bar.mini{top:10px;height:12px;border-radius:4px;background:#818cf8}
 #mod-dpr .sq .bar.sel{outline:3px solid #f59e0b;outline-offset:1px}
-#mod-dpr .sq .bar.tgt{outline:2px dashed #4338ca;outline-offset:2px}
 #mod-dpr .sq .span{position:absolute;top:15px;height:2px;background:#c7d2fe;z-index:1}
 #mod-dpr .sq svg.lk{position:absolute;left:calc(var(--PW)*2);top:30px;z-index:3;pointer-events:none;overflow:visible}
 #mod-dpr .sq svg.lk path{fill:none}
 #mod-dpr .sq svg.lk .im{stroke:#cbd5e1;stroke-width:1.5}
 #mod-dpr .sq svg.lk .ex{stroke:#4338ca;stroke-width:2}
 #mod-dpr .sq svg.lk .x{stroke:#ea580c;stroke-width:2}
-#mod-dpr .sq svg.lk .hot{stroke:#dc2626;stroke-width:3}
-#mod-dpr .sq svg.lk .hit{stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:pointer}
-#mod-dpr .sq .dt{border-top:1px solid #c3ccd9;padding:10px 12px;background:#fbfcfe}
-#mod-dpr .sq .dt:empty{display:none}
-#mod-dpr .sq .dt .nm{font-weight:800;font-size:14px;line-height:1.35}
-#mod-dpr .sq .dt .pth{font-size:11px;color:#5b6b82;margin-top:1px}
-#mod-dpr .sq .dt .rw{display:flex;gap:6px;align-items:flex-start;margin-top:8px;flex-wrap:wrap}
-#mod-dpr .sq .dt .lb{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#5b6b82;font-weight:800;width:84px;flex:none;padding-top:4px}
-#mod-dpr .sq .dt .cs{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0}
-#mod-dpr .sq .chip{display:inline-flex;align-items:center;gap:5px;background:#eef2ff;border:1px solid #c7d2fe;color:#312e81;border-radius:7px;padding:2px 4px 2px 8px;font-size:11.5px;font-weight:700;line-height:1.4;max-width:100%}
-#mod-dpr .sq .chip.x{background:#fff7ed;border-color:#fdba74;color:#9a3412}
-#mod-dpr .sq .chip.au{background:#f7f9fc;border-color:#e6ebf2;color:#5b6b82;padding-right:8px}
-#mod-dpr .sq .chip button{border:0;background:transparent;color:inherit;font-size:12px;cursor:pointer;padding:0 3px;opacity:.7}
-#mod-dpr .sq .dt .em{color:#9aa6b8}
-#mod-dpr .sq .mode{display:flex;align-items:center;gap:8px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:6px 10px;font-weight:700;color:#312e81;margin-top:8px}
-#mod-dpr .sq .mode .sp{flex:1}
 #mod-dpr .sq .foot{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid #e6ebf2;flex-wrap:wrap}
 #mod-dpr .sq .foot .sp{flex:1}
 #mod-dpr .sq .pl{display:inline-block;border-radius:999px;font-size:10.5px;font-weight:800;padding:1px 8px;line-height:1.5;white-space:nowrap;border:1px solid #e6ebf2;background:#f7f9fc;color:#5b6b82}
 #mod-dpr .sq .pl.amb{background:#fff8e6;color:#8a5a00;border-color:#f2d999}
 #mod-dpr .sq .note{margin:12px;background:#fde4e4;border:1px solid #f3b4b4;border-radius:9px;padding:8px 10px;font-size:12.5px;color:#b91c1c}
-@media (max-width:860px){#mod-dpr .sq{--W:34px;--LW:178px;--PW:88px;--IN:4px}#mod-dpr .sq .r{font-size:12px}#mod-dpr .sq .r.s{font-size:11.5px}#mod-dpr .sq .r .no,#mod-dpr .sq .left .hh .no{width:32px}#mod-dpr .sq .left .hh .no,#mod-dpr .sq .hh .c.hp{font-size:9.5px;letter-spacing:0;padding-left:5px}#mod-dpr .sq .dt .lb{width:100%}#mod-dpr .sq .ch{max-height:58vh}}
+@media (max-width:860px){#mod-dpr .sq{--W:34px;--LW:178px;--PW:88px;--IN:4px}#mod-dpr .sq .r{font-size:12px}#mod-dpr .sq .r.s{font-size:11.5px}#mod-dpr .sq .r .no,#mod-dpr .sq .left .hh .no{width:32px}#mod-dpr .sq .left .hh .no,#mod-dpr .sq .hh .c.hp{font-size:9.5px;letter-spacing:0;padding-left:5px}#mod-dpr .sq .ch{max-height:calc(100vh - 300px)}}
 /* v5.10 · Handover tab (M88) */
 #mod-dpr .hov{max-width:760px;padding:12px 4px;font-size:13.5px;color:#0f1e33}
 #mod-dpr .hov .hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}#mod-dpr .hov .hd a{color:#4338ca;font-weight:700;cursor:pointer;font-size:12.5px}#mod-dpr .hov .hd b{font-size:16px}
@@ -8434,7 +8417,7 @@ const DPR = (function () {
     const keep = S.seq || {}; let Q;
     try {
       const d = await rpc('rpc_dpr_sequence', {});
-      Q = { rows: [], byId: {}, L: [], canEdit: !!(d && d.can_edit) && !state.isViewer, all: !!keep.all, q: keep.q || '', open: keep.open || {}, sel: null, selLink: null, mode: null, err: '' };
+      Q = { rows: [], byId: {}, L: [], canEdit: !!(d && d.can_edit) && !state.isViewer, all: !!keep.all, q: keep.q || '', open: keep.open || {}, sel: null, err: '' };
       ((d && d.rows) || []).forEach(r => { const a = { id: 'a' + r.wbs_node_id, wbs: r.wbs_node_id, name: r.name || '', path: r.path || [], works: num(r.works), plan: r.plan_id || null, mode: r.mode || null,
         subs: (r.subs || []).map(s => ({ id: s.id, name: s.name || '', group: s.group || null, gid: s.group_id || null })) }; Q.rows.push(a); Q.byId[a.id] = a; });
       ((d && d.links) || []).forEach(l => { const f = 'a' + l.from_wbs + (l.from_sub ? ':' + l.from_sub : ''), t = 'a' + l.to_wbs + (l.to_sub ? ':' + l.to_sub : ''); if (Q.byId['a' + l.from_wbs] && Q.byId['a' + l.to_wbs]) Q.L.push({ f, t }); });
@@ -8487,7 +8470,6 @@ const DPR = (function () {
         <div class="sg" id="sq_sc"></div><button class="b" onclick="DPR.seqExp(1)">Expand All</button><button class="b" onclick="DPR.seqExp(0)">Collapse All</button>
         <span class="lg"><span><i style="border-color:#cbd5e1"></i>Plan Order</span><span><i style="border-color:#4338ca"></i>Link</span><span><i style="border-color:#ea580c"></i>Link To Another Package</span></span></div>
         <div class="ch" id="sq_ch"><div class="in"><div class="left" id="sq_left" onclick="DPR.seqRow(event)"></div><div class="right" id="sq_right" onclick="DPR.seqBar(event)" onchange="DPR.seqIn(event)" onkeydown="if(event.key==='Enter'&&event.target.classList.contains('pi'))event.target.blur()"></div></div></div>
-        <div class="dt" id="sq_dt" onclick="DPR.seqDt(event)"></div>
         <div class="foot"><span class="pl amb" id="sq_dirty" style="display:none"></span><span class="pl" id="sq_lc"></span><span class="pl" id="sq_uc"></span><span class="sp"></span>${Q.canEdit ? '<button class="b" id="sq_dis" onclick="DPR.seqDiscard()">Discard</button><button class="b pri" id="sq_sav" onclick="DPR.seqSave()">Save Sequence</button>' : ''}</div></div>`;
     }
     seqPaint();
@@ -8512,7 +8494,7 @@ const DPR = (function () {
     let lh = '<div class="hh"><span class="no">S.No.</span>Activity</div>', rh = '<div class="hh"><div class="c hp">Predecessors</div><div class="c hp">Successors</div>' + Array.from({ length: max }, (_, i) => `<div class="c">${i + 1}</div>`).join('') + '</div>';
     const pos = {}; let row = 0, prev = [];
     const bar = (id, cls) => { const x = (lv[id] - 1) * W + 5; pos[id] = { x1: x, x2: x + W - 10, y: row * RH + RH / 2 };
-      return `<button class="bar ${cls} ${Q.sel === id ? 'sel' : ''} ${Q.mode && Q.sel !== id ? 'tgt' : ''}" data-n="${id}" style="left:${x}px;width:${W - 10}px" title="${esc(sqLabel(id))}"></button>`; };
+      return `<button class="bar ${cls} ${Q.sel === id ? 'sel' : ''}" data-n="${id}" style="left:${x}px;width:${W - 10}px" title="${esc(sqLabel(id))}"></button>`; };
     vis.forEach(a => {
       a.path.forEach((p, i) => { if (!prev[i] || prev[i].id !== p.id) { prev.length = i;
         lh += `<div class="r p d${Math.min(i, 2)}"><span class="no">${Q.no['h' + p.id]}</span><span class="tx" style="padding-left:calc(var(--IN) * ${i})" title="${esc(p.name)}">${esc(p.name)}</span></div>`; rh += `<div class="gr p d${Math.min(i, 2)}">${blank}<div class="ga"></div></div>`; row++; } prev[i] = p; }); prev.length = a.path.length;
@@ -8533,67 +8515,40 @@ const DPR = (function () {
     const paths = [];
     E.forEach(e => { if (e.k === -2) return; const fid = e.k >= 0 ? e.rf : e.f, tid = e.k >= 0 ? e.rt : e.t, a = pos[fid], b = pos[tid]; if (!a || !b) return;
       const fa = sqAct(fid), ta = sqAct(tid); if (e.k === -1 && !(Q.open[fa.id] || Q.q)) return;
-      const xp = sqPkg(fa) !== sqPkg(ta), cls = e.k < 0 ? 'im' : (Q.selLink === e.k ? 'hot' : (xp ? 'x' : 'ex'));
+      const xp = sqPkg(fa) !== sqPkg(ta), cls = e.k < 0 ? 'im' : (xp ? 'x' : 'ex');
       const bx = Math.max(b.x1, a.x2 + 12), mx = a.x2 + 5, d = a.y === b.y ? `M${a.x2},${a.y}H${bx - 1}` : `M${a.x2},${a.y}H${mx}V${b.y}H${bx - 1}`, head = `M${bx - 6},${b.y - 4}L${bx - 1},${b.y}L${bx - 6},${b.y + 4}`;
-      paths.push({ z: e.k < 0 ? 0 : (Q.selLink === e.k ? 2 : 1), h: `<path class="${cls}" d="${d}"/><path class="${cls}" d="${head}"/>` + (e.k >= 0 ? `<path class="hit" data-k="${e.k}" d="${d}"/>` : '') }); });
+      paths.push({ z: e.k < 0 ? 0 : 1, h: `<path class="${cls}" d="${d}"/><path class="${cls}" d="${head}"/>` }); });
     paths.sort((x, y) => x.z - y.z);
     const PW = parseFloat(cs.getPropertyValue('--PW')) || 104;
     $('sq_left').innerHTML = lh; $('sq_right').style.width = (max * W + 2 * PW) + 'px';
     $('sq_right').innerHTML = rh + `<svg class="lk" width="${max * W}" height="${row * RH}">${paths.map(p => p.h).join('')}</svg>`;
     $('sq_sc').innerHTML = `<button class="${Q.all ? '' : 'on'}" onclick="DPR.seqScope(0)">In Reporting<i>${Q.rows.filter(inRep).length}</i></button><button class="${Q.all ? 'on' : ''}" onclick="DPR.seqScope(1)">All Estimated<i>${Q.rows.length}</i></button>`;
-    seqDetail();
     const dirty = sqDirty(), dp = $('sq_dirty'); dp.style.display = dirty ? '' : 'none'; dp.textContent = 'Unsaved';
     if ($('sq_sav')) { $('sq_sav').disabled = !dirty || !!Q.busy; $('sq_dis').disabled = !dirty || !!Q.busy; }
     $('sq_lc').textContent = Q.L.length + ' Link' + (Q.L.length === 1 ? '' : 's');
     const un = Q.rows.filter(a => inRep(a) && !linked.has(a.id)).length; $('sq_uc').textContent = un + ' Without Links'; $('sq_uc').className = 'pl' + (un ? ' amb' : '');
   }
-  function seqDetail() {
-    const Q = S.seq, d = $('sq_dt'); if (!d) return;
-    const chips = (list) => list.length ? list.map(x => `<span class="chip ${x.k < 0 ? 'au' : (sqPkg(sqAct(x.id)) !== sqPkg(sqAct(Q.sel)) ? 'x' : '')}">${esc(sqLabel(x.id))}${x.k < 0 || !Q.canEdit ? '' : `<button data-rm="${x.k}" title="Remove Link">✕</button>`}</span>`).join('') : '<span class="em">—</span>';
-    if (Q.selLink != null && Q.L[Q.selLink]) { const l = Q.L[Q.selLink];
-      d.innerHTML = `<div class="nm">${esc(sqLabel(l.t))}</div><div class="rw"><span class="lb">Predecessor</span><span class="cs"><span class="chip">${esc(sqLabel(l.f))}</span></span></div>${Q.canEdit ? `<div class="rw"><button class="b red" data-rm="${Q.selLink}">Remove Link</button></div>` : ''}`; return; }
-    if (!Q.sel || !sqAct(Q.sel)) { d.innerHTML = ''; return; }
-    const a = sqAct(Q.sel), whole = Q.sel.indexOf(':') < 0 && a.subs.length, mine = x => whole ? x.split(':')[0] === a.id : x === Q.sel;
-    const pr = Q.L.map((l, k) => ({ id: l.f, k, t: l.t })).filter(x => mine(x.t) && x.id.split(':')[0] !== a.id), su = Q.L.map((l, k) => ({ id: l.t, k, f: l.f })).filter(x => mine(x.f) && x.id.split(':')[0] !== a.id);
-    if (!whole) { const E = sqEdges(); E.filter(e => e.k === -1 && e.t === Q.sel).forEach(e => pr.unshift({ id: e.f, k: -1 })); E.filter(e => e.k === -1 && e.f === Q.sel).forEach(e => su.unshift({ id: e.t, k: -1 })); }
-    d.innerHTML = `<div class="nm">${esc(sqLabel(Q.sel, true))}</div><div class="pth">${esc(a.path.map(p => p.name).join(' › '))}</div>`
-      + (Q.mode ? `<div class="mode"><span>${Q.mode === 'next' ? 'Pick The Successor' : 'Pick The Predecessor'}</span><span class="sp"></span><button class="b" data-m="x">Cancel</button></div>`
-        : `<div class="rw"><span class="lb">Predecessors</span><span class="cs">${chips(pr)}</span></div><div class="rw"><span class="lb">Successors</span><span class="cs">${chips(su)}</span></div>`
-          + (Q.canEdit ? '<div class="rw"><button class="b pri" data-m="prev">＋ Predecessor</button><button class="b pri" data-m="next">＋ Successor</button></div>' : ''));
-  }
-  function sqPickNode(id) {
-    const Q = S.seq;
-    if (Q.mode && Q.sel && id !== Q.sel) { const f = Q.mode === 'next' ? Q.sel : id, t = Q.mode === 'next' ? id : Q.sel; sqAdd(f, t); Q.mode = null; seqPaint(); return; }
-    Q.sel = id; Q.selLink = null; Q.mode = null; seqPaint();
-  }
+  /* v5.14.1 · the panel under the chart is gone: links are typed in the Predecessors / Successors cells; a tap only highlights the row */
+  function sqPickNode(id) { const Q = S.seq; Q.sel = Q.sel === id ? null : id; seqPaint(); }
   function seqRow(ev) {
     const Q = S.seq, s = ev.target.closest('[data-s]'); if (s) { sqPickNode(s.dataset.s); return; }
     const r = ev.target.closest('[data-a]'); if (!r) return; const a = Q.byId[r.dataset.a]; if (!a) return;
-    if (Q.mode) { sqPickNode(a.id); return; }
-    if (a.subs.length && (ev.target.closest('.tg') || Q.sel === a.id)) Q.open[a.id] = !Q.open[a.id];
-    Q.sel = a.id; Q.selLink = null; seqPaint();
+    if (a.subs.length) Q.open[a.id] = !Q.open[a.id];
+    Q.sel = a.id; seqPaint();
   }
-  function seqBar(ev) {
-    const Q = S.seq, b = ev.target.closest('.bar'); if (b) { sqPickNode(b.dataset.n); return; }
-    const h = ev.target.closest('.hit'); if (h) { Q.selLink = +h.dataset.k; Q.sel = null; Q.mode = null; seqPaint(); }
-  }
-  function seqDt(ev) {
-    const Q = S.seq, t = ev.target.closest('button'); if (!t || !Q.canEdit) return;
-    if (t.dataset.m) { Q.mode = t.dataset.m === 'x' ? null : t.dataset.m; seqPaint(); }
-    else if (t.dataset.rm != null) { Q.L.splice(+t.dataset.rm, 1); Q.selLink = null; seqPaint(); }
-  }
+  function seqBar(ev) { const b = ev.target.closest('.bar'); if (b) sqPickNode(b.dataset.n); }
   function seqIn(ev) {
     const Q = S.seq, t = ev.target; if (!t.classList || !t.classList.contains('pi') || !Q.canEdit) return;
     const isP = t.dataset.pr != null, id = isP ? t.dataset.pr : t.dataset.su, nums = [...new Set((t.value.match(/\d+/g) || []).map(Number))], ids = [];
     for (const x of nums) { const o = Q.rev[x]; if (!o) { toast(x > 0 && x <= Q.max ? 'S.No. ' + x + ' Is A Heading' : 'S.No. ' + x + ' Not Found', 'warn'); seqPaint(); return; } ids.push(o); }
     Q.L = Q.L.filter(l => !((isP ? l.t === id : l.f === id) && ids.indexOf(isP ? l.f : l.t) < 0));
     ids.forEach(o => { const f = isP ? o : id, tt = isP ? id : o; if (!Q.L.some(l => l.f === f && l.t === tt)) sqAdd(f, tt); });
-    Q.sel = id; Q.selLink = null; Q.mode = null; seqPaint();
+    Q.sel = id; seqPaint();
   }
   function seqQ(v) { S.seq.q = v; seqPaint(); }
   function seqScope(all) { S.seq.all = !!all; seqPaint(); }
   function seqExp(on) { const Q = S.seq; Q.open = {}; if (on) Q.rows.forEach(a => { if (a.subs.length) Q.open[a.id] = true; }); seqPaint(); }
-  function seqDiscard() { const Q = S.seq; if (!sqDirty()) return; Q.L = Q.saved ? Q.saved.split('|').map(k => { const p = k.split('>'); return { f: p[0], t: p[1] }; }) : []; Q.sel = null; Q.selLink = null; Q.mode = null; seqPaint(); }
+  function seqDiscard() { const Q = S.seq; if (!sqDirty()) return; Q.L = Q.saved ? Q.saved.split('|').map(k => { const p = k.split('>'); return { f: p[0], t: p[1] }; }) : []; Q.sel = null; seqPaint(); }
   async function seqSave() {
     const Q = S.seq; if (!Q || !Q.canEdit || Q.busy || !sqDirty()) return;
     const sp = id => { const p = id.split(':'); return [Number(p[0].slice(1)), p[1] || null]; };
@@ -9244,7 +9199,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqDt, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
+    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,

@@ -76,7 +76,8 @@
 // v80 · Construction v5.12.2 — DPR: × Remove on Labour cards too (pairs with M89 on the database)
 // v81 · Construction v5.13 — Reporting Plan: add a sub-activity inside a named group, move rows between groups
 // v82 · Construction v5.14 — Daily Report manager: Sequence tab (predecessors / successors, project format; pairs with M90 on the database)
-const VERSION = 'pgs-shell-v82';
+// v83 · Construction v5.14.1 — Sequence: the panel under the chart is removed, the chart takes the height
+const VERSION = 'pgs-shell-v83';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

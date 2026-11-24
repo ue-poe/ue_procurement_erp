@@ -74,7 +74,8 @@
 // v78 · Construction v5.12 — DPR: every slab level gets its own floor chip, labelled × Remove on never-reported work, confirm sheet before Add Work
 // v79 · Construction v5.12.1 — DPR Add Work: work already on a sheet always shows, marked green
 // v80 · Construction v5.12.2 — DPR: × Remove on Labour cards too (pairs with M89 on the database)
-const VERSION = 'pgs-shell-v80';
+// v81 · Construction v5.13 — Reporting Plan: add a sub-activity inside a named group, move rows between groups
+const VERSION = 'pgs-shell-v81';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

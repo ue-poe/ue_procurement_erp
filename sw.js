@@ -86,7 +86,8 @@
 // v90 · Construction v5.16.3 — DPR report: End Of Report line; 1 Week Trend shows Week No, date range and weekdays
 // v91 · Construction v5.16.4 — DPR report: contractor wise 1-week trend
 // v92 · Construction v5.16.5 — DPR report: progress as compact cards (every sub-activity, a group is its own card), Non-Estimated as its own area row
-const VERSION = 'pgs-shell-v92';
+// v93 · Construction v5.16.6 — Combined DPR: warning when the report's manpower differs from the labour saved for the day
+const VERSION = 'pgs-shell-v93';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

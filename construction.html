@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16.5</title>
+<title>Penguin Construction v5.16.6</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -7698,10 +7698,16 @@ const DPR = (function () {
     if (C.heads) h += li('↑', 'grey', `<b>Manpower ${fmt(C.heads)} Heads</b>`, top ? `${esc(conName(top.c))} Carries ${fmt(top.h)} (${Math.round(top.h / C.heads * 100)}%)` : '');
     return h || li('·', 'grey', 'Nothing Accepted Yet.');
   }
+  // v5.16.6 · tripwire: the report's manpower against the labour rows saved for the day (the week trend's count). Only when every sent report is in the DPR.
+  function mTotChk(C) { const d = ((S.mTr && S.mTr.days) || []).find(x => x.d === S.mProg), sent = mSent();
+    if (!d || !sent.length || C.inc.length !== sent.length || num(d.tot) === num(C.heads)) return null;
+    const diff = [...new Set(Object.keys(C.by || {}).concat(Object.keys(d.con || {})))].map(c => [c, sum((C.by || {})[c]), num((d.con || {})[c])]).filter(x => x[1] !== x[2]);
+    return { rep: num(C.heads), saved: num(d.tot), diff }; }
+  const mTotWarn = C => { const k = mTotChk(C); return k ? `<div class="d2-warn" style="background:#fdeeee;border:1px solid #f0b4b4;color:#b91c1c;border-radius:8px;margin:0 0 8px"><b>Manpower Does Not Match Saved Labour</b> · Report ${fmt(k.rep)} · Saved ${fmt(k.saved)}${k.diff.length ? ' · ' + k.diff.map(x => `${esc(conName(x[0]))} ${fmt(x[1])} Vs ${fmt(x[2])}`).join(' · ') : ''} · Check Before Sharing</div>` : ''; };
   function mDprView() {
     const C = mComb(), sent = mSent(), pub = mPub(), days = (S.mTr && S.mTr.days) || null, T = days ? rvTrendFacts(days) : null, dd = esc(dsh(S.mProg));
     S.to = S.mProg;
-    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl">${mPdfBtns()}</div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}`;   // v165.1 · Table | Cards
+    let h = `<div class="d2-card">${mBanner(`<div class="rv-ctl">${mPdfBtns()}</div>`)}${mSubtabs()}<div class="rv" id="d2_sc">${mNeed()}${mTotWarn(C)}`;   // v165.1 · Table | Cards
     h += `<div class="rvm-cov"><span class="t">In This DPR</span>${sent.map(s => { const inn = C.inc.some(P => P.id === s.submission_id), a = esc((s.areas || []).join(' · ') || '—');
       return `<span class="cv ${inn ? (s.status === 'Accepted' ? 'ok' : 'pend') : 'pend'}"><b>${a}</b> ${esc(s.engineer || '')} · ${inn ? (s.status === 'Accepted' ? '✓ Accepted' : 'To Review — Preview Only') : 'To Review — Not In'}${s.status === 'Submitted' && S.mPay[s.submission_id] && S.mPay[s.submission_id].data.earlier_open ? ' · Waits On ' + esc(dsh(S.mPay[s.submission_id].data.earlier_open.report_date)) : ''}</span>`; }).join('')}${mNotSent().map(a => `<span class="cv out"><b>${esc(a.area_name)}</b> ${esc(a.home_engineers || '')} · No Report → Not Reported</span>`).join('')}<span class="sp"></span>${!pub && sent.some(s => s.status === 'Submitted') ? `<label class="rvm-chk"><input type="checkbox" ${S.mIncl ? 'checked' : ''} onchange="DPR.mIncl(this.checked)"> Preview Reports Still To Review</label>` : ''}${S.holdOff ? '' : `<label class="rvm-chk"><input type="checkbox" ${S.wPdf ? 'checked' : ''} onchange="DPR.wPdf(this.checked)"> Include Waiting Appendix In PDF</label>`}</div>`;
     const nArea = (S.mQueue.areas || []).length || sent.length, inAreas = new Set(C.inc.flatMap(P => P.areas || [])).size, out = mNotSent().length + C.waitOut.length;

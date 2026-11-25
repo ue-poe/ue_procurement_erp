@@ -85,7 +85,8 @@
 // v89 · Construction v5.16.2 — Share PDF: plain file name, faster build, and Share Image / Save PDF when the phone refuses the PDF
 // v90 · Construction v5.16.3 — DPR report: End Of Report line; 1 Week Trend shows Week No, date range and weekdays
 // v91 · Construction v5.16.4 — DPR report: contractor wise 1-week trend
-const VERSION = 'pgs-shell-v91';
+// v92 · Construction v5.16.5 — DPR report: progress as compact cards (every sub-activity, a group is its own card), Non-Estimated as its own area row
+const VERSION = 'pgs-shell-v92';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

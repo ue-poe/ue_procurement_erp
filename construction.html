@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16</title>
+<title>Penguin Construction v5.16.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -7562,7 +7562,8 @@ const DPR = (function () {
       <div class="meta"><div>DPR ${pub ? `<span class="pill p-vio">Published · ${esc(pub.dpr_no || '')}</span>` : !S.sheet ? '<span class="pill p-grey">Checking…</span>' : '<span class="pill p-amb">Open · Not Published</span>'}</div><div>Reports <b>${sent.length} Of ${all} Sent</b></div>${tr ? `<div><span class="pill p-navy">${tr} To Review</span></div>` : ''}</div>${extra || ''}</div>`;
   }
   const mPdfBtns = () => { const ph = !!(window.matchMedia && window.matchMedia('(max-width: 820px)').matches), b = (m, l, pri) => `<button class="d2-btn sm ${pri ? 'navy' : ''}" onclick="DPR.mPrint('${m}')">⎙ ${l}</button>`;   // v5.16 · the format of the device comes first; the other one stays a tap away
-    return mPub() ? (ph ? b('phone', 'PDF · Phone', 1) + b('lap', 'PDF · A4') : b('lap', 'PDF · A4', 1) + b('phone', 'PDF · Phone')) : b(ph ? 'phone' : 'lap', 'Preview PDF'); };
+    const sh = ph && mCanShare() ? `<button class="d2-btn sm navy" onclick="DPR.mShare()">⤴ Share PDF</button>` : '';
+    return mPub() ? (ph ? sh + b('phone', 'PDF · Phone', !sh) + b('lap', 'PDF · A4') : b('lap', 'PDF · A4', 1) + b('phone', 'PDF · Phone')) : b(ph ? 'phone' : 'lap', 'Preview PDF'); };
   function mPubBtn(pos) {
     const pub = mPub(), sent = mSent(), tr = sent.filter(s => s.status === 'Submitted').length, acc = sent.filter(s => s.status === 'Accepted').length;
     if (pub) return '';   // v167 · the PDF buttons live on the Combined DPR banner (mPdfBtns), not here
@@ -7763,7 +7764,8 @@ const DPR = (function () {
     return { pd, L, trades, tot, areas, byAct: grp('act'), cons, P, T, n: { lines: rowsP.reduce((a, r) => a + r.locs.length, 0), moved: cnt('worked') + cnt('done'), wip: cnt('wip'), nowork: cnt('nowork'), nr: cnt('nr') } };
   }
   function mPrintHtml(mode) {
-    const phone = mode === 'phone'; const C = mComb(), pub = mPub(), dd = esc(dsh(S.mProg)), org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', days = (S.mTr && S.mTr.days) || null;
+    const share = mode === 'share', phone = mode === 'phone' || share;   // v5.16.1 · 'share' = the phone layout at screen size, drawn to a PDF file for the share sheet
+    const C = mComb(), pub = mPub(), dd = esc(dsh(S.mProg)), org = (pgsS.org && pgsS.org.org_name) || (state && state.orgName) || '', days = (S.mTr && S.mTr.days) || null;
     S.to = S.mProg;
     const WH = S.holdOff ? [] : holdRowsP(C.inc); S._prW = WH;   // v5.3 · M49
     const X = prFacts(C, days), T = X.T, pdd = esc(dsh(X.pd)), est = C.heads - C.np, dH = C.prevOk && C.inc.length ? C.heads - C.prev : null;
@@ -7843,7 +7845,7 @@ const DPR = (function () {
     if (outR) p += `<h4>Areas Not In This Report</h4>${outR}`;
     p += waitH + `<div class="ft">${foot}${engs ? ' · ' + engs : ''}</div>`;
     return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(projName())} DPR ${fdd} Phone</title><style>@page{margin:8mm}${CSS}
- body{width:108mm;zoom:1.8;font-size:12.5px;line-height:1.3}
+ body{${share ? 'width:424px;padding:8px' : 'width:108mm;zoom:1.8'};font-size:12.5px;line-height:1.3}
  .ph-h{background:#14233d;color:#fff;border-radius:10px;padding:9px 11px}.ph-h small{display:block;font-size:11px;color:#b8c4d8}.ph-h>b{display:block;font-size:19px;line-height:1.15;margin:1px 0}.ph-h i{font-style:normal;font-size:11px;color:#b8c4d8}
  .k{display:flex;gap:5px;margin-top:8px}.k div{flex:1;min-width:0;background:#22324f;border-radius:8px;padding:5px 8px}.k b{font-size:21px}.k span{display:block;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b8c4d8;white-space:nowrap}.k .r b{color:#fca5a5}
  .s{margin:12px 0 5px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#14233d;border-radius:7px;padding:6px 10px}
@@ -7857,6 +7859,59 @@ const DPR = (function () {
  .ln{display:flex;align-items:center;gap:8px;padding:6px 10px;border-top:1px solid #dfe5ee;break-inside:avoid}.ln:first-child{border-top:0}.ln .nm{width:118px;font-weight:800;color:#14233d;font-size:13px}.ln .hb{flex:1;height:10px;background:#eef1f6}.ln .hb i{display:block;height:100%;background:#2f6fd0}.ln b{font-size:15px;min-width:30px;text-align:right}
  table td,table th{font-size:10.5px;padding:3px 3px}.pill{font-size:10px;padding:1px 5px}.lg{font-size:10.5px;gap:4px 10px;margin:4px 2px}.mu,.nr1{font-size:11px}.lvl h2{font-size:10.5px}.pr-w{font-size:10.5px}.pr-w .row{grid-template-columns:1fr;gap:1px;padding-left:10px}
  .ft{font-size:10px;color:#8492a6;margin:8px 2px}</style></head><body>${p}</body></html>`;
+  }
+  /* ----- v5.16.1 · Share PDF (phone) -----
+       The phone-format report is drawn to images inside the browser and wrapped in a PDF one page tall — the whole report scrolls as one sheet —
+       then handed to the phone's share sheet (WhatsApp, Mail, Drive…). No print dialog, no library. Where the browser cannot share files the
+       buttons stay on Print. */
+  const mCanShare = () => { try { return !!(navigator.canShare && navigator.canShare({ files: [new File([new Uint8Array(1)], 'a.pdf', { type: 'application/pdf' })] })); } catch (e) { return false; } };
+  function prPdf(pages, wPx) {   // pages: [[{ jpg: Uint8Array, w, h (image px), hPx (screen px) }]] · images are stacked top to bottom on each page
+    const enc = new TextEncoder(), parts = [], off = [], defs = [], kids = [], K = 0.75, W = (wPx * K).toFixed(2); let len = 0, n = 3;
+    const put = x => { const u = typeof x === 'string' ? enc.encode(x) : x; parts.push(u); len += u.length; };
+    const obj = (i, body, stream) => { off[i] = len; put(i + ' 0 obj\n' + body + '\n'); if (stream) { put('stream\n'); put(stream); put('\nendstream\n'); } put('endobj\n'); };
+    put('%PDF-1.4\n'); put(new Uint8Array([0x25, 0xE2, 0xE3, 0xCF, 0xD3, 0x0A]));
+    pages.forEach(strips => { const Hpt = strips.reduce((a, x) => a + x.hPx, 0) * K, pageNo = n++, contNo = n++; let y = Hpt, cont = '', xo = '';
+      strips.forEach((x, i) => { const im = n++, h = x.hPx * K; y -= h; cont += 'q ' + W + ' 0 0 ' + h.toFixed(2) + ' 0 ' + y.toFixed(2) + ' cm /I' + i + ' Do Q\n'; xo += '/I' + i + ' ' + im + ' 0 R ';
+        defs.push([im, '<< /Type /XObject /Subtype /Image /Width ' + x.w + ' /Height ' + x.h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + x.jpg.length + ' >>', x.jpg]); });
+      const cb = enc.encode(cont); defs.push([contNo, '<< /Length ' + cb.length + ' >>', cb]);
+      defs.push([pageNo, '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + W + ' ' + Hpt.toFixed(2) + '] /Resources << /XObject << ' + xo + '>> >> /Contents ' + contNo + ' 0 R >>']); kids.push(pageNo + ' 0 R'); });
+    obj(1, '<< /Type /Catalog /Pages 2 0 R >>'); obj(2, '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + kids.length + ' >>'); defs.forEach(d => obj(d[0], d[1], d[2]));
+    const xref = len; put('xref\n0 ' + n + '\n0000000000 65535 f \n'); for (let i = 1; i < n; i++) put(String(off[i]).padStart(10, '0') + ' 00000 n \n');
+    put('trailer\n<< /Size ' + n + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF\n');
+    return new Blob(parts, { type: 'application/pdf' });
+  }
+  async function mPdfFile() {
+    const old = document.getElementById('rv_share_fr'); if (old) old.remove();
+    const W = 424, f = document.createElement('iframe'); f.id = 'rv_share_fr'; f.style.cssText = 'position:fixed;left:-9999px;top:0;width:' + W + 'px;height:10px;border:0;visibility:hidden'; document.body.appendChild(f);
+    try {
+      const doc = f.contentWindow.document; doc.open(); doc.write(mPrintHtml('share')); doc.close();
+      await new Promise(r => setTimeout(r, 120));
+      const H = Math.ceil(doc.documentElement.scrollHeight), name = (doc.title || 'DPR').replace(/ Phone$/, '').replace(/[\\/:*?"<>|]+/g, '-') + '.pdf';
+      const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '"><foreignObject width="100%" height="100%">' + new XMLSerializer().serializeToString(doc.documentElement) + '</foreignObject></svg>';
+      const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('DRAW')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+      const k = 2.5, STRIP = 1400, PAGE = 16800, pages = [[]]; let used = 0;
+      for (let y = 0; y < H; y += STRIP) { const hPx = Math.min(STRIP, H - y), c = document.createElement('canvas'); c.width = Math.round(W * k); c.height = Math.round(hPx * k);
+        const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, -y * k, W * k, H * k);
+        const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.84)); if (!b) throw new Error('DRAW');
+        if (used + hPx > PAGE) { pages.push([]); used = 0; } used += hPx; pages[pages.length - 1].push({ jpg: new Uint8Array(await b.arrayBuffer()), w: c.width, h: c.height, hPx }); c.width = c.height = 0; }
+      return new File([prPdf(pages, W)], name, { type: 'application/pdf' });
+    } finally { f.remove(); }
+  }
+  function mShareBar(file) {   // the share sheet needs a fresh tap when preparing took too long: one bar with one button
+    mShareClose(); S._shFile = file;
+    const d = document.createElement('div'); d.id = 'rv_share'; d.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;display:flex;gap:8px;align-items:center;background:#14233d;color:#fff;border-radius:12px;padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.35);font:600 13px system-ui';
+    d.innerHTML = '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">PDF Ready</span><button class="d2-btn navy" style="background:#fff;color:#14233d" onclick="DPR.mShareNow()">⤴ Share</button><button class="d2-btn" style="background:transparent;color:#fff;border-color:#55657c" onclick="DPR.mShareClose()">✕</button>';
+    document.body.appendChild(d);
+  }
+  function mShareClose() { const d = document.getElementById('rv_share'); if (d) d.remove(); }
+  async function mShareNow() { const file = S._shFile; mShareClose(); if (!file) return; try { await navigator.share({ files: [file], title: file.name.replace(/\.pdf$/, '') }); } catch (e) { if (!e || e.name !== 'AbortError') toast('Could Not Open The Share Sheet', 'error'); } }
+  async function mShare() {
+    if (S._shBusy) return; S._shBusy = true; toast('Preparing The PDF…', 'info', 2500);
+    try { const file = await mPdfFile();
+      try { await navigator.share({ files: [file], title: file.name.replace(/\.pdf$/, '') }); }
+      catch (e) { if (e && e.name === 'AbortError') return; if (e && e.name === 'NotAllowedError') { mShareBar(file); return; } throw e; } }
+    catch (e) { toast('Could Not Prepare The PDF — Opening Print Instead', 'error'); mPrint('phone'); }
+    finally { S._shBusy = false; }
   }
   function mPrint(mode) {   // v5.16 · 'lap' = A4 portrait tables (default) · 'phone' = one column of cards
     const old = document.getElementById('rv_print'); if (old) old.remove();
@@ -9057,7 +9112,7 @@ const DPR = (function () {
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
     let b = MTABS.filter(t => mCan(t[0]) && t[0] !== 'rev').map(t => row(t[1], t[2], `DPR.sheetClose();DPR.mTab('${t[0]}')`)).join('');
     b += row('Day Reports (Calendar)', 'Pick A Date · Published Archive', 'DPR.sheetClose();DPR.mpCal()');
-    if (mPub()) b += row('⎙ PDF · Phone', 'One Column · 120 × 213 mm', "DPR.sheetClose();DPR.mPrint('phone')") + row('⎙ PDF · Laptop', 'A4 Landscape · Three Columns', "DPR.sheetClose();DPR.mPrint('land')");
+    if (mPub()) b += (mCanShare() ? row('⤴ Share PDF', 'Phone Format · To WhatsApp, Mail, Drive', "DPR.sheetClose();DPR.mShare()") : '') + row('⎙ Print · Phone', 'One Column Of Cards', "DPR.sheetClose();DPR.mPrint('phone')") + row('⎙ Print · A4', 'A4 Portrait · Tables', "DPR.sheetClose();DPR.mPrint('lap')");
     else b += row('⎙ Preview PDF', 'Draft DPR · Figures May Still Change', "DPR.sheetClose();DPR.mPrint('land')");
     if (!mPub() && mSent().some(s => s.status === 'Submitted')) b += row((S.mIncl ? '☑' : '☐') + ' Preview Reports Still To Review', 'Show Them In The Combined DPR (Preview Only)', `DPR.sheetClose();DPR.mIncl(${S.mIncl ? 'false' : 'true'})`);
     if (!S.holdOff) b += row((S.wPdf ? '☑' : '☐') + ' Waiting Appendix In PDF', 'Held Activities', `DPR.sheetClose();DPR.wPdf(${S.wPdf ? 'false' : 'true'});DPR.mpMenu()`);
@@ -9162,7 +9217,7 @@ const DPR = (function () {
     h += `<h3>Manpower · ${fmt(C.heads)} Heads${T && T.on ? ` · 7-Day Avg ${fmt(T.avg)}` : ''}</h3><div class="mpb">${mMp(C.by, C.heads, C.np)}</div>`;
     if (pub) h += `<div class="sentnote">Published ${esc(dts(pub.published_at))}${S.sheet && S.sheet.published_by_name ? ' By ' + esc(S.sheet.published_by_name) : ''} · ${esc(pub.dpr_no || '')} · Immutable</div>`;
     const tr = sent.filter(s => s.status === 'Submitted').length;
-    return h + `</div></div><div class="d2-foot pf" id="d2_foot"><span class="msg"><b>DPR ${dd}</b> · ${pub ? 'Published ' + esc(pub.dpr_no || '') : tr ? tr + ' Still To Review — Publish Takes Accepted Ones' : C.inc.length ? 'All Reviewed — Ready To Publish' : 'Nothing Accepted Yet'}</span>${pub ? `<button class="d2-btn" onclick="DPR.mPrint('phone')">⎙ PDF · Phone</button><button class="d2-btn" onclick="DPR.mPrint('land')">⎙ PDF · Laptop</button>` : `<button class="d2-btn" onclick="DPR.mPrint('land')">⎙ Preview PDF</button>${mPubBtn()}`}</div></div>`;
+    return h + `</div></div><div class="d2-foot pf" id="d2_foot"><span class="msg"><b>DPR ${dd}</b> · ${pub ? 'Published ' + esc(pub.dpr_no || '') : tr ? tr + ' Still To Review — Publish Takes Accepted Ones' : C.inc.length ? 'All Reviewed — Ready To Publish' : 'Nothing Accepted Yet'}</span>${pub ? (mCanShare() ? `<button class="d2-btn navy" onclick="DPR.mShare()">⤴ Share PDF</button><button class="d2-btn" onclick="DPR.mPrint('lap')">⎙ Print · A4</button>` : `<button class="d2-btn" onclick="DPR.mPrint('phone')">⎙ PDF · Phone</button><button class="d2-btn" onclick="DPR.mPrint('lap')">⎙ PDF · A4</button>`) : `<button class="d2-btn" onclick="${mCanShare() ? 'DPR.mShare()' : "DPR.mPrint('phone')"}">${mCanShare() ? '⤴ Share Preview' : '⎙ Preview PDF'}</button>${mPubBtn()}`}</div></div>`;
   }
 
   return { rvMode, rvDim, rvPrint, rvGrp, pLL, mpTog, remTog, sameYd, ylabTog, open, engLoad, refresh, tab, filt, areaF, srch, fsrch, setView, subTab, foldRow, foldAll, pickDate, calMove, createDay, dayMove, repGo, clubMode, tick, makeClub, unclub,
@@ -9173,7 +9228,7 @@ const DPR = (function () {
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
-    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mRetryPay, wipeCache,
+    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mShare, mShareNow, mShareClose, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pAddG, pAddS, pRowDel, pRowMv, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();

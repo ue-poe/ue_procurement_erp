@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16.1</title>
+<title>Penguin Construction v5.16.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -7880,37 +7880,42 @@ const DPR = (function () {
     put('trailer\n<< /Size ' + n + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF\n');
     return new Blob(parts, { type: 'application/pdf' });
   }
-  async function mPdfFile() {
+  async function mPdfFile() {   // → { pdf: File, image(): Promise<File> } · the image is the same report as one tall JPEG, made only when asked for
     const old = document.getElementById('rv_share_fr'); if (old) old.remove();
     const W = 424, f = document.createElement('iframe'); f.id = 'rv_share_fr'; f.style.cssText = 'position:fixed;left:-9999px;top:0;width:' + W + 'px;height:10px;border:0;visibility:hidden'; document.body.appendChild(f);
     try {
       const doc = f.contentWindow.document; doc.open(); doc.write(mPrintHtml('share')); doc.close();
       await new Promise(r => setTimeout(r, 120));
-      const H = Math.ceil(doc.documentElement.scrollHeight), name = (doc.title || 'DPR').replace(/ Phone$/, '').replace(/[\\/:*?"<>|]+/g, '-') + '.pdf';
+      const H = Math.ceil(doc.documentElement.scrollHeight), fd = new Date(S.mProg + 'T00:00:00'), dd = String(fd.getDate()).padStart(2, '0') + '-' + String(fd.getMonth() + 1).padStart(2, '0') + '-' + fd.getFullYear();
+      const name = ('DPR ' + dd + ' ' + projName()).replace(/[^A-Za-z0-9 _-]+/g, ' ').replace(/\s+/g, ' ').trim();   // v5.16.2 · plain letters, digits, spaces only: some share sheets refuse other characters
       const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '"><foreignObject width="100%" height="100%">' + new XMLSerializer().serializeToString(doc.documentElement) + '</foreignObject></svg>';
       const img = new Image(); await new Promise((res, rej) => { img.onload = res; img.onerror = () => rej(new Error('DRAW')); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
-      const k = 2.5, STRIP = 1400, PAGE = 16800, pages = [[]]; let used = 0;
-      for (let y = 0; y < H; y += STRIP) { const hPx = Math.min(STRIP, H - y), c = document.createElement('canvas'); c.width = Math.round(W * k); c.height = Math.round(hPx * k);
+      const strip = async (y, hPx, k) => { const c = document.createElement('canvas'); c.width = Math.round(W * k); c.height = Math.round(hPx * k);
         const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, -y * k, W * k, H * k);
-        const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.84)); if (!b) throw new Error('DRAW');
-        if (used + hPx > PAGE) { pages.push([]); used = 0; } used += hPx; pages[pages.length - 1].push({ jpg: new Uint8Array(await b.arrayBuffer()), w: c.width, h: c.height, hPx }); c.width = c.height = 0; }
-      return new File([prPdf(pages, W)], name, { type: 'application/pdf' });
+        const b = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.82)); const o = { w: c.width, h: c.height, hPx, b }; c.width = c.height = 0; if (!b) throw new Error('DRAW'); return o; };
+      const k = 2, STRIP = 2400, PAGE = 16800, pages = [[]]; let used = 0;   // fewer, larger strips: the PDF is ready sooner, so the first tap is still fresh when the share sheet is asked for
+      for (let y = 0; y < H; y += STRIP) { const o = await strip(y, Math.min(STRIP, H - y), k); if (used + o.hPx > PAGE) { pages.push([]); used = 0; } used += o.hPx; pages[pages.length - 1].push({ jpg: new Uint8Array(await o.b.arrayBuffer()), w: o.w, h: o.h, hPx: o.hPx }); }
+      return { pdf: new File([prPdf(pages, W)], name + '.pdf', { type: 'application/pdf' }), image: async () => new File([(await strip(0, H, Math.min(2, 15000 / H))).b], name + '.jpg', { type: 'image/jpeg' }) };
     } finally { f.remove(); }
   }
-  function mShareBar(file) {   // the share sheet needs a fresh tap when preparing took too long: one bar with one button
-    mShareClose(); S._shFile = file;
-    const d = document.createElement('div'); d.id = 'rv_share'; d.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;display:flex;gap:8px;align-items:center;background:#14233d;color:#fff;border-radius:12px;padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.35);font:600 13px system-ui';
-    d.innerHTML = '<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">PDF Ready</span><button class="d2-btn navy" style="background:#fff;color:#14233d" onclick="DPR.mShareNow()">⤴ Share</button><button class="d2-btn" style="background:transparent;color:#fff;border-color:#55657c" onclick="DPR.mShareClose()">✕</button>';
+  const mShareErr = e => e && e.name === 'AbortError' ? '' : ((e && e.name) || 'Error') + (e && e.message ? ' · ' + String(e.message).slice(0, 60) : '');
+  function mShareBar(msg, fail) {   // one bar above the footer: a fresh tap for the share sheet, and — when the PDF itself is refused — the same report as an image or saved to the phone
+    mShareClose(); const B = 'border:0;border-radius:8px;padding:9px 12px;font:700 13px system-ui;white-space:nowrap;cursor:pointer;';
+    const d = document.createElement('div'); d.id = 'rv_share'; d.style.cssText = 'position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#14233d;color:#fff;border-radius:12px;padding:10px 12px;box-shadow:0 6px 24px rgba(0,0,0,.35);font:600 13px system-ui';
+    d.innerHTML = `<span style="flex:1 1 120px;min-width:0;overflow-wrap:anywhere">${esc(msg)}</span>` + (fail ? `<button style="${B}background:#fff;color:#14233d" onclick="DPR.mShareImg()">⤴ Share Image</button><button style="${B}background:#fff;color:#14233d" onclick="DPR.mShareSave()">⬇ Save PDF</button>` : `<button style="${B}background:#fff;color:#14233d" onclick="DPR.mShareNow()">⤴ Share</button>`) + `<button style="${B}background:#22324f;color:#fff" onclick="DPR.mShareClose()">✕</button>`;
     document.body.appendChild(d);
   }
   function mShareClose() { const d = document.getElementById('rv_share'); if (d) d.remove(); }
-  async function mShareNow() { const file = S._shFile; mShareClose(); if (!file) return; try { await navigator.share({ files: [file], title: file.name.replace(/\.pdf$/, '') }); } catch (e) { if (!e || e.name !== 'AbortError') toast('Could Not Open The Share Sheet', 'error'); } }
+  const mShareFiles = file => navigator.share({ files: [file], title: file.name.replace(/\.\w+$/, '') });
+  async function mShareNow() { const F = S._shF; mShareClose(); if (!F) return; try { await mShareFiles(F.pdf); } catch (e) { const m = mShareErr(e); if (m) mShareBar('PDF Not Shared · ' + m, true); } }
+  async function mShareImg() { const F = S._shF; mShareClose(); if (!F) return; try { await mShareFiles(await F.image()); } catch (e) { const m = mShareErr(e); if (m) mShareBar('Image Not Shared · ' + m, true); } }
+  function mShareSave() { const F = S._shF; mShareClose(); if (!F) return; const u = URL.createObjectURL(F.pdf), a = document.createElement('a'); a.href = u; a.download = F.pdf.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 60000); toast('PDF Saved To Downloads'); }
   async function mShare() {
-    if (S._shBusy) return; S._shBusy = true; toast('Preparing The PDF…', 'info', 2500);
-    try { const file = await mPdfFile();
-      try { await navigator.share({ files: [file], title: file.name.replace(/\.pdf$/, '') }); }
-      catch (e) { if (e && e.name === 'AbortError') return; if (e && e.name === 'NotAllowedError') { mShareBar(file); return; } throw e; } }
-    catch (e) { toast('Could Not Prepare The PDF — Opening Print Instead', 'error'); mPrint('phone'); }
+    if (S._shBusy) return; S._shBusy = true; mShareClose(); toast('Preparing The PDF…', 'info', 2500);
+    try { const F = await mPdfFile(); S._shF = F;
+      if (!(navigator.userActivation && navigator.userActivation.isActive === false)) { try { await mShareFiles(F.pdf); return; } catch (e) { const m = mShareErr(e); if (!m) return; if (!e || e.name !== 'NotAllowedError') { mShareBar('PDF Not Shared · ' + m, true); return; } } }
+      mShareBar('PDF Ready');   // preparing outlived the tap (or the browser asks for a tap of its own): one more tap opens the sheet
+    } catch (e) { toast('Could Not Prepare The PDF — Opening Print Instead', 'error'); mPrint('phone'); }
     finally { S._shBusy = false; }
   }
   function mPrint(mode) {   // v5.16 · 'lap' = A4 portrait tables (default) · 'phone' = one column of cards
@@ -9228,7 +9233,7 @@ const DPR = (function () {
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
-    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mShare, mShareNow, mShareClose, mRetryPay, wipeCache,
+    mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mShare, mShareNow, mShareImg, mShareSave, mShareClose, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pAddG, pAddS, pRowDel, pRowMv, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,
     hOpen: hOpenT, hGo, hF: hFset, hArea: hAreaSet, hSet, hStart, hAlloc, hClassify, hClose, hConfirm, hReopen, hNote, _s: S };
 })();

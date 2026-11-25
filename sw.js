@@ -79,7 +79,8 @@
 // v83 · Construction v5.14.1 — Sequence: the panel under the chart is removed, the chart takes the height
 // v84 · Construction v5.15 — Reporting Plan: a group is a split of the location (M92); Sequence lists a grouped activity once
 // v85 · Construction v5.15.1 — left rail: Site Areas and Labour Setup entries removed (they are tabs inside Daily Report)
-const VERSION = 'pgs-shell-v85';
+// v86 · Construction v5.15.2 — Progress: 25 / 50 / 75 buttons fill up to the progress reported; Left counts today's entry
+const VERSION = 'pgs-shell-v86';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

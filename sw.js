@@ -83,7 +83,8 @@
 // v87 · Construction v5.16 — Combined DPR print redesigned: Labour Report + Activity Progress, A4 and Phone formats
 // v88 · Construction v5.16.1 — Combined DPR on the phone: Share PDF straight to the share sheet (no print dialog)
 // v89 · Construction v5.16.2 — Share PDF: plain file name, faster build, and Share Image / Save PDF when the phone refuses the PDF
-const VERSION = 'pgs-shell-v89';
+// v90 · Construction v5.16.3 — DPR report: End Of Report line; 1 Week Trend shows Week No, date range and weekdays
+const VERSION = 'pgs-shell-v90';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

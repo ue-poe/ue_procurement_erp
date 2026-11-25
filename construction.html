@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16.7</title>
+<title>Penguin Construction v5.16.8</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -6892,6 +6892,7 @@ const DPR = (function () {
   const worked = () => allLines().filter(({ g, l }) => outOf(g, l) !== '').length;
   async function preview() {
     if (S.R ? S.R.Y.locked : S.locked) { toast('Already Sent', 'warn'); return; }
+    S.groups.forEach(g => { if (labFill(g)) markDirty(g); });   // v5.16.8
     if (dirtyAll()) { const ok = await saveAll(true); if (!ok) return; }
     S.ylab = false; S.mpo = null; S.remo = null;
     const nAtt = attCount(), nMiss = labStats().miss;   // v159.3 · every attention row blocks preview (heads, hindrance reason, qty / % or WIP)
@@ -8390,6 +8391,8 @@ const DPR = (function () {
     openT(g, l).forEach(s => { const y = x.subs[s.id], t = subT(y), v = oc === 'w' ? (run.indexOf(s) >= 0 ? 'w' : (t.out === 'w' ? '' : t.out)) : oc; t.out = v; t.s = v === 'w' && !subStartedAsOf(s, y) ? S.to : ''; if (v !== 'h') t.rc = ''; });
   }
   const labState = g => { const ls = labLive(g); if (!ls.length) return 'fin'; const os = ls.map(l => outT(g, l)); if (os.some(o => o === 'w')) return 'w'; if (os.every(o => o === 'h')) return 'h'; if (os.every(o => o)) return 'n'; return os.some(o => o) ? 'mix' : ''; };
+  // v5.16.8 · a crew that carries heads: every running row still without a status today is Working (rows set to Hindrance / No Work are left alone)
+  const labFill = g => { if (!dOf(g).cons.some(c => heads(c.heads) > 0)) return false; let ch = false; labLive(g).forEach(l => { if (!outT(g, l)) { labLineSet(g, l, 'w'); if (outT(g, l)) ch = true; } }); return ch; };
   const labRc = g => { for (const l of labLive(g)) { if (!staged(l)) { if (tOf(g, l).rc) return tOf(g, l).rc; } else for (const s of openT(g, l)) { const t = subT(lineX(g, l).subs[s.id]); if (t.rc) return t.rc; } } return ''; };
   const labHeadsAll = g => cardHeads(g);
   const labDone = g => { const st = labState(g); if (st === 'fin') return true; if (st === '' || st === 'mix') return false; if (g.lines.some(l => tReasonMissing(g, l))) return false; return !(st === 'w' && cardNeedsLab(g)); };
@@ -8405,7 +8408,7 @@ const DPR = (function () {
   function labHead(gid, key, ci, tc, v, step) {   // a stepper or a typed number; heads on a crew that has no status yet mark it Working today
     const g = G(gid); if (!g || isRo()) return; const c = unitRows(g, { key })[ci]; if (!c) return;
     const n = Math.max(0, Math.round(step ? num(c.heads[tc]) + step : num(v))); if (n) c.heads[tc] = n; else delete c.heads[tc];
-    if (n && key === 'A' && labState(g) !== 'w') labLive(g).forEach(l => labLineSet(g, l, 'w'));
+    if (n && key === 'A') { if (labState(g) !== 'w') labLive(g).forEach(l => labLineSet(g, l, 'w')); else labFill(g); }   // v5.16.8 · one row already Working no longer leaves the rest blank
     markDirty(g); redraw();
   }
   function labTrade(gid, key, ci) {

@@ -80,7 +80,8 @@
 // v84 · Construction v5.15 — Reporting Plan: a group is a split of the location (M92); Sequence lists a grouped activity once
 // v85 · Construction v5.15.1 — left rail: Site Areas and Labour Setup entries removed (they are tabs inside Daily Report)
 // v86 · Construction v5.15.2 — Progress: 25 / 50 / 75 buttons fill up to the progress reported; Left counts today's entry
-const VERSION = 'pgs-shell-v86';
+// v87 · Construction v5.16 — Combined DPR print redesigned: Labour Report + Activity Progress, A4 and Phone formats
+const VERSION = 'pgs-shell-v87';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

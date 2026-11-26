@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16.9</title>
+<title>Penguin Construction v5.17</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3532,6 +3532,85 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .mp2 .vr{flex:none;width:1px;height:20px;background:rgba(255,255,255,.28);align-self:center;margin:0 1px}
 #mod-dpr .dp2 .pf-top .mp2 .sd{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
 #mod-dpr .dp2 .pf-top .mp2 .sd.a{background:#fbbf24}#mod-dpr .dp2 .pf-top .mp2 .sd.g{background:#34d399}#mod-dpr .dp2 .pf-top .mp2 .sd.r{background:#f87171}
+/* v5.17 · manager Analysis (DPR_Manager_Analysis_mock_v4) — every class is an-*; layout follows the width of the screen area (container query) */
+#mod-dpr .dp2 .an{container-type:inline-size;container-name:an;padding:8px 10px 16px;background:#fff;font-size:13px;color:#1e293b;font-variant-numeric:tabular-nums}
+#mod-dpr .dp2 .an,#mod-dpr .dp2 .an *{box-sizing:border-box}
+#mod-dpr .dp2 .an .an-tabs{display:flex;gap:6px;border-bottom:1px solid #cbd5e1;margin-bottom:9px;align-items:flex-end}
+#mod-dpr .dp2 .an .an-tabs button{border:1px solid #cbd5e1;border-bottom:0;background:#e4e9f2;color:#6b7690;font-weight:700;font-size:13.5px;padding:7px 16px;border-radius:9px 9px 0 0;cursor:pointer}
+#mod-dpr .dp2 .an .an-tabs button.on{background:#fff;color:var(--dn,#16233f);position:relative;top:1px}
+#mod-dpr .dp2 .an .an-tabs button small{font-weight:600;color:#6b7690;margin-left:6px;font-size:11px}
+#mod-dpr .dp2 .an .an-tabs .sp{flex:1}
+#mod-dpr .dp2 .an .an-tabs button.rl{border:1px solid #cbd5e1;border-radius:6px;background:#fff;padding:3px 10px;margin-bottom:5px;font-size:14px}
+#mod-dpr .dp2 .an .an-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:10px}
+#mod-dpr .dp2 .an .an-k{border:1px solid #cbd5e1;border-radius:9px;padding:6px 10px;background:#fff;min-width:0}
+#mod-dpr .dp2 .an .an-k b{font-size:21px;display:block;line-height:1.15}
+#mod-dpr .dp2 .an .an-k b small{font-size:11.5px;color:#6b7690;font-weight:700;margin-left:5px}
+#mod-dpr .dp2 .an .an-k span{font-size:11px;color:#6b7690;font-weight:700}
+#mod-dpr .dp2 .an .an-k.red{background:#fde8e8;border-color:#f3b4b4}#mod-dpr .dp2 .an .an-k.red b{color:#b91c1c}
+#mod-dpr .dp2 .an .an-k.amb{background:#fdf0d2;border-color:#ecd08f}#mod-dpr .dp2 .an .an-k.amb b{color:#a35b00}
+#mod-dpr .dp2 .an .an-k.grn b{color:#15803d}
+#mod-dpr .dp2 .an .an-sec{display:flex;align-items:center;gap:6px 10px;margin:13px 0 6px;flex-wrap:wrap}
+#mod-dpr .dp2 .an .an-sec h3{font-size:14px;color:var(--dn,#16233f);margin:0;padding:0;border:0;background:none;text-transform:none;letter-spacing:0}
+#mod-dpr .dp2 .an .an-cnt{background:var(--dn,#16233f);color:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:2px 9px}
+#mod-dpr .dp2 .an .an-cnt.red{background:#b91c1c}
+#mod-dpr .dp2 .an .an-q{border:1px solid #cbd5e1;border-radius:7px;padding:5px 9px;font:inherit;font-size:12px;width:220px;margin-left:auto;background:#fff}
+#mod-dpr .dp2 .an .an-tg{display:flex;border:1px solid #cbd5e1;border-radius:7px;overflow:hidden}
+#mod-dpr .dp2 .an .an-tg:empty{display:none}
+#mod-dpr .dp2 .an .an-tg button{border:0;background:#fff;color:#6b7690;font-weight:700;font-size:12px;padding:5px 11px;cursor:pointer}
+#mod-dpr .dp2 .an .an-tg button.on{background:var(--dn,#16233f);color:#fff}
+#mod-dpr .dp2 .an table.an-t{border-collapse:collapse;width:100%;background:#fff}
+#mod-dpr .dp2 .an table.an-t th,#mod-dpr .dp2 .an table.an-t td{border:1px solid #cbd5e1;padding:5px 8px;vertical-align:middle;text-align:left;font-size:12.5px}
+#mod-dpr .dp2 .an table.an-t thead th{background:#1e2a4a;color:#fff;font-size:11.5px;font-weight:700;border-color:#3a4a72;white-space:nowrap}
+#mod-dpr .dp2 .an table.an-t thead th i{font-style:normal;font-weight:600;color:#b9c3dc;font-size:10.5px;margin-left:4px}
+#mod-dpr .dp2 .an table.an-t .n{text-align:right;font-weight:700}
+#mod-dpr .dp2 .an table.an-t tr.tot td{background:#1e2a4a;color:#fff;font-weight:700;border-color:#3a4a72}
+#mod-dpr .dp2 .an table.an-t td.z{background:#fde8e8;color:#b91c1c}
+#mod-dpr .dp2 .an table.an-t td.na{color:#98a2b8;text-align:right;font-size:11.5px}
+#mod-dpr .dp2 .an table.an-t td.loc{font-weight:700}
+#mod-dpr .dp2 .an #an_dep td{padding:3px 8px}
+#mod-dpr .dp2 .an .an-mut{color:#6b7690;font-size:11.5px;font-weight:600}
+#mod-dpr .dp2 .an .an-p{display:inline-block;border-radius:99px;font-size:11px;font-weight:700;padding:2px 9px;white-space:nowrap}
+#mod-dpr .dp2 .an .an-p.w{background:#dcfce7;color:#15803d}#mod-dpr .dp2 .an .an-p.h{background:#fde8e8;color:#b91c1c}#mod-dpr .dp2 .an .an-p.nw{background:#fdf0d2;color:#a35b00}#mod-dpr .dp2 .an .an-p.ns{background:#e4e9f2;color:#475569}
+#mod-dpr .dp2 .an .an-dc{display:inline-flex;align-items:center;gap:7px;border:1px solid #cbd5e1;border-radius:6px;padding:1px 4px 1px 7px;margin:1px 5px 1px 0;font-size:12px;font-weight:600;white-space:nowrap}
+#mod-dpr .dp2 .an .an-dc b{background:#e4e9f2;border-radius:4px;padding:0 6px;font-size:13px;min-width:22px;text-align:center}
+#mod-dpr .dp2 .an .an-dc.z{border-color:#f3b4b4;color:#b91c1c}#mod-dpr .dp2 .an .an-dc.z b{background:#fde8e8}
+#mod-dpr .dp2 .an .an-two{display:grid;grid-template-columns:1fr 1.25fr;gap:12px;align-items:start}
+#mod-dpr .dp2 .an .an-ac{border:1px solid #cbd5e1;border-left:4px solid #15803d;border-radius:8px;margin-bottom:7px;overflow:hidden;background:#fff}
+#mod-dpr .dp2 .an .an-ac.k0{border-left-color:#b91c1c}#mod-dpr .dp2 .an .an-ac.k1,#mod-dpr .dp2 .an .an-ac.k4{border-left-color:#64748b}#mod-dpr .dp2 .an .an-ac.k2,#mod-dpr .dp2 .an .an-ac.k3{border-left-color:#d97706}
+#mod-dpr .dp2 .an .an-ah{display:flex;align-items:center;gap:4px 10px;flex-wrap:wrap;background:#e4e9f2;padding:4px 10px;color:var(--dn,#16233f)}
+#mod-dpr .dp2 .an .an-ah>b{font-size:13.5px}
+#mod-dpr .dp2 .an .an-as{margin-left:auto;display:flex;gap:4px 14px;align-items:center;flex-wrap:wrap;font-weight:700}
+#mod-dpr .dp2 .an .an-as small{font-size:10px;color:#6b7690;font-weight:700;text-transform:uppercase}
+#mod-dpr .dp2 .an .an-lr{display:flex;flex-wrap:wrap;align-items:center;border-top:1px solid #e3e8f0;padding:2px 10px}
+#mod-dpr .dp2 .an .an-ln{flex:1 1 200px;min-width:190px;line-height:1.25;padding:2px 0}
+#mod-dpr .dp2 .an .an-ln b{display:block;font-size:12.5px}#mod-dpr .dp2 .an .an-ln .an-mut{font-size:11px}
+#mod-dpr .dp2 .an .an-m{width:70px;text-align:right;padding:2px 7px;border-left:1px solid #e3e8f0;font-weight:700;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+#mod-dpr .dp2 .an .an-m small{display:block;white-space:nowrap;font-size:9.5px;color:#6b7690;text-transform:uppercase;letter-spacing:.02em;font-weight:700}
+#mod-dpr .dp2 .an .an-m.dnb{width:104px}#mod-dpr .dp2 .an .an-m.st{width:186px;text-align:left;align-items:flex-start}
+#mod-dpr .dp2 .an .an-m.z{background:#fde8e8;color:#b91c1c}#mod-dpr .dp2 .an .an-m.lo{background:#fdf0d2;color:#a35b00}#mod-dpr .dp2 .an .an-m.ok{color:#15803d}
+#mod-dpr .dp2 .an .an-bar{display:inline-flex;width:46px;height:7px;background:#e4e9f2;border-radius:9px;vertical-align:middle;margin-right:6px;overflow:hidden}
+#mod-dpr .dp2 .an .an-bar i{display:block;height:100%;background:#8fa3cf}#mod-dpr .dp2 .an .an-bar i.mv{background:#5b3fb5}
+#mod-dpr .dp2 .an .an-brk{display:none}
+@container an (min-width:981px){#mod-dpr .dp2 .an .an-lr+.an-lr .an-m small{display:none}}
+@container an (max-width:980px){
+  #mod-dpr .dp2 .an .an-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}#mod-dpr .dp2 .an .an-two{grid-template-columns:1fr}
+  #mod-dpr .dp2 .an .an-ln{flex:1 1 0;min-width:0;order:0}
+  #mod-dpr .dp2 .an .an-m.st{order:1;flex:0 0 auto;width:auto;max-width:none;padding:0 0 0 6px;border-left:0}#mod-dpr .dp2 .an .an-m.st small{display:none}
+  #mod-dpr .dp2 .an .an-brk{display:block;order:2;flex-basis:100%;height:0}
+  #mod-dpr .dp2 .an .an-m,#mod-dpr .dp2 .an .an-m.dnb{order:3;width:auto;flex:1 1 24%;max-width:25%;flex-direction:row;justify-content:flex-start;align-items:baseline;gap:5px;text-align:left;border-left:0;padding:1px 2px;white-space:nowrap}
+  #mod-dpr .dp2 .an .an-m.dnb .an-bar{width:30px;margin-right:3px}#mod-dpr .dp2 .an .an-m.z,#mod-dpr .dp2 .an .an-m.lo{border-radius:4px}
+  #mod-dpr .dp2 .an .an-as{margin-left:0;flex-basis:100%}#mod-dpr .dp2 .an .an-q{margin-left:0;flex:1 1 160px;width:auto}
+}
+@container an (max-width:700px){
+  #mod-dpr .dp2 .an{padding:6px 6px 16px}#mod-dpr .dp2 .an .an-kpis{gap:6px}#mod-dpr .dp2 .an .an-k b{font-size:18px}
+  #mod-dpr .dp2 .an table.an-t.rw thead{display:none}#mod-dpr .dp2 .an table.an-t.rw,#mod-dpr .dp2 .an table.an-t.rw tbody{display:block}
+  #mod-dpr .dp2 .an table.an-t.rw tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #cbd5e1;border-radius:8px;margin-bottom:6px;overflow:hidden}
+  #mod-dpr .dp2 .an table.an-t.rw td{display:block;border:0;border-top:1px solid #e3e8f0;text-align:left;padding:4px 8px}
+  #mod-dpr .dp2 .an table.an-t.rw td::before{content:attr(data-l);display:block;font-size:9.5px;font-weight:700;color:#6b7690;text-transform:uppercase;letter-spacing:.03em}
+  #mod-dpr .dp2 .an table.an-t.rw td.wd{grid-column:1/-1}
+  #mod-dpr .dp2 .an .an-x{overflow-x:auto}#mod-dpr .dp2 .an .an-x table{min-width:480px}
+}
+@container an (max-width:520px){#mod-dpr .dp2 .an .an-m,#mod-dpr .dp2 .an .an-m.dnb{flex-basis:32%;max-width:34%}#mod-dpr .dp2 .an .an-p{font-size:10.5px;padding:2px 7px}}
 @media(max-width:860px){
   /* the shell's top bar gives way to the sheet header; ☰ opens the same drawer (project, Switch Project, modules) */
   body:has(#mod-dpr.active #pf_top):not(.pgs-nav-open) .pgs-sidebar{position:static!important;box-shadow:none!important;padding:0!important;min-height:0!important}
@@ -7579,6 +7658,7 @@ const DPR = (function () {
   function mMain() {
     if (S.mv === 'eng' && S.mEng && S.mPay[S.mEng]) return mTabsRow() + mpEng();   // v5.5 · phone flow (mEngView / mDprView / mDayView kept for reference)
     if (S.mv === 'dpr') return mTabsRow() + mpDpr();
+    if (S.mv === 'an') return mTabsRow() + mpAn();   // v5.17 · manager Analysis (M98)
     S.mv = 'day'; return mTabsRow() + mpDay();
   }
 
@@ -9143,10 +9223,129 @@ const DPR = (function () {
     const st = pub ? `<b class="acc">Published</b> · ${esc(pub.dpr_no || '')}` : !S.sheet ? '<b>Checking…</b>' : `<b class="draft">DPR Open</b>`;
     const engs = sent.map(x => S.mPay[x.submission_id]).filter(Boolean), me = engs.find(o => o.id === cur);
     const dot = o => o.s.status === 'Accepted' ? 'g' : o.s.status === 'Returned' ? 'r' : 'a';
-    const where = me ? me.name.split(' ')[0] + ' · ' + (MP_STM[me.s.status] || ['', me.s.status])[1] : S.mv === 'dpr' ? 'Combined DPR' : 'Engineer Reports';
+    const where = me ? me.name.split(' ')[0] + ' · ' + (MP_STM[me.s.status] || ['', me.s.status])[1] : S.mv === 'dpr' ? 'Combined DPR' : S.mv === 'an' ? 'Analysis' : 'Engineer Reports';
     return `<div class="pf-top mp" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.mDay(-1)">‹</button><button class="date" onclick="DPR.mpCal()"><b>${esc(dmy(S.mProg))}</b><i>▾</i></button><button class="nav" ${S.mDate >= S.mToday ? 'disabled' : ''} onclick="DPR.mDay(1)">›</button>
       <div class="st"><div>${st}</div><div class="m"><span class="m1">${sent.length} Of ${all} Sent${tr ? ` · <span class="late">${tr} To Review</span>` : ''} · Labour ${esc(dsh(S.mDate))}</span><span class="m2">${esc(where)}</span></div></div><button class="menu" title="Reporting Plan · Hindrances · Areas · Setup · PDF" onclick="DPR.mpMenu()">⋯</button></div>
-      <div class="floors scroll r2 mp2"><span class="sg"><button class="${S.mv !== 'dpr' ? 'on' : ''}" title="${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}" onclick="DPR.mV('day')">Reports <i>${sent.length}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" title="One Report · Cumulative" onclick="DPR.mV('dpr')">Combined</button></span>${engs.length ? '<span class="vr"></span>' : ''}${engs.map(o => `<button class="${o.id === cur ? 'on' : ''}" title="${esc(o.name + ' · ' + (MP_STM[o.s.status] || ['', o.s.status])[1])}" onclick="DPR.mEng('${o.id}')"><span class="sd ${dot(o)}"></span>${esc(o.name.split(' ')[0])}</button>`).join('')}</div></div>`;
+      <div class="floors scroll r2 mp2"><span class="sg"><button class="${S.mv !== 'dpr' && S.mv !== 'an' ? 'on' : ''}" title="${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}" onclick="DPR.mV('day')">Reports <i>${sent.length}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" title="One Report · Cumulative" onclick="DPR.mV('dpr')">Combined</button><button class="${S.mv === 'an' ? 'on' : ''}" title="Labour · Progress · Numbers" onclick="DPR.mV('an')">Analysis</button></span>${engs.length ? '<span class="vr"></span>' : ''}${engs.map(o => `<button class="${o.id === cur ? 'on' : ''}" title="${esc(o.name + ' · ' + (MP_STM[o.s.status] || ['', o.s.status])[1])}" onclick="DPR.mEng('${o.id}')"><span class="sd ${dot(o)}"></span>${esc(o.name.split(' ')[0])}</button>`).join('')}</div></div>`;
+  }
+  /* ==================================================================
+     v5.17 · MANAGER ANALYSIS (DPR_Manager_Analysis_mock_v4, approved 26 Nov 2026) · reads M98 rpc_dpr_analysis only.
+     Third segment beside Reports / Combined. Labour = heads of the report date; Progress = the day before, one card per
+     activity with its locations as micro rows. A row is what labour is booked to (card · club · plan group). Nothing is written.
+     Tab / sort / search repaint #an_body only — the scroll area and the header stay where they are.
+     ================================================================== */
+  const AN_MISS = e => /rpc_dpr_analysis|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
+  const anS = () => (S.an = S.an || { tab: 'lab', sort: 'att', q: '', nr: true });
+  async function anLoad(force) {
+    const d = S.mProg, A = anS(); if (!d) return;
+    if (!force && (A.key === d || A.busy === d)) return;
+    A.busy = d; A.err = null; if (force) { A.key = null; A.data = null; A.R = null; anDraw(); }
+    try { const data = await rpc('rpc_dpr_analysis', { p_report_date: d }); if (S.mProg === d) { A.data = data || {}; A.R = null; A.key = d; } }
+    catch (e) { if (S.mProg === d) { A.err = AN_MISS(e) ? 'miss' : String((e && e.message) || e); A.data = null; A.R = null; A.key = d; } }
+    finally { if (A.busy === d) A.busy = null; }
+    if (S.view === 'mgr' && S.mv === 'an') { if (S.mProg === d) anDraw(); else anLoad(); }
+  }
+  function anDraw() { const el = $('an_body'); if (el) el.innerHTML = anBody(); else if (S.view === 'mgr' && S.mv === 'an') mPaint(); }
+  function anTab(t) { anS().tab = t; anDraw(); }
+  function anSort(s) { anS().sort = s; anDraw(); }
+  function anNr() { const A = anS(); A.nr = !A.nr; anDraw(); }
+  function anQ(v) { const A = anS(); A.q = v || ''; document.querySelectorAll('#an_body .an-ac').forEach(c => { c.style.display = fz(c.getAttribute('data-s') || '', A.q) ? '' : 'none'; }); }
+  function anReload() { anLoad(true); }
+  const anN = v => v == null ? '—' : fmt(Math.abs(num(v)) < 10 ? Math.round(num(v) * 10) / 10 : Math.round(num(v)));
+  const anLoc = r => (r.loc_path || r.loc_name || '—') + (r.plan_group ? ' · ' + r.plan_group : '') + (num(r.n_lines) > 1 ? ' · ' + r.n_lines + ' Lines' : '');
+  const anChipLoc = r => (r.loc_name || r.loc_path || '—') + (r.plan_group ? ' · ' + r.plan_group : '');
+  function anRows() {   // derive once per load: flags, per-head figures, day counts
+    const A = anS(); if (A.R) return A.R; const D = A.data || {}, d = D.report_date || S.mProg, pd = D.progress_date || addDays(d, -1);
+    const rows = (D.rows || []).map(r => { const x = Object.assign({}, r), un = r.kind === 'unassigned';
+      x.un = un; x.area = r.area || 'Unassigned'; x.heads = r.heads == null ? null : num(r.heads); x.hp = r.heads_prev == null ? null : num(r.heads_prev);
+      x.mv = r.moved == null ? null : num(r.moved); x.ph = x.hp > 0 && r.moved_matched != null ? num(r.moved_matched) / x.hp : null;
+      x.avg = num(r.man_days) > 0 && r.qty_hist != null ? num(r.qty_hist) / num(r.man_days) : null;
+      x.day = r.started_on ? daysBetween(r.started_on, pd) + 1 : null; x.stall = r.last_moved ? Math.max(0, daysBetween(r.last_moved, pd)) : x.day;
+      x.idle = r.last_worked ? daysBetween(r.last_worked, d) : null; x.subDay = r.sub && r.sub.started_on ? daysBetween(r.sub.started_on, pd) + 1 : null;
+      x.nrDays = r.last_report ? daysBetween(r.last_report, d) : null;
+      // labour today
+      x.st = !r.reported ? 'ns' : x.heads > 0 ? 'w' : r.outcome === 'hindrance' ? 'h' : r.outcome === 'worked' ? 'w0' : 'n';
+      // progress of the day before
+      x.f = !r.reported ? 'nr' : !r.has_progress ? 'new' : x.hp > 0 && !(x.mv > 0) && r.outcome_prev === 'worked' ? 'zero' : r.outcome_prev === 'hindrance' ? 'h' : r.outcome_prev === 'none' ? 'n'
+          : !(x.mv > 0) ? 'wip' : (x.ph != null && x.avg != null && x.ph < 0.7 * x.avg) ? 'low' : 'ok';
+      x.rank = { zero: 0, nr: 1, h: 2, n: 2, wip: 2, low: 3, 'new': 4, ok: 5 }[x.f];
+      return x; });
+    const ne = (D.non_estimated || []).map(n => ({ contractor: n.contractor, trade: n.trade, heads: num(n.heads), area: n.area || 'Unassigned', reason: n.reason || 'Non-Estimated', loc: n.loc_path || '' }));
+    const nsAreas = new Set(); (D.not_sent || []).forEach(e => String(e.areas || '').split(',').map(s => s.trim()).filter(Boolean).forEach(a => nsAreas.add(a)));
+    const lab = [];   // one flat list of today's heads: every Labour table is built from it, so the totals cannot differ
+    rows.filter(r => r.reported).forEach(r => (r.labour || []).forEach(l => lab.push({ con: l.contractor, tr: l.trade, h: num(l.heads), area: r.area, loc: (r.loc_path || r.loc_name || '—') })));
+    ne.forEach(n => lab.push({ con: n.contractor, tr: n.trade, h: n.heads, area: n.area, loc: n.area + ' › Non-Estimated' }));
+    const areas = [...new Set([...rows.filter(r => r.reported).map(r => r.area), ...ne.map(n => n.area), ...nsAreas])].sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
+    return (A.R = { D, d, pd, rows, ne, nsAreas, lab, areas, cn: c => (D.contractors && D.contractors[c]) || conName(c) || c || '—' });
+  }
+  const anK = (v, lab, c, sm) => `<div class="an-k ${c || ''}"><b>${v}${sm ? `<small>${sm}</small>` : ''}</b><span>${lab}</span></div>`;
+  const anPill = (c, t) => `<span class="an-p ${c}">${t}</span>`;
+  const anStPill = r => r.st === 'w' ? anPill('w', 'Working') : r.st === 'h' ? anPill('h', 'Hindrance' + (r.reason ? ' · ' + esc(r.reason) : '')) : r.st === 'w0' ? anPill('h', 'Working · No Heads') : r.st === 'n' ? anPill('nw', 'No Work') : anPill('ns', 'Not Sent' + (r.engineer ? ' · ' + esc(r.engineer.split(' ')[0]) : ''));
+  const anFlag = r => ({ nr: anPill('ns', 'Not Reported' + (r.nrDays == null ? ' · Never' : ' · ' + r.nrDays + ' Day' + (r.nrDays === 1 ? '' : 's')) + (r.engineer ? ' · ' + esc(r.engineer.split(' ')[0]) : '')),
+    zero: anPill('h', 'Heads · No Progress'), h: anPill('h', 'Hindrance' + (r.reason && r.st === 'h' ? ' · ' + esc(r.reason) : '')), n: anPill('nw', 'No Work'), wip: anPill('nw', 'Working · No Progress'),
+    low: anPill('nw', 'Below Average'), 'new': anPill('ns', 'Started ' + esc(dsh(anS().R.d))), ok: anPill('w', 'Moved') })[r.f];
+  function anLab() {
+    const M = anRows(), D = M.D, rep = M.rows.filter(r => r.reported), act = M.rows.filter(r => !r.un), broken = rep.filter(r => !r.un && !(r.heads > 0)), nr = M.rows.filter(r => !r.reported);
+    const hT = num(D.heads), hP = D.heads_prev == null ? null : num(D.heads_prev), neH = M.ne.reduce((a, n) => a + n.heads, 0), sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+    let h = `<div class="an-kpis">${anK(fmt(hT), 'Heads ' + esc(dsh(M.d)), '', hP == null ? '' : (hT - hP >= 0 ? '+' : '') + fmt(hT - hP) + ' vs ' + esc(dsh(M.pd)))}${anK(act.length, 'Active Lines')}${anK(rep.filter(r => !r.un && r.heads > 0).length, 'With Labour', 'grn')}${anK(broken.length, 'No Labour', broken.length ? 'red' : '')}${anK(nr.length, 'Not Reported', nr.length ? 'amb' : '', esc([...M.nsAreas].join(', ')))}${anK(fmt(neH), 'Non-Estimated Heads')}</div>`;
+    h += `<div class="an-sec"><h3>No Labour Today</h3><span class="an-cnt ${broken.length ? 'red' : ''}">${broken.length}</span></div>`;
+    if (broken.length) h += `<table class="an-t rw"><thead><tr><th>Activity</th><th>Location</th><th>Engineer</th><th>Status ${esc(dsh(M.d))}</th><th class="n">Last Worked</th><th class="n">Idle Days</th><th class="n">Progress</th><th class="n">Day</th></tr></thead><tbody>${
+      broken.slice().sort((a, b) => num(b.idle) - num(a.idle)).map(r => `<tr><td class="wd" data-l="Activity"><b>${esc(r.activity)}</b></td><td class="wd loc" data-l="Location">${esc(anLoc(r))}</td><td data-l="Engineer">${esc(r.engineer || '—')}</td><td data-l="Status">${anStPill(r)}</td><td class="n" data-l="Last Worked">${r.last_worked ? esc(dsh(r.last_worked)) : '—'}</td><td class="n ${r.idle == null ? '' : 'z'}" data-l="Idle Days">${r.idle == null ? '—' : r.idle}</td><td class="n" data-l="Progress">${r.pct == null ? '—' : fmt(r.pct) + '%'}</td><td class="n" data-l="Day">${r.day == null ? '—' : r.day}</td></tr>`).join('')}</tbody></table>`;
+    // compact deployment: one row per activity, one column per site area, location + heads in the cell
+    const dep = new Map(); rep.forEach(r => { const k = r.activity; if (!dep.has(k)) dep.set(k, { act: k, ne: false, cells: [] }); dep.get(k).cells.push({ area: r.area, t: anChipLoc(r), h: num(r.heads), z: !(r.heads > 0) }); });
+    M.ne.forEach(n => { const k = '\u0001' + n.reason; if (!dep.has(k)) dep.set(k, { act: n.reason, ne: true, cells: [] }); const c = dep.get(k).cells.find(x => x.area === n.area); if (c) c.h += n.heads; else dep.get(k).cells.push({ area: n.area, t: 'Non-Estimated', h: n.heads, z: false }); });
+    const chip = c => `<span class="an-dc ${c.z ? 'z' : ''}">${esc(c.t)}<b>${fmt(c.h)}</b></span>`, ath = a => `<th>${esc(a)}${M.nsAreas.has(a) ? ' <i>Not Sent</i>' : ''}</th>`;
+    const at = a => sum(M.lab.filter(l => l.area === a), l => l.h);
+    h += `<div class="an-sec"><h3>Deployment · Activity × Location</h3><span class="an-cnt">${fmt(hT)} Heads</span></div><div class="an-x"><table class="an-t" id="an_dep"><thead><tr><th>Activity</th>${M.areas.map(ath).join('')}<th class="n">Total</th></tr></thead><tbody>${
+      [...dep.values()].map(a => { const t = sum(a.cells, c => c.h); return `<tr><td><b>${esc(a.act)}</b>${a.ne ? ' <span class="an-mut">NE</span>' : ''}</td>${M.areas.map(ar => `<td>${a.cells.filter(c => c.area === ar).map(chip).join('') || '<span class="an-mut">·</span>'}</td>`).join('')}<td class="n ${t ? '' : 'z'}">${fmt(t)}</td></tr>`; }).join('')}
+      <tr class="tot"><td>Total</td>${M.areas.map(a => `<td class="n">${M.nsAreas.has(a) && !at(a) ? '—' : fmt(at(a))}</td>`).join('')}<td class="n">${fmt(sum(M.lab, l => l.h))}</td></tr></tbody></table></div>`;
+    // the two manpower tables
+    const cons = [...new Set(M.lab.map(l => l.con))].sort((a, b) => sum(M.lab.filter(l => l.con === b), l => l.h) - sum(M.lab.filter(l => l.con === a), l => l.h));
+    const cell = v => `<td class="n">${v ? fmt(v) : '<span class="an-mut">·</span>'}</td>`;
+    h += `<div class="an-two"><div><div class="an-sec"><h3>Contractor × Area</h3></div><div class="an-x"><table class="an-t"><thead><tr><th>Contractor</th>${M.areas.map(a => `<th class="n">${esc(a)}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>${
+      cons.map(c => { const L = M.lab.filter(l => l.con === c), T = {}; L.forEach(l => { T[l.tr] = num(T[l.tr]) + l.h; });
+        return `<tr><td><b>${esc(M.cn(c))}</b><br><span class="an-mut">${Object.entries(T).map(([t, v]) => esc(tCode(t)) + ' ' + fmt(v)).join(' · ')}</span></td>${M.areas.map(a => { const v = sum(L.filter(l => l.area === a), l => l.h); return M.nsAreas.has(a) && !at(a) ? '<td class="na">Not Sent</td>' : cell(v); }).join('')}<td class="n">${fmt(sum(L, l => l.h))}</td></tr>`; }).join('')}
+      <tr class="tot"><td>Total</td>${M.areas.map(a => `<td class="n">${M.nsAreas.has(a) && !at(a) ? '—' : fmt(at(a))}</td>`).join('')}<td class="n">${fmt(sum(M.lab, l => l.h))}</td></tr></tbody></table></div></div>`;
+    const locs = [...new Set(M.lab.map(l => l.loc))].sort((a, b) => a.localeCompare(b, 'en', { numeric: true })), sh = c => { const w = M.cn(c).split(' '); return w[0] + (w[1] && w[0].length < 4 ? ' ' + w[1] : ''); };
+    h += `<div><div class="an-sec"><h3>Location × Contractor</h3></div><div class="an-x"><table class="an-t"><thead><tr><th>Location</th>${cons.map(c => `<th class="n" title="${esc(M.cn(c))}">${esc(sh(c))}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>${
+      locs.map(lc => { const L = M.lab.filter(l => l.loc === lc); return `<tr><td class="loc">${esc(lc)}</td>${cons.map(c => cell(sum(L.filter(l => l.con === c), l => l.h))).join('')}<td class="n">${fmt(sum(L, l => l.h))}</td></tr>`; }).join('')}
+      <tr class="tot"><td>Total</td>${cons.map(c => `<td class="n">${fmt(sum(M.lab.filter(l => l.con === c), l => l.h))}</td>`).join('')}<td class="n">${fmt(sum(M.lab, l => l.h))}</td></tr></tbody></table></div></div></div>`;
+    return h;
+  }
+  function anPrg() {
+    const M = anRows(), A = anS(), E = M.rows.filter(r => !r.un), sum = (a, f) => a.reduce((s, x) => s + f(x), 0), pdS = esc(dsh(M.pd));
+    const zero = E.filter(r => r.f === 'zero'), nr = E.filter(r => r.f === 'nr'), shown = A.nr ? E : E.filter(r => r.f !== 'nr');
+    let h = `<div class="an-kpis">${anK(E.filter(r => r.mv > 0).length, 'Lines Moved', 'grn', 'Of ' + E.filter(r => r.reported).length)}${anK(M.D.heads_prev == null ? '—' : fmt(M.D.heads_prev), 'Heads ' + pdS)}${anK(zero.length, 'Heads · No Progress', zero.length ? 'red' : '', zero.length ? fmt(sum(zero, r => num(r.hp))) + ' Heads' : '')}${anK(E.filter(r => r.f === 'low').length, 'Below Average', E.some(r => r.f === 'low') ? 'amb' : '')}${anK(E.filter(r => r.f === 'h' || r.f === 'n' || r.f === 'wip').length, 'No Work / Hindrance', E.some(r => r.f === 'h' || r.f === 'n' || r.f === 'wip') ? 'amb' : '')}${anK(nr.length, 'Not Reported', nr.length ? 'amb' : '', esc([...M.nsAreas].join(', ')))}</div>`;
+    const G = new Map(); shown.forEach(r => { if (!G.has(r.activity)) G.set(r.activity, []); G.get(r.activity).push(r); });
+    const cards = [...G.entries()].map(([a, r]) => ({ a, r: r.slice().sort((x, y) => x.rank - y.rank || num(y.stall) - num(x.stall) || anLoc(x).localeCompare(anLoc(y), 'en', { numeric: true })), rank: Math.min(...r.map(x => x.rank)) }))
+      .sort((x, y) => A.sort === 'att' ? x.rank - y.rank || x.a.localeCompare(y.a) : x.a.localeCompare(y.a));
+    h += `<div class="an-sec"><h3>Progress And Productivity</h3><span class="an-cnt">${G.size} Activit${G.size === 1 ? 'y' : 'ies'} · ${shown.length} Location${shown.length === 1 ? '' : 's'}</span><input class="an-q" placeholder="Search Activity / Location" value="${esc(A.q)}" oninput="DPR.anQ(this.value)">
+      <div class="an-tg">${nr.length ? `<button class="${A.nr ? 'on' : ''}" onclick="DPR.anNr()">Not Reported ${nr.length}</button>` : ''}</div><div class="an-tg"><button class="${A.sort === 'att' ? 'on' : ''}" onclick="DPR.anSort('att')">Attention First</button><button class="${A.sort === 'act' ? 'on' : ''}" onclick="DPR.anSort('act')">By Activity</button></div></div>`;
+    const m = (lab, v, c) => `<div class="an-m ${c || ''}"><small>${lab}</small><span>${v}</span></div>`;
+    h += cards.map(({ a, r, rank }) => { const us = [...new Set(r.map(x => String(x.uom || '').toLowerCase()))], u = us.length === 1 && r[0].uom ? r[0].uom : '', rp = r.filter(x => x.reported && x.has_progress);
+      const q = sum(rp, x => num(x.mv)), hh = sum(rp, x => num(x.hp)), qm = sum(rp.filter(x => x.hp > 0), x => num(x.moved_matched)), bad = r.filter(x => x.rank < 3).length, hay = a + ' ' + r.map(anLoc).join(' ');
+      return `<div class="an-ac k${rank}" data-s="${esc(hay)}" ${fz(hay, A.q) ? '' : 'style="display:none"'}><div class="an-ah"><b>${esc(a)}</b><span class="an-mut">${u ? esc(u) + ' · ' : ''}${r.length} Location${r.length > 1 ? 's' : ''}</span><span class="an-as">${bad ? anPill('h', bad + ' Need Attention') : ''}<span><small>Heads</small> ${fmt(hh)}</span><span><small>Moved</small> ${u ? (q ? '+' + anN(q) : '0') : '—'}</span><span><small>Per Head</small> ${u && hh && qm ? anN(qm / hh) : '—'}</span></span></div>${
+        r.map(l => { const base = Math.max(0, num(l.pct) - (num(l.est) > 0 && l.mv ? 100 * l.mv / num(l.est) : 0)), mvp = num(l.est) > 0 && l.mv ? Math.min(100, 100 * l.mv / num(l.est)) : 0, nm = l.uom == null;
+          return `<div class="an-lr"><div class="an-ln"><b>${esc(anLoc(l))}</b><span class="an-mut">${nm ? 'Mixed Units' : 'Est ' + fmt(Math.round(num(l.est)))}${u ? '' : l.uom ? ' ' + esc(l.uom) : ''}${l.sub && l.sub.name ? ' · ' + esc(l.sub.name) + (l.subDay ? ' · Day ' + l.subDay : '') : ''}</span></div>${
+            m('Done', `<i class="an-bar"><i style="width:${base.toFixed(1)}%"></i><i class="mv" style="width:${mvp.toFixed(1)}%"></i></i>${l.pct == null ? '—' : fmt(l.pct) + '%'}`, 'dnb')}${
+            m('Moved', !l.reported || !l.has_progress || nm ? '—' : l.mv ? '+' + anN(l.mv) : '0', l.f === 'zero' ? 'z' : '')}${
+            m('Heads', l.hp == null ? '—' : fmt(l.hp))}${
+            m('Per Head', l.ph == null ? '—' : anN(l.ph), l.f === 'zero' ? 'z' : l.f === 'low' ? 'lo' : l.ph ? 'ok' : '')}${
+            m('Avg / Head', anN(l.avg))}${m('Man-Days', l.man_days == null ? '—' : fmt(l.man_days))}${m('Day', l.day == null ? '—' : l.day)}${
+            m('Stalled', l.stall == null ? '—' : l.stall + ' <span class="an-mut">D</span>', l.stall >= 3 ? 'z' : l.stall > 0 ? 'lo' : '')}${m('Status', anFlag(l), 'st')}<i class="an-brk"></i></div>`; }).join('')}</div>`; }).join('');
+    if (!cards.length) h += `<div class="d2-empty"><b>No Active Activity For ${esc(dsh(M.d))}</b></div>`;
+    return h;
+  }
+  function anBody() {
+    const A = anS();
+    if (A.key !== S.mProg || A.busy === S.mProg) return `<div class="dpr-load" style="padding:16px;text-align:center">Loading…</div>`;
+    if (A.err) return `<div class="d2-empty"><b>${A.err === 'miss' ? 'Analysis Needs Migration M98' : 'Could Not Load The Analysis'}</b>${A.err === 'miss' ? '' : `<div class="an-mut">${esc(A.err)}</div>`}<div style="margin-top:10px"><button class="d2-btn" onclick="DPR.anReload()">↻ Retry</button></div></div>`;
+    const M = anRows();
+    return `<div class="an-tabs"><button class="${A.tab === 'lab' ? 'on' : ''}" onclick="DPR.anTab('lab')">Labour<small>${esc(dsh(M.d))}</small></button><button class="${A.tab === 'prg' ? 'on' : ''}" onclick="DPR.anTab('prg')">Progress<small>${esc(dsh(M.pd))}</small></button><span class="sp"></span><button class="rl" title="Reload" onclick="DPR.anReload()">↻</button></div>${A.tab === 'prg' ? anPrg() : anLab()}`;
+  }
+  function mpAn() {
+    const A = anS(); if (A.key !== S.mProg && A.busy !== S.mProg) setTimeout(() => anLoad(), 0);
+    return `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc"><div class="mg an" id="an_body">${anBody()}</div></div></div>`;
   }
   function mpMenu() {
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
@@ -9267,6 +9466,7 @@ const DPR = (function () {
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
+    anTab, anSort, anQ, anNr, anReload,   // v5.17 · manager Analysis
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mShare, mShareNow, mShareImg, mShareSave, mShareClose, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pAddG, pAddS, pRowDel, pRowMv, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,

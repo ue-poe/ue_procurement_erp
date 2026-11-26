@@ -91,7 +91,8 @@
 // v95 · Construction v5.16.8 — Daily Report: a crew with heads marks every blank running row Working today
 // v96 · Construction v5.16.9 — Heads Missing is shown only on the rows Working today
 // v97 · Construction v5.17 — Review & Publish: Analysis segment (labour deployment, no-labour, productivity per head) · reads M98
-const VERSION = 'pgs-shell-v97';
+// v98 · Construction v5.18 — Review & Publish: review, flag, accept and return from the Analysis (Reports / Combined under the ⋯ menu) · reads M99
+const VERSION = 'pgs-shell-v98';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

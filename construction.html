@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.17</title>
+<title>Penguin Construction v5.18</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3611,6 +3611,30 @@ html,body{touch-action:pan-x pan-y}
   #mod-dpr .dp2 .an .an-x{overflow-x:auto}#mod-dpr .dp2 .an .an-x table{min-width:480px}
 }
 @container an (max-width:520px){#mod-dpr .dp2 .an .an-m,#mod-dpr .dp2 .an .an-m.dnb{flex-basis:32%;max-width:34%}#mod-dpr .dp2 .an .an-p{font-size:10.5px;padding:2px 7px}}
+/* v5.18 · review through the Analysis: report strips, flag, line detail, return note */
+#mod-dpr .dp2 .an .an-rps{display:flex;flex-direction:column;gap:6px;margin-bottom:9px}
+#mod-dpr .dp2 .an .an-rp{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap;border:1px solid #cbd5e1;border-radius:9px;background:#fff;padding:6px 12px}
+#mod-dpr .dp2 .an .an-rp>b{font-size:14.5px;color:var(--dn,#16233f)}
+#mod-dpr .dp2 .an .an-rp .kv{font-weight:700}#mod-dpr .dp2 .an .an-rp .kv small{display:block;font-size:9.5px;color:#6b7690;text-transform:uppercase;font-weight:700}
+#mod-dpr .dp2 .an .an-rp .sp{flex:1}
+#mod-dpr .dp2 .an .an-p.nv{background:var(--dn,#16233f);color:#fff}
+#mod-dpr .dp2 .an .an-fl{border:1px solid #cbd5e1;background:#fff;border-radius:6px;font-size:12px;font-weight:700;padding:2px 8px;cursor:pointer;color:#6b7690;white-space:nowrap}
+#mod-dpr .dp2 .an .an-fl.on{background:#b91c1c;border-color:#b91c1c;color:#fff}
+#mod-dpr .dp2 .an .an-ln.cl{cursor:pointer}#mod-dpr .dp2 .an .an-lr.open{background:#f8fafc}
+#mod-dpr .dp2 .an .an-det{border-top:1px dashed #cbd5e1;background:#f8fafc;padding:5px 10px 7px 22px}
+#mod-dpr .dp2 .an .an-det .u{display:flex;gap:4px 8px;flex-wrap:wrap;align-items:center;padding:2px 0}
+#mod-dpr .dp2 .an .an-det .u>b{min-width:64px;font-size:12.5px}
+#mod-dpr .dp2 .an .an-sc{border:1px solid #cbd5e1;border-radius:6px;padding:1px 7px;font-size:11.5px;font-weight:600;background:#fff;white-space:nowrap}
+#mod-dpr .dp2 .an .an-sc.d{color:#15803d;border-color:#bfe5cb}#mod-dpr .dp2 .an .an-sc.m{color:#5b3fb5;border-color:#cfc4f1}#mod-dpr .dp2 .an .an-sc.n{color:#6b7690}
+.an-ret label{display:block;font-size:10.5px;font-weight:700;color:#6b7690;text-transform:uppercase;margin:8px 0 4px}
+.an-ret textarea{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px;padding:8px;font:inherit;font-size:13px;resize:vertical}
+.an-ret .an-rs{display:flex;gap:6px;flex-wrap:wrap}
+.an-ret .an-rs button{border:1px solid #cbd5e1;background:#fff;border-radius:99px;padding:5px 12px;font-weight:700;font-size:12px;cursor:pointer}
+.an-ret .an-rs button.on{background:#16233f;color:#fff;border-color:#16233f}
+#mod-dpr .dp2 .an .an-m>span{white-space:nowrap}
+#mod-dpr .dp2 .an .an-m.st{width:auto;flex:0 1 214px;min-width:150px}
+#mod-dpr .dp2 .an .an-m.st>span{white-space:normal;display:flex;flex-wrap:wrap;gap:3px 5px;align-items:center}
+#mod-dpr .dp2 .an .an-m.st .an-p{white-space:normal}
 @media(max-width:860px){
   /* the shell's top bar gives way to the sheet header; ☰ opens the same drawer (project, Switch Project, modules) */
   body:has(#mod-dpr.active #pf_top):not(.pgs-nav-open) .pgs-sidebar{position:static!important;box-shadow:none!important;padding:0!important;min-height:0!important}
@@ -4847,7 +4871,7 @@ const DPR = (function () {
     club: true, unclub: null, clubPage: {},
     st: null, cat: null, catP: null, ct: new Set(), co: new Set(), coAll: false, cv: 'loc', cf: null, ctw: null, cpk: '', catAll: false,
     // manager
-    mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null, mPay: {}, mv: 'day', mEng: null, mIncl: true, mFull: false, mCal: null, mTr: null, m39: null,
+    mTab: 'rev', mDate: null, mToday: null, mProg: null, mQueue: null, mDetail: {}, mOpen: new Set(), mRet: {}, sheet: null, pubList: null, mPay: {}, mv: 'an', mEng: null, mIncl: true, mFull: false, mCal: null, mTr: null, m39: null,
     hind: null, hSum: null, hParties: null, hOpen: new Set(), hF: 'all', hArea: '', hEd: {},
     plans: null, pSel: null, pQ: '', pQm: '', pEd: null, pTicks: new Set(), pFold: new Set(),
     cards: true, cd: null, cdFold: new Set(), cdSeen: new Set(), rvCards: true, mCards: true,   // C5 · Cards is the only view _cdF: null, cdF: null, cdP: null, cdC: null, cdTot: null, cdTotReq: null, cdTotOff: false, cdPkg: null, cdPkgS: {}, cdPkgReq: {}, cdPkgOff: false, cdPkgNoScope: false, cdPkgOpen: new Set(), cdTotStale: false, cdPkgStale: false,   // v165.1 · Cards view
@@ -7498,7 +7522,7 @@ const DPR = (function () {
     right += `<div class="lc open" style="border-left-color:var(--drd)"><div class="lh" style="cursor:default"><div class="a">Hindrances · Needing Action</div><div class="l">Allocate · Classify · Close In The Hindrances Tab</div></div>${hAct.length ? hAct.map(h => `<div class="hrow"><div><b>${esc(h.activity || h.group || '')} · ${esc(h.location || '')}</b><span>Since ${dsh(h.from_date)} · ${esc(h.reason_text)} · ${esc(h.raised_by || '')}${h.allocated_to ? ' → ' + esc(h.allocated_to) + (h.target_on ? ' · Target ' + dsh(h.target_on) : '') : ''}</span></div><span class="sp2 ${hStep(h)[0]}">${hStep(h)[1]}</span><button class="btn sm" onclick="DPR.hGo('${h.id}')">Open · ${h.days_lost} Days</button></div>`).join('') : '<div class="dpr-note">Nothing Open.</div>'}</div>`;
     $('dpr_mbody').innerHTML = '<div class="rev"><div>' + left + '</div><div>' + right + '</div></div>';
   }
-  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.cdTotReq = null; S.cdPkgReq = {}; S.cdTotStale = true; S.cdPkgStale = true; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'day'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
+  async function mGo(reportDate) { if (reportDate === S.mProg && !S.mJumpTo) return; if (reportDate > todayYmd()) return; S.cdTotReq = null; S.cdPkgReq = {}; S.cdTotStale = true; S.cdPkgStale = true; S.mDate = addDays(reportDate, 1); S.sheet = null; S.mOpen = new Set(); S.mv = 'an'; S.mFull = false; if (S.mCal) S.mCal.month = monthOf(reportDate); await mgrLoad(); }
   async function mDay(n) { const nd = addDays(S.mDate, n); if (nd > S.mToday) return; S.mDate = nd; S.sheet = null; S.mOpen = new Set(); await mgrLoad(); }
   async function mOpen(id) {
     if (S.mOpen.has(id)) { S.mOpen.delete(id); revDraw(); return; }
@@ -7659,7 +7683,8 @@ const DPR = (function () {
     if (S.mv === 'eng' && S.mEng && S.mPay[S.mEng]) return mTabsRow() + mpEng();   // v5.5 · phone flow (mEngView / mDprView / mDayView kept for reference)
     if (S.mv === 'dpr') return mTabsRow() + mpDpr();
     if (S.mv === 'an') return mTabsRow() + mpAn();   // v5.17 · manager Analysis (M98)
-    S.mv = 'day'; return mTabsRow() + mpDay();
+    if (S.mv === 'day') return mTabsRow() + mpDay();
+    S.mv = 'an'; return mTabsRow() + mpAn();   // v5.18 · the Analysis is the review screen; Reports / Combined open from the ⋯ menu
   }
 
   /* ----- view 1 · the day: one row per engineer / area ----- */
@@ -9223,23 +9248,26 @@ const DPR = (function () {
     const st = pub ? `<b class="acc">Published</b> · ${esc(pub.dpr_no || '')}` : !S.sheet ? '<b>Checking…</b>' : `<b class="draft">DPR Open</b>`;
     const engs = sent.map(x => S.mPay[x.submission_id]).filter(Boolean), me = engs.find(o => o.id === cur);
     const dot = o => o.s.status === 'Accepted' ? 'g' : o.s.status === 'Returned' ? 'r' : 'a';
-    const where = me ? me.name.split(' ')[0] + ' · ' + (MP_STM[me.s.status] || ['', me.s.status])[1] : S.mv === 'dpr' ? 'Combined DPR' : S.mv === 'an' ? 'Analysis' : 'Engineer Reports';
+    const where = me ? me.name.split(' ')[0] + ' · ' + (MP_STM[me.s.status] || ['', me.s.status])[1] : S.mv === 'dpr' ? 'Combined DPR' : S.mv === 'an' ? anWhere() : 'Engineer Reports';
     return `<div class="pf-top mp" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.mDay(-1)">‹</button><button class="date" onclick="DPR.mpCal()"><b>${esc(dmy(S.mProg))}</b><i>▾</i></button><button class="nav" ${S.mDate >= S.mToday ? 'disabled' : ''} onclick="DPR.mDay(1)">›</button>
       <div class="st"><div>${st}</div><div class="m"><span class="m1">${sent.length} Of ${all} Sent${tr ? ` · <span class="late">${tr} To Review</span>` : ''} · Labour ${esc(dsh(S.mDate))}</span><span class="m2">${esc(where)}</span></div></div><button class="menu" title="Reporting Plan · Hindrances · Areas · Setup · PDF" onclick="DPR.mpMenu()">⋯</button></div>
-      <div class="floors scroll r2 mp2"><span class="sg"><button class="${S.mv !== 'dpr' && S.mv !== 'an' ? 'on' : ''}" title="${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}" onclick="DPR.mV('day')">Reports <i>${sent.length}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" title="One Report · Cumulative" onclick="DPR.mV('dpr')">Combined</button><button class="${S.mv === 'an' ? 'on' : ''}" title="Labour · Progress · Numbers" onclick="DPR.mV('an')">Analysis</button></span>${engs.length ? '<span class="vr"></span>' : ''}${engs.map(o => `<button class="${o.id === cur ? 'on' : ''}" title="${esc(o.name + ' · ' + (MP_STM[o.s.status] || ['', o.s.status])[1])}" onclick="DPR.mEng('${o.id}')"><span class="sd ${dot(o)}"></span>${esc(o.name.split(' ')[0])}</button>`).join('')}</div></div>`;
+      <div class="floors scroll r2 mp2">${S.mv === 'an' ? anChips() : `<span class="sg"><button class="${S.mv !== 'dpr' ? 'on' : ''}" title="${all} Area${all === 1 ? '' : 's'} · ${sent.length} Sent${tr ? ' · ' + tr + ' To Review' : ''}" onclick="DPR.mV('day')">Reports <i>${sent.length}</i></button><button class="${S.mv === 'dpr' ? 'on' : ''}" title="One Report · Cumulative" onclick="DPR.mV('dpr')">Combined</button><button title="Back To The Review Screen" onclick="DPR.mV('an')">← Review</button></span>${engs.length ? '<span class="vr"></span>' : ''}${engs.map(o => `<button class="${o.id === cur ? 'on' : ''}" title="${esc(o.name + ' · ' + (MP_STM[o.s.status] || ['', o.s.status])[1])}" onclick="DPR.mEng('${o.id}')"><span class="sd ${dot(o)}"></span>${esc(o.name.split(' ')[0])}</button>`).join('')}`}</div></div>`;
   }
   /* ==================================================================
-     v5.17 · MANAGER ANALYSIS (DPR_Manager_Analysis_mock_v4, approved 26 Nov 2026) · reads M98 rpc_dpr_analysis only.
-     Third segment beside Reports / Combined. Labour = heads of the report date; Progress = the day before, one card per
-     activity with its locations as micro rows. A row is what labour is booked to (card · club · plan group). Nothing is written.
-     Tab / sort / search repaint #an_body only — the scroll area and the header stay where they are.
+     v5.17 · MANAGER ANALYSIS (DPR_Manager_Analysis_mock_v4, approved 26 Nov 2026) · reads rpc_dpr_analysis (M98 · M99 payload_v 99).
+     v5.18 · REVIEW THROUGH THE ANALYSIS (DPR_Review_Analysis_mock_v5, approved 26 Nov 2026): this is the Review & Publish screen.
+     Header chips = All Reports + one per sent report (filters every table). A strip per report carries Review / Accept / Return.
+     Tabs: Issues (what to question, with a flag) · Labour (report date) · Progress (the day before; a location opens to its lines).
+     Flagged rows pre-fill the Return note. Accept / Return are the existing rpc_dpr_accept / rpc_dpr_return. Publish in the footer.
+     A row is what labour is booked to (card · club · plan group). Flag / open / tab / sort repaint #an_body only — scroll stays.
      ================================================================== */
   const AN_MISS = e => /rpc_dpr_analysis|PGRST202|Could not find the function/i.test(String((e && (e.message || e.details || e.hint)) || ''));
-  const anS = () => (S.an = S.an || { tab: 'lab', sort: 'att', q: '', nr: true });
+  const anS = () => (S.an = S.an || { tab: 'iss', sort: 'att', q: '', nr: true, eng: null, flags: new Set(), open: new Set(), ret: null });
+  const anSid = name => { const x = mSubs().find(z => z.engineer === name && (z.status === 'Submitted' || z.status === 'Accepted')); return x ? x.submission_id : null; };
   async function anLoad(force) {
     const d = S.mProg, A = anS(); if (!d) return;
     if (!force && (A.key === d || A.busy === d)) return;
-    A.busy = d; A.err = null; if (force) { A.key = null; A.data = null; A.R = null; anDraw(); }
+    A.busy = d; A.err = null; if (A.fd !== d) { A.fd = d; A.flags = new Set(); A.open = new Set(); } if (force) { A.key = null; A.data = null; A.R = null; anDraw(); }
     try { const data = await rpc('rpc_dpr_analysis', { p_report_date: d }); if (S.mProg === d) { A.data = data || {}; A.R = null; A.key = d; } }
     catch (e) { if (S.mProg === d) { A.err = AN_MISS(e) ? 'miss' : String((e && e.message) || e); A.data = null; A.R = null; A.key = d; } }
     finally { if (A.busy === d) A.busy = null; }
@@ -9270,13 +9298,31 @@ const DPR = (function () {
           : !(x.mv > 0) ? 'wip' : (x.ph != null && x.avg != null && x.ph < 0.7 * x.avg) ? 'low' : 'ok';
       x.rank = { zero: 0, nr: 1, h: 2, n: 2, wip: 2, low: 3, 'new': 4, ok: 5 }[x.f];
       return x; });
-    const ne = (D.non_estimated || []).map(n => ({ contractor: n.contractor, trade: n.trade, heads: num(n.heads), area: n.area || 'Unassigned', reason: n.reason || 'Non-Estimated', loc: n.loc_path || '' }));
+    const ne = (D.non_estimated || []).map(n => ({ engineer: n.engineer || '', contractor: n.contractor, trade: n.trade, heads: num(n.heads), area: n.area || 'Unassigned', reason: n.reason || 'Non-Estimated', loc: n.loc_path || '' }));
     const nsAreas = new Set(); (D.not_sent || []).forEach(e => String(e.areas || '').split(',').map(s => s.trim()).filter(Boolean).forEach(a => nsAreas.add(a)));
-    const lab = [];   // one flat list of today's heads: every Labour table is built from it, so the totals cannot differ
+    return (A.R = { D, d, pd, rows, ne, nsAreas, cn: c => (D.contractors && D.contractors[c]) || conName(c) || c || '—' });
+  }
+  const anRowSid = r => !r.reported ? null : (r.submission_id || anSid(r.engineer));
+  function anView(sid) {   // the whole day, or one report: every table is built from this one list, so the totals cannot differ
+    const M = anRows(), A = anS(), e = sid === undefined ? A.eng : sid;
+    const rows = e ? M.rows.filter(r => anRowSid(r) === e) : M.rows, ne = e ? M.ne.filter(n => anSid(n.engineer) === e) : M.ne, nsAreas = e ? new Set() : M.nsAreas;
+    const lab = [];
     rows.filter(r => r.reported).forEach(r => (r.labour || []).forEach(l => lab.push({ con: l.contractor, tr: l.trade, h: num(l.heads), area: r.area, loc: (r.loc_path || r.loc_name || '—') })));
     ne.forEach(n => lab.push({ con: n.contractor, tr: n.trade, h: n.heads, area: n.area, loc: n.area + ' › Non-Estimated' }));
     const areas = [...new Set([...rows.filter(r => r.reported).map(r => r.area), ...ne.map(n => n.area), ...nsAreas])].sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
-    return (A.R = { D, d, pd, rows, ne, nsAreas, lab, areas, cn: c => (D.contractors && D.contractors[c]) || conName(c) || c || '—' });
+    const heads = lab.reduce((a, l) => a + l.h, 0);
+    return { D: M.D, d: M.d, pd: M.pd, cn: M.cn, eng: e || null, rows, ne, nsAreas, lab, areas, heads, headsPrev: e ? null : (M.D.heads_prev == null ? null : num(M.D.heads_prev)), headsPrevEst: rows.reduce((a, r) => a + num(r.hp), 0) };
+  }
+  function anIssues(V) {   // what a manager would question in the report(s)
+    const out = [], u = r => r.uom ? ' ' + r.uom : '';
+    V.rows.filter(r => r.reported && !r.un).forEach(r => {
+      if (r.f === 'zero') out.push([0, r, 'h', 'Heads · No Progress', fmt(r.hp) + ' Heads · 0' + u(r) + ' On ' + dsh(V.pd)]);
+      if (r.st === 'w0') out.push([1, r, 'h', 'Working · No Heads', 'Marked Working · No Labour Entered']);
+      if (r.st === 'n') out.push([2, r, 'nw', 'No Labour · No Reason', r.idle == null ? 'Never Worked' : 'Idle ' + r.idle + ' Day' + (r.idle === 1 ? '' : 's') + ' · Last Worked ' + dsh(r.last_worked)]);
+      if (r.st === 'h') out.push([3, r, 'h', 'Hindrance' + (r.reason ? ' · ' + r.reason : ''), r.idle == null ? '' : 'Idle ' + r.idle + ' Day' + (r.idle === 1 ? '' : 's')]);
+      if (r.f === 'low') out.push([4, r, 'nw', 'Below Average', anN(r.ph) + ' Per Head vs ' + anN(r.avg) + u(r) + ' Average']);
+      if (r.stall >= 3 && r.st === 'w' && r.f !== 'zero') out.push([5, r, 'nw', 'Stalled', 'No Progress For ' + r.stall + ' Days · Labour On ' + dsh(V.d)]); });
+    return out.sort((a, b) => a[0] - b[0]);
   }
   const anK = (v, lab, c, sm) => `<div class="an-k ${c || ''}"><b>${v}${sm ? `<small>${sm}</small>` : ''}</b><span>${lab}</span></div>`;
   const anPill = (c, t) => `<span class="an-p ${c}">${t}</span>`;
@@ -9285,8 +9331,8 @@ const DPR = (function () {
     zero: anPill('h', 'Heads · No Progress'), h: anPill('h', 'Hindrance' + (r.reason && r.st === 'h' ? ' · ' + esc(r.reason) : '')), n: anPill('nw', 'No Work'), wip: anPill('nw', 'Working · No Progress'),
     low: anPill('nw', 'Below Average'), 'new': anPill('ns', 'Started ' + esc(dsh(anS().R.d))), ok: anPill('w', 'Moved') })[r.f];
   function anLab() {
-    const M = anRows(), D = M.D, rep = M.rows.filter(r => r.reported), act = M.rows.filter(r => !r.un), broken = rep.filter(r => !r.un && !(r.heads > 0)), nr = M.rows.filter(r => !r.reported);
-    const hT = num(D.heads), hP = D.heads_prev == null ? null : num(D.heads_prev), neH = M.ne.reduce((a, n) => a + n.heads, 0), sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
+    const M = anView(), rep = M.rows.filter(r => r.reported), act = M.rows.filter(r => !r.un), broken = rep.filter(r => !r.un && !(r.heads > 0)), nr = M.rows.filter(r => !r.reported);
+    const hT = M.heads, hP = M.headsPrev, neH = M.ne.reduce((a, n) => a + n.heads, 0), sum = (a, f) => a.reduce((s, x) => s + f(x), 0);
     let h = `<div class="an-kpis">${anK(fmt(hT), 'Heads ' + esc(dsh(M.d)), '', hP == null ? '' : (hT - hP >= 0 ? '+' : '') + fmt(hT - hP) + ' vs ' + esc(dsh(M.pd)))}${anK(act.length, 'Active Lines')}${anK(rep.filter(r => !r.un && r.heads > 0).length, 'With Labour', 'grn')}${anK(broken.length, 'No Labour', broken.length ? 'red' : '')}${anK(nr.length, 'Not Reported', nr.length ? 'amb' : '', esc([...M.nsAreas].join(', ')))}${anK(fmt(neH), 'Non-Estimated Heads')}</div>`;
     h += `<div class="an-sec"><h3>No Labour Today</h3><span class="an-cnt ${broken.length ? 'red' : ''}">${broken.length}</span></div>`;
     if (broken.length) h += `<table class="an-t rw"><thead><tr><th>Activity</th><th>Location</th><th>Engineer</th><th>Status ${esc(dsh(M.d))}</th><th class="n">Last Worked</th><th class="n">Idle Days</th><th class="n">Progress</th><th class="n">Day</th></tr></thead><tbody>${
@@ -9313,9 +9359,9 @@ const DPR = (function () {
     return h;
   }
   function anPrg() {
-    const M = anRows(), A = anS(), E = M.rows.filter(r => !r.un), sum = (a, f) => a.reduce((s, x) => s + f(x), 0), pdS = esc(dsh(M.pd));
+    const M = anView(), A = anS(), E = M.rows.filter(r => !r.un), sum = (a, f) => a.reduce((s, x) => s + f(x), 0), pdS = esc(dsh(M.pd));
     const zero = E.filter(r => r.f === 'zero'), nr = E.filter(r => r.f === 'nr'), shown = A.nr ? E : E.filter(r => r.f !== 'nr');
-    let h = `<div class="an-kpis">${anK(E.filter(r => r.mv > 0).length, 'Lines Moved', 'grn', 'Of ' + E.filter(r => r.reported).length)}${anK(M.D.heads_prev == null ? '—' : fmt(M.D.heads_prev), 'Heads ' + pdS)}${anK(zero.length, 'Heads · No Progress', zero.length ? 'red' : '', zero.length ? fmt(sum(zero, r => num(r.hp))) + ' Heads' : '')}${anK(E.filter(r => r.f === 'low').length, 'Below Average', E.some(r => r.f === 'low') ? 'amb' : '')}${anK(E.filter(r => r.f === 'h' || r.f === 'n' || r.f === 'wip').length, 'No Work / Hindrance', E.some(r => r.f === 'h' || r.f === 'n' || r.f === 'wip') ? 'amb' : '')}${anK(nr.length, 'Not Reported', nr.length ? 'amb' : '', esc([...M.nsAreas].join(', ')))}</div>`;
+    let h = `<div class="an-kpis">${anK(E.filter(r => r.mv > 0).length, 'Lines Moved', 'grn', 'Of ' + E.filter(r => r.reported).length)}${anK(M.eng ? fmt(M.headsPrevEst) : M.headsPrev == null ? '—' : fmt(M.headsPrev), 'Heads ' + pdS)}${anK(zero.length, 'Heads · No Progress', zero.length ? 'red' : '', zero.length ? fmt(sum(zero, r => num(r.hp))) + ' Heads' : '')}${anK(E.filter(r => r.f === 'low').length, 'Below Average', E.some(r => r.f === 'low') ? 'amb' : '')}${anK(E.filter(r => r.f === 'h' || r.f === 'n' || r.f === 'wip').length, 'No Work / Hindrance', E.some(r => r.f === 'h' || r.f === 'n' || r.f === 'wip') ? 'amb' : '')}${anK(nr.length, 'Not Reported', nr.length ? 'amb' : '', esc([...M.nsAreas].join(', ')))}</div>`;
     const G = new Map(); shown.forEach(r => { if (!G.has(r.activity)) G.set(r.activity, []); G.get(r.activity).push(r); });
     const cards = [...G.entries()].map(([a, r]) => ({ a, r: r.slice().sort((x, y) => x.rank - y.rank || num(y.stall) - num(x.stall) || anLoc(x).localeCompare(anLoc(y), 'en', { numeric: true })), rank: Math.min(...r.map(x => x.rank)) }))
       .sort((x, y) => A.sort === 'att' ? x.rank - y.rank || x.a.localeCompare(y.a) : x.a.localeCompare(y.a));
@@ -9326,31 +9372,98 @@ const DPR = (function () {
       const q = sum(rp, x => num(x.mv)), hh = sum(rp, x => num(x.hp)), qm = sum(rp.filter(x => x.hp > 0), x => num(x.moved_matched)), bad = r.filter(x => x.rank < 3).length, hay = a + ' ' + r.map(anLoc).join(' ');
       return `<div class="an-ac k${rank}" data-s="${esc(hay)}" ${fz(hay, A.q) ? '' : 'style="display:none"'}><div class="an-ah"><b>${esc(a)}</b><span class="an-mut">${u ? esc(u) + ' · ' : ''}${r.length} Location${r.length > 1 ? 's' : ''}</span><span class="an-as">${bad ? anPill('h', bad + ' Need Attention') : ''}<span><small>Heads</small> ${fmt(hh)}</span><span><small>Moved</small> ${u ? (q ? '+' + anN(q) : '0') : '—'}</span><span><small>Per Head</small> ${u && hh && qm ? anN(qm / hh) : '—'}</span></span></div>${
         r.map(l => { const base = Math.max(0, num(l.pct) - (num(l.est) > 0 && l.mv ? 100 * l.mv / num(l.est) : 0)), mvp = num(l.est) > 0 && l.mv ? Math.min(100, 100 * l.mv / num(l.est)) : 0, nm = l.uom == null;
-          return `<div class="an-lr"><div class="an-ln"><b>${esc(anLoc(l))}</b><span class="an-mut">${nm ? 'Mixed Units' : 'Est ' + fmt(Math.round(num(l.est)))}${u ? '' : l.uom ? ' ' + esc(l.uom) : ''}${l.sub && l.sub.name ? ' · ' + esc(l.sub.name) + (l.subDay ? ' · Day ' + l.subDay : '') : ''}</span></div>${
+          const can = anCanOpen(l), op = can && A.open.has(l.id);
+          return `<div class="an-lr ${op ? 'open' : ''}"><div class="an-ln ${can ? 'cl' : ''}" ${can ? `onclick="DPR.anOpen('${esc(l.id)}')"` : ''}><b>${can ? (op ? '▾ ' : '▸ ') : ''}${esc(anLoc(l))}</b><span class="an-mut">${nm ? 'Mixed Units' : 'Est ' + fmt(Math.round(num(l.est)))}${u ? '' : l.uom ? ' ' + esc(l.uom) : ''}${l.sub && l.sub.name ? ' · ' + esc(l.sub.name) + (l.subDay ? ' · Day ' + l.subDay : '') : ''}</span></div>${
             m('Done', `<i class="an-bar"><i style="width:${base.toFixed(1)}%"></i><i class="mv" style="width:${mvp.toFixed(1)}%"></i></i>${l.pct == null ? '—' : fmt(l.pct) + '%'}`, 'dnb')}${
             m('Moved', !l.reported || !l.has_progress || nm ? '—' : l.mv ? '+' + anN(l.mv) : '0', l.f === 'zero' ? 'z' : '')}${
             m('Heads', l.hp == null ? '—' : fmt(l.hp))}${
             m('Per Head', l.ph == null ? '—' : anN(l.ph), l.f === 'zero' ? 'z' : l.f === 'low' ? 'lo' : l.ph ? 'ok' : '')}${
             m('Avg / Head', anN(l.avg))}${m('Man-Days', l.man_days == null ? '—' : fmt(l.man_days))}${m('Day', l.day == null ? '—' : l.day)}${
-            m('Stalled', l.stall == null ? '—' : l.stall + ' <span class="an-mut">D</span>', l.stall >= 3 ? 'z' : l.stall > 0 ? 'lo' : '')}${m('Status', anFlag(l), 'st')}<i class="an-brk"></i></div>`; }).join('')}</div>`; }).join('');
+            m('Stalled', l.stall == null ? '—' : l.stall + ' <span class="an-mut">D</span>', l.stall >= 3 ? 'z' : l.stall > 0 ? 'lo' : '')}${m('Status', anFlag(l) + (l.reported ? ` <button class="an-fl ${A.flags.has(l.id) ? 'on' : ''}" title="Flag For Return" onclick="DPR.anFlagT('${esc(l.id)}')">⚑</button>` : ''), 'st')}<i class="an-brk"></i></div>${op ? anDet(l) : ''}`; }).join('')}</div>`; }).join('');
     if (!cards.length) h += `<div class="d2-empty"><b>No Active Activity For ${esc(dsh(M.d))}</b></div>`;
     return h;
   }
+  const anCanOpen = r => (r.lines || []).length > 1 || (r.lines || []).some(x => (x.subs || []).length);
+  function anDet(r) {   // the lines of a card and their started sub-activities, as of the progress date
+    const many = new Set((r.lines || []).map(x => x.activity)).size > 1;
+    return `<div class="an-det">${(r.lines || []).map(x => { const subs = x.subs || [];
+      const chips = subs.length ? subs.map(z => { const b = num(z.before), a = num(z.after), mvd = z.after != null && a > b + 0.0005, p = num(z.pct);
+          const t = mvd ? (a >= 99.9995 ? 'Done' : fmt(Math.round(b)) + ' → ' + fmt(Math.round(a)) + '%') : p >= 99.9995 ? 'Done' : z.outcome_prev === 'hindrance' ? fmt(Math.round(p)) + '% · Hindrance' : z.outcome_prev === 'worked' ? fmt(Math.round(p)) + '% · Working · No Progress' : fmt(Math.round(p)) + '% · No Work';
+          return `<span class="an-sc ${mvd ? 'm' : p >= 99.9995 ? 'd' : 'n'}">${esc(z.name)} · ${t}</span>`; }).join('')
+        : `<span class="an-sc ${num(x.moved) > 0 ? 'm' : 'n'}">${num(x.moved) > 0 ? '+' + anN(x.moved) + (x.uom ? ' ' + esc(x.uom) : '') : x.outcome_prev === 'hindrance' ? 'Hindrance' : x.outcome_prev === 'worked' ? 'Working · No Progress' : x.outcome_prev ? 'No Work' : '—'}</span>`;
+      return `<div class="u"><b>${esc(x.loc || '—')}${many ? ` <span class="an-mut">${esc(short(x.activity, 34))}</span>` : ''}</b>${chips}</div>`; }).join('')}</div>`;
+  }
+  function anIss() {
+    const V = anView(), A = anS(), I = anIssues(V);
+    if (!I.length) return `<div class="d2-empty"><b style="color:#15803d">No Issues Found</b></div>`;
+    return `<table class="an-t rw"><thead><tr><th>Issue</th><th>Activity</th><th>Location</th><th>Engineer</th><th>Figures</th><th class="n">Flag For Return</th></tr></thead><tbody>${
+      I.map(([k, r, c, t, fig]) => `<tr><td data-l="Issue">${anPill(c, esc(t))}</td><td class="wd" data-l="Activity"><b>${esc(r.activity)}</b></td><td class="wd loc" data-l="Location">${esc(anLoc(r))}</td><td data-l="Engineer">${esc(r.engineer || '—')}</td><td class="wd" data-l="Figures">${esc(fig) || '—'}</td><td class="n" data-l="Flag"><button class="an-fl ${A.flags.has(r.id) ? 'on' : ''}" onclick="DPR.anFlagT('${esc(r.id)}')">⚑ ${A.flags.has(r.id) ? 'Flagged' : 'Flag'}</button></td></tr>`).join('')}</tbody></table>`;
+  }
+  function anStrip() {   // one strip per report: who · status · sent · heads · issues · the action
+    const A = anS(), pub = mPub(), subs = mSubs().slice().sort((a, b) => (a.status === 'Draft') - (b.status === 'Draft')), kv = (a, b) => `<span class="kv"><small>${a}</small>${b}</span>`;
+    const stp = s => s.status === 'Accepted' ? anPill('w', 'Accepted') : s.status === 'Returned' ? anPill('h', 'Returned') : s.status === 'Submitted' ? '<span class="an-p nv">To Review</span>' : anPill('ns', 'Draft · Not Sent');
+    let h = subs.filter(s => !A.eng || s.submission_id === A.eng).map(s => { const k = s.submission_id, sentS = s.status === 'Submitted' || s.status === 'Accepted', V = sentS ? anView(k) : null;
+      const nI = V ? anIssues(V).length : 0, nF = V ? V.rows.filter(r => A.flags.has(r.id)).length : 0, P = S.mPay[k], eo = P && P.data && P.data.earlier_open;
+      let act = '';
+      if (s.status === 'Submitted') act = !A.eng ? `<button class="d2-btn navy" onclick="DPR.anEng('${k}')">Review →</button>`
+        : eo ? `<span class="an-mut">Date Order · ${esc(dsh(eo.report_date))} ${eo.status === 'Submitted' ? 'Still To Review' : 'Is ' + esc(eo.status)}</span><button class="d2-btn amb" onclick="DPR.anJump('${eo.report_date}','${eo.submission_id}')">Review ${esc(dsh(eo.report_date))} First →</button>`
+        : `<button class="d2-btn red" onclick="DPR.anRet('${k}')">↩ Return${nF ? ' · ' + nF + ' Flagged' : ''}</button><button class="d2-btn ok" onclick="DPR.anAccept('${k}')">✓ Accept</button>`;
+      else if (s.status === 'Accepted') act = !A.eng ? `<button class="d2-btn" onclick="DPR.anEng('${k}')">View →</button>` : pub ? `<span class="an-mut">Published · Read-Only</span>` : `<button class="d2-btn red" onclick="DPR.anRet('${k}')">↩ Return${nF ? ' · ' + nF + ' Flagged' : ''}</button>`;
+      else if (s.status === 'Returned') act = `<span class="an-mut">${esc(s.return_reason || '')} · Waiting For Resend</span>`;
+      return `<div class="an-rp"><b>${esc(s.engineer || '')}</b>${kv('Area', esc((s.areas || []).join(' · ') || '—'))}${stp(s)}${s.submitted_at ? kv('Sent', esc(dts(s.submitted_at)) + (s.is_late ? ' ' + anPill('h', 'Late') : '')) + kv('Attempt', num(s.attempt_no) || 1) : ''}${sentS ? kv('Heads', V && A.key === S.mProg && !A.err ? fmt(V.heads) : fmt(s.heads)) + kv('Issues', nI) : ''}<span class="sp"></span>${act}</div>`; }).join('');
+    if (!A.eng) mNotSent().filter(a => !(a.submission_ids || []).some(id => subs.some(s => s.submission_id === id))).forEach(a => {
+      h += `<div class="an-rp"><b>${esc(a.home_engineers || 'No Engineer Allocated')}</b>${kv('Area', esc(a.area_name))}${anPill('ns', 'Not Sent')}${kv('Running', num(a.running_works))}<span class="sp"></span></div>`; });
+    return h ? `<div class="an-rps">${h}</div>` : '';
+  }
+  function anChips() {   // header row of the review screen: All Reports + one chip per sent report
+    const A = anS(), sent = mSent(), dot = s => s.status === 'Accepted' ? 'g' : s.status === 'Returned' ? 'r' : 'a';
+    return `<span class="sg"><button class="${!A.eng ? 'on' : ''}" title="Every Sent Report Of The Day" onclick="DPR.anEng('')">All Reports <i>${sent.length}</i></button></span>${sent.length ? '<span class="vr"></span>' : ''}${sent.map(s => `<button class="${A.eng === s.submission_id ? 'on' : ''}" title="${esc((s.engineer || '') + ' · ' + (s.status === 'Accepted' ? 'Accepted' : 'To Review'))}" onclick="DPR.anEng('${s.submission_id}')"><span class="sd ${dot(s)}"></span>${esc(String(s.engineer || '').split(' ')[0])}</button>`).join('')}`;
+  }
+  const anWhere = () => { const A = anS(), s = A.eng && mSubs().find(x => x.submission_id === A.eng); return s ? String(s.engineer || '').split(' ')[0] + ' · ' + (s.status === 'Accepted' ? 'Accepted' : 'To Review') : 'All Reports'; };
+  function anEng(id) { const A = anS(); A.eng = id || null; A.q = ''; mPaint(); const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; }
+  function anFlagT(id) { const A = anS(); if (A.flags.has(id)) A.flags.delete(id); else A.flags.add(id); anDraw(); }
+  function anOpen(id) { const A = anS(); if (A.open.has(id)) A.open.delete(id); else A.open.add(id); anDraw(); }
+  async function anJump(d, id) { anS().eng = id || null; if (d !== S.mProg) await mGo(d); else mPaint(); }
+  async function anAccept(id) {
+    try { await rpc('rpc_dpr_accept', { p_submission_id: id }); toast('Accepted', 'success'); mDrop(id); if (S.mDetail) delete S.mDetail[id]; anS().eng = null; await mgrLoad(); } catch (e) { toast(err(e, 'Could not accept'), 'error'); }
+  }
+  const AN_RQ = ['Heads Missing', 'Progress Doubtful — Recheck', 'Hindrance Reason Missing', 'Labour Mismatch', 'Wrong Location / Activity'];
+  function anRet(id) {
+    const A = anS(), s = mSubs().find(x => x.submission_id === id); if (!s) return; const V = anView(id), I = anIssues(V);
+    const note = V.rows.filter(r => A.flags.has(r.id)).map((r, n) => { const i = I.find(x => x[1].id === r.id); return (n + 1) + '. ' + r.activity + ' · ' + anLoc(r) + ' — ' + (i ? i[3] + (i[4] ? ' (' + i[4] + ')' : '') : 'Please Check'); }).join('\n');
+    A.ret = { id, reason: '', note };
+    sheetOpen('Return · ' + (s.engineer || '') + ' · ' + dsh(S.mProg), 'Say What Needs Fixing', `<div class="an-ret"><label>Reason</label><div class="an-rs" id="an_rs">${AN_RQ.map(t => `<button onclick="DPR.anRetQ(this)">${t}</button>`).join('')}</div><label>Note To The Engineer</label><textarea id="an_rn" rows="7" placeholder="What Needs Fixing (Required)…" oninput="DPR.anRetNote(this.value)">${esc(note)}</textarea></div>`,
+      `<button class="dbtn" onclick="DPR.sheetClose()">Cancel</button><span class="sp"></span><button class="dbtn" style="color:#b91c1c;border-color:#f3b4b4" onclick="DPR.anRetGo()">↩ Return Report</button>`);
+  }
+  function anRetQ(el) { const A = anS(); if (!A.ret) return; const t = el.textContent, on = A.ret.reason !== t; A.ret.reason = on ? t : ''; document.querySelectorAll('#an_rs button').forEach(b => b.classList.toggle('on', on && b === el)); }
+  function anRetNote(v) { const A = anS(); if (A.ret) A.ret.note = v; }
+  async function anRetGo() {
+    const A = anS(), R = A.ret; if (!R) return; const n = String(R.note || '').trim(), reason = R.reason || n.slice(0, 60), note = R.reason && n ? R.reason + '\n' + n : (n || R.reason);
+    if (!note) { toast('Say What Needs Fixing', 'warn'); return; }
+    try { await rpc('rpc_dpr_return', { p_submission_id: R.id, p_reason: reason.slice(0, 60), p_note: note }); sheetClose(); toast('Returned To The Engineer', 'success');
+      anView(R.id).rows.forEach(r => A.flags.delete(r.id)); mDrop(R.id); if (S.mDetail) delete S.mDetail[R.id]; A.ret = null; A.eng = null; await mgrLoad(); anLoad(true); }
+    catch (e) { toast(err(e, 'Could not return'), 'error'); }
+  }
   function anBody() {
     const A = anS();
-    if (A.key !== S.mProg || A.busy === S.mProg) return `<div class="dpr-load" style="padding:16px;text-align:center">Loading…</div>`;
-    if (A.err) return `<div class="d2-empty"><b>${A.err === 'miss' ? 'Analysis Needs Migration M98' : 'Could Not Load The Analysis'}</b>${A.err === 'miss' ? '' : `<div class="an-mut">${esc(A.err)}</div>`}<div style="margin-top:10px"><button class="d2-btn" onclick="DPR.anReload()">↻ Retry</button></div></div>`;
-    const M = anRows();
-    return `<div class="an-tabs"><button class="${A.tab === 'lab' ? 'on' : ''}" onclick="DPR.anTab('lab')">Labour<small>${esc(dsh(M.d))}</small></button><button class="${A.tab === 'prg' ? 'on' : ''}" onclick="DPR.anTab('prg')">Progress<small>${esc(dsh(M.pd))}</small></button><span class="sp"></span><button class="rl" title="Reload" onclick="DPR.anReload()">↻</button></div>${A.tab === 'prg' ? anPrg() : anLab()}`;
+    if (A.eng && !(S.mQueue || {})._loading && !mSubs().some(s => s.submission_id === A.eng)) A.eng = null;   // the report of another date
+    const strip = anStrip();
+    if (A.key !== S.mProg || A.busy === S.mProg) return strip + `<div class="dpr-load" style="padding:16px;text-align:center">Loading…</div>`;
+    if (A.err) return strip + `<div class="d2-empty"><b>${A.err === 'miss' ? 'Analysis Needs Migration M98' : 'Could Not Load The Analysis'}</b>${A.err === 'miss' ? '' : `<div class="an-mut">${esc(A.err)}</div>`}<div style="margin-top:10px"><button class="d2-btn" onclick="DPR.anReload()">↻ Retry</button></div></div>`;
+    const V = anView(), nI = anIssues(V).length, tb = (k, t, sm) => `<button class="${A.tab === k ? 'on' : ''}" onclick="DPR.anTab('${k}')">${t}<small>${sm}</small></button>`;
+    return strip + `<div class="an-tabs">${tb('iss', 'Issues', nI)}${tb('lab', 'Labour', esc(dsh(V.d)))}${tb('prg', 'Progress', esc(dsh(V.pd)))}<span class="sp"></span><button class="rl" title="Reload" onclick="DPR.anReload()">↻</button></div>${A.tab === 'prg' ? anPrg() : A.tab === 'lab' ? anLab() : anIss()}`;
   }
   function mpAn() {
-    const A = anS(); if (A.key !== S.mProg && A.busy !== S.mProg) setTimeout(() => anLoad(), 0);
-    return `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc"><div class="mg an" id="an_body">${anBody()}</div></div></div>`;
+    const A = anS(), pub = mPub(), tr = mSent().filter(s => s.status === 'Submitted').length, ns = mNotSent().length;
+    if (A.key !== S.mProg && A.busy !== S.mProg) setTimeout(() => anLoad(), 0);
+    return `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc"><div class="mg an" id="an_body">${anBody()}</div></div>
+      <div class="d2-foot pf" id="d2_foot"><span class="msg"><b>${esc(dsh(S.mProg))}</b> · ${tr} To Review · ${ns} Area${ns === 1 ? '' : 's'} Not Sent${pub ? ` · Published ${esc(pub.dpr_no || '')}` : tr ? ' · Publish Waits Until No Sent Report Is Still To Review' : ''}</span><button class="d2-btn" onclick="DPR.mPrint('${pub ? 'lap' : 'land'}')">⎙ ${pub ? 'Print · A4' : 'Preview PDF'}</button>${mPubBtn()}</div></div>`;
   }
   function mpMenu() {
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;
     let b = MTABS.filter(t => mCan(t[0]) && t[0] !== 'rev').map(t => row(t[1], t[2], `DPR.sheetClose();DPR.mTab('${t[0]}')`)).join('');
     b += row('Day Reports (Calendar)', 'Pick A Date · Published Archive', 'DPR.sheetClose();DPR.mpCal()');
+    b += row('Engineer Reports · Old View', 'One Card Per Engineer', "DPR.sheetClose();DPR.mV('day')") + row('Combined DPR · Old View', 'One Report · Cumulative', "DPR.sheetClose();DPR.mV('dpr')");   // v5.18
     if (mPub()) b += (mCanShare() ? row('⤴ Share PDF', 'Phone Format · To WhatsApp, Mail, Drive', "DPR.sheetClose();DPR.mShare()") : '') + row('⎙ Print · Phone', 'One Column Of Cards', "DPR.sheetClose();DPR.mPrint('phone')") + row('⎙ Print · A4', 'A4 Portrait · Tables', "DPR.sheetClose();DPR.mPrint('lap')");
     else b += row('⎙ Preview PDF', 'Draft DPR · Figures May Still Change', "DPR.sheetClose();DPR.mPrint('land')");
     if (!mPub() && mSent().some(s => s.status === 'Submitted')) b += row((S.mIncl ? '☑' : '☐') + ' Preview Reports Still To Review', 'Show Them In The Combined DPR (Preview Only)', `DPR.sheetClose();DPR.mIncl(${S.mIncl ? 'false' : 'true'})`);
@@ -9466,7 +9579,7 @@ const DPR = (function () {
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
     pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
-    anTab, anSort, anQ, anNr, anReload,   // v5.17 · manager Analysis
+    anTab, anSort, anQ, anNr, anReload, anEng, anFlagT, anOpen, anJump, anAccept, anRet, anRetQ, anRetNote, anRetGo,   // v5.17 · manager Analysis · v5.18 review through it
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog
     mTab, mGo, mDay, mOpen, mAccept, mRetNote, mReturnGo, publish, viewSheet, printSheet, shareSheet, mV, mEng, mFull, mIncl, mCalMove, mJump, mPrint, mShare, mShareNow, mShareImg, mShareSave, mShareClose, mRetryPay, wipeCache,
     pSel: pSelect, pPk, pPkAll, pQ, pQm, pLoc, pMode, pSetV, pTick, pTickAll, pAddG, pAddS, pRowDel, pRowMv, pMv, pDel, pDiscard, pSave, pLocDel, pLocPick, pLocNew, edDraw,

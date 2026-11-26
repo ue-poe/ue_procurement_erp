@@ -92,7 +92,8 @@
 // v96 · Construction v5.16.9 — Heads Missing is shown only on the rows Working today
 // v97 · Construction v5.17 — Review & Publish: Analysis segment (labour deployment, no-labour, productivity per head) · reads M98
 // v98 · Construction v5.18 — Review & Publish: review, flag, accept and return from the Analysis (Reports / Combined under the ⋯ menu) · reads M99
-const VERSION = 'pgs-shell-v98';
+// v99 · Construction v5.18.1 — Analysis Progress: the day's percent beside the quantity; day columns carry their date
+const VERSION = 'pgs-shell-v99';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

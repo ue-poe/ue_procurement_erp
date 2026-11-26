@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.18</title>
+<title>Penguin Construction v5.18.1</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3635,6 +3635,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .an .an-m.st{width:auto;flex:0 1 214px;min-width:150px}
 #mod-dpr .dp2 .an .an-m.st>span{white-space:normal;display:flex;flex-wrap:wrap;gap:3px 5px;align-items:center}
 #mod-dpr .dp2 .an .an-m.st .an-p{white-space:normal}
+/* v5.18.1 · dated day columns */
+#mod-dpr .dp2 .an .an-m.w2{width:92px}#mod-dpr .dp2 .an .an-m.dnb{width:118px}#mod-dpr .dp2 .an .an-m.vio{color:#5b3fb5}
 @media(max-width:860px){
   /* the shell's top bar gives way to the sheet header; ☰ opens the same drawer (project, Switch Project, modules) */
   body:has(#mod-dpr.active #pf_top):not(.pgs-nav-open) .pgs-sidebar{position:static!important;box-shadow:none!important;padding:0!important;min-height:0!important}
@@ -9369,14 +9371,15 @@ const DPR = (function () {
       <div class="an-tg">${nr.length ? `<button class="${A.nr ? 'on' : ''}" onclick="DPR.anNr()">Not Reported ${nr.length}</button>` : ''}</div><div class="an-tg"><button class="${A.sort === 'att' ? 'on' : ''}" onclick="DPR.anSort('att')">Attention First</button><button class="${A.sort === 'act' ? 'on' : ''}" onclick="DPR.anSort('act')">By Activity</button></div></div>`;
     const m = (lab, v, c) => `<div class="an-m ${c || ''}"><small>${lab}</small><span>${v}</span></div>`;
     h += cards.map(({ a, r, rank }) => { const us = [...new Set(r.map(x => String(x.uom || '').toLowerCase()))], u = us.length === 1 && r[0].uom ? r[0].uom : '', rp = r.filter(x => x.reported && x.has_progress);
-      const q = sum(rp, x => num(x.mv)), hh = sum(rp, x => num(x.hp)), qm = sum(rp.filter(x => x.hp > 0), x => num(x.moved_matched)), bad = r.filter(x => x.rank < 3).length, hay = a + ' ' + r.map(anLoc).join(' ');
-      return `<div class="an-ac k${rank}" data-s="${esc(hay)}" ${fz(hay, A.q) ? '' : 'style="display:none"'}><div class="an-ah"><b>${esc(a)}</b><span class="an-mut">${u ? esc(u) + ' · ' : ''}${r.length} Location${r.length > 1 ? 's' : ''}</span><span class="an-as">${bad ? anPill('h', bad + ' Need Attention') : ''}<span><small>Heads</small> ${fmt(hh)}</span><span><small>Moved</small> ${u ? (q ? '+' + anN(q) : '0') : '—'}</span><span><small>Per Head</small> ${u && hh && qm ? anN(qm / hh) : '—'}</span></span></div>${
+      const q = sum(rp, x => num(x.mv)), hh = sum(rp, x => num(x.hp)), qm = sum(rp.filter(x => x.hp > 0), x => num(x.moved_matched)), bad = r.filter(x => x.rank < 3).length, hay = a + ' ' + r.map(anLoc).join(' '), eT = sum(rp, x => num(x.est));
+      return `<div class="an-ac k${rank}" data-s="${esc(hay)}" ${fz(hay, A.q) ? '' : 'style="display:none"'}><div class="an-ah"><b>${esc(a)}</b><span class="an-mut">${u ? esc(u) + ' · ' : ''}${r.length} Location${r.length > 1 ? 's' : ''}</span><span class="an-as">${bad ? anPill('h', bad + ' Need Attention') : ''}<span><small>Heads ${pdS}</small> ${fmt(hh)}</span><span><small>Moved ${pdS}</small> ${u ? (q ? '+' + anN(q) : '0') : '—'}${u && q && eT > 0 ? ' <span class="an-mut">+' + fmt(Math.round(1000 * q / eT) / 10) + '%</span>' : ''}</span><span><small>Per Head</small> ${u && hh && qm ? anN(qm / hh) : '—'}</span></span></div>${
         r.map(l => { const base = Math.max(0, num(l.pct) - (num(l.est) > 0 && l.mv ? 100 * l.mv / num(l.est) : 0)), mvp = num(l.est) > 0 && l.mv ? Math.min(100, 100 * l.mv / num(l.est)) : 0, nm = l.uom == null;
           const can = anCanOpen(l), op = can && A.open.has(l.id);
           return `<div class="an-lr ${op ? 'open' : ''}"><div class="an-ln ${can ? 'cl' : ''}" ${can ? `onclick="DPR.anOpen('${esc(l.id)}')"` : ''}><b>${can ? (op ? '▾ ' : '▸ ') : ''}${esc(anLoc(l))}</b><span class="an-mut">${nm ? 'Mixed Units' : 'Est ' + fmt(Math.round(num(l.est)))}${u ? '' : l.uom ? ' ' + esc(l.uom) : ''}${l.sub && l.sub.name ? ' · ' + esc(l.sub.name) + (l.subDay ? ' · Day ' + l.subDay : '') : ''}</span></div>${
-            m('Done', `<i class="an-bar"><i style="width:${base.toFixed(1)}%"></i><i class="mv" style="width:${mvp.toFixed(1)}%"></i></i>${l.pct == null ? '—' : fmt(l.pct) + '%'}`, 'dnb')}${
-            m('Moved', !l.reported || !l.has_progress || nm ? '—' : l.mv ? '+' + anN(l.mv) : '0', l.f === 'zero' ? 'z' : '')}${
-            m('Heads', l.hp == null ? '—' : fmt(l.hp))}${
+            m('Done Till ' + pdS, `<i class="an-bar"><i style="width:${base.toFixed(1)}%"></i><i class="mv" style="width:${mvp.toFixed(1)}%"></i></i>${l.pct == null ? '—' : fmt(l.pct) + '%'}`, 'dnb')}${
+            m('Moved ' + pdS, !l.reported || !l.has_progress || nm ? '—' : l.mv ? '+' + anN(l.mv) : '0', (l.f === 'zero' ? 'z ' : '') + 'w2')}${
+            m('Moved %', !l.reported || !l.has_progress ? '—' : mvp ? '+' + fmt(Math.round(mvp * 10) / 10) + '%' : '0%', (l.f === 'zero' ? 'z' : mvp ? 'vio' : ''))}${
+            m('Heads ' + pdS, l.hp == null ? '—' : fmt(l.hp), 'w2')}${
             m('Per Head', l.ph == null ? '—' : anN(l.ph), l.f === 'zero' ? 'z' : l.f === 'low' ? 'lo' : l.ph ? 'ok' : '')}${
             m('Avg / Head', anN(l.avg))}${m('Man-Days', l.man_days == null ? '—' : fmt(l.man_days))}${m('Day', l.day == null ? '—' : l.day)}${
             m('Stalled', l.stall == null ? '—' : l.stall + ' <span class="an-mut">D</span>', l.stall >= 3 ? 'z' : l.stall > 0 ? 'lo' : '')}${m('Status', anFlag(l) + (l.reported ? ` <button class="an-fl ${A.flags.has(l.id) ? 'on' : ''}" title="Flag For Return" onclick="DPR.anFlagT('${esc(l.id)}')">⚑</button>` : ''), 'st')}<i class="an-brk"></i></div>${op ? anDet(l) : ''}`; }).join('')}</div>`; }).join('');

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.18.1</title>
+<title>Penguin Construction v5.18.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -9460,7 +9460,8 @@ const DPR = (function () {
     const A = anS(), pub = mPub(), tr = mSent().filter(s => s.status === 'Submitted').length, ns = mNotSent().length;
     if (A.key !== S.mProg && A.busy !== S.mProg) setTimeout(() => anLoad(), 0);
     return `<div class="d2-card pfc mpc">${mpHead()}<div class="rv pfrvw" id="d2_sc"><div class="mg an" id="an_body">${anBody()}</div></div>
-      <div class="d2-foot pf" id="d2_foot"><span class="msg"><b>${esc(dsh(S.mProg))}</b> · ${tr} To Review · ${ns} Area${ns === 1 ? '' : 's'} Not Sent${pub ? ` · Published ${esc(pub.dpr_no || '')}` : tr ? ' · Publish Waits Until No Sent Report Is Still To Review' : ''}</span><button class="d2-btn" onclick="DPR.mPrint('${pub ? 'lap' : 'land'}')">⎙ ${pub ? 'Print · A4' : 'Preview PDF'}</button>${mPubBtn()}</div></div>`;
+      <div class="d2-foot pf" id="d2_foot"><span class="msg"><b>${esc(dsh(S.mProg))}</b> · ${tr} To Review · ${ns} Area${ns === 1 ? '' : 's'} Not Sent${pub ? ` · Published ${esc(pub.dpr_no || '')}` : tr ? ' · Publish Waits Until No Sent Report Is Still To Review' : ''}</span>${pub ? (mCanShare() ? `<button class="d2-btn navy" onclick="DPR.mShare()">⤴ Share PDF</button><button class="d2-btn" onclick="DPR.mPrint('lap')">⎙ Print · A4</button>` : `<button class="d2-btn" onclick="DPR.mPrint('phone')">⎙ PDF · Phone</button><button class="d2-btn" onclick="DPR.mPrint('lap')">⎙ PDF · A4</button>`)
+        : `<button class="d2-btn" onclick="${mCanShare() ? 'DPR.mShare()' : "DPR.mPrint('phone')"}">${mCanShare() ? '⤴ Share Preview' : '⎙ Preview PDF'}</button>${mPubBtn()}`}</div></div>`;   // v5.18.2 · same share / print buttons as the Combined DPR footer had
   }
   function mpMenu() {
     const row = (t, s, call, cls) => `<div class="dpr-lrow ${cls || ''}" onclick="${call}"><div class="nm"><b>${t}</b><span>${s}</span></div>›</div>`;

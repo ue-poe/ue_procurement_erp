@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.18.2</title>
+<title>Penguin Construction v5.18.3</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -7868,19 +7868,22 @@ const DPR = (function () {
       return base >= 100 ? { n, k: 'dn' } : { n, k: 'pe', a: base }; };
     const list = (r, st) => { const it = st.map(s => subIt(r, s)); if (!it.some(x => x.k === 'on' || x.k === 'hd')) { const f = it.find(x => x.k === 'pe'); if (f) f.cur = 1; } return it; };
     const gain = (a, b) => a - b > 0.5 ? '+' + Math.round(a - b) + '%' : '';
+    // v5.18.3 · slim card (DPR_ProgressCards_mock_v4): sub-activities finished earlier and those not started are left off the card
+    const slim = (it, done) => { if (done) return []; const act = it.filter(x => x.k === 'on' || x.k === 'hd' || (x.k === 'dn' && x.td) || (x.k === 'pe' && x.a > 0));
+      if (act.length) return act; const f = it.find(x => x.k === 'pe'); return f ? [Object.assign({}, f, { nx: 1 })] : []; };
     const units = r => { const st = prSt(r), stg = (r.l.stages || []);
       if (st === 'nr') return [{ nr: 1 }];
       if (r.groups && r.groups.length) return r.groups.map(G => { const it = list(r, stg.filter(s => (s.group_id || null) === G.id)), b = rd(G.b), a = rd(G.a);
         const gs = G.done ? 'done' : it.some(x => x.k === 'hd') ? 'hind' : it.some(x => x.w || x.td) ? 'worked' : it.some(x => x.k === 'on') ? 'wip' : 'nowork';
-        return { grp: G.name, st: gs, b, a, gain: gain(G.a, G.b), ds: G.ds || '', de: G.done ? (G.de || '') : '', it }; });
+        return { grp: G.name, st: gs, b, a, gain: gain(G.a, G.b), ds: G.ds || '', de: G.done ? (G.de || '') : '', it: slim(it, gs === 'done') }; });
       const b = rd(r.b), a = rd(r.a);
-      return [{ grp: '', st, b, a, gain: stg.length ? gain(r.a, r.b) : (st === 'worked' || st === 'done') && r.today && r.today !== 'WIP' ? r.today : '', ds: r.ds || '', de: st === 'done' ? (r.de || '') : '', it: stg.length ? list(r, stg) : [] }]; };
+      return [{ grp: '', st, b, a, gain: stg.length ? gain(r.a, r.b) : (st === 'worked' || st === 'done') && r.today && r.today !== 'WIP' ? r.today : '', ds: r.ds || '', de: st === 'done' ? (r.de || '') : '', it: stg.length ? slim(list(r, stg), st === 'done') : [] }]; };
     const acts = new Map();
     C.rows.filter(r => r.o !== '' || C.NR.includes(r)).forEach(r => {
       if (!acts.has(r.act)) acts.set(r.act, { name: prName(r.act), m: new Map() }); const A = acts.get(r.act);
       if (!A.m.has(r.area)) A.m.set(r.area, { name: r.area, c: new Map(), nr: [] }); const R = A.m.get(r.area);
       units(r).forEach(u => { if (u.nr) { R.nr.push(r.loc); return; }
-        const key = [u.grp, u.st, u.b, u.a, u.gain, u.ds, u.de, u.it.map(x => [x.n, x.k, x.td || 0, x.b || 0, x.a || 0, x.cur || 0].join('~')).join('^')].join('|');
+        const key = [u.grp, u.st, u.b, u.a, u.gain, u.ds, u.de, u.it.map(x => [x.n, x.k, x.td || 0, x.b || 0, x.a || 0, x.cur || 0, x.nx || 0].join('~')).join('^')].join('|');
         if (!R.c.has(key)) R.c.set(key, Object.assign(u, { locs: [] })); R.c.get(key).locs.push(r.loc); }); });
     const P = [...acts.values()].sort((a, b) => a.name.localeCompare(b.name)).map(A => { const areas = [...A.m.values()].sort((a, b) => a.name.localeCompare(b.name)).map(R => ({ name: R.name, nr: R.nr.length ? prClub(R.nr) : '', nrN: R.nr.length,
         cards: [...R.c.values()].map(u => Object.assign(u, { loc: prClub(u.locs), day: u.ds ? daysBetween(u.ds, u.de || pd) + 1 : 0 })).sort((a, b) => a.loc.localeCompare(b.loc, undefined, { numeric: true }) || a.grp.localeCompare(b.grp, undefined, { numeric: true })) }));
@@ -7906,10 +7909,10 @@ const DPR = (function () {
     const pubTxt = pub ? esc(pub.dpr_no || '') : 'Draft · Not Yet Published', foot = `Penguin Construction · Combined DPR · ${dd} · ${pub ? 'Published ' + esc(dts(pub.published_at)) : 'Draft'} · Printed ${esc(new Date().toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }))}`;
     const z = v => num(v) > 0 ? `<td class="n">${fmt(v)}</td>` : '<td class="n z">·</td>', tn = t => esc(tCode(t)), ST = prStName, stc = { worked: 'w', done: 'd', wip: 'wip', nowork: 'n', hind: 'h', nr: 'n' };
     const bar = r => `<div class="bar">${r.b > 0 ? `<i class="e" style="width:${r.b}%"></i>` : ''}${r.a > r.b ? `<i class="t" style="width:${r.a - r.b}%"></i>` : ''}</div>`;
-    const pcSub = x => x.k === 'dn' ? `<span class="dn">${esc(x.n)}${x.td ? ' <b>Today</b>' : ''}</span>` : x.k === 'hd' ? `<span class="hd">${esc(x.n)} · Hindrance</span>` : x.k === 'on' ? `<span class="on${x.w ? ' wk' : ''}">${esc(x.n)} ${x.w ? `<i>${x.b}→</i><em>${x.a}%</em>` : x.a ? `<i>${x.a}%</i>` : ''}</span>` : `<span class="${x.cur ? 'on' : 'pe'}">${esc(x.n)}${x.a ? ` <i>${x.a}%</i>` : ''}</span>`;
-    const pcCard = u => `<div class="pc s-${stc[u.st]}"><div class="pt"><b>${esc(u.loc)}${u.grp ? `<small>${esc(u.grp)}</small>` : ''}</b><u>${u.a}%</u></div><div class="cb">${u.b > 0 ? `<i class="e" style="width:${u.b}%"></i>` : ''}${u.a > u.b ? `<i class="t" style="width:${u.a - u.b}%"></i>` : ''}</div>${u.it.length ? `<div class="sl">${u.it.map(pcSub).join('')}</div>` : ''}<div class="pm"><span class="st">${u.st === 'done' && u.de ? 'Done ' + esc(dsh(u.de)) : ST[u.st]}</span>${u.gain ? `<span class="up">${esc(u.gain)}</span>` : ''}<span class="sp"></span>${u.day ? `<span>${u.st === 'done' && u.de ? `In ${u.day} Day${u.day === 1 ? '' : 's'}` : 'Day ' + u.day}</span>` : ''}</div></div>`;
+    const pcSub = x => x.nx ? `<span class="pe">Next · ${esc(x.n)}</span>` : x.k === 'dn' ? `<span class="dn${x.td ? ' td' : ''}">${esc(x.n)}${x.td ? ' <b>Done Today</b>' : ''}</span>` : x.k === 'hd' ? `<span class="hd">${esc(x.n)} · Hindrance</span>` : x.k === 'on' ? `<span class="on${x.w ? ' wk' : ''}">${esc(x.n)} ${x.w ? `<i>${x.b}→</i><em>${x.a}%</em>` : x.a ? `<i>${x.a}%</i>` : ''}</span>` : `<span class="${x.cur ? 'on' : 'pe'}">${esc(x.n)}${x.a ? ` <i>${x.a}%</i>` : ''}</span>`;
+    const pcCard = u => `<div class="pc s-${stc[u.st]}"><div class="pt"><b>${esc(u.loc)}${u.grp ? `<small>${esc(u.grp)}</small>` : ''}</b><u>${u.a}%</u></div><div class="cb">${u.b > 0 ? `<i class="e" style="width:${u.b}%"></i>` : ''}${u.a > u.b ? `<i class="t" style="width:${u.a - u.b}%"></i>` : ''}</div><div class="pm"><span class="st">${u.st === 'done' && u.de ? 'Done ' + esc(dsh(u.de)) : ST[u.st]}</span>${u.gain ? `<span class="up">${esc(u.gain)}</span>` : ''}</div>${u.it.length ? `<div class="sl">${u.it.map(pcSub).join('')}</div>` : ''}${u.ds || u.day ? `<div class="pd"><span>${u.ds ? 'Start <b>' + esc(dsh(u.ds)) + '</b>' : ''}</span><span><b>${u.day ? (u.st === 'done' && u.de ? `In ${u.day} Day${u.day === 1 ? '' : 's'}` : 'Day ' + u.day) : ''}</b></span></div>` : ''}</div>`;
     const pcAct = A => `<div class="pa"><div class="pah"><b>${esc(A.name)}</b><span>${A.n.all} Location${A.n.all === 1 ? '' : 's'}</span></div>${A.areas.map(R => `<div class="pab"><div class="par">${esc(R.name)}</div>${R.cards.length ? `<div class="pg">${R.cards.map(pcCard).join('')}</div>` : ''}${R.nrN ? `<div class="pnr"><b>${R.nrN} Not Reported</b> · ${esc(R.nr)}</div>` : ''}</div>`).join('')}<div class="psum"><span><b>${A.n.moved}</b> Worked</span><span><b>${A.n.wip}</b> WIP</span><span><b>${A.n.nowork}</b> No Work</span><span><b>${A.n.hind}</b> Hindrance</span><span><b>${A.n.nr}</b> Not Reported</span></div></div>`;
-    const pcLg = `<span><i style="background:#a9b6c9"></i>Before ${pdd}</span><span><i style="background:#15803d"></i>Reported For ${pdd}</span><span>✓ Done</span><span>▸ Ongoing</span><span>○ Not Started</span>`;
+    const pcLg = `<span><i style="background:#a9b6c9"></i>Before ${pdd}</span><span><i style="background:#15803d"></i>Reported For ${pdd}</span><span>✓ Done Today</span><span>▸ Ongoing</span><span>○ Part Done / Next</span>`;
     const chart = T ? (() => { const mx = Math.max(1, ...T.days.map(d => d.tot), T.avg), k = 72 / mx, step = mx > 300 ? 100 : mx > 120 ? 50 : mx > 40 ? 20 : 10; let s = '<line x1="24" y1="96" x2="296" y2="96" stroke="#b9c3d2"/>';
       for (let v = step; v <= mx; v += step) { const y = 96 - v * k; s += `<line x1="24" y1="${y}" x2="296" y2="${y}" stroke="#e3e8f0"/><text x="20" y="${y + 2.5}" font-size="6.5" text-anchor="end" fill="#8492a6">${v}</text>`; }
       if (T.on) { const ay = 96 - T.avg * k; s += `<line x1="24" y1="${ay}" x2="296" y2="${ay}" stroke="#b45309" stroke-dasharray="3 2"/><text x="296" y="7" font-size="6.5" text-anchor="end" fill="#b45309">- - Avg ${fmt(T.avg)}</text>`; }
@@ -7931,7 +7934,7 @@ const DPR = (function () {
  .pt{display:flex;align-items:baseline;gap:4px}.pt b{flex:1;min-width:0;font-size:13.5px;line-height:1.15;color:#14233d;overflow-wrap:anywhere}.pt b small{display:block;font-size:10.5px;font-weight:800;color:#1d4ed8}.pt u{text-decoration:none;font-size:15px;font-weight:800;color:#14233d}
  .cb{display:flex;height:7px;background:#eef1f6;border-radius:99px;overflow:hidden;margin:4px 0}.cb i{display:block;height:100%}.cb .e{background:#a9b6c9}.cb .t{background:#15803d}
  .sl{margin:0 0 4px;font-size:10.5px;line-height:1.3}.sl span{display:block;padding-left:13px;position:relative}.sl span:before{position:absolute;left:0}.sl .dn{color:#9aa7ba}.sl .dn:before{content:'✓';color:#6fb487;font-weight:800}.sl .dn b{color:#15803d}.sl .on{color:#14233d;font-weight:700}.sl .on:before{content:'▸';left:1px;color:#d08a0b}.sl .on.wk:before{color:#15803d}.sl em{font-style:normal;font-weight:800;color:#15803d}.sl i{font-style:normal;font-weight:600;color:#55657c}.sl .pe{color:#55657c}.sl .pe:before{content:'○';font-size:9px;top:1px;color:#b9c3d2}.sl .hd{color:#b91c1c;font-weight:700}.sl .hd:before{content:'!';left:3px;font-weight:800}
- .pm{display:flex;flex-wrap:wrap;align-items:center;gap:1px 5px;font-size:10.5px;color:#55657c;white-space:nowrap}.pm .st{font-weight:800;color:#6b7a90}.pm .sp{flex:1}.pm .up{font-size:11.5px}.s-w .st,.s-d .st{color:#15803d}.s-wip .st{color:#b45309}.s-h .st{color:#b91c1c}
+ .pm{display:flex;flex-wrap:wrap;align-items:center;gap:1px 5px;font-size:10.5px;color:#55657c;white-space:nowrap}.sl{margin:2px 0 0}.sl .dn.td{color:#15803d;font-weight:700}.pd{display:flex;justify-content:space-between;gap:6px;font-size:10.5px;color:#55657c;border-top:1px dashed #dfe5ee;margin-top:4px;padding-top:3px;white-space:nowrap}.pd b{color:#14233d}.pm .st{font-weight:800;color:#6b7a90}.pm .sp{flex:1}.pm .up{font-size:11.5px}.s-w .st,.s-d .st{color:#15803d}.s-wip .st{color:#b45309}.s-h .st{color:#b91c1c}
  .pnr{margin:0 6px 6px;padding:5px 8px;border:1px dashed #cfd7e3;border-radius:7px;background:#f6f8fb;font-size:10.5px;line-height:1.35;color:#55657c;break-inside:avoid}.pnr b{color:#14233d}.psum{display:flex;gap:10px;flex-wrap:wrap;padding:5px 10px;background:#f6f8fb;border-top:1px solid #dfe5ee;font-size:10.5px;color:#55657c;break-before:avoid}.psum b{color:#14233d}
  .draft{color:#b91c1c;font-weight:800}.end{text-align:center;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#55657c;font-size:8pt;margin:6px 0 2px;break-inside:avoid;break-before:avoid}`;
     const waitH = S.wPdf ? prWait(WH) : '';

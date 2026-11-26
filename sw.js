@@ -95,7 +95,8 @@
 // v99 · Construction v5.18.1 — Analysis Progress: the day's percent beside the quantity; day columns carry their date
 // v100 · Construction v5.18.2 — review screen footer: Share PDF / Share Preview and both print formats are back
 // v101 · Construction v5.18.3 — PDF progress cards: only the active sub-activities, start date and elapsed days on each card
-const VERSION = 'pgs-shell-v101';
+// v102 · Construction v5.18.4 — Deployment table with contractor pills in the report (replaces Activity · Location Wise) and on the review screen; contractor on progress cards
+const VERSION = 'pgs-shell-v102';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

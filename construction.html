@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.16.8</title>
+<title>Penguin Construction v5.16.9</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -9000,7 +9000,7 @@ const DPR = (function () {
     else { if ((l.stages || []).some(s => { const y = x.subs[s.id]; return subBase(s) < 99.9995 && !heldS(g, l, s) && y.out === 'h' && !y.rc; })) w.push('Hindrance Reason Missing'); const q = (l.stages || []).filter(s => { const y = x.subs[s.id], b = subBase(s); return b < 99.9995 && !heldS(g, l, s) && y.out === 'w' && !y.wip && num(y.pct) <= b + 0.0005; }); if (q.length) w.push(q.map(s => s.name).join(', ') + ' · % Missing'); }
     if (x.fin && !(x.cert > 0)) w.push('Site Cert. Qty Required');
     if (outOf(g, l) === '' && outT(g, l) !== '' && startedB(l) && !x.fin) w.push(dsh(PD()) + ' Progress Status Missing (W / H / N)');
-    if (labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key))) w.push('Heads Missing');
+    if (outT(g, l) === 'w' && labUnits(g).some(u => u.worked && !unitHeads(g, u) && !noLab(g, u.key))) w.push('Heads Missing');   // v5.16.9 · only on the rows Working today, not on the No Work / Hindrance rows of the same crew
     return w;
   }
   function pfHinds() {   // open hindrances on this sheet (today's H, else yesterday's), with since / days

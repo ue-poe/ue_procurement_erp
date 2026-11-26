@@ -90,7 +90,8 @@
 // v94 · Construction v5.16.7 — DPR A4 print: an activity starts on a new sheet when it would otherwise be split
 // v95 · Construction v5.16.8 — Daily Report: a crew with heads marks every blank running row Working today
 // v96 · Construction v5.16.9 — Heads Missing is shown only on the rows Working today
-const VERSION = 'pgs-shell-v96';
+// v97 · Construction v5.17 — Review & Publish: Analysis segment (labour deployment, no-labour, productivity per head) · reads M98
+const VERSION = 'pgs-shell-v97';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

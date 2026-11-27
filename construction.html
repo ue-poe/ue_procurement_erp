@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.19.1</title>
+<title>Penguin Construction v5.19.2</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3645,10 +3645,11 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .ec-q input::placeholder{color:rgba(255,255,255,.7)}
 #mod-dpr .dp2 .pf-top .ec-q input:focus{outline:2px solid #9db4f5;background:#fff;color:#132338}
 #mod-dpr .dp2 .pf-top .rib .all.pd.on{background:#b86a00;border-color:#b86a00;color:#fff}
-#mod-dpr .dp2 .ec-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-items:start;padding:4px 2px 8px}
-@media (min-width:1000px){ #mod-dpr .dp2 .ec-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (min-width:1500px){ #mod-dpr .dp2 .ec-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
-#mod-dpr .dp2 .ec-c{background:#fff;border:1px solid #cfd7e3;border-radius:10px;overflow:hidden;min-width:0}
+/* v5.19.2 · cards stack in columns (a tall card no longer leaves a gap beside it) */
+#mod-dpr .dp2 .ec-grid{display:block;columns:1;column-gap:8px;padding:4px 2px 8px}
+@media (min-width:1000px){ #mod-dpr .dp2 .ec-grid{columns:2} }
+@media (min-width:1500px){ #mod-dpr .dp2 .ec-grid{columns:3} }
+#mod-dpr .dp2 .ec-c{background:#fff;border:1px solid #cfd7e3;border-radius:10px;overflow:hidden;min-width:0;break-inside:avoid;margin:0 0 8px}
 #mod-dpr .dp2 .ec-c .ech{display:block;padding:7px 10px;background:#f1f4f9;border-bottom:1px solid #cfd7e3}
 #mod-dpr .dp2 .ec-c .ech b{display:block;font-size:13.5px;line-height:1.25}
 #mod-dpr .dp2 .ec-c .ech > span{display:block;font-size:11px;color:#64728a}
@@ -3881,7 +3882,8 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .onel .lk{margin-left:auto;color:#5b6b82;font-weight:700;font-size:11px;cursor:pointer;text-decoration:underline}
 #mod-dpr .dp2 .onel select.rs{height:28px;border-radius:7px;border:1px solid #c3ccd9;font-size:12px;max-width:190px}
 #mod-dpr .dp2 .onel select.rs.bad{border-color:#b91c1c;background:#fff5f5}
-#mod-dpr .dp2 .onel select.rs.mini{width:22px;padding:0;border-color:#dfe5ee;color:transparent;background:#fff}
+#mod-dpr .dp2 .onel select.rs.mini{width:22px;flex:0 0 22px;padding:0;border-color:#dfe5ee;color:transparent;background:#fff}
+#mod-dpr .dp2 .onel select.rs.mini option{color:#132338}   /* v5.19.2 · the change-reason list was drawn in the select's transparent text colour */
 #mod-dpr .dp2 .pf-ent.rl.one>.rail{padding:3px 4px}#mod-dpr .dp2 .pf-ent.rl.one>.rail b{font-size:13.5px}#mod-dpr .dp2 .pf-ent.rl.one>.rail .p,#mod-dpr .dp2 .pf-ent.rl.one>.rail small{display:none}
 #mod-dpr .dp2 .pf-ent.rl.fin{cursor:pointer}#mod-dpr .dp2 .pf-ent.rl.fin>.rail b{color:#5b6b82}
 #mod-dpr .dp2 .pf-card .pf-ent.rl + .pf-ent.rl{border-top:2px solid var(--tintb,#c9d6ea)}

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.18.4</title>
+<title>Penguin Construction v5.18.5</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -6896,19 +6896,43 @@ const DPR = (function () {
   }
 
   /* ---------- Report Together (M33): any activities × any locations → one card; labour once, progress per row ---------- */
+  /* v5.18.5 · clubbing / splitting cards makes the server clear their unsent rows (M33 fn_dpr_reset_open_drafts). Keep what was entered on
+     those cards — status, progress, dates, heads — put it back on the new cards after the reload and save it when it is complete.
+     No save of the whole sheet first, so a half-filled card elsewhere no longer blocks the club. */
+  async function regroup(wids, call) {
+    const W = new Set(wids), keepL = {}, src = [];
+    S.groups.forEach(g => { if (!g.lines.some(l => W.has(l.work_id))) return; const d = dOf(g);
+      g.lines.forEach(l => { keepL[l.work_id] = d.lines[l.work_id]; });
+      const cons = []; (d.cons || []).forEach(c => cons.push(c)); Object.values(d.rows || {}).forEach(a => a.forEach(c => cons.push(c)));
+      src.push({ wids: g.lines.map(l => l.work_id), cons, nolab: !!(d.nolab && d.nolab.has('A')), used: false }); });
+    await call();
+    await engLoad(tDate(), true);
+    const done = [];
+    S.groups.forEach(g => { if (!g.lines.some(l => keepL[l.work_id])) return;
+      const d = S.D[g.wgroup_id] = newDraft(g);
+      g.lines.forEach(l => { if (keepL[l.work_id]) d.lines[l.work_id] = keepL[l.work_id]; });
+      const by = new Map();
+      src.forEach(x => { if (x.used || !x.wids.some(w => g.lines.some(l => l.work_id === w))) return; x.used = true; if (x.nolab) d.nolab.add('A');   // a split club: its labour stays with the first card
+        x.cons.forEach(c => { if (!c.con) return; const hs = Object.entries(c.heads || {}).filter(([, v]) => num(v) > 0); if (!hs.length) return;
+          const m = by.get(c.con) || { con: c.con, heads: {} }; hs.forEach(([t, v]) => { m.heads[t] = num(m.heads[t]) + num(v); }); by.set(c.con, m); }); });
+      if (by.size) d.cons = [...by.values()];
+      markDirty(g); done.push(g); });
+    let saved = 0; S._q = true;
+    try { for (const g of done) { if (payloadOf(g) && await saveCard(g)) saved++; } } finally { S._q = false; }
+    if (saved) await engLoad(tDate(), true); else redraw();
+  }
   function clubMode() { S.cm = !S.cm; if (!S.cm) S.ticks = new Set(); redraw(); }
   function tick(wid, on) { const e = S.W[wid], ids = e && e.g.lines.length > 1 ? e.g.lines.map(l => l.work_id) : [wid]; ids.forEach(w => on ? S.ticks.add(w) : S.ticks.delete(w)); redraw(); }   // v157 · ticking one line of a club ticks the club
   async function makeClub() {
     const ids = [...S.ticks]; if (ids.length < 2) { toast('Tick Two Or More Activities To Report Them Together', 'warn'); return; }
     if (new Set(ids.map(w => S.W[w] && S.W[w].g.wgroup_id)).size < 2) { toast('Those Activities Already Report Together', 'warn'); return; }
-    if (dirtyAll() && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast(ids.length + ' Activities Now Report Together', 'success'); S.cm = false; S.ticks = new Set(); await engLoad(tDate(), true); }
+    try { await regroup(ids, () => rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null })); toast(ids.length + ' Activities Now Report Together', 'success'); S.cm = false; S.ticks = new Set(); redraw(); }
     catch (e) { toast(err(e, 'Could not club them'), 'error'); }
   }
   async function unclub(gid) {
     if (!confirm('Split This Club Back Into Single Cards? Progress Stays; Labour Entered On The Club Stays With The First Card.')) return;
-    if (dirtyAll() && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_unclub', { p_wgroup_id: gid }); toast('Club Split', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not split the club'), 'error'); }
+    const ug = G(gid); if (!ug) return;
+    try { await regroup(ug.lines.map(l => l.work_id), () => rpc('rpc_dpr_unclub', { p_wgroup_id: gid })); toast('Club Split', 'success'); } catch (e) { toast(err(e, 'Could not split the club'), 'error'); }
   }
 
   /* ---------- catalogue (Browse / Grid) hosted in the scroll area ---------- */
@@ -6959,7 +6983,7 @@ const DPR = (function () {
     if (cardHasW(g)) pushRows(d.cons, {}, g.label || g.location);   // v158.3 · a card finished on an earlier date sends no labour
     const uk = new Set(labUnits(g).map(u => u.key));   // rows of a sub / group no longer marked worked are not sent
     Object.entries(d.rows || {}).filter(([k]) => uk.has(k)).forEach(([k, arr]) => pushRows(arr, k[0] === 'S' ? { work_sub_id: k.slice(2) } : k[0] === 'C' ? { sub_club_id: k.slice(2) } : { plan_group_id: k.slice(2) }, (g.label || g.location) + ' · ' + k.slice(2)));   // v157.1 · per sub / group (M34 stores plan_group_id)
-    if (problems.length) { toast(problems[0], 'warn'); return null; }
+    if (problems.length) { if (!S._q) toast(problems[0], 'warn'); return null; }
     return { outcome: d.out === 'worked' ? 'worked' : d.out, reason_code: d.out === 'hindrance' ? d.rc || null : null, remarks: null, labour_rows, lines, no_labour: noLab(g, 'A') };   // v161.3 · v165: outcome follows today; a club hindered on every member today → outcome hindrance = one card-level period (M42 server)
   }
   async function saveCard(g) {
@@ -8354,8 +8378,7 @@ const DPR = (function () {
     const M = pfModel(true), c = M.cards.find(x => x.key === key); if (!c) return;
     const gs = pfLiveGs(c), ids = []; gs.forEach(g => g.lines.forEach(l => { if (ids.indexOf(l.work_id) < 0) ids.push(l.work_id); }));   // a unit already in a club brings its club along (same rule as the # tick); finished units stay out
     if (gs.length < 2) return;
-    if (dirtyAll() && !(await saveAll(true))) return;
-    try { await rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null }); toast('One Crew · ' + c.act + ' · ' + pfFloorLabel(c.floor), 'success'); await engLoad(tDate(), true); }
+    try { await regroup(ids, () => rpc('rpc_dpr_club', { p_work_ids: ids, p_label: null })); toast('One Crew · ' + c.act + ' · ' + pfFloorLabel(c.floor), 'success'); }
     catch (e) { toast(err(e, 'Could not make one crew'), 'error'); return; }
     const e0 = S.W[ids[0]]; if (e0) { S.mpo = e0.g.wgroup_id + '|A'; redraw(); }
   }
@@ -8845,14 +8868,12 @@ const DPR = (function () {
   function scTick(sid) { const P = S.pfSc; if (!P) return; P.ids.has(sid) ? P.ids.delete(sid) : P.ids.add(sid); redraw(); }
   async function scGo() {
     const P = S.pfSc; if (!P || isRo()) return; const ids = [...P.ids]; if (ids.length < 2) { toast('Tick Two Or More Sub-Activities', 'warn'); return; }
-    if (dirtyAll() && !(await saveAll(true))) return;
     try { const r = await rpc('rpc_dpr_sub_club', { p_work_id: P.wid, p_sub_ids: ids, p_label: null }); S.pfSc = null;
       toast(ids.length + ' Sub-Activities · One Crew' + (r && r.labour_rows_reset ? ' — Enter The Crew’s Labour Once' : ''), 'success'); await engLoad(tDate(), true); }
     catch (e) { toast(SC_MISS(e) ? 'Clubbing Sub-Activities Needs M87 On The Database — Ask The Admin' : err(e, 'Could not club them'), 'error', 7000); }
   }
   async function scSplit(cid) {
     if (isRo() || !confirm('Split This Crew? Labour Goes Back To One Entry Per Sub-Activity. Heads Entered On The Club Today Are Cleared.')) return;
-    if (dirtyAll() && !(await saveAll(true))) return;
     try { await rpc('rpc_dpr_sub_unclub', { p_id: cid }); toast('Crew Split', 'success'); await engLoad(tDate(), true); } catch (e) { toast(err(e, 'Could not split the crew'), 'error'); }
   }
   function scWork(wid, cid) {   // the whole crew works today / does not: every open member takes the same status

@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.19.2</title>
+<title>Penguin Construction v5.20</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3645,6 +3645,26 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .pf-top .ec-q input::placeholder{color:rgba(255,255,255,.7)}
 #mod-dpr .dp2 .pf-top .ec-q input:focus{outline:2px solid #9db4f5;background:#fff;color:#132338}
 #mod-dpr .dp2 .pf-top .rib .all.pd.on{background:#b86a00;border-color:#b86a00;color:#fff}
+/* v5.20 · ENGINEER REVIEW (DPR_Engineer_Refresh_mock_v5) — the manager Analysis styles, plus the To Fix list and the club rows */
+#mod-dpr .dp2 .er-fix{background:#fff7e8;border:1px solid #f0cf8e;border-radius:10px;margin:0 0 10px;overflow:hidden}
+#mod-dpr .dp2 .er-fix.ok{background:#e9f7ef;border-color:#b7e0c8;color:#0d6b45;font-weight:700;padding:7px 10px}
+#mod-dpr .dp2 .er-fix .fh{padding:6px 10px;font-weight:800;color:#b86a00;font-size:12px}
+#mod-dpr .dp2 .er-fix .fr{display:flex;gap:8px;padding:6px 10px;border-top:1px solid #f0dcae;align-items:center;flex-wrap:wrap}
+#mod-dpr .dp2 .er-fix .fr b{flex:1 1 180px;min-width:0}
+#mod-dpr .dp2 .er-fix .fr button,#mod-dpr .dp2 .an .er-fx{border:1px solid #12305a;background:#12305a;color:#fff;border-radius:6px;padding:3px 10px;font:inherit;font-weight:700;font-size:11.5px;cursor:pointer}
+#mod-dpr .dp2 .an .an-tabs.er-t button{white-space:nowrap}
+@container an (max-width:700px){
+  #mod-dpr .dp2 .an .an-tabs.er-t button{padding:7px 9px;font-size:12.5px}#mod-dpr .dp2 .an .an-tabs.er-t button small{margin-left:4px}
+  #mod-dpr .dp2 .an table.an-t.er-rw thead{display:none}#mod-dpr .dp2 .an table.an-t.er-rw,#mod-dpr .dp2 .an table.an-t.er-rw tbody{display:block}
+  #mod-dpr .dp2 .an table.an-t.er-rw tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #cbd5e1;border-radius:8px;margin-bottom:6px;overflow:hidden}
+  #mod-dpr .dp2 .an table.an-t.er-rw td{display:block;border:0;border-top:1px solid #e3e8f0;text-align:left;padding:4px 8px}
+  #mod-dpr .dp2 .an table.an-t.er-rw td::before{content:attr(data-l);display:block;font-size:9.5px;font-weight:700;color:#6b7690;text-transform:uppercase;letter-spacing:.03em}
+  #mod-dpr .dp2 .an table.an-t.er-rw td.wd{grid-column:1/-1}
+}
+#mod-dpr .dp2 .an .er-sub{display:block;color:#34435e;font-size:11px;font-weight:600}
+#mod-dpr .dp2 .an .an-lr.er-cl{border-top-style:dashed}
+#mod-dpr .dp2 .an .er-cp{background:#e6ecfd;color:#2952cc;border-radius:5px;padding:0 5px;font-size:10px;font-weight:700;margin-left:5px}
+#mod-dpr .dp2 .an .er-rs{border:1px solid #cbd5e1;background:#fff;border-radius:6px;padding:3px 10px;font:inherit;font-weight:700;font-size:11.5px;color:#12305a;cursor:pointer}
 /* v5.19.2 · cards stack in columns (a tall card no longer leaves a gap beside it) */
 #mod-dpr .dp2 .ec-grid{display:block;columns:1;column-gap:8px;padding:4px 2px 8px}
 @media (min-width:1000px){ #mod-dpr .dp2 .ec-grid{columns:2} }
@@ -9349,7 +9369,85 @@ const DPR = (function () {
   function pfAch(title, sub, cons, mix, hN, hLabel, extra, pct) {   // activity header on one line: what and where on the left; crew, trades, heads and % on the right
     return `<div class="ach a1"><div><b>${esc(title)}</b><small>${sub}</small></div><span class="crew">${cons.length ? '<b>' + cons.map(esc).join(' · ') + '</b>' : '<i>No Crew</i>'}${mix ? ' · ' + mix : ''}${extra ? ' ' + extra : ''}</span><span class="hn" title="${esc(hLabel)}">${fmt(hN)}<small>Heads</small></span>${pct}</div>`;
   }
+  /* ==================================================================
+     v5.20 · ENGINEER REVIEW (DPR_Engineer_Refresh_mock_v5, approved 27 Nov 2026)
+     Preview & Send and the sent Day Report as three tabs — Labour · Progress · On Hold — built from the sheet's own drafts (nothing is read
+     from the server): To Fix list, Deployment table with contractor pills, No Labour Today, Contractor / Location Wise, one card per
+     activity with a row per location, and the holds grouped by activity. The earlier preview stays under ⋯ › Entry · Old View.
+     ================================================================== */
+  const erCsh = c => { const w = String(c || '').trim().split(/\s+/)[0] || ''; return w.length > 3 && w === w.toUpperCase() ? w[0] + w.slice(1).toLowerCase() : w; };
+  const erArea = (g, l) => { const k = pfFloorKey(g, l); return pfFloorMark(k) || pfFloorLabel(k); };
+  const erYd = g => { const d = S.yd && S.yd.D && S.yd.D[g.wgroup_id]; return d ? rvRows(d).reduce((a, c) => a + heads(c.heads), 0) : null; };   // the same card's heads on the previous sheet
+  function erRows() {   // one row per open line of the sheet (finished-before and held lines stay out)
+    return allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l)).map(({ g, l }) => { const x = lineX(g, l), n = cdNodeLive(g, l);
+      const subs = staged(l) ? subsLive(g, l).filter(z => { const b = subBase(z), y = x.subs[z.id]; return (b > 0.0005 && b < 99.9995) || (y && y.out === 'w'); }).map(z => z.name + ' ' + Math.round(Math.min(100, subPct(g, l, z))) + '%') : [];
+      return { g, l, x, n, act: l.activity, loc: lineLoc(g, l), o: outOf(g, l), oT: outT(g, l), why: pfWhy(g, l), mv: num(lineDoneQty(g, l)), b: Math.min(100, n.b), p: Math.min(100, n.pct), subs,
+        day: n.ds ? daysBetween(n.ds, S.to) + 1 : null, club: g.lines.length > 1, starts: pfStartsToday(g, l) }; });
+  }
+  function erFix(R) {
+    if (!S.prev || S.locked) return ''; const bad = R.filter(r => r.why.length || attOf(r.g, r.l));
+    if (!bad.length) return `<div class="er-fix ok">✓ Nothing Missing — Ready To Send</div>`;
+    return `<div class="er-fix"><div class="fh">To Fix Before Sending · ${bad.length}</div>${bad.map(r => `<div class="fr"><b>${esc(short(r.act, 60))} · ${esc(r.loc)}</b>${anPill('nv', esc(r.why.join(' · ') || 'Check'))}<button onclick="DPR.pfGo('${r.l.work_id}')">Fix ›</button></div>`).join('')}</div>`;
+  }
+  const erSt = r => r.x.fin ? anPill('w', 'Finished') : r.oT === 'w' ? anPill('w', 'Working') : r.oT === 'h' ? anPill('h', 'Hindrance' + (pfRcOf(r.g, r.l) ? ' · ' + esc(pfRcOf(r.g, r.l)) : '')) : r.oT === 'n' ? anPill('nw', 'No Work') : anPill('nv', 'Not Filled');
+  function erLab(R) {
+    const dd = esc(dsh(S.to)), rows = cdLabRows(''), tot = rows.reduce((a, r) => a + sum(r.hd), 0), ne = rows.filter(r => r.np).reduce((a, r) => a + sum(r.hd), 0);
+    const prevH = ((S.lprev || {}).rows || []).reduce((a, r) => a + heads(r.heads || {}), 0), noLab = R.filter(r => !finT(r.g, r.l) && !(cardHeads(r.g) > 0));
+    let h = `<div class="an-kpis">${anK(fmt(tot), 'Heads ' + dd, '', prevH ? (tot - prevH >= 0 ? '+' : '') + fmt(tot - prevH) + ' vs ' + esc(dsh(PD())) : '')}${anK(R.filter(r => r.oT === 'w').length, 'Working Today', 'grn')}${anK(noLab.length, 'No Labour', noLab.length ? 'red' : '')}${anK(R.filter(r => r.oT === 'h').length, 'Hindrance', R.some(r => r.oT === 'h') ? 'red' : '')}${anK(R.filter(r => r.oT === '').length, 'Not Filled', R.some(r => r.oT === '') ? 'amb' : '')}${anK(fmt(ne), 'Non-Estimated Heads')}</div>`;
+    // deployment: one row per activity, one column per tower / block, one chip per location × contractor (a club is one chip)
+    const dep = new Map(), areas = [];
+    rows.forEach(r => { if (!(sum(r.hd) > 0)) return; let act, area, t;
+      if (r.np) { act = r.act; area = 'Other'; t = String(r.loc || 'NE').split(/\s*[›,]\s*/).pop(); }
+      else { const g = r.g, ls = g.lines, l0 = ls[0]; act = [...new Set(ls.map(l => l.activity))].join(' + '); area = erArea(g, l0); t = lineLoc(g, l0) + (ls.length > 1 ? ' +' + (ls.length - 1) : ''); }
+      if (areas.indexOf(area) < 0) areas.push(area); if (!dep.has(act)) dep.set(act, { act, ne: !!r.np, cells: [] }); dep.get(act).cells.push({ area, t, con: conName(r.con), h: sum(r.hd) }); });
+    areas.sort(pfNatCmp);
+    const chip = c => `<span class="an-dc"><span class="l">${esc(c.t)}</span>${c.con ? `<span class="cp" title="${esc(c.con)}">${esc(erCsh(c.con))}</span>` : ''}<b>${fmt(c.h)}</b></span>`, aT = a => [...dep.values()].reduce((n, d) => n + d.cells.filter(c => c.area === a).reduce((m, c) => m + c.h, 0), 0);
+    h += `<div class="an-sec"><h3>Deployment · Activity × Location</h3><span class="an-cnt">${fmt(tot)} Heads</span></div>`;
+    h += dep.size ? `<div class="an-x"><table class="an-t" id="an_dep"><thead><tr><th>Activity</th>${areas.map(a => `<th>${esc(a)}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>${[...dep.values()].map(d => { const t = d.cells.reduce((n, c) => n + c.h, 0);
+      return `<tr><td><b>${esc(d.act)}</b>${d.ne ? ' <span class="an-mut">NE</span>' : ''}</td>${areas.map(a => `<td>${d.cells.filter(c => c.area === a).map(chip).join('') || '<span class="an-mut">·</span>'}</td>`).join('')}<td class="n">${fmt(t)}</td></tr>`; }).join('')}<tr class="tot"><td>Total</td>${areas.map(a => `<td class="n">${fmt(aT(a))}</td>`).join('')}<td class="n">${fmt(tot)}</td></tr></tbody></table></div>` : `<div class="d2-empty"><b>No Labour Entered For ${dd}</b></div>`;
+    h += `<div class="an-sec"><h3>No Labour Today</h3><span class="an-cnt ${noLab.length ? 'red' : ''}">${noLab.length}</span></div>`;
+    if (noLab.length) h += `<table class="an-t er-rw"><thead><tr><th>Activity</th><th>Location</th><th>Status ${dd}</th><th class="n">Progress</th><th class="n">Day</th></tr></thead><tbody>${noLab.map(r => `<tr><td class="wd" data-l="Activity"><b>${esc(r.act)}</b></td><td class="wd loc" data-l="Location">${esc(r.loc)} <span class="an-mut">${esc(erArea(r.g, r.l))}</span></td><td class="wd" data-l="Status">${erSt(r)}${r.oT === 'w' ? ' ' + anPill('nv', 'Heads Missing') : ''}</td><td class="n" data-l="Progress">${Math.round(r.p)}%</td><td class="n" data-l="Day">${r.day == null ? '—' : r.day}</td></tr>`).join('')}</tbody></table>`;
+    const byC = new Map(), byL = new Map(); rows.forEach(r => { const n = sum(r.hd); if (!(n > 0)) return; const k = r.con || ''; if (!byC.has(k)) byC.set(k, { n: 0, t: {} }); const o = byC.get(k); o.n += n; Object.entries(r.hd).forEach(([t, v]) => { if (num(v) > 0) o.t[t] = num(o.t[t]) + num(v); });
+      const lk = r.np ? 'Non-Estimated' : (() => { const fk = pfFloorKey(r.g, r.g.lines[0]); return (pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk); })(); byL.set(lk, num(byL.get(lk)) + n); });
+    h += `<div class="an-two"><div><div class="an-sec"><h3>Contractor Wise</h3></div><table class="an-t"><thead><tr><th>Contractor</th><th class="n">Heads</th></tr></thead><tbody>${[...byC.entries()].sort((a, b) => b[1].n - a[1].n).map(([c, o]) => `<tr><td><b>${c ? esc(conName(c)) : 'Contractor Not Picked'}</b><br><span class="an-mut">${cdTrOrder(o.t).map(t => esc(tCode(t)) + ' ' + fmt(o.t[t])).join(' · ')}</span></td><td class="n">${fmt(o.n)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td class="n">${fmt(tot)}</td></tr></tbody></table></div>
+      <div><div class="an-sec"><h3>Location Wise</h3></div><table class="an-t"><thead><tr><th>Location</th><th class="n">Heads</th></tr></thead><tbody>${[...byL.entries()].sort((a, b) => pfNatCmp(a[0], b[0])).map(([k, n]) => `<tr><td>${esc(k)}</td><td class="n">${fmt(n)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td class="n">${fmt(tot)}</td></tr></tbody></table></div></div>`;
+    return h;
+  }
+  function erPrg(R) {
+    const pdS = esc(dsh(PD())), dd = esc(dsh(S.to)), P = R.filter(r => !r.starts), fixOn = S.prev && !S.locked;
+    const gs = [...new Set(P.map(r => r.g))], hpT = gs.reduce((a, g) => a + num(erYd(g)), 0);
+    let h = `<div class="an-kpis">${anK(P.filter(r => r.o !== '').length, 'Reported ' + pdS, '', 'Of ' + P.length)}${anK(P.filter(r => r.p - r.b > 0.0005).length, 'Lines Moved', 'grn')}${anK(R.filter(r => r.x.fin).length, 'Completed', 'grn')}${anK(P.filter(r => r.o === 'h').length, 'Hindrance', P.some(r => r.o === 'h') ? 'red' : '')}${anK(fmt(hpT), 'Heads ' + pdS)}${anK(R.filter(r => r.starts).length, 'Starting ' + dd)}</div>`;
+    const G = new Map(); R.forEach(r => { if (!G.has(r.act)) G.set(r.act, []); G.get(r.act).push(r); });
+    h += `<div class="an-sec"><h3>Progress By Activity</h3><span class="an-cnt">${G.size} Activit${G.size === 1 ? 'y' : 'ies'} · ${R.length} Location${R.length === 1 ? '' : 's'}</span></div>`;
+    const m = (lab, v, c) => `<div class="an-m ${c || ''}"><small>${lab}</small><span>${v}</span></div>`;
+    h += [...G.entries()].sort((a, b) => pfNatCmp(a[0], b[0])).map(([a, rs]) => {
+      rs.sort((x, y) => pfNatCmp(erArea(x.g, x.l), erArea(y.g, y.l)) || (x.g === y.g ? 0 : pfNatCmp(lineLoc(x.g, x.g.lines[0]), lineLoc(y.g, y.g.lines[0]))) || pfNatCmp(x.loc, y.loc));
+      const us = [...new Set(rs.map(r => String(r.l.uom || '').toLowerCase()))], u = us.length === 1 && rs[0].l.uom ? rs[0].l.uom : '', q = rs.reduce((n, r) => n + r.mv, 0), cg = [...new Set(rs.map(r => r.g))], hh = cg.reduce((n, g) => n + num(erYd(g)), 0), bad = rs.filter(r => r.why.length).length;
+      const seen = new Set();
+      return `<div class="an-ac k${bad ? 1 : 4}"><div class="an-ah"><b>${esc(a)}</b><span class="an-mut">${u ? esc(u) + ' · ' : ''}${rs.length} Location${rs.length > 1 ? 's' : ''}</span><span class="an-as">${bad ? anPill('h', bad + ' To Fix') : ''}<span><small>Heads ${pdS}</small> ${fmt(hh)}</span><span><small>Moved ${pdS}</small> ${u ? (q ? '+' + fmt(q) : '0') : '—'}</span><span><small>Per Head</small> ${u && hh && q ? fmt(q / hh) : '—'}</span></span></div>${rs.map(r => {
+        const first = !seen.has(r.g); seen.add(r.g); const mine = rs.filter(z => z.g === r.g), hp = erYd(r.g), cq = mine.reduce((n, z) => n + z.mv, 0), uu = r.l.uom || '', mvp = Math.max(0, r.p - r.b);
+        const moved = r.starts ? '—' : r.o === '' ? anPill('nv', 'Not Filled') : r.mv > 0 ? '+' + fmt(r.mv) + (u ? '' : ' ' + esc(uu)) : mvp > 0.05 ? '+' + Math.round(mvp) + '%' : r.o === 'h' ? 'Hindrance' : r.o === 'n' ? 'No Work' : r.x.wip || r.o === 'w' ? 'WIP' : '0';
+        return `<div class="an-lr ${r.club && !first ? 'er-cl' : ''}"><div class="an-ln"><b>${esc(r.loc)}</b>${r.club ? `<span class="er-cp">Club · ${r.g.lines.length}</span>` : ''}<span class="an-mut"> ${esc(erArea(r.g, r.l))} · ${esc(pfCons(r.g).map(erCsh).join(' · ') || 'No Crew')}</span>${r.subs.length ? `<span class="er-sub">${esc(r.subs.join(' · '))}</span>` : ''}</div>${
+          m('Done', `<i class="an-bar"><i style="width:${r.b.toFixed(1)}%"></i><i class="mv" style="width:${mvp.toFixed(1)}%"></i></i>${Math.round(r.p)}%`, 'dnb')}${m('Moved', moved, (mvp > 0.05 ? 'vio ' : '') + 'w2')}${
+          m('Heads ' + pdS, !first ? '<span class="an-mut">↑</span>' : hp == null ? '—' : fmt(hp), 'w2')}${m('Per Head', !first ? '<span class="an-mut">↑</span>' : hp && cq > 0 ? fmt(cq / hp) + ' ' + esc(uu) : '—', hp && cq > 0 ? 'ok' : '')}${m('Day', r.day == null ? '—' : r.day)}${
+          m('Status ' + dd, erSt(r) + (r.oT === 'w' && first ? ' <b>' + fmt(cardHeads(r.g)) + '</b>' : '') + (r.why.length ? ' ' + anPill('nv', esc(r.why.join(' · '))) + (fixOn ? ` <button class="er-fx" onclick="DPR.pfGo('${r.l.work_id}')">Fix</button>` : '') : ''), 'st')}<i class="an-brk"></i></div>`; }).join('')}</div>`; }).join('');
+    if (!G.size) h += `<div class="d2-empty"><b>No Active Activity On This Sheet</b></div>`;
+    return h;
+  }
+  function erHold() {
+    const rows = S.holdOff ? [] : holdRowsCtx('', ''), ro = isRo(); if (!rows.length) return `<div class="d2-empty"><b>Nothing On Hold</b></div>`;
+    const G = new Map(); rows.forEach(r => { const k = r.act || '—'; if (!G.has(k)) G.set(k, []); G.get(k).push(r); });
+    return `<div class="an-kpis">${anK(rows.length, 'On Hold')}${anK(rows.filter(r => r.ready).length, 'Ready To Resume', rows.some(r => r.ready) ? 'grn' : '')}${anK(rows.filter(r => r.due).length, 'Review Due', rows.some(r => r.due) ? 'amb' : '')}</div>` + [...G.entries()].sort((a, b) => pfNatCmp(a[0], b[0])).map(([a, rs]) => `<div class="an-sec"><h3>${esc(a)}</h3><span class="an-cnt">${rs.length} On Hold</span></div><table class="an-t er-rw"><thead><tr><th>Location</th><th>Held</th><th>Waiting For</th><th>Reason</th><th class="n">Since</th><th class="n">Days</th><th></th></tr></thead><tbody>${rs.sort((x, y) => y.days - x.days).map(r => `<tr><td class="wd loc" data-l="Location"><b>${esc(r.loc)}</b> <span class="an-mut">${esc(pathTail(r.path))}</span></td><td data-l="Held">${esc(r.kind === 'club' ? 'Club' : r.name || 'Whole Activity')}</td><td class="wd" data-l="Waiting For">${esc(r.wait)}${r.ready ? ' ' + anPill('w', 'Ready') : r.due ? ' ' + anPill('nv', 'Review Due') : ''}</td><td class="wd" data-l="Reason">${esc(r.h.reason || '—')}</td><td class="n" data-l="Since">${esc(dsh(r.h.held_from))}</td><td class="n" data-l="Days"><b>${r.days}</b></td><td class="n" data-l="">${ro ? '' : `<button class="er-rs" onclick="DPR.resumeAsk('${r.h.id}')">▶ Resume</button>`}</td></tr>`).join('')}</tbody></table>`).join('');
+  }
+  function erView() {
+    const R = erRows(), t = S.er === 'prog' || S.er === 'hold' ? S.er : 'lab', nH = S.holdOff ? 0 : holdRowsCtx('', '').length;
+    const tab = (k, nm, sm) => `<button class="${t === k ? 'on' : ''}" onclick="DPR.erTab('${k}')">${nm}${sm ? `<small>${sm}</small>` : ''}</button>`;
+    setTimeout(pfStick, 0);
+    return `<div class="an">${erFix(R)}<div class="an-tabs er-t">${tab('lab', 'Labour', esc(dsh(S.to)))}${tab('prog', 'Progress', esc(dsh(PD())))}${tab('hold', 'On Hold', String(nH))}</div>${t === 'lab' ? erLab(R) : t === 'prog' ? erPrg(R) : erHold()}${!S.prev && S.sub && S.sub.submitted_at ? `<div class="an-mut" style="margin-top:10px">Sent ${esc(dts(S.sub.submitted_at))}${S.sub.is_late ? ' · Late' : ''}${S.sub.reviewed_at ? ' · Reviewed ' + esc(dts(S.sub.reviewed_at)) : ''}</div>` : ''}</div><div class="ec-end"></div>`;
+  }
+  function erTab(k) { S.er = k; redraw(); try { const sc = $('d2_sc'); if (sc) sc.scrollTop = 0; } catch (e) { /* no scroller */ } }
   function pfPreview() {
+    if (!S.ecOld) return erView();   // v5.20 · the review in three tabs; the earlier preview stays under ⋯ › Entry · Old View
     const M = pfModel(true), dd = esc(dsh(S.to)), pdd = esc(dsh(PD()));
     const L = allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l));
     const rep = L.filter(({ g, l }) => outOf(g, l) !== '').length, moved = L.filter(({ g, l }) => lineMoved(g, l)).length, done = L.filter(({ g, l }) => lineX(g, l).fin).length, hz = L.filter(({ g, l }) => hasHT(g, l) || hasH(g, l)).length, wT = L.filter(({ g, l }) => outT(g, l) === 'w').length, heads0 = allHeads();
@@ -9766,7 +9864,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    ecOpen, ecShut, ecNext, ecPend, ecOldTog, pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
+    ecOpen, ecShut, ecNext, ecPend, ecOldTog, erTab, pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     anTab, anSort, anQ, anNr, anReload, anEng, anFlagT, anOpen, anJump, anAccept, anRet, anRetQ, anRetNote, anRetGo,   // v5.17 · manager Analysis · v5.18 review through it
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog

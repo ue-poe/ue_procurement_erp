@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Construction">
 <link rel="manifest" href="construction.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>Penguin Construction v5.18.5</title>
+<title>Penguin Construction v5.19</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ============================================================
@@ -3637,6 +3637,62 @@ html,body{touch-action:pan-x pan-y}
 #mod-dpr .dp2 .an .an-m.st .an-p{white-space:normal}
 /* v5.18.1 · dated day columns */
 #mod-dpr .dp2 .an .an-m.w2{width:92px}#mod-dpr .dp2 .an .an-m.dnb{width:118px}#mod-dpr .dp2 .an .an-m.vio{color:#5b3fb5}
+/* v5.19 · ENTRY CARDS (DPR_Engineer_Refresh_mock_v5): search always on screen · one small card per activity · a tile per crew / location · entry in a pop-up */
+#mod-dpr .dp2 .pf-top .ec-top{display:flex;flex-wrap:wrap;align-items:center;gap:0 6px}
+#mod-dpr .dp2 .pf-top .ec-top .pftabs{display:flex!important;flex:1 1 320px;min-width:0}
+#mod-dpr .dp2 .pf-top .ec-q{flex:1 1 240px;min-width:0;padding:2px 6px 6px}
+#mod-dpr .dp2 .pf-top .ec-q input{width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:9px;padding:8px 10px;font:inherit;font-size:13px;text-transform:none}
+#mod-dpr .dp2 .pf-top .ec-q input::placeholder{color:rgba(255,255,255,.7)}
+#mod-dpr .dp2 .pf-top .ec-q input:focus{outline:2px solid #9db4f5;background:#fff;color:#132338}
+#mod-dpr .dp2 .pf-top .rib .all.pd.on{background:#b86a00;border-color:#b86a00;color:#fff}
+#mod-dpr .dp2 .ec-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-items:start;padding:4px 2px 8px}
+@media (min-width:1000px){ #mod-dpr .dp2 .ec-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (min-width:1500px){ #mod-dpr .dp2 .ec-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+#mod-dpr .dp2 .ec-c{background:#fff;border:1px solid #cfd7e3;border-radius:10px;overflow:hidden;min-width:0}
+#mod-dpr .dp2 .ec-c .ech{display:block;padding:7px 10px;background:#f1f4f9;border-bottom:1px solid #cfd7e3}
+#mod-dpr .dp2 .ec-c .ech b{display:block;font-size:13.5px;line-height:1.25}
+#mod-dpr .dp2 .ec-c .ech > span{display:block;font-size:11px;color:#64728a}
+#mod-dpr .dp2 .pf.lab.ec-s{padding:4px 2px 0!important}
+@media (max-width:860px){ #mod-dpr .dp2 .ec-end{height:72px} }
+#mod-dpr .dp2 .ec-c .ech .m{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+#mod-dpr .dp2 .ec-pl{display:inline-block;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700;white-space:nowrap;background:#eef1f6;color:#64728a}
+#mod-dpr .dp2 .ec-pl.w{background:#e3f5ec;color:#0d8a5f}#mod-dpr .dp2 .ec-pl.p{background:#fff1d6;color:#b86a00}#mod-dpr .dp2 .ec-pl.o{background:#e6ecfd;color:#2952cc}
+#mod-dpr .dp2 .ec-tl{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:8px}
+#mod-dpr .dp2 .ec-ti{border:1px solid #cfd7e3;border-left:4px solid #9aa6ba;border-radius:8px;padding:5px 7px;background:#fff;text-align:left;min-height:48px;font:inherit;cursor:pointer;min-width:0;color:#132338}
+#mod-dpr .dp2 .ec-ti b{display:block;font-size:13px;overflow-wrap:anywhere}
+#mod-dpr .dp2 .ec-ti span{display:block;font-size:11px;color:#64728a}
+#mod-dpr .dp2 .ec-ti .sx{color:#34435e;font-weight:600;line-height:1.2;margin:1px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mod-dpr .dp2 .ec-ti .ec-pl{display:inline-block;font-size:10px;padding:0 6px;margin-left:4px}
+#mod-dpr .dp2 .ec-ti.w{border-left-color:#0d8a5f;background:#f4fbf7}
+#mod-dpr .dp2 .ec-ti.h{border-left-color:#c0262d;background:#fef5f5}
+#mod-dpr .dp2 .ec-ti.p{border-left-color:#b86a00;background:#fffaf0}#mod-dpr .dp2 .ec-ti.p span:last-child{color:#b86a00;font-weight:700}
+#mod-dpr .dp2 .ec-ti.d{border-left-color:#2952cc;background:#f4f7fe}
+#mod-dpr .dp2 .ec-ti.fin{opacity:.6}
+#mod-dpr .dp2 .ec-ti.tk{outline:2px solid #12305a;outline-offset:-2px}
+#mod-dpr .dp2 .ec-ov{position:fixed;inset:0;background:rgba(15,25,45,.5);z-index:9050;display:none;align-items:center;justify-content:center}
+#mod-dpr .dp2 .ec-ov.on{display:flex}
+#mod-dpr .dp2 .ec-md{background:#eef1f6;border-radius:14px;width:min(560px,94vw);max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
+#mod-dpr .dp2 .ec-mh{background:#14233f;color:#fff;padding:9px 12px;display:flex;gap:8px;align-items:center}
+#mod-dpr .dp2 .ec-mh > div{flex:1;min-width:0}
+#mod-dpr .dp2 .ec-mh b{display:block;font-size:14px}
+#mod-dpr .dp2 .ec-mh small{display:block;font-size:11px;color:#b9c6dd}
+#mod-dpr .dp2 .ec-mh .mk{flex:none;background:#fff;color:#14233f;border-radius:6px;padding:2px 8px;font-weight:800;font-size:11px;white-space:nowrap}
+#mod-dpr .dp2 .ec-mh .mk.prog{background:#ffd98a}
+#mod-dpr .dp2 .ec-mh button{flex:none;border:0;background:#1d3157;color:#fff;border-radius:7px;padding:7px 11px;font-weight:700;cursor:pointer;font:inherit}
+#mod-dpr .dp2 .ec-ml{display:flex;gap:6px;padding:7px 10px;border-bottom:1px solid #cfd7e3;background:#f7f9fc;overflow-x:auto;scrollbar-width:none}
+#mod-dpr .dp2 .ec-ml::-webkit-scrollbar{display:none}
+#mod-dpr .dp2 .ec-ml button{flex:none;border:1px solid #cfd7e3;background:#fff;border-radius:999px;padding:5px 11px;font-weight:600;color:#34435e;white-space:nowrap;font:inherit;cursor:pointer}
+#mod-dpr .dp2 .ec-ml button.on{background:#14233f;color:#fff;border-color:#14233f}
+#mod-dpr .dp2 .ec-ml button i{font-style:normal;color:#e08a00;margin-left:4px}
+#mod-dpr .dp2 .ec-bd{overflow:auto;padding:6px;min-height:80px}
+#mod-dpr .dp2 .ec-bd .pf{padding:0;background:transparent}
+#mod-dpr .dp2 .ec-bd .lab-c,#mod-dpr .dp2 .ec-bd .pf-card{margin:0}
+#mod-dpr .dp2 .ec-mf{display:flex;gap:8px;padding:8px 10px;border-top:1px solid #cfd7e3;align-items:center;background:#fff}
+#mod-dpr .dp2 .ec-mf .sp{flex:1}
+#mod-dpr .dp2 .ec-b{border:1px solid #cfd7e3;background:#fff;border-radius:8px;padding:9px 14px;font-weight:700;color:#16233a;font:inherit;cursor:pointer}
+#mod-dpr .dp2 .ec-b.pri{background:#14233f;color:#fff;border-color:#14233f}
+@media (min-width:621px){ #mod-dpr .dp2 .ec-ml{flex-wrap:wrap;overflow:visible} }
+@media (max-width:620px){ #mod-dpr .dp2 .ec-ov{align-items:flex-end} #mod-dpr .dp2 .ec-md{width:100vw;border-radius:14px 14px 0 0;max-height:92vh} }
 /* v5.18.4 · contractor pill inside the deployment chip */
 #mod-dpr .dp2 .an .an-two>div{min-width:0}
 #mod-dpr .dp2 .an .an-dc .cp{background:#eef2ff;color:#3730a3;border-radius:99px;padding:0 6px;font-size:10px;font-weight:800;white-space:nowrap}
@@ -5511,7 +5567,7 @@ const DPR = (function () {
     $('dpr_root').innerHTML = `<div class="drp dp2 eng" id="d2"><div class="d2-wrap"><div class="d2-side" id="d2_side"></div><div class="d2-main" id="d2_main"></div></div></div>`;
     fit(); $('d2_side').innerHTML = sideHtml(); paintMain();
   }
-  function paintMain(part) { const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); const h = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); if (part) domSet(m, h); else m.innerHTML = h; }
+  function paintMain(part) { setTimeout(ecPaint, 0); const m = $('d2_main'); if (!m) return; if (S.R) ctxUse(ctxOf(curTab())); const h = topTabs() + (S.tab === 'rep' ? repHtml() : !S.sub ? blankHtml() : logHtml()); if (part) domSet(m, h); else m.innerHTML = h; }
   // v160 · Day Sheet | Report as one slim row above the date banner (moved out of the calendar column)
   const topTabs = () => `<div class="d2-toptabs"><button class="${S.tab === 'log' ? 'on' : ''}" onclick="DPR.tab('log')">Day Sheet<i>${esc(dsh(S.to))} · ${esc(stOf(stKey())[1])}</i></button><button class="${S.tab === 'rep' ? 'on' : ''}" onclick="DPR.tab('rep')">Report<i>Day Reports · Preview &amp; Send</i></button></div>`;
   function calHtml() {
@@ -8332,7 +8388,7 @@ const DPR = (function () {
   const pfFloorMark = k => { const segs = String(k || '').split(' › ').filter(Boolean); return segs.length >= 2 ? segs[segs.length - 2] : ''; };   // v5.5.6 · the level above the floor (tower / block / wing — whatever the project's tree has there)
   const pfCardKey = (g, l) => pfFloorKey(g, l) + '\u0001' + (linePkg(g, l) || '—') + '\u0001' + l.activity;
   const pfColl = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }), pfNatCmp = (a, b) => pfColl.compare(String(a), String(b));   // v5.8.1 · one collator, not one per comparison
-  const pfHit = (g, l) => !S.fs || fz(l.activity + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + linePkg(g, l) + ' ' + (l.stages || []).map(s => s.name).join(' '), S.fs);
+  const pfHit = (g, l) => !S.fs || fz(l.activity + ' ' + lineLoc(g, l) + ' ' + lineLocPath(g, l) + ' ' + linePkg(g, l) + ' ' + (l.stages || []).map(s => s.name).join(' ') + ' ' + pfCons(g).join(' '), S.fs);
   function pfModel(all) {   // floors → cards → units, over the live lines (held lines live on the Waiting shelf)
     const lines = allLines().filter(({ g, l }) => !heldL(g, l));
     const floors = new Map();
@@ -8394,7 +8450,7 @@ const DPR = (function () {
   function pfFloor(k) { S.pfF = k || ''; S.mpo = null; redraw(); }
   function pfFind(v) { S.fs = String(v || '').trim() ? v : ''; redraw(); }
   function pfGo(wid) {   // Fix → back to the sheet, on that unit
-    const e = S.W[wid]; if (!e) return; S.prev = false; S.pft = attP(e.g, e.l) || !attW(e.g, e.l) ? 'prog' : 'lab'; S.pfF = pfFloorKey(e.g, e.l); S.pfU[pfCardKey(e.g, e.l)] = wid; S.fs = ''; paint();
+    const e = S.W[wid]; if (!e) return; S.prev = false; S.pft = attP(e.g, e.l) || !attW(e.g, e.l) ? 'prog' : 'lab'; S.pfF = pfFloorKey(e.g, e.l); S.pfU[pfCardKey(e.g, e.l)] = wid; S.fs = ''; if (!S.ecOld) { S.pfF = ''; S.ecP = false; const an = [...new Set(e.g.lines.map(z => z.activity))], lab = S.pft === 'lab'; S.ec = { t: S.pft, gid: e.g.wgroup_id, ak: (lab && an.length > 1 ? (linePkg(e.g, labLive(e.g)[0] || e.l) || '—') + '\u0001' + an.join(' + ') : (linePkg(e.g, e.l) || '—') + '\u0001' + e.l.activity), keep: false }; paint(); return; } paint();
     setTimeout(() => { const el = document.querySelector('#d2 .pf-card[data-k="' + CSS.escape(pfCardKey(e.g, e.l)) + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }, 40);
   }
   /* ----- the entry under the unit scroller ----- */
@@ -8948,7 +9004,94 @@ const DPR = (function () {
   const pfStartsToday = (g, l) => !finL(l) && !startedB(l) && outOf(g, l) === '' && outT(g, l) === 'w';   // new today: labour only, no progress yet
   const progLines = () => allLines().filter(({ g, l }) => !finL(l) && !heldL(g, l) && !pfStartsToday(g, l) && (startedB(l) || outOf(g, l) !== ''));
   const progDone = () => progLines().filter(({ g, l }) => outOf(g, l) !== '' && !attP(g, l)).length;
+  /* ==================================================================
+     v5.19 · ENTRY CARDS (DPR_Engineer_Refresh_mock_v5, approved 27 Nov 2026)
+     The sheet is a short list: one small card per activity, a tile per crew (Labour) or per location card (Progress). A tile opens a
+     pop-up that hosts the SAME entry blocks as before — labBlock (Labour, today) or pfEntry (Progress, yesterday) — so every control,
+     setter and payload is unchanged. Labour and Progress stay apart: the pop-up shows only the tab it was opened from.
+     ================================================================== */
+  function ecModel(M) {
+    const t = pfTabOf(), acts = new Map(), seen = new Set();
+    const A = (pkg, act) => { const k = pkg + '\u0001' + act; if (!acts.has(k)) acts.set(k, { key: k, pkg, act, tiles: [] }); return acts.get(k); };
+    M.cards.forEach(c => c.items.forEach(it => { const g = it.g, l = it.l;
+      if (t === 'lab') { if (seen.has(g)) return; seen.add(g); const ls = labLive(g); if (!ls.length) return;
+        const an = [...new Set(g.lines.map(x => x.activity))]; (an.length > 1 ? A(linePkg(g, ls[0]) || '—', an.join(' + ')) : A(c.pkg, an[0])).tiles.push({ g, ls }); return; }
+      if (pfStartsToday(g, l)) return;
+      const a = A(c.pkg, c.act); let T = a.tiles.find(x => x.g === g); if (!T) a.tiles.push(T = { g, ls: [] }); T.ls.push(l); }));
+    return { t, acts: [...acts.values()] };
+  }
+  function ecInfo(T, t) {   // what a tile says
+    const g = T.g, locs = T.ls.map(l => lineLoc(g, l)), name = locs[0] + (locs.length > 1 ? ' +' + (locs.length - 1) : ''), club = g.lines.length > 1;
+    if (t === 'lab') { const st = labState(g), pend = !labDone(g), n = labHeadsAll(g);
+      return { name, club, pend, n: st === 'w' ? n : 0, cls: pend ? 'p' : st === 'w' ? 'w' : st === 'h' ? 'h' : 'n', sub: '',
+        txt: st === 'w' ? (n ? fmt(n) + (n === 1 ? ' Head' : ' Heads') : pend ? 'Heads Missing' : 'Working') : st === 'h' ? (pend ? 'Hindrance · Reason?' : 'Hindrance') : st === 'n' ? 'No Work' : st === 'mix' ? 'Part Filled' : 'Pending' }; }
+    const open = T.ls.filter(l => !finL(l)); if (!open.length) return { name, club, pend: false, n: 0, cls: 'fin', sub: '', txt: 'Finished' };
+    const pend = open.some(l => outOf(g, l) === '' || attP(g, l)), avg = f => open.reduce((a, l) => a + f(l), 0) / open.length;
+    const base = avg(l => Math.min(100, lineBasePct(l))), pct = avg(l => Math.min(100, linePct(g, l))), mv = pct - base, os = open.map(l => outOf(g, l));
+    const run = []; open.forEach(l => { if (staged(l)) subsLive(g, l).forEach(z => { const b = subBase(z), y = lineX(g, l).subs[z.id]; if (((b > 0.0005 && b < 99.9995) || (y && y.out === 'w')) && run.indexOf(z.name) < 0) run.push(z.name); }); });
+    return { name, club, pend, n: 0, sub: run.length ? run[0] + (run.length > 1 ? ' +' + (run.length - 1) : '') : '',
+      cls: pend ? 'p' : mv > 0.5 ? 'd' : os.some(o => o === 'w') ? 'w' : os.every(o => o === 'h') ? 'h' : 'n',
+      txt: pend ? 'Pending' : mv > 0.5 ? '+' + Math.round(mv) + '% · ' + Math.round(pct) + '%' : (os.some(o => o === 'w') ? 'WIP' : os.every(o => o === 'h') ? 'Hindrance' : 'No Work') + ' · ' + Math.round(pct) + '%' };
+  }
+  const ecPendN = M => { const E = ecModel(M); return E.acts.reduce((a, x) => a + x.tiles.filter(T => ecInfo(T, E.t).pend).length, 0); };
+  function ecSheet(ro) {
+    const M = pfModel(false), live = cdModel('live'), o = { ro }, t = pfTabOf();
+    setTimeout(pfStick, 0);
+    if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Add The Activities You Are Working On From The Approved Estimate.</div>${ro ? '' : `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd()">＋ Add Work</button>`}</div>` + cdNp(live, o) + cdWaiting(live, o);
+    const E = ecModel(M), cm = S.cm && !ro && t === 'lab'; let h = '';
+    if (t === 'lab') {
+      const all = labCards(), rows = []; all.forEach(g => { if (labState(g) === 'w') rvRows(dOf(g)).forEach(r => rows.push(r)); });
+      const mix = tradeMix(rows), tot = rows.reduce((a, c) => a + heads(c.heads), 0), cons = new Set(rows.map(r => r.con).filter(Boolean)).size;
+      h += `<div class="pf lab ec-s"><div class="lab-tot"><b>${fmt(tot)}</b><span class="k">Heads Today</span>${Object.entries(mix).map(([tc, v]) => `<span class="tm">${esc(labTname(tc))} ${fmt(v)}</span>`).join('')}${cons ? `<span class="k">${cons} Contractor${cons === 1 ? '' : 's'}</span>` : ''}<span class="sp"></span>${ro ? '' : `<button class="lb ${S.cm ? 'on' : ''}" title="Tick Crews To Report Them Together — Labour Once" onclick="DPR.clubMode()">☑ Club</button>`}</div>`;
+      if (cm) h += `<div class="lab-club"><span><b>${new Set([...S.ticks].map(w => S.W[w] && S.W[w].g.wgroup_id)).size}</b> Ticked · Any Activities, Any Units — They Share One Crew</span><button class="lb ok" onclick="DPR.makeClub()">One Crew For The Ticked</button><button class="lb" onclick="DPR.clubMode()">Cancel</button></div>`;
+      h += '</div>';
+    }
+    const cards = E.acts.map(a => {
+      const ts = a.tiles.map(T => ({ T, I: ecInfo(T, t) })).filter(x => !S.ecP || x.I.pend); if (!ts.length) return '';
+      const nL = ts.reduce((n, x) => n + x.T.ls.length, 0), nP = ts.filter(x => x.I.pend).length, H = ts.reduce((n, x) => n + x.I.n, 0);
+      return `<div class="ec-c"><div class="ech"><b>${esc(a.act)}</b><span>${esc(a.pkg)}</span><div class="m"><span class="ec-pl">${nL} Location${nL === 1 ? '' : 's'}</span>${t === 'lab' ? `<span class="ec-pl w">${fmt(H)} Heads</span>` : ''}${nP ? `<span class="ec-pl p">${nP} Pending</span>` : '<span class="ec-pl w">Filled</span>'}</div></div><div class="ec-tl">${ts.map(({ T, I }) => { const tk = cm && T.g.lines.every(l => S.ticks.has(l.work_id));
+        return `<button class="ec-ti ${I.cls} ${tk ? 'tk' : ''}" title="${esc(T.ls.map(l => lineLoc(T.g, l)).join(' · '))}" onclick="${cm ? `DPR.tick('${T.g.lines[0].work_id}',${tk ? 'false' : 'true'})` : `DPR.ecOpen('${t}','${T.g.wgroup_id}','${cdQ(a.key)}')`}"><b>${tk ? '☑ ' : ''}${esc(I.name)}${I.club ? '<span class="ec-pl o">Club</span>' : ''}</b>${I.sub ? `<span class="sx">${esc(I.sub)}</span>` : ''}<span>${esc(I.txt)}</span></button>`; }).join('')}</div></div>`; }).join('');
+    h += cards ? `<div class="ec-grid">${cards}</div>` : `<div class="d2-empty"><b>${S.ecP && E.acts.length ? 'Nothing Pending Here' : t === 'prog' && M.cards.length ? 'No Progress To Enter' : 'No Match'}</b>${S.fs && !ro ? `<div><button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd(1)">＋ Add “${esc(S.fs)}” From The Estimate</button></div>` : ''}</div>`;
+    if (t === 'lab') { const pend = labCards().filter(g => { const st = labState(g); return st === '' || st === 'mix'; }).length;
+      if (pend && !ro) h += `<div class="pf lab ec-s"><div class="lab-rest"><span><b>${pend}</b> Activit${pend === 1 ? 'y' : 'ies'} Still Need Labour, Hindrance Or No Work</span><button class="lb" onclick="DPR.labRest()">No Work For The Rest</button></div></div>`;
+      return h + cdNp(live, o) + cdLabour(live, o) + cdWaiting(live, o) + '<div class="ec-end"></div>'; }
+    return h + cdWaiting(live, o) + '<div class="ec-end"></div>';
+  }
+  function ecFind(E) {   // the open tile, from the list as it stands; a tile that left the list (filter, hold, split) falls back to its card
+    const g = G(E.gid); if (!g) return null; const Mo = ecModel(pfModel(false)), a = Mo.acts.find(x => x.key === E.ak), T = a && a.tiles.find(x => x.g === g);
+    if (T) return { a, T }; const act = String(E.ak).split('\u0001')[1] || '';
+    const ls = E.t === 'lab' ? labLive(g) : g.lines.filter(l => l.activity === act && !pfStartsToday(g, l)); if (!ls.length) return null;
+    return { a: { key: E.ak, pkg: String(E.ak).split('\u0001')[0], act, tiles: [{ g, ls }] }, T: { g, ls } };
+  }
+  function ecPop() {
+    const E = S.ec, F = ecFind(E); if (!F) return ''; const { a, T } = F, g = T.g, ro = isRo(), t = E.t, l0 = T.ls[0], fk = pfFloorKey(g, l0);
+    let body;
+    if (t === 'lab') body = `<div class="pf lab"><article class="lab-c t1">${labBlock(g, ro, false)}</article></div>`;
+    else { const all = pfModel(true).cards, cOf = l => all.find(c => c.key === pfCardKey(g, l)) || { key: pfCardKey(g, l), floor: pfFloorKey(g, l), pkg: linePkg(g, l) || '—', act: l.activity, items: [{ g, l }] };
+      body = `<div class="pf"><article class="pf-card t1">${T.ls.map(l => finL(l) && !S.pfO[l.work_id] ? `<div class="pf-ent rl one fin" onclick="DPR.pfOpen('${l.work_id}')"><div class="rail"><b>${esc(lineLoc(g, l))}</b></div><div class="eb"><div class="onel"><span class="tag g">Finished${l.finished_on ? ' ' + esc(dsh(l.finished_on)) : ''}</span><span class="muted">100%</span></div></div></div>` : pfEntry(cOf(l), ro, l.work_id)).join('')}</article></div>`; }
+    const sib = a.tiles.length > 1 ? `<div class="ec-ml">${a.tiles.map(X => { const I = ecInfo(X, t); return `<button class="${X.g === g ? 'on' : ''}" onclick="DPR.ecOpen('${t}','${X.g.wgroup_id}','${cdQ(a.key)}')">${esc(I.name)}${I.pend ? '<i>●</i>' : ''}</button>`; }).join('')}</div>` : '';
+    const hold = t === 'prog' && !ro && !S.holdOff && T.ls.some(l => !finT(g, l)) ? `<button class="ec-b" title="Put This Activity On Hold — Waiting, Not A Hindrance" onclick="DPR.hcOpen('${cdQ(pfCardKey(g, T.ls.find(l => !finT(g, l))))}')">⏸ Hold</button>` : '';
+    const last = a.tiles.indexOf(T) >= a.tiles.length - 1;
+    return `<div class="ec-md"><div class="ec-mh"><div><b>${esc(a.act)}</b><small>${esc(T.ls.map(l => lineLoc(g, l)).join(' · '))} · ${esc((pfFloorMark(fk) ? pfFloorMark(fk) + ' › ' : '') + pfFloorLabel(fk))}</small></div><span class="mk ${t}">${t === 'lab' ? 'Labour · ' + esc(dsh(S.to)) : 'Progress · ' + esc(dsh(PD()))}</span><button title="Close" onclick="DPR.ecShut()">✕</button></div>${sib}<div class="ec-bd">${body}</div><div class="ec-mf">${hold}<span class="sp"></span><button class="ec-b" onclick="DPR.ecShut()">Done</button>${last ? '' : `<button class="ec-b pri" onclick="DPR.ecNext()">Next Location ›</button>`}</div></div>`;
+  }
+  function ecPaint() {   // the pop-up lives beside the sheet (inside #d2, so the entry styles and the focus restore apply) and is morphed, never rebuilt
+    const host = $('d2'); let el = $('dprEc');
+    const on = !!S.ec && !!host && S.view === 'eng' && S.tab === 'log' && !!S.sub && !!S.cards && !S.ecOld && !S.catMode && !rvOn();
+    const h = on ? ecPop() : '';
+    if (!h) { S.ec = null; if (el) { el.classList.remove('on'); el.innerHTML = ''; } return; }
+    if (!el || el.parentNode !== host) { if (el) el.remove(); el = document.createElement('div'); el.id = 'dprEc'; el.className = 'ec-ov'; el.addEventListener('click', e => { if (e.target === el) ecShut(); }); host.appendChild(el); }
+    const a = document.activeElement, k = a && a.dataset && el.contains(a) ? a.dataset.k : null, bd = el.querySelector('.ec-bd'), top = bd && S.ec.keep ? bd.scrollTop : 0;
+    domSet(el, h); el.classList.add('on'); S.ec.keep = true;
+    const b2 = el.querySelector('.ec-bd'); if (b2) b2.scrollTop = top;
+    if (k && document.activeElement !== a) { const f = el.querySelector('[data-k="' + k + '"]'); if (f) f.focus(); }
+  }
+  function ecOpen(t, gid, ak) { S.pft = t === 'prog' ? 'prog' : 'lab'; S.ec = { t: S.pft, gid, ak, keep: false }; S.mpo = null; S.remo = null; ecPaint(); }
+  function ecShut() { S.ec = null; S.mpo = null; S.remo = null; ecPaint(); }
+  function ecNext() { const E = S.ec, F = E && ecFind(E); if (!F) { ecShut(); return; } const i = F.a.tiles.indexOf(F.T), nx = F.a.tiles[i + 1]; if (nx) ecOpen(E.t, nx.g.wgroup_id, F.a.key); else ecShut(); }
+  function ecPend() { S.ecP = !S.ecP; redraw(); }
+  function ecOldTog() { S.ecOld = !S.ecOld; S.ec = null; S.ecP = false; paint(); }
   function pfSheet(ro) {
+    if (!S.ecOld) return ecSheet(ro);   // v5.19 · entry cards; the earlier layout stays under ⋯ › Entry · Old View
     const M = pfModel(false), live = cdModel('live'), o = { ro };
     setTimeout(pfStick, 0);
     if (!M.lines.length) return `<div class="d2-empty"><b>Nothing On Your Sheet</b><div style="margin-top:6px">Add The Activities You Are Working On From The Approved Estimate.</div>${ro ? '' : `<button class="d2-btn navy big" style="margin-top:10px" onclick="DPR.pfAdd()">＋ Add Work</button>`}</div>` + cdNp(live, o) + cdWaiting(live, o);
@@ -8965,7 +9108,7 @@ const DPR = (function () {
     return `<div class="pftabs">${tb('lab', 1, 'Labour', 'Today · ' + esc(dsh(S.to)), lt - lp, lt)}${tb('prog', 2, 'Progress', 'Till ' + esc(dsh(PD())) + ' EOD', pd, pl)}</div>`;
   }
   function pfFoot() {   // sheet footer for the two tabs
-    const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount(), lp = labPend(), t = pfTabOf(), wide = pfWide();
+    const n = dirtyAll(), d = esc(dsh(S.to)), att = attCount(), lp = labPend(), t = pfTabOf(), wide = pfWide() && !!S.ecOld;
     const msg = `<span class="msg"><b>${d} Sheet</b> · ${n ? n + ' Unsaved · ' : ''}${lp ? `<span style="color:var(--drd)"><b>${lp}</b> Need${lp === 1 ? 's' : ''} Labour, Hindrance Or No Work</span>` : 'Labour Complete'} · ${att ? `<span style="color:var(--drd)"><b>${att}</b> Need${att === 1 ? 's' : ''} Attention</span>` : 'Progress Of ' + esc(dsh(PD()))}</span>`;
     const save = `<button class="d2-btn" ${n ? '' : 'disabled'} onclick="DPR.saveAll()">Save Draft${n ? ' · ' + n : ''}</button>`;
     if (!wide && t === 'lab') return msg + save + `<button class="d2-btn navy" onclick="DPR.pfTab('prog')">Next: Progress →</button>`;
@@ -8984,7 +9127,7 @@ const DPR = (function () {
     return `<div class="pf-top" id="pf_top">${pfNames()}<div class="r1"><button class="menu app" title="Menu · Switch Project" onclick="pgsMobileNav(true)">☰</button><button class="nav" onclick="DPR.dayMove(-1)">‹</button><button class="date" onclick="DPR.pfCal()"><b>${esc(dmy(S.to))}</b><i>▾</i></button><button class="nav" ${S.to >= today ? 'disabled' : ''} onclick="DPR.dayMove(1)">›</button>
       <div class="st"><div><b class="${st[0]}">${esc(st[1])}</b>${due ? ' · ' + due : ''}${sub && sub.submitted_at ? ' · Sent ' + esc(dts(sub.submitted_at)) : ''}</div><div class="m"><span class="m1">${nAtt ? `<span class="late">${nAtt} Need${nAtt === 1 ? 's' : ''} Attention</span> · ` : ''}Progress ${esc(dsh(sub ? PD() : addDays(S.to, -1)))} · Status &amp; Labour ${esc(dsh(S.to))}</span><span class="m2">${esc(where)}</span></div></div>
       <div class="who"><b>${esc((state.userName || 'Site Engineer').split(' ')[0])}</b><small>${esc(S.homeAreas.length ? S.homeAreas.join(' · ') : projName())}</small></div><button class="menu" title="Find · Add Work · Reports" onclick="DPR.pfMenu()">⋯</button></div>
-      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `${pfTabs()}<div class="rib r2">${allChip}<button class="ar" title="Earlier Floors" onclick="DPR.pfRib(-1)">‹</button><div class="floors scroll" id="pf_rib" onscroll="DPR.pfRibAt(this.scrollLeft)">${chips}</div><button class="ar" title="More Floors" onclick="DPR.pfRib(1)">›</button>${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
+      ${rv ? '<div class="floors scroll"><span class="rvt">' + (rv === 'blank' ? 'No Report Yet' : S.prev ? 'Preview · Check, Then Send' : 'Day Report') + '</span></div>' : S.catMode && !ro ? pfAddBar() : `${S.ecOld ? pfTabs() : `<div class="ec-top">${pfTabs()}<div class="ec-q"><input data-k="ecq" type="search" placeholder="Search Activity · Location · Contractor" value="${esc(S.fs || '')}" oninput="DPR.pfFind(this.value)" autocomplete="off"></div></div>`}<div class="rib r2">${S.ecOld || !sub ? '' : `<button class="all pd ${S.ecP ? 'on' : ''}" onclick="DPR.ecPend()">Pending <i>${ecPendN(M)}</i></button>`}${allChip}<button class="ar" title="Earlier Floors" onclick="DPR.pfRib(-1)">‹</button><div class="floors scroll" id="pf_rib" onscroll="DPR.pfRibAt(this.scrollLeft)">${chips}</div><button class="ar" title="More Floors" onclick="DPR.pfRib(1)">›</button>${ro ? '' : `<button class="add" onclick="DPR.pfAdd()">＋ Add</button>`}</div>`}${S.fs && !rv && !S.catMode && S.ecOld ? `<div class="find"><span>Find “${esc(S.fs)}”</span><button class="d2-btn sm" onclick="DPR.pfFind('')">× Clear</button></div>` : ''}</div>`;
   }
   /* v5.5.5 · Add Work: the estimate picker (tick activities × locations → each on its own, or Report Together) with its search always on screen */
   function pfAddBar() {
@@ -9125,6 +9268,7 @@ const DPR = (function () {
       + row('Start Work By Location', 'Pick A Location, Tick Its Lines', 'DPR.sheetClose();DPR.startOpen()')
       + row('☑ Report Together', (S.cm ? 'On · Tick Crews On The Labour Tab' : 'Club Any Activities · Any Units — Labour Once'), "DPR.sheetClose();DPR.pfTab('lab');DPR.clubMode()");
     b += row('Day Reports', 'Calendar · Sent Reports · Preview', 'DPR.sheetClose();DPR.tab(\'rep\')');
+    b += row(S.ecOld ? 'Entry · New View' : 'Entry · Old View', S.ecOld ? 'Activity Cards · Entry In A Pop-Up' : 'Entry On The Card', 'DPR.sheetClose();DPR.ecOldTog()');
     if (sub && sub.status === 'Draft' && !ro) b += row('Delete ' + esc(dsh(S.to)) + ' Report', 'Unsent Draft Only', `DPR.sheetClose();DPR.delDay('${S.to}')`, 'red');
     sheetOpen('Sheet · ' + dsh(S.to), projName(), b, '<span class="sp"></span><button class="dbtn" onclick="DPR.sheetClose()">Close</button>');
   }
@@ -9620,7 +9764,7 @@ const DPR = (function () {
     npAdd, npAddGo, npDel, npStep, npCon, npLocDel, npLocPick, npLocFilter, npLocTick,
     catTick, catTickMany, catOpen, catView, catShowAll, catAllOpen, catClear, catGo, catFloor, catTower, catPkg, catBack, gridOpen,
     startOpen, startSearch, startLoc, startBack, startTog, startTick, startTickMany, startGo,
-    pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
+    ecOpen, ecShut, ecNext, ecPend, ecOldTog, pfFloor, pfUnit, pfSub, pfGrp, pfCrew, pfGo, pfCal, pfCalMove, pfFind, pfMenu, pfAdd, pfAddQ, pfTab, labW, labSame, labOut, labReason, labUnitTog, labSubTog, labHead, labTrade, labRest, labFold, pfOpen, pfMore, pfRib, pfRibAt, hcOpen, hcSet, hcTog, hcGo, scMode, scTick, scGo, scSplit, scWork, hovNew, hovBack, hovSet, hovAll, hovTick, hovGo, hovReturn, hovRetTick, hovRetGo, catConfirm, seqQ, seqScope, seqExp, seqRow, seqBar, seqIn, seqDiscard, seqSave,   // v5.4 · phone flow
     mpMenu, mpCal, mpCalMove, mpRet, mpQuick,   // v5.5 · manager phone flow
     anTab, anSort, anQ, anNr, anReload, anEng, anFlagT, anOpen, anJump, anAccept, anRet, anRetQ, anRetNote, anRetGo,   // v5.17 · manager Analysis · v5.18 review through it
     repOpen, preview, prevClose, submitGo, sheetClose, fsFind, fsGo, flatSet, retrieveAsk, retrieveGo, cdGo, cardsSet, cdFoldAll, cdFold, cdRowTog, rvCards, mCards, cdPkgTog, cdOvTog, holdOpen, holdEditOpen, holdSet, holdGo, resumeAsk, resumeGo, resumeAll, resumeAllGo, wTog, wGo, wF, wPdf,   // v5.3 · M49 Waiting / On Hold   // v166 · Cards · v166.2 cdRowTog · C4 cdOvTog

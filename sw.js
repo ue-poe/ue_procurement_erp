@@ -99,7 +99,8 @@
 // v108 · index.html v215 — Quantity Take Off: named groups · Read As · Map To Item with conversion · sheet access by Admin · Tools pop-up (M101, M102)
 // v109 · index.html v216 — Quantity Take Off drawing: touch and pen (tap, aim, pinch, two-finger pan, box select) · Undo / Redo / Finish / Cancel / Delete Node on the drawing
 // v110 · index.html v216 (in place) — Quantity Take Off: group total always on the band of the measurement sheet · register item on two lines, quantity and unit never cut
-const VERSION = 'pgs-shell-v110';
+// v111 · index.html v216 (in place) — Quantity Take Off: a copied line whose source was removed or never saved no longer blocks Save
+const VERSION = 'pgs-shell-v111';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

@@ -101,7 +101,8 @@
 // v110 · index.html v216 (in place) — Quantity Take Off: group total always on the band of the measurement sheet · register item on two lines, quantity and unit never cut
 // v111 · index.html v216 (in place) — Quantity Take Off: a copied line whose source was removed or never saved no longer blocks Save
 // v112 · index.html v216 (in place) — Quantity Take Off: a measurement sheet opens for viewing · Edit button at the top right opens it for editing
-const VERSION = 'pgs-shell-v112';
+// v113 · index.html v217 — BBS Reinforcement Drawing: bar shape pane (bar ends, legs by Ld, typed lengths, Draw Shape) · bar mark and number of bars on the bar set cards · shaped bars on bar marks and the BBS sheet (M103, M104)
+const VERSION = 'pgs-shell-v113';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];

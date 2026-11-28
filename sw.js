@@ -102,7 +102,8 @@
 // v111 · index.html v216 (in place) — Quantity Take Off: a copied line whose source was removed or never saved no longer blocks Save
 // v112 · index.html v216 (in place) — Quantity Take Off: a measurement sheet opens for viewing · Edit button at the top right opens it for editing
 // v113 · index.html v217 — BBS Reinforcement Drawing: bar shape pane (bar ends, legs by Ld, typed lengths, Draw Shape) · bar mark and number of bars on the bar set cards · shaped bars on bar marks and the BBS sheet (M103, M104)
-const VERSION = 'pgs-shell-v113';
+// v114 · index.html v218 — BBS: one top row · tools, plan picker, layers and view choices on the canvases · Layers pop-up on the uploaded drawing · dimension figures readable and turned with their dimension
+const VERSION = 'pgs-shell-v114';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
                './construction.html', './construction.webmanifest',
                './icon-192.png', './icon-512.png'];
